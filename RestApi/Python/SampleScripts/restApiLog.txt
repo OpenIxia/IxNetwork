@@ -1,0 +1,674 @@
+
+GET: http://192.168.70.3:11009/api/v1/sessions
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis
+DATA: {"hostname": "192.168.70.11"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1
+HEADERS: {'content-type': 'application/json'}
+connectIxChassis 192.168.70.11: Status: ready
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/availableHardware", "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": "192.168.70.11"}]}, {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": "1"}]}, {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": "1"}]}]}]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+Port currently owned by: IxNetwork/WIN-CBNTTNIKRT9/hgee
+Port is still owned: 192.168.70.11/cardId:1/portId:1
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/availableHardware", "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": "192.168.70.11"}]}, {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": "2"}]}, {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": "1"}]}]}]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+Port currently owned by: IxNetwork/WIN-CBNTTNIKRT9/hgee
+Port is still owned: 192.168.70.11/cardId:2/portId:1
+
+Ports are still owned: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/1/operations/releaseport
+DATA: {"arg1": ["/api/v1/sessions/1/ixnetwork/vport/1"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/2/operations/releaseport
+DATA: {"arg1": ["/api/v1/sessions/1/ixnetwork/vport/2"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1/card/1/port/1/operations/clearownership
+DATA: {"arg1": ["/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1/card/1/port/1"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1/card/2/port/1/operations/clearownership
+DATA: {"arg1": ["/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1/card/2/port/1"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/operations/releaseport
+DATA: {"arg1": ["http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/1", "http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/2"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/globals/licensing
+DATA: {'licensingServers': ['192.168.70.3'], 'mode': 'subscription', 'tier': 'tier3'}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/globals/licensing
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+Verifying sessionId license server: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork
+	['192.168.70.3']
+	subscription
+	tier3
+
+newBlankConfig:http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/newconfig
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/newconfig
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+createVports: /api/v1/sessions/1/ixnetwork/vport/1
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+	Name: 1/1
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/1
+DATA: {'name': '1/1'}
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+createVports: /api/v1/sessions/1/ixnetwork/vport/2
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/2
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+	Name: 2/1
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport/2
+DATA: {'name': '2/1'}
+HEADERS: {'content-type': 'application/json'}
+
+createVports: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports
+DATA: {"arg1": [{"arg1": "192.168.70.11", "arg2": "1", "arg3": "1"}, {"arg1": "192.168.70.11", "arg2": "2", "arg3": "1"}], "arg2": [], "arg3": ["/api/v1/sessions/1/ixnetwork/vport/1", "/api/v1/sessions/1/ixnetwork/vport/2"], "arg4": "true"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/assignports/7
+HEADERS: {'content-type': 'application/json'}
+createTopology: Getting vport list: [['192.168.70.11', '1', '1']]
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology
+DATA: {"vports": ["/api/v1/sessions/1/ixnetwork/vport/1"], "name": "Topo1"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup
+DATA: {"multiplier": 1, "name": "DG1"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+createDeviceGroup: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+createTopology: Getting vport list: [['192.168.70.11', '2', '1']]
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/vport
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology
+DATA: {"vports": ["/api/v1/sessions/1/ixnetwork/vport/2"], "name": "Topo2"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup
+DATA: {"multiplier": 1, "name": "DG2"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+createDeviceGroup: /api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+DATA: {'name': 'MyEth1'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/1/counter
+DATA: {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/1/nest/1
+DATA: {'enabled': False}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/3/singleValue
+DATA: {'value': True}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/vlan/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/4/counter
+DATA: {'start': 103, 'direction': 'increment', 'step': 0}
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1
+DATA: {'name': 'MyEth2'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/7/counter
+DATA: {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/7/nest/1
+DATA: {'enabled': False}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/9/singleValue
+DATA: {'value': True}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/vlan/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/10/counter
+DATA: {'start': 103, 'direction': 'increment', 'step': 0}
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/13/counter
+DATA: {'start': '1.1.1.1', 'direction': 'increment', 'step': '0.0.0.1'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/13/nest/1
+DATA: {'enabled': False}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/15/counter
+DATA: {'start': '1.1.1.2', 'direction': 'increment', 'step': '0.0.0.0'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/15/nest/1
+DATA: {'enabled': False}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/16/singleValue
+DATA: {'value': True}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/14/singleValue
+DATA: {'value': 24}
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4
+DATA: {}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/18/counter
+DATA: {'start': '1.1.1.2', 'direction': 'increment', 'step': '0.0.0.1'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/18/nest/1
+DATA: {'enabled': False}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/20/counter
+DATA: {'start': '1.1.1.1', 'direction': 'increment', 'step': '0.0.0.0'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/20/nest/1
+DATA: {'enabled': False}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/21/singleValue
+DATA: {'value': True}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/19/singleValue
+DATA: {'value': 24}
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/startallprotocols
+DATA: {"arg1": "sync"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/", "nodes": [{"node": "topology", "properties": [], "where": []}, {"node": "deviceGroup", "properties": ["href", "enabled"], "where": []}, {"node": "deviceGroup", "properties": ["href", "enabled"], "where": []}]}]}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/215?includes=count
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/operations/getValues
+DATA: {"arg1": "/api/v1/sessions/1/ixnetwork/multivalue/215", "arg2": 0, "arg3": 1}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+HEADERS: {'content-type': 'application/json'}
+
+/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+	Status: starting
+	Waiting 1/20 seconds ...
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+HEADERS: {'content-type': 'application/json'}
+
+/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+	Status: starting
+	Waiting 2/20 seconds ...
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+HEADERS: {'content-type': 'application/json'}
+
+/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+	Status: started
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/216?includes=count
+HEADERS: {'content-type': 'application/json'}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/multivalue/operations/getValues
+DATA: {"arg1": "/api/v1/sessions/1/ixnetwork/multivalue/216", "arg2": 0, "arg3": 1}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1
+HEADERS: {'content-type': 'application/json'}
+
+/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1
+	Status: started
+
+VerifyProtocolSessions: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1?includes=sessionStatus
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+HEADERS: {'content-type': 'application/json'}
+Protocol sessions are all up: ipv4
+
+VerifyProtocolSessions: /api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1
+
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1?includes=sessionStatus
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1
+HEADERS: {'content-type': 'application/json'}
+Protocol sessions are all up: ipv4
+
+configTrafficItem: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem : {'name': 'Topo1 to Topo2', 'trafficType': 'ipv4', 'biDirectional': True, 'srcDestMesh': 'one-to-one', 'routeMesh': 'oneToOne', 'allowSelfDestined': False}
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem
+DATA: {"name": "Topo1 to Topo2", "trafficType": "ipv4", "biDirectional": true, "srcDestMesh": "one-to-one", "routeMesh": "oneToOne", "allowSelfDestined": false}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/endpointSet
+DATA: {"name": "Flow-Group-1", "sources": ["/api/v1/sessions/1/ixnetwork/topology/1"], "destinations": ["/api/v1/sessions/1/ixnetwork/topology/2"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 201
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/endpointSet/1
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/endpointSet
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
+DATA: {'type': 'fixedFrameCount'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
+DATA: {'frameCount': 50000}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/frameRate
+DATA: {'rate': 88}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/frameRate
+DATA: {'type': 'percentLineRate'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/frameSize
+DATA: {'fixedSize': 128}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/tracking
+DATA: {'trackBy': ['flowGroup0', 'vlanVlanId0']}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1
+DATA: {'name': 'Topo1_mod_Topo2'}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/frameSize
+DATA: {'fixedSize': 512}
+HEADERS: {'content-type': 'application/json'}
+
+PATCH: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/endpointSet/1
+DATA: {'name': 'Flow-Group-10'}
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+Regenerating traffic items: ['/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1']
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/operations/generate
+DATA: {"arg1": ["/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1"]}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/operations/apply
+DATA: {"arg1": "/api/v1/sessions/1/ixnetwork/traffic"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/operations/apply
+DATA: {"arg1": "/api/v1/sessions/1/ixnetwork/traffic"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+startTraffic: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/operations/start
+
+POST: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/operations/start
+DATA: {"arg1": "http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 202
+
+Expecting traffic state: ['started', 'startedWaitingForStats']
+
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic
+HEADERS: {'content-type': 'application/json'}
+checkTrafficState: startedWaitingForStats: Waited 1/45 seconds
+
+checkTrafficState: Done
+
+startTraffic: Successfully started
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+Expecting traffic state: ['stopped', 'stoppedWaitingForStats']
+
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic
+HEADERS: {'content-type': 'application/json'}
+checkTrafficState: started: Waited 1/45 seconds
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic
+HEADERS: {'content-type': 'application/json'}
+checkTrafficState: started: Waited 2/45 seconds
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/traffic
+HEADERS: {'content-type': 'application/json'}
+checkTrafficState: stoppedWaitingForStats: Waited 3/45 seconds
+
+checkTrafficState: Done
+
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/1
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/2
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/3
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/4
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/5
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/6
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/7
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/8
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/9
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/10
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/10/page
+HEADERS: {'content-type': 'application/json'}
+
+GET: http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/statistics/view/10/page
+HEADERS: {'content-type': 'application/json'}
+
+Row: 1
+	Tx Port: 1/1
+	Rx Port: 2/1
+	Traffic Item: Topo1_mod_Topo2
+	VLAN:VLAN-ID: 103
+	Flow Group: Topo1_mod_Topo2-Flow-Group-10 - Flow Group 0001
+	Tx Frames: 50000
+	Rx Frames: 50000
+	Frames Delta: 0
+	Loss %: 0
+	Tx Frame Rate: 0
+	Rx Frame Rate: 0
+	Tx L1 Rate (bps): 0
+	Rx L1 Rate (bps): 0
+	Rx Bytes: 25600000
+	Tx Rate (Bps): 0
+	Rx Rate (Bps): 0
+	Tx Rate (bps): 0
+	Rx Rate (bps): 0
+	Tx Rate (Kbps): 0
+	Rx Rate (Kbps): 0
+	Tx Rate (Mbps): 0
+	Rx Rate (Mbps): 0
+	Store-Forward Avg Latency (ns): 17065771
+	Store-Forward Min Latency (ns): 0
+	Store-Forward Max Latency (ns): 40355500
+	First TimeStamp: 00:00:01.006
+	Last TimeStamp: 00:00:02.077
+
+Row: 2
+	Tx Port: 2/1
+	Rx Port: 1/1
+	Traffic Item: Topo1_mod_Topo2
+	VLAN:VLAN-ID: 103
+	Flow Group: Topo1_mod_Topo2-Flow-Group-10 - Flow Group 0002
+	Tx Frames: 50000
+	Rx Frames: 50000
+	Frames Delta: 0
+	Loss %: 0
+	Tx Frame Rate: 0
+	Rx Frame Rate: 0
+	Tx L1 Rate (bps): 0
+	Rx L1 Rate (bps): 0
+	Rx Bytes: 25600000
+	Tx Rate (Bps): 0
+	Rx Rate (Bps): 0
+	Tx Rate (bps): 0
+	Rx Rate (bps): 0
+	Tx Rate (Kbps): 0
+	Rx Rate (Kbps): 0
+	Tx Rate (Mbps): 0
+	Rx Rate (Mbps): 0
+	Store-Forward Avg Latency (ns): 16811947
+	Store-Forward Min Latency (ns): 32940
+	Store-Forward Max Latency (ns): 39702860
+	First TimeStamp: 00:00:01.006
+	Last TimeStamp: 00:00:02.064

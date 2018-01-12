@@ -1,0 +1,312 @@
+Doc version 1.0
+Author: Hubert Gee
+Date: 12/14/2017
+
+Table of Contents
+-----------------
+	- Overview
+	- Python and OS support
+	- Requirements
+	- Getting started
+	- 3 configuration methods
+	     1> Create a configuration from scratch
+	     2> Load a saved JSON config file
+	     3> Load a saved .ixncfg config file
+	- 2 IxNetwork API servers.  Choices are:
+	     1> Windows
+	     2> Linux
+	     (Windows Connection Manager is not supported for this app)
+	- How to use ixnetCli.py
+	- Modify existing configurations, rerun traffic and get stats.
+	- help()
+	- showcommands()
+	- Examples
+	     Start by connecting to one of the API type of servers:
+	        - Connecting to windows API server
+	        - Connecting to Linux API server
+
+	     Select a method to make your configurations
+	        - Create a configuration from scratch
+	        - runjsonconfig():    Load a saved JSON config file
+	        - runixncfgconfig():  Load a saved .ixncfg config file
+
+
+Overview
+--------
+   - This is an IxNetwork ReST API application that emulates CLI interactions.
+   - It is written in Python 3. Will work in Python 2 also.
+   - This is intended for environments that configures simple configurations,
+     send traffic and get stats.
+   - Allow users to use the CLI to modify traffic configurations, rerun traffic
+     and get stats. 
+   - This app uses the Python Interpreter as a way for CLI interactions.
+   - All users have to do is enter the Python shell and import the ixnetCli.py
+     module and start entering CLI commands.
+   - The CLI commands are nothing but Python functions.
+   - The Python functions are high level APIs that calls high level APIs in the the IxNetRestApi modules.
+
+
+Python and Feature support
+--------------------------
+   - This app supports Python 2.7 and Python 3+
+   - Supports Python in both Linux and Windows
+
+
+Requirements
+------------
+   - IxNetwork 8.40 (minimum)
+   - One of the following IxNetwork API servers:
+        - Windows
+        - Linux
+
+   - Python "requests" module
+   - IxNetwork API modules:
+       - ixnetCli.py
+       - IxNetRestApi.py
+       - IxNetRestApiPortMgmt.py
+       - IxNetRestApiFileMgmt.py
+       - IxNetRestApiProtocolMgmt.py
+       - IxNetRestApiTrafficMgmt.py
+       - IxNetRestApiStatisticsMgmt.py
+       - IxNetRestApiPortMgmt.py
+
+
+    How to install the Python requests module
+    ------------------------------------------
+
+        - The requests module is a client-side tool to send ReST API commands.
+
+        - If you are using Python version 2.7.9 to 2.7.14, you could do a "pip install requests".
+            - If you're in a Linux environment, enter "which python" to get the path to your Python. 
+            - If your Python path is: /usr/local/python2.7.9, then go to /usr/local/python2.7.9/bin and ...
+            - Enter: sudo pip install requests 
+            - Must have root privileges.
+
+        - If you are using Python version 3+, follow the same steps as above.
+
+        - If you are using Python version 2 prior to 2.7.9, make sure that you have pip installed. 
+            - The earlier Python 2 versions don't come with PIP.
+    	    - If you don't have PIP installed, then following the below steps to install it.
+    	    - You must have root privilegs.
+      
+	    <Steps to install setuptools and install PIP>
+
+	      In Linux:
+
+	        - Enter: wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-8.2.1.tar.gz 
+		- Enter: tar -xvf setuptools-8.2.1.tar.gz
+		- Enter: cd setuptools-8.2.1
+		- Enter: python setup.py install
+
+
+    Where to get the IxNetRestApi modules
+    --------------------------------------
+       - www.ixiaautomation.com/showRestApi
+
+
+Getting Started:
+-----------------------
+
+    1> Go to http://ixiaautomation.com/showRestApi
+           Download all the API modules
+
+    2> Go to http://ixiaautomation.com/sampleScripts//LowLevelApi/IxNetwork/NGPF/REST
+           Download ixnetCli.py
+
+    3> Put all of the above files in a central network location where everybody has access to.
+
+    4> Edit the preference.py file
+
+    preference.py file
+
+        The first thing you do is set up the preference.py file.
+	This is where you state your default chassis IP, API server IP and license server IP 
+	so you don't have to enter them on CLI each time you run this application.
+
+
+	Why use this preference.py file
+
+	    - By having a preference file, you won't overwrite your preferences each time you get an updated
+	      ixnetCli.py for bug fixes and enhancements.
+
+	    - Each user could have their own preference file because they could
+	      be using different chassis, ports and other default preferences.
+
+	How to tell ixnetCli to use which preference file:
+
+	      Enter:  setpreference('preference_<name>.py')
+
+
+	- Preference file must have the .py extension.
+
+	- If you are going to create a preference file, always begin with "preference_" and append a name.
+	  Then end it with the .py extension.
+
+	- Prefence files could be stored anywhere in your filesystem. Just include the path when you are 
+	  entering setpreference('path_to_preference_file/preference_hgee.py')
+
+
+	Preference file example:
+	
+	    Important: Set the value to None if not applied.
+
+	    jsonConfigFile = '/home/hgee/ixnetCli/bgpJsonOriginal.json'
+	    ixncfgConfigFile = '/home/hgee/ixnetCli/bgp_ngpf_8.30.ixncfg'
+	    apiServerType = 'windows'
+	    windowsApiServerIp = '192.168.70.127'
+	    windowsApiServerIpPort = 11009
+	    chassisIp = '192.168.70.11'
+	    portList = [[chassisIp, 1,1], [chassisIp, 2,1]]
+	    linuxApiServerIp = '192.168.70.144'
+	    linuxApiServerIpPort = 443
+	    apiKey = 'eaebe82c72d541cfab384e911496b063'
+	    username = 'admin'
+	    password = 'admin'
+	    licenseServerIp = '192.168.70.127'
+	    licenseMode = 'subscription'
+	    licenseTier = 'tier3'
+	    forceTakePortOwnership = True
+	    deleteSessionAfterTest = True ;# For Linux only
+	    enableDebugTracing = False ;# Display error tracebacks
+ 
+
+3 configuration methods
+-----------------------
+
+    1> Create a configuration from scratch
+       -----------------------------------
+        - Currently, only a BGP and MPLS templates are available to create from scratch.
+	- Users must set the JSON parameter values for the configurations using
+	  the bgpConfig.json sample parameter file.
+	- Enter: configbgp().
+	- The configbgp() API resides in the application module ixnetCli.py.
+	      - Read the bgpConfig.json file.
+	      - Configures a two port Topology (Tx and Rx ports).
+	      - Start BGP protocol.
+	      - Verifies ARP and BGP.
+
+
+    2> Load a saved JSON config file
+       -----------------------------
+           - On the IxNetwork GUI, make sure the configuration is good.
+	   - Export the configuration into a JSON format file.
+	   - Enter: runjsonconfig('<*.json file>') 
+
+
+    3> Load a saved .ixncfg config file
+       -----------------------------
+           - On the IxNetwork GUI, make sure the configuration is good.
+	   - Do a save-as .ixncfg format file.
+	   - Enter: runixncfgconfig('<*.ixncfg file>) 
+
+
+2 IxNetwork API servers
+-----------------------
+Choices:
+	
+    1> Windows
+        - The Windows IxNetwork GUI is the ReST API server. Using port 11009.
+	- Supports only 1 user session.
+
+    2> Linux
+        - Supports up to 15 concurrent user sessions.
+
+        - The Linux API server comes in two different installations:
+
+	    1> Install the Linux API server in an XGS-HL chassis.
+	       This is an all-in-one chassis solution.
+	       Starting with IxOS/IxNetwork 8.40.
+
+	    2> OVA or QCOW2 format.
+
+
+How to use ixnetCli.py
+------------------------------------------
+    - ixnetCli.py is the main module that you import in the Python Shell Interpreter.
+    
+    Example:
+
+	 From a Linux or Windows  prompt:
+
+	    Enter: python  (If on Windows, you might have to enter the full path to your Python.exe) 
+
+            Enter: from ixnetCli import *
+	    Enter: connecttolinux() or connecttowindows()	 
+	    Enter: starttraffic()
+	    Enter: getstats()
+
+
+	 - To see all the CLI commands
+	      Enter: showcommands()  or showcommands('API_name')
+
+	 - Docstring support:
+
+	      Enter help('API__name')
+
+
+Modify existing configurations, rerun traffic and get stats
+-----------------------------------------------------------
+
+    Once you are in the Python Shell interpreter mode, every CLI command is a
+    Python syntax.  As you see below how to enter the CLI commands.    
+    
+    Worth mentionings:
+       - Modifying Traffic Item requires the Traffic Item name as the first parameter.
+         In case there are more than one Traffic Items, this app will get the Traffic Item's
+         object by filtering the name.
+
+       - To know your configured Traffic Item name, enter:
+             showtrafficitemnames() or showtrafficitems()
+
+       - To get a descript of each parameter, enter: help(<the CLI function name>)	 
+
+
+    As of this version of the DOC, this application supports the following traffic modifications:
+
+        - configcustompayload(trafficItemName customRepeat customPattern)
+
+	    Enter: configcustompayload('Topo1 to Topo2', True, 'deadbeef')
+
+	- flapbgp(topologyName bgpName enableTrueOrFalse ipInterfaceList upTimeInSeconds downTimeInSeconds))
+
+	    Enter: flapbgp('Topo1 to Topo2', 'bgp1', True, 30, 10)
+
+	- setfixedframes(trafficItemName)
+
+	    Enter: setfixedframes('Topo1 to Topo2')
+
+	- setframerate(trafficItemName frameRate)
+
+	    Enter: setframerate('Topo1 to Topo2', 75)
+
+	- setframecount(trafficItemName frameCount)
+
+	    Enter: setframecount('Topo1 to Topo2', 15000)
+
+	- setframesize(trafficItemName frameSize)
+
+	    Enter: setframesize('Topo1 to Topo2', 128)
+
+	- settrafficcontinuous(trafficItemName)
+
+	    Enter: settrafficcontinuous('Topo1 to Topo2')
+
+	After modifying your configurations, start traffic and get stats:
+
+	    Enter: starttraffic()
+	    Enter: getstats()
+
+
+help()
+------
+    - All the CLI functions in the main module ixnetCli.py has a docstring description
+      that descibes the function and all the parameters.
+    
+    - Use help(<CLI function name>) to see how to use the function and its parameters.
+
+showcommands()
+--------------
+    - showcommands():  To view all the available CLI functions.
+    - showcommands('<function name>'):  To view individual CLI functions.
+
+x

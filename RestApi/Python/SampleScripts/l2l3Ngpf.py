@@ -80,8 +80,7 @@ try:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=connectToApiServer,
-                          deleteSessionAfterTest=deleteSessionAfterTest,
-                          generateRestLogFile=True)
+                          deleteSessionAfterTest=deleteSessionAfterTest)
         
     #---------- Preference Settings End --------------
     

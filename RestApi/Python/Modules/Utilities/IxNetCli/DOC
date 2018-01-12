@@ -18,14 +18,15 @@ Table of Contents
 	     (Windows Connection Manager is not supported for this app)
 	- How to use ixnetCli.py
 	- Modify existing configurations, rerun traffic and get stats.
-	- help()
 	- showcommands()
 	- Examples
-	     Start by connecting to one of the API type of servers:
-	        - Connecting to windows API server
-	        - Connecting to Linux API server
+	     1> Set your preference file.  Default = preference.py
+	     
+	     2> Start by connecting to one of the API type of servers:
+	        - Connecting to windows API server --> (connecttowindows())
+	        - Connecting to Linux API server   --> (connecttolinux())
 
-	     Select a method to make your configurations
+	     3> Select a method to make your configurations
 	        - Create a configuration from scratch
 	        - runjsonconfig():    Load a saved JSON config file
 	        - runixncfgconfig():  Load a saved .ixncfg config file
@@ -37,13 +38,13 @@ Overview
    - It is written in Python 3. Will work in Python 2 also.
    - This is intended for environments that configures simple configurations,
      send traffic and get stats.
-   - Allow users to use the CLI to modify traffic configurations, rerun traffic
+   - This app allow users to use the CLI to modify traffic configurations, rerun traffic
      and get stats. 
    - This app uses the Python Interpreter as a way for CLI interactions.
    - All users have to do is enter the Python shell and import the ixnetCli.py
      module and start entering CLI commands.
    - The CLI commands are nothing but Python functions.
-   - The Python functions are high level APIs that calls high level APIs in the the IxNetRestApi modules.
+   - The Python functions are high level APIs that calls functions in the the IxNetRestApi* modules.
 
 
 Python and Feature support
@@ -101,27 +102,23 @@ Requirements
 
     Where to get the IxNetRestApi modules
     --------------------------------------
-       - www.ixiaautomation.com/showRestApi
-
+       - Download/clone from Github:  https://github.com/IxNetwork
+       - The full path to this application is: IxNetwork/RestApi/Python/Modules/Utilities/IxNetCli
 
 Getting Started:
 -----------------------
 
-    1> Go to http://ixiaautomation.com/showRestApi
-           Download all the API modules
+    1> Download/clone from Github:  https://github.com/IxNetwork
 
-    2> Go to http://ixiaautomation.com/sampleScripts//LowLevelApi/IxNetwork/NGPF/REST
-           Download ixnetCli.py
+    2> Put all of the above files in a central network location where everybody has access to.
 
-    3> Put all of the above files in a central network location where everybody has access to.
-
-    4> Edit the preference.py file
+    3> Edit the preference.py file
 
     preference.py file
 
         The first thing you do is set up the preference.py file.
 	This is where you state your default chassis IP, API server IP and license server IP 
-	so you don't have to enter them on CLI each time you run this application.
+	and everything else so you don't have to enter them on CLI each time you run this application.
 
 
 	Why use this preference.py file
@@ -140,19 +137,19 @@ Getting Started:
 	- Preference file must have the .py extension.
 
 	- If you are going to create a preference file, always begin with "preference_" and append a name.
-	  Then end it with the .py extension.
+	  Then end it with the .py extension. For example: preference_susan.py
 
 	- Prefence files could be stored anywhere in your filesystem. Just include the path when you are 
-	  entering setpreference('path_to_preference_file/preference_hgee.py')
+	  entering setpreference('path_to_preference_file/preference_susan.py')
 
 
 	Preference file example:
 	
 	    Important: Set the value to None if not applied.
 
-	    jsonConfigFile = '/home/hgee/ixnetCli/bgpJsonOriginal.json'
-	    ixncfgConfigFile = '/home/hgee/ixnetCli/bgp_ngpf_8.30.ixncfg'
-	    apiServerType = 'windows'
+	    jsonConfigFile = '/bgpJsonOriginal.json'
+	    ixncfgConfigFile = 'bgp_ngpf_8.30.ixncfg'
+	    apiServerType = 'windows' ;# Options: windows|linux
 	    windowsApiServerIp = '192.168.70.127'
 	    windowsApiServerIpPort = 11009
 	    chassisIp = '192.168.70.11'
@@ -175,10 +172,11 @@ Getting Started:
 
     1> Create a configuration from scratch
        -----------------------------------
-        - Currently, only a BGP and MPLS templates are available to create from scratch.
-	- Users must set the JSON parameter values for the configurations using
-	  the bgpConfig.json sample parameter file.
-	- Enter: configbgp().
+        - Currently, as of this writing, there is only a BGP and MPLS templates available to create from scratch.
+	- Enter: configbgp("<The bgp.json config file>").
+	         For example: If you created a json config file called bgpConfig.json, then enter it as the value.
+                              configbgp('bgpConfig.json')
+		 
 	- The configbgp() API resides in the application module ixnetCli.py.
 	      - Read the bgpConfig.json file.
 	      - Configures a two port Topology (Tx and Rx ports).
@@ -186,23 +184,23 @@ Getting Started:
 	      - Verifies ARP and BGP.
 
 
-    2> Load a saved JSON config file
+    2> Loading a saved JSON config file
        -----------------------------
            - On the IxNetwork GUI, make sure the configuration is good.
 	   - Export the configuration into a JSON format file.
 	   - Enter: runjsonconfig('<*.json file>') 
 
 
-    3> Load a saved .ixncfg config file
+    3> Loading a saved .ixncfg config file
        -----------------------------
            - On the IxNetwork GUI, make sure the configuration is good.
 	   - Do a save-as .ixncfg format file.
 	   - Enter: runixncfgconfig('<*.ixncfg file>) 
 
 
-2 IxNetwork API servers
------------------------
-Choices:
+2 IxNetwork API servers to use
+------------------------------
+Choices are:  Windows and Linux
 	
     1> Windows
         - The Windows IxNetwork GUI is the ReST API server. Using port 11009.
@@ -213,25 +211,26 @@ Choices:
 
         - The Linux API server comes in two different installations:
 
-	    1> Install the Linux API server in an XGS-HL chassis.
+	    1> Install the Linux API server in an XGS-HSL chassis.
 	       This is an all-in-one chassis solution.
 	       Starting with IxOS/IxNetwork 8.40.
 
-	    2> OVA or QCOW2 format.
+	    2> OVA or QCOW2 format installation for hypervisors (VMWare or KVM).
 
 
 How to use ixnetCli.py
 ------------------------------------------
     - ixnetCli.py is the main module that you import in the Python Shell Interpreter.
     
-    Example:
+    Example 1:
 
 	 From a Linux or Windows  prompt:
 
 	    Enter: python  (If on Windows, you might have to enter the full path to your Python.exe) 
 
             Enter: from ixnetCli import *
-	    Enter: connecttolinux() or connecttowindows()	 
+	    Enter: connecttolinux() or connecttowindows()
+	    Enter: configbgp('bgpConfig.json')
 	    Enter: starttraffic()
 	    Enter: getstats()
 
@@ -241,8 +240,19 @@ How to use ixnetCli.py
 
 	 - Docstring support:
 
-	      Enter help('API__name')
+	      Enter help('API_name')
 
+    Example 2:
+        
+	If you set up your preference.py file, then you don't need to enter:
+	    - connecttowindows() or connecttolinux()
+
+	Just simply load your configuration, start traffic and get stats.
+
+	    Enter: configbgp('bgpConfig.json')
+	    Enter: starttraffic()
+	    Enter: getstats()
+	
 
 Modify existing configurations, rerun traffic and get stats
 -----------------------------------------------------------

@@ -26,8 +26,8 @@
 #    python <script>.py linux
 
 import sys, traceback
-sys.path.insert(0, '../Modules/Main')
 
+#sys.path.insert(0, '../Modules/Main')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic

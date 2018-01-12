@@ -1,6 +1,6 @@
 jsonConfigFile = 'bgpJsonOriginal.json'
 ixncfgConfigFile = 'bgp_ngpf_8.30.ixncfg'
-apiServerType = 'windows' ;# Use connecttolinux() or connecttowindows() to set this.
+apiServerType = 'windows' ;# Options: windows|linux
 windowsApiServerIp = '192.168.70.3'
 windowsApiServerIpPort = 11009
 chassisIp = '192.168.70.11'

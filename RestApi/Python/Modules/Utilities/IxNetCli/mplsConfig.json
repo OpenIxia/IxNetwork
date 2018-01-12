@@ -17,8 +17,8 @@
 		"frameSize": 64,
 		"stack": {
 		    "mac": {
-			"src": {"start": "00:01:01:01:00:01", "step": "00:00:00:00:00:01", "direction": "increment", "count": 2},
-			"dst": {"start": "00:01:02:01:00:01", "step": "00:00:00:00:00:01", "direction": "increment", "count": 2}
+			"src": {"start": "00:0c:29:aa:86:e0", "step": "00:00:00:00:00:01", "direction": "increment", "count": 1},
+			"dst": {"start": "00:0c:29:84:37:16", "step": "00:00:00:00:00:01", "direction": "increment", "count": 1}
 		    },
 		    "mpls": [
 			{"start": 16, "step": 1, "direction": "increment", "count": 2},
@@ -48,8 +48,8 @@
 		"frameSize": 64,
 		"stack": {
 		    "mac": {
-			"src": {"start": "00:01:01:01:00:01", "step": "00:00:00:00:00:01", "direction": "increment", "count": 2},
-			"dst": {"start": "00:01:02:01:00:01", "step": "00:00:00:00:00:01", "direction": "increment", "count": 2}
+			"src": {"start": "00:0c:29:aa:86:e0", "step": "00:00:00:00:00:01", "direction": "increment", "count": 1},
+			"dst": {"start": "00:0c:29:84:37:16", "step": "00:00:00:00:00:01", "direction": "increment", "count": 1}
 		    },
 		    "mpls": [
 			{"start": 20, "step": 1, "direction": "increment", "count": 2},

@@ -36,9 +36,6 @@ PLEASE READ DISCLAIMER
     python <script>.py windows
     python <script>.py linux
 """
-# TODO:
-#    - Compare showsession and showlinuxsession()
-#    - Fix showcommands() to exclude completer() and getInput()
 
 from __future__ import absolute_import, print_function, division
 import sys, inspect, traceback, platform
@@ -53,10 +50,12 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiStatistics import Statistics
 
-# Default the API server to either windows or linux.
 class middleware:
     # Internal variables.  Don't touch below variables.
-    preference = None ;# The preference module object if user calls setpreference()
+    #if os.path.exists('preference.py'):
+    #    preference = 'preference.py' ;# The preference module object if user calls setpreference()
+
+    preference = None
     resume = False
     connectedTo = None
     sessionId = None
@@ -74,6 +73,7 @@ try:
     # The preference.py file has to be in the same directory as ixnetCli.py
     # Users are allowed to create preference file and overwrite the preference.py file.
     middleware.preference = importlib.import_module('preference')
+
 except:
     pass
 
@@ -198,11 +198,7 @@ try:
         :param apiServerIp: (str) The API server IP address.
         :param apiServerIpPort: (int) The API server TCP port.
         :param resume: (bool) True|False: To connect to an existing session.
-        :param apiKey: (str) The Linux API server user account's API Key.
-        :param sessionId: (int) The session ID.
-        :param username: (str) The login username.
-        :param password: (str) The login password.
-        :param deleteSessionAfterTest: (bool) True|False: To Delete the session when test is done."""
+        """
         middleware.preference.apiServerType = 'windows'
         connect(apiServerIp=apiServerIp, apiServerIpPort=apiServerIpPort, resume=resume)
 
@@ -783,6 +779,12 @@ try:
         defined JSON config file.
 
         :param jsonConfigFile: (str) The JSON parameter file to load for this configuration."""
+
+        if middleware.preference.apiServerType == 'windows':
+            connecttowindows()
+        if middleware.preference.apiServerType == 'linux':
+            connecttolinux()
+
         if jsonConfigFile == None:
             if middleware.preference.ixncfgConfigFile:
                 readjsonparamfile(middleware.preference.ixncfgConfigFile)
@@ -792,20 +794,6 @@ try:
         else:
             readjsonparamfile(jsonConfigFile)
 
-        '''
-        middleware.ixn.connectIxChassis(middleware.params['ixChassisIp'])
-        if middleware.portMgmtObj.arePortsAvailable(middleware.params['portList'], raiseException=False) != 0:
-            if middleware.params['forceTakePortOwnership'] == True:
-                middleware.portMgmtObj.releasePorts(middleware.params['portList'])
-                middleware.portMgmtObj.clearPortOwnership(middleware.params['portList'])
-            else:
-                raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
-
-        # Configuring license requires releasing all ports even for ports that is not used for this test.
-        middleware.portMgmtObj.releaseAllPorts()
-        middleware.ixn.configLicenseServerDetails(middleware.params['licenseServerIp'],
-                                                  middleware.params['licenseMode'], middleware.params['licenseTier'])
-        '''
         if licenseServerIp:
             middleware.preference.licenseServerIp = licenseServerIp
         if licenseMode:
@@ -970,6 +958,11 @@ try:
         :param chassisIp: (str) The Ixia chassis IP address.
         :param portList: (list) Example: [chassisIp, slotNumber, portNumber] => [["192.168.70.11", "1", "1"], ["192.168.70.11", "2", "1"]]
         """
+        if middleware.preference.apiServerType == 'windows':
+            connecttowindows()
+        if middleware.preference.apiServerType == 'linux':
+            connecttolinux()
+
         if jsonConfigFile == None:
             if middleware.preference.ixncfgConfigFile:
                 readjsonparamfile(middleware.preference.ixncfgConfigFile)

@@ -45,6 +45,7 @@ import sys, inspect, traceback, platform
 import importlib
 from collections import OrderedDict
 
+sys.path.insert(0, '../../Main')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -111,10 +112,11 @@ try:
 
         if command == None:
             print('\n\n  Example:')
-            print('\t1> Windows: connecttowindows("192.168.70.127")')
+            print('\t1> setpreference("preference.py")')
+            print('\n\t2> Windows: connecttowindows("192.168.70.127")')
             print('\t   Linux:   connecttolinux("192.168.70.144", "5443")')
             print()
-            print('\t2> To load a saved config file:')
+            print('\t3> To load a saved config file:')
             print('\t      Option 1> runjsonconfig("json_config_file.json")')
             print('\t      Option 2> runixncfgconfig("ixncfg_file.ixncfg", ixChassisIp="1.1.1.1")')
             print()
@@ -124,7 +126,8 @@ try:
             #print('\t      Option 2> runixncfgconfig("ixncfg_file.ixncfg", ixChassisIp="1.1.1.1")')
             print()
             print('\t   To create a config from scratch:')
-            print('\t      configbgp("bgp.json")')
+            print('\t      configbgp("bgpConfig.json")')
+            print('\t      configmpls("mplsConfig.json")')
             print()
 
     def setpreference(preferenceFile):

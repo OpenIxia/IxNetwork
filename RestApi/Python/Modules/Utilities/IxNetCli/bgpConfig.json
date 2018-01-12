@@ -1,0 +1,57 @@
+{
+    "ixChassisIp": "192.168.70.11",
+    "portList": [["192.168.70.11", "1", "1"],
+                 ["192.168.70.11", "2", "1"]
+                ],
+
+    "topologies": {
+        "1": {"ports": [["192.168.70.11", "1", "1"]],
+            "macAddress": {"start": "00:01:01:00:00:01", "direction": "increment", "step": "00:00:00:00:00:01"},
+            "vlanId": {"start": 0, "direction": "increment", "step":0},
+            "ipv4Address": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1"},
+            "ipv4Gateway": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.0"},
+            "ipv4Prefix": 24,
+            "totalIpInterfaces": 1,
+            "bgpDutIp": "1.1.1.2",
+            "bgpType": "internal",
+            "localAs2Bytes": 101,
+            "routeAdvertisements": "100.0.0.1",
+	    "routeAddressStep": "0.0.0.1",
+            "routeAdvertisingPrefix": 32,
+            "totalAdvertisingRoutes": 100,
+            "routeAdvertisementName": "BGP-Routes1",
+            "enabled": true
+            },
+        "2": {"ports": [["192.168.70.11", "2", "1"]],
+            "macAddress": {"start": "00:01:02:00:00:01", "direction": "increment", "step": "00:00:00:00:00:01"},
+            "vlanId": {"start": 0, "direction": "increment", "step":0},
+            "ipv4Address": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1"},
+            "ipv4Gateway": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.0"},
+            "ipv4Prefix": 24,
+            "totalIpInterfaces": 1,
+            "bgpDutIp": "1.1.1.1",
+            "bgpType": "internal",
+            "localAs2Bytes": 101,
+            "routeAdvertisements": "180.0.0.1",
+	    "routeAddressStep": "0.0.0.1",
+            "routeAdvertisingPrefix": 32,
+            "totalAdvertisingRoutes": 100,
+            "routeAdvertisementName": "BGP-Routes2",
+            "enabled": true
+            }
+        },
+
+    "trafficItems":  {
+        "1": {"name": "Port1 to Port2",
+            "srcEndpoint": "topology1",
+            "dstEndpoint": "topology2",
+            "transmissionType": "fixedPacketCount",
+            "frameCount": 2000000,
+            "frameRate": 100,
+            "bidirectional": true,
+            "frameRateType": "percentLineRate",
+            "frameSize": 64,
+            "enabled": true
+            }
+        }
+  }

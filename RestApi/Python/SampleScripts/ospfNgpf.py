@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7
+#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -27,7 +27,7 @@
 
 import sys, traceback
 
-#sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -49,6 +49,8 @@ try:
     releasePortsWhenDone = False
     enableDebugTracing = False
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+
+    # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -84,7 +86,10 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
+    # Configuring license requires releasing all ports even for ports that is not used for this test.
+    portObj.releaseAllPorts()
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+
     mainObj.newBlankConfig()
 
     # Set createVports True if building config from scratch.
@@ -208,7 +213,6 @@ try:
     configElementObj = trafficStatus[2][0]
 
     trafficObj.regenerateTrafficItems()
-    trafficObj.applyTraffic()
     trafficObj.startTraffic()
 
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.

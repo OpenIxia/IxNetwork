@@ -6,7 +6,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7
+#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -39,7 +39,7 @@
 
 import sys, traceback
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -55,11 +55,12 @@ if len(sys.argv) > 1:
 
 try:
     #---------- Preference Settings --------------
-
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+
+    # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -148,15 +149,15 @@ try:
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Destination MAC Address',
                                        data={'valueType': 'increment',
-                                             'startValue': '00:01:01:02:00:01',
+                                             'startValue': '00:0c:29:84:37:16',
                                              'stepValue': '00:00:00:00:00:01',
-                                             'countValue': 2})
+                                             'countValue': 1})
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Source MAC Address',
                                        data={'valueType': 'increment',
-                                             'startValue': '00:01:01:01:00:01',
+                                             'startValue': '00:0c:29:aa:86:e0',
                                              'stepValue': '00:00:00:00:00:01',
-                                             'countValue': 2})
+                                             'countValue': 1})
     
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='MPLS', stackNumber=1, action='append')
     # Just an example to show a list of field names in order to know which field to configure the IP addresses.
@@ -244,7 +245,6 @@ try:
     
     trafficObj.showTrafficItemPacketStack(configElementObj)
     trafficObj.regenerateTrafficItems()
-    trafficObj.applyTraffic()
     trafficObj.startTraffic()
     
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.

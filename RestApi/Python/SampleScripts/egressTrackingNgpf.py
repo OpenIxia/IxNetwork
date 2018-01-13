@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7/3.4
+#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -72,7 +72,7 @@
 
 import sys, traceback
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiProtocol import Protocol
@@ -127,6 +127,8 @@ try:
     releasePortsWhenDone = False
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+
+    # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -164,8 +166,8 @@ try:
 
     # Uncomment this to configure license server.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    #mainObj.releaseAllPorts()
-    #mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    portObj.releaseAllPorts()
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     mainObj.newBlankConfig()
 
@@ -237,24 +239,25 @@ try:
     # For all parameter options, please go to the API configTrafficItem
     # mode = create or modify
     trafficObj = Traffic(mainObj)
-    trafficStatus = trafficObj.configTrafficItem(mode='create',
-                                                 trafficItem = {
-                                                     'name':'Topo1 to Topo2',
-                                                     'trafficType':'ipv4',
-                                                     'biDirectional':True,
-                                                     'srcDestMesh':'one-to-one',
-                                                     'routeMesh':'oneToOne',
-                                                     'allowSelfDestined':False,
-                                                     'trackBy': ['flowGroup0', 'vlanVlanId0', 'sourceDestValuePair0']},
-                                                 endpoints = [({'name':'Flow-Group-1',
-                                                                'sources': [topologyObj1],
-                                                                'destinations': [topologyObj2]},
-                                                               {'highLevelStreamElements': None})],
-                                                 configElements = [{'transmissionType': 'fixedFrameCount',
-                                                                    'frameCount': 100000,
-                                                                    'frameRate': 88,
-                                                                    'frameRateType': 'percentLineRate',
-                                                                    'frameSize': 128}])
+    trafficStatus = trafficObj.configTrafficItem(
+        mode='create',
+        trafficItem = {
+            'name':'Topo1 to Topo2',
+            'trafficType':'ipv4',
+            'biDirectional':True,
+            'srcDestMesh':'one-to-one',
+            'routeMesh':'oneToOne',
+            'allowSelfDestined':False,
+            'trackBy': ['flowGroup0', 'vlanVlanId0', 'sourceDestValuePair0']},
+        endpoints = [({'name':'Flow-Group-1',
+                       'sources': [topologyObj1],
+                       'destinations': [topologyObj2]},
+                      {'highLevelStreamElements': None})],
+        configElements = [{'transmissionType': 'fixedFrameCount',
+                           'frameCount': 100000,
+                           'frameRate': 88,
+                           'frameRateType': 'percentLineRate',
+                           'frameSize': 128}])
     
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
@@ -268,7 +271,6 @@ try:
     
     trafficObj.startTraffic()
     
-    print('\n****************** 7')
     response = mainObj.get(mainObj.httpHeader+statview)
     print(response.json())
 

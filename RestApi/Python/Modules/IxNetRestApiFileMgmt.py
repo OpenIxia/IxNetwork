@@ -40,7 +40,7 @@ class FileMgmt(object):
 
         # 4> Tell the server to load the config file
         response = self.ixnObj.post(loadConfigUrl, data=payload, headers=octetStreamHeader)
-        if self.ixnObj.waitForComplete(response, loadConfigUrl+'/'+response.json()['id'], timeout=140) == 1:
+        if self.ixnObj.waitForComplete(response, loadConfigUrl+'/'+response.json()['id'], silentMode=False, timeout=140) == 1:
             raise IxNetRestApiException
 
     def copyFileWindowsToRemoteWindows(self, windowsPathAndFileName, localPath, renameDestinationFile=None, includeTimestamp=False):
@@ -226,7 +226,7 @@ class FileMgmt(object):
         jsonFilename = destinationPath+'/'+filename+'.json'
         self.exportJsonConfigFile(jsonFilename)
 
-    def importJsonConfigObj(self, dataObj, type='modify'):
+    def importJsonConfigObj(self, dataObj, type='modify', silentMode=False):
         """
         Description
             For newConfig:
@@ -250,17 +250,15 @@ class FileMgmt(object):
         """
         if type is 'modify':
             arg3 = False
-            silentMode = False
         if type is 'newConfig':
             arg3 = True
-            silentMode = True
 
         dataReformatted = {"arg1": "/api/v1/sessions/1/ixnetwork/resourceManager",
                            "arg2": json.dumps(dataObj),
                            "arg3": arg3}
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfig'
         response = self.ixnObj.post(url, data=dataReformatted, silentMode=silentMode)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False) == 1:
             raise IxNetRestApiException
 
     def importJsonConfigFile(self, jsonFileName, type='modify'):
@@ -306,7 +304,7 @@ class FileMgmt(object):
                 "arg3": arg3}
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfigfile'
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=300) == 1:
             raise IxNetRestApiException
 
     def exportJsonConfigFile(self, jsonFileName):
@@ -340,7 +338,7 @@ class FileMgmt(object):
         }
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/exportconfigfile'
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False) == 1:
             raise IxNetRestApiException
 
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
@@ -371,7 +369,7 @@ class FileMgmt(object):
         }
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/exportconfig'
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False) == 1:
             raise IxNetRestApiException
         return json.loads(response.json()['result'])
 
@@ -390,6 +388,62 @@ class FileMgmt(object):
             match = re.match("/availableHardware/.*'([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)']/card\[([0-9]+)]/port\[([0-9]+)", connectedTo)
             portList.append([match.group(1), match.group(2), match.group(3)])
         return portList
+
+    def jsonAssignPorts_backup(self, jsonObject, portList):
+        """
+        Description
+            Reassign ports.  Will remove the existing JSON config datas: availableHardware, cardId, portId.
+            Then recreate JSON datas for availableHardware based on the portList input.
+
+        Parameters
+            jsonObject: The JSON config object.
+            portList: Example:
+                        portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
+        """
+        #       1> Get a copy of an existing Traffic Item in the list.
+        #       2> Replace the XPATH ID with the next incremental ID.
+        #       3> Append the copied codes to the Traffic Item list.
+        #       4> Write to the JSON config file.
+        copyAvailableHardware = jsonData["availableHardware"]
+        copy['xpath'] = '/availableHardware'
+        
+        # Since it is reassigning ports, remove existing chassis's and add what users want.
+        jsonObject.pop("availableHardware")
+        jsonObject.update({"availableHardware": {
+                            "xpath": "/availableHardware",
+                            "chassis": []
+                        }})
+
+        ixChassisId = 1
+        chassisIpList = []
+        vportId = 1
+        for ports in portList:
+            ixChassisIp = ports[0]
+            cardId = ports[1]
+            portId = ports[2]
+            if ixChassisIp not in chassisIpList:
+                jsonObject["availableHardware"]["chassis"].insert(0, {"xpath": "/availableHardware/chassis[{0}]".format(ixChassisId),
+                                                                        "hostname": ixChassisIp,
+                                                                        "card": []
+                                                                    })
+
+            cardList = []
+            if cardId not in cardList:
+                # If card doesn't exist in list, create a new card.
+                jsonObject["availableHardware"]["chassis"][0]["card"].insert(0, {"xpath": "/availableHardware/chassis[@alias = {0}/card[{1}]".format(ixChassisIp, cardId)})
+                jsonObject["availableHardware"]["chassis"][0]["card"][0].update({"port": []})
+                cardList.append(cardId)
+            self.ixnObj.logInfo('\njsonAssignPorts: %s %s %s' % (ixChassisIp, cardId, portId))
+            jsonObject["availableHardware"]["chassis"][0]["card"][0]["port"].insert(0, {"xpath": "/availableHardware/chassis[@alias = {0}/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
+            jsonObject["vport"][vportId-1].update({"connectedTo": "/availableHardware/chassis[@alias = {0}]/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId),
+                                            "xpath": "/vport[{0}]".format(vportId)
+                                          })
+            vportId += 1
+            ixChassisId += 1
+        self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
+        self.ixnObj.logInfo('Ports rebooting ...')
+        #self.importJsonConfigObj(dataObj=jsonObject, type='newConfig')
+        self.importJsonConfigObj(dataObj=jsonObject, type='modify')
 
     def jsonAssignPorts(self, jsonObject, portList):
         """
@@ -421,6 +475,7 @@ class FileMgmt(object):
                                                                         "hostname": ixChassisIp,
                                                                         "card": []
                                                                     })
+
             cardList = []
             if cardId not in cardList:
                 # If card doesn't exist in list, create a new card.
@@ -436,7 +491,8 @@ class FileMgmt(object):
             ixChassisId += 1
         self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
         self.ixnObj.logInfo('Ports rebooting ...')
-        self.importJsonConfigObj(dataObj=jsonObject, type='newConfig')
+        #self.importJsonConfigObj(dataObj=jsonObject, type='newConfig')
+        self.importJsonConfigObj(dataObj=jsonObject, type='modify')
 
     def jsonReadConfig(self, jsonFile):
         #if os.path.exists(jsonFile) is False:

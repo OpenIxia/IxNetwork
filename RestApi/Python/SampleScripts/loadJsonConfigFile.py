@@ -1,20 +1,30 @@
-""" Description
-    A sample script to:
-        - Read a saved JSON config file into an JSON object..
-        - Load the configuration:  Import the JSON config object to IxNetwork.
-        - Modify just the BGP configuration fragments.
-          Two ways to do this:
-             1> Using the XPATH.
-             2> Using the JSON config object in Dict format.
-        - Start all protocols.
-        - Verify protocol sessions including ARP.
-        - Start traffic.
-        - Get stats.
-"""
+
+# PLEASE READ DISCLAIMER
+#
+#    This is a sample script for demo and reference purpose only.
+#    It is subject to change for content updates without warning.
+#
+# REQUIREMENTS
+#    - Python2.7 (Supports Python 2 and 3)
+#    - Python modules: requests
+#
+# DESCRIPTION
+#    A sample script to:
+#        - Read a saved JSON config file into an JSON object..
+#        - Load the configuration:  Import the JSON config object to IxNetwork.
+#        - Modify just the BGP configuration fragments.
+#          Two ways to do this:
+#             1> Using the XPATH.
+#             2> Using the JSON config object in Dict format.
+#        - Start all protocols.
+#        - Verify protocol sessions including ARP.
+#        - Start traffic.
+#        - Get stats.
+
 
 import json, sys
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -34,13 +44,15 @@ if len(sys.argv) > 1:
 try:
     #---------- Preference Settings --------------
 
-    licenseServerIp = '192.168.70.3'
-    licenseModel = 'subscription'
-    licenseTier = 'tier3'
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
     jsonConfigFile = 'bgp.json'
+
+    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIp = '192.168.70.3'
+    licenseModel = 'subscription'
+    licenseTier = 'tier3'
     
     ixChassisIp = '192.168.70.11'
     # [chassisIp, cardNumber, slotNumber]
@@ -78,13 +90,18 @@ try:
 
     fileMgmtObj = FileMgmt(mainObj)
     jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
+
+    #fileMgmtObj.importJsonConfigObj(dataObj=jsonData, type='newConfig')
+    fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
+
     fileMgmtObj.jsonAssignPorts(jsonData, portList)
     portObj.verifyPortState()
 
-    # Mofify the BGP configuration using JSON XPATH
-    #    1> Export the JSON configuration to a file.
-    #    2> Get the XPATH to where you want to modify the configuraiton.
-    #    3> Import the modified JSON to IxNetwork
+    # Example: How to modify
+    #    Mofify the BGP configuration using JSON XPATH. XPATH are obtained from a JSON exported config file.
+    #       1> Export the JSON configuration to a file.
+    #       2> Get the XPATH to where you want to modify the configuraiton.
+    #       3> Import the modified JSON to IxNetwork
     xpathObj = [{"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] flap']/singleValue",
                  "value": "true"},
                 {"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] uptimeInSec']/singleValue",
@@ -101,7 +118,6 @@ try:
 
     trafficObj = Traffic(mainObj)
     trafficObj.regenerateTrafficItems()
-    trafficObj.applyTraffic()
     trafficObj.startTraffic()
 
     # Uncomment this if traffic is fixed packet count because you want to assure that

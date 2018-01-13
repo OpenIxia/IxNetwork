@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7
+#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -31,7 +31,7 @@
 
 import sys, traceback
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -54,6 +54,8 @@ try:
     releasePortsWhenDone = False
     enableDebugTracing = False
     deleteSessionAfterTest = True
+
+    # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -99,6 +101,7 @@ try:
 
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.loadConfigFile(configFile)
+
     portObj.assignPorts(portList)
     portObj.verifyPortState()
 
@@ -121,7 +124,6 @@ try:
 
     trafficObj = Traffic(mainObj)
     trafficObj.regenerateTrafficItems()
-    trafficObj.applyTraffic()
     trafficObj.startTraffic()
 
     # Uncomment this if traffic is fixed packet count because you want to assure that

@@ -261,7 +261,8 @@ class PortMgmt(object):
         data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": "true"}
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/assignports', data=data)
-        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'], timeout=120) == 1:
+        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'],
+                                       silentMode=False, timeout=900) == 1:
             raise IxNetRestApiException('assignPorts: Ports not coming up:', portList)
         if rawTraffic:
             vportProtocolList = []

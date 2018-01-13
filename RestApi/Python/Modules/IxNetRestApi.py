@@ -6,7 +6,7 @@
 #    It is subject to change for updates without warning.
 #
 # REQUIREMENTS
-#    - Python 2.7.9+
+#    - Python 2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #
 
@@ -330,10 +330,14 @@ class Connect(object):
             silentMode: True or False. If True, display info messages.
             timeout: The time allowed to wait for success completion in seconds.
         """
+
         if silentMode == False:
             self.logInfo('\nwaitForComplete...')
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
+        if response.json() == '' and response.json()['state'] == 'SUCCESS':
+            self.logInfo('\tState: SUCCESS')
+            return 
         if 'errors' in response.json():
             self.logInfo(response.json()["errors"][0])
             return 1
@@ -350,33 +354,31 @@ class Connect(object):
             self.logInfo('waitForComplete: %s' % response.text)
             return 1
 
-        while True:
-            response = self.get(url, silentMode=silentMode)
+
+        for counter in range(1,timeout+1):
+            response = self.get(url, silentMode=True)
             state = response.json()["state"]
             if silentMode == False:
-                self.logInfo("\tState: {0}".format(state))
-            if response.json()["state"] == "IN_PROGRESS" or response.json()["state"] == "down":
-                if timeout == 0:
-                    return 1
+                if state != 'SUCCESS':
+                    self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout))
+                if state == 'SUCCESS':
+                    self.logInfo("\tState: {0}".format(state))
+
+            if counter < timeout and response.json()["state"] == "IN_PROGRESS" or response.json()["state"] == "down":
                 time.sleep(1)
                 continue
-            if timeout > 0 and state == 'SUCCESS':
-                break
-            elif timeout > 0 and state == 'ERROR':
+            if counter < timeout and state == 'SUCCESS':
+                if silentMode == False:
+                    self.logInfo('\n')
+                return 0
+            if counter < timeout and state == 'ERROR':
                 self.showErrorMessage()
                 return 1
-            elif timeout > 0 and state == 'EXCEPTION':
+            if counter < timeout and state == 'EXCEPTION':
                 print('\n', response.text)
                 return 1
-            elif timeout == 0 and state != 'SUCCESS':
+            if counter == timeout and state != 'SUCCESS':
                 return 1
-            else:
-                if silentMode == False:
-                    self.logInfo("\tState: {0} {1} seconds remaining".format(state, timeout))
-                timeout = timeout-1
-                continue
-        if silentMode == False:
-            self.logInfo('\n')
 
     def connectIxChassis(self, chassisIp):
         """
@@ -449,8 +451,6 @@ class Connect(object):
             url = 'https://{0}/api/v1/auth/session'.format(linuxServerIp)
             self.logInfo('\nconnectToLinuxApiServer: %s' % url)
             response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)
-            print('\n---- connecctToLinuxApiServer status 1:', response.status_code)
-            print('\n---- connectToLinuxApiServer response 1:', response.json())
             if not str(response.status_code).startswith('2'):
             #if not re.match('2[0-9][0-9]', str(response.status_code)):
                 raise IxNetRestApiException('\nLogin username/password failed\n')
@@ -465,9 +465,6 @@ class Connect(object):
             self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
             self.logInfo('\nlinuxServerCreateSession')
             response = self.post(url, data=data, headers=self.jsonHeader)
-            print('\n---- connecctToLinuxApiServer status 2:', response.status_code)
-            print('\n---- connectToLinuxApiServer response 2:', response.json())
-
 
             sessionId = response.json()['id']
             self.sessionId = 'https://{0}/api/v1/sessions/{1}'.format(linuxServerIp, sessionId)
@@ -477,9 +474,6 @@ class Connect(object):
             # 3: Start the new session
             self.logInfo('\nlinuxServerStartSession: %s' % self.sessionId)
             response = self.post(self.sessionId+'/operations/start')
-            print('\n---- connecctToLinuxApiServer status 3:', response.status_code)
-            print('\n---- connectToLinuxApiServer response 3:', response.json())
-
             if self.linuxServerWaitForSuccess(response.json()['url'], timeout=60) == 1:
                 raise IxNetRestApiException
 

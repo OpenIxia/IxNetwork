@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7
+#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -29,7 +29,7 @@
 
 import sys, traceback
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -51,17 +51,19 @@ try:
     releasePortsWhenDone = False
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+
+    # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.21'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '2', '1']]
 
     if connectToApiServer == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='192.168.70.110',
                           serverIpPort='443',
                           username='admin',
                           password='admin',

@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7
+#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
 #    - NGPF configuration. (Classic Framework is not supported in REST)
 #
@@ -30,7 +30,7 @@
 
 import sys, traceback
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -52,11 +52,13 @@ try:
     releasePortsWhenDone = False
     enableDebugTracing = True
     deleteSessionAfterTest = True
+    configFile = 'QuickTestNgpf_vm8.20.ixncfg'
+    quickTestNameToRun = 'QuickTest1'
+
+    # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
-    configFile = 'QuickTestNgpf_vm8.20.ixncfg'
-    quickTestNameToRun = 'QuickTest1'
 
     ixChassisIp = '192.168.70.11'
     # [chassisIp, cardNumber, slotNumber]

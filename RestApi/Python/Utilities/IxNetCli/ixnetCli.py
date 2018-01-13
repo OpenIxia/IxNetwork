@@ -42,7 +42,7 @@ import sys, inspect, traceback, platform
 import importlib
 from collections import OrderedDict
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, '../../Modules')
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt

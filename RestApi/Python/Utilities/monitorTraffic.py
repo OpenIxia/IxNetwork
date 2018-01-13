@@ -62,6 +62,8 @@ Command Line Parameters:
 
 from __future__ import absolute_import, print_function
 import os, sys, requests, json, time, re, datetime, traceback
+
+sys.path.insert(0, '../Modules')
 from IxNetRestApi import *
 from IxNetRestApiStatistics import Statistics
 from IxNetRestApiTraffic import Traffic

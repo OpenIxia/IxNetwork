@@ -53,7 +53,7 @@ try:
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
-    
+
     ixChassisIp = '192.168.70.11'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
@@ -90,10 +90,7 @@ try:
 
     fileMgmtObj = FileMgmt(mainObj)
     jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
-
-    #fileMgmtObj.importJsonConfigObj(dataObj=jsonData, type='newConfig')
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
-
     fileMgmtObj.jsonAssignPorts(jsonData, portList)
     portObj.verifyPortState()
 

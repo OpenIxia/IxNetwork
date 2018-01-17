@@ -78,6 +78,43 @@ class PortMgmt(object):
                 self.ixnObj.logInfo('\ndisconnectIxChassis: %s' % chassisIdUrl)
                 response = self.ixnObj.delete(self.ixnObj.httpHeader+chassisIdUrl)
 
+    def getChassisId(self, chassisIp):
+        """
+        Description
+           Get the chassis ID based on the chassis IP address.
+        
+        Parameter
+           chassisIp: The chassis IP address
+        """
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/availableHardware/chassis')
+        for eachChassis in response.json():
+            if eachChassis['ip'] == chassisIp:
+                return eachChassis['id']
+
+    def connectVportTo(self, portList):
+        self.createVports(portList)
+        vportObjectList = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        portListIndex = 0
+        for vportObj in vportObjectList.json():
+            print('\n', vportObj)
+            connectedTo = vportObj['connectedTo']
+            vportHref = vportObj['links'][0]['href']
+            if connectedTo == 'null':
+                # RW: 'connectedTo': '/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1/card/1/port/1'
+                # ReadOnly: 'assignedTo': '192.168.70.11:1:1'
+                chassisIp = portList[portListIndex][0]
+                cardNumber = portList[portListIndex][1]
+                portNumber = portList[portListIndex][2]
+                chassisId = self.getChassisId(chassisIp)
+                self.ixnObj.patch(self.ixnObj.sessionUrl+'/availableHardware/chassis/'+str(chassisId)+'/card/'+str(cardNumber)+'/port/'+str(portNumber))
+                data = '/api/v1/sessions/{0}/ixnetwork/availableHardware/chassis/{1}/card/{2}/port/{3}'.format(self.ixnObj.sessionIdNumber, chassisId, cardNumber, portNumber)
+                self.ixnObj.patch(self.ixnObj.httpHeader+vportHref, data={'connectedTo': data})
+                if portListIndex < len(portList):
+                    portListIndex += 1
+                    continue
+                else:
+                    break
+
     def createVports(self, portList=None, rawTrafficVportStyle=False):
         """
         Description
@@ -240,9 +277,9 @@ class PortMgmt(object):
             POST: http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/assignports
                   data={arg1: [{arg1: ixChassisIp, arg2: 1, arg3: 1}, {arg1: ixChassisIp, arg2: 1, arg3: 2}],
                         arg2: [],
-                        arg3: [http://{apiServerIp:port}/api/v1/sessions/{1}/ixnetwork/vport/1,
-                               http://{apiServerIp:port}/api/v1/sessions/{1}/ixnetwork/vport/2],
-                        arg4: true}
+                        arg3: ['/api/v1/sessions/{1}/ixnetwork/vport/1',
+                               '/api/v1/sessions/{1}/ixnetwork/vport/2'],
+                        arg4: true}  <-- True will clear port ownership
                   headers={'content-type': 'application/json'}
             GET:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/assignports/1
                   data={}
@@ -261,6 +298,7 @@ class PortMgmt(object):
         data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": "true"}
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/assignports', data=data)
+        print('\n---- assignPorts:', response.json())
         if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'],
                                        silentMode=False, timeout=900) == 1:
             raise IxNetRestApiException('assignPorts: Ports not coming up:', portList)
@@ -344,6 +382,9 @@ class PortMgmt(object):
 
             for userPort in portList:
                 userChassisIp = userPort[0]
+                if userChassisIp != chassisIp:
+                    continue
+                print('\n---- port:', userChassisIp, chassisIp)
                 userCardId = userPort[1]
                 userPortId = userPort[2]
                 url = self.ixnObj.httpHeader+chassisHref+'/card/'+str(userCardId)+'/port/'+str(userPortId)+'/operations/clearownership'

@@ -76,6 +76,16 @@ class Connect(object):
             self.apiServerPlatform = serverOs
             self.getSessionUrl(apiServerIp, serverIpPort)
 
+        if serverOs == 'windows':
+            self.sessionIdNumber = 1
+
+        if serverOs == 'windowsConnectionMgr':
+            # TODO: Dynamically get the session Id number
+            
+            if sessionId:
+                self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(apiServerIp, serverIpPort, str(sessionId))
+                self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(apiServerIp, serverIpPort, str(sessionId))
+
         if serverOs == 'linux':
             # Disable SSL warning messages
             requests.packages.urllib3.disable_warnings()
@@ -466,9 +476,9 @@ class Connect(object):
             self.logInfo('\nlinuxServerCreateSession')
             response = self.post(url, data=data, headers=self.jsonHeader)
 
-            sessionId = response.json()['id']
-            self.sessionId = 'https://{0}/api/v1/sessions/{1}'.format(linuxServerIp, sessionId)
-            self.sessionUrl = 'https://{0}/api/v1/sessions/{1}/ixnetwork'.format(linuxServerIp, sessionId)
+            self.sessionIdNumber = response.json()['id']
+            self.sessionId = 'https://{0}/api/v1/sessions/{1}'.format(linuxServerIp, self.sessionIdNumber)
+            self.sessionUrl = 'https://{0}/api/v1/sessions/{1}/ixnetwork'.format(linuxServerIp, self.sessionIdNumber)
             self.httpHeader = self.sessionUrl.split('/api')[0]
 
             # 3: Start the new session

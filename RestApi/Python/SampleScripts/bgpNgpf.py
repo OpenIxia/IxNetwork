@@ -50,20 +50,20 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
     # Optional: Mainly for connecting to Linux API server.
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.21'
+    ixChassisIp = '192.168.70.11'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '2', '1']]
 
     if connectToApiServer == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.110',
+        mainObj = Connect(apiServerIp='10.219.116.93',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
@@ -277,9 +277,11 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and connectToApiServer == 'linux':
-        mainObj.linuxServerStopAndDeleteSession()
+        if deleteSessionAfterTest:
+            mainObj.linuxServerStopAndDeleteSession()
     if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
         if connectToApiServer == 'windowsConnectionMgr':
-            mainObj.deleteSession()
+            if deleteSessionAfterTest:
+                mainObj.deleteSession()

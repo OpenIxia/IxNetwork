@@ -226,7 +226,7 @@ class FileMgmt(object):
         jsonFilename = destinationPath+'/'+filename+'.json'
         self.exportJsonConfigFile(jsonFilename)
 
-    def importJsonConfigObj(self, dataObj, type='modify', silentMode=False):
+    def importJsonConfigObj(self, dataObj, type='modify', silentMode=False, timeout=90):
         """
         Description
             For newConfig:
@@ -258,7 +258,7 @@ class FileMgmt(object):
                            "arg3": arg3}
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfig'
         response = self.ixnObj.post(url, data=dataReformatted, silentMode=silentMode)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False) == 1:
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=timeout) == 1:
             raise IxNetRestApiException
 
     def importJsonConfigFile(self, jsonFileName, type='modify'):
@@ -445,7 +445,7 @@ class FileMgmt(object):
         #self.importJsonConfigObj(dataObj=jsonObject, type='newConfig')
         self.importJsonConfigObj(dataObj=jsonObject, type='modify')
 
-    def jsonAssignPorts(self, jsonObject, portList):
+    def jsonAssignPorts(self, jsonObject, portList, timeout=90):
         """
         Description
             Reassign ports.  Will remove the existing JSON config datas: availableHardware, cardId, portId.
@@ -492,11 +492,12 @@ class FileMgmt(object):
         self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
         self.ixnObj.logInfo('Ports rebooting ...')
         #self.importJsonConfigObj(dataObj=jsonObject, type='newConfig')
-        self.importJsonConfigObj(dataObj=jsonObject, type='modify')
+        self.importJsonConfigObj(dataObj=jsonObject, type='modify', timeout=timeout)
 
     def jsonReadConfig(self, jsonFile):
-        #if os.path.exists(jsonFile) is False:
-        #    raise IxNetRestApiException("JSON file doesn't exists: %s" % jsonFile)
+        if os.path.exists(jsonFile) is False:
+            raise IxNetRestApiException("JSON param file doesn't exists: %s" % jsonFile)
+
         with open(jsonFile.strip()) as inFile:
             jsonData = json.load(inFile)
         return jsonData

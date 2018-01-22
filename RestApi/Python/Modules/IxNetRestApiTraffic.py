@@ -29,7 +29,7 @@ class Traffic(object):
 
             trafficItem: Traffic Item kwargs.
 
-            endpoints: [list]: A list of two items: [ ( {endpoints}, {highLevelStreams: [(),()]} ), (add more endpoints)... ]
+            endpoints: [list]: A list: [{name, sources:[], destionations:[], highLevelStreams: None, (add more endpoints)... ]
                                Scroll down to see example.
 
             configElements: [list]: Config Element kwargs.
@@ -105,15 +105,18 @@ class Traffic(object):
                                   'routeMesh':'oneToOne',
                                   'allowSelfDestined':False,
                                   'trackBy': ['flowGroup0', 'vlanVlanId0']},
-                               endpoints = [({'name':'Flow-Group-1',
-                                              'sources': [topologyObj1],
-                                              'destinations': [topologyObj2]},
-                                             {'highLevelStreamElements': None})],
+
+                               endpoints = [{'name':'Flow-Group-1',
+                                             'sources': [topologyObj1],
+                                             'destinations': [topologyObj2],
+                                             'highLevelStreamElements': None}],
+
                                configElements = [{'transmissionType': 'fixedFrameCount',
                                                   'frameCount': 50000,
                                                   'frameRate': 88,
                                                   'frameRateType': 'percentLineRate',
-                                                  'frameSize': 128}])
+                                                  'frameSize': 128}]
+            )
 
             To create a new Traffic Item and configure the highLevelStream:
 
@@ -125,24 +128,24 @@ class Traffic(object):
                                                        'routeMesh':'oneToOne',
                                                        'allowSelfDestined':False,
                                                        'trackBy': ['flowGroup0', 'vlanVlanId0']},
-                                         endpoints = [({'name':'Flow-Group-1',
+                                         endpoints = [{'name':'Flow-Group-1',
                                                         'sources': [topologyObj1],
-                                                        'destinations': [topologyObj2]},
-                                                       {'highLevelStreamElements': [
-                                                           ({
+                                                        'destinations': [topologyObj2],
+                                                        'highLevelStreamElements': [
+                                                           {
                                                                'transmissionType': 'fixedFrameCount',
                                                                'frameCount': 10000,
                                                                'frameRate': 18,
                                                                'frameRateType': 'percentLineRate',
-                                                               'frameSize': 128}), 
-                                                           ({
+                                                               'frameSize': 128}, 
+                                                           {
                                                                'transmissionType': 'fixedFrameCount',
                                                                'frameCount': 20000,
                                                                'frameRate': 28,
                                                                'frameRateType': 'percentLineRate',
-                                                               'frameSize': 228})
-                                                       ]
-                                                    })],
+                                                               'frameSize': 228}
+                                                         ]
+                                                     }],
                                          configElements = None)
     
 
@@ -156,6 +159,9 @@ class Traffic(object):
             raise IxNetRestApiException('Creating Traffic Item requires trafficItem kwargs')
         if mode == None:
             raise IxNetRestApiException('configTrafficItem Error: Must include mode: config or modify')
+
+        # Don't configure config elements if user is configuring highLevelStreams
+        isHighLevelStreamTrue = False
 
         # Create a new Traffic Item
         if mode == 'create' and trafficItem != None:
@@ -185,10 +191,24 @@ class Traffic(object):
                 # out the traffic item object handle.
                 trafficItemObj = self.ixnObj.sessionUrl.split('/endpointSet')[0]
 
+            # endpoints = [{'name':'Flow-Group-1', 'sources': [topologyObj1], 'destinations': [topologyObj2], 'highLevelStreamElements': None}]
             for endPoint in endpoints:
-                eachEndPoint = endPoint[0]
-                highLevelStream = endPoint[1]['highLevelStreamElements']
-                response = self.ixnObj.post(self.ixnObj.httpHeader+trafficItemObj+'/endpointSet', data=eachEndPoint)
+                endpointSrcDst = {}
+                # {'name':'Flow-Group-1', 'sources': [topologyObj1], 'destinations': [topologyObj2]}
+                #eachEndPoint = endPoint[0]
+                if 'name' in endPoint:
+                    endpointSrcDst['name'] = endPoint['name']
+                endpointSrcDst['sources'] = endPoint['sources']
+                endpointSrcDst['destinations'] = endPoint['destinations']
+                response = self.ixnObj.post(self.ixnObj.httpHeader+trafficItemObj+'/endpointSet', data=endpointSrcDst)
+
+                if 'highLevelStreamElements' in endPoint:
+                    highLevelStream = endPoint['highLevelStreamElements']
+                    # JSON doesn't support None.  In case user passed in {} instead of None.
+                    if highLevelStream == {}:
+                        highLevelStream = None
+                else:
+                    highLevelStream = None
 
                 # Get the RETURNED endpointSet/# object
                 endpointSetObj = response.json()['links'][0]['href']
@@ -201,16 +221,26 @@ class Traffic(object):
 
                 # An endpoint flow group could have two highLevelStream if bi-directional is enabled.x
                 if highLevelStream != None:
+                    isHighLevelStreamTrue = True
+                    configElementObjList = None ;# Don't configure config elements if user is configuring highLevelStreams
                     streamNum = 1
                     for eachHighLevelStream in highLevelStream:
                         self.configHighLevelStream(self.ixnObj.httpHeader+trafficItemObj+'/highLevelStream/'+str(streamNum), eachHighLevelStream)
                         streamNum += 1
 
         if mode == 'modify' and endpoints != None:
-            endpointSetObj = obj
-            self.ixnObj.patch(self.ixnObj.httpHeader+endpointSetObj, data=endpoints)
+            endpointSrcDst = {}
+            if 'name' in endpoints:
+                endpointSrcDst['name'] = endpoints['name']
+            if 'sources' in endpoints:
+                endpointSrcDst['sources'] = endpoints['sources']
+            if 'destinations' in endpoints:
+                endpointSrcDst['destinations'] = endpoints['destinations']
 
-        if configElements is not None:
+            endpointSetObj = obj
+            self.ixnObj.patch(self.ixnObj.httpHeader+endpointSetObj, data=endpointSrcDst)
+
+        if isHighLevelStreamTrue == False and configElements != None:
             if mode == 'create' and type(configElements) != list:
                 raise IxNetRestApiException('configTrafficItem error: Provide configElements in a list')
 
@@ -240,6 +270,7 @@ class Traffic(object):
         if mode in ['create', 'modify'] and 'trackBy' in locals():
             self.ixnObj.patch(self.ixnObj.httpHeader+trafficItemObj+'/tracking', data={'trackBy': trackBy})
 
+        # API server needs some time to complete processing the highlevel stream configuration before entering regenerate.
         if mode == 'create' and trafficItem != None:
             return [trafficItemObj, endpointSetObjList, configElementObjList]
 

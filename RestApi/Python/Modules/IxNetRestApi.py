@@ -618,7 +618,7 @@ class Connect(object):
 
         self.logInfo('\nlinuxServerStopOperations: %s' % sessionId)
         response = self.post(sessionId+'/operations/stop')
-        if self.linuxServerWaitForSuccess(response.json()['url'], timeout=30) == 1:
+        if self.linuxServerWaitForSuccess(response.json()['url'], timeout=90) == 1:
             raise IxNetRestApiException
 
     def linuxServerDeleteSession(self, sessionId=None):

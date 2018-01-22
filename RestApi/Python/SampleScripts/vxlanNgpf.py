@@ -76,6 +76,7 @@ try:
         
     #---------- Preference Settings End --------------
 
+    mainObj.newBlankConfig()
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -90,8 +91,6 @@ try:
     # Configuring license requires releasing all ports even for ports that is not used for this test.
     portObj.releaseAllPorts()
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
-
-    mainObj.newBlankConfig()
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
@@ -225,10 +224,10 @@ try:
             'routeMesh':'oneToOne',
             'allowSelfDestined':False,
             'trackBy': ['flowGroup0']},
-        endpoints = [({'name':'Flow-Group-1',
-                       'sources': [vxlanIpv4Obj1],
-                       'destinations': [vxlanIpv4Obj2]},
-                      {'highLevelStreamElements': None})],
+        endpoints = [{'name':'Flow-Group-1',
+                      'sources': [vxlanIpv4Obj1],
+                      'destinations': [vxlanIpv4Obj2]
+                  }],
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,

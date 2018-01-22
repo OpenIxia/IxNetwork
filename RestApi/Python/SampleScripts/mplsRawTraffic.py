@@ -89,6 +89,7 @@ try:
 
     #---------- Preference Settings End --------------
 
+    mainObj.newBlankConfig()
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -103,8 +104,6 @@ try:
     # Configuring license requires releasing all ports even for ports that is not used for this test.
     portObj.releaseAllPorts()
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
-
-    mainObj.newBlankConfig()
 
     # Set createVports = True if building config from scratch.
     vportList = portObj.assignPorts(portList, createVports=True, rawTraffic=True)
@@ -121,15 +120,15 @@ try:
             'srcDestMesh':'one-to-one',
             'routeMesh':'oneToOne',
             'allowSelfDestined':False,
-            'trackBy': ['flowGroup0']},
-
-        endpoints = [({'name':'Flow-Group-1', 'sources': [vportList[0]], 'destinations': [vportList[1]]}, {'highLevelStreamElements': None})],
-
+            'trackBy': ['flowGroup0']
+        },
+        endpoints = [{'name':'Flow-Group-1', 'sources': [vportList[0]], 'destinations': [vportList[1]]}],
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,
                            'frameRateType': 'percentLineRate',
-                           'frameSize': 128}])
+                           'frameSize': 128
+                       }])
 
     trafficItem1Obj  = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
@@ -235,7 +234,11 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and connectToApiServer == 'linux':
-        mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer == 'windows':
+        if deleteSessionAfterTest:
+            mainObj.linuxServerStopAndDeleteSession()
+    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+        if connectToApiServer == 'windowsConnectionMgr':
+            if deleteSessionAfterTest:
+                mainObj.deleteSession()

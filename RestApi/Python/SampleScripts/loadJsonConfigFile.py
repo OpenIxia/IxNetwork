@@ -47,6 +47,7 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
+    deleteSessionAfterTest = True
     jsonConfigFile = 'bgp.json'
 
     # Optional: Mainly for connecting to Linux API server.
@@ -64,7 +65,7 @@ try:
                           serverIpPort='443',
                           username='admin',
                           password='admin',
-                          deleteSessionAfterTest=True,
+                          deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs='linux')
 
@@ -90,8 +91,10 @@ try:
 
     fileMgmtObj = FileMgmt(mainObj)
     jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
+
+    # 8.40: Takes 5 minutes to load/assignPorts on OVA/VE Linux. 
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
-    fileMgmtObj.jsonAssignPorts(jsonData, portList)
+    fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=300)
     portObj.verifyPortState()
 
     # Example: How to modify
@@ -153,12 +156,14 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and connectToApiServer == 'linux':
-        mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer == 'windows':
+        if deleteSessionAfterTest:
+            mainObj.linuxServerStopAndDeleteSession()
+    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
         if connectToApiServer == 'windowsConnectionMgr':
-            mainObj.deleteSession()
+            if deleteSessionAfterTest:
+                mainObj.deleteSession()
 
 
 

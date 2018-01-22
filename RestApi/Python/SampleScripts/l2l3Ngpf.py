@@ -63,7 +63,7 @@ try:
                 [ixChassisIp, '2', '1']]
 
     if connectToApiServer == 'linux':
-        mainObj = Connect(apiServerIp='10.219.116.93',
+        mainObj = Connect(apiServerIp='192.168.70.108',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
@@ -77,7 +77,8 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest)
         
     #---------- Preference Settings End --------------
-    
+
+    mainObj.newBlankConfig()    
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -92,8 +93,6 @@ try:
     # Configuring license requires releasing all ports even for ports that is not used for this test.
     portObj.releaseAllPorts()
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
-
-    mainObj.newBlankConfig()
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
@@ -172,10 +171,10 @@ try:
                                                      'routeMesh':'oneToOne',
                                                      'allowSelfDestined':False,
                                                      'trackBy': ['flowGroup0', 'vlanVlanId0']},
-                                                 endpoints = [({'name':'Flow-Group-1',
+                                                 endpoints = [{'name':'Flow-Group-1',
                                                                 'sources': [topologyObj1],
-                                                                'destinations': [topologyObj2]},
-                                                               {'highLevelStreamElements': None})],
+                                                                'destinations': [topologyObj2]
+                                                           }],
                                                  configElements = [{'transmissionType': 'fixedFrameCount',
                                                                     'frameCount': 50000,
                                                                     'frameRate': 88,
@@ -238,9 +237,11 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and connectToApiServer == 'linux':
-        mainObj.linuxServerStopAndDeleteSession()
+        if deleteSessionAfterTest:
+            mainObj.linuxServerStopAndDeleteSession()
     if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
         if connectToApiServer == 'windowsConnectionMgr':
-            mainObj.deleteSession()
+            if deleteSessionAfterTest:
+                mainObj.deleteSession()

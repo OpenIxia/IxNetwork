@@ -178,7 +178,11 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and connectToApiServer == 'linux':
-        mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer == 'windows':
+        if deleteSessionAfterTest:
+            mainObj.linuxServerStopAndDeleteSession()
+    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+        if connectToApiServer == 'windowsConnectionMgr':
+            if deleteSessionAfterTest:
+                mainObj.deleteSession()

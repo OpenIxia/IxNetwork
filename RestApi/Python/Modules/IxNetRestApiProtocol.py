@@ -174,7 +174,7 @@ class Protocol(object):
 
             # Config Mac Address Port Step        
             portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
-            if macAddressPortStep is not 'disabled':
+            if macAddressPortStep != 'disabled':
                 self.ixnObj.patch(portStepMultivalue, data={'step': macAddressPortStep})
 
             if macAddressPortStep == 'disabled':
@@ -260,7 +260,7 @@ class Protocol(object):
 
         # Config IPv4 port step
         portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
-        if ipv4AddressPortStep is not 'disabled':
+        if ipv4AddressPortStep != 'disabled':
             self.ixnObj.patch(portStepMultivalue, data={'step': ipv4AddressPortStep})
 
         if ipv4AddressPortStep == 'disabled':
@@ -275,7 +275,7 @@ class Protocol(object):
 
         # Config Gateway port step
         portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
-        if gatewayPortStep is not 'disabled':
+        if gatewayPortStep != 'disabled':
             self.ixnObj.patch(portStepMultivalue, data={'step': gatewayPortStep})
 
         if gatewayPortStep == 'disabled':
@@ -1460,6 +1460,7 @@ class Protocol(object):
                                     'nodes': [{'node': 'ipv4',  'properties': ['gatewayIp', 'resolvedGatewayMac'], 'where': []}
                                     ]}
                         queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+                        print('\n---- query:', queryResponse.json())
                         response = self.ixnObj.get(self.ixnObj.httpHeader+ipv4Href+'?includes=resolvedGatewayMac')
                         gatewayMacAddress = response.json()['resolvedGatewayMac']
                         self.ixnObj.logInfo('\ngatewayIpMacAddress: %s' % gatewayMacAddress)

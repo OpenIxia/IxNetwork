@@ -179,7 +179,7 @@ class Connect(object):
             self.logInfo('HEADERS: %s' % self.jsonHeader)
 
         try:
-            response = requests.post(restApi, data=data, headers=self.jsonHeader, verify=self.verifySslCert)
+            response = requests.post(restApi, data=data, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
             # 200 or 201
             if silentMode == False:
                 self.logInfo('STATUS CODE: %s' % response.status_code)

@@ -51,11 +51,11 @@ Command Line Parameters:
           To show a list of configured Traffic Items:
               Enter: python monitorTraffic.py -showTrafficItemNames
 
-          Enter: python monitorTraffic.py -apiServerIp 192.168.70.127 -trafficName 'traf.*1 traf.*2' -frameLossThreshold 500 \
+          Enter: python monitorTraffic.py -apiServerIp 192.168.70.3 -trafficName 'traf.*1 traf.*2' -frameLossThreshold 500 \
           -recordStatsToFile
 
        For monitoring protocol session flappings:
-          Enter: python monitorTraffic.py -apiServerIp 192.168.70.127 -protocolSessions "bgp" -frameLossThreshold 2 \
+          Enter: python monitorTraffic.py -apiServerIp 192.168.70.3 -protocolSessions "bgp" -frameLossThreshold 2 \
           -recordStatsToFile
 
 """
@@ -79,16 +79,18 @@ class Variables():
     jsonFileForTraffic = 'monitorTraffic.json'
     jsonFileForProtocol = 'monitorProtocoljson'
     jsonData= {}
-    Variables.statObj = None
-    Variables.trafficObj = None
+    #Variables.statObj = None
+    #Variables.trafficObj = None
+    statObj = None
+    trafficObj = None
 
     # These two variables are reserved for connecting to a Linux API server.
     # Send email alerts
     emailSubject = 'ALERT: IxNetwork Traffic Monitoring Failed:'
     emailFrom = 'monitorTraffic.py Script'
-    emailSendFrom = 'hgee@ixiacom.com'
+    emailSendFrom = 'hubert.gee@keysight.com'
     emailSenderPassword = '-'
-    emailSmtpServer = 'pod51011.outlook.com'
+    emailSmtpServer = 'outlook.office365.com'
     emailSmtpServerPort = 587
     sendEmailTo = emailSendFrom
     sendAlert = False
@@ -565,7 +567,8 @@ try:
                 writeToJson(monitoring='protocol')
 
     if monitorTrafficItemList and not monitorTrafficItemList[0] == 'all':
-        configuredTrafficItems = Variables.sessionObj.getAllTrafficItemNames()
+        #configuredTrafficItems = Variables.sessionObj.getAllTrafficItemNames()
+        configuredTrafficItems = Variables.trafficObj.getAllTrafficItemNames()
         for monitorTrafficItemName in monitorTrafficItemList:
             discoveredTrafficItemFlag = 0
             for eachConfiguredTrafficItem in configuredTrafficItems:

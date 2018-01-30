@@ -1,0 +1,456 @@
+{
+    "xpath": "/",
+    "availableHardware": {
+        "xpath": "/availableHardware",
+        "chassis": [
+            {
+                "xpath": "/availableHardware/chassis[1]",
+                "hostname": "192.168.70.11",
+                "card": [
+                    {
+                        "xpath": "/availableHardware/chassis[@alias = '192.168.70.11']/card[1]",
+                        "aggregation": [
+                            {
+                                "xpath": "/availableHardware/chassis[@alias = '192.168.70.11']/card[1]/aggregation[1]"
+                            }
+                        ],
+                        "port": [
+                            {
+                                "xpath": "/availableHardware/chassis[@alias = '192.168.70.11']/card[1]/port[1]"
+                            }
+                        ]
+                    },
+                    {
+                        "xpath": "/availableHardware/chassis[@alias = '192.168.70.11']/card[2]",
+                        "aggregation": [
+                            {
+                                "xpath": "/availableHardware/chassis[@alias = '192.168.70.11']/card[2]/aggregation[1]"
+                            }
+                        ],
+                        "port": [
+                            {
+                                "xpath": "/availableHardware/chassis[@alias = '192.168.70.11']/card[2]/port[1]"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "vport": [
+        {
+            "connectedTo": "/availableHardware/chassis[@alias = '192.168.70.11']/card[1]/port[1]",
+            "name": "1/1",
+            "rxMode": "captureAndMeasure",
+            "xpath": "/vport[1]"
+        },
+        {
+            "connectedTo": "/availableHardware/chassis[@alias = '192.168.70.11']/card[2]/port[1]",
+            "name": "1/2",
+            "rxMode": "captureAndMeasure",
+            "xpath": "/vport[2]"
+        }
+    ],
+    "topology": [
+        {
+            "xpath": "/topology[1]",
+            "name": "Topo1",
+            "vports": [
+                "/vport[1]"
+            ],
+            "deviceGroup": [
+                {
+                    "xpath": "/topology[1]/deviceGroup[1]",
+                    "multiplier": 1,
+                    "name": "DG1",
+                    "ethernet": [
+                        {
+                            "xpath": "/topology[1]/deviceGroup[1]/ethernet[1]",
+                            "name": "Eth1",
+                            "enableVlans": {
+                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1] enableVlans']",
+                                "singleValue": {
+                                    "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1] enableVlans']/singleValue",
+                                    "value": "true"
+                                }
+                            },
+                            "mac": {
+                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1] mac']",
+                                "counter": {
+                                    "direction": "increment",
+                                    "start": "00:01:01:00:00:01",
+                                    "step": "00:00:00:00:00:01",
+                                    "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1] mac']/counter"
+                                }
+                            },
+                            "mtu": {
+                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1] mtu']",
+                                "clearOverlays": false,
+                                "singleValue": {
+                                    "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1] mtu']/singleValue",
+                                    "value": "1500"
+                                }
+                            },
+                            "vlan": [
+                                {
+                                    "xpath": "/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1]",
+                                    "name": "VLAN 1",
+                                    "priority": {
+                                        "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1] priority']",
+                                        "singleValue": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1] priority']/singleValue",
+                                            "value": "7"
+                                        }
+                                    },
+                                    "tpid": {
+                                        "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1] tpid']",
+                                        "singleValue": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1] tpid']/singleValue",
+                                            "value": "ethertype8100"
+                                        }
+                                    },
+                                    "vlanId": {
+                                        "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1] vlanId']",
+                                        "counter": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/vlan[1] vlanId']/counter",
+                                            "direction": "increment",
+                                            "start": "103",
+                                            "step": "0"
+                                        }
+                                    }
+                                }
+                            ],
+                            "ipv4": [
+                                {
+                                    "xpath": "/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]",
+                                    "name": "IPv4",
+                                    "address": {
+                                        "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] address']",
+                                        "counter": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] address']/counter",
+                                            "direction": "increment",
+                                            "start": "1.1.1.1",
+                                            "step": "0.0.0.1"
+                                        },
+                                        "gatewayIp": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] gatewayIp']",
+                                            "counter": {
+                                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] gatewayIp']/counter",
+                                                "direction": "increment",
+                                                "start": "1.1.1.2",
+                                                "step": "0.0.0.0"
+                                            }
+                                        },
+                                        "prefix": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] prefix']",
+                                            "singleValue": {
+                                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] prefix']/singleValue",
+                                                "value": "24"
+                                            }
+                                        },
+                                        "resolveGateway": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] resolveGateway']",
+                                            "singleValue": {
+                                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] resolveGateway']/singleValue",
+                                                "value": "true"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "networkGroup": [
+                        {
+                            "multiplier": 100,
+                            "name": "networkGroup1",
+                            "xpath": "/topology[1]/deviceGroup[1]/networkGroup[1]",
+                            "enabled": {
+                                "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/networkGroup[1] enabled']",
+                                "singleValue": {
+                                    "value": "true",
+                                    "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/networkGroup[1] enabled']/singleValue"
+                                }
+                            },
+                            "ipv4PrefixPools": [
+                                {
+                                    "xpath": "/topology[1]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1]",
+                                    "networkAddress": {
+                                        "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] networkAddress']",
+                                        "counter": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] networkAddress']/counter",
+                                            "direction": "increment",
+                                            "start": "160.1.0.0",
+                                            "step": "0.0.0.1"
+                                        }
+                                    },
+                                    "prefixLength": {
+                                        "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] prefixLength']",
+                                        "singleValue": {
+                                            "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] prefixLength']/singleValue",
+                                            "value": "24"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "xpath": "/topology[2]",
+            "name": "Topo2",
+            "vports": [
+                "/vport[2]"
+            ],
+            "deviceGroup": [
+                {
+                    "xpath": "/topology[2]/deviceGroup[1]",
+                    "ethernet": [
+                        {
+                            "enableVlans": {
+                                "singleValue": {
+                                    "value": "true",
+                                    "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1] enableVlans']/singleValue"
+                                },
+                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1] enableVlans']"
+                            },
+                            "ipv4": [
+                                {
+                                    "address": {
+                                        "counter": {
+                                            "direction": "increment",
+                                            "start": "1.1.1.2",
+                                            "step": "0.0.0.1",
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] address']/counter"
+                                        },
+                                        "gatewayIp": {
+                                            "counter": {
+                                                "direction": "increment",
+                                                "start": "1.1.1.1",
+                                                "step": "0.0.0.0",
+                                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] gatewayIp']/counter"
+                                            },
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] gatewayIp']"
+                                        },
+                                        "prefix": {
+                                            "singleValue": {
+                                                "value": "24",
+                                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] prefix']/singleValue"
+                                            },
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] prefix']"
+                                        },
+                                        "resolveGateway": {
+                                            "singleValue": {
+                                                "value": "true",
+                                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] resolveGateway']/singleValue"
+                                            },
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] resolveGateway']"
+                                        },
+                                        "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1] address']"
+                                    },
+                                    "bgpIpv4Peer": [
+                                        {
+                                            "name": "myBgp2",
+                                            "xpath": "/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1]"
+                                        }
+                                    ],
+                                    "name": "IPv4-2",
+                                    "xpath": "/topology[2]/deviceGroup[1]/ethernet[1]/ipv4[1]"
+                                }
+                            ],
+                            "mac": {
+                                "counter": {
+                                    "direction": "increment",
+                                    "start": "00:01:02:00:00:01",
+                                    "step": "00:00:00:00:00:01",
+                                    "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1] mac']/counter"
+                                },
+                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1] mac']"
+                            },
+                            "mtu": {
+                                "clearOverlays": false,
+                                "singleValue": {
+                                    "value": "1500",
+                                    "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1] mtu']/singleValue"
+                                },
+                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1] mtu']"
+                            },
+                            "name": "Eth1-2",
+                            "vlan": [
+                                {
+                                    "name": "VLAN 2",
+                                    "priority": {
+                                        "singleValue": {
+                                            "value": "7",
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1] priority']/singleValue"
+                                        },
+                                        "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1] priority']"
+                                    },
+                                    "tpid": {
+                                        "singleValue": {
+                                            "value": "ethertype8100",
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1] tpid']/singleValue"
+                                        },
+                                        "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1] tpid']"
+                                    },
+                                    "vlanId": {
+                                        "counter": {
+                                            "direction": "increment",
+                                            "start": "103",
+                                            "step": "0",
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1] vlanId']/counter"
+                                        },
+                                        "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1] vlanId']"
+                                    },
+                                    "xpath": "/topology[2]/deviceGroup[1]/ethernet[1]/vlan[1]"
+                                }
+                            ],
+                            "xpath": "/topology[2]/deviceGroup[1]/ethernet[1]"
+                        }
+                    ],
+                    "multiplier": 1,
+                    "name": "DG1-2",
+                    "networkGroup": [
+                        {
+                            "multiplier": 100,
+                            "name": "networkGroup2",
+                            "xpath": "/topology[2]/deviceGroup[1]/networkGroup[1]",
+                            "enabled": {
+                                "clearOverlays": false,
+                                "singleValue": {
+                                    "value": "true",
+                                    "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/networkGroup[1] enabled']/singleValue"
+                                },
+                                "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/networkGroup[1] enabled']"
+                            },
+                            "ipv4PrefixPools": [
+                                {
+                                    "networkAddress": {
+                                        "counter": {
+                                            "direction": "increment",
+                                            "start": "180.1.0.0",
+                                            "step": "0.0.0.1",
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] networkAddress']/counter"
+                                        },
+                                        "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] networkAddress']"
+                                    },
+                                    "prefixLength": {
+                                        "singleValue": {
+                                            "value": "24",
+                                            "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] prefixLength']/singleValue"
+                                        },
+                                        "xpath": "/multivalue[@source = '/topology[2]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1] prefixLength']"
+                                    },
+                                    "xpath": "/topology[2]/deviceGroup[1]/networkGroup[1]/ipv4PrefixPools[1]"
+                                }
+                            ]
+                        }
+                    ]
+
+                }
+            ]
+        }
+    ],
+    "traffic": {
+        "xpath": "/traffic",
+        "trafficItem": [
+            {
+                "xpath": "/traffic/trafficItem[1]",
+                "enabled": true,
+                "name": "Topo1 to Topo2",
+                "trafficItemType": "l2L3",
+                "trafficType": "ipv4",
+                "routeMesh": "oneToOne",
+                "srcDestMesh": "oneToOne",
+                "allowSelfDestined": false,
+                "biDirectional": true,
+                "configElement": [
+                    {
+                        "xpath": "/traffic/trafficItem[1]/configElement[1]",
+                        "crc": "goodCrc",
+                        "destinationMacMode": "manual",
+                        "enableDisparityError": false,
+                        "framePayload": {
+                            "xpath": "/traffic/trafficItem[1]/configElement[1]/framePayload",
+                            "customPattern": "",
+                            "customRepeat": true,
+                            "type": "incrementByte"
+                        },
+                        "frameRate": {
+                            "xpath": "/traffic/trafficItem[1]/configElement[1]/frameRate",
+                            "bitRateUnitsType": "bitsPerSec",
+                            "enforceMinimumInterPacketGap": 0,
+                            "interPacketGapUnitsType": "nanoseconds",
+                            "rate": 88.0,
+                            "type": "percentLineRate"
+                        },
+                        "frameRateDistribution": {
+                            "xpath": "/traffic/trafficItem[1]/configElement[1]/frameRateDistribution",
+                            "portDistribution": "applyRateToAll",
+                            "streamDistribution": "splitRateEvenly"
+                        },
+                        "frameSize": {
+                            "xpath": "/traffic/trafficItem[1]/configElement[1]/frameSize",
+                            "fixedSize": 128,
+                            "incrementFrom": 64,
+                            "incrementStep": 1,
+                            "incrementTo": 1518,
+                            "presetDistribution": "cisco",
+                            "quadGaussian": [],
+                            "randomMax": 1518,
+                            "randomMin": 64,
+                            "type": "fixed",
+                            "weightedPairs": [],
+                            "weightedRangePairs": []
+                        },
+                        "preambleCustomSize": 8,
+                        "preambleFrameSizeMode": "auto",
+                        "transmissionControl": {
+                            "xpath": "/traffic/trafficItem[1]/configElement[1]/transmissionControl",
+                            "burstPacketCount": 1,
+                            "duration": 1,
+                            "enableInterBurstGap": false,
+                            "enableInterStreamGap": false,
+                            "frameCount": 50000,
+                            "interBurstGap": 0.0,
+                            "interBurstGapUnits": "nanoseconds",
+                            "interStreamGap": 0.0,
+                            "iterationCount": 1,
+                            "minGapBytes": 12,
+                            "repeatBurst": 1,
+                            "startDelay": 0,
+                            "startDelayUnits": "bytes",
+                            "type": "fixedFrameCount"
+                        }
+                    }
+                ],
+                "endpointSet": [
+                    {
+                        "xpath": "/traffic/trafficItem[1]/endpointSet[1]",
+                        "name": "Flow-Group-1",
+                        "sources": [
+                            "/topology[1]"
+                        ],
+                        "destinations": [
+                            "/topology[2]"
+                        ],
+                        "multicastDestinations": []
+                    }
+                ],
+                "tracking": [
+                    {
+                        "xpath": "/traffic/trafficItem[1]/tracking",
+                        "oneToOneMesh": false,
+                        "trackBy": [
+                            "flowGroup0",
+                            "trackingenabled0",
+                            "vlanVlanId0"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

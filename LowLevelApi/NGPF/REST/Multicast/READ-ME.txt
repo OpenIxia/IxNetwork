@@ -1,0 +1,172 @@
+################################################################################
+# Version 1.0    $Revision: #2 $
+# $Author: vsomashekar $
+#
+#    Copyright © 1997 - 2015 by IXIA
+#    All Rights Reserved.
+#
+################################################################################
+
+################################################################################
+#                                                                              #
+#                                LEGAL  NOTICE:                                #
+#                                ==============                                #
+# The following code and documentation (hereinafter "the script") is an        #
+# example script for demonstration purposes only.                              #
+# The script is not a standard commercial product offered by Ixia and have     #
+# been developed and is being provided for use only as indicated herein. The   #
+# script [and all modifications, enhancements and updates thereto (whether     #
+# made by Ixia and/or by the user and/or by a third party)] shall at all times #
+# remain the property of Ixia.                                                 #
+#                                                                              #
+# Ixia does not warrant (i) that the functions contained in the script will    #
+# meet the user's requirements or (ii) that the script will be without         #
+# omissions or error-free.                                                     #
+# THE SCRIPT IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, AND IXIA        #
+# DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE,          #
+# INCLUDING BUT NOT LIMITED TO ANY WARRANTY OF MERCHANTABILITY AND FITNESS FOR #
+# A PARTICULAR PURPOSE OR OF NON-INFRINGEMENT.                                 #
+# THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SCRIPT  IS WITH THE #
+# USER.                                                                        #
+# IN NO EVENT SHALL IXIA BE LIABLE FOR ANY DAMAGES RESULTING FROM OR ARISING   #
+# OUT OF THE USE OF, OR THE INABILITY TO USE THE SCRIPT OR ANY PART THEREOF,   #
+# INCLUDING BUT NOT LIMITED TO ANY LOST PROFITS, LOST BUSINESS, LOST OR        #
+# DAMAGED DATA OR SOFTWARE OR ANY INDIRECT, INCIDENTAL, PUNITIVE OR            #
+# CONSEQUENTIAL DAMAGES, EVEN IF IXIA HAS BEEN ADVISED OF THE POSSIBILITY OF   #
+# SUCH DAMAGES IN ADVANCE.                                                     #
+# Ixia will not be required to provide any software maintenance or support     #
+# services of any kind (e.g., any error corrections) in connection with the    #
+# script or any part thereof. The user acknowledges that although Ixia may     #
+# from time to time and in its sole discretion provide maintenance or support  #
+# services for the script, any such services are subject to the warranty and   #
+# damages limitations set forth herein and will not obligate Ixia to provide   #
+# any additional maintenance or support services.                              #
+#                                                                              #
+################################################################################
+
+
+If you want to run these sample script from the windows please install python2.6+
+in the client and also install requests and httplib2 modules accordingly.Now copy
+these test files to the python directory (or any preferred test directory) and run
+them from command prompt.Please contact support/me @ixia for any clarification.
+Thank You.
+
+Ref:
+install the requests package in the client from the follwing tutorial.
+https://github.com/kennethreitz/requests
+https://www.youtube.com/watch?v=Ng5T18HyA-Q
+for linux install using this command pip install requests
+
+https://www.youtube.com/watch?v=zXGvJTi6lCw
+
+
+I am giving the output for this sample file :
+
+c:\Python27>python test.iptv.py
+Sleep 5 sec to finish initialization for IxNet
+#######################################################
+
+Doing new Config
+POST: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/operations/newConfig
+WAIT FOR ACTION TO COMPLETE
+Current state: IN_PROGRESS
+Current state: IN_PROGRESS after 0 seconds
+Current state: IN_PROGRESS after 1 seconds
+Current state: IN_PROGRESS after 2 seconds
+Current state: IN_PROGRESS after 3 seconds
+Current state: IN_PROGRESS after 4 seconds
+Current state: IN_PROGRESS after 5 seconds
+Current state: SUCCESS after 6 seconds
+Loading the configuration file ... config.iptv.ixncfg
+Uploading IxNetwork config to server
+IxNetwork config uploaded Correctly, now loading the config
+{"id":"","state":"SUCCESS","progress":100,"message":null,"url":"","resultUrl":"","result":"kVoid"}
+Assign Multiple Ports at once
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/vport
+POST: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/operations/assignports <--- DATA: {'arg1': [{'arg1': '10.200.115.147', 'arg2': '12', 'arg3': '1'}, {'arg1': '1
+:11010/api/v1/sessions/1/ixnetwork/vport/1', 'http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/vport/2'], 'arg4': True}
+WAIT FOR ACTION TO COMPLETE
+Current state: IN_PROGRESS
+Current state: IN_PROGRESS after 0 seconds
+Current state: IN_PROGRESS after 1 seconds
+Current state: IN_PROGRESS after 2 seconds
+Current state: IN_PROGRESS after 3 seconds
+Current state: IN_PROGRESS after 4 seconds
+Current state: IN_PROGRESS after 5 seconds
+Current state: IN_PROGRESS after 6 seconds
+Current state: IN_PROGRESS after 7 seconds
+Current state: IN_PROGRESS after 8 seconds
+Current state: IN_PROGRESS after 9 seconds
+Current state: IN_PROGRESS after 10 seconds
+Current state: IN_PROGRESS after 11 seconds
+Current state: IN_PROGRESS after 12 seconds
+Current state: IN_PROGRESS after 13 seconds
+Current state: IN_PROGRESS after 14 seconds
+Current state: IN_PROGRESS after 15 seconds
+Current state: IN_PROGRESS after 16 seconds
+Current state: IN_PROGRESS after 17 seconds
+Current state: IN_PROGRESS after 18 seconds
+Current state: IN_PROGRESS after 19 seconds
+Current state: IN_PROGRESS after 20 seconds
+Current state: IN_PROGRESS after 21 seconds
+Current state: IN_PROGRESS after 22 seconds
+Current state: IN_PROGRESS after 23 seconds
+Current state: IN_PROGRESS after 24 seconds
+Current state: IN_PROGRESS after 25 seconds
+Current state: IN_PROGRESS after 26 seconds
+Current state: IN_PROGRESS after 27 seconds
+Current state: IN_PROGRESS after 28 seconds
+Current state: IN_PROGRESS after 29 seconds
+Current state: IN_PROGRESS after 30 seconds
+Current state: IN_PROGRESS after 31 seconds
+Current state: IN_PROGRESS after 32 seconds
+Current state: IN_PROGRESS after 33 seconds
+Current state: IN_PROGRESS after 34 seconds
+Current state: IN_PROGRESS after 35 seconds
+Current state: IN_PROGRESS after 36 seconds
+Current state: SUCCESS after 37 seconds
+
+Starting IGMP Router first
+POST: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/topology/operations/start  <-- Payload: {'arg1': ['/api/v1/sessions/1/ixnetwork/topology/2']}
+Starting IGMP Host Second
+POST: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/topology/deviceGroup/ethernet/ipv4/igmpHost/operations/start  <-- Payload: {'arg1': ['/api/v1/sessions/1/ixnet
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/
+Checking for the stat  :  Protocols Summary
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/6/page/
+--Validating for  Protocol Type ---->  IGMP Host
+Protocol Type :: IGMP Host
+Sessions Up :: 1
+Sessions Down :: 0
+Sessions Total :: 1
+Checking for all the sessions to be up
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/
+Checking for the stat  :  Protocols Summary
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/6/page/
+http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/6/page/ -isReady =  true
+---------Validating for  Protocol Type ---->  IGMP Host
+Sessions Up :: 1
+Sessions Down :: 0
+Sessions Total :: 1
+PASS-All Sessions are UP!!
+Starting the Traffic
+Generate Apply Start Traffic...
+Set refreshLearnedInfoBeforeApply for Traffic to True
+Verifying for the node : http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/traffic/
+PATCH: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/traffic/ <-- Attribute: {'refreshLearnedInfoBeforeApply': 'true'}
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/traffic/
+Applying the traffic ....
+POST: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/traffic/operations/apply  <-- Payload: {'arg1': u'/api/v1/sessions/1/ixnetwork/traffic'}
+Starting the traffic...
+POST: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/traffic/operations/startStatelessTraffic  <-- Payload: {'arg1': [u'/api/v1/sessions/1/ixnetwork/traffic']}
+SUCCESS:Generate Apply Start Traffic...
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/
+Checking for the stat  :  Traffic Item Statistics
+GET: http://10.200.115.207:11010/api/v1/sessions/1/ixnetwork/statistics/view/18/page/
+--Validating for  Traffic Item ---->  Traffic Item 1
+Traffic Item :: Traffic Item 1
+Tx Frames :: 16571395
+Rx Frames :: 16571393
+PASS- Test case Passed !!
+
+c:\Python27>
+c:\Python27>

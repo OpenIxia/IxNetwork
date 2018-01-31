@@ -1,14 +1,24 @@
 """
 Description:
 
-    Monitor specified Traffic Item by its name and/or monitor protocol sessions up/down (flapping)
-    and send email alerts if the frames delta counter is equal or greater than
-    the user defined threshold value.
-
-    A separate email alert is sent foreach unique Traffic Item and protocol session.
+    - Monitor 'all' or specified Traffic Items by its name.
+    - On a seperate terminal, monitor protocol sessions up/down (flapping).
+    - Set the frameLossThreshold.
+    - If the frameLossThreshold is reached, send email alerts.
+    - Each Traffic Item is monitored seperately. Meaning if Traffic 3 met its frameLossThreshold, an email
+      alert will be sent for Traffic 3.  If Traffic 8 mets its frameLossThreshold, a seperate email alert will be sent for Traffic 8.
+    - Sames goes for monitoring protocol sessions.
 
     Supports single session Windows and Linux API server. If monitoring a session on Linux API Server,
     include parameter -apiKey <apiKey> and -sessionId <sessionId>
+
+    For frame loss accurate measurement:
+      - This utility looks for "Lost Frames" counter first. If it doesn't exists, then it will fall on "Frames Delta".
+      - For most accurately real time frame loss, use cards that supports Advance Sequence Checking and enable 
+        "Advance Sequence Checking" in Traffic Options.
+      - Otherwise, this utility will look at the "Frames Delta" counter for real time loss.
+      - "Frames Delta" measurement will have Tx/Rx delays while taking a snapshot of running traffic.
+        Therefore, you should set the -frameLossThreshold greater than 300 to consider real time frame loss.
 
 Features:
   - Traffic Item monitoring.
@@ -21,9 +31,11 @@ Features:
       - For protocol session monitoring, set protocol session flapping threshold.
       - Send email alerts for each Traffic Item if it reach the threshold.
       - Set the stat monitoring polling interval.
-      - Each Traffic Item will have its own recorded stats in json file.
-        The json file name is the name of the TrafficItem.stats.
-    - Statistics result filename: monitorTraffic.json
+      - Save stats to a file:
+            - If -recordStatsToFile is included, stats are saved in a JSON file.
+            - Each Traffic Item name is a dictionary key along with all of its stats in a list.
+    - Statistics result filename: monitorTraffic.json and/or monitorProtocol.json.
+    - You could change these file names.
 
   - Protocol Session flap monitoring.
       - Statistics result filename: monitorProtocol.json
@@ -34,12 +46,7 @@ Features:
       - Available protocols: bgp, ospf, isis, igmp, pim, mld
       - Each port/protocol will send it's own threshold alert.
       - Each protocol will have its own recorded stats.
-        The text file name is the name of the protocol.stats.
 
-      Time       Protocol  Port                 Up    Down   FlapMarker  Flapped   FlapDelta
-      ---------------------------------------------------------------------------------------
-      19:45:55   BGP       1/1                  3     0      8           18        10
-      19:45:55   BGP       2/1                  3     0      8           18        10
 
 Command Line Parameters:
 
@@ -52,11 +59,19 @@ Command Line Parameters:
               Enter: python monitorTraffic.py -showTrafficItemNames
 
           Enter: python monitorTraffic.py -apiServerIp 192.168.70.3 -trafficName 'traf.*1 traf.*2' -frameLossThreshold 500 \
-          -recordStatsToFile
+          -recordStatsToFile - sendAlert -emailPasswordFile <path_to_password_file>
 
        For monitoring protocol session flappings:
           Enter: python monitorTraffic.py -apiServerIp 192.168.70.3 -protocolSessions "bgp" -frameLossThreshold 2 \
-          -recordStatsToFile
+          -recordStatsToFile - sendAlert -emailPasswordFile <path_to_password_file>
+
+
+Output example:
+   Time       TrafficItemName   TxRate          RxRate          TxFrames        RxFrames        LossDur(ms)     LossDelta    LossThreshold
+   --------------------------------------------------------------------------------------------------------------------------------------------
+   18:31:49   traffic_1         31476.06        31476.06        185333          185333          0               0            100       
+   18:31:49   traffic_2         31476.06        31476.06        185333          185332          0.006           1            100       
+   18:31:49   traffic_3         31475.56        31475.56        185332          185331          0.006           1            100  
 
 """
 
@@ -69,7 +84,7 @@ from IxNetRestApiStatistics import Statistics
 from IxNetRestApiTraffic import Traffic
 
 class Variables():
-    ixNetRestServerIp = '192.168.70.127'
+    ixNetRestServerIp = '192.168.70.3'
     ixNetRestServerPort = '11009'
     connectToApiServer = 'windows'
     getStatInterval = 2
@@ -79,8 +94,6 @@ class Variables():
     jsonFileForTraffic = 'monitorTraffic.json'
     jsonFileForProtocol = 'monitorProtocoljson'
     jsonData= {}
-    #Variables.statObj = None
-    #Variables.trafficObj = None
     statObj = None
     trafficObj = None
 
@@ -89,7 +102,7 @@ class Variables():
     emailSubject = 'ALERT: IxNetwork Traffic Monitoring Failed:'
     emailFrom = 'monitorTraffic.py Script'
     emailSendFrom = 'hubert.gee@keysight.com'
-    emailSenderPassword = '-'
+    emailSenderPassword = None
     emailSmtpServer = 'outlook.office365.com'
     emailSmtpServerPort = 587
     sendEmailTo = emailSendFrom
@@ -132,8 +145,7 @@ def help():
     print('\t-emailPasswordFile    : By default, your email password is not required unless you')
     print('\t                        need to include it. Then you need to put your email password into a file and')
     print('\t                        state the full path and filename as the value')
-    print('\t-sendAlert            : Defaults to false. Add this parameter if you want email notifications.')
-    print('\t-externalExecution    : Defaults to false. Set to true if executing this script from another script.')
+    print('\t-sendAlert            : Defaults to false. Include this parameter if you want email notifications.')
     print('\t-recordStatsToFile    : To record statistics to a text file -> traffic_item_name.stats')
     print('\t-displayMaxLines      : Display the max lines of stats per terminal screen')
     print('\t-apiKey               : Only for connecting to an existing session on Linux. The Linux API server user API-KEY')
@@ -141,8 +153,8 @@ def help():
     print('\n\n')
     print('Example:')
     print('\n  Connecting to a  Windows API server:')
-    print('\n\tpython monitorTraffic.py -apiServerIp 192.168.70.127 -trafficName all -displayMaxLines 5')
-    print('\tpython monitorTraffic.py -apiServerIp 192.168.70.127 -protocolSessions bgp -displayMaxLines 3')
+    print('\n\tpython monitorTraffic.py -apiServerIp 192.168.70.3 -trafficName all -displayMaxLines 5 -sendAlert')
+    print('\tpython monitorTraffic.py -apiServerIp 192.168.70.3 -protocolSessions bgp -displayMaxLines 3')
     print('\n  Connecting to a Linux API server:')
     print('\n\tpython monitorTraffic.py -connectToApiServer linux -apiServerIp 192.168.70.127 -apiServerIpPort 443\n\t\t-apiKey 75c3663f920b4fe986ab1d1c39bc1658 -sessionId 3 -trafficName all\n\t\t-displayMaxLines 5 -getStatInterval 3')
 
@@ -218,8 +230,18 @@ def monitorTraffic():
     if Variables.displayMaxLineOutputFlag == 0:
         if Variables.monitorTrafficColumnNames == Variables.displayMaxLineOutput:
             Variables.monitorTrafficColumnNames = 0
-            statisticTopLine = '\n{0:10} {1:17} {2:15} {3:15} {4:15} {5:15} {6:15} {7:12} {8:10}'.format(
-                'Time', 'TrafficItemName', 'TxRate', 'RxRate', 'TxFrames', 'RxFrames', 'LossDur(ms)', 'LossDelta', 'LossThreshold' )
+
+            try:
+                # This is for Advance Sequence Checking enabled
+                lostFrames = stats[1]['Lost Frames']
+                statisticTopLine = '\n{0:10} {1:17} {2:15} {3:15} {4:15} {5:15} {6:15} {7:12} {8:10}'.format(
+                    'Time', 'TrafficItemName', 'TxRate', 'RxRate', 'TxFrames', 'RxFrames', 'LossDur(ms)', 'LossFrames', 'LossThreshold' )
+            except:
+                # This is Advance Sequence Checking disabled
+                deltaLoss = stats[1]['Frames Delta']
+                statisticTopLine = '\n{0:10} {1:17} {2:15} {3:15} {4:15} {5:15} {6:15} {7:12} {8:10}'.format(
+                    'Time', 'TrafficItemName', 'TxRate', 'RxRate', 'TxFrames', 'RxFrames', 'LossDur(ms)', 'LossDelta', 'LossThreshold' )
+
             print(statisticTopLine)
             print('-'*140)
         Variables.monitorTrafficColumnNames += 1
@@ -236,8 +258,11 @@ def monitorTraffic():
             txFrames = values['Tx Frames']
             rxFrames = values['Rx Frames']
             #lossPct = values['Loss %']
-            framesDelta = values['Frames Delta']
-
+            try:
+                framesLost = values['Lost Frames']
+            except:
+                framesLost = values['Frames Delta']
+            
             try:
                 pktLossDuration = values['Packet Loss Duration (ms)']
             except:
@@ -263,7 +288,7 @@ def monitorTraffic():
                 txFrames,
                 rxFrames,
                 pktLossDuration,
-                framesDelta,
+                framesLost,
                 str(Variables.frameLossDeltaThreshold).strip()
                 )
             print(statistics)
@@ -275,17 +300,18 @@ def monitorTraffic():
                 #with open(trafficItemName+'.stats', 'a') as statFile:
                 #    statFile.write(statistics+'\n')
             if Variables.frameLossDeltaThreshold != 0:
-                if int(framesDelta) >= Variables.frameLossDeltaThreshold:
+                if int(framesLost) >= Variables.frameLossDeltaThreshold:
                     if Variables.sendEmailAlertOnceFlag[trafficItemName] == 0:
                         Variables.sendEmailAlertOnceFlag[trafficItemName] = 1
-                        bodyMessage = '\nThe Traffic Item reached the delta frame loss threshold: {0}'.format(
+                        bodyMessage = '\nThe Traffic Item reached the frame loss threshold: {0}'.format(
                             Variables.frameLossDeltaThreshold)
                         bodyMessage = bodyMessage + '\n\tTrafficItemName: {0}'.format(trafficItemName)
                         print('\n', bodyMessage)
-                        if Variables.sendAlert == True:
+                        if Variables.sendAlert == True and Variables.emailPasswordFile != None:
                             print('\nSending email alert to: {0}\n'.format(Variables.sendEmailTo))
                             sendEmail(Variables.sendEmailTo, bodyMessage)
-    #print()
+
+    print()
 
 def monitorProtocol():
     # Each port will send an email alert if its protocol session flaps.
@@ -392,7 +418,7 @@ def monitorProtocol():
                             bodyMessage = bodyMessage + '\n\tSessionsFlapCount: {0}'.format(sessionsFlapCount)
                             bodyMessage = bodyMessage + '\n\tSessionsFlapDelta: {0}\n'.format(flapDelta)
                             print('\n%s' % bodyMessage)
-                            if Variables.sendAlert == True:
+                            if Variables.sendAlert == True and Variables.emailPasswordFile != None:
                                 print('\tSending email alert to: {0}\n'.format(Variables.sendEmailTo))
                                 sendEmail(Variables.sendEmailTo, bodyMessage)
 
@@ -458,7 +484,6 @@ try:
             argIndex+=2
         elif currentArg == '-showTrafficItemNames':
             connect()
-            #trafficItemList = Variables.sessionObj.getAllTrafficItemNames()
             trafficItemList = Variables.trafficObj.getAllTrafficItemNames()
             print('\n\nList of configured Traffic Item names:\n')
             for index in range(0, len(trafficItemList)):
@@ -487,9 +512,8 @@ try:
             Variables.recordStatsToFile = True
             argIndex+=1
         elif currentArg == '-sendAlert':
-            Variables.sendAlert = parameters[argIndex+1]
             Variables.sendAlert = True
-            argIndex+=2
+            argIndex+=1
         elif currentArg == '-externalExecution':
             argIndex+=1
             Variables.externalExecution = True
@@ -567,7 +591,6 @@ try:
                 writeToJson(monitoring='protocol')
 
     if monitorTrafficItemList and not monitorTrafficItemList[0] == 'all':
-        #configuredTrafficItems = Variables.sessionObj.getAllTrafficItemNames()
         configuredTrafficItems = Variables.trafficObj.getAllTrafficItemNames()
         for monitorTrafficItemName in monitorTrafficItemList:
             discoveredTrafficItemFlag = 0
@@ -603,7 +626,7 @@ try:
                 errorMsg = errorMsg + '\n\tList of Configured Traffic Item names:\n\t{0}\n\n'.format(configuredTrafficItems)
                 raise IxNetRestApiException(errorMsg)
     else:
-        Variables.trafficItemNameToMonitor = Variables.sessionObj.getAllTrafficItemNames()
+        Variables.trafficItemNameToMonitor = Variables.trafficObj.getAllTrafficItemNames()
         for eachConfiguredTrafficItem in Variables.trafficItemNameToMonitor:
             Variables.trafficItemsToMonitor.append(eachConfiguredTrafficItem)
             Variables.sendEmailAlertOnceFlag[eachConfiguredTrafficItem] = 0

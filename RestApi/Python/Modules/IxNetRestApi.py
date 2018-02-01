@@ -468,7 +468,7 @@ class Connect(object):
 
             # 2: Create new session
             if self.apiServerPort != None:
-                linuxServerIp = linuxServerIp + ':' + self.apiServerPort
+                linuxServerIp = linuxServerIp + ':' + str(self.apiServerPort)
 
             url = 'https://{0}/api/v1/sessions'.format(linuxServerIp)
             data = {'applicationType': 'ixnrest'}

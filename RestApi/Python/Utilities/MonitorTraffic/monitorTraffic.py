@@ -462,7 +462,7 @@ def monitorProtocol():
               Routes Rx Graceful Restart:  0
               Connect State Count:  0
         '''
-    #print()
+    print()
 
 try:
     stoppedTrafficFlag = 0

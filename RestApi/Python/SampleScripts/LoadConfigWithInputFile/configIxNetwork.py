@@ -36,6 +36,7 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiStatistics import Statistics
 
+connectToApiServer = 'windows'
 parameters = sys.argv[1:]
 argIndex = 0
 while argIndex < len(parameters):
@@ -53,6 +54,13 @@ while argIndex < len(parameters):
             raise IxNetRestApiException("JSON param file doesn't exists: %s" % paramFile)
         argIndex += 2
 
+    elif bool(re.match(currentArg, 'help', re.I)):
+        print('\nconfigIxNetwork Parameters')
+        print('----------------------------')
+        print('\t-connectToApiServer: defaults to windows. Options: windows|windowsConnectionMgr|linux')
+        print('\t-paramFile: The json config file to input')
+        print()
+        sys.exit()
     else:
         raise IxNetRestApiException('\nNo such parameter: %s' % currentArg)
 
@@ -127,20 +135,20 @@ def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupJsonData):
 
 
 try:
-    if jsonData['connectToApiServer'] == 'linux':
-        mainObj = Connect(apiServerIp=jsonData['apiServerIp'],
+    if connectToApiServer == 'linux':
+        mainObj = Connect(apiServerIp=jsonData['linuxApiServerIp'],
                           serverIpPort=jsonData['linuxServerIpPort'],
                           username=jsonData['usename'],
                           password=jsonData['password'],
                           deleteSessionAfterTest=jsonData['deleteSessionAfterTest'],
                           verifySslCert=jsonData['verifySslCert'],
-                          serverOs=jsonData['connectToApiServer']
+                          serverOs=connectToApiServer
                           )
 
-    if jsonData['connectToApiServer'] in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp=jsonData['apiServerIp'],
+    if connectToApiServer in ['windows', 'windowsConnectionMgr']:
+        mainObj = Connect(apiServerIp=jsonData['windowsApiServerIp'],
                           serverIpPort=jsonData['windowsServerIpPort'],
-                          serverOs=jsonData['connectToApiServer'],
+                          serverOs=connectToApiServer,
                           deleteSessionAfterTest=jsonData['deleteSessionAfterTest']
                           )
 
@@ -251,10 +259,10 @@ try:
     if jsonData['releasePortsWhenDone'] == True:
         portObj.releasePorts(portList)
 
-    if jsonData['connectToApiServer'] == 'linux':
+    if connectToApiServer == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
 
-    if jsonData['connectToApiServer'] == 'windowsConnectionMgr':
+    if connectToApiServer == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
@@ -262,12 +270,12 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
-    if 'mainObj' in locals() and jsonData['connectToApiServer'] == 'linux':
+    if 'mainObj' in locals() and connectToApiServer == 'linux':
         if jsonData['deleteSessionAfterTest']:
             mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and jsonData['connectToApiServer'] in ['windows', 'windowsConnectionMgr']:
+    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
         if jsonData['releasePortsWhenDone'] and jsonData['forceTakePortOwnership']:
             portObj.releasePorts(portList)
-        if jsonData['connectToApiServer'] == 'windowsConnectionMgr':
+        if connectToApiServer == 'windowsConnectionMgr':
             if jsonData['deleteSessionAfterTest']:
                 mainObj.deleteSession()

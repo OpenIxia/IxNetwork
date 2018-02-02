@@ -28,11 +28,14 @@ class PortMgmt(object):
                 timeout = timeout - 1
             return 0
 
-    def connectIxChassis(self, chassisIp):
+    def connectIxChassis(self, chassisIp, timeout=30):
         """
         Description
            Connect to an Ixia chassis.
            This needs to be done prior to assigning ports for testing.
+
+        Parameter
+           chassisIp: (list) A list of chassis IP addresses.
 
         Syntax
            /api/v1/sessions/1/ixnetwork/availableHardware/chassis
@@ -40,24 +43,32 @@ class PortMgmt(object):
         Parameter
            chassisIp: The chassis IP address.
         """
+        if type(chassisIp) is str:
+            chassisIp = chassisIp.split(' ')
+
+        chassisObjList = []
         url = self.ixnObj.sessionUrl+'/availableHardware/chassis'
-        data = {'hostname': chassisIp}
-        response = self.ixnObj.post(url, data=data)
-        chassisIdObj = response.json()['links'][0]['href']
-        # Chassis states: down, polling, ready
-        for timer in range(1,61):
-            response = self.ixnObj.get(self.ixnObj.httpHeader + chassisIdObj, silentMode=True)
-            currentStatus = response.json()['state']
-            self.ixnObj.logInfo('connectIxChassis {0}: Status: {1}'.format(chassisIp, currentStatus))
-            if currentStatus != 'ready' and timer < 60:
-                time.sleep(1)
-            if currentStatus != 'ready' and timer == 60:
-                raise IxNetRestApiException('connectIxChassis: Connecting to chassis {0} failed'.format(chassisIp))
-            if currentStatus == 'ready' and timer < 60:
-                break
+        for chassisIpAddress in chassisIp:
+            data = {'hostname': chassisIpAddress}
+            response = self.ixnObj.post(url, data=data)
+            chassisIdObj = response.json()['links'][0]['href']
+
+            # Chassis states: down, polling, ready
+            for timer in range(1,timeout+1):
+                response = self.ixnObj.get(self.ixnObj.httpHeader + chassisIdObj, silentMode=True)
+                currentStatus = response.json()['state']
+                self.ixnObj.logInfo('connectIxChassis {0}: Status: {1}. Wait {2}/{3} seconds'.format(
+                    chassisIpAddress, currentStatus, timer, timeout))
+                if currentStatus != 'ready' and timer < timeout:
+                    time.sleep(1)
+                if currentStatus != 'ready' and timer == timeout:
+                    raise IxNetRestApiException('connectIxChassis: Connecting to chassis {0} failed'.format(chassisIpAddress))
+                if currentStatus == 'ready' and timer < timeout:
+                    chassisObjList.append(chassisIdObj)
+                    break
 
         # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1
-        return self.ixnObj.httpHeader + chassisIdObj
+        return chassisObjList
 
     def disconnectIxChassis(self, chassisIp):
         """

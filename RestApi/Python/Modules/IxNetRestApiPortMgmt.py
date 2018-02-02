@@ -288,6 +288,9 @@ class PortMgmt(object):
                   headers={}
             Expecting:   RESPONSE:  SUCCESS
         """
+        # Verify if the portList has duplicates.
+        self.verifyForDuplicatePorts(portList)
+
         if createVports:
             self.createVports(portList)
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
@@ -420,9 +423,20 @@ class PortMgmt(object):
                 returnValues.append('connected')
         return returnValues
 
+    def verifyForDuplicatePorts(self, portList):
+        """
+        Description
+           Verify if the portList has any duplicate ports.
+           Raise an exception if true.
+        """
+        duplicatePorts = [x for n, x in enumerate(portList) if x in portList[:n]]
+        if duplicatePorts:
+            raise IxNetRestApiException('\nYour portList has duplicate ports {0}'.format(duplicatePorts))
+
     def arePortsAvailable(self, portList, raiseException=True):
         """
-        Description: Verify if any of the portList is owned.
+        Description:
+           Verify if any of the portList is owned.
 
         Parameter:
            portList: Example: [ ['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1'] ]
@@ -431,6 +445,9 @@ class PortMgmt(object):
             - List of ports that are currently owned
             - 0: If portList are available
         """
+        # Verify if the portList has duplicates.
+        self.verifyForDuplicatePorts(portList)
+
         portOwnedList = []
         for port in portList:
             chassisIp = port[0]

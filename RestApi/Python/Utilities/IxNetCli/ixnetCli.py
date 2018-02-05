@@ -793,11 +793,6 @@ try:
             print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
             return
 
-        #if middleware.preference.apiServerType == 'windows':
-        #    connecttowindows()
-        #if middleware.preference.apiServerType == 'linux':
-        #    connecttolinux()
-
         if licenseServerIp:
             middleware.preference.licenseServerIp = licenseServerIp
         if licenseMode:
@@ -942,12 +937,6 @@ try:
         defined JSON config file.
 
         :param jsonConfigFile: (str) The JSON parameter file to load for this configuration."""
-        '''
-        if middleware.preference.apiServerType == 'windows':
-            connecttowindows()
-        if middleware.preference.apiServerType == 'linux':
-            connecttolinux()
-        '''
         if os.path.exists(paramFile) is False:
             raise IxNetRestApiException("Param file doesn't exists: %s" % paramFile)
             
@@ -963,10 +952,9 @@ try:
         :param chassisIp: (str) The Ixia chassis IP address.
         :param portList: (list) Example: [chassisIp, slotNumber, portNumber] => [["192.168.70.11", "1", "1"], ["192.168.70.11", "2", "1"]]
         """
-        if middleware.preference.apiServerType == 'windows':
-            connecttowindows()
-        if middleware.preference.apiServerType == 'linux':
-            connecttolinux()
+        if middleware.connected == False:
+            print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
+            return
 
         if os.path.exists(paramFile) is False:
             raise IxNetRestApiException("Param file doesn't exists: %s" % paramFile)

@@ -62,6 +62,7 @@ class middleware:
     apiKey = None
     linuxServerSessionId = None
     sessionHeader = None ;# /api/v1/session/<id>/ixnetwork
+    connected = False ;# Internal use only. Verify if user is connected to an api server.
     params = None ;# Internal use only. From readjsonparamfile.
     ixn = None
     portMgmtObj = None
@@ -282,6 +283,7 @@ try:
             middleware.apiKey = ixn.apiKey
             middleware.linuxServerSessionId = ixn.sessionId
 
+        middleware.connected = True
         middleware.sessionId = ixn.sessionId.split('/')[-1]
         middleware.ixn = ixn
         middleware.portMgmtObj = PortMgmt(ixn)
@@ -292,8 +294,8 @@ try:
 
         match = re.match('http.*(/api.*ixnetwork)', middleware.ixn.sessionUrl)
         middleware.sessionHeader = match.group(1)
-
     # This is not the json import/export feature.
+
     def readjsonparamfile(jsonConfigFile):
         """For internal use only and for building a config from scratch.
         Used by functions that creates configuration from scratch. Read and load a JSON parameters file.
@@ -331,6 +333,10 @@ try:
             print('\nNo licenseServerIp is set or included on this command line')
             return
         '''
+        if middleware.connected == False:
+            print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
+            return
+
         if 'json' not in jsonConfigFile:
             print('\nError: The JSON config file doesn\'t have a .json extnesion. Please check your jsonConfigFile value: %s\n' % jsonConfigFile)
             return
@@ -408,6 +414,10 @@ try:
         :param licenseMode: (str) subscription|perpetual.
         :param licenseTier: (str) tier1, tier2, tier3, ...
         :param includeCrc: (bool) True|False: To include CRC error stats."""
+        if middleware.connected == False:
+            print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
+            return
+
         if 'ixn cfg' not in ixncfgConfigFile:
             print('\nError: The .ixncfg config file doesn\'t have a .ixncfg extnesion. Please check your ixncfgConfigFile value: %s\n' % ixncfgConfigFile)
             return 
@@ -779,10 +789,14 @@ try:
                                          uptime=upTimeInSeconds, downtime=downTimeInSeconds)
 
     def configIxNetworkFromScratch(licenseServerIp=None, licenseMode=None, licenseTier=None):
-        if middleware.preference.apiServerType == 'windows':
-            connecttowindows()
-        if middleware.preference.apiServerType == 'linux':
-            connecttolinux()
+        if middleware.connected == False:
+            print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
+            return
+
+        #if middleware.preference.apiServerType == 'windows':
+        #    connecttowindows()
+        #if middleware.preference.apiServerType == 'linux':
+        #    connecttolinux()
 
         if licenseServerIp:
             middleware.preference.licenseServerIp = licenseServerIp

@@ -20,11 +20,11 @@ Table of Contents
 	- Modify existing configurations, rerun traffic and get stats.
 	- showcommands()
 	- Examples
-	     1> Set your preference file.  Default = preference.py
+	     1> Set your preference file name.  Default = preference.py
 	     
 	     2> Start by connecting to one of the API type of servers:
-	        - Connecting to windows API server --> (connecttowindows())
-	        - Connecting to Linux API server   --> (connecttolinux())
+	        - Connecting to windows API server --> Enter:  connecttowindows()
+	        - Connecting to Linux API server   --> Enter:  connecttolinux()
 
 	     3> Select a method to make your configurations
 	        - Create a configuration from scratch
@@ -177,12 +177,12 @@ Getting Started:
     1> Create a configuration from scratch
        -----------------------------------
         - Currently, as of this writing, there is only a BGP and MPLS templates available to create from scratch.
-	- Enter: configbgp("<The bgp.json config file>").
-	         For example: If you created a json config file called bgpConfig.json, then enter it as the value.
-                              configbgp('bgpConfig.json')
+	- Enter: configbgp("<bgpConfig.py>").
+	         For example: If you created a config file called bgpConfig.py, then enter it as the value.
+                              configbgp('bgpConfig.py')
 		 
 	- The configbgp() API resides in the application module ixnetCli.py.
-	      - Read the bgpConfig.json file.
+	      - Read the bgpConfig.py file.
 	      - Configures a two port Topology (Tx and Rx ports).
 	      - Start BGP protocol.
 	      - Verifies ARP and BGP.
@@ -226,18 +226,17 @@ How to use ixnetCli.py
 ------------------------------------------
     - ixnetCli.py is the main module that you import in the Python Shell Interpreter.
     
-    Example 1:
+    Example:
 
-	 From a Linux or Windows  prompt:
+	 From a Linux or Windows OS prompt:
 
-	    Enter: python  (If on Windows, you might have to enter the full path to your Python.exe) 
+	    Enter: python  (If you are using Windows, you might have to enter the full path to your Python.exe) 
 
             Enter: from ixnetCli import *
 	    Enter: connecttolinux() or connecttowindows()
 	    Enter: configbgp('bgpConfig.json')
 	    Enter: starttraffic()
 	    Enter: getstats()
-
 
 	 - To see all the CLI commands
 	      Enter: showcommands()  or showcommands('API_name')
@@ -246,17 +245,6 @@ How to use ixnetCli.py
 
 	      Enter help('API_name')
 
-    Example 2:
-        
-	If you set up your preference.py file, then you don't need to enter:
-	    - connecttowindows() or connecttolinux()
-
-	Just simply load your configuration, start traffic and get stats.
-
-	    Enter: configbgp('bgpConfig.json')
-	    Enter: starttraffic()
-	    Enter: getstats()
-	
 
 Modify existing configurations, rerun traffic and get stats
 -----------------------------------------------------------

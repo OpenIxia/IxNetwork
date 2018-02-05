@@ -108,18 +108,22 @@ Requirements
 Getting Started:
 -----------------------
 
-    1> Download/clone from Github:  https://github.com/IxNetwork
+    1> Clone from Github:  https://github.com/OpenIxia/IxNetwork.git
 
     2> Put all of the above files in a central network location where everybody has access to.
 
     3> Edit the preference.py file
 
-    preference.py file
+       preference.py file
+
+       IMPORTTANT:
+          Copy the preference.py file to a different name and place it somewhere outside of your 
+          cloned Githu directory.  So in case you do an update from Github on this project, your 
+          preference file will not get overwritten.
 
         The first thing you do is set up the preference.py file.
 	This is where you state your default chassis IP, API server IP and license server IP 
 	and everything else so you don't have to enter them on CLI each time you run this application.
-
 
 	Why use this preference.py file
 

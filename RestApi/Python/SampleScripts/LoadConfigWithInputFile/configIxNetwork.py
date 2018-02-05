@@ -9,10 +9,10 @@
 #
 # DESCRIPTION
 #    This sample script demonstrates:
-#        - Read a parameter file using JSON data structure.
+#        - Read a parameter file using Python dictionary data structure.
 #        - Testing with two back-to-back Ixia ports.
 #        - This utility is scalable.  Meaning you could create n number of Topology Groups and Traffic Items.
-#        - The JSON config file model reflects the IxNework API tree structure.
+#        - The dictionary parameter file model reflects the IxNework API tree structure.
 #        - Connecting to Windows IxNetwork API server or Linux API server.
 #        - Written in Python3 and supports Python 2 
 #        - Verify for sufficient amount of port licenses before testing.
@@ -26,7 +26,7 @@
 #        - Get stats
 #
 
-import sys, json, traceback
+import sys, traceback
 
 sys.path.insert(0, '../../Modules')
 from IxNetRestApi import *
@@ -50,15 +50,15 @@ while argIndex < len(parameters):
 
     elif bool(re.match(currentArg, '-paramFile', re.I)):
         paramFile = parameters[argIndex + 1]
-        if os.path.exists(paramFile) is False:
-            raise IxNetRestApiException("JSON param file doesn't exists: %s" % paramFile)
+        if '.py' in paramFile:
+            paramFile = paramFile.split('.')[0]
         argIndex += 2
 
     elif bool(re.match(currentArg, 'help', re.I)):
         print('\nconfigIxNetwork Parameters')
         print('----------------------------')
         print('\t-connectToApiServer: defaults to windows. Options: windows|windowsConnectionMgr|linux')
-        print('\t-paramFile: The json config file to input')
+        print('\t-paramFile: The Python dictionary module file to input')
         print()
         sys.exit()
     else:
@@ -67,11 +67,13 @@ while argIndex < len(parameters):
 if 'paramFile' not in locals():
     sys.exit('\nError: You need to include -paramFile <file>\n')
 
-with open(paramFile.strip()) as inFile:
-    jsonData = json.load(inFile)
+if os.path.exists(paramFile+'.py') is False:
+    raise IxNetRestApiException("JSON param file doesn't exists: %s" % paramFile)
 
-def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupJsonData):
-    for ethernet in deviceGroupJsonData['ethernet']:
+param = __import__(paramFile).params
+
+def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupData):
+    for ethernet in deviceGroupData['ethernet']:
         ethernetObj = protocolObj.createEthernetNgpf(
             deviceGroupObj,
             ethernetName = ethernet['name'],
@@ -121,7 +123,7 @@ def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupJsonData):
                                                          networkType = ospf['networkType'],
                                                          deadInterval = ospf['deadInterval'])
 
-        if 'networkGroup' in deviceGroup:
+        if 'networkGroup' in deviceGroupData:
             for networkGroup in deviceGroup['networkGroup']:
                 networkGroupObj = protocolObj.configNetworkGroup(
                     create = deviceGroupObj,
@@ -136,45 +138,45 @@ def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupJsonData):
 
 try:
     if connectToApiServer == 'linux':
-        mainObj = Connect(apiServerIp=jsonData['linuxApiServerIp'],
-                          serverIpPort=jsonData['linuxServerIpPort'],
-                          username=jsonData['usename'],
-                          password=jsonData['password'],
-                          deleteSessionAfterTest=jsonData['deleteSessionAfterTest'],
-                          verifySslCert=jsonData['verifySslCert'],
+        mainObj = Connect(apiServerIp=param['linuxApiServerIp'],
+                          serverIpPort=param['linuxServerIpPort'],
+                          username=param['usename'],
+                          password=param['password'],
+                          deleteSessionAfterTest=param['deleteSessionAfterTest'],
+                          verifySslCert=param['verifySslCert'],
                           serverOs=connectToApiServer
                           )
 
     if connectToApiServer in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp=jsonData['windowsApiServerIp'],
-                          serverIpPort=jsonData['windowsServerIpPort'],
+        mainObj = Connect(apiServerIp=param['windowsApiServerIp'],
+                          serverIpPort=param['windowsServerIpPort'],
                           serverOs=connectToApiServer,
-                          deleteSessionAfterTest=jsonData['deleteSessionAfterTest']
+                          deleteSessionAfterTest=param['deleteSessionAfterTest']
                           )
 
     #---------- Preference Settings End --------------
 
     portObj = PortMgmt(mainObj)
-    portObj.connectIxChassis(jsonData['ixChassisIp'])
+    portObj.connectIxChassis(param['ixChassisIp'])
 
-    if portObj.arePortsAvailable(jsonData['portList'], raiseException=False) != 0:
-        if jsonData['forceTakePortOwnership'] == True:
-            portObj.releasePorts(jsonData['portList'])
-            portObj.clearPortOwnership(jsonData['portList'])
+    if portObj.arePortsAvailable(param['portList'], raiseException=False) != 0:
+        if param['forceTakePortOwnership'] == True:
+            portObj.releasePorts(param['portList'])
+            portObj.clearPortOwnership(param['portList'])
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
     # Configuring license requires releasing all ports even for ports that is not used for this test.
     portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([jsonData['licenseServerIp']], jsonData['licenseModel'], jsonData['licenseTier'])
+    mainObj.configLicenseServerDetails([param['licenseServerIp']], param['licenseModel'], param['licenseTier'])
 
     mainObj.newBlankConfig()
 
     # Set createVports = True if building config from scratch.
-    portObj.assignPorts(jsonData['portList'], createVports=True)
+    portObj.assignPorts(param['portList'], createVports=True)
     protocolObj = Protocol(mainObj, portObj)
 
-    for topologyGroup in jsonData['topology']:
+    for topologyGroup in param['topology']:
         topologyObj = protocolObj.createTopologyNgpf(portList=topologyGroup['ports'],
                                                      topologyName=topologyGroup['name'])
         
@@ -204,7 +206,7 @@ try:
     match = re.match('http.*(/api.*ixnetwork)', mainObj.sessionUrl)
     sessionHeader = match.group(1)
 
-    for trafficItem in jsonData['trafficItem']:
+    for trafficItem in param['trafficItem']:
         endpoints = {}
         endpoints['sources'] = []
         endpoints['destinations'] = []
@@ -256,7 +258,7 @@ try:
         print('{txPort:10} {txFrames:15} {rxPort:10} {rxFrames:15} {frameLoss:10} '.format(
             txPort=txPort, txFrames=txFrames, rxPort=rxPort, rxFrames=rxFrames, frameLoss=frameLoss))
 
-    if jsonData['releasePortsWhenDone'] == True:
+    if param['releasePortsWhenDone'] == True:
         portObj.releasePorts(portList)
 
     if connectToApiServer == 'linux':
@@ -266,16 +268,16 @@ try:
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
-    if jsonData['enableDebugTracing']:
+    if param['enableDebugTracing']:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and connectToApiServer == 'linux':
-        if jsonData['deleteSessionAfterTest']:
+        if param['deleteSessionAfterTest']:
             mainObj.linuxServerStopAndDeleteSession()
     if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
-        if jsonData['releasePortsWhenDone'] and jsonData['forceTakePortOwnership']:
+        if param['releasePortsWhenDone'] and param['forceTakePortOwnership']:
             portObj.releasePorts(portList)
         if connectToApiServer == 'windowsConnectionMgr':
-            if jsonData['deleteSessionAfterTest']:
+            if param['deleteSessionAfterTest']:
                 mainObj.deleteSession()

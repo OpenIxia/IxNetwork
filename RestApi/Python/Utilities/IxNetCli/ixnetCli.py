@@ -308,7 +308,7 @@ try:
         #middleware.params = json.load(open(jsonConfigFile))
 
 
-    def runjsonconfig(jsonConfigFile=None, chassisIp=None, portList=None, licenseServerIp=None, licenseMode=None, licenseTier=None, includeCrc=False):
+    def runjsonconfig(jsonConfigFile=None, chassisIp=None, portList=None, includeCrc=False):
         """Loads an exported JSON config file, reassigns ports, verify protocols, start traffic and get stats.
 
         :param jsonConfigFile: (str) The IxNetwork saved configuration in JSON format.
@@ -317,22 +317,8 @@ try:
         :param portList: (list) All the ports to use for this JSON configuration file.
                          The amount of ports must match the amount of configured ports in the JSON config file.
                          Defaults to using all the ports defined in the JSON config file.
-                         Input example:  portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
-        :param licenseServerIp: (str) The license server IP address.
-        :param licenseMode: (str) mixed|subscription|perpetual
-        :param licenseTier: (str) tier1, tier2, tier3"""
-        '''
-        if licenseServerIp:
-            preference.licenseServerIp = [licenseServerIp]
-        if licenseMode:
-            preference.licenseMode = licenseMode
-        if licenseTier:
-            preference.licenseTier = licenseTier
+                         Input example:  portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]"""
 
-        if preference.licenseServerIp == None:
-            print('\nNo licenseServerIp is set or included on this command line')
-            return
-        '''
         if middleware.connected == False:
             print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
             return
@@ -340,13 +326,6 @@ try:
         if 'json' not in jsonConfigFile:
             print('\nError: The JSON config file doesn\'t have a .json extnesion. Please check your jsonConfigFile value: %s\n' % jsonConfigFile)
             return
-
-        if licenseServerIp:
-            middleware.preference.licenseServerIp = licenseServerIp
-        if licenseMode:
-            middleware.preference.licenseMode = licenseMode
-        if licenseTier:
-            middleware.preference.licenseTier = licenseTier
 
         if middleware.preference.licenseServerIp == None:
             print('\nNo licenseServerIp is set or included on this command line')
@@ -403,23 +382,20 @@ try:
         middleware.trafficObj.startTraffic()
         getstats(includeCrc=includeCrc)
 
-    def runixncfgconfig(ixncfgConfigFile=None, chassisIp=None, portList=None, licenseServerIp=None, licenseMode=None, licenseTier=None, includeCrc=False):
+    def runixncfgconfig(ixncfgConfigFile=None, chassisIp=None, portList=None, includeCrc=False):
         """Loads a saved ixncfg config file, reassign ports, start protocols, verify protocols, start traffic and get stats.
 
         :param ixncfgConfigFile: (str) The IxNetwork saved configuration in ixncfg format.
         :param chassisIp: (str) The chassis IP address.
         :param portList: (list) A list of list containing [[ixChassisIp, 1, 1], [ixChassisIp, 1, 2]]
                          Defaults to using ports configured in the saved config file.
-        :param licenseServerIp: (str) The license server IP address.
-        :param licenseMode: (str) subscription|perpetual.
-        :param licenseTier: (str) tier1, tier2, tier3, ...
         :param includeCrc: (bool) True|False: To include CRC error stats."""
         if middleware.connected == False:
             print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
             return
 
-        if 'ixn cfg' not in ixncfgConfigFile:
-            print('\nError: The .ixncfg config file doesn\'t have a .ixncfg extnesion. Please check your ixncfgConfigFile value: %s\n' % ixncfgConfigFile)
+        if 'ixncfg' not in ixncfgConfigFile:
+            print('\nError: The .ixncfg config file doesn\'t have a .ixncfg extension. Please check your ixncfgConfigFile value: %s\n' % ixncfgConfigFile)
             return 
 
         if ixncfgConfigFile == None:
@@ -428,13 +404,6 @@ try:
                 return
             else:
                 ixncfgConfigFile = middleware.preference.ixncfgConfigFile
-
-        if licenseServerIp:
-            middleware.preference.licenseServerIp = licenseServerIp
-        if licenseMode:
-            middleware.preference.licenseMode = licenseMode
-        if licenseTier:
-            middleware.preference.licenseTier = licenseTier
 
         if middleware.preference.licenseServerIp == None:
             print('\nNo licenseServerIp is set or included on this command line')
@@ -447,15 +416,6 @@ try:
             else:
                 chassisIp = middleware.preference.chassisIp
 
-        '''
-        middleware.ixn.connectIxChassis(chassisIp)
-        if portList is not None and middleware.portMgmtObj.arePortsAvailable(portList, raiseException=False) != 0:
-            if preference.forceTakePortOwnership == True:
-                middleware.portMgmtObj.releasePorts(portList)
-                middleware.portMgmtObj.clearPortOwnership(portList)
-            else:
-                raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
-        '''
         # Need to support multiple chassis's.  If user passed in a string of chassis, convert it to a list.
         if chassisIp is not list:
             chassisIp = chassisIp.split(' ')
@@ -788,27 +748,23 @@ try:
         middleware.protocolObj.flapBgpPeerNgpf(bgpObjHandle=bgpObject, enable=enableTrueOrFalse, flapList=ipInterfaceList,
                                          uptime=upTimeInSeconds, downtime=downTimeInSeconds)
 
-    def configIxNetworkFromScratch(licenseServerIp=None, licenseMode=None, licenseTier=None):
+    def configIxNetworkFromScratch(chassisIp=None, portList=None):
         if middleware.connected == False:
             print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
             return
 
-        if licenseServerIp:
-            middleware.preference.licenseServerIp = licenseServerIp
-        if licenseMode:
-            middleware.preference.licenseMode = licenseMode
-        if licenseTier:
-            middleware.preference.licenseTier = licenseTier
-
-        if middleware.preference.licenseServerIp == None:
-            print('\nNo licenseServerIp is set or included on this command line')
-            return
-
-        if middleware.preference.chassisIp == None:
-            middleware.preference.chassisIp = middleware.params['ixChassisIp']
+        if chassisIp:
+            middleware.preference.chassisIp = chassisIp
+        else:
+            if middleware.preference.chassisIp == None:
+                middleware.preference.chassisIp = middleware.params['ixChassisIp']
         middleware.ixn.connectIxChassis(middleware.preference.chassisIp)
-        if middleware.preference.portList == None:
-            middleware.preference.portList = middleware.params['portList']
+
+        if portList:
+            middleware.preference.portList = portList
+        else:
+            if middleware.preference.portList == None:
+                middleware.preference.portList = middleware.params['portList']
 
         if middleware.portMgmtObj.arePortsAvailable(middleware.preference.portList, raiseException=False) != 0:
             if middleware.preference.forceTakePortOwnership == True:
@@ -932,19 +888,22 @@ try:
         if isAnyTrafficItemConfigured == 0:
             raise IxNetRestApiException('No Traffic Item was enabled for configuring')
 
-    def configbgp(paramFile=None, licenseServerIp=None, licenseMode=None, licenseTier=None):
+    def configbgp(paramFile=None, chassisIp=None, portList=None):
         """Configure BGP and Traffic Item from scratch.  Getting all the settings from the user
         defined JSON config file.
 
         :param jsonConfigFile: (str) The JSON parameter file to load for this configuration."""
+        if paramFile == None:
+            raise IxNetRestApiException('\nError: You must provide a paramFile\n')
+
         if os.path.exists(paramFile) is False:
             raise IxNetRestApiException("Param file doesn't exists: %s" % paramFile)
-            
+
         middleware.params = __import__(paramFile.split('.')[0]).params
-        configIxNetworkFromScratch(licenseServerIp, licenseMode, licenseTier)
+        configIxNetworkFromScratch(chassisIp, portList)
 
 
-    def configmpls(paramFile=None, chassisIp=None, portList=None,  licenseServerIp=None, licenseMode=None, licenseTier=None):
+    def configmpls(paramFile=None, chassisIp=None, portList=None):
         """Configure MPLS raw Traffic Item.  Getting all the settings from the user
         defined JSON config file.
 
@@ -952,21 +911,17 @@ try:
         :param chassisIp: (str) The Ixia chassis IP address.
         :param portList: (list) Example: [chassisIp, slotNumber, portNumber] => [["192.168.70.11", "1", "1"], ["192.168.70.11", "2", "1"]]
         """
-        if middleware.connected == False:
-            print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
-            return
+        if paramFile == None:
+            raise IxNetRestApiException('\nError: You must provide a paramFile\n')
 
         if os.path.exists(paramFile) is False:
             raise IxNetRestApiException("Param file doesn't exists: %s" % paramFile)
+
+        if middleware.connected == False:
+            print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
+            return
             
         middleware.params = __import__(paramFile.split('.')[0]).params
-
-        if licenseServerIp:
-            middleware.preference.licenseServerIp = licenseServerIp
-        if licenseMode:
-            middleware.preference.licenseMode = licenseMode
-        if licenseTier:
-            middleware.preference.licenseTier = licenseTier
 
         if middleware.preference.licenseServerIp == None:
             print('\nNo licenseServerIp is set or included on this command line')

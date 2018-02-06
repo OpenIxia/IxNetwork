@@ -3015,7 +3015,7 @@ class Protocol(object):
                         index = 1
                         self.ixnObj.logInfo('\t    {0:8} {1:14} {2:7} {3:9} {4:12} {5:16} {6:12} {7:7} {8:7}'.format('Index', 'MacAddress', 'VlanId', 'VlanPri', 'EthSession',
                                                                                                         'IPv4Address', 'Gateway', 'Prefix', 'Ipv4Session'))
-                        print('\t   ', '-'*104)
+                        self.ixnObj.logInfo('\t    {0}'.format('-'*104))
                         for mac,vlanId,vlanPriority,ethSession,ip,gateway,prefix,ipv4Session in zip(macAddress,
                                                                                                     vlanId,
                                                                                                     vlanPriority,

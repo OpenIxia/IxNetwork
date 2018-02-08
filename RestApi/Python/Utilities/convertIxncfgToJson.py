@@ -40,10 +40,9 @@ from IxNetRestApi import *
 from IxNetRestApiFileMgmt import FileMgmt
 from IxNetRestApiPortMgmt import PortMgmt
 
-destinationPath = '/home/hgee/Temp/temp2'
-ixncfgFolders = ['/home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/Utilities/temp']
-ixncfgFiles = ['/home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/Utilities/temp/temp3/bgp_ngpf_temp3.ixncfg',
-               '/home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/Utilities/temp/temp2/bgp_ngpf_temp2.ixncfg']
+destinationPath = '/home/hgee/Temp/temp2' ;# User needs to replace this
+ixncfgFolders = []
+ixncfgFiles = []
 
 # Default the API server to either windows or linux.
 connectToApiServer = 'windows'

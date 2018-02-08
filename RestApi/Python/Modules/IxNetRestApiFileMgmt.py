@@ -344,7 +344,7 @@ class FileMgmt(object):
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
         absolutePath = response.json()['absolute']
         self.ixnObj.logInfo('Storing the exported file to: %s' % destinationPath)
-        self.copyFileWindowsToLocalLinux(absolutePath.replace('\\', '\\\\')+'\\\\'+fileName,
+        self.copyFileWindowsToLocalLinux(windowsPathAndFileName=absolutePath.replace('\\', '\\\\')+'\\\\'+fileName,
                                         localPath=destinationPath,
                                         renameDestinationFile=None,
                                         includeTimestamp=False)
@@ -491,11 +491,10 @@ class FileMgmt(object):
             ixChassisId += 1
         self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
         self.ixnObj.logInfo('Ports rebooting ...')
-        #self.importJsonConfigObj(dataObj=jsonObject, type='newConfig')
         self.importJsonConfigObj(dataObj=jsonObject, type='modify', timeout=timeout)
 
     def jsonReadConfig(self, jsonFile):
-        if os.path.exists(jsonFile) is False:
+        if os.path.isfile(jsonFile) == False:
             raise IxNetRestApiException("JSON param file doesn't exists: %s" % jsonFile)
 
         with open(jsonFile.strip()) as inFile:

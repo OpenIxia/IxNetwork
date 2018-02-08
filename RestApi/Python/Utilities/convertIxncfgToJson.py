@@ -3,8 +3,11 @@ Description
 
     This script converts .ixncfg configurations to a JSON config file:
 
-    All converted filenames are the same names as the original .ixncfg config file with the .json extension.
-    All converted JSON config files are stored in the variable destinationPath.
+    - All converted filenames are the same names as the original .ixncfg config file with the .json extension.
+    - All converted JSON config files are stored in the user defined variable destinationPath.
+    - You provide a list of folders containing .ixncfg config files and this script will convert all .ixncfg
+      config files in it.
+    - You could also provide a list of .ixncfg config files including its path.
 
     This script could connect to any IxNetwork API servers: Windows or Linux.
 

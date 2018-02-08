@@ -27,13 +27,20 @@ Variables
     ixncfgFiles:  Provide a list of all the .ixncfg files including its path.
                   Leave variable empty if none.
 
+Requirements:
+    (This script uses ReST APIs)
+    - Written in Python3 and supports Python2
+    - The Python "requests" module for ReST API executions.
+    - IxNetwork API server.  Chassis and ports are not required.
+    - IxNetRestApi* modules in the ../Modules directory.
+
 Usage
 
     You must set the above variables.
 
     Command line execution:
-        python convertIxncfgToJson
-        python convertIxncfgToJson windows|linux|windowsConnectionMgr
+        python convertIxncfgToJson or ...
+        python convertIxncfgToJson linux|windowsConnectionMgr
 """
 
 import sys, glob, traceback

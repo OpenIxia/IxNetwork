@@ -491,12 +491,15 @@ class PortMgmt(object):
         return 0
 
     def verifyPortState(self, timeout=70):
-        #timer = timeout
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
-        vportList = ["%s/vport/%s" % (self.ixnObj.sessionUrl, str(i["id"])) for i in response.json()]
+        vportList = [metaDatas["links"][0]['href'] for metaDatas in response.json()]
         for eachVport in vportList:
             for counter in range(1,timeout+1):
-                response = self.ixnObj.get(eachVport, silentMode=True)
+                response = self.ixnObj.get(self.ixnObj.httpHeader+eachVport, silentMode=True)
+                if response.json()['state'] == 'unassigned':
+                    print('\nThe vport {0} is not assigned to a physical port. Skipping this vport verification.'.format(eachVport))
+                    break
+
                 self.ixnObj.logInfo('\nPort: %s' % response.json()['assignedTo'])
                 self.ixnObj.logInfo('\tVerifyPortState: %s\n\tWaiting %s/%s seconds' % (response.json()['state'], counter, timeout))
                 if counter < timeout and response.json()['state'] in ['down', 'busy']:
@@ -507,4 +510,5 @@ class PortMgmt(object):
                 if counter == timeout and response.json()['state'] == 'down':
                     # Failed
                     raise IxNetRestApiException('Port failed to come up')
+
 

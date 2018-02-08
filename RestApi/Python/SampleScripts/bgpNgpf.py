@@ -225,18 +225,16 @@ try:
             'routeMesh':'oneToOne',
             'allowSelfDestined':False,
             'trackBy': ['flowGroup0', 'vlanVlanId0']},
-
         endpoints = [{'name':'Flow-Group-1',
                       'sources': [topologyObj1],
                       'destinations': [topologyObj2]
-                      ]
                   }],
-        
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,
                            'frameRateType': 'percentLineRate',
-                           'frameSize': 128}])
+                           'frameSize': 128
+                       }])
 
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]

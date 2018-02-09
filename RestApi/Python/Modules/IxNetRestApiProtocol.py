@@ -8,8 +8,8 @@ import re, time
 from IxNetRestApi import IxNetRestApiException
 
 # 8.40 updates:
-#    sessionStatus using ?includes=sessionStatus and then response.json()['sessionStatus']
-#       - verifyProtocolSessionsNgpf (TODO: Call verifyProtocolStarted())
+#    sessionStatus uses ?includes=sessionStatus and then response.json()['sessionStatus']
+#       - verifyProtocolSessionsNgpf 
 #       - verifyAllProtocolSessionsInternal
 #       - getNgpfGatewayIpMacAddress (resolvedGatewayMac rquires ?includes=resolvedGatewayMac)
 #       - showTopologies
@@ -1506,6 +1506,89 @@ class Protocol(object):
                         return gatewayIp
                 except:
                     pass
+        return 0
+
+    def getDeviceGroupObjBySrcIp(self, srcIpAddress):
+        """
+        Description
+            Search each Topology's Device Group for the srcIpAddress.
+            If found, return the Device Group object.
+            Mainly used for Traffic Item source/destination endpoints.
+
+            if srcIpAddress is IPv6, the format must match what is shown
+            in the GUI or API server.  Please verify how the configured 
+            IPv6 format looks like on either the GUI or API server when you
+            are testing your script during development.
+
+        Returns
+            0: Failed. No srcIpAddress found in any Device Group.
+            deviceGroup Object: The Device Group object
+        """
+        queryData = {'from': '/',
+                    'nodes': [{'node': 'topology',    'properties': [], 'where': []},
+                              {'node': 'deviceGroup', 'properties': [], 'where': []},
+                              {'node': 'ethernet',  'properties': [], 'where': []},
+                              {'node': 'ipv4',  'properties': ['address'], 'where': []},
+                              {'node': 'ipv6',  'properties': ['address'], 'where': []}
+                              ]}
+
+        queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+        for topology in queryResponse.json()['result'][0]['topology']:
+            for deviceGroup in topology['deviceGroup']:
+                for ethernet in deviceGroup['ethernet']:
+                    try:
+                        if bool(re.match(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', srcIpAddress)):
+                            srcIpMultivalue = ethernet['ipv4'][0]['address']
+                        else:
+                            # IPv6 format: ['2000:0:0:1:0:0:0:2', '2000:0:0:2:0:0:0:2', '2000:0:0:3:0:0:0:2', '2000:0:0:4:0:0:0:2']
+                            srcIpMultivalue = ethernet['ipv6'][0]['address']
+
+                        response = self.ixnObj.getMultivalueValues(srcIpMultivalue)
+                        if srcIpAddress in response:
+                            self.ixnObj.logInfo('\nFound srcIpAddress: %s' % srcIpAddress)
+                            return deviceGroup['href']
+                    except:
+                        pass
+        return 0
+
+    def getNetworkGroupObjByIp(self, ipAddress):
+        """
+        Description
+            Search each Device Group's Network Group for the ipAddress.
+            If found, return the Network Group object.
+            Mainly used for Traffic Item source/destination endpoints.
+
+            The ipAddress cannot be a range. It has to be an actual IP address
+            within the range.
+
+        Returns
+            0: Failed. No ipAddress found in any NetworkGroup.
+            network group Object: The Network Group object.
+        """
+        queryData = {'from': '/',
+                    'nodes': [{'node': 'topology',    'properties': [], 'where': []},
+                              {'node': 'deviceGroup', 'properties': [], 'where': []},
+                              {'node': 'networkGroup',  'properties': [], 'where': []},
+                              {'node': 'ipv4PrefixPools',  'properties': ['networkAddress'], 'where': []},
+                              {'node': 'ipv6PrefixPools',  'properties': ['networkAddress'], 'where': []}
+                              ]}
+
+        queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+
+        if '.' in ipAddress:
+            prefixPoolType = 'ipv4PrefixPools'
+        if ':' in ipAddress:
+            prefixPoolType = 'ipv6PrefixPools'
+
+        for topology in queryResponse.json()['result'][0]['topology']:
+            for deviceGroup in topology['deviceGroup']:
+                for networkGroup in deviceGroup['networkGroup']:
+                    for prefixPool in networkGroup[prefixPoolType]:
+                        prefixPoolRangeMultivalue = prefixPool['networkAddress']
+                        response = self.ixnObj.getMultivalueValues(prefixPoolRangeMultivalue)
+                        if ipAddress in response:
+                            return networkGroup['href']
+
         return 0
 
     def getIpAddrIndexNumber(self, ipAddress):

@@ -5,6 +5,10 @@ class Statistics(object):
     def __init__(self, ixnObj):
         self.ixnObj = ixnObj
 
+        # For takesnapshot()
+        from IxNetRestApiFileMgmt import FileMgmt
+        self.fileMgmtObj = FileMgmt(self.ixnObj)
+
     def getStats(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False, displayStats=True,
                  silentMode=True, ignoreError=False):
         """
@@ -238,8 +242,8 @@ class Statistics(object):
         #response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files?filename=Flow Statistics.csv&absolute=c:\\Results', ignoreError=True)
         if localLinuxPath:
             # Get the snapshot. Use the csvFilename that was specified and the location
-            self.ixnObj.copyFileWindowsToLocalLinux('{0}\\{1}.csv'.format(windowsPath, viewName), localLinuxPath,
-                                            renameDestinationFile=renameDestinationFile, includeTimestamp=includeTimestamp)
+            self.fileMgmtObj.copyFileWindowsToLocalLinux('{0}\\{1}.csv'.format(windowsPath, viewName), localLinuxPath,
+                                                    renameDestinationFile=renameDestinationFile, includeTimestamp=includeTimestamp)
 
     def getViewObject(self, viewName='Flow Statistics'):
         """
@@ -258,7 +262,7 @@ class Statistics(object):
             "Port Summary"
             "OSPFv2-RTR Drill Down"
             "OSPFv2-RTR Per Port"
-            "IPv4 Drill Down"
+xo            "IPv4 Drill Down"
             "L2-L3 Test Summary Statistics"
             "Flow Statistics"
             "Traffic Item Statistics"

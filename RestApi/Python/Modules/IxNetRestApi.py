@@ -16,7 +16,7 @@ import os, re, sys, requests, json, time, subprocess, traceback
 class IxNetRestApiException(Exception): pass
 
 class Connect(object):
-    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows',
+    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', webQuickTest=False,
                  username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
                  apiKey=None, generateRestLogFile=False):
@@ -29,6 +29,7 @@ class Connect(object):
             serverIp: The REST API server IP address.
             serverPort: The server IP address socket port.
             apiServer: windows, windowsConnectionMgr or linux
+            webQuickTest: True|False: True for using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
             includeDebugTraceback: True or False.
                                    If True, traceback messsages are included in raised exceptions.
                                    If False, no traceback.  Less verbose.
@@ -57,6 +58,35 @@ class Connect(object):
             jsonHeader: The default URL header: {"content-type": "application/json"}
             apiKey: For Linux API server only. Automatically provided by the server when connecting and authenticating.
                     You could also provide an API-Key to connect to an existing session. Get the API-Key from the Linux API server.
+
+        Steps to connect to Linux API server steps:
+            1> POST: https://192.168.70.108/api/v1/auth/session
+               DATA: {"username": "admin", "password": "admin"}
+               HEADERS: {'content-type': 'application/json'}
+        
+            2> POST: https://192.168.70.108:443/api/v1/sessions
+               DATA: {"applicationType": "ixnrest"}
+               HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+            3> POST: https://192.168.70.108:443/api/v1/sessions/4/operations/start
+               DATA: {}
+               HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+            sessionId = https://192.168.70.108:443/api/v1/sessions/<id>
+
+        Steps to connect to Linux Web Quick Test:
+            1> POST: https://192.168.70.108:443/api/v1/auth/session
+               DATA: {"username": "admin", "password": "admin"}
+               HEADERS: {'content-type': 'application/json'}
+
+            2> POST: https://192.168.70.108:443/api/v1/sessions
+               DATA: {'applicationType': 'ixnetwork'}
+
+            3> POST: https://192.168.70.108:443/api/v1/sessions/2/operations/start
+               DATA: {'applicationType': 'ixnetwork'}
+
+            sessionId = https://192.168.70.108/ixnetworkweb/api/v1/sessions/<id>
+               
         """
         from requests.exceptions import ConnectionError
         from requests.packages.urllib3.connection import HTTPConnection
@@ -66,6 +96,7 @@ class Connect(object):
         self.verifySslCert = verifySslCert
         self.linuxApiServerIp = apiServerIp
         self.apiServerPort = serverIpPort
+        self.webQuickTest = webQuickTest
         self.generateRestLogFile = generateRestLogFile
         if generateRestLogFile:
             self.restLogFile = 'restApiLog.txt'
@@ -80,8 +111,7 @@ class Connect(object):
             self.sessionIdNumber = 1
 
         if serverOs == 'windowsConnectionMgr':
-            # TODO: Dynamically get the session Id number
-            
+            # TODO: Dynamically get the session Id number            
             if sessionId:
                 self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(apiServerIp, serverIpPort, str(sessionId))
                 self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(apiServerIp, serverIpPort, str(sessionId))
@@ -97,9 +127,14 @@ class Connect(object):
             if apiKey != None and sessionId == None:
                 raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
             if apiKey and sessionId:
-                self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
-                self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(self.linuxApiServerIp, self.apiServerPort, sessionId)
-                self.httpHeader = self.sessionUrl.split('/api')[0]
+                if self.webQuickTest == False:
+                    self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
+                    self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(self.linuxApiServerIp, self.apiServerPort, sessionId)
+                    self.httpHeader = self.sessionUrl.split('/api')[0]
+                if self.webQuickTest:
+                    self.sessionId = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
+                    self.sessionUrl = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
+                    self.httpHeader = self.sessionUrl.split('/ixnetworkweb')[0]
                 self.apiKey = apiKey
                 self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
 
@@ -471,7 +506,11 @@ class Connect(object):
                 linuxServerIp = linuxServerIp + ':' + str(self.apiServerPort)
 
             url = 'https://{0}/api/v1/sessions'.format(linuxServerIp)
-            data = {'applicationType': 'ixnrest'}
+            if self.webQuickTest == False:
+                data = {'applicationType': 'ixnrest'}
+            if self.webQuickTest == True:
+                data = {'applicationType': 'ixnetwork'}
+
             self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
             self.logInfo('\nlinuxServerCreateSession')
             response = self.post(url, data=data, headers=self.jsonHeader)
@@ -486,6 +525,11 @@ class Connect(object):
             response = self.post(self.sessionId+'/operations/start')
             if self.linuxServerWaitForSuccess(response.json()['url'], timeout=60) == 1:
                 raise IxNetRestApiException
+
+            if self.webQuickTest == True:
+                self.sessionId = 'https://{0}/ixnetworkweb/api/v1/sessions/{1}'.format(linuxServerIp, self.sessionIdNumber)
+                self.sessionUrl = 'https://{0}/ixnetworkweb/api/v1/sessions/{1}/ixnetwork'.format(linuxServerIp, self.sessionIdNumber)
+                self.httpHeader = self.sessionUrl.split('/api')[0]
 
         # If an API-Key is provided, then verify the session ID connection.
         if self.apiKey:

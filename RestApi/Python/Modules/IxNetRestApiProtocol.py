@@ -707,15 +707,7 @@ class Protocol(object):
                         data = {'arg1': [rsvpTeLspsObj['href']]}
                         self.ixnObj.post(self.ixnObj.httpHeader+rsvpTeLspsObj['href']+'/operations/start', data=data)
 
-    def startAllProtocols(self):
-        """
-        Description
-            Start all protocols in NGPF and verify all Device Groups are started.
-
-        Syntax
-            POST:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/startallprotocols
-        """
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/startallprotocols', data={'arg1': 'sync'})
+    def verifyDeviceGroupStatus(self):
         queryData = {'from': '/',
                         'nodes': [{'node': 'topology', 'properties': [], 'where': []},
                                   {'node': 'deviceGroup', 'properties': ['href', 'enabled'], 'where': []},
@@ -723,6 +715,8 @@ class Protocol(object):
                     }
 
         queryResponse = self.ixnObj.query(data=queryData)
+
+        deviceGroupTimeout = 60
         for topology in queryResponse.json()['result'][0]['topology']:
             for deviceGroup in topology['deviceGroup']:
                 deviceGroupObj = deviceGroup['href']
@@ -731,30 +725,50 @@ class Protocol(object):
                 enabledMultivalue = response.json()['enabled']
                 enabled = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=True)
                 if enabled[0] == 'true':
-                    for counter in range(1,21):
+                    for counter in range(1,deviceGroupTimeout+1):
                         response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=True)
                         deviceGroupStatus = response.json()['status']
                         self.ixnObj.logInfo('\n%s' % deviceGroupObj)
                         self.ixnObj.logInfo('\tStatus: %s' % deviceGroupStatus)
-                        if deviceGroupStatus != 'started':
-                            self.ixnObj.logInfo('\tWaiting %d/%d seconds ...' % (counter, 20))
+                        if counter < deviceGroupTimeout and deviceGroupStatus != 'started':
+                            self.ixnObj.logInfo('\tWaiting %d/%d seconds ...' % (counter, deviceGroupTimeout))
                             time.sleep(1)
-                        if deviceGroupStatus == 'started':
+                        if counter < deviceGroupTimeout and deviceGroupStatus == 'started':
                             break
-
+                        if counter == deviceGroupTimeout and deviceGroupStatus != 'started':
+                            raise IxNetRestApiException('\nDevice Group failed to start up')
+                    
+                    # Inner Device Group
                     if deviceGroup['deviceGroup'] != []:
                         innerDeviceGroupObj = deviceGroup['deviceGroup'][0]['href']
-                        for counter in range(1,21):
+                        for counter in range(1,deviceGroupTimeout):
                             response = self.ixnObj.get(self.ixnObj.httpHeader+innerDeviceGroupObj, silentMode=True)
                             innerDeviceGroupStatus = response.json()['status']
                             self.ixnObj.logInfo('\n\tInnerDeviceGroup: %s' % innerDeviceGroupObj)
                             self.ixnObj.logInfo('\t   Status: %s' % innerDeviceGroupStatus)
-                            if innerDeviceGroupStatus != 'started':
-                                self.ixnObj.logInfo('\tWait %d/%d' % (counter, 20))
+                            if counter < deviceGroupTimeout and innerDeviceGroupStatus != 'started':
+                                self.ixnObj.logInfo('\tWait %d/%d' % (counter, deviceGroupTimeout))
                                 time.sleep(1)
-                            if innerDeviceGroupStatus == 'started':
+                            if counter < deviceGroupTimeout and innerDeviceGroupStatus == 'started':
                                 break
+                            if counter == deviceGroupTimeout and innerDeviceGroupStatus != 'started':
+                                raise IxNetRestApiException('\nInner Device Group failed to start up')
         print()
+
+    def startAllProtocols(self):
+        """
+        Description
+            Start all protocols in NGPF and verify all Device Groups are started.
+
+        Syntax
+            POST:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/startallprotocols
+        """
+        #response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/startallprotocols', data={'arg1': 'sync'})
+        url = self.ixnObj.sessionUrl+'/operations/startallprotocols'
+        response = self.ixnObj.post(url)
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
+            raise IxNetRestApiException
+        self.verifyDeviceGroupStatus()
 
     def stopAllProtocols(self):
         """
@@ -764,7 +778,10 @@ class Protocol(object):
         Syntax
             POST:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/stopallprotocols
         """
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/stopallprotocols', data={'arg1': 'sync'})
+        url = self.ixnObj.sessionUrl+'/operations/stopallprotocols'
+        response = self.ixnObj.post(url, data={'arg1': 'sync'})
+        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
+            raise IxNetRestApiException
 
     def startProtocol(self, protocolObj):
         """
@@ -813,6 +830,8 @@ class Protocol(object):
         response = self.ixnObj.post(url, data={'arg1': topologyObjList})
         if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
             raise IxNetRestApiException
+
+        self.verifyDeviceGroupStatus()
 
     def stopTopology(self, topologyObjList='all'):
         """
@@ -902,9 +921,7 @@ class Protocol(object):
 
         for eachProtocol in protocolObjList:
             # notStarted, up or down
-
             protocolName =  eachProtocol.split('/')[-2]
-            self.ixnObj.logInfo('\nVerifyProtocolSessions: %s\n' % eachProtocol)
             for timer in range(1,timerStop+1):
                 sessionStatus = self.getSessionStatus(eachProtocol)
                 # ['up']
@@ -912,28 +929,28 @@ class Protocol(object):
                 # Started
                 protocolSessionStatus = response.json()['status']
 
-                print('\nprotocolSessionStatus:', protocolSessionStatus)
-                print('sessionStatusResponse:', sessionStatus)
+                self.ixnObj.logInfo('\nVerifyProtocolSessions: %s\n' % eachProtocol)
+                print('\tprotocolSessionStatus:', protocolSessionStatus)
+                print('\tsessionStatusResponse:', sessionStatus)
                 if timer < timerStop:
-                    if 'down' in protocolSessionStatus or 'notStarted' in protocolSessionStatus:
-                        self.ixnObj.logInfo('\tStatus: Down : Wait %s/%s seconds' % (timer, timerStop))
+                    if protocolSessionStatus != 'started':
+                        self.ixnObj.logInfo('\tWait %s/%s seconds' % (timer, timerStop))
                         time.sleep(1)
                         continue
 
                     # Started
-                    if 'down' not in protocolSessionStatus or 'notStarted' not in protocolSessionStatus:
-                        if 'down' in sessionStatus:
-                            self.ixnObj.logInfo('\tProtocol session is down: Wait %s/%s seconds' % (timer, timerStop))
-                            time.sleep(1)
+                    if 'up' not in sessionStatus:
+                        self.ixnObj.logInfo('\tProtocol session is down: Wait %s/%s seconds' % (timer, timerStop))
+                        time.sleep(1)
+                        continue
 
-                    if 'down' not in protocolSessionStatus or 'notStarted' not in protocolSessionStatus:
-                        if 'down' not in sessionStatus:
-                            self.ixnObj.logInfo('Protocol sessions are all up: {0}'.format(protocolName))
-                            break
+                    if 'up' in sessionStatus:
+                        self.ixnObj.logInfo('\tProtocol sessions are all up: {0}'.format(protocolName))
+                        break
 
                 if timer == timerStop:
                     if 'notStarted' in protocolSessionStatus:
-                        raise IxNetRestApiException('\nverifyProtocolSessions: {0} session failed to start'.format(protocolName))
+                        raise IxNetRestApiException('\tverifyProtocolSessions: {0} session failed to start'.format(protocolName))
                         
                     if protocolSessionStatus == 'started' and 'down' in sessionStatus:
                         # Show ARP failures
@@ -952,7 +969,7 @@ class Protocol(object):
                             for eachIpIndex in ipInterfaceIndexList:
                                 self.ixnObj.logInfo('\t{0}'.format(ipAddressList[eachIpIndex]))
                         else:
-                            self.ixnObj.logInfo('\nverifyProtocolSessions: {0} session failed'.format(protocolName))
+                            self.ixnObj.logInfo('\tverifyProtocolSessions: {0} session failed'.format(protocolName))
 
                         raise IxNetRestApiException('Verify protocol sessions failed: {0}'.format(protocolName))
 
@@ -1460,7 +1477,6 @@ class Protocol(object):
                                     'nodes': [{'node': 'ipv4',  'properties': ['gatewayIp', 'resolvedGatewayMac'], 'where': []}
                                     ]}
                         queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
-                        print('\n---- query:', queryResponse.json())
                         response = self.ixnObj.get(self.ixnObj.httpHeader+ipv4Href+'?includes=resolvedGatewayMac')
                         gatewayMacAddress = response.json()['resolvedGatewayMac']
                         self.ixnObj.logInfo('\ngatewayIpMacAddress: %s' % gatewayMacAddress)

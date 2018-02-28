@@ -916,7 +916,7 @@ class Traffic(object):
             enabledTrafficItemHrefList = [trafficItem['href'] for trafficItem in queryResponse.json()['result'][0]['trafficItem']]
             self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/startstatelesstrafficblocking', data={'arg1': enabledTrafficItemHrefList})
             # Wait a few seconds before calling getStats() or else viewObj is not created.
-            time.sleep(5)
+            time.sleep(8)
         self.ixnObj.logInfo('startTraffic: Successfully started')
 
     def stopTraffic(self):

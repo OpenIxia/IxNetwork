@@ -175,7 +175,7 @@ class Connect(object):
 
             if silentMode is False:
                 self.logInfo('STATUS CODE: {0}'.format(response.status_code))
-            if not re.match('2[0-9][0-9]', str(response.status_code)):
+            if not str(response.status_code).startswith('2'):
                 if ignoreError == False:
                     if 'message' in response.json() and response.json()['messsage'] != None:
                         self.logWarning('\n%s' % response.json()['message'])
@@ -218,17 +218,17 @@ class Connect(object):
             # 200 or 201
             if silentMode == False:
                 self.logInfo('STATUS CODE: %s' % response.status_code)
-            if not re.match('2[0-9][0-9]', str(response.status_code)):
+            if str(response.status_code).startswith('2') == False:
                 if ignoreError == False:
-                    if 'message' in response.json() and response.json()['messsage'] != None:
-                        self.logWarning('\n%s' % response.json()['message'])
-                    self.showErrorMessage()
+                    if 'errors' in response.json():
+                        raise IxNetRestApiException('POST error: {0}\n'.format(response.json()['errors'][0]['detail']))
                     raise IxNetRestApiException('POST error: {0}\n'.format(response.text))
 
             # Change it back to the original json header
             if headers != None:
                 self.jsonHeader = originalJsonHeader
             return response
+
         except requests.exceptions.RequestException as errMsg:
             raise IxNetRestApiException('POST error: {0}\n'.format(errMsg))
 
@@ -252,10 +252,10 @@ class Connect(object):
             response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
             if silentMode == False:
                 print('STATUS CODE:', response.status_code)
-            if not re.match('2[0-9][0-9]', str(response.status_code)):
+            if not str(response.status_code).startswith('2'):
                 if 'message' in response.json() and response.json()['messsage'] != None:
                     self.logWarning('\n%s' % response.json()['message'])
-                self.showErrorMessage()
+
                 raise IxNetRestApiException('PATCH error: {0}\n'.format(response.text))
             return response
         except requests.exceptions.RequestException as errMsg:
@@ -282,7 +282,7 @@ class Connect(object):
         try:
             response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
             print('STATUS CODE:', response.status_code)
-            if not re.match('2[0-9][0-9]', str(response.status_code)):
+            if not str(response.status_code).startswith('2'):
                 self.showErrorMessage()
                 raise IxNetRestApiException('DELETE error: {0}\n'.format(response.text))
             return response
@@ -384,21 +384,15 @@ class Connect(object):
             self.logInfo('\tState: SUCCESS')
             return 
         if 'errors' in response.json():
-            self.logInfo(response.json()["errors"][0])
-            return 1
+            raise IxNetRestApiException(response.json()["errors"][0])
         if silentMode == False:
             self.logInfo("\tState: %s " %response.json()["state"])
         if response.json()['state'] == "SUCCESS":
             if silentMode == False:
                 self.logInfo('\n')
             return 0
-        if response.json()['state'] == "ERROR":
-            self.showErrorMessage()
-            return 1
-        if response.json()['state'] == "EXCEPTION":
-            self.logInfo('waitForComplete: %s' % response.text)
-            return 1
-
+        if response.json()['state'] in ["ERROR", "EXCEPTION"]:
+            raise IxNetRestApiException('\nWaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
 
         for counter in range(1,timeout+1):
             response = self.get(url, silentMode=True)
@@ -409,21 +403,16 @@ class Connect(object):
                 if state == 'SUCCESS':
                     self.logInfo("\tState: {0}".format(state))
 
-            if counter < timeout and response.json()["state"] == "IN_PROGRESS" or response.json()["state"] == "down":
+            if counter < timeout and state in ["IN_PROGRESS", "down"]:
                 time.sleep(1)
                 continue
+
             if counter < timeout and state == 'SUCCESS':
-                if silentMode == False:
-                    self.logInfo('\n')
-                return 0
-            if counter < timeout and state == 'ERROR':
-                self.showErrorMessage()
-                return 1
-            if counter < timeout and state == 'EXCEPTION':
-                print('\n', response.text)
-                return 1
+                if silentMode == False:self.logInfo('\n')
+                return
+
             if counter == timeout and state != 'SUCCESS':
-                return 1
+                raise IxNetRestApiException('\n%s' % response.text)
 
     def connectIxChassis(self, chassisIp):
         """
@@ -715,10 +704,8 @@ class Connect(object):
         url = self.sessionUrl+'/operations/newconfig'
         self.logInfo('\nnewBlankConfig:', url)
         response = self.post(url)
-        if response == 1: return 1
         url = self.sessionUrl+'/operations/newconfig/'+response.json()['id']
-        if self.waitForComplete(response, url) == 1:
-            raise IxNetRestApiException()
+        self.waitForComplete(response, url)
 
     def refreshHardware(self, chassisObj):
         """
@@ -733,8 +720,7 @@ class Connect(object):
                          Ex: '/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1'
         """
         response = self.post(self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo', data={'arg1': [chassisObj]})
-        if self.waitForComplete(response, self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo') == 1:
-            raise IxNetRestApiException
+        self.waitForComplete(response, self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo')
 
     def query(self, data, silentMode=True):
         """
@@ -774,8 +760,7 @@ class Connect(object):
         url = self.sessionUrl+'/operations/query'
         reformattedData = {'selects': [data]}
         response = self.post(url, data=reformattedData, silentMode=silentMode)
-        if self.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.waitForComplete(response, url+'/'+response.json()['id'])
         return response
 
     def configMultivalue(self, multivalueUrl, multivalueType, data):
@@ -822,8 +807,7 @@ class Connect(object):
                 'arg3': count
                 }
         response = self.post(self.sessionUrl+'/multivalue/operations/getValues', data=data, silentMode=silentMode)
-        if self.waitForComplete(response, self.sessionUrl+'/operations/multivalue/getValues'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.waitForComplete(response, self.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'])
         return response.json()['result']
 
     @staticmethod

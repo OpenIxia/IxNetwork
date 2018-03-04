@@ -431,8 +431,7 @@ class Traffic(object):
         data = {'arg1': arg1, 'arg2': protocolTemplateId}
         response = self.ixnObj.post(self.ixnObj.httpHeader+configElementObj+'/stack/operations/%s' % action, data=data)
 
-        if self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+configElementObj+'/stack/operations/appendprotocol/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+configElementObj+'/stack/operations/appendprotocol/'+response.json()['id'])
 
         # /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4
         self.ixnObj.logInfo('\naddTrafficItemPacketStack: Returning: %s' % response.json()['result'])
@@ -862,8 +861,7 @@ class Traffic(object):
         """
         restApiHeader = '/api'+self.ixnObj.sessionUrl.split('/api')[1]
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/apply', data={'arg1': restApiHeader+'/traffic'})
-        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/traffic/operations/apply/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/traffic/operations/apply/'+response.json()['id'])
 
     def regenerateTrafficItems(self, trafficItemList='all'):
         """
@@ -886,8 +884,7 @@ class Traffic(object):
         data = {"arg1": trafficItemList}
         self.ixnObj.logInfo('\nRegenerating traffic items: %s' % trafficItemList)
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startTraffic(self, blocking=False):
         """

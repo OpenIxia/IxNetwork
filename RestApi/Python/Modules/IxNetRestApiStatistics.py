@@ -184,8 +184,7 @@ class Statistics(object):
         """
         removeAllTclViewsUrl = self.ixnObj.sessionUrl+'/operations/removealltclviews'
         response = self.ixnObj.post(removeAllTclViewsUrl)
-        if self.ixnObj.waitForComplete(response, removeAllTclViewsUrl+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, removeAllTclViewsUrl+'/'+response.json()['id'])
 
     def clearStats(self):
         """
@@ -236,8 +235,7 @@ class Statistics(object):
                 }
         url = self.ixnObj.sessionUrl+'/operations/takeviewcsvsnapshot'
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
         #response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files?filename=Flow Statistics.csv&absolute=c:\\Results', ignoreError=True)
         if localLinuxPath:

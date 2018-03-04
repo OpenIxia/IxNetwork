@@ -315,9 +315,9 @@ class PortMgmt(object):
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/assignports', data=data)
         print('\n', response.json())
-        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'],
-                                       silentMode=False, timeout=timeout) == 1:
-            raise IxNetRestApiException('assignPorts: Ports not coming up:', portList)
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'],
+                                    silentMode=False, timeout=timeout)
+        
         if rawTraffic:
             vportProtocolList = []
             for vport in vportList:
@@ -346,8 +346,7 @@ class PortMgmt(object):
         vportList = ["%s/vport/%s" % (self.ixnObj.sessionUrl, str(i["id"])) for i in response.json()]
         url = self.ixnObj.sessionUrl+'/vport/operations/unassignports'
         response = self.ixnObj.post(url, data={'arg1': vportList, 'arg2': deleteVirtualPorts})
-        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/operations/unassignports/'+response.json()['id'], timeout=120) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/operations/unassignports/'+response.json()['id'], timeout=120)
 
     def releaseAllPorts(self):
         """
@@ -360,9 +359,8 @@ class PortMgmt(object):
         response = self.ixnObj.post(url, data={'arg1': vportList})
         if response.json()['state'] == 'SUCCESS': return 0
         if response.json()['id'] != '':
-            if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120) == 1:
-                raise IxNetRestApiException
-
+            self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120)
+            
     def releasePorts(self, portList):
         """
         Description
@@ -380,8 +378,7 @@ class PortMgmt(object):
             response = self.ixnObj.post(url, data={'arg1': vport})
             if response.json()['state'] == 'SUCCESS': continue
             if response.json()['id'] != '':
-                if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120) == 1:
-                    raise IxNetRestApiException('releasePorts failed')
+                self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120)
 
     def clearPortOwnership(self, portList):
         """

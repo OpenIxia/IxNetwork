@@ -766,8 +766,7 @@ class Protocol(object):
         #response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/startallprotocols', data={'arg1': 'sync'})
         url = self.ixnObj.sessionUrl+'/operations/startallprotocols'
         response = self.ixnObj.post(url)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
         self.verifyDeviceGroupStatus()
 
     def stopAllProtocols(self):
@@ -780,8 +779,7 @@ class Protocol(object):
         """
         url = self.ixnObj.sessionUrl+'/operations/stopallprotocols'
         response = self.ixnObj.post(url, data={'arg1': 'sync'})
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startProtocol(self, protocolObj):
         """
@@ -828,9 +826,7 @@ class Protocol(object):
 
         url = self.ixnObj.sessionUrl+'/topology/operations/start'
         response = self.ixnObj.post(url, data={'arg1': topologyObjList})
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
-
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
         self.verifyDeviceGroupStatus()
 
     def stopTopology(self, topologyObjList='all'):
@@ -857,8 +853,7 @@ class Protocol(object):
             topologyObjList = [topology['href'] for topology in topologyList]
 
         self.ixnObj.post(self.ixnObj.sessionUrl+'/topology/operations/stop', data={'arg1': topologyObjList})
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopDeviceGroup(self, deviceGroupObjList='all', action='start'):
         """
@@ -886,8 +881,7 @@ class Protocol(object):
                 for dgHref in  dg['deviceGroup']:
                     url = self.ixnObj.sessionUrl+'/topology/deviceGroup/operations/%s' % action
                     response = self.ixnObj.post(url, data={'arg1': dgHref['href'].split(' ')})
-                    if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-                        raise IxNetRestApiException
+                    self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
                     time.sleep(3)
 
     def verifyProtocolSessionsNgpf(self, protocolObjList=None, timeout=90):
@@ -1184,8 +1178,7 @@ class Protocol(object):
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/ethernet/ipv4/operations/sendarp'
         data = {'arg1': ipv4ObjList}
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def sendPing(self, srcIpList=None, destIp=None):
         """
@@ -1232,8 +1225,7 @@ class Protocol(object):
                 if srcIpIndexList != []:
                     data = {'arg1': ipv4Obj, 'arg2': destIp, 'arg3': srcIpIndexList}
                     response = self.ixnObj.post(url, data=data)
-                    if self.ixnObj.waitForComplete(response, url+response.json()['id']) == 1:
-                        raise IxNetRestApiException
+                    self.ixnObj.waitForComplete(response, url+response.json()['id'])
                     self.ixnObj.logInfo(response.json()['result'][0]['arg3'])
                     if noSrcIpIndexFound != []:
                         self.ixnObj.logError('No srcIp address found in configuration: {0}'.format(noSrcIpIndexFound))
@@ -2037,8 +2029,7 @@ class Protocol(object):
         """
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly',
                              data={'arg1': '/api/v1/sessions/1/ixnetwork/globals/topology'})
-        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly'+response.json()['id'])
 
     def getProtocolListByPort(self, port):
         """
@@ -2511,8 +2502,7 @@ class Protocol(object):
         data = {'arg1': ipv4ObjList}
         self.ixnObj.logInfo('\nstartStopIpv4Ngpf: {0}'.format(action))
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopBgpNgpf(self, bgpObjList, action='start'):
         """
@@ -2532,8 +2522,7 @@ class Protocol(object):
         data = {'arg1': bgpObjList}
         self.ixnObj.logInfo('\nstartStopBgpNgpf: {0}'.format(action))
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopOspfNgpf(self, ospfObjList, action='start'):
         """
@@ -2553,8 +2542,7 @@ class Protocol(object):
         data = {'arg1': ospfObjList}
         self.ixnObj.logInfo('\nstartStopOspfNgpf: {0}'.format(action))
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopIgmpHostNgpf(self, igmpHostObjList, action='start'):
         """
@@ -2574,9 +2562,7 @@ class Protocol(object):
         data = {'arg1': igmpHostObjList}
         self.ixnObj.logInfo('\nstartStopIgmpHostNgpf: {0}'.format(action))
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
-
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopPimV4InterfaceNgpf(self, pimV4ObjList, action='start'):
         """
@@ -2597,8 +2583,7 @@ class Protocol(object):
         self.ixnObj.logInfo('\nstartStopPimV4InterfaceNgpf: {0}'.format(action))
         self.ixnObj.logInfo('\t%s' % pimV4ObjList)
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopMldHostNgpf(self, mldHostObjList, action='start'):
         """
@@ -2619,8 +2604,7 @@ class Protocol(object):
         self.ixnObj.logInfo('\nstartStopMldHostNgpf: {0}'.format(action))
         self.ixnObj.logInfo('\t%s' % mldHostObjList)
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopIsisL3Ngpf(self, isisObjList, action='start'):
         """
@@ -2641,8 +2625,7 @@ class Protocol(object):
         self.ixnObj.logInfo('\nstartStopIsisL3Ngpf: {0}'.format(action))
         self.ixnObj.logInfo('\t%s' % isisObjList)
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startStopLdpBasicRouterNgpf(self, ldpObjList, action='start'):
         """
@@ -2663,8 +2646,7 @@ class Protocol(object):
         self.ixnObj.logInfo('\nstartStopLdpBasicRouterNgpf: {0}'.format(action))
         self.ixnObj.logInfo('\t%s' % ldpObjList)
         response = self.ixnObj.post(url, data=data)
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def enableDisableIgmpGroupRangeNgpf(self, protocolSessionUrl, groupRangeList, action='disable'):
         """
@@ -2859,9 +2841,7 @@ class Protocol(object):
         self.ixnObj.logInfo('\nsendIgmpJoinNgpf: %s' % url)
         self.ixnObj.logInfo('\t%s' % multicastIpAddress)
         response = self.ixnObj.post(self.ixnObj.httpHeader+url, data=data)
-        if self.ixnObj.waitForComplete(response, url+response.json()['id']) == 1:
-            raise IxNetRestApiException
-
+        self.ixnObj.waitForComplete(response, url+response.json()['id'])
 
     def sendPimV4JoinLeaveNgpf(self, routerId=None, pimObj=None, multicastIpAddress=None, action='join'):
         """
@@ -2936,8 +2916,7 @@ class Protocol(object):
         self.ixnObj.logInfo('\nsendPimv4JoinNgpf: %s' % url)
         self.ixnObj.logInfo('\t%s' % multicastIpAddress)
         response = self.ixnObj.post(self.ixnObj.httpHeader+url, data=data)
-        if self.ixnObj.waitForComplete(response, url+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        self.ixnObj.waitForComplete(response, url+response.json()['id'])
 
     def sendMldJoinNgpf(self, mldObj, ipv6AddressList):
         """
@@ -2975,8 +2954,7 @@ class Protocol(object):
                     portIdObj = mldObj+'/mldMcastIPv6GroupList/port/%s' % currentPortId
                     # portIdObj = http:/{apiServerIp:port}/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/mldHost/1/mldMcastIPv6GroupList/port/1
                     response = self.ixnObj.post(url, data={'arg1': [portIdObj]})
-                    if self.ixnObj.waitForComplete(response, url+response.json()['id']) == 1:
-                        raise IxNetRestApiException
+                    self.ixnObj.waitForComplete(response, url+response.json()['id'])
 
     def sendMldLeaveNgpf(self, mldObj, ipv6AddressList):
         """
@@ -3014,8 +2992,7 @@ class Protocol(object):
                     portIdObj = mldObj+'/mldMcastIPv6GroupList/port/%s' % currentPortId
                     # portIdObj = http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/mldHost/1/mldMcastIPv6GroupList/port/1
                     response = self.ixnObj.post(url, data={'arg1': [portIdObj]})
-                    if self.ixnObj.waitForComplete(response, url+response.json()['id']) == 1:
-                        raise IxNetRestApiException
+                    self.ixnObj.waitForComplete(response, url+response.json()['id'])
 
     def getSessionStatus(self, protocolObj):
         """

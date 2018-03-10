@@ -1,5 +1,6 @@
 import sys
 from IxNetRestApiFileMgmt import FileMgmt
+from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApi import IxNetRestApiException
 
 class PacketCapture(object):
@@ -8,11 +9,11 @@ class PacketCapture(object):
     portObj: The port object
 
     """
-    def __init__(self, ixnObj, portMgmtObj):
+    def __init__(self, ixnObj, portMgmtObj=None):
         """
         Parameters
             ixnObj: The main ixnObj object
-            portMgmtObj: The PortMgmt object.
+            portMgmtObj: (Optional):  The PortMgmt object.
                          If you already have the portMgmt object, then pass it in. 
                          Otherwise, leave portMgmtObj=None
 
@@ -20,18 +21,26 @@ class PacketCapture(object):
             trafficObj = Traffic(mainObj)
             portMgmtObj = PortMgmt(mainObj)
             captureObj = PacketCapture(mainObj, portMgmtObj)
-            captureObj.packetCaptureConfigPortMode(port=[ixChassisIp, '2', '1'], enableControlPlane=True, enableDataPlane=False)
-            trafficObj.startTraffic()
+            captureObj.packetCaptureConfigPortMode(port=[ixChassisIp, '2', '1'], enableControlPlane=False, enableDataPlane=True)
+            trafficObj.startTraffic()  <-- Make sure traffic is running in continuous mode
             captureObj.packetCaptureStart()
             time.sleep(10)
             captureObj.packetCaptureStop()
             trafficObj.stopTraffic()
-            captureObj.packetCaptureGetCurrentPackets()
-            Optional: captureObj.packetCaptureClearTabs()
-            Optional: captureObj.saveCapture('c:\\Results')
+
+            pktCaptureObj.getCapFile(port=[ixChassisIp, '2', '1'], typeOfCapture='data', saveToTempLocation='c:\\Results',
+                                     localLinuxLocation='.', appendToSavedCapturedFile=None)
+
+            pktCaptureObj.packetCaptureGetCurrentPackets(getUpToPacketNumber=5, capturePacketsToFile=True,
+                                                         getSavedCapturedDotCapFile=True)
+
+            captureObj.packetCaptureClearTabs()
         """
         self.ixnObj = ixnObj
-        self.portMgmtObj = portMgmtObj
+        if portMgmtObj:
+            self.portMgmtObj = portMgmtObj
+        else:
+            self.portMgmtObj = PortMgmt(ixnObj)
         self.enableControlPlane = False
         self.enableDataPlane = False
 
@@ -79,16 +88,17 @@ class PacketCapture(object):
         """
         self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/closeAllTabs')
 
-    def packetCaptureGetCurrentPackets(self, getUpToPacketNumber=None, capturePacketsToFile=True, getSavedCapturedDotCapFile=False):
+    def packetCaptureGetCurrentPackets(self, getUpToPacketNumber=20, capturePacketsToFile=True):
         """
         Description
-           Packet Capturing.
+           Packet Capturing in wireshark style details. By default, it saved 7209 packet counts.
+           It takes a long time to save all the packet header details into a file. 
+           This API will default saving 20 packet counts. You could increase the packet count.
 
         Parameters
             getUpToPacketNumber: None|The last packet number to get. 
                                  Always starts at 1. If you state 10, then this function will get 1-10 packets.
             capturePacketsToFile: True|False
-            getSavedCapturedDotCapFile: True|False
         """
         import subprocess, time
 
@@ -167,7 +177,7 @@ class PacketCapture(object):
                                 with open(packetCaptureFilenameControl, 'a') as packetCaptureFile:
                                     packetCaptureFile.write('\t{0}: {1}: {2}\n'.format(fieldId, fieldName, fieldValue))
 
-    def getCapFile(self, port, typeOfCapture='data', saveToTempLocation='c:\\', localLinuxLocation='.', appendToSavedCapturedFile=None):
+    def getCapFile(self, port, typeOfCapture='data', saveToTempLocation='c:\\Temp', localLinuxLocation='.', appendToSavedCapturedFile=None):
         """
         Get the latest captured .cap file from ReST API server to local Linux drive.
 
@@ -176,6 +186,7 @@ class PacketCapture(object):
                   Example: [ixChassisIp, '2', '1']
             typeOfCapture: data|control
             saveToTempLocation: Where to temporary save the .cap file on the ReST API server: C:\\Temp
+                                The folder will be created if it doesn't exists.
             localLinuxLocation: Where to save the .cap file on the Linux machine.
             appendToSavedCapturedFile: Add a text string to the captured file.
 

@@ -2,9 +2,13 @@ import re, time
 from IxNetRestApi import IxNetRestApiException
 
 class Traffic(object):
-    def __init__(self, ixnObj):
+    def __init__(self, ixnObj=None):
         self.ixnObj = ixnObj
 
+    def setMainObject(self, mainObject):
+        # For Python Robot Framework support
+        self.ixnObj = mainObject
+        
     def configTrafficItem(self, mode=None, obj=None, trafficItem=None, endpoints=None, configElements=None):
         """
         Description

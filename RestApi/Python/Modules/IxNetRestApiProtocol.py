@@ -19,14 +19,29 @@ from IxNetRestApi import IxNetRestApiException
 #
 
 class Protocol(object):
-    def __init__(self, ixnObj, portMgmtObj=None):
+    def __init__(self, ixnObj=None, portMgmtObj=None):
         """
         :param ixnObj: The main connection object.
-        :param portMgmtObj: (Optional): Mandatory for creating Topologies.
+        :param portMgmtObj: Optional. It's deprecated. Leaving it here for backward compatibility
         """
         self.ixnObj = ixnObj
-        self.portMgmtObj = portMgmtObj
         self.configuredProtocols = []
+
+        from IxNetRestApiPortMgmt import PortMgmt
+        self.portMgmtObj = PortMgmt(self.ixnObj)
+
+        from IxNetRestApiStatistics import Statistics
+        self.statObj = Statistics(self.ixnObj)
+
+    def setMainObject(self, mainObject):
+        # For Python Robot Framework support
+        self.ixnObj = mainObject
+        self.portMgmtObj.setMainObject(mainObject)
+        self.statObj.setMainObject(mainObject)
+
+    def getSelfObject(self):
+        # For Python Robot Framework support
+        return self
 
     def createTopologyNgpf(self, portList, topologyName=None):
         """
@@ -167,10 +182,10 @@ class Protocol(object):
 
         if macAddress != None:
             multivalue = ethObjResponse.json()['mac']
-            if type(macAddress) is dict:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=macAddress)
-            else:
+            if type(macAddress) == str:
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': macAddress})
+            else:
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=macAddress)
 
             # Config Mac Address Port Step        
             portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
@@ -191,10 +206,10 @@ class Protocol(object):
             multivalue = vlanIdResponse.json()['vlanId']
 
             # CONFIG VLAN ID
-            if type(vlanId) is dict:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=vlanId)
-            else:
+            if type(vlanId) == str:
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': int(vlanId)})
+            else:
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=vlanId)
 
             # CONFIG VLAN PRIORITY
             if vlanPriority != None:
@@ -206,10 +221,10 @@ class Protocol(object):
 
         if mtu != None:
             multivalue = ethObjResponse.json()['mtu']
-            if type(mtu) is dict:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=json.dumps(mtu))
-            else:
+            if type(mtu) == str:
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': int(mtu)})
+            else:
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=json.dumps(mtu))
 
         return ethernetObj
 
@@ -253,10 +268,10 @@ class Protocol(object):
 
         # Config IPv4 address
         multivalue = ipv4Response.json()['address']
-        if type(ipv4Address) is dict:
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/counter", data=ipv4Address)
-        else:
+        if type(ipv4Address) == str:
             self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': ipv4Address})
+        else:
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/counter", data=ipv4Address)
 
         # Config IPv4 port step
         portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
@@ -268,10 +283,10 @@ class Protocol(object):
 
         # Config Gateway
         multivalue = ipv4Response.json()['gatewayIp']
-        if type(gateway) is dict:
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/counter", data=gateway)
-        else:
+        if type(gateway) == str:
             self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': gateway})
+        else:
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/counter", data=gateway)
 
         # Config Gateway port step
         portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
@@ -619,7 +634,7 @@ class Protocol(object):
         totalPortsUpFlag = 0
 
         for counter in range(1,timeout+1):
-            stats = self.ixnObj.getStats(viewName=protocolViewName, displayStats=False)
+            stats = self.statObj.getStats(viewName=protocolViewName, displayStats=False)
             totalPorts = len(stats.keys()) ;# Length stats.keys() represents total ports.
             self.ixnObj.logInfo('\nProtocolName: {0}'.format(protocolViewName))
             for session in stats.keys():

@@ -2,8 +2,16 @@ import time
 from IxNetRestApi import IxNetRestApiException
 
 class PortMgmt(object):
-    def __init__(self, ixnObj):
+    def __init__(self, ixnObj=None):
         self.ixnObj = ixnObj
+
+    def getSelfObject(self):
+        # For Python Robot Framework support
+        return self
+
+    def setMainObject(self, mainObject):
+        # For Python Robot Framework support
+        self.ixnObj = mainObject
 
     def connectToVChassis(self, chassisIp):
         # Connects to the virtual chassis

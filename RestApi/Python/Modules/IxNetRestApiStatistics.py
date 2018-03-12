@@ -2,12 +2,16 @@ import re, time
 from IxNetRestApi import IxNetRestApiException
 
 class Statistics(object):
-    def __init__(self, ixnObj):
+    def __init__(self, ixnObj=None):
         self.ixnObj = ixnObj
 
         # For takesnapshot()
         from IxNetRestApiFileMgmt import FileMgmt
         self.fileMgmtObj = FileMgmt(self.ixnObj)
+
+    def setMainObject(self, mainObject):
+        # For Python Robot Framework support
+        self.ixnObj = mainObject
 
     def getStats(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False, displayStats=True,
                  silentMode=True, ignoreError=False):

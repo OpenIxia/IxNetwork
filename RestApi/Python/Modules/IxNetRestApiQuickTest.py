@@ -1,10 +1,19 @@
 import re, time
 from IxNetRestApi import IxNetRestApiException
+from IxNetResApiFileMgmt import FileMgmt
 
 class QuickTest(object):
-    def __init__(self, ixnObj, fileMgmtObj):
+    def __init__(self, ixnObj=None, fileMgmtObj=None):
         self.ixnObj = ixnObj
-        self.fileMgmtObj = fileMgmtObj
+        if fileMgmtObj:
+            self.fileMgmtObj = fileMgmtObj
+        else:
+            self.fileMgmtObj = FileMgmt(ixnObj)
+
+    def setMainObject(self, mainObject):
+        # For Python Robot Framework support
+        self.ixnObj = mainObject
+        self.fileMgmtObj.setMainObject(mainObject)
 
     def getAllQuickTestHandles(self):
         """

@@ -9,7 +9,7 @@ class PacketCapture(object):
     portObj: The port object
 
     """
-    def __init__(self, ixnObj, portMgmtObj=None):
+    def __init__(self, ixnObj=None, portMgmtObj=None):
         """
         Parameters
             ixnObj: The main ixnObj object
@@ -41,8 +41,14 @@ class PacketCapture(object):
             self.portMgmtObj = portMgmtObj
         else:
             self.portMgmtObj = PortMgmt(ixnObj)
+
         self.enableControlPlane = False
         self.enableDataPlane = False
+
+    def setMainObject(self, mainObject):
+        # For Python Robot Framework support
+        self.ixnObj = mainObject
+        self.portMgmtObj.setMainObject(mainObject)
 
     def packetCaptureConfigPortMode(self, port, enableControlPlane=True, enableDataPlane=True):
         """

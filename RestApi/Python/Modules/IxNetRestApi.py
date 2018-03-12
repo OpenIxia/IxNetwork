@@ -15,6 +15,7 @@ import os, re, sys, requests, json, time, subprocess, traceback
 
 class IxNetRestApiException(Exception): pass
 
+
 class Connect(object):
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', webQuickTest=False,
                  username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
@@ -288,6 +289,10 @@ class Connect(object):
             return response
         except requests.exceptions.RequestException as errMsg:
             raise IxNetRestApiException('DELETE error: {0}\n'.format(errMsg))
+
+    def getSelfObject(self):
+        # For Robot Framework support only.
+        return self
 
     def getSessionUrl(self, ixNetRestServerIp, ixNetRestServerPort=11009):
         """
@@ -810,6 +815,16 @@ class Connect(object):
         self.waitForComplete(response, self.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'])
         return response.json()['result']
 
+    def stdoutRedirect(self):
+        """
+        Description
+        For Robot Framework.  Robot captures the stdout. This stdoutRedirect
+        will redirect the output back to stdout so you could see the test progress
+        and to troubleshoot.
+        """
+        for attr in ('stdin', 'stdout', 'stderr'):
+            setattr(sys, attr, getattr(sys, '__%s__' %attr))        
+            
     @staticmethod
     def prettyprintAllOperations(sessionUrl):
         # Dispaly all the operation commands and its description:

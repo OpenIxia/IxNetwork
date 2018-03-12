@@ -35,6 +35,8 @@ from IxNetRestApiFileMgmt import FileMgmt
 
 # The path to your exported JSON config file:
 jsonConfigFile = 'bgpSimplified.json'
+
+# Where to store the exported JSON config file
 exportJsonConfigFile = '/home/hgee/exportedJsonConfig.json'
 
 try:
@@ -46,7 +48,7 @@ try:
     fileMgmtObj.exportJsonConfigFile(jsonFileName=exportJsonConfigFile)
 
     # How to load a complete json config file
-    fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
+    fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
 
 
     # Read a JSON config file and store all the datas into an object.
@@ -62,7 +64,7 @@ try:
                {"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] downtimeInSec']/singleValue",
                  "value": "68"}
              ]
-    fileMgmtObj.importJsonConfigObj(dataObj=xpathObj, type='modify')
+    fileMgmtObj.importJsonConfigObj(dataObj=xpathObj, option='modify')
 
 
     # How to add a new Traffic Item without touching the JSON config file.
@@ -72,7 +74,7 @@ try:
         "xpath": "/traffic/trafficItem[1]",
         "name": 'New Traffic Item 1'
     }]
-    fileMgmtObj.importJsonConfigObj(dataObj=jsonData, type='modify')
+    fileMgmtObj.importJsonConfigObj(dataObj=jsonData, option='modify')
 
 
     # How to modify multiple configurations simultaneously:
@@ -84,7 +86,7 @@ try:
         "xpath": "/topology[1]",
         "name": 'New Topology 1'
     }]
-    fileMgmtObj.importJsonConfigObj(dataObj=jsonData, type='modify')
+    fileMgmtObj.importJsonConfigObj(dataObj=jsonData, option='modify')
 
 
     # How to write the modication to the JSON config file.

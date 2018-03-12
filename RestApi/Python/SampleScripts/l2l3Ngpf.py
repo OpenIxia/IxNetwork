@@ -47,6 +47,7 @@ if len(sys.argv) > 1:
 
 try:
     #---------- Preference Settings --------------
+    licenseServerIsInChassis = False
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
@@ -78,7 +79,6 @@ try:
         
     #---------- Preference Settings End --------------
 
-    mainObj.newBlankConfig()    
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -89,15 +89,19 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
-    # Uncomment this to configure license server.
+    mainObj.newBlankConfig()    
+
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseServerIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
 
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
                                               topologyName='Topo1')
 

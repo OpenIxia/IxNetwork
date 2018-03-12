@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
+#    - Python2.7 - 3.6
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -51,7 +51,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -78,7 +78,6 @@ try:
 
     #---------- Preference Settings End --------------
 
-    mainObj.newBlankConfig()
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -88,14 +87,19 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
+    mainObj.newBlankConfig()
+
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseServerIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
 
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]], topologyName='Topo1')
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
 

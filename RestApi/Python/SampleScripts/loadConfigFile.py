@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
+#    - Python2.7 - 3.6
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -55,7 +55,7 @@ try:
     enableDebugTracing = False
     deleteSessionAfterTest = True
 
-    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -101,11 +101,10 @@ try:
 
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.loadConfigFile(configFile)
-
     portObj.assignPorts(portList)
     portObj.verifyPortState()
 
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
 
     # MODIFY BGP CONFIG:
     #    Step 1 of 2:  Get the BGP host object.
@@ -120,7 +119,7 @@ try:
 
     protocolObj.startAllProtocols()
     protocolObj.verifyArp(ipType='ipv4')
-    protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
+    protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
 
     trafficObj = Traffic(mainObj)
     trafficObj.regenerateTrafficItems()

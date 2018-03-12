@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
+#    - Python2.7 - 3.6
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -50,7 +50,7 @@ try:
     deleteSessionAfterTest = True
     jsonConfigFile = 'bgp.json'
 
-    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -84,16 +84,17 @@ try:
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    # Optional: Uncomment if required.
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseServerIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     fileMgmtObj = FileMgmt(mainObj)
     jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
 
-    # 8.40: Takes 5 minutes to load/assignPorts on OVA/VE Linux. 
-    fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
+    fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
     fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=300)
     portObj.verifyPortState()
 
@@ -109,12 +110,12 @@ try:
                 {"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] downtimeInSec']/singleValue",
                  "value": "68"}
             ]
-    fileMgmtObj.importJsonConfigObj(dataObj=xpathObj, type='modify')
+    fileMgmtObj.importJsonConfigObj(dataObj=xpathObj, option='modify')
 
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
     protocolObj.startAllProtocols()
     protocolObj.verifyArp(ipType='ipv4')
-    protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
+    protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
 
     trafficObj = Traffic(mainObj)
     trafficObj.regenerateTrafficItems()

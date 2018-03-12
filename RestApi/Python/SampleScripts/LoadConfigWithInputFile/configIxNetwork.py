@@ -9,7 +9,7 @@
 #
 # DESCRIPTION
 #    This sample script demonstrates:
-#        - Read a parameter file using Python dictionary data structure.
+#        - Read a parameter file that is in a Python dictionary data structure.
 #        - Testing with two back-to-back Ixia ports.
 #        - This utility is scalable.  Meaning you could create n number of Topology Groups and Traffic Items.
 #        - The dictionary parameter file model reflects the IxNework API tree structure.
@@ -174,7 +174,7 @@ try:
 
     # Set createVports = True if building config from scratch.
     portObj.assignPorts(param['portList'], createVports=True)
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
 
     for topologyGroup in param['topology']:
         topologyObj = protocolObj.createTopologyNgpf(portList=topologyGroup['ports'],

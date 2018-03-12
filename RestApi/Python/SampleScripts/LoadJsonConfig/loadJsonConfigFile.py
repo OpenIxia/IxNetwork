@@ -84,7 +84,7 @@ try:
     enableDebugTracing = jsonData['enableDebugTracing']
     deleteSessionAfterTest = jsonData['deleteSessionAfterTest']
     
-    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIsInChassis = False
     licenseServerIp = jsonData['licenseServerIp']
     licenseModel = jsonData['licenseModel']
     licenseTier = jsonData['licenseTier']
@@ -125,16 +125,18 @@ try:
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    # Optional: Uncomment if required.
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseServerIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
-    fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
+    fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
     fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=90)
     portObj.verifyPortState()
 
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
     protocolObj.startAllProtocols()
     protocolObj.verifyArp(ipType='ipv4')
     protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)

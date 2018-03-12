@@ -6,7 +6,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
+#    - Python2.7 - 3.6
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -33,9 +33,6 @@
 #    No need to create DG, if you create RAW, just source and dest are ports.
 #    If you use VM ports to do back to back, you probably will not see traffic. Use a physical ports instead.
 #
-#    * Raw Traffic Item is not supported for:
-#        - Linux API server
-#        - IxVM ports
 
 import sys, traceback
 
@@ -60,7 +57,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -87,7 +84,6 @@ try:
 
     #---------- Preference Settings End --------------
 
-    mainObj.newBlankConfig()
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -98,13 +94,18 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
-    # Uncomment this to configure license server.
+    mainObj.newBlankConfig()
+
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseServerIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports = True if building config from scratch.
-    vportList = portObj.assignPorts(portList, createVports=True, rawTraffic=True)
+    vportList = portObj.assignPorts(portList, createVports=True, rawTraffic=True, timeout=120)
+    portObj.verifyPortState()
 
     # For all parameter options, please go to the API configTrafficItem
     # mode = create or modify

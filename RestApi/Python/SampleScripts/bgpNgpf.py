@@ -5,7 +5,7 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
+#    - Python2.7 - 3.6
 #    - Python modules: requests
 #
 # DESCRIPTION
@@ -52,7 +52,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
-    # Optional: Mainly for connecting to Linux API server.
+    licenseServerIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -63,7 +63,7 @@ try:
                 [ixChassisIp, '2', '1']]
 
     if connectToApiServer == 'linux':
-        mainObj = Connect(apiServerIp='10.219.116.93',
+        mainObj = Connect(apiServerIp='192.168.70.108',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
@@ -81,7 +81,6 @@ try:
 
     #---------- Preference Settings End --------------
 
-    mainObj.newBlankConfig()
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -92,9 +91,14 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
+    mainObj.newBlankConfig()
+
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseServerIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports = True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
@@ -191,7 +195,7 @@ try:
                                     enableBgpIdSameasRouterId = True,
                                     staleTime = 0,
                                     flap = False)
-    
+
     networkGroupObj1 = protocolObj.configNetworkGroup(create=deviceGroupObj1,
                                                       name='networkGroup1',
                                                       multiplier = 100,
@@ -207,7 +211,7 @@ try:
                                                                     'step': '0.0.0.1',
                                                                     'direction': 'increment'},
                                                   prefixLength = 32)
-
+    
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsNgpf()
 
@@ -244,8 +248,8 @@ try:
     trafficObj.startTraffic()
 
     # Check the traffic state to assure traffic has stopped before checking for stats.
-    #if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
-    #    trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
+    if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
+        trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics', silentMode=False)

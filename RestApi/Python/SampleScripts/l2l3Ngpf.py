@@ -100,7 +100,6 @@ try:
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
-    sys.exit()
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],

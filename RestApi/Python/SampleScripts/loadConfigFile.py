@@ -55,7 +55,7 @@ try:
     enableDebugTracing = False
     deleteSessionAfterTest = True
 
-    licenseServerIsInChassis = False
+    licenseIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -94,10 +94,12 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
-    # Uncomment this to configure license server.
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if licenseIsInChassis == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.loadConfigFile(configFile)

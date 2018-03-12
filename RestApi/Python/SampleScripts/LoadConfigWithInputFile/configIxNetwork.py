@@ -166,11 +166,14 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([param['licenseServerIp']], param['licenseModel'], param['licenseTier'])
-
     mainObj.newBlankConfig()
+
+    # If the license is activated on the chassis's license server, this variable should be True.
+    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
+    # Configuring license requires releasing all ports even for ports that is not used for this test.
+    if param['licenseIsInChassis'] == False:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports = True if building config from scratch.
     portObj.assignPorts(param['portList'], createVports=True)

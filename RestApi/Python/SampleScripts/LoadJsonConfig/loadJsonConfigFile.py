@@ -84,7 +84,7 @@ try:
     enableDebugTracing = jsonData['enableDebugTracing']
     deleteSessionAfterTest = jsonData['deleteSessionAfterTest']
     
-    licenseServerIsInChassis = False
+    licenseIsInChassis = False
     licenseServerIp = jsonData['licenseServerIp']
     licenseModel = jsonData['licenseModel']
     licenseTier = jsonData['licenseTier']
@@ -128,7 +128,7 @@ try:
     # If the license is activated on the chassis's license server, this variable should be True.
     # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseServerIsInChassis == False:
+    if licenseIsInChassis == False:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 

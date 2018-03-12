@@ -47,7 +47,7 @@ if len(sys.argv) > 1:
 
 try:
     #---------- Preference Settings --------------
-    licenseServerIsInChassis = False
+    licenseIsInChassis = False
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
@@ -94,12 +94,13 @@ try:
     # If the license is activated on the chassis's license server, this variable should be True.
     # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseServerIsInChassis == False:
+    if licenseIsInChassis == False:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
+    sys.exit()
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],

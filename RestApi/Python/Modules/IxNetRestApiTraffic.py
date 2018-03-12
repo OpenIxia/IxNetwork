@@ -698,6 +698,22 @@ class Traffic(object):
         url = self.ixnObj.sessionUrl+'/traffic/trafficItem/%s' % str(trafficItemNumber)
         response = self.ixnObj.patch(url, data={"enabled": "false"})
 
+    def enableAllTrafficItems(self, mode=True):
+        """
+        Description
+           Enable or Disable all Traffic Items.
+         
+        Parameter
+           mode: True|False
+                 True: Enable all Traffic Items
+                 False: Disable all Traffic Items
+        """
+        queryData = {'from': '/traffic',
+                     'nodes': [{'node': 'trafficItem', 'properties': [], 'where': []}]}
+        queryResponse = self.ixnObj.query(data=queryData)
+        for trafficItem in queryResponse.json()['result'][0]['trafficItem']:
+            self.ixnObj.patch(self.ixnObj.httpHeader + trafficItem['href'], data={'enabled': mode})
+
     def isTrafficItemNameExists(self, trafficItemName):
         """
         Description

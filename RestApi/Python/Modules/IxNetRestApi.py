@@ -431,6 +431,9 @@ class Connect(object):
         Parameter
            chassisIp: The chassis IP address.
         """
+        self.stdoutRedirect()
+        print('\n--- chassisIp:', chassisIp)
+
         url = self.sessionUrl+'/availableHardware/chassis'
         data = {'hostname': chassisIp}
         response = self.post(url, data=data)

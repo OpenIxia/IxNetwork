@@ -67,7 +67,7 @@ ${ixChassisIp} =  192.168.70.11
 &{configElements} =  transmissionType=fixedFrameCount  frameCount=50000  frameRate=88  frameRateType=percentLineRate  frameSize=128
 
 *** Test Cases ***
-Configuring L2L3 NGPF Protocol stacks
+Configuring BGP in NGPF
 
     # Extending the main ${ixnObj} object to all the instantiated classes
     ${ixnObj} =  ixnObj.getSelfObject

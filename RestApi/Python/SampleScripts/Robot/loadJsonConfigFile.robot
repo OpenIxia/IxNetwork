@@ -48,7 +48,7 @@ ${ixChassisIp} =  192.168.70.11
 
 
 *** Test Cases ***
-Configuring L2L3 NGPF Protocol stacks
+Load a JSON config file
 
     # Extending the main ${ixnObj} object to all the instantiated classes
     ${ixnObj} =  ixnObj.getSelfObject

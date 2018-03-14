@@ -30,9 +30,9 @@ ${apiServerPort} =  11009
 ${apiServerOs} =  windows
 ${forceTakePortOwnership} =  True
 ${releasePortsWhenDone} =  False
-${enableDebugTracing} =  True
 ${deleteSessionAfterTest} =  True
-${licenseServerIp} =  192.168.70.3
+${licenseIsInChassis} =  False
+@{licenseServerIp} =  192.168.70.3
 ${licenseModel} =  subscription
 ${licenseTier} =  tier3  
 
@@ -76,15 +76,27 @@ Configuring BGP in NGPF
     trafficObj.setMainObject     ${ixnObj}   
     statisticObj.setMainObject   ${ixnObj}
 
-    # Verify if ports are available. Take over bluntly if forceTakePortOwnership == True
+    Log To Console  Connecting to chassis ...
+    portMgmtObj.ConnectIxChassis  ${ixChassisIp}
+
+    # Verify if ports are available. Take over ports if forceTakePortOwnership == True
     ${result} =  portMgmtObj.arePortsAvailable  portList=${portList}  raiseException=${False}
+    Log To Console  arePortsAvailable: ${result}
     Run Keyword If  ("${result}"!=0) and ("${forceTakePortOwnership}"=="True")  Run Keywords
+    ...  Log To Console  Taking over ports ...
     ...  portMgmtObj.releasePorts  ${portList}
     ...  AND  portMgmtObj.clearPortOwnership  ${portList}
     ...  ELSE  Fail  Ports are still owned
 
+    Log To Console  Creating new blank config
     ixnObj.newBlankConfig
-    portMgmtObj.ConnectIxChassis  ${ixChassisIp}
+
+    Run Keyword If  "${licenseIsInChassis}"=="False"  Run Keywords
+    ...  Log To Console  Configuring licenses ...
+    ...  portMgmtObj.releasePorts  portList=${portList}
+    ...  AND  ixnObj.configLicenseServerDetails  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
+
+    Log To Console  Assigning ports ...
     portMgmtObj.assignPorts  ${portList}  createVports=True
 
     ${topology1Obj} =     protocolObj.createTopologyNgpf  portList=${topology1Port}  topologyName=Topo1
@@ -104,7 +116,10 @@ Configuring BGP in NGPF
     ${networkGroup2Obj} =  protocolObj.configNetworkGroup  create=${deviceGroup2Obj}  name=NG-2  multipler=100  
     			   ...  networkAddress=${networkGroup2Address}  prefixLength=32
 
+    Log To Console  Starting all protocols
     protocolObj.startAllProtocols
+
+    Log To Console  Verifying protocol sessions
     protocolObj.verifyProtocolSessionsNgpf
 
     @{sourceEndpointObjects}  Create List  ${topology1Obj}
@@ -113,9 +128,12 @@ Configuring BGP in NGPF
     @{endpoint1}  Create List  ${endpoint1}
     @{configElements}  Create List  ${configElements}
 
+    Log To Console  Configuring Traffic Item
     ${trafficItemStatus} =  trafficObj.configTrafficItem  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}  
     ...  configElements=${configElements}
     trafficObj.regenerateTrafficItems  
+
+    Log To Console  Starting traffic
     trafficObj.startTraffic  
 
     # Get the Traffic Item and ConfigElement objects incase you need to modify something.

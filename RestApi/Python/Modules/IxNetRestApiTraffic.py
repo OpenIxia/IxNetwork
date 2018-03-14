@@ -906,12 +906,17 @@ class Traffic(object):
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
-    def startTraffic(self, blocking=False):
+    def startTraffic(self, applyTraffic=True, blocking=False):
         """
         Description
             Start traffic and verify traffic is started.
 
         Parameter
+            applyTraffic: True|False: 
+                          In a situation like packet capturing, you cannot apply traffic after
+                          starting packet capture because this will stop packet capturing. 
+                          You need to set applyTraffic to False in this case.
+
             blocking: True|False: Blocking doesn't return until the server has
                       started traffic and ready for stats.  Unblocking is the opposite.
 
@@ -919,7 +924,9 @@ class Traffic(object):
             POST: http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/traffic/operations/start
                   data={arg1: http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/traffic}
         """
-        self.applyTraffic()
+        if applyTraffic:
+            self.applyTraffic()
+
         self.ixnObj.logInfo('\nstartTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/start')
 
         if blocking == False:

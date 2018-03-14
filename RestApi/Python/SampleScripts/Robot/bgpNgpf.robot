@@ -77,50 +77,50 @@ Configuring BGP in NGPF
     statisticObj.setMainObject   ${ixnObj}
 
     Log To Console  Connecting to chassis ...
-    portMgmtObj.ConnectIxChassis  ${ixChassisIp}
+    portMgmtObj.Connect Ix Chassis  ${ixChassisIp}
 
     # Verify if ports are available. Take over ports if forceTakePortOwnership == True
-    ${result} =  portMgmtObj.arePortsAvailable  portList=${portList}  raiseException=${False}
+    ${result} =  portMgmtObj.Are Ports Available  portList=${portList}  raiseException=${False}
     Log To Console  arePortsAvailable: ${result}
     Run Keyword If  ("${result}"!=0) and ("${forceTakePortOwnership}"=="True")  Run Keywords
     ...  Log To Console  Taking over ports ...
-    ...  portMgmtObj.releasePorts  ${portList}
-    ...  AND  portMgmtObj.clearPortOwnership  ${portList}
+    ...  portMgmtObj.Release Ports  ${portList}
+    ...  AND  portMgmtObj.Clear Port Ownership  ${portList}
     ...  ELSE  Fail  Ports are still owned
 
     Log To Console  Creating new blank config
-    ixnObj.newBlankConfig
+    ixnObj.New Blank Config
 
     Run Keyword If  "${licenseIsInChassis}"=="False"  Run Keywords
     ...  Log To Console  Configuring licenses ...
-    ...  portMgmtObj.releasePorts  portList=${portList}
-    ...  AND  ixnObj.configLicenseServerDetails  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
+    ...  portMgmtObj.Release Ports  portList=${portList}
+    ...  AND  ixnObj.Config License Server Details  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
 
     Log To Console  Assigning ports ...
     portMgmtObj.assignPorts  ${portList}  createVports=True
 
-    ${topology1Obj} =     protocolObj.createTopologyNgpf  portList=${topology1Port}  topologyName=Topo1
-    ${topology2Obj} =     protocolObj.createTopologyNgpf  portList=${topology2Port}  topologyName=Topo2
-    ${deviceGroup1Obj} =  protocolObj.createDeviceGroupNgpf  ${topology1Obj}  multiplier=1  deviceGroupName=DG1  
-    ${deviceGroup2Obj} =  protocolObj.createDeviceGroupNgpf  ${topology2Obj}  multiplier=1  deviceGroupName=DG2  
-    ${ethernet1Obj} =     protocolObj.createEthernetNgpf  ${deviceGroup1Obj}  ethernetName=Eth1  macAddress=${ethMacAddr1}
-    ${ethernet2Obj} =     protocolObj.createEthernetNgpf  ${deviceGroup2Obj}  ethernetName=Eth2  macAddress=${ethMacAddr2}
-    ${ipv41Obj} =         protocolObj.createIpv4Ngpf  ${ethernet1Obj}  ipv4Address=${ipv41}  gateway=${ipv4Gateway1}  prefix=24
-    ${ipv42Obj} =         protocolObj.createIpv4Ngpf  ${ethernet2Obj}  ipv4Address=${ipv42}  gateway=${ipv4Gateway2}  prefix=24
-    ${bgp1Obj} =          protocolObj.configBgp  ${ipv41Obj}  name=BGP_1  holdTimer=90  dutIp=${bgp1DutIp}  localAs2Bytes=101  
+    ${topology1Obj} =     protocolObj.Create Topology Ngpf  portList=${topology1Port}  topologyName=Topo1
+    ${topology2Obj} =     protocolObj.Create Topology Ngpf  portList=${topology2Port}  topologyName=Topo2
+    ${deviceGroup1Obj} =  protocolObj.Create Device Group Ngpf  ${topology1Obj}  multiplier=1  deviceGroupName=DG1  
+    ${deviceGroup2Obj} =  protocolObj.Create Device Group Ngpf  ${topology2Obj}  multiplier=1  deviceGroupName=DG2  
+    ${ethernet1Obj} =     protocolObj.Create Ethernet Ngpf  ${deviceGroup1Obj}  ethernetName=Eth1  macAddress=${ethMacAddr1}
+    ${ethernet2Obj} =     protocolObj.Create Ethernet Ngpf  ${deviceGroup2Obj}  ethernetName=Eth2  macAddress=${ethMacAddr2}
+    ${ipv41Obj} =         protocolObj.Create Ipv4 Ngpf  ${ethernet1Obj}  ipv4Address=${ipv41}  gateway=${ipv4Gateway1}  prefix=24
+    ${ipv42Obj} =         protocolObj.Create Ipv4 Ngpf  ${ethernet2Obj}  ipv4Address=${ipv42}  gateway=${ipv4Gateway2}  prefix=24
+    ${bgp1Obj} =          protocolObj.Config Bgp  ${ipv41Obj}  name=BGP_1  holdTimer=90  dutIp=${bgp1DutIp}  localAs2Bytes=101  
     	       		  ...  type=internal
-    ${bgp2Obj} =          protocolObj.configBgp  ${ipv42Obj}  name=BGP_2  holdTimer=90  dutIp=${bgp2DutIp}  localAs2Bytes=101  
+    ${bgp2Obj} =          protocolObj.Config Bgp  ${ipv42Obj}  name=BGP_2  holdTimer=90  dutIp=${bgp2DutIp}  localAs2Bytes=101  
     	       		  ...  type=internal
-    ${networkGroup1Obj} =  protocolObj.configNetworkGroup  create=${deviceGroup1Obj}  name=NG-1  multipler=100  
+    ${networkGroup1Obj} =  protocolObj.Config Network Group  create=${deviceGroup1Obj}  name=NG-1  multipler=100  
     			   ...  networkAddress=${networkGroup1Address}  prefixLength=32
-    ${networkGroup2Obj} =  protocolObj.configNetworkGroup  create=${deviceGroup2Obj}  name=NG-2  multipler=100  
+    ${networkGroup2Obj} =  protocolObj.Config Network Group  create=${deviceGroup2Obj}  name=NG-2  multipler=100  
     			   ...  networkAddress=${networkGroup2Address}  prefixLength=32
 
     Log To Console  Starting all protocols
-    protocolObj.startAllProtocols
+    protocolObj.Start All Protocols
 
     Log To Console  Verifying protocol sessions
-    protocolObj.verifyProtocolSessionsNgpf
+    protocolObj.Verify Protocol Sessions Ngpf
 
     @{sourceEndpointObjects}  Create List  ${topology1Obj}
     @{destEndpointObjects}  Create List  ${topology2Obj}
@@ -129,12 +129,12 @@ Configuring BGP in NGPF
     @{configElements}  Create List  ${configElements}
 
     Log To Console  Configuring Traffic Item
-    ${trafficItemStatus} =  trafficObj.configTrafficItem  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}  
+    ${trafficItemStatus} =  trafficObj.Config Traffic Item  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}  
     ...  configElements=${configElements}
-    trafficObj.regenerateTrafficItems  
+    trafficObj.Regenerate Traffic Items  
 
     Log To Console  Starting traffic
-    trafficObj.startTraffic  
+    trafficObj.Start Traffic  
 
     # Get the Traffic Item and ConfigElement objects incase you need to modify something.
     ${trafficItemObj} =  Get From List  ${trafficItemStatus}  0
@@ -142,12 +142,12 @@ Configuring BGP in NGPF
     ${configElementObj} =  Get From List  ${configElementObj}  0
     
     # Check the traffic state before checking stats
-    ${result} =  trafficObj.getTransmissionType  ${configElementObj}
+    ${result} =  trafficObj.Get Transmission Type  ${configElementObj}
     @{expectedTrafficState}  Create List  stopped  stoppedWaitingForStats
     Run Keyword If  ('${result}' == "fixedFrameCount")  RunKeyword
-    ...  trafficObj.checkTrafficState  expectedState=${expectedTrafficState}
+    ...  trafficObj.Check Traffic State  expectedState=${expectedTrafficState}
 
-    ${stats} =  statisticObj.getStats  viewName=Flow Statistics
+    ${stats} =  statisticObj.Get Stats  viewName=Flow Statistics
 
     Log To Console  ${stats}
     #${txFrames} =  Get From Dictionary  ${stats}  1  

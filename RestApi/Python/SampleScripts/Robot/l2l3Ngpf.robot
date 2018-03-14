@@ -78,12 +78,12 @@ Configuring basic L2L3 in NGPF
     portMgmtObj.ConnectIxChassis  ${ixChassisIp}
 
     # Verify if ports are available. Take over ports if forceTakePortOwnership == True
-    ${result} =  portMgmtObj.arePortsAvailable  portList=${portList}  raiseException=${False}
+    ${result} =  portMgmtObj.Are Ports Available  portList=${portList}  raiseException=${False}
     Log To Console  arePortsAvailable: ${result}
     Run Keyword If  ("${result}"!=0) and ("${forceTakePortOwnership}"=="True")  Run Keywords
     ...  Log To Console  Taking over ports ...
-    ...  portMgmtObj.releasePorts  ${portList}
-    ...  AND  portMgmtObj.clearPortOwnership  ${portList}
+    ...  portMgmtObj.Release Ports  ${portList}
+    ...  AND  portMgmtObj.Clear Port Ownership  ${portList}
     ...  ELSE  Fail  Ports are still owned
 
 
@@ -92,27 +92,27 @@ Configuring basic L2L3 in NGPF
 
     Run Keyword If  "${licenseIsInChassis}"=="False"  Run Keywords
     ...  Log To Console  Configuring licenses ...
-    ...  portMgmtObj.releasePorts  portList=${portList}
-    ...  AND  ixnObj.configLicenseServerDetails  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
+    ...  portMgmtObj.Release Ports  portList=${portList}
+    ...  AND  ixnObj.Config License Server Details  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
 
     Log To Console  Assigning ports ...
-    portMgmtObj.assignPorts  ${portList}  createVports=True
+    portMgmtObj.Assign Ports  ${portList}  createVports=True
 
     Log To Console  Creating NGPF protocol stacks ...
-    ${topology1Obj} =  protocolObj.createTopologyNgpf  portList=${topology1Port}  topologyName=Topo1
-    ${topology2Obj} =  protocolObj.createTopologyNgpf  portList=${topology2Port}  topologyName=Topo2
-    ${deviceGroup1Obj} =  protocolObj.createDeviceGroupNgpf  ${topology1Obj}  multiplier=1  deviceGroupName=DG1  
-    ${deviceGroup2Obj} =  protocolObj.createDeviceGroupNgpf  ${topology2Obj}  multiplier=1  deviceGroupName=DG2  
-    ${ethernet1Obj} =  protocolObj.createEthernetNgpf  ${deviceGroup1Obj}  ethernetName=Eth1  macAddress=${ethMacAddr1}
-    ${ethernet2Obj} =  protocolObj.createEthernetNgpf  ${deviceGroup2Obj}  ethernetName=Eth2  macAddress=${ethMacAddr2}
-    ${ipv41Obj} =  protocolObj.createIpv4Ngpf  ${ethernet1Obj}  ipv4Address=${ipv41}  gateway=${ipv4Gateway1}  prefix=24
-    ${ipv42Obj} =  protocolObj.createIpv4Ngpf  ${ethernet2Obj}  ipv4Address=${ipv42}  gateway=${ipv4Gateway2}  prefix=24
+    ${topology1Obj} =  protocolObj.Create Topology Ngpf  portList=${topology1Port}  topologyName=Topo1
+    ${topology2Obj} =  protocolObj.Create Topology Ngpf  portList=${topology2Port}  topologyName=Topo2
+    ${deviceGroup1Obj} =  protocolObj.Create Device Group Ngpf  ${topology1Obj}  multiplier=1  deviceGroupName=DG1  
+    ${deviceGroup2Obj} =  protocolObj.Create Device Group Ngpf  ${topology2Obj}  multiplier=1  deviceGroupName=DG2  
+    ${ethernet1Obj} =  protocolObj.Create Ethernet Ngpf  ${deviceGroup1Obj}  ethernetName=Eth1  macAddress=${ethMacAddr1}
+    ${ethernet2Obj} =  protocolObj.Create Ethernet Ngpf  ${deviceGroup2Obj}  ethernetName=Eth2  macAddress=${ethMacAddr2}
+    ${ipv41Obj} =  protocolObj.Create Ipv4 Ngpf  ${ethernet1Obj}  ipv4Address=${ipv41}  gateway=${ipv4Gateway1}  prefix=24
+    ${ipv42Obj} =  protocolObj.Create Ipv4 Ngpf  ${ethernet2Obj}  ipv4Address=${ipv42}  gateway=${ipv4Gateway2}  prefix=24
 
     Log To Console  Starting all protocols ...
-    protocolObj.startAllProtocols
+    protocolObj.Start All Protocols
 
     Log To Console  Verifying protocol sessions ...
-    protocolObj.verifyProtocolSessionsNgpf
+    protocolObj.Verify Protocol Sessions Ngpf
 
     @{sourceEndpointObjects}  Create List  ${topology1Obj}
     @{destEndpointObjects}  Create List  ${topology2Obj}
@@ -121,10 +121,10 @@ Configuring basic L2L3 in NGPF
     @{configElements}  Create List  ${configElements}
 
     Log To Console  Configure Traffic Item
-    ${trafficItemStatus} =  trafficObj.configTrafficItem  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}
+    ${trafficItemStatus} =  trafficObj.Config Traffic Item  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}
     ...  configElements=${configElements}
-    trafficObj.regenerateTrafficItems  
-    trafficObj.startTraffic  
+    trafficObj.Regenerate Traffic Items  
+    trafficObj.Start Traffic  
 
     # Get the Traffic Item and ConfigElement objects to use for making modifications
     ${trafficItemObj} =  Get From List  ${trafficItemStatus}  0
@@ -132,13 +132,13 @@ Configuring basic L2L3 in NGPF
     ${configElementObj} =  Get From List  ${configElementObj}  0
     
     # Check the traffic state before checking stats
-    ${result} =  trafficObj.getTransmissionType  ${configElementObj}
+    ${result} =  trafficObj.Get Transmission Type  ${configElementObj}
     @{expectedTrafficState}  Create List  stopped  stoppedWaitingForStats
     Run Keyword If  ('${result}' == "fixedFrameCount")  RunKeyword
-    ...  trafficObj.checkTrafficState  expectedState=${expectedTrafficState}
+    ...  trafficObj.Check Traffic State  expectedState=${expectedTrafficState}
 
     Log To Console  Getting stats
-    ${stats} =  statisticObj.getStats  viewName=Flow Statistics
+    ${stats} =  statisticObj.Get Stats  viewName=Flow Statistics
     
     Log To Console  ${stats}
     

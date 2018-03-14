@@ -59,41 +59,41 @@ Load a JSON config file
     statisticObj.setMainObject  ${ixnObj}
 
     Log To Console  Connecting to chassis ...
-    portMgmtObj.ConnectIxChassis  ${ixChassisIp}
+    portMgmtObj.Connect Ix Chassis  ${ixChassisIp}
 
     # Verify if ports are available. Take over if forceTakePortOwnership == True
-    ${result} =  portMgmtObj.arePortsAvailable  portList=${portList}  raiseException=${False}
+    ${result} =  portMgmtObj.Are Ports Available  portList=${portList}  raiseException=${False}
     Run Keyword If  ("${result}"!=0) and ("${forceTakePortOwnership}"=="True")  Run Keywords
-    ...  portMgmtObj.releasePorts  ${portList}
-    ...  AND  portMgmtObj.clearPortOwnership  ${portList}
+    ...  portMgmtObj.Release Ports  ${portList}
+    ...  AND  portMgmtObj.Clear Port Ownership  ${portList}
     ...  ELSE  Fail  Ports are still owned
 
-    ${jsonData} =  fileMgmtObj.jsonReadConfig  ${jsonConfigFile}
+    ${jsonData} =  fileMgmtObj.Json Read Config  ${jsonConfigFile}
 
     Log To Console  Loading JSON config file to API server
     ${newConfig}  Evaluate  str('newConfig')
-    fileMgmtObj.importJsonConfigFile  jsonFileName=${jsonConfigFile}  option=${newConfig}
+    fileMgmtObj.Import Json Config File  jsonFileName=${jsonConfigFile}  option=${newConfig}
 
     Log To Console  Assigning ports
     ${assignPortTimeout} =  Convert To Integer  300
-    fileMgmtObj.jsonAssignPorts  ${jsonData}  ${portList}  timeout=${assignPortTimeout}
-    portMgmtObj.verifyPortState
+    fileMgmtObj.Json Assign Ports  ${jsonData}  ${portList}  timeout=${assignPortTimeout}
+    portMgmtObj.Verify Port State
 
     Log To Console  Start all protocols
-    protocolObj.startAllProtocols
+    protocolObj.Start All Protocols
 
     Log To Console  Verifying protocol sessions
-    protocolObj.verifyArp  ipType=ipv4
-    protocolObj.verifyProtocolSessionsUp  protocolViewName=BGP Peer Per Port
-    trafficObj.regenerateTrafficItems
+    protocolObj.Verify Arp  ipType=ipv4
+    protocolObj.Verify Protocol Sessions Up  protocolViewName=BGP Peer Per Port
+    trafficObj.Regenerate Traffic Items
 
     Log To Console  Starting traffic
-    trafficObj.startTraffic  
+    trafficObj.Start Traffic  
 
     sleep  10
 
     Log To Console  Getting stats
-    ${stats} =  statisticObj.getStats  viewName=Flow Statistics
+    ${stats} =  statisticObj.Get Stats  viewName=Flow Statistics
 
     Log To Console  ${stats}
 

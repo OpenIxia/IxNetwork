@@ -8,7 +8,8 @@
 #    - Python modules: requests
 #
 # DESCRIPTION
-#    This sample script demonstrates:
+#    A dynamic sample script that...
+# 
 #        - Read a parameter file that is in a Python dictionary data structure.
 #        - Testing with two back-to-back Ixia ports.
 #        - This utility is scalable.  Meaning you could create n number of Topology Groups and Traffic Items.
@@ -36,16 +37,16 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiStatistics import Statistics
 
-connectToApiServer = 'windows'
+osPlatform = 'windows'
 parameters = sys.argv[1:]
 argIndex = 0
 while argIndex < len(parameters):
     currentArg = parameters[argIndex]
 
-    if bool(re.match(currentArg, '-connectToApiServer', re.I)):
-        connectToApiServer = parameters[argIndex + 1]
-        if connectToApiServer not in ['windows', 'windowsConnectionMgr', 'linux']:
-            raise IxNetRestApiException("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % connectToApiServer)
+    if bool(re.match(currentArg, '-osPlatform', re.I)):
+        osPlatform = parameters[argIndex + 1]
+        if osPlatform not in ['windows', 'windowsConnectionMgr', 'linux']:
+            raise IxNetRestApiException("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % osPlatform)
         argIndex += 2
 
     elif bool(re.match(currentArg, '-paramFile', re.I)):
@@ -57,7 +58,7 @@ while argIndex < len(parameters):
     elif bool(re.match(currentArg, 'help', re.I)):
         print('\nconfigIxNetwork Parameters')
         print('----------------------------')
-        print('\t-connectToApiServer: defaults to windows. Options: windows|windowsConnectionMgr|linux')
+        print('\t-osPlatform: defaults to windows. Options: windows|windowsConnectionMgr|linux')
         print('\t-paramFile: The Python dictionary module file to input')
         print()
         sys.exit()
@@ -137,20 +138,20 @@ def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupData):
 
 
 try:
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj = Connect(apiServerIp=param['linuxApiServerIp'],
                           serverIpPort=param['linuxServerIpPort'],
                           username=param['usename'],
                           password=param['password'],
                           deleteSessionAfterTest=param['deleteSessionAfterTest'],
                           verifySslCert=param['verifySslCert'],
-                          serverOs=connectToApiServer
+                          serverOs=osPlatform
                           )
 
-    if connectToApiServer in ['windows', 'windowsConnectionMgr']:
+    if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp=param['windowsApiServerIp'],
                           serverIpPort=param['windowsServerIpPort'],
-                          serverOs=connectToApiServer,
+                          serverOs=osPlatform,
                           deleteSessionAfterTest=param['deleteSessionAfterTest']
                           )
 
@@ -173,7 +174,7 @@ try:
     # Configuring license requires releasing all ports even for ports that is not used for this test.
     if param['licenseIsInChassis'] == False:
         portObj.releaseAllPorts()
-        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+        mainObj.configLicenseServerDetails(param['licenseServerIp'], param['licenseModel'], param['licenseTier'])
 
     # Set createVports = True if building config from scratch.
     portObj.assignPorts(param['portList'], createVports=True)
@@ -264,10 +265,10 @@ try:
     if param['releasePortsWhenDone'] == True:
         portObj.releasePorts(portList)
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
 
-    if connectToApiServer == 'windowsConnectionMgr':
+    if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
@@ -275,12 +276,12 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
-    if 'mainObj' in locals() and connectToApiServer == 'linux':
+    if 'mainObj' in locals() and osPlatform == 'linux':
         if param['deleteSessionAfterTest']:
             mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
+    if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if param['releasePortsWhenDone'] and param['forceTakePortOwnership']:
             portObj.releasePorts(portList)
-        if connectToApiServer == 'windowsConnectionMgr':
+        if osPlatform == 'windowsConnectionMgr':
             if param['deleteSessionAfterTest']:
                 mainObj.deleteSession()

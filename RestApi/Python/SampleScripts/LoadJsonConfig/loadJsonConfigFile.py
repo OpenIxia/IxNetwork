@@ -39,20 +39,20 @@ def help():
 
 
 # Default the API server to either windows or linux.
-connectToApiServer = 'windows'
+osPlatform = 'windows'
 
 parameters = sys.argv[1:]
 argIndex = 0
 while argIndex < len(parameters):
     currentArg = parameters[argIndex]
     if currentArg == '-windows':
-        connectToApiServer = 'windows'
+        osPlatform = 'windows'
         argIndex += 1
     elif currentArg == '-linux':
-        connectToApiServer = 'linux'
+        osPlatform = 'linux'
         argIndex += 1
     elif currentArg == '-windowsConnectionMgr':
-        connectToApiServer = 'windowsConnectionMgr'
+        osPlatform = 'windowsConnectionMgr'
         argIndex += 1
     elif currentArg == '-jsonFile':
         jsonConfigFile = parameters[argIndex+1]
@@ -69,7 +69,7 @@ if os.path.isfile(jsonConfigFile) == False:
 with open(jsonConfigFile.strip()) as inFile:
     jsonData = json.load(inFile)
 
-if connectToApiServer == 'linux':
+if osPlatform == 'linux':
     # Verify if mandatory parameters are included in the json config file.
     if 'linuxApiServerIp' not in jsonData:
         sys.exit('\nError: JSON config file is missing the linuxApiServerIp parameter/value\n')
@@ -100,7 +100,7 @@ try:
         matchPort = re.match('port\[([0-9]+)]', port)
         portList.append([ixChassisIp, matchCard.group(1), matchPort.group(1)]) 
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj = Connect(apiServerIp = jsonData['linuxApiServerIp'],
                           serverIpPort = jsonData['linuxServerIpPort'],
                           username = jsonData['username'],
@@ -109,8 +109,8 @@ try:
                           verifySslCert = False,
                           serverOs ='linux')
 
-    if connectToApiServer in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp=jsonData['windowsApiServerIp'], serverIpPort=jsonData['windowsServerIpPort'], serverOs=connectToApiServer)
+    if osPlatform in ['windows', 'windowsConnectionMgr']:
+        mainObj = Connect(apiServerIp=jsonData['windowsApiServerIp'], serverIpPort=jsonData['windowsServerIpPort'], serverOs=osPlatform)
 
     #---------- Preference Settings End --------------
     fileMgmtObj = FileMgmt(mainObj)
@@ -169,10 +169,10 @@ try:
     if releasePortsWhenDone == True:
         portObj.releasePorts(portList)
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
 
-    if connectToApiServer == 'windowsConnectionMgr':
+    if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
@@ -180,13 +180,13 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
-    if 'mainObj' in locals() and connectToApiServer == 'linux':
+    if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
+    if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
-        if connectToApiServer == 'windowsConnectionMgr':
+        if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()
 

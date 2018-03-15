@@ -53,7 +53,6 @@ Command Line Parameters:
        For help:
           Enter: python monitorTraffic.py help
 
-
        For monitoring Traffic Items:
           To show a list of configured Traffic Items:
               Enter: python monitorTraffic.py -showTrafficItemNames
@@ -78,7 +77,7 @@ Output example:
 from __future__ import absolute_import, print_function
 import os, sys, requests, json, time, re, datetime, traceback
 
-sys.path.insert(0, '../Modules')
+sys.path.insert(0, '../../Modules')
 from IxNetRestApi import *
 from IxNetRestApiStatistics import Statistics
 from IxNetRestApiTraffic import Traffic
@@ -86,7 +85,7 @@ from IxNetRestApiTraffic import Traffic
 class Variables():
     ixNetRestServerIp = '192.168.70.3'
     ixNetRestServerPort = '11009'
-    connectToApiServer = 'windows'
+    osPlatform = 'windows'
     getStatInterval = 2
     recordStatsToFile = False
     apiKey = None
@@ -128,7 +127,7 @@ class IxNetRestApiException(Exception): pass
 def help():
     os.system('clear')
     print('\nParameters:')
-    print('\t-connectToApiServer   : windows|linux. The IxNetwork API server connecting to.')
+    print('\t-osPlatform   : windows|linux. The IxNetwork API server connecting to.')
     print('\t-apiServerIp          : The IxNetwork API server IP to connect to')
     print('\t-apiServerIpPort      : The IxNetwork API server IP port.')
     print('\t                        Windows default=11009. Linux default=443')
@@ -155,16 +154,16 @@ def help():
     print('\n\tpython monitorTraffic.py -apiServerIp 192.168.70.3 -trafficName all -displayMaxLines 5 -sendAlert -emailPasswordFile x')
     print('\tpython monitorTraffic.py -apiServerIp 192.168.70.3 -protocolSessions bgp -displayMaxLines 3 -sendAlert -emailPasswordFile x')
     print('\n  Connecting to a Linux API server:')
-    print('\n\tpython monitorTraffic.py -connectToApiServer linux -apiServerIp 192.168.70.127 -apiServerIpPort 443\n\t\t-apiKey 75c3663f920b4fe986ab1d1c39bc1658 -sessionId 3 -trafficName all\n\t\t-displayMaxLines 5 -getStatInterval 3')
+    print('\n\tpython monitorTraffic.py -osPlatform linux -apiServerIp 192.168.70.127 -apiServerIpPort 443\n\t\t-apiKey 75c3663f920b4fe986ab1d1c39bc1658 -sessionId 3 -trafficName all\n\t\t-displayMaxLines 5 -getStatInterval 3')
 
-    print('\n\tpython monitorTraffic.py -connectToApiServer linux -apiServerIp 192.168.70.127 -apiServerIpPort 443\n\t\t-apiKey 75c3663f920b4fe986ab1d1c39bc1658 -sessionId 3 -protocolSessions bgp\n\t\t-displayMaxLines 3 -getStatInterval 3')
+    print('\n\tpython monitorTraffic.py -osPlatform linux -apiServerIp 192.168.70.127 -apiServerIpPort 443\n\t\t-apiKey 75c3663f920b4fe986ab1d1c39bc1658 -sessionId 3 -protocolSessions bgp\n\t\t-displayMaxLines 3 -getStatInterval 3')
     print()
 
 def connect():
-    if Variables.connectToApiServer == 'windows':
+    if Variables.osPlatform == 'windows':
         restObj = Connect(apiServerIp=Variables.ixNetRestServerIp, serverIpPort=Variables.ixNetRestServerPort)
 
-    if Variables.connectToApiServer == 'linux':
+    if Variables.osPlatform == 'linux':
         print('\napiKey:', Variables.apiKey)
         print('sessionId:', Variables.sessionId)
         print('apiServerIpPort:', Variables.ixNetRestServerPort)
@@ -175,7 +174,7 @@ def connect():
                           password='admin',
                           deleteSessionAfterTest=False,
                           verifySslCert=False,
-                          serverOs=Variables.connectToApiServer,
+                          serverOs=Variables.osPlatform,
                           apiKey=Variables.apiKey,
                           sessionId=Variables.sessionId
                         )
@@ -519,8 +518,8 @@ try:
         elif currentArg == '-displayMaxLines':
             Variables.displayMaxLineOutput = int(parameters[argIndex+1])
             argIndex+=2
-        elif currentArg == '-connectToApiServer':
-             Variables.connectToApiServer = parameters[argIndex+1]
+        elif currentArg == '-osPlatform':
+             Variables.osPlatform = parameters[argIndex+1]
              argIndex +=2
         elif currentArg == '-apiKey':
              Variables.apiKey = parameters[argIndex+1]

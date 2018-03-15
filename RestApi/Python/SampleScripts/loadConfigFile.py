@@ -40,13 +40,13 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
 
 # Default the API server to either windows or linux.
-connectToApiServer = 'windows'
+osPlatform = 'windows'
 
 # For accepting command line parameters: windows or linux
 if len(sys.argv) > 1:
     if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
         sys.exit("\nError: %s is not a known option. Choices are 'windows', 'windowsConnectionMgr or 'linux'." % sys.argv[1])
-    connectToApiServer = sys.argv[1]
+    osPlatform = sys.argv[1]
 
 try:
     #---------- Preference Settings --------------
@@ -67,7 +67,7 @@ try:
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '2', '1']]
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
                                 serverIpPort='443',
                                 username='admin',
@@ -76,10 +76,10 @@ try:
                                 verifySslCert=False,
                                 serverOs='linux')
 
-    if connectToApiServer in ['windows', 'windowsConnectionMgr']:
+    if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                                 serverIpPort='11009',
-                                serverOs=connectToApiServer,
+                                serverOs=osPlatform,
                                 deleteSessionAfterTest=deleteSessionAfterTest)
 
     #---------- Preference Settings End --------------
@@ -151,10 +151,10 @@ try:
     if releasePortsWhenDone == True:
         portObj.releasePorts(portList)
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
 
-    if connectToApiServer == 'windowsConnectionMgr':
+    if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
@@ -162,12 +162,12 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
-    if 'mainObj' in locals() and connectToApiServer == 'linux':
+    if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
+    if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
-        if connectToApiServer == 'windowsConnectionMgr':
+        if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

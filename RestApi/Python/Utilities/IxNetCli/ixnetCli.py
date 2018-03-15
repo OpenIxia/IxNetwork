@@ -33,8 +33,12 @@ PLEASE READ DISCLAIMER
         - Get stats
 
  USAGE
-    python <script>.py windows
-    python <script>.py linux
+    - python
+    - from ixnetCli import *
+    - showcommands()
+    - connecttowindows() or connecttolinux()
+    - configbgp('bgpParams.py')
+    - runconfig
 """
 
 from __future__ import absolute_import, print_function, division
@@ -374,7 +378,7 @@ try:
         middleware.ixn.configLicenseServerDetails([middleware.preference.licenseServerIp],
                                                   middleware.preference.licenseMode,
                                                   middleware.preference.licenseTier)
-        middleware.fileMgmtObj.importJsonConfigObj(jsonData, type='newConfig')
+        middleware.fileMgmtObj.importJsonConfigObj(jsonData, option='newConfig')
         middleware.portMgmtObj.verifyPortState()
         middleware.protocolObj.startAllProtocols()
         middleware.protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
@@ -758,6 +762,7 @@ try:
         else:
             if middleware.preference.chassisIp == None:
                 middleware.preference.chassisIp = middleware.params['ixChassisIp']
+
         middleware.ixn.connectIxChassis(middleware.preference.chassisIp)
 
         if portList:

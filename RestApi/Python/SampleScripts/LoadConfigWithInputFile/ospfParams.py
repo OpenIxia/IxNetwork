@@ -8,7 +8,7 @@ params = {
     "enableDebugTracing": True,
     "deleteSessionAfterTest": False,
     "licesenIsInChassis": False,
-    "licenseServerIp": "192.168.70.3",
+    "licenseServerIp": ["192.168.70.3"],
     "licenseModel": "subscription",
     "licenseTier": "tier3",    
     "ixChassisIp": "192.168.70.11",

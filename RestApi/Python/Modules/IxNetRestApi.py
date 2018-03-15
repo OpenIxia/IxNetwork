@@ -20,11 +20,17 @@ class Connect(object):
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', webQuickTest=False,
                  username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
-                 apiKey=None, generateRestLogFile=False):
+                 apiKey=None, generateRestLogFile=False, httpInsecure=True):
         """
         Description
             Class Connect()
             Initial settings for this Class.
+
+        Note
+            Starting IxNetwork 8.50, https will be enforced even for Windows connection.
+            If you still want to use http, you need to add -restInsecure to the IxNetwork.exe appliaction under "target".
+            For example:  Right click on "IxNetwork API server", select properties and under target 
+                          ixnetwork.exe -restInsecure -restPort 11009 -restOnAllInterfaces -tclPort 8009
 
         Parameters
             serverIp: The REST API server IP address.
@@ -51,6 +57,11 @@ class Connect(object):
                includeDebugTraceback: True or False. If True, include tracebacks in raised exceptions
                sessionId: To session ID on the Linux API server to connect to.
                apiKey: The Linux API server user API-KEY to use for the sessionId connection.
+               httpInsecure: True|False: This parameter is only for Windows connection.
+                             True: Using http.  False: Using https.
+                             Starting 8.50: IxNetwork defaults to use https.
+                             If you are using versions prior to 8.50, it needs to be a http connection.
+                             In this case, set httpInsecure=True.
 
        Class Variables:
             apiServerPlatform: windows, windowsConnectionMgr, linux
@@ -92,7 +103,15 @@ class Connect(object):
         from requests.exceptions import ConnectionError
         from requests.packages.urllib3.connection import HTTPConnection
 
+        # Disable SSL warnings
+        requests.packages.urllib3.disable_warnings()
+
+        # Disable non http connections.
+        from requests.packages.urllib3.exceptions import InsecureRequestWarning
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
         self.jsonHeader = {"content-type": "application/json"}
+        self.httpInsecure = httpInsecure
         self.apiKey = None
         self.verifySslCert = verifySslCert
         self.linuxApiServerIp = apiServerIp
@@ -119,7 +138,7 @@ class Connect(object):
 
         if serverOs == 'linux':
             # Disable SSL warning messages
-            requests.packages.urllib3.disable_warnings()
+            #requests.packages.urllib3.disable_warnings()
             if self.apiServerPort == None:
                 self.apiServerPort == 443
             self.apiServerPlatform = 'linux'
@@ -162,8 +181,6 @@ class Connect(object):
            ignoreError: True or False.  If False, the response will be returned.
         """
         if silentMode is False or self.generateRestLogFile is True:
-            #print('\nGET:', restApi)
-            #print('HEADERS:', self.jsonHeader)
             self.logInfo('\nGET: {0}'.format(restApi))
             self.logInfo('HEADERS: {0}'.format(self.jsonHeader))
 
@@ -304,7 +321,12 @@ class Connect(object):
          ixNetRestServerPort: Provide a port number to connect to your non Linux API Server.
                               On a Linux API Server, a socket port is not needed. State "None".
         """
-        url = 'http://{0}:{1}/api/v1/sessions'.format(ixNetRestServerIp, ixNetRestServerPort)
+        if self.httpInsecure:
+            httpVerb = 'http'
+        else:
+            httpVerb = 'https'
+
+        url = '{0}://{1}:{2}/api/v1/sessions'.format(httpVerb, ixNetRestServerIp, ixNetRestServerPort)
         serverAndPort = ixNetRestServerIp+':'+str(ixNetRestServerPort)
 
         if self.apiServerPlatform == 'windowsConnectionMgr':
@@ -319,11 +341,13 @@ class Connect(object):
             response = self.get(url)
             sessionId = response.json()[0]['id']
 
-        self.sessionUrl = 'http://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(apiServer=ixNetRestServerIp,
+        self.sessionUrl = '{http}://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(http=httpVerb,
+                                                                                            apiServer=ixNetRestServerIp,
                                                                                             port=ixNetRestServerPort,
                                                                                             id=sessionId)
         # http://192.168.70.127:11009
         self.httpHeader = self.sessionUrl.split('/api')[0]
+
         # http://192.168.70.127:11009/api/v1/sessions/1
         self.sessionId = self.sessionUrl.split('/ixnetwork')[0]
         return self.sessionUrl
@@ -431,9 +455,6 @@ class Connect(object):
         Parameter
            chassisIp: The chassis IP address.
         """
-        self.stdoutRedirect()
-        print('\n--- chassisIp:', chassisIp)
-
         url = self.sessionUrl+'/availableHardware/chassis'
         data = {'hostname': chassisIp}
         response = self.post(url, data=data)

@@ -38,11 +38,11 @@ Overview
    - It is written in Python 3. Will work in Python 2 also.
    - This is intended for environments that configures simple configurations,
      send traffic and get stats.
-   - This app allow users to use the CLI to modify traffic configurations, rerun traffic
+   - This app allow users to use the CLI to modify traffic configurations, run and rerun traffic
      and get stats. 
-   - This app uses the Python Interpreter as a way for CLI interactions.
+   - This app uses the Python Interpreter for CLI interactions.
    - All users have to do is enter the Python shell and import the ixnetCli.py
-     module and start entering CLI commands.
+     module and start entering CLI commands by calling its function names.
    - The CLI commands are nothing but Python functions.
    - The Python functions are high level APIs that calls functions in the the IxNetRestApi* modules.
 
@@ -107,6 +107,7 @@ Requirements
 
 Getting Started:
 -----------------------
+    Get the Python client-libraries and application.
 
     1> Clone from Github:  https://github.com/OpenIxia/IxNetwork.git
 
@@ -118,35 +119,32 @@ Getting Started:
 
        IMPORTTANT:
           Copy the preference.py file to a different name and place it somewhere outside of your 
-          cloned Githu directory.  So in case you do an update from Github on this project, your 
+          cloned Github directory.  So in case you do an update from Github on this project, your 
           preference file will not get overwritten.
 
         The first thing you do is set up the preference.py file.
-	This is where you state your default chassis IP, API server IP and license server IP 
+	This is where you state your chassis IP, API server IP and license server IP 
 	and everything else so you don't have to enter them on CLI each time you run this application.
 
-	Why use this preference.py file
-
-	    - By having a preference file, you won't overwrite your preferences each time you get an updated
-	      ixnetCli.py for bug fixes and enhancements.
-
-	    - Each user could have their own preference file because they could
-	      be using different chassis, ports and other default preferences.
+	Each user could have their own preference file because they could
+	be using different chassis, ports and other default preferences.
 
 	How to tell ixnetCli to use which preference file:
 
 	      Enter:  setpreference('preference_<name>.py')
 
 
-	- Preference file must have the .py extension.
-
+	- Preference file must have:
+	    - The .py extension.
+	    - Must begin with prefernce_
+        
 	- If you are going to create a preference file, always begin with "preference_" and append a name.
-	  Then end it with the .py extension. For example: preference_susan.py
+	  For example: preference_susan.py
 
 	- Prefence files could be stored anywhere in your filesystem. Just include the path when you are 
 	  entering setpreference('path_to_preference_file/preference_susan.py')
 
-
+        
 	Preference file example:
 	
 	    Important: Set the value to None if not applied.
@@ -173,6 +171,9 @@ Getting Started:
 
 3 configuration methods
 -----------------------
+    1> Create a configuration from scratch
+    2> Loading a saved JSON config file
+    3> Loading a saved .ixncfg config file
 
     1> Create a configuration from scratch
        -----------------------------------
@@ -187,13 +188,11 @@ Getting Started:
 	      - Start BGP protocol.
 	      - Verifies ARP and BGP.
 
-
     2> Loading a saved JSON config file
        -----------------------------
            - On the IxNetwork GUI, make sure the configuration is good.
 	   - Export the configuration into a JSON format file.
 	   - Enter: runjsonconfig('<*.json file>') 
-
 
     3> Loading a saved .ixncfg config file
        -----------------------------
@@ -213,11 +212,10 @@ Choices are:  Windows and Linux
     2> Linux
         - Supports up to 15 concurrent user sessions.
 
-        - The Linux API server comes in two different installations:
+        - The Linux API server comes in multiple methods:
 
-	    1> Install the Linux API server in an XGS-HSL chassis.
+	    1> Install the Linux API server in an XGS-HSL chassis. (Starting with 8.40)
 	       This is an all-in-one chassis solution.
-	       Starting with IxOS/IxNetwork 8.40.
 
 	    2> OVA or QCOW2 format installation for hypervisors (VMWare or KVM).
 
@@ -230,20 +228,35 @@ How to use ixnetCli.py
 
 	 From a Linux or Windows OS prompt:
 
-	    Enter: python  (If you are using Windows, you might have to enter the full path to your Python.exe) 
+            Step 1:
+	        Enter a Python shell:
+		(If you are using Windows, you might have to enter the full path to your Python.exe) 
+	           Enter: python  
 
-            Enter: from ixnetCli import *
-	    Enter: connecttolinux() or connecttowindows()
-	    Enter: configbgp('bgpConfig.json')
-	    Enter: starttraffic()
-	    Enter: getstats()
+            Step 2:
+                Import the ixnetCli module
+                   Enter: from ixnetCli import *
+
+	    Step 3:
+	        Connect to the API server:
+	    	   Enter: connecttolinux() or connecttowindows()
+
+	    Step 4:
+	        Configure IxNetwork
+		   Enter: configbgp('bgpParams.py')
+
+	    Step 5:
+	        Enter: starttraffic()
+
+	    Step 6:
+	        Enter: getstats()
 
 	 - To see all the CLI commands
-	      Enter: showcommands()  or showcommands('API_name')
+	      Enter: showcommands() or showcommands('The_fucntion_name')
 
 	 - Docstring support:
 
-	      Enter help('API_name')
+	      Enter help('The_function_name')
 
 
 Modify existing configurations, rerun traffic and get stats
@@ -253,14 +266,14 @@ Modify existing configurations, rerun traffic and get stats
     Python syntax.  As you see below how to enter the CLI commands.    
     
     Worth mentionings:
-       - Modifying Traffic Item requires the Traffic Item name as the first parameter.
+       - Modifying Traffic Item requires the Traffic Item's name as the first parameter.
          In case there are more than one Traffic Items, this app will get the Traffic Item's
          object by filtering the name.
 
-       - To know your configured Traffic Item name, enter:
+       - To see all of your configured Traffic Item name, enter:
              showtrafficitemnames() or showtrafficitems()
 
-       - To get a descript of each parameter, enter: help(<the CLI function name>)	 
+       - To get a description of each parameter, enter: help(<the_function_name>)	 
 
 
     As of this version of the DOC, this application supports the following traffic modifications:

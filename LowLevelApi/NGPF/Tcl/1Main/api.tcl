@@ -17,6 +17,22 @@ proc Connect {apiServerIp ixNetworkVersion {apiKey None}} {
     return 0
 }
 
+proc ConnectToIxChassis {ixChassisIp} {
+    puts "\nAdding a chassis"
+    set chassisObj [ixNet add [ixNet getRoot]/availableHardware "chassis"]
+    set chassisObj [ixNet remapIds $chassisObj]
+    puts "Chassis object: $chassisObj"
+
+    puts "\nConnectToIxChassis: $ixChassisIp"
+    set status [ixNet setAttribute $chassisObj -hostname $ixChassisIp]
+    puts "Connecting to chassis status: $status"
+    ixNet commit
+
+    puts "\nGet chassis info"
+    set status [ixNet getList [ixNet getRoot]/availableHardware chassis]
+    puts "Chassis: $status"
+}
+
 proc GetApiKey {apiServerIp {username admin} {password admin} {apiKeyFilePath ./apiKeyFile}} {
     # apiServerIp: The IxNetwork API server IP
     # username: The Linux API server login username
@@ -33,15 +49,45 @@ proc GetApiKey {apiServerIp {username admin} {password admin} {apiKeyFilePath ./
 proc LoadConfigFile {configFile} {
     # configFile: The confile file to load
 
-    puts "Loading config file: $configFile"
+    puts "\nLoading config file: $configFile"
     set result [ixNet execute loadConfig [ixNet readFrom $configFile]]
     puts "\nresult: $result"
     if {$result != "::ixNet::OK"} {
 	puts "\nError: Loading config file: $configFile"
 	return 1
     }
-    after 3000
+    after 8000
     return 0
+}
+
+proc GetVportPhyPort {vport {returnValue addSlash}} {
+    # vport: ::ixNet::OBJ-/vport:1
+    # returnValue: 
+    #    addSlash: Return port format 1/2
+    #    noSlash:  Return port format "1 1"
+
+    set connectedTo [ixNet getAttribute $vport -connectedTo]
+    set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
+    set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
+    if {$returnValue == "addSlash"} {
+	set port $card/$portNum
+    } else {
+	set port "$card $portNum"
+    }
+    return $port
+}
+
+proc GetPortsAndAssignPorts {ixChassisIp} {
+    set portList {}
+    set vportList [ixNet getList [ixNet getRoot] vport]
+    foreach vport $vportList {
+	set port [GetVportPhyPort $vport noSlash]
+	lappend portList [list $ixChassisIp [lindex $port 0] [lindex $port 1]]
+    }
+    puts "\nGetPortsAndAssignPorts"
+    puts "\t[list $portList]"
+    puts "\t[list $vportList]" 
+    ixTclNet::AssignPorts $portList {} $vportList true
 }
 
 proc ClearPortOwnership {portList} {
@@ -53,7 +99,9 @@ proc ClearPortOwnership {portList} {
 	set portId [lindex $port 2]
     
 	puts "\nClearPortOwnership: $ixChassisIp/$cardId/$portId"
-	if {[catch {[ixNet exec clearOwnership [ixNet getRoot]/availableHardware/chassis:"$ixChassisIp"/card:$cardId/port:$portId]} errMsg]} {
+	set chassisObj [lindex [ixNet getList [ixNet getRoot]/availableHardware chassis] end]
+	puts "\n--- chassisObj: $chassisObj"
+	if {[catch {ixNet exec clearOwnership [ixNet getRoot]/availableHardware/chassis:"$ixChassisIp"/card:$cardId/port:$portId} errMsg]} {
 	    puts $errMsg
 	}
     }
@@ -68,20 +116,21 @@ proc ReleaseAllPorts {} {
 proc ReleasePorts {portList} {
     # portList: [list "$ixChassisIp $cardNum $portNum" ...]
 
+    puts "\nReleasePorts: $portList"
     set vportList [ixNet getList [ixNet getRoot] vport]
     foreach vport $vportList {
 	puts $vport
 	# chassis="192.168.70.11" card="1" port="1" portip="192.168.70.12"
-	set connectionInfo [ixNet getAttribute $vport -connectionInfo]
-	puts "connectionInfo: $connectionInfo"
-	set chassisIp [string map {\" ""}  [lindex [split [lindex $connectionInfo 0] = ] 1]]
-	set cardId [string map {\" ""} [lindex [split [lindex $connectionInfo 1] = ] 1]]
-	set portId [string map {\" ""} [lindex [split [lindex $connectionInfo 2] = ] 1]]
-	puts "ReleasePorts: $chassisIp/$cardId/$portId"
-	if {$portList == "$chassisIp $cardId $portId"} {
+	set assignedTo [ixNet getAttribute $vport -assignedTo]
+	puts "assignedTo: $assignedTo"
+	set chassisIp [string map {\" ""}  [lindex [split $assignedTo :] 0]]
+	set cardId [string map {\" ""} [lindex [split $assignedTo :] 1]]
+	set portId [string map {\" ""} [lindex [split $assignedTo :] 2]]
+
+	if {[lsearch -regexp $portList "$chassisIp $cardId $portId"] != -1} {
+	    puts "\nReleasePorts: $chassisIp/$cardId/$portId"
 	    set status [ixNet exec releasePort $vport]
 	    puts $status
-	    return
 	}
     }
 }
@@ -111,17 +160,16 @@ proc ConfigLicenseServer {{licenseServerIp None} {licenseMode None} {licenseTier
 
 proc VerifyPortState { {StopTimer 120} } {
     set portDownList {}
+    set startTimer 1
     set stopTime $StopTimer
     puts \n
     foreach vPort [ixNet getList [ixNet getRoot] vport] {
 	puts "\nvPort: $vPort"
 	set port [GetVportConnectedToPort $vPort]
-	puts "port: $port"
-	for {set timer 1} {$timer <= $stopTime} {incr timer} {
+	for {set timer $startTimer} {$timer <= $stopTime} {incr timer} {
 	    if {$timer == $stopTime} {
 		lappend portDownList $port
 	    }
-
 	    if {[ixNet getAttribute $vPort -state] == "up"} {
 		puts "VerifyPortState: $port is up"
 		break
@@ -131,13 +179,13 @@ proc VerifyPortState { {StopTimer 120} } {
 		continue
 	    }
 	}
+       set startTimer $timer
     }
 
     if {$portDownList != ""} {
 	puts "VerifyPortState: Ports can't come up: $portDownList\n"
 	return 1
     }
-    puts "VerifyPortState: All ports are up"
     return 0
 }
 
@@ -169,11 +217,11 @@ proc VerifyAllProtocolSessionsNgpf {} {
     # 
     # Returns 0 if all sessions are UP.
     # Returns 1 if any session remains DOWN after 90 seconds.
-    
+
+    # TODO: Create an IPv6 protocol list to also support IPv6
     set protocolList [list ancp \
 			  bfdv4Interface \
 			  bgpIpv4Peer \
-			  bgpIpv6Peer \
 			  dhcpv4relayAgent \
 			  dhcpv4server \
 			  geneve \

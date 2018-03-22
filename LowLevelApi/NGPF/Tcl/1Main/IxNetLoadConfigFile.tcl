@@ -24,15 +24,15 @@ if {[Connect $apiServerIp $ixNetworkVersion]} {
     exit
 }
 
-ReleaseAllPorts
-
-#ReleasePorts "$ixChassisIp 1 1"
-
+ConnectToIxChassis $ixChassisIp
+ReleasePorts $portList
 ClearPortOwnership $portList
 
 if {[LoadConfigFile $configFile]} {
     exit
 }
+
+GetPortsAndAssignPorts $ixChassisIp
 
 if {[VerifyPortState]} {
     exit

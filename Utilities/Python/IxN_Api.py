@@ -1867,4 +1867,23 @@ def IxVmRebuildChassisTopologyPy(ixNet, ixNetworkVersion):
     #rebuildChassisTopology (kString - ixnVersion ,kBool - usePrevSlotID ,kBool - promiscMode)
     ixNet.execute('rebuildChassisTopology', ixNetworkVersion, 'false', 'false')
 
+def EnableFlowGroup(endpointSetName, mode=True):
+    '''
+    endpointSetName: The name of the EndpointSetId (Flow Group) 
+    mode: True|False
+    '''
+    for trafficItem in ixNet.getList(ixNet.getRoot()+'traffic', 'trafficItem'):            
+        for endpointSetIdObj in ixNet.getList(trafficItem, 'endpointSet'):
+            endpointSetIdName = ixNet.getAttribute(endpointSetIdObj, '-name')
+            endpointSetId = endpointSetIdObj.split(':')[-1]
+
+            if endpointSetName == endpointSetIdName:
+                for highLevelStream in ixNet.getList(trafficItem, 'highLevelStream'):
+                    endpointId = ixNet.getAttribute(highLevelStream, '-endpointSetId')
+                    
+                    if endpointId == endpointSetId:
+                        print '\nEnableFlowGroup=%s: endpontSetName:%s' % (mode, endpointSetName)
+                        print highLevelStream
+                        ixNet.setAttribute(highLevelStream, '-enabled', mode)
+                        ixNet.commit()
 

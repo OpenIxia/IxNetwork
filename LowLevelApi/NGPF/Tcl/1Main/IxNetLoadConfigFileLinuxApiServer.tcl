@@ -1,9 +1,11 @@
 #!/opt/ActiveTcl-8.5/bin/tclsh
 
 # Description
-#    This sample script shows how to prepare and use ixNet low level TCL API with the Linux API server.
-#
+#    - This sample script shows how to prepare and use ixNet low level TCL API with the Linux API server.
+#    
 #    Load a saved .ixncfg config file 
+#       - This script will automatically get the ports from the saved config file.
+#       - If you want to use different ports, then set portList [list [chassisIp, cardId, portId] ...]
 #    Verify port state
 #    Start all protocols
 #    TODO: Verify protocol sessions
@@ -44,7 +46,9 @@
 #
 #    - In the scripts, package req IxTclNetworkLinuxApiServer
 
-
+# The original Linux API Server file is IxTclNetwork, but it is renamed to IxTclNetworkLinuxApiServer
+# to support both Windows and Linux. Rename this to IxTclNetwork if that's what you're using.
+# Using this assumes that you are using the Linux all-in-one tar package downloaded from the OpenIxia.com/softwareUpgrade.
 package req IxTclNetworkLinuxApiServer
 package req Tclx
 
@@ -58,17 +62,13 @@ set password admin
 set licenseServerIp 192.168.70.3
 set licenseMode subscription
 set licenseTier tier3
-set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
+set portList []
 
-# For the Linux API server, the config file has to be in the same directory as the script.
-set configFile bgp_ngpf_8.30.ixncfg
+set configFile /home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/SampleScripts/bgp_ngpf_8.30.ixncfg
 
-set apiKey [GetApiKey $apiServerIp $username $password]
-if {$apiKey == 1} {
+if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
     exit
 }
-
-Connect $apiServerIp $ixNetworkVersion $apiKey
 
 set sessions [ixNet getSessionInfo]
 puts "\nSessionId: $sessions"
@@ -79,10 +79,17 @@ if {[LoadConfigFile $configFile]} {
     exit
 }
 
+if {[ReleasePorts]} {
+    exit
+}
 
-ReleasePorts $portList
-ClearPortOwnership $portList
-GetPortsAndAssignPorts $ixChassisIp
+if {[ClearPortOwnership]} {
+    exit
+}
+
+if {[AssignPorts $ixChassisIp]} {
+    exit
+}
 
 if {[VerifyPortState]} {
     exit

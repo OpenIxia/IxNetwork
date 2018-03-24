@@ -2,9 +2,10 @@
 
 # Description
 #    Load a saved .ixncfg config file
+#       - This script will use the ports from the saved config file.
+#       - If you want to use different ports, then set portList [list [$ixChassisIp, $cardId, $portId] ...]
 #    Verify port state
 #    Start all protocols
-#    TODO: Verify protocol sessions
 #    Start traffic
 #    Get stats
 
@@ -16,23 +17,30 @@ source api.tcl
 set apiServerIp 192.168.70.3
 set ixChassisIp 192.168.70.11
 set ixNetworkVersion 8.40
-set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
-
+#set portList []
 set configFile /home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/SampleScripts/bgp_ngpf_8.30.ixncfg
 
-if {[Connect $apiServerIp $ixNetworkVersion]} {
+if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform windows]} {
     exit
 }
 
 ConnectToIxChassis $ixChassisIp
-ReleasePorts $portList
-ClearPortOwnership $portList
+
+if {[ReleasePorts]} {
+    exit
+}
+
+if {[ClearPortOwnership]} {
+    exit
+}
 
 if {[LoadConfigFile $configFile]} {
     exit
 }
 
-GetPortsAndAssignPorts $ixChassisIp
+if {[AssignPorts $ixChassisIp]} {
+    exit
+}
 
 if {[VerifyPortState]} {
     exit

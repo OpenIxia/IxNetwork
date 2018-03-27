@@ -1,3 +1,11 @@
+proc NewBlankConfig {} {
+    if {[catch {ixNet execute newConfig} errMsg]} {
+	puts "\nError: Failed to start new blank config: $errMsg"
+	return 1
+    }
+    return 0
+}
+
 proc Connect {args} {
     # osPlatform:  The Ixia chassis OS.  windows|linux.  Defaults to windows
     # apiServerIp: The IxNetwork API server
@@ -88,7 +96,6 @@ proc Connect {args} {
 }
 
 proc ConnectToIxChassis {ixChassisIp} {
-    puts "\nAdding a chassis"
     set chassisObj [ixNet add [ixNet getRoot]/availableHardware "chassis"]
     set chassisObj [ixNet remapIds $chassisObj]
     puts "Chassis object: $chassisObj"
@@ -125,9 +132,8 @@ proc LoadConfigFile {configFile} {
 	return 1
     }
 
-    set configFileHandle [ixNet readFrom $configFile]
     puts "\nLoadConfigFile: $configFile"
-    if {[ixNet exec loadConfig $configFileHandle] != "::ixNet::OK"} {
+    if {[ixNet exec loadConfig [ixNet readFrom $configFile]] != "::ixNet::OK"} {
 	puts "\nError: LoadConfigFile failed: $configFile"
 	return 1
     }
@@ -281,11 +287,15 @@ proc ClearPortOwnership {{portList None}} {
 	set cardId [lindex $port 1]
 	set portId [lindex $port 2]
     
-	puts "ClearPortOwnership: $ixChassisIp/$cardId/$portId"
-	set chassisObj [lindex [ixNet getList [ixNet getRoot]/availableHardware chassis] end]
-	if {[catch {ixNet exec clearOwnership [ixNet getRoot]/availableHardware/chassis:"$ixChassisIp"/card:$cardId/port:$portId} errMsg]} {
-	    puts "\nError: ClearPortOwnership: $errMsg"
-	    return 1
+	set isPortOwned [ixNet getAttribute [ixNet getRoot]/availableHardware/chassis:"$ixChassisIp"/card:$cardId/port:$portId -owner]
+
+	if {$isPortOwned != ""} {
+	    puts "ClearPortOwnership: $ixChassisIp/$cardId/$portId"
+	    set chassisObj [lindex [ixNet getList [ixNet getRoot]/availableHardware chassis] end]
+	    if {[catch {ixNet exec clearOwnership [ixNet getRoot]/availableHardware/chassis:"$ixChassisIp"/card:$cardId/port:$portId} errMsg]} {
+		puts "\nError: ClearPortOwnership: $errMsg"
+		return 1
+	    }
 	}
     }
     return 0
@@ -307,6 +317,11 @@ proc ReleasePorts {{portList None}} {
 	set configuredPorts [GetPortsAssignedToVports]
 	set portList [lindex $configuredPorts 0]
 	set vportList [lindex $configuredPorts 1]
+    }
+
+    set vportList [GetVportMappingToPhyPort $portList]
+    if {$vportList == 0} {
+	return 0
     }
 
     foreach vport $vportList {
@@ -516,6 +531,251 @@ proc VerifyAllProtocolSessionsNgpf {} {
 	    }
 	}
     }
+    return 0
+}
+
+proc GetTrafficItemObjects {{trafficItemName None}} {
+    # Get the Traffic Item objects: trafficItemObj, configElementObj and endpointSetObj
+    #    - trafficItemObj: Configures bi-directional traffic, tracking, one-to-one meshing.
+    #    - configElement:  Configures frameSizes, lineRate
+    #    - endpointSetObj: The source/dest endpoints and name
+    #
+    # Parameter
+    #    trafficItemName: Provide a traffic item name to look for. This is optional.
+    #                     If no traffic item name is specified, then return the 
+    #                     first trafficItemObj, configElementObj and endpointSetObj.
+
+    set trafficItemObjList [ixNet getList [ixNet getRoot]/traffic trafficItem]
+    foreach trafficItemObj $trafficItemObjList {
+	set trafficItemObjName [ixNet getAttribute $trafficItemObj -name]
+	set configElementObj [ixNet getList $trafficItemObj configElement]
+	set endpointSetObj [ixNet getList $trafficItemObj endpointSet]
+
+	if {$trafficItemName != "None" && $trafficItemName == $trafficItemObjName} {
+	    return [list $trafficItemObj $configElementObj $endpointSetObj]
+	}
+	if {$trafficItemName == "None"} {
+	    # If user did not specify which Traffic Item object to get by a name, 
+	    # return the first objects
+	    return [list $trafficItemObj $configElementObj $endpointSetObj]
+	}
+    }
+    puts "\nError: GetTrafficItemObjects: No traffic item name found in configuration: $trafficItemName"
+    return 0
+}
+
+proc GetConfigElementObj {trafficItemObj} {
+    return [ixNet getList $trafficItemObj configElement]
+}
+
+proc ConfigFrameSize {args} {
+    set params {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg { 
+	    -configElementObj {
+		set configElementObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -type {
+		# auto, fixed, increment, presetDistribution, quadGaussian, random, weightedPairs
+		set type [lindex $args [expr $argIndex + 1]]
+		append params " -type $type"
+		incr argIndex 2
+	    }
+	    -frameSize {
+		set frameSize [lindex $args [expr $argIndex + 1]]
+		append params " -fixedSize $frameSize"
+		incr argIndex 2
+	    }
+	    -randomMin {
+		set randomMin [lindex $args [expr $argIndex + 1]]
+		append params " -randomMin $randomMin"
+		incr argIndex 2
+	    }
+	    -randomMax {
+		set randomMax [lindex $args [expr $argIndex + 1]]
+		append params " -randomMax $randomMax"
+		incr argIndex 2
+	    }
+	    -incrementFrom {
+		set incrementFrom [lindex $args [expr $argIndex + 1]]
+		append params " -incrementFrom $incrementFrom"
+		incr argIndex 2
+	    }
+	    -incrementTo {
+		set incrementTo [lindex $args [expr $argIndex + 1]]
+		append params " -incrementTo $incrementTo"
+		incr argIndex 2
+	    }
+	    -incrementStep {
+		set incrementStep [lindex $args [expr $argIndex + 1]]
+		append params " -incrementStep $incrementStep"
+		incr argIndex 2
+	    }
+	    default {
+		puts "\nError ConfigFrameSize: No such parameter: $currentArg"
+	    }
+	}
+    }
+
+    puts "\nConfigFrameSize: $params"
+    if {[catch {eval ixNet setMultiAttribute $configElementObj/frameSize $params} errMsg]} {
+	puts "Error: ConfigFrameSize: $params"
+	return 1
+    }
+    ixNet commit
+    return 0
+}
+
+proc ConfigFrameRate {args} {
+    set params {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg { 
+	    -configElementObj {
+		set configElementObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -type {
+		# percentLineRate, framesPerSecond, bitsPerSecond, interPacketGap
+		set type [lindex $args [expr $argIndex + 1]]
+		append params " -type $type"
+		incr argIndex 2
+	    }
+	    -rate {
+		set rate [lindex $args [expr $argIndex + 1]]
+		append params " -rate $rate"
+		incr argIndex 2
+	    }
+	    -interPacketGapUnitsType {
+		set interPacketGapUnitsType [lindex $args [expr $argIndex + 1]]
+		append params " -interPacketGapUnitsTyhpe $interPacketGapUnitsType"
+		incr argIndex 2
+	    }
+	    -enforceMinimumInterPacketGap {
+		set enforceMinimumInterPacketGap [lindex $args [expr $argIndex + 1]]
+		append params " -enforceMinimumInterPacketGap $enforceMinimumInterPacketGap"
+		incr argIndex 2
+	    }
+	    -bitRateUnitsType {
+		set bitRateUnitsType [lindex $args [expr $argIndex + 1]]
+		append params " -bitRateUnitsType $bitRateUnitsType"
+		incr argIndex 2
+	    }
+	    default {
+		puts "\nError ConfigFrameRate: No such parameter: $currentArg"
+	    }
+	}
+    }
+
+    puts "\nConfigFrameRate: $params"
+    if {[catch {eval ixNet setMultiAttribute $configElementObj/frameRate $params} errMsg]} {
+	puts "Error: ConfigFrameRate: $params"
+	return 1
+    }
+    ixNet commit
+    return 0
+}
+
+proc ConfigFramePayload {args} {
+    set params {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg { 
+	    -configElementObj {
+		set configElementObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -type {
+		# custom, decrementByte, decrementWord, incrementByte, incrementWord, random
+		set type [lindex $args [expr $argIndex + 1]]
+		append params " -type $type"
+		incr argIndex 2
+	    }
+	    -customPattern {
+		set customPattern [lindex $args [expr $argIndex + 1]]
+		append params " -customPattern $customPattern"
+		incr argIndex 2
+	    }
+	    # True|False
+	    -customRepeat {
+		set customRepeat [lindex $args [expr $argIndex + 1]]
+		append params " -customRepeat $customRepeat"
+		incr argIndex 2
+	    }
+	    default {
+		puts "\nError ConfigFrameRate: No such parameter: $currentArg"
+	    }
+	}
+    }
+
+    puts "\nConfigFramePayload: $params"
+    if {[catch {eval ixNet setMultiAttribute $configElementObj/framePayload $params} errMsg]} {
+	puts "Error: ConfigFramePayload: $params"
+	return 1
+    }
+    ixNet commit
+    return 0
+}
+
+proc ConfigPortSpeed {args} {
+    # Look below under -speed for parameter inputs.
+    # Note: Some port speed doesn't have autonegotation.
+
+    set params {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg { 
+	    -port {
+		set port [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -speed {
+		# For ethernet
+		#    -autoNegotiate: True|False
+		#    -speed: auto, speed1000, speed100fd, speed100hd, speed10fd, speed10hd
+		#
+		# For ethernetvm
+		#    -speed: speed100, speed1000, speed10g, speed2000, speed20g, speed25g, speed3000, speed30g, speed4000
+		#            speed5000, speed50g, speed6000, speed7000, speed9000
+		#
+		# For hundredGigLan
+		#    -speed: speed100g, speed40g   
+		#
+		# For novusHundredGigLan
+		#    -enableAutoNegotiation: True|False
+		#    -speed: speed100g, speed10g, speed25g, speed40g, speed50g
+		#
+		# For novusTenGigLan
+		#    -autoNegotiate: True|False
+		#    -speed: speed1000, speed100fd, speed10g, speed2.5g, speed5g
+		set speed [lindex $args [expr $argIndex + 1]]
+		append params " -speed $speed"
+		incr argIndex 2
+	    }
+	    -autonegotiate {
+		# True|False
+		set autonegotiate [lindex $args [expr $argIndex + 1]]
+		append params " -autonegotiate $autonegotiate
+		incr argIndex 2
+	    }
+	    default {
+		puts "\nError ConfigPortSpeed: No such parameter: $currentArg"
+	    }
+	}
+    }
+
+    puts "\nConfigPortSpeed: $params"
+    if {[catch {eval ixNet setMultiAttribute $vportObj/l1Config $params} errMsg]} {
+	puts "Error: ConfigPortSpeed: $params"
+	return 1
+    }
+    ixNet commit
     return 0
 }
 
@@ -1246,14 +1506,39 @@ proc GetVportMapping { Port } {
     
     foreach vport $vportList {
 	set connectedTo [ixNet getAttribute $vport -connectedTo]
+	set chassis [lindex [split [lindex [split $connectedTo /] 2] :] end]
 	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
 	set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
 	set port $card/$portNum
 	if {$port == $Port} {
 	    return $vport
 	}
+
     }
     return 0
+}
+
+proc GetVportMappingToPhyPort { portList} {
+    # Search all vport for the port number.
+    # Port format = [list [$ixChassisIp $card $port] ...]
+
+    set vportList [ixNet getList [ixNet getRoot] vport]
+    if {$vportList == ""} {
+	return 0
+    }
+
+    set vportPhyPortList {}
+    foreach vport $vportList {
+	set connectedTo [ixNet getAttribute $vport -connectedTo]
+	set chassis [lindex [lindex [split [lindex [split $connectedTo /] 2] :] end] 0]
+	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
+	set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
+	set port "$chassis $card $portNum"
+	if {[lsearch -regexp $portList $port] != -1} {
+	    append vportPhyPortList "$vport "
+	}
+    }
+    return $vportPhyPortList
 }
 
 proc RestartStaticIpAuthProtocol { portList } {
@@ -2952,26 +3237,289 @@ proc AddChassis { ixiaChassisIp } {
     return[lindex [ixNet remapIds $chassisObj] 0]
 }
 
-proc CreateTopologyNgpf { topologyName vPorts } {
-    puts "\nCreateTopologyNgpf: $topologyName : $vPorts"
-    set topologyObj [ixNet add [ixNet getRoot] "topology"]
-    ixNet setMultiAttribute $topologyObj \
-	-name $topologyName \
-	-vports [list $vPorts]
+proc CreateTopology { args } {
+    # Example: set topology1Obj [CreateTopologyNgpf -name Topo-1 -portList [list "$ixChassisIp 1 1"]]
 
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -name {
+		set name [lindex $args [expr $argIndex + 1]]
+		append paramList " -name $name"
+		incr argIndex 2
+	    }
+	    -portList {
+		set portList [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    if {[info exists portList] == 0} {
+	puts "\nError: CreateToplogy: Requires portList"
+	return 1
+    }
+
+    set vportList [GetVportMappingToPhyPort $portList]
+    append paramList " -vports [list $vportList]"
+
+    puts "\nCreateTopologyNgpf: $paramList"
+
+    set topologyObj [ixNet add [ixNet getRoot] "topology"]
+
+    if {[catch {eval ixNet setMultiAttribute $topologyObj $paramList} errMsg]} {
+	puts "\nConnect failed $paramList"
+	return 1
+    }
     ixNet commit
     return [lindex [ixNet remapIds $topologyObj] 0]
 }
 
-proc CreateDeviceGroupNgpf { topologyObj deviceGroupName multiplier } {
-    puts "\nCreateDeviceGroupNgpf: $topologyObj : $deviceGroupName"
+proc CreateDeviceGroup { args } {
+
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -topologyObj {
+		set topologyObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -name {
+		set name [lindex $args [expr $argIndex + 1]]
+		append paramList " -name $name"
+		incr argIndex 2
+	    }
+	    -multiplier {
+		set multiplier [lindex $args [expr $argIndex + 1]]
+		append paramList " -multiplier $multiplier"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    puts "\nCreateDeviceGroupNgpf: $paramList"
     set deviceGroupObj [ixNet add $topologyObj "deviceGroup"]
-    ixNet setMultiAttribute $deviceGroupObj \
-	-name $deviceGroupName \
-	-multiplier $multiplier
-    
+    if {[catch {eval ixNet setMultiAttribute $deviceGroupObj $paramList} errMsg]} {
+	puts "\nCreateDeviceGroup failed: $paramList"
+	return 1
+    }
     ixNet commit
     return [lindex [ixNet remapIds $deviceGroupObj] 0]
+}
+
+proc CreateEthernetNgpf {args} {
+    set direction increment
+    set step 00:00:00:00:00:00
+
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -deviceGroupObj {
+		set deviceGroupObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -name {
+		set name [lindex $args [expr $argIndex + 1]]
+		append paramList " -name $name"
+		incr argIndex 2
+	    }
+	    -macAddress {
+		set macAddress [lindex $args [expr $argIndex + 1]]
+		append paramList " -start $macAddress"
+		incr argIndex 2
+	    }
+	    -direction {
+		set direction [lindex $args [expr $argIndex + 1]]
+		append paramList " -direction $direction"
+		incr argIndex 2
+	    }
+	    -step {
+		set step [lindex $args [expr $argIndex + 1]]
+		append paramList " -step $step"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    puts "\nCreateEthernetNgpf: Adding new Ethernet stack"
+    set ethernetObj [ixNet add $deviceGroupObj ethernet]
+    ixNet commit
+
+    set ethernetMultivalue [ixNet getAttribute $ethernetObj -mac]
+    puts "\t$paramList"
+    if {[catch {eval ixNet setMultiAttribute $ethernetMultivalue/counter  $paramList} errMsg]} {
+	puts "\nCreateEthernetNgpf failed: $paramList"
+	return 1
+    }
+    ixNet commit
+    return [lindex [ixNet remapIds $ethernetObj] 0]
+}
+
+proc CreateIpv4Ngpf {args} {
+    set direction increment
+    set step 0.0.0.0
+
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -ethernetObj {
+		set ethernetObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -name {
+		set name [lindex $args [expr $argIndex + 1]]
+		append paramList " -name $name"
+		incr argIndex 2
+	    }
+	    -ipAddress  {
+		set ipAddress [lindex $args [expr $argIndex + 1]]
+		append paramList " -start $ipAddress"
+		incr argIndex 2
+	    }
+	    -direction {
+		set direction [lindex $args [expr $argIndex + 1]]
+		append paramList " -direction $direction"
+		incr argIndex 2
+	    }
+	    -step {
+		set step [lindex $args [expr $argIndex + 1]]
+		append paramList " -step $step"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    puts "\nCreateIpv4Ngpf: Adding new IPv4 stack"
+    set ipv4Obj [ixNet add $ethernetObj ipv4]
+    ixNet commit
+
+    set ipv4Multivalue [ixNet getAttribute $ipv4Obj -address]
+
+    puts "\t$paramList"
+    if {[catch {eval ixNet setMultiAttribute $ipv4Multivalue/counter  $paramList} errMsg]} {
+	puts "\nCreateIpv4Ngpf failed: $paramList"
+	return 1
+    }
+    ixNet commit
+    return [lindex [ixNet remapIds $ipv4Obj] 0]
+}
+
+proc ConfigIpv4GatewayIpNgpf {args} {
+    set direction increment
+    set step 0.0.0.0
+
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -ipv4Obj {
+		set ipv4Obj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -gatewayIp  {
+		set gatewayIp [lindex $args [expr $argIndex + 1]]
+		append paramList " -start $gatewayIp"
+		incr argIndex 2
+	    }
+	    -direction {
+		set direction [lindex $args [expr $argIndex + 1]]
+		append paramList " -direction $direction"
+		incr argIndex 2
+	    }
+	    -step {
+		set step [lindex $args [expr $argIndex + 1]]
+		append paramList " -step $step"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    set gatewayMultivalue [ixNet getAttribute $ipv4Obj -gatewayIp]
+
+    puts "\t$paramList"
+    if {[catch {eval ixNet setMultiAttribute $gatewayMultivalue/counter $paramList} errMsg]} {
+	puts "\nConfigGatewayIpNgpf failed: $paramList"
+	return 1
+    }
+    ixNet commit
+}
+
+proc ConfigBgpNgpf {args} {
+    set direction increment
+    set step 0.0.0.0
+
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -ipv4Obj {
+		set ipv4Obj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -dutIp  {
+		set dutIp [lindex $args [expr $argIndex + 1]]
+		append paramList " -start $dutIp"
+		incr argIndex 2
+	    }
+	    -direction {
+		set direction [lindex $args [expr $argIndex + 1]]
+		append paramList " -direction $direction"
+		incr argIndex 2
+	    }
+	    -step {
+		set step [lindex $args [expr $argIndex + 1]]
+		append paramList " -step $step"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    puts "\nCreateBgpNgpf: Adding new BGP V4 stack"
+    set bgpObj [ixNet add $ipv4Obj bgpIpv4Peer]
+    ixNet commit
+
+    set bgpMultivalue [ixNet getAttribute $bgpObj -dutIp]
+
+    puts "\t$paramList"
+    if {[catch {eval ixNet setMultiAttribute $bgpMultivalue/counter $paramList} errMsg]} {
+	puts "\nConfigBgpNgpf failed: $paramList"
+	return 1
+    }
+    ixNet commit
 }
 
 proc CreateEthernetStackNgpf { deviceGroupObj ethernetStackName } {
@@ -3032,7 +3580,7 @@ proc CreateIpv4GatewayIpObjNgpf { ipv4StackObj } {
     return [lindex [ixNet remapIds $ipv4GatewayIpObj] 0]
 }
 
-proc ConfigIpv4GatewayIpNgpf { ipv4GatwayIpObj start {step 0.0.0.0} {direction increment} } {
+proc ConfigIpv4GatewayIpNgpf_backup { ipv4GatwayIpObj start {step 0.0.0.0} {direction increment} } {
     puts "\nConfigIpv4GatewayIpNgpf: $ipv4GatwayIpObj : start=$start step=$step direction=$direction"
     set ipv4GatewayIpObj2 [ixNet add $ipv4GatwayIpObj "counter"]
     ixNet setMultiAttribute $ipv4GatewayIpObj2 \
@@ -3078,4 +3626,159 @@ proc ConfigIpv4GatewayIpOverlayNgpf { ipv4GatewayIpObj count index indexStep val
 
 proc RebootCardId { cardId } {
     ixNet execute hwRebootCardByIDs $cardId
+}
+
+proc CreateTrafficItem {args} {
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -name {
+		set name [lindex $args [expr $argIndex + 1]]
+		append paramList " -name $name"
+		incr argIndex 2
+	    }
+	    # ipv4, ipv6, ethernetVlan
+	    -trafficType {
+		set trafficType [lindex $args [expr $argIndex + 1]]
+		append paramList " -trafficType $trafficType"
+		incr argIndex 2
+	    }
+	    -trafficItemType {
+		set trafficItemType [lindex $args [expr $argIndex + 1]]
+		append paramList " -trafficItemType $trafficItemType"
+		incr argIndex 2
+	    }
+	    # true|false
+	    -biDirection {
+		set biDirection [lindex $args [expr $argIndex + 1]]
+		append paramList " -biDirectional $biDirection"
+		incr argIndex 2
+	    }
+	    -trackBy {
+		set trackBy [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -srcEndpoint {
+		set srcEndpoint [lindex $args [expr $argIndex + 1]]
+		append paramList " -srcEndpoint $srcEndpoint"
+		incr argIndex 2
+	    }	    
+	    -dstEndpoint {
+		set dstEndpoint [lindex $args [expr $argIndex + 1]]
+		append paramList " -dstEndpoint $dstEndpoint"
+		incr argIndex 2
+	    }	    
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    puts "\nCreateTrafficItem: $paramList"
+    set trafficItemObj [ixNet add [ixNet getRoot]/traffic trafficItem]
+    ixNet commit
+    if {[catch {eval ixNet setMultiAttribute $trafficItemObj $paramList} errMsg]} {
+	puts "Error: CreateTrafficItem: $errMsg"
+	return 1
+    }
+    ixNet commit
+
+    # Must set trafficType after creating a new Traffic Item or else it will default to raw.
+    ixNet setAttribute $trafficItemObj -trafficType ipv4
+    ixNet commit
+    set trafficItemObj [lindex [ixNet remapIds $trafficItemObj] 0]
+    if {[info exists trackBy]} {
+	puts "Configuring tracking: $trackBy"
+	if {[catch {ixNet setMultiAttribute $trafficItemObj/tracking -trackBy $trackBy} errMsg]} {
+	    puts "\nError CreateTrafficItem: $errMsg"
+	}
+	ixNet commit
+    }
+    return $trafficItemObj
+}
+
+proc CreateEndpoints {args} {
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -trafficItemObj {
+		set trafficItemObj [lindex $args [expr $argIndex + 1]]
+		#append paramList " -trafficItemObj $trafficItemObj"
+		incr argIndex 2
+	    }
+	    -name {
+		set name [lindex $args [expr $argIndex + 1]]
+		append paramList " -name $name"
+		incr argIndex 2
+	    }
+	    -srcEndpoint {
+		set srcEndpoint [lindex $args [expr $argIndex + 1]]
+		append paramList " -sources $srcEndpoint"
+		incr argIndex 2
+	    }	    
+	    -dstEndpoint {
+		set dstEndpoint [lindex $args [expr $argIndex + 1]]
+		append paramList " -destinations $dstEndpoint"
+		incr argIndex 2
+	    }	    
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    if {[catch {set endpointSetObj [ixNet add $trafficItemObj endpointSet]} errMsg]} {
+	puts "Error: Creating new endpoints"
+	return 1
+    }
+    ixNet commit
+    puts "CreateEndpoints: $paramList"
+    if {[catch {eval ixNet setMultiAttribute $endpointSetObj $paramList} errMsg]} {
+	puts "\nError: CreateEndpoints: $errMsg"
+	return 1
+    }
+    ixNet commit
+    set endpointSetObj [lindex [ixNet remapIds $endpointSetObj] 0]
+}
+
+proc ConfigTrafficTransmissionControl {args} {
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -configElementObj {
+		set configElementObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -type {
+		# continuous, fixedFrameCount, fixedDuration, fixedIterationCount, custom, auto
+		set type [lindex $args [expr $argIndex + 1]]
+		append paramList " -type $type"
+		incr argIndex 2
+	    }
+	    -frameCount {
+		set frameCount [lindex $args [expr $argIndex + 1]]
+		append paramList " -frameCount $frameCount"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+    
+    puts "\nConfigTrafficTransmissionControl: $paramList"
+    if {[catch {eval ixNet setMultiAttribute $configElementObj/transmissionControl $paramList} errMsg]} {
+	puts "Error: ConfigTrafficTransmissionControl: $errMsg"
+	return 1
+    }
+    ixNet commit
 }

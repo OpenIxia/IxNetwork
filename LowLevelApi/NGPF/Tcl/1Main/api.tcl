@@ -85,29 +85,31 @@ proc Connect {args} {
 	append paramList " -apiKey $apiKey"
     }
 
-    puts "\nConnecting: $paramList"
+    puts "\nConnecting to API server: $paramList"
     if {[catch {set connectStatus [eval ixNet connect $paramList]} errMsg]} {
 	puts "\nConnect failed $paramList"
 	return 1
     }
 
-    puts "\nconnectStatus: $connectStatus"
+    puts "connectStatus: $connectStatus"
     return 0
 }
 
 proc ConnectToIxChassis {ixChassisIp} {
-    set chassisObj [ixNet add [ixNet getRoot]/availableHardware "chassis"]
-    set chassisObj [ixNet remapIds $chassisObj]
-    puts "Chassis object: $chassisObj"
+    if {[catch {set chassisObj [ixNet add [ixNet getRoot]/availableHardware "chassis"]} errMsg]} {
+	puts "Error: ConnectToIxChassis: $errMsg"
+	return 1
+    }
 
     puts "\nConnectToIxChassis: $ixChassisIp"
-    set status [ixNet setAttribute $chassisObj -hostname $ixChassisIp]
-    puts "Connecting to chassis status: $status"
+    if {[catch {set status [ixNet setAttribute $chassisObj -hostname $ixChassisIp]} errMsg]} {
+	puts "\nError: ConnectToIxChassis: $errMsg"
+	return 1
+    }
     ixNet commit
-
-    puts "\nGet chassis info"
+    set chassisObj [ixNet remapIds $chassisObj]
     set status [ixNet getList [ixNet getRoot]/availableHardware chassis]
-    puts "ConnectToIxChassis: $status"
+    puts "ConnectToIxChassis: Connected: $status"
 }
 
 proc GetApiKey {apiServerIp {username admin} {password admin} {apiKeyFilePath ./apiKeyFile}} {
@@ -160,6 +162,8 @@ proc GetVportPhyPort {vport {returnValue addSlash}} {
 }
 
 proc GetPorts {{ixChassisIp None}} {
+    # Get all the ports from $ixChassisIp
+
     set chassisObjList [ixNet getList [ixNet getRoot]/availableHardware chassis]
     if {$chassisObjList == ""} {
 	puts "\nError: GetPorts: No chassis is connected"
@@ -237,23 +241,38 @@ proc AssignPorts {ixChassisIp {portList None}} {
     # With the ixChassis IP, this proc discover all the ports or
     # you could pass in a portList.
     #
-    # If there is no vports discovered in your configuration, this Proc will
-    # automatically create vports in the amount of total ports.
+    # If there is no vports discovered in your configuration, this Proc
+    # expected you to pass in a portList.
+    #
+    # portList: A list of ports in a list format: [list "$ixChassisIp $card $port" ...]
 
     set vportList [ixNet getList [ixNet getRoot] vport]
-    set portList [GetPorts]
-
-    if {$portList == "None"} {
-	puts "\nError: AssignPorts: No ports found in the configuration."
-	puts "Either manually add ports to your configuration or pass in a list of ports"
-	return
+    if {$vportList == "" && $portList == "None"} {
+	puts "\nError: AssignPorts: The configuration has no vports created and you did not pass"
+	puts "\tin a portList. Don't know how to assign ports. If it's a blank config, you need"
+	puts "\tto pass in a portList"
+	return 1
     }
 
     puts "\nAssignPorts"
+
+    if 0 {
     if {$vportList == ""} {
+	# WARNING: This is dangerous.
+	#          GetPorts will get ALL the ports from the $ixChassisIP.
+	#          Use this only if you are for sure you want to use all the ports in the chassis.
+	#          Otherwise, pass in a $portList.
+	set portList [GetPorts $ixChassisIp]
+	if {$portList == "None"} {
+	    puts "\nError: AssignPorts: No ports found in the configuration."
+	    puts "Either manually add ports to your configuration or pass in a list of ports"
+	    return
+	}
+
 	# Create a list of vports in the same amount as the portList.
 	puts "AssignPorts: No vports found. Creating new vports"
 	set vportList {}
+	# At this point, $portList is ALL the ports!
 	foreach port $portList {
 	    set vport [ixNet add [ixNet getRoot] vport]
 	    ixNet commit
@@ -261,6 +280,13 @@ proc AssignPorts {ixChassisIp {portList None}} {
 	}
 	set vportList [ixNet getList [ixNet getRoot] vport]
     }
+    }
+
+    if {$vportList == ""} {
+	# vports will be automatically created by ixTclNet::AssignPorts
+	set vportList {}
+    }
+
     puts "\tPortList: [list $portList]"
     puts "\tVportList: [list $vportList]" 
     if {[catch {ixTclNet::AssignPorts $portList {} $vportList true} errMsg]} {
@@ -273,6 +299,9 @@ proc AssignPorts {ixChassisIp {portList None}} {
 proc ClearPortOwnership {{portList None}} {
     # This Proc could get all the ports dynamically or you could pass in 
     # a list of ports.
+    #
+    # WARNING: If you don't pass in a list of $portList, then this function
+    #          will clear port ownership on ALL the ports connected to your chassis.
     # 
     # portList: The format is:  [list "$ixChassisIp $cardNum $portNum" ...]
 
@@ -296,6 +325,8 @@ proc ClearPortOwnership {{portList None}} {
 		puts "\nError: ClearPortOwnership: $errMsg"
 		return 1
 	    }
+	} else {
+	    puts "ClearPortOwnership: $ixChassisIp/$cardId/$portId is not currently owned"
 	}
     }
     return 0
@@ -313,17 +344,22 @@ proc ReleasePorts {{portList None}} {
     # 
     # portList: The format is:  [list "$ixChassisIp $cardNum $portNum" ...]
 
+    # If user did not include $portList, then get ports from the loaded configuration.
+    # WARNING: This will release ALL the ports that is connected to your chassis.
     if {$portList == "None"} {
 	set configuredPorts [GetPortsAssignedToVports]
 	set portList [lindex $configuredPorts 0]
 	set vportList [lindex $configuredPorts 1]
     }
 
-    set vportList [GetVportMappingToPhyPort $portList]
-    if {$vportList == 0} {
+    if {$portList != "None"} {
+	set vportList [GetVportMappingToPhyPort $portList]
+    }
+    if {$vportList == 0 || $vportList == ""} {
 	return 0
     }
-
+    puts "releasePorts vportList: $vportList"
+    
     foreach vport $vportList {
 	# chassis="192.168.70.11" card="1" port="1" portip="192.168.70.12"
 	set assignedTo [ixNet getAttribute $vport -assignedTo]
@@ -350,17 +386,27 @@ proc ConfigLicenseServer {{licenseServerIp None} {licenseMode None} {licenseTier
 
     if {$licenseServerIp != "None"} {
 	puts "\nConfiguring license server: $licenseServerIp"
-	set status [ixNet setAttribute [ixNet getRoot]/globals/licensing -licensingServers $licenseServerIp]
+	if {[catch {set status [ixNet setAttribute [ixNet getRoot]/globals/licensing -licensingServers $licenseServerIp]} errMsg]} {
+	    puts "Error: ConfigLicenseServerIp: $errMsg"
+	    return 1
+	}
     }
     if {$licenseMode != "None"} {
-	puts "\nConfiguring license mode: $licenseMode"
-	set licenseServer [ixNet setAttribute [ixNet getRoot]/globals/licensing -mode $licenseMode]
+	puts "Configuring license mode: $licenseMode"
+	if {[catch {set licenseServer [ixNet setAttribute [ixNet getRoot]/globals/licensing -mode $licenseMode]} errMsg]} {
+	    puts "Error: ConfigLicenseMode: $errMsg"
+	    return 1
+	}
     }
-    if {$licenseServerIp != "None"} {
-	puts "\nConfiguring license tier: $licenseTier"
-	set licenseServer [ixNet setAttribute [ixNet getRoot]/globals/licensing -tier $licenseTier]
+    if {$licenseTier != "None"} {
+	puts "Configuring license tier: $licenseTier"
+	if {[catch {set licenseServer [ixNet setAttribute [ixNet getRoot]/globals/licensing -tier $licenseTier]} errMsg]} {
+	    puts "Error: ConfigLicenseServerIp: $errMsg"
+	    return 1
+	}
     }
     ixNet commit
+    return 0
 }
 
 proc VerifyPortState { {StopTimer 120} } {
@@ -978,7 +1024,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
     ixNet commit
 
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
-    puts "\n$columnList\n"
+    #puts "\n$columnList\n"
     
     set startTime 1
     set stopTime 30
@@ -991,7 +1037,116 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 	            break
 	}
     }
-    puts "\ntotal Pages: $totalPages"
+    #puts "\ntotal Pages: $totalPages"
+
+    # Iterrate through each page 
+    set row 0
+    for {set currentPage 1} {$currentPage <= $totalPages} {incr currentPage} {
+	puts "\nGetStatView: Getting statistics on page: $currentPage/$totalPages. Please wait ..."
+
+	catch {ixNet setAttribute $view/page -currentPage $currentPage} errMsg
+	if {$errMsg != "::ixNet::OK"} {
+	            puts "\nGetStatView: Failed to get statistic for current page.\n"
+	            return 1
+	}
+	ixNet commit
+	
+	# Wait for statistics to populate on current page
+	set whileLoopStopCounter 0
+	while {[ixNet getAttribute $view/page -isReady] != "true"} {
+	    if {$whileLoopStopCounter == "5"} {
+		puts "\nGetStatView: Could not get stats"
+		return 1
+	    }
+	    if {$whileLoopStopCounter < 5} {
+		puts "\nGetStatView: Not ready yet.  Waiting $whileLoopStopCounter/5 seconds ..."
+		after 1000
+	    }
+	            incr whileLoopStopCounter
+	}
+	
+	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
+	set totalFlowStatistics [llength $pageList]
+
+	# totalPageList == The total amount of flow statistics
+	for {set pageListIndex 0} {$pageListIndex <= $totalFlowStatistics} {incr pageListIndex} {
+	    set rowList [lindex $pageList $pageListIndex] ;# second list of 1 ingress and x egress rows
+
+	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
+		# Increment the row number
+		incr row
+
+		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
+		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
+		
+		puts "\n  $row:"
+		for {set index 0} {$index <[llength $cellList]} {incr index} {
+		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index]
+		    puts "\t[join [lindex $columnList $index] _]: [lindex $cellList $index]"
+		}
+	    }
+	}
+    }  
+    ixNet setAttribute $view -enabled false
+    ixNet commit
+
+    return $getStats
+}
+
+proc GetStats_backup {{viewName "Traffic Item Statistics"}} {
+    # This will get the stats based on the $viewName stat that you want to retrieve.
+    # Stats will be returned in a keyed list.
+    #
+    # viewName options (Not case sensitive):
+    #    NOTE: Not all statistics are listed here.
+    #          You could get the statistic viewName directly from the IxNetwork GUI in the statistics.
+    #
+    #    'Port Statistics'
+    #    'Tx-Rx Frame Rate Statistics'
+    #    'Port CPU Statistics'
+    #    'Global Protocol Statistics'
+    #    'Protocols Summary'
+    #    'Port Summary'
+    #    'OSPFv2-RTR Drill Down'
+    #    'OSPFv2-RTR Per Port'
+    #    'IPv4 Drill Down'
+    #    'L2-L3 Test Summary Statistics'
+    #    'Flow Statistics'
+    #    'Traffic Item Statistics'
+    #    'IGMP Host Drill Down'
+    #    'IGMP Host Per Port'
+    #    'IPv6 Drill Down'
+    #    'MLD Host Drill Down'
+    #    'MLD Host Per Port'
+    #    'PIMv6 IF Drill Down'
+    #    'PIMv6 IF Per Port'
+
+    set root [ixNet getRoot]
+    set viewList [ixNet getList $root/statistics view]    
+    set statViewIndex [lsearch -nocase -regexp $viewList $viewName]
+    set view [lindex $viewList $statViewIndex]
+    puts "\nview: $view"
+    # Flow Statistics
+    set caption [ixNet getAttribute $view -caption]
+
+    ixNet setAttribute $view -enabled true
+    ixNet commit
+
+    set columnList [ixNet getAttribute ${view}/page -columnCaptions]
+    #puts "\n$columnList\n"
+    
+    set startTime 1
+    set stopTime 30
+    while {$startTime < $stopTime} {
+	set totalPages [ixNet getAttribute $view/page -totalPages]
+	if {[regexp -nocase "null" $totalPages]} {
+	            puts "\nGetStatView: Getting total pages for $view is not ready. $startTime/$stopTime"
+	            after 2000
+	} else {
+	            break
+	}
+    }
+    #puts "\ntotal Pages: $totalPages"
 
     # Iterrate through each page 
     set row 0
@@ -1054,11 +1209,15 @@ proc KeylPrint {keylist {space ""}} {
     upvar $keylist kl
     set result ""
     foreach key [keylkeys kl] {
+	if {$key == ""} {
+	    continue
+	}
 	set value [keylget kl $key]
+
 	if {[catch {keylkeys value}]} {
-	        append result "$space$key: $value\n"
+	    append result "$space$key: $value\n"
 	} else {
-	        set newspace "$space "
+	    set newspace "$space "
 	    append result "$space$key:\n[KeylPrint value $newspace]"
 	}
     }

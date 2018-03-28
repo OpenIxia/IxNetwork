@@ -2,35 +2,65 @@
 
 # Description
 #    Load a saved .ixncfg config file
-#       - This script will use the ports from the saved config file.
+#       - This script could use the ports from the saved config file.
 #       - If you want to use different ports, then set portList [list [$ixChassisIp, $cardId, $portId] ...]
+#         and the APIs will use your $portList for ReleasePorts, ClearPortOwnership and AssignPorts
+#
 #    Verify port state
 #    Start all protocols
 #    Start traffic
 #    Get stats
+#
+# Suports Windows API server and Linux API server
+#
 
-package req IxTclNetwork
 package req Tclx
-
 source api.tcl
 
-set apiServerIp 192.168.70.3
+set osPlatform linux ;# windows|linux
+
+if {$osPlatform == "windows"} {
+    set apiServerIp 192.168.70.3
+}
+if {$osPlatform == "linux"} {
+    set apiServerIp 192.168.70.108
+}
+
 set ixChassisIp 192.168.70.11
 set ixNetworkVersion 8.40
-#set portList []
-set configFile /home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/SampleScripts/bgp_ngpf_8.30.ixncfg
+set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
+set licenseMode subscription 
+set licenseTier tier3
+set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
+set configFile bgpNgpf_8.40.ixncfg
 
-if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform windows]} {
-    exit
+if {$osPlatform == "linux"} {
+    package req IxTclNetworkLinuxApiServer 
+   if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
+	exit
+    }
+    set sessions [ixNet getSessionInfo]
+    puts "\nSessionId: $sessions"
+}
+
+if {$osPlatform == "windows"} {
+    package req IxTclNetwork
+    if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform windows]} {
+	exit
+    }
 }
 
 ConnectToIxChassis $ixChassisIp
 
-if {[ReleasePorts]} {
+if {[ReleasePorts $portList]} {
     exit
 }
 
-if {[ClearPortOwnership]} {
+if {[ClearPortOwnership $portList]} {
+    exit
+}
+
+if {[ConfigLicenseServer $licenseServerIp $licenseMode $licenseTier]} {
     exit
 }
 
@@ -38,7 +68,7 @@ if {[LoadConfigFile $configFile]} {
     exit
 }
 
-if {[AssignPorts $ixChassisIp]} {
+if {[AssignPorts $ixChassisIp $portList]} {
     exit
 }
 

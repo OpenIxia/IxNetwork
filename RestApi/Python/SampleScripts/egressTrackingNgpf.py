@@ -268,11 +268,10 @@ try:
     statview = trafficObj.createEgressStatView(trafficItemObj, egressTrackingPort, offsetBit, bitWidth,
                                     egressStatViewName, ingressTrackingFilterName)
     
-    trafficObj.startTraffic()
+    # Already called applyTraffic() few lines above.
+    # Don't call it again or else egress stats will disappear.
+    trafficObj.startTraffic(applyTraffic=False)
     
-    response = mainObj.get(mainObj.httpHeader+statview)
-    print(response.json())
-
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
         trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)

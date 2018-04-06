@@ -228,6 +228,20 @@ class Protocol(object):
 
         return ethernetObj
 
+    def createIsIsL3Ngpf(self, ethernetObj, **data):
+        """
+        Description
+            Create ISISL3
+
+        Parameters
+            ethernetObj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
+            data: The ISISL3 attributes.  You could view all the attributes from the IxNetwork API browser.
+        """
+        url = self.ixnObj.httpHeader+ethernetObj + '/isisL3'
+        response = self.ixnObj.post(url, data=data)
+        isisObj = response.json()['links'][0]['href']
+        return isisObj
+
     def createIpv4Ngpf(self, ethernetObj, name=None, ipv4Address='', ipv4AddressPortStep='disabled', gateway=None,
                        gatewayPortStep='disabled', prefix=None, resolveGateway=True):
         """
@@ -918,10 +932,10 @@ class Protocol(object):
         Parameters
             protocolObjList: A list of protocol objects.  Default = None.  The class will automatically verify all
                              of the configured protocols.
-            Ex: ['http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1',
-                 'http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
-                 'http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1',
-                 'http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1',]
+            Ex: ['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1',
+                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
+                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1',
+                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1',]
             timeout: Total wait time for all the protocols in the provided list to come up.
         """
         timerStop = timeout

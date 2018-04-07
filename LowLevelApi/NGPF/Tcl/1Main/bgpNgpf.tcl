@@ -15,7 +15,7 @@
 package req Tclx
 source api.tcl
 
-set osPlatform linux ;# windows|linux
+set osPlatform windows;# windows|linux
 
 if {$osPlatform == "windows"} {
     set apiServerIp 192.168.70.3
@@ -61,6 +61,8 @@ if {[ClearPortOwnership $portList]} {
     exit
 }
 
+# Configuring the license server details are optional. If you need to configure them,
+# this is the spot to do it.  You need to release the ports before you could configure them.
 if {[ConfigLicenseServer $licenseServerIp $licenseMode $licenseTier]} {
     exit
 }
@@ -128,6 +130,9 @@ RegenerateAllTrafficItems
 if {[StartTraffic]} {
     exit
 }
+
+set stats [GetStats "Port Statistics"]
+puts [KeylPrint stats]
 
 set stats [GetStats]
 puts [KeylPrint stats]

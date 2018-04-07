@@ -3,9 +3,23 @@ from IxNetRestApi import IxNetRestApiException
 
 class FileMgmt(object):
     def __init__(self, ixnObj=None):
+        """
+        Description
+           Initialize default attributes.
+
+        Parameter
+           ixnObj: (Object): The parent object.
+        """
         self.ixnObj = ixnObj
 
     def setMainObject(self, mainObject):
+        """
+        Description
+           For Robot support only. Setting the parent object.
+
+        Parameter
+           mainObject: (Object): The parent object.
+        """
         self.ixnObj = mainObject
 
     def loadConfigFile(self, configFile):
@@ -14,7 +28,7 @@ class FileMgmt(object):
             Load a saved config file from a Linux machine.
 
         Parameter
-            configFile: The full path including the saved config filename.
+            configFile: (str): The full path including the saved config filename.
         """
         if os.path.exists(configFile) is False:
             raise IxNetRestApiException("Config file doesn't exists: %s" % configFile)
@@ -53,10 +67,10 @@ class FileMgmt(object):
             You could also include a timestamp for the destination file.
 
         Parameters
-            windowsPathAndFileName: The full path and filename to retrieve from Windows API server.
-            localPath: The remote Windows destination path to put the file to.
-            renameDestinationFile: You could rename the destination file.
-            includeTimestamp: True|False.  If False, each time you copy the same file will be overwritten.
+            windowsPathAndFileName: (str): The full path and filename to retrieve from Windows API server.
+            localPath: (str): The remote Windows destination path to put the file to.
+            renameDestinationFile: (str): You could rename the destination file.
+            includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
         """
         import datetime
 
@@ -112,18 +126,14 @@ class FileMgmt(object):
             You could also include a timestamp for the destination file.
 
         Parameters
-            windowsPathAndFileName: The full path and filename to retrieve from Windows client.
-            localPath: The Linux destination path to put the file to.
-            renameDestinationFile: You could rename the destination file.
-            includeTimestamp: True|False.  If False, each time you copy the same file will be overwritten.
+            windowsPathAndFileName: (str): The full path and filename to retrieve from Windows client.
+            localPath: (str): The Linux destination path to put the file to.
+            renameDestinationFile: (str): You could rename the destination file.
+            includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
 
         Syntax
-            post: /api/v0/sessions/1/ixnetwork/operations/copyfile
+            post: /api/v1/sessions/1/ixnetwork/operations/copyfile
             data: {'arg1': windowsPathAndFileName, 'arg2': '/api/v1/sessions/1/ixnetwork/files/'+fileName'}
-
-            Note:
-               To get the Windows path dynamically:
-
         """
         import datetime
 
@@ -177,13 +187,14 @@ class FileMgmt(object):
             You could include a timestamp for the destination file.
 
         Parameters
-            windowsPathAndFileName: The full path and filename to retrieve from Windows client.
-            localPath: The Windows local filesystem. Ex: C:\\Results.
-            renameDestinationFile: You could name the destination file.
-            includeTimestamp: True|False.  If False, each time you copy the same file will be overwritten.
+            windowsPathAndFileName: (str): The full path and filename to retrieve from Windows client.
+            localPath: (str): The Windows local filesystem. Ex: C:\\Results.
+            renameDestinationFile: (str): You could name the destination file.
+            includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
 
-        Example:  WindowsPathAndFileName =  'C:\\Users\\hgee\\AppData\\Local\\Ixia\\IxNetwork\\data\\result\\DP.Rfc2544Tput\\9e1a1f04-fca5-42a8-b3f3-74e5d165e68c\\Run0001\\TestReport.pdf'
-                  localPath = 'C:\\Results'
+        Example:
+           WindowsPathAndFileName =  'C:\\Users\\hgee\\AppData\\Local\\Ixia\\IxNetwork\\data\\result\\DP.Rfc2544Tput\\9e1a1f04-fca5-42a8-b3f3-74e5d165e68c\\Run0001\\TestReport.pdf'
+           localPath = 'C:\\Results'
         """
         import datetime
 
@@ -215,9 +226,9 @@ class FileMgmt(object):
             extension will be .json.  The converted .json file will be saved in the path
             variable destinationPath.
 
-        Parameter
-            ixncfgFile: The binary IxNetwork .ixncfg file.
-            destinationPath: The destination path to save the .json config file.
+        Parameters
+            ixncfgFile: (str): The binary IxNetwork .ixncfg file.
+            destinationPath: (str): The destination path to save the .json config file.
         """
         self.loadConfigFile(ixncfgFile)
         filename = ixncfgFile.split('/')[-1]
@@ -232,7 +243,7 @@ class FileMgmt(object):
         """
         Description
             For newConfig:
-                This is an equivalent to loading a saved .ixncfg file.
+                This is equivalent to loading a saved .ixncfg file.
                 To use this API, your script should have read a JSON config into an object variable.
                 Then pass in the json object to the data parameter.
 
@@ -243,9 +254,11 @@ class FileMgmt(object):
                               "enabled": True,
                               "name": "Topo-BGP"}
 
-        Parameter
-            data: The JSON config object.
-            option: newConfig|modify
+        Parameters
+            data: (json object): The JSON config object.
+            option: (str): newConfig|modify
+            silentMode: (bool): If True, don't display REST API command on stdout.
+            timeout: (int): The timeout value to declare as failed.
 
         Note
             arg2 value must be a string of JSON data: '{"xpath": "/traffic/trafficItem[1]", "enabled": false}'
@@ -273,8 +286,8 @@ class FileMgmt(object):
             current configuration
 
         Parameters
-            jsonFileName: The JSON config file. Could include absolute path also.
-            option: newConfig|modify
+            jsonFileName: (json object): The JSON config file. Could include absolute path also.
+            option: (str): newConfig|modify
         """
         if option is 'modify':
             arg3 = False
@@ -312,7 +325,7 @@ class FileMgmt(object):
             Export the current configuration to a JSON format config file.
 
         Parameters
-            jsonFileName: The JSON config file name to create. Could include absolute path also.
+            jsonFileName: (str): The JSON config file name to create. Could include absolute path also.
 
         Example
             restObj.exportJsonConfigFile(jsonFileName='/path/exportedJsonConfig.json')
@@ -376,7 +389,7 @@ class FileMgmt(object):
             Read an exported json data and create a list of all the vports from the json configuration.
 
         Parameter
-            jsonData: The json data after calling: jsonData = jsonReadConfig(jsonConfigFile)
+            jsonData: (json object): The json data after calling: jsonData = jsonReadConfig(jsonConfigFile)
         """
         portList = []
         for vport in jsonData['vport']:
@@ -393,9 +406,11 @@ class FileMgmt(object):
             Then recreate JSON datas for availableHardware based on the portList input.
 
         Parameters
-            jsonObject: The JSON config object.
-            portList: Example:
+            jsonObject: (json object): The JSON config object.
+            portList: (list) 
+               Example:
                         portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
+            timeout: (int): The timeout value to declare as failed.
         """
         # Since it is reassigning ports, remove existing chassis's and add what users want.
         jsonObject.pop("availableHardware")
@@ -435,6 +450,13 @@ class FileMgmt(object):
         self.importJsonConfigObj(dataObj=jsonObject, option='modify', timeout=timeout)
 
     def jsonReadConfig(self, jsonFile):
+        """
+        Description
+           Read the input json file.
+        
+        Parameter
+           jsonFile: (json object): The json file to read.
+        """
         import sys
         if os.path.isfile(jsonFile) == False:
             raise IxNetRestApiException("JSON param file doesn't exists: %s" % jsonFile)
@@ -445,10 +467,23 @@ class FileMgmt(object):
 
     @staticmethod
     def jsonWriteToFile(dataObj, jsonFile, sortKeys=False):
+        """
+        Description
+           Write data to a json file.
+        
+        Parameters
+           dataObj: (json object): The json object containing the data.
+           jsonFile (str): The the destination json file to write the json data.
+           sortKeys: (bool): To sort the json object keys.
+        """
         print('\njsonWriteToFile ...')
         with open(jsonFile, 'w') as outFile:
             json.dump(dataObj, outFile, sort_keys=sortKeys, indent=4)
 
     @staticmethod
-    def jsonPrettyprint(data, sortKeys=False):
+    def jsonPrettyprint(data, sortKeys=False, **kwargs):
+        """
+        Description
+           Display the JSON data in human readable format with indentations.
+        """
         print('\n', json.dumps(data, indent=4, sort_keys=sortKeys))

@@ -2,7 +2,6 @@
 
 # Description
 #    Load a saved .ixncfg config file
-#       - This script will use the ports from the saved config file.
 #       - If you want to use different ports, then set portList [list [$ixChassisIp, $cardId, $portId] ...]
 #    Verify port state
 #    Start all protocols
@@ -62,7 +61,8 @@ if {[ClearPortOwnership $portList]} {
 }
 
 # Configuring the license server details are optional. If you need to configure them,
-# this is the spot to do it.  You need to release the ports before you could configure them.
+# this is the spot to do it.  NOte: You need to release the ports before you could configure them
+# which is done above.
 if {[ConfigLicenseServer $licenseServerIp $licenseMode $licenseTier]} {
     exit
 }

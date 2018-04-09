@@ -10,7 +10,10 @@ class Statistics(object):
         self.fileMgmtObj = FileMgmt(self.ixnObj)
 
     def setMainObject(self, mainObject):
-        # For Python Robot Framework support
+        """
+        Description
+            For Python Robot Framework support.
+        """
         self.ixnObj = mainObject
 
     def getStats(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False, displayStats=True,
@@ -282,3 +285,10 @@ xo            "IPv4 Drill Down"
                 return viewObj
         return None
 
+    def clearStats(self):
+        """
+        Description
+            Clear all stats and wait for API server to finish.
+        """
+        url = self.ixnObj.sessionUrl + '/operations/clearStats'
+        response = self.ixnObj.post(url, data={'arg1': ['waitForPortStatsRefresh']})

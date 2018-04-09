@@ -21,8 +21,9 @@ from IxNetRestApi import IxNetRestApiException
 class Protocol(object):
     def __init__(self, ixnObj=None, portMgmtObj=None):
         """
-        :param ixnObj: The main connection object.
-        :param portMgmtObj: Optional. It's deprecated. Leaving it here for backward compatibility
+        Parameters
+        ixnObj: <str>: The main connection object.
+        portMgmtObj: <str>: Optional. It's deprecated. Leaving it here for backward compatibility
         """
         self.ixnObj = ixnObj
         self.configuredProtocols = []
@@ -34,13 +35,23 @@ class Protocol(object):
         self.statObj = Statistics(self.ixnObj)
 
     def setMainObject(self, mainObject):
-        # For Python Robot Framework support
+        """
+        Description
+           For Python Robot Framework support
+        
+        Parameter
+           mainObject: <str>: The connect object.
+        """
         self.ixnObj = mainObject
         self.portMgmtObj.setMainObject(mainObject)
         self.statObj.setMainObject(mainObject)
 
     def getSelfObject(self):
-        # For Python Robot Framework support
+        """
+        Description
+           For Python Robot Framework support.
+           Get the Connect object.
+        """
         return self
 
     def createTopologyNgpf(self, portList, topologyName=None):
@@ -49,11 +60,11 @@ class Protocol(object):
             Create a new Topology and assign ports to it.
 
         Parameters
-            portList: format = [[(str(chassisIp), str(slotNumber), str(portNumber)] ]
-                Example 1: [ ['192.168.70.10', '1', '1'] ]
-                Example 2: [ ['192.168.70.10', '1', '1'], ['192.168.70.10', '2', '1'] ]
+            portList: <list>: format = [[(str(chassisIp), str(slotNumber), str(portNumber)] ]
+                      Example 1: [ ['192.168.70.10', '1', '1'] ]
+                      Example 2: [ ['192.168.70.10', '1', '1'], ['192.168.70.10', '2', '1'] ]
 
-            topologyName: Give a name to the Topology Group.
+            topologyName: <str>: Give a name to the Topology Group.
 
         Return
             /api/v1/sessions/<id>/topology/<id>
@@ -78,9 +89,9 @@ class Protocol(object):
             Create a new Device Group.
 
         Parameters
-            topologyObj: A Topology object: /api/v1/sessions/1/ixnetwork/topology/{id}
-            multiplier: The amount of host to create (In integer).
-            deviceGroupName: Optional: Device Group name.
+            topologyObj: <str>: A Topology object: /api/v1/sessions/1/ixnetwork/topology/{id}
+            multiplier: <int>: The amount of host to create (In integer).
+            deviceGroupName: <str>: Optional: Device Group name.
 
         Returns:
             /api/v1/sessions/1/ixnetwork/topology/{id}/deviceGroup/{id}
@@ -101,15 +112,15 @@ class Protocol(object):
             Create new LACP group.
 
         Parameter
-            ethernetObj: The Ethernet stack object to create the LACP.
-                            Example: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+            ethernetObj: <str>:The Ethernet stack object to create the LACP.
+                               Example: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
 
-            administrativeKey: Default=1
-            actorSystemId: Default='00 00 00 00 00 01'.
-            actorSystemPriority: Default=1
-            actorKey: Default=1
-            actorPortNumber: Default=1
-            actorPortPriority: Default=1
+            administrativeKey: <int>: Default=1
+            actorSystemId: <str>: Default='00 00 00 00 00 01'.
+            actorSystemPriority: <int>: Default=1
+            actorKey: <int>: Default=1
+            actorPortNumber: <int>: Default=1
+            actorPortPriority: <int>: Default=1
         """
         response = self.ixnObj.post(self.ixnObj.httpHeader+ethernetObj+'/lacp')
         lacpObj = response.json()['links'][0]['href']
@@ -149,21 +160,21 @@ class Protocol(object):
             Create an Ethernet header
 
         Parameters
-            deviceGroupObj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2'
+            deviceGroupObj: <str>: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2'
 
-            ethernetName: Ethernet header name.
-            macAddress: By default, IxNetwork will generate unique Mac Addresses.
-                        {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
-                        Note: step: '00:00:00:00:00:00' means don't increment.
+            ethernetName: <str>:  Ethernet header name.
+            macAddress: <str>: By default, IxNetwork will generate unique Mac Addresses.
+                               {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
+                               Note: step: '00:00:00:00:00:00' means don't increment.
 
-            macAddressPortStep: Incrementing the Mac address on each port based on your input.
-                                '00:00:00:00:00:01' means to increment the last byte on each port.
-                                Options:
-                                   - 'disable' or '00:00:00:01:00:00' format
+            macAddressPortStep:<str>: Incrementing the Mac address on each port based on your input.
+                                      '00:00:00:00:00:01' means to increment the last byte on each port.
+                                      Options:
+                                         - 'disable' or '00:00:00:01:00:00' format
 
-            vlanId: None, single value or {'start': 103, 'direction': 'increment', 'step': 1}
-            vlanPriority: None, single value or {'start': 2, 'direction': 'increment', 'step': 1}
-            mtu: None, single value or {'start': 1300, 'direction': 'increment', 'step': 1})
+            vlanId: None|single value| {'start': 103, 'direction': 'increment', 'step': 1}
+            vlanPriority: None|single value| {'start': 2, 'direction': 'increment', 'step': 1}
+            mtu: None| single value| {'start': 1300, 'direction': 'increment', 'step': 1})
 
          Example:
              ethernetObj1 = createEthernetNgpf(deviceGroupObj1,
@@ -2283,48 +2294,63 @@ class Protocol(object):
                             self.ixnObj.logInfo('\tFound port configured: %s' % currentPort)
         return portList
 
-    def flapBgp(self, topologyName=None, bgpName=None, enableTrueOrFalse=True, ipInterfaceList='all', upTimeInSeconds=0, downTimeInSeconds=0):
-        """Config BGP flapping.
+    def flapBgp(self, topologyName=None, bgpName=None, enable=True, ipInterfaceList='all', upTimeInSeconds=0, downTimeInSeconds=0):
+        """
+        Description
+           Enable/Disable BGP flapping.
 
-        param: topologyName: The Topolgy Group name where the BGP stack resides in.
-        param: enableTrueOrFalse: (True|False): Enable or disable BGP flapping.
-        param: ipInterfaceList: (list): A list of the local BGP IP interface to configure for flapping.
-        param: upTimeInSeconds: (int): The up time for BGP to remain up before flapping it down.
-        param: downTimeInSeconds: (int): The down time for BGP to remain down before flapping it back up."""
+        Parameters
+           topologyName: <str>: Optional: The Topolgy Group name where the BGP stack resides in.
+           bgpName: <str>: Mandatory. The name of the BGP stack.
+           enable: <bool>: To enable or disable BGP flapping.
+           ipInterfaceList: <list>: A list of the local BGP IP interface to configure for flapping.
+           upTimeInSeconds: <int>: The up time for BGP to remain up before flapping it down.
+           downTimeInSeconds: <int>: The down time for BGP to remain down before flapping it back up.
+        """
+        bgpObject = None
         queryData = {'from': '/',
-                    'nodes': [{'node': 'topology', 'properties': ['name'], 'where': [{'property': 'name', 'regex': topologyName}]},
-                              {'node': 'deviceGroup', 'properties': [], 'where': []},
-                              {'node': 'ethernet', 'properties': [], 'where': []},
-                              {'node': 'ipv4', 'properties': [], 'where': []},
-                              {'node': 'bgpIpv4Peer', 'properties': ['name'], 'where': [{'property': 'name', 'regex': bgpName}]}]}
-        queryResponse = self.ixnObj.query(data=queryData)
-        if queryResponse.json()['result'][0]['topology'] == []:
-            raise IxNetRestApiException('\nNo such Topology Group name found %s' % topologyName)
-        if queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'] == []:
-            raise IxNetRestApiException('\nNo such bgpIpv4Peer name found %s' % bgpName)
+                     'nodes': [{'node': 'topology', 'properties': ['name'], 'where': [{'property': 'name', 'regex': topologyName}]},
+                               {'node': 'deviceGroup', 'properties': [], 'where': []},
+                               {'node': 'ethernet', 'properties': [], 'where': []},
+                               {'node': 'ipv4', 'properties': [], 'where': []},
+                               {'node': 'ipv6', 'properties': [], 'where': []},
+                               {'node': 'bgpIpv4Peer', 'properties': ['name'], 'where': []},
+                               {'node': 'bgpIpv6Peer', 'properties': ['name'], 'where': []}
+                           ]}
 
-        bgpObject = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'][0]['href']
-        self.flapBgpPeerNgpf(bgpObjHandle=bgpObject, enable=enableTrueOrFalse, flapList=ipInterfaceList,
-                                         uptime=upTimeInSeconds, downtime=downTimeInSeconds)
+        queryResponse = self.ixnObj.query(data=queryData)
+        if queryResponse.json()['result'][0]['topology'][0]['name'] != topologyName:
+            raise IxNetRestApiException('\nNo such Topology Group name found %s' % topologyName)
+            
+        try:
+            discoveredBgpName = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'][0]['name']
+            if bgpName == discoveredBgpName:
+                bgpObject = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'][0]['href']
+        except:
+            discoveredBgpName = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv6'][0]['bgpIpv6Peer'][0]['name']
+            if bgpName == discoveredBgpName:
+                bgpObject = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv6'][0]['bgpIpv6Peer'][0]['href']
+        
+        if bgpObject == None:
+            raise IxNetRestApiException('\nNo such bgp name found %s' % bgpName)
+        
+        self.flapBgpPeerNgpf(bgpObjHandle=bgpObject, enable=enable, flapList=ipInterfaceList,
+                             uptime=upTimeInSeconds, downtime=downTimeInSeconds)
 
     def flapBgpPeerNgpf(self, bgpObjHandle, enable=True, flapList='all', uptime=0, downtime=0):
         """
         Description
-           This API will enable or disable flapping on either all or a list of BGP IP routes.
-           If you are configuring routes to enable, you could also set the uptime and downtime in seconds.
+           Enable or disable BGP flapping on either all or a list of IP interfaces.
 
         Parameters
             bgpObjHandle: The bgp object handle.
                          /api/v1/sessions/<int>/ixnetwork/topology/<int>/deviceGroup/<int>/ethernet/<int>/ipv4/<int>/bgpIpv4Peer/<int>
-            enable: True or False
-                - Default = True
-            flapList: 'all' or a list of IP route addresses to enable/disable.
-                      [['160.1.0.1', '160.1.0.2',...]
-                - Default = 'all'
-            uptime: In seconds.
-                - Defaults = 0
-            downtime: In seconds.
-                - Defaults = 0
+            enable: <bool>: Default = True
+            flapList: 'all' or a list of IP addresses to enable/disable flapping.
+                      [['10.10.10.1', '10.10.10.8', ...]
+                      Default = 'all'
+            uptime: <int>: In seconds. Defaults = 0
+            downtime: <int>: In seconds. Defaults = 0
 
         Syntax
            POST = /api/v1/sessions/<int>/ixnetwork/topology/<int>/deviceGroup/<int>/ethernet/<int>/ipv4/<int>/bgpIpv4Peer/<int>
@@ -2333,15 +2359,20 @@ class Protocol(object):
             ipRouteListToFlap = flapList.split(' ')
 
         response = self.ixnObj.get(self.ixnObj.httpHeader+bgpObjHandle)
-        networkAddressList = response.json()['localIpv4Ver2']
-        count = len(networkAddressList)
 
-        # Recreate an index list based on user defined ip route to enable/disable
+        # Get the IP object from the bgpObjHandle
+        match = re.match('(/api.*)/bgp', bgpObjHandle)
+        ipObj = match.group(1)
+
+        ipAddressList = self.getIpAddresses(ipObj)
+        count = len(ipAddressList)
+
+        # Recreate an index list based on user defined ip address to enable/disable
         indexToFlapList = []
         if flapList != 'all':
-            for ipRouteAddress in flapList:
+            for ipAddress in flapList:
                 # A custom list of indexes to enable/disable flapping based on the IP address index number.
-                indexToFlapList.append(networkAddressList.index(ipRouteAddress))
+                indexToFlapList.append(ipAddressList.index(ipAddress))
 
         # Copy the same index list for uptime and downtime
         indexUptimeList = indexToFlapList
@@ -2370,9 +2401,12 @@ class Protocol(object):
                 downtimeOverlayList.append(str(downtime))
 
         if flapList != 'all':
-            currentFlappingValueList = flappingResponse[0]
-            currentUptimeValueList   = uptimeResponse[0]
-            currentDowntimeValueList = downtimeResponse[0]
+            # ['true', 'true', 'true']
+            currentFlappingValueList = flappingResponse
+            # ['10', '10', '10']
+            currentUptimeValueList   = uptimeResponse
+            # ['20', '20', '20']
+            currentDowntimeValueList = downtimeResponse
 
             indexCounter = 0
             for (eachFlapValue, eachUptimeValue, eachDowntimeValue) in zip(currentFlappingValueList, currentUptimeValueList,
@@ -2388,6 +2422,7 @@ class Protocol(object):
                         flapOverlayList.append("true")
                     else:
                         flapOverlayList.append("false")
+
                     uptimeOverlayList.append(str(uptime))
                     downtimeOverlayList.append(str(downtime))
                 indexCounter += 1
@@ -3037,6 +3072,19 @@ class Protocol(object):
         """
         response = self.ixnObj.get(self.ixnObj.httpHeader+protocolObj+'?includes=sessionStatus', silentMode=True)
         return response.json()['sessionStatus']
+
+    def getIpAddresses(self, ipObj):
+        """
+        Description
+           Get the configured ipv4|ipv6 addresses in a list.
+        
+        Parameter
+           ipObj: <str>: The IPv4|Ipv6 object: /api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader+ipObj)
+        multivalueObj = response.json()['address']
+        response = self.ixnObj.getMultivalueValues(multivalueObj)
+        return response
 
     def showTopologies(self):
         """

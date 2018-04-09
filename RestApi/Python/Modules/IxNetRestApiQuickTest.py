@@ -1,6 +1,6 @@
 import re, time
 from IxNetRestApi import IxNetRestApiException
-from IxNetResApiFileMgmt import FileMgmt
+from IxNetRestApiFileMgmt import FileMgmt
 
 class QuickTest(object):
     def __init__(self, ixnObj=None, fileMgmtObj=None):

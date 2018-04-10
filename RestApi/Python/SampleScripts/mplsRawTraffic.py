@@ -178,6 +178,15 @@ try:
                                              'stepValue': '1',
                                              'countValue': 2,
                                              'auto': False})
+
+    # Exp value range: 0-7
+    trafficObj.configPacketHeaderField(stackObj,
+                                       fieldName='MPLS Exp',
+                                       data={'valueType': 'increment',
+                                             'startValue': '3',
+                                             'stepValue': '1',
+                                             'countValue': 1,
+                                             'auto': False})
         
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='IPv4', stackNumber=2, action='append')
     #stackObj = getPacketHeaderStackIdObj(configElementObjList[0], stackId=6)

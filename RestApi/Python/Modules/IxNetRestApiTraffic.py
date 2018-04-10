@@ -18,7 +18,7 @@ class Traffic(object):
                  trafficItemObj, endpointSetObjList and configElementObjList
 
             NOTE:
-                Each Traffic Item could create multiple endpoints and for each endpoint,
+                Each Traffic Item could create multiple endpoints and for each endpoint.
                 you could provide a list of configElements for each endpoint.
                 The endpoints and configElements must be in a list.
 
@@ -29,11 +29,11 @@ class Traffic(object):
         Parameters
             mode: craete|modify
 
-            obj: For mode=modify only.  Select the object to modify: trafficItemObj|configElementObj|endpointObj
+            obj: For "mode=modify" only. Provide the object to modify: trafficItemObj|configElementObj|endpointObj
 
             trafficItem: Traffic Item kwargs.
 
-            endpoints: [list]: A list: [{name, sources:[], destionations:[], highLevelStreams: None, (add more endpoints)... ]
+            endpoints: [list]: A list: [{name: sources:[], destionations:[], highLevelStreams: None, (add more endpoints)... ]
                                Scroll down to see example.
 
             configElements: [list]: Config Element kwargs.
@@ -71,6 +71,10 @@ class Traffic(object):
 
             allowSelfDestined: True or False
 
+            trackBy: [list]: trackingenabled0, ethernetIiSourceaddress0, ethernetIiDestinationaddress0, ethernetIiPfcQueue0,
+                             vlanVlanId0, vlanVlanUserPriority0, ipv4SourceIp0, sourceDestValuePair0, sourceDestEndpointPair0,
+                             ipv4Precedence0, ipv4SourceIp0, flowGroup0, frameSize0 
+
         ConfigElement Parameters
             transmissionType:
                - continuous, fixedFrameCount
@@ -98,6 +102,15 @@ class Traffic(object):
 
 
         USAGE EXAMPLE:
+            To modify:
+                trafficObj.configTrafficItem(mode='modify',
+                                             obj='/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1', 
+                                             configElements={'transmissionType': 'continuous'})
+
+                trafficObj.configTrafficItem(mode='modify',
+                                             obj='/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1',
+                                             trafficItem={'trackBy': ['frameSize0', 'ipv4SourceIp0']})
+
             To create new Traffic Item:
 
             configTrafficItem(mode='create',
@@ -279,6 +292,8 @@ class Traffic(object):
             return [trafficItemObj, endpointSetObjList, configElementObjList]
 
     def configConfigElements(self, configElementObj, configElements):
+        print('---- 3 ----', configElementObj, configElements)
+
         if 'transmissionType' in configElements:
             self.ixnObj.patch(configElementObj+'/transmissionControl', data={'type': configElements['transmissionType']})
 
@@ -441,7 +456,50 @@ class Traffic(object):
         self.ixnObj.logInfo('\naddTrafficItemPacketStack: Returning: %s' % response.json()['result'])
         return response.json()['result']
 
-    def showTrafficItemStackLinks(self, configElementObj):
+    def getTrafficItemPktHeaderObj(self, configElementObj=None, trafficItemName=None, packetHeaderName=None):
+        """
+        Description
+           Get the Traffic Item packet header stack object.
+           You could either pass in a configElement object or the Traffic Item name.
+           
+        Parameters
+           configElementObj: <str>: Optional: The configElement object.
+                             Example: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1
+
+           trafficItemName: <str>: Optional: The Traffic Item name.
+
+           packetHeaderName: <str>: Mandatory: The packet header name.
+                             Example: ethernet, mpls, ipv4, ...
+        """
+        if configElementObj != None:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+
+        if configElementObj == None:
+            # Expect user to pass in the Traffic Item name if user did not pass in a configElement object.
+            queryData = {'from': '/traffic',
+                         'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]}]}
+
+            queryResponse = self.ixnObj.query(data=queryData)
+
+            if queryResponse.json()['result'][0]['trafficItem'] == []:
+                raise IxNetRestApiException('\nNo such Traffic Item name found: %s' % trafficItemName)
+                
+            trafficItemObj = queryResponse.json()['result'][0]['trafficItem'][0]['href']
+            configElementObj = trafficItemObj+'/configElement/1'
+        
+        response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+
+        for eachStack in response.json():
+            print('\nstack', eachStack, eachStack['stackTypeId'])
+            if bool(re.match(packetHeaderName, eachStack['stackTypeId'], re.I)):
+                stackObj = eachStack['links'][0]['href']
+                break
+        else:
+            raise IxNetRestApiException('\nError: No such stack name found: %s' % stackName)
+
+        return stackObj
+
+    def showTrafficItemStackLink(self, configElementObj):
         # Return a list of configured Traffic Item packet header in sequential order.
         #   1: Ethernet II
         #   2: MPLS
@@ -518,7 +576,7 @@ class Traffic(object):
            3: Ethernet-Type
            4: PFC Queue
         """
-        self.ixnObj.logInfo('\ngetPacketHeaderFieldNames: %s' % stackObj+'/field')
+        self.ixnObj.logInfo('\nshowPacketHeaderFieldNames: %s' % stackObj+'/field')
         response = self.ixnObj.get(self.ixnObj.httpHeader+stackObj+'/field')
         for eachField in  response.json():
             id = eachField['id']
@@ -540,16 +598,30 @@ class Traffic(object):
         """
         Desciption
             Configure raw packets in a Traffic Item.
-            In order to know the field names to modify, use getPacketHeaderFieldNames() to display the names:
+            In order to know the field names to modify, use showPacketHeaderFieldNames() to display the names:
 
         stackIdObj: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/{id}/configElement/{id}/stack/{id}
-        fieldName: The name of the field name in the packet header stack to modify.
-                   You could use getPacketHeaderFieldNames(stackObj) API to dispaly your options
+
+        fieldName: The field name in the packet header to modify.
+                   Example. In a MPLS packet header, the fields would be "Label value", "MPLS Exp", etc.
+
+                   Note: Use showPacketHeaderFieldNames(stackObj) API to dispaly your options.
+
         data: Example:
              data={'valueType': 'valueList', 'valueList': ['1001', '1002'], auto': False}
              data={'valueType': 'increment', 'startValue': '1.1.1.1', 'stepValue': '0.0.0.1', 'countValue': 2}
              data={'valueType': 'increment', 'startValue': '00:01:01:01:00:01', 'stepValue': '00:00:00:00:00:01'}
              data={'valueType': 'increment', 'startValue': 1001, 'stepValue': 1, 'countValue': 2, 'auto': False}
+        
+        Example: To modify MPLS field:
+            packetHeaderObj = trafficObj.getTrafficItemPktHeaderObj(trafficItemName='Raw MPLS/UDP', packetHeaderName='mpls')
+            trafficObj.configPacketHeaderField(packetHeaderObj,
+                                               fieldName='MPLS Exp',
+                                               data={'valueType': 'increment',
+                                               'startValue': '4',
+                                               'stepValue': '1',
+                                               'countValue': 1,
+                                               'auto': False})
         """
         fieldId = None
         # Get the field ID object by the user defined fieldName

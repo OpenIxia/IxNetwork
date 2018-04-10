@@ -37,6 +37,7 @@ ixNet = ixia_ngpf.ixnet ;# For low level Python API commands
 ixnetwork_tcl_server = '192.168.70.3'
 port_1 = '1/1/1'
 port_2 = '1/2/1'
+username = 'hgee'
 
 # Convert vport to physical port
 def GetVportConnectedToPortPy(vport):
@@ -49,17 +50,6 @@ def GetVportConnectedToPortPy(vport):
     port = connectedTo[1].split(':')[1]
     return '1/'+card+'/'+port
 
-def CreateQuickFlowGroup():
-    print '\nCreating a traffic item'
-    quickFlowGroupObj = ixNet.add(ixNet.getRoot()+'/traffic', 'trafficItem')
-    ixNet.setMultiAttribute(quickFlowGroupObj ,'-trafficItemType', 'quick', '-trafficType', 'raw')
-    ixNet.commit()
-    quickFlowGroupObj = ixNet.remapIds(quickFlowGroupObj)[0]
-    #ixNet.setAttribute(quickFlowGroupObj + '/tracking', '-trackBy', ['trackingenabled0'])
-    #ixNet.commit()
-    print 'Done: Returning:', quickFlowGroupObj
-    return quickFlowGroupObj
-
 def ConfigQuickFlowGroup(portHandle, **trafficParams):
     """
     Desciption
@@ -67,7 +57,7 @@ def ConfigQuickFlowGroup(portHandle, **trafficParams):
         For Quick Flow Group, only one QFG is allowed and required.
         If you have multiple streams, they all fall under this QFG.
     """
-    print '\nExisting Traffic Item:', ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem')
+    print '\nExisting Traffic Item:', ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem') 
 
     if ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem') == []:
         print '\nCreating new traffic item for Quick Flow Group'
@@ -83,7 +73,8 @@ def ConfigQuickFlowGroup(portHandle, **trafficParams):
     portList = []
     for eachVport in ixNet.getList(ixNet.getRoot(), 'vport'):
         port = GetVportConnectedToPortPy(eachVport)
-        portList.append(port)
+        if portHandle != port:
+            portList.append(port)
     print '\nAll vport list for Rx ports:', portList
 
     trafficParams.update({'port_handle': portHandle, 'port_handle2': ' '.join(portList), 'circuit_type':'quick_flows'})
@@ -254,19 +245,11 @@ def PrintDict(obj, nested_level=0, output=sys.stdout):
     else:
         print >> output, '%s%s' % (nested_level * spacing, obj)
 
-
-connect_result = ixia_ngpf.connect ( 
-    ixnetwork_tcl_server = ixnetwork_tcl_server,
-    tcl_server = tcl_server,
-    username = user_name,
-    break_locks = '1'
-    ) 
-
 trafficItem1 = { 'name': 'rule1',
                  'mode': 'create',
                  'mac_dst_mode' : 'fixed',
                  'mac_src_mode' : 'fixed',
-                 'mac_src'   :   '00:0C:29:AA:86:E1',
+                 'mac_src'   :   '00:0C:29:AA:86:E0',
                  'mac_dst'   :   '00:0C:29:84:37:16',
                  'transmit_mode': 'single_burst',
                  'rate_pps' : 1000,
@@ -288,16 +271,16 @@ trafficItem2 = { 'name': 'rule2',
                  'mode': 'create',
                  'mac_dst_mode' : 'fixed',
                  'mac_src_mode' : 'fixed',
-                 'mac_src'   :   '00:0C:29:AA:86:E1',
-                 'mac_dst'   :   '00:0C:29:84:37:16',
+                 'mac_src'   :   '00:0C:29:84:37:16',
+                 'mac_dst'   :   '00:0C:29:AA:86:E0',
                  'transmit_mode': 'single_burst',
                  'rate_pps' : 1000,
                  'l3_protocol': 'ipv4',
-                 'ip_src_addr': '10.10.10.1',
+                 'ip_src_addr': '1.1.1.2',
                  'ip_src_mode': 'increment',
                  'ip_src_step': '0.0.0.1',
                  'ip_src_count': '1',
-                 'ip_dst_addr': '10.10.10.2',
+                 'ip_dst_addr': '1.1.1.1',
                  'ip_dst_mode':'increment',
                  'ip_dst_step': '0.0.0.1',
                  'ip_dst_count': '1',
@@ -305,6 +288,12 @@ trafficItem2 = { 'name': 'rule2',
                  'frame_size': '1000',
                  'number_of_packets_per_stream': 50000
              }
+
+connect_result = ixia_ngpf.connect ( 
+    ixnetwork_tcl_server = ixnetwork_tcl_server,
+    username = username,
+    break_locks = '1'
+    ) 
 
 ConfigQuickFlowGroup(portHandle=port_1, **trafficItem1)
 ConfigQuickFlowGroup(portHandle=port_2, **trafficItem2)

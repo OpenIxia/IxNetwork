@@ -142,15 +142,15 @@ try:
     mplsObj1 = protocolObj.configMpls(ethernetObj=ethernetObj1,
                                       name = 'mpls-1',
                                       destMac = {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'},
-                                      exp = {'start': 0, 'direction': 'increment', 'step': 1},
+                                      cos = {'start': 0, 'direction': 'increment', 'step': 1},
                                       ttl = {'start': 16, 'direction': 'increment', 'step': 1},
                                       rxLabelValue = {'start': 288, 'direction': 'increment', 'step': 1},
                                       txLabelValue = {'start': 888, 'direction': 'increment', 'step': 1})
 
     mplsObj2 = protocolObj.configMpls(ethernetObj=ethernetObj2,
                                       name = 'mpls-2',
-                                      destMac = {'start': '00:01:01:00:00:01', direction': 'increment', 'step': '00:00:00:00:00:01'},
-                                      exp = {'start': 0, 'direction': 'increment', 'step': 1},
+                                      destMac = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'},
+                                      cos = {'start': 0, 'direction': 'increment', 'step': 1},
                                       ttl = {'start': 16, 'direction': 'increment', 'step': 1},
                                       rxLabelValue = {'start': 888, 'direction': 'increment', 'step': 1},
                                       txLabelValue = {'start': 288, 'direction': 'increment', 'step': 1})

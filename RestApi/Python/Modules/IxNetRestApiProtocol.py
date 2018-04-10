@@ -105,8 +105,7 @@ class Protocol(object):
         self.ixnObj.logInfo('createDeviceGroup: %s' % deviceGroupObj)
         return deviceGroupObj
 
-    def createLacpNgpf(self, ethernetObj, actorSystemId=None, actorSystemPriority=None,
-                       actorKey=None, administrativeKey=None, actorPortNumber=None, actorPortPriority=None):
+    def createLacpNgpf(self, ethernetObj, **kwargs):
         """
         Description
             Create new LACP group.
@@ -127,31 +126,15 @@ class Protocol(object):
         self.configuredProtocols.append(lacpObj)
         
         lacpResponse = self.ixnObj.get(self.ixnObj.httpHeader+lacpObj)
-        if actorSystemId:
-            print('\nlacp actorSystemId:', actorSystemId)
-            actorSystemIdMultivalue = lacpResponse.json()['actorSystemId']
-            print('actorSystemId multivalue:', actorSystemIdMultivalue)
-            self.ixnObj.configMultivalue(actorSystemIdMultivalue, 'singleValue', data={'value': actorSystemId})
- 
-        if actorKey:
-            actorKeyMultivalue = lacpResponse.json()['actorKey']
-            self.ixnObj.configMultivalue(actorKeyMultivalue, 'singleValue', data={'value': actorKey})
 
-        if administrativeKey:
-            administrativeKeyMultivalue = lacpResponse.json()['administrativeKey']
-            self.ixnObj.configMultivalue(administrativeKeyMultivalue, 'singleValue', data={'value': administrativeKey})
+        lacpAttributes = ['administrativeKey', 'actorSystemId', 'actorSystemPriority', 'actorKey', 'actorPortNumber', 'actorPortPriority']
 
-        if actorSystemPriority:
-            actorSystemPriorityMultivalue = lacpResponse.json()['actorSystemPriority']
-            self.ixnObj.configMultivalue(actorSystemPriorityMultivalue, 'singleValue', data={'value': actorSystemPriority})
+        for lacpAttribute in lacpAttributes:
+            if lacpAttribute in kwargs:
+                multiValue = lacpResponse.json()[lacpAttribute]
+                self.ixnObj.logInfo('\nConfiguring LACP attribute: %s' % lacpAttribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[lacpAttribute]})
 
-        if actorPortNumber:
-            actorPortNumberMultivalue = lacpResponse.json()['actorPortNumber']
-            self.ixnObj.configMultivalue(actorPortNumberMultivalue, 'singleValue', data={'value': actorPortNumber})
-
-        if actorPortPriority:
-            actorPortPriorityMultivalue = lacpResponse.json()['actorPortPriority']
-            self.ixnObj.configMultivalue(actorPortPriorityMultivalue, 'singleValue', data={'value': actorPortPriority})
 
     def createEthernetNgpf(self, deviceGroupObj, ethernetName=None, macAddress=None,
                            macAddressPortStep='disabled', vlanId=None, vlanPriority=None, mtu=None):
@@ -353,12 +336,14 @@ class Protocol(object):
                           networkType = 'pointtomultipoint',
                           deadInterval = '40')
         """
+        # To create new OSPF object
         if 'ospf' not in obj:
             ospfUrl = self.ixnObj.httpHeader+obj+'/ospfv2'
             response = self.ixnObj.post(ospfUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1
             ospfObj = response.json()['links'][0]['href']
 
+        # To modify OSPF
         if 'ospf' in obj:
             ospfObj = obj
 
@@ -367,29 +352,14 @@ class Protocol(object):
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+ospfObj, data={'name': kwargs['name']})
 
-        if 'areaId' in kwargs:
-            multiValue = ospfObjResponse.json()['areaId']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['areaId']})
+        # All of these BGP attributes configures multivalue singleValue. So just loop them to do the same thing.
+        ospfAttributes = ['areaId', 'neighborIp', 'helloInterval', 'areadIdIp', 'networkType', 'deadInterval']
 
-        if 'neighborIp' in kwargs:
-            multiValue = ospfObjResponse.json()['neighborIp']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['neighborIp']})
-
-        if 'helloInterval' in kwargs:
-            multiValue = ospfObjResponse.json()['helloInterval']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['helloInterval']})
-
-        if 'areaIdIp' in kwargs:
-            multiValue = ospfObjResponse.json()['areaIdIp']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['areaIdIp']})
-
-        if 'networkType' in kwargs:
-            multiValue = ospfObjResponse.json()['networkType']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['networkType']})
-
-        if 'deadInterval' in kwargs:
-            multiValue = ospfObjResponse.json()['deadInterval']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['deadInterval']})
+        for ospfAttribute in ospfAttributes:
+            if ospfAttribute in kwargs:
+                multiValue = ospfObjResponse.json()[ospfAttribute]
+                self.ixnObj.logInfo('\nConfiguring OSPF attribute: %s' % ospfAttribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[ospfAttribute]})
 
         self.configuredProtocols.append(ospfObj)
         return ospfObj
@@ -398,14 +368,14 @@ class Protocol(object):
         """
         Description
             Create or modify BGP.  If creating a new BGP header, provide an IPv4 object handle.
-            If modifying a BGP header, provide the BGP object handle.
+            If modifying a BGP, provide the BGP object handle.
 
         Parameters
-            IPv4 object handle example:
-               obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+            obj: <str>: Either an IPv4 object or a BGP object.
+                 IPv4 object example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+                 BGP object example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
 
-            BGP object handle example:
-               obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+            kwargs: BGP configuration attributes. The attributes could be obtained from the IxNetwork API browser.
 
         Example:
             createBgp(obj,
@@ -423,65 +393,88 @@ class Protocol(object):
 
         # flap = true or false.  Provide a list of total true or false according to the total amount of host IP interfaces.
         """
+        # To create a new BGP stack using IPv4 object.
         if 'bgp' not in obj:
             bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv4Peer'
             response = self.ixnObj.post(bgpUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
             bgpObj = response.json()['links'][0]['href']
 
+        # To modify BGP by providing a BGP object handle.
         if 'bgp' in obj:
             bgpObj = obj
 
         bgpObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+bgpObj)
 
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+bgpObj, data={'name': kwargs['name']})
+
         if 'enableBgp' in kwargs and kwargs['enableBgp'] == True:
             multiValue = bgpObjResponse.json()['enableBgpId']
             self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': True})
 
-        if 'name' in kwargs:
-            self.ixnObj.patch(self.ixnObj.httpHeader+bgpObj, data={'name': kwargs['name']})
-
-        if 'holdTimer' in kwargs:
-            multiValue = bgpObjResponse.json()['holdTimer']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['holdTimer']})
-
         if 'dutIp' in kwargs:
             multiValue = bgpObjResponse.json()['dutIp']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/counter",
-                       data={'start': kwargs['dutIp']['start'],
-                             'direction': kwargs['dutIp']['start'],
-                             'step': kwargs['dutIp']['start']})
 
-        if 'localAs2Bytes' in kwargs:
-            multiValue = bgpObjResponse.json()['localAs2Bytes']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['localAs2Bytes']})
+            self.configMultivalue(multiValue, 'counter', data=kwargs['dutIp'])
 
-        if 'enableGracefulRestart' in kwargs:
-            multiValue = bgpObjResponse.json()['enableGracefulRestart']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['enableGracefulRestart']})
+        # All of these BGP attributes configures multivalue singleValue. So just loop them to do the same thing.
+        bgpAttributes = ['localAs2Bytes', 'enableGracefulRestart', 'restartTime', 'type',
+                         'staleTime', 'flap', 'holdTimer', 'enableBgpIdSameasRouterId']
 
-        if 'restartTime' in kwargs:
-            multiValue = bgpObjResponse.json()['restartTime']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['restartTime']})
-
-        if 'type' in kwargs:
-            multiValue = bgpObjResponse.json()['type']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['type']})
-
-        if 'enableBgpIdSameasRouterId' in kwargs:
-            multiValue = bgpObjResponse.json()['enableBgpIdSameasRouterId']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['enableBgpIdSameasRouterId']})
-
-        if 'staleTime' in kwargs:
-            multiValue = bgpObjResponse.json()['staleTime']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['staleTime']})
-
-        if 'flap' in kwargs:
-            multiValue = bgpObjResponse.json()['flap']
-            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs['flap']})
-
+        for bgpAttribute in bgpAttributes:
+            if bgpAttribute in kwargs:
+                multiValue = bgpObjResponse.json()[bgpAttribute]
+                self.ixnObj.logInfo('\nConfiguring BGP attribute: %s' % bgpAttribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[bgpAttribute]})
+            
         self.configuredProtocols.append(bgpObj)
         return bgpObj
+
+    def configMpls(self, ethernetObj, **kwargs):
+        """
+        Description
+            Create or modify static MPLS.  
+
+        Parameters
+            ethernetObj: <str>: The Ethernet object handle.
+                         Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+
+        Example:
+            mplsObj1 = protocolObj.configMpls(ethernetObj=ethernetObj1,
+                                      name = 'mpls-1',
+                                      destMac = {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'},
+                                      exp = {'start': 0, 'direction': 'increment', 'step': 1},
+                                      ttl = {'start': 16, 'direction': 'increment', 'step': 1},
+                                      rxLabelValue = {'start': 288, 'direction': 'increment', 'step': 1},
+                                      txLabelValue = {'start': 888, 'direction': 'increment', 'step': 1})
+        """
+        # To create a new MPLS
+        if 'mpls' not in ethernetObj:
+            mplsUrl = self.ixnObj.httpHeader+ethernetObj+'/mpls'
+            response = self.ixnObj.post(mplsUrl)
+            mplsObj = response.json()['links'][0]['href']
+
+        # To modify MPLS
+        if 'mpls' in ethernetObj:
+            mplsObj = ethernetObj
+
+        mplsResponse = self.ixnObj.get(self.ixnObj.httpHeader+mplsObj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+mplsObj, data={'name': kwargs['name']})
+
+        # All of these mpls attributes configures multivalue counter. So just loop them to do the same thing.
+        mplsAttributes = ['rxLabelValue', 'txLabelValue', 'destMac', 'cos', 'ttl']
+
+        for mplsAttribute in mplsAttributes:
+            if mplsAttribute in kwargs:
+                multiValue = mplsResponse.json()[mplsAttribute]
+                self.ixnObj.logInfo('\nConfiguring MPLS attribute: %s' % mplsAttribute)
+                self.configMultivalue(multiValue, 'counter', data=kwargs[mplsAttribute])
+                
+        self.configuredProtocols.append(mplsObj)
+        return mplsObj
 
     def configVxlanNgpf(self, obj, **kwargs):
         """
@@ -626,20 +619,62 @@ class Protocol(object):
                         'direction': kwargs['networkAddress']['direction']}
         self.ixnObj.configMultivalue(multivalue, 'counter', data)
 
-            # self.ixnObj.patch(self.ixnObj.sessionUrl+multiValue+"/counter",
-            #             data={'start': kwargs['networkAddress']['start'],
-            #                     'step': kwargs['networkAddress']['step'],
-            #                     'direction': kwargs['networkAddress']['direction']})
-
         if 'prefixLength' in kwargs:
             response = self.ixnObj.get(ipv4PrefixObj)
             multivalue = response.json()['prefixLength']
             data={'value': kwargs['prefixLength']}
             self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
-            # self.ixnObj.patch(self.ixnObj.sessionUrl+multiValue+"/singleValue",
-            #             data={'value': kwargs['prefixLength']})
 
         return ipv4PrefixObj
+
+    def configMultivalue(self, multivalueUrl, multivalueType, data):
+        """
+        Description
+           Configure multivalues.
+
+        Parameters
+           multivalueUrl: (str): The multivalue: /api/v1/sessions/{1}/ixnetwork/multivalue/1
+           multivalueType: (str): counter|singleValue|valueList
+           data: (dict): singleValue: data={'value': '1.1.1.1'})
+                             valueList:   data needs to be in a [list]:  data={'values': [list]}
+                             counter:     data={'start': value, 'direction': increment|decrement, 'step': value}
+        """
+        if multivalueType == 'counter':
+            # Examples: macAddress = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
+            #          data=macAddress)
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/counter', data=data)
+
+        if multivalueType == 'singleValue':
+            # data={'value': value}
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/singleValue', data=data)
+
+        if multivalueType == 'valueList':
+            # data={'values': ['item1', 'item2']}
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/valueList', data=data)
+
+    def getMultivalueValues(self, multivalueObj, silentMode=False):
+        """
+        Description
+           Get the multivalue values.
+
+        Parameters
+           multivalueObj: (str): The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
+           silentMode: (bool): True=Display the GET and status code. False=Don't display.
+        
+        Requirements
+           self.ixnObj.waitForComplete()
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader+multivalueObj+'?includes=count', silentMode=silentMode)
+        count = response.json()['count']
+        if silentMode == False:
+            self.ixnObj.logInfo('\ngetMultivalueValues: {0} Count={1}'.format(multivalueObj, count))
+        data = {'arg1': multivalueObj,
+                'arg2': 0,
+                'arg3': count
+                }
+        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/multivalue/operations/getValues', data=data, silentMode=silentMode)
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'])
+        return response.json()['result']
 
     def verifyProtocolSessionsUp(self, protocolViewName='BGP Peer Per Port', timeout=60):
         """
@@ -1055,8 +1090,6 @@ class Protocol(object):
                           'pcc', 'pce', 'pcepBackupPCEs', 'pimV4Interface', 'pimV6Interface', 'ptp', 'rsvpteIf',
                           'rsvpteLsps', 'tag', 'vxlan']
 
-        #sessionDownList = ['down', 'notStarted']
-        #startCounter = 1
         queryData = {'from': '/',
                         'nodes': [{'node': 'topology', 'properties': [], 'where': []},
                                   {'node': 'deviceGroup', 'properties': ['href'], 'where': []}]
@@ -1457,8 +1490,6 @@ class Protocol(object):
             return 1
         if unresolvedArpList != [] and startFlag == 1:
             print()
-            # for ip in unresolvedArpList:
-            #     self.ixnObj.logInfo('\tUnresolvedArps: srcIp:{0}  gateway:{1}'.format(ip[0], ip[1]))
             raise IxNetRestApiException
 
     def getNgpfGatewayIpMacAddress(self, gatewayIp):
@@ -1500,11 +1531,6 @@ class Protocol(object):
                         gatewayIpIndex = valueList.index(gatewayIp)
                         self.ixnObj.logInfo('\nFound gateway: %s ; Index:%s' % (gatewayIp, gatewayIpIndex))
 
-                        # Get the IPv4 gateway mac address with the "gatewayIpMultivalue"
-                        #queryData = {'from': deviceGroup['ethernet'][0]['href'],
-                        #            'nodes': [{'node': 'ipv4',  'properties': ['gatewayIp', 'resolvedGatewayMac'],
-                        #                    'where': [{'property': 'gatewayIp', 'regex': gatewayIpMultivalue}]}
-                        #            ]}
                         queryData = {'from': deviceGroup['ethernet'][0]['href'],
                                     'nodes': [{'node': 'ipv4',  'properties': ['gatewayIp', 'resolvedGatewayMac'], 'where': []}
                                     ]}
@@ -2300,7 +2326,7 @@ class Protocol(object):
            Enable/Disable BGP flapping.
 
         Parameters
-           topologyName: <str>: Optional: The Topolgy Group name where the BGP stack resides in.
+           topologyName: <str>: Mandatory: The Topolgy Group name where the BGP stack resides in.
            bgpName: <str>: Mandatory. The name of the BGP stack.
            enable: <bool>: To enable or disable BGP flapping.
            ipInterfaceList: <list>: A list of the local BGP IP interface to configure for flapping.

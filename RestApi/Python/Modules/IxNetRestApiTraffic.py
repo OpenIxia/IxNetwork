@@ -1103,6 +1103,15 @@ class Traffic(object):
         data = {'type': payloadType, 'customRepeat': customRepeat, 'customPattern': customPattern}
         self.ixnObj.patch(self.ixnObj.httpHeader+configElementObj+'/framePayload', data=data)
 
+    def enableMinFrameSize(self, enable=True):
+        """
+        Description
+           Enable the global traffic option to allow smaller frame size.
+
+        Parameter
+           enable: <bool>: True to enable it.
+        """
+        self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic', data={'enableMinFrameSize': enable})
 
 
 

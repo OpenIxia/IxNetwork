@@ -292,8 +292,6 @@ class Traffic(object):
             return [trafficItemObj, endpointSetObjList, configElementObjList]
 
     def configConfigElements(self, configElementObj, configElements):
-        print('---- 3 ----', configElementObj, configElements)
-
         if 'transmissionType' in configElements:
             self.ixnObj.patch(configElementObj+'/transmissionControl', data={'type': configElements['transmissionType']})
 
@@ -1072,13 +1070,19 @@ class Traffic(object):
                 self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(cElement['frameRate']['type'], cElement['frameRate']['rate']))
             self.ixnObj.logInfo('\n', end='')
 
-    def setFrameSize(self, trafficItemName, frameSize):
+    def setFrameSize(self, trafficItemName, **kwargs):
         """
         Description
             Modify the frame size.
 
-            param: trafficItemName: The name of the Traffic Item.
-            param: frameSize: (int): The frame size to set.
+        Parameters
+            type: <str>:  fixed|increment|presetDistribution|quadGaussian|random|weightedPairs
+        
+            trafficItemName: <str>: The name of the Traffic Item..
+
+        Example:
+            trafficObj.setFrameSize('Topo1 to Topo2', type='fxied', fixedSize=128)
+            trafficObj.setFrameSize('Topo1 to Topo2', type='increment', incrementFrom=68, incrementStep=2, incrementTo=1200)
         """
         queryData = {'from': '/traffic',
                     'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]},
@@ -1086,8 +1090,9 @@ class Traffic(object):
         queryResponse = self.ixnObj.query(data=queryData)
         if queryResponse.json()['result'][0]['trafficItem'] == []:
             raise IxNetRestApiException('\nNo such Traffic Item name found: %s' % trafficItemName)
+
         configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
-        self.configTrafficItem(mode='modify', obj=configElementObj, configElements={'frameSize': frameSize})
+        self.ixnObj.patch(self.ixnObj.httpHeader+configElementObj+'/frameSize', data=kwargs)
 
     def configFramePayload(self, configElementObj, payloadType='custom', customRepeat=True, customPattern=None):
         """
@@ -1095,10 +1100,10 @@ class Traffic(object):
             Configure the frame payload.
 
         Parameters
-            payloadType: Options:
+            payloadType: <str>: Options:
                            custom, decrementByte, decrementWord, incrementByte, incrementWord, random
-            customRepeat: True|False
-            customPattern: Enter a custom payload pattern
+            customRepeat: <bool>
+            customPattern: <str>: Enter a custom payload pattern
         """
         data = {'type': payloadType, 'customRepeat': customRepeat, 'customPattern': customPattern}
         self.ixnObj.patch(self.ixnObj.httpHeader+configElementObj+'/framePayload', data=data)

@@ -340,7 +340,7 @@ class Protocol(object):
 
         return ipv4Obj
 
-    def configV4DhcpClient(self, obj, **kwargs):
+    def configDhcpClientV4(self, obj, **kwargs):
         """
         Description
             Create or modify DHCP V4 Client in NGPF.
@@ -398,7 +398,7 @@ class Protocol(object):
         self.configuredProtocols.append(dhcpObj)
         return dhcpObj
 
-    def configV4DhcpServer(self, obj, **kwargs):
+    def configDhcpServerV4(self, obj, **kwargs):
         """
         Description
             Create or modify DHCP v4 Server in NGPF.

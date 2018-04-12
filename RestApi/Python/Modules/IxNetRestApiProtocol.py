@@ -136,96 +136,109 @@ class Protocol(object):
                 self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[lacpAttribute]})
 
 
-    def createEthernetNgpf(self, deviceGroupObj, ethernetName=None, macAddress=None,
-                           macAddressPortStep='disabled', vlanId=None, vlanPriority=None, mtu=None):
+    def createEthernetNgpf(self, obj, **kwargs):
         """
         Description
-            Create an Ethernet header
+            Create or modify NGPF Ethernet.
+            To create a new Ethernet stack in NGPF, pass in the device group object.
+            To modify an existing Ethernet stack in NGPF, pass in the Ethernet object.
 
         Parameters
-            deviceGroupObj: <str>: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2'
+            obj: <str>: Device Group obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2'
+                        Ethernet obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
 
-            ethernetName: <str>:  Ethernet header name.
-            macAddress: <str>: By default, IxNetwork will generate unique Mac Addresses.
+            name|ethernetName: <str>:  Ethernet name.
+            macAddress: <dict>: By default, IxNetwork will generate unique Mac Addresses.
                                {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
                                Note: step: '00:00:00:00:00:00' means don't increment.
 
-            macAddressPortStep:<str>: Incrementing the Mac address on each port based on your input.
+            macAddressPortStep:<str>: disable|00:00:00:01:00:00
+                                      Incrementing the Mac address on each port based on your input.
                                       '00:00:00:00:00:01' means to increment the last byte on each port.
-                                      Options:
-                                         - 'disable' or '00:00:00:01:00:00' format
 
-            vlanId: None|single value| {'start': 103, 'direction': 'increment', 'step': 1}
-            vlanPriority: None|single value| {'start': 2, 'direction': 'increment', 'step': 1}
-            mtu: None| single value| {'start': 1300, 'direction': 'increment', 'step': 1})
+            vlanId: <dict>: Example: {'start': 103, 'direction': 'increment', 'step': 1}
+            vlanPriority: <dict>:  Example: {'start': 2, 'direction': 'increment', 'step': 1}
+            mtu: <dict>: Example: {'start': 1300, 'direction': 'increment', 'step': 1})
 
          Example:
-             ethernetObj1 = createEthernetNgpf(deviceGroupObj1,
-                                          ethernetName='Eth1',
-                                          macAddress={'start': '00:01:01:00:00:01',
-                                                      'direction': 'increment',
-                                                      'step': '00:00:00:00:00:01'},
-                                          macAddressPortStep='00:00:00:00:01:00')
+             createEthernetNgpf(deviceGroupObj1,
+                                ethernetName='Eth1',
+                                macAddress={'start': '00:01:01:00:00:01',
+                                            'direction': 'increment',
+                                            'step': '00:00:00:00:00:01'},
+                                macAddressPortStep='00:00:00:00:01:00',
+                                vlanId={'start': 128, 'direction': 'increment', 'step':0},
+                                vlanPriority={'start': 7, 'direction': 'increment', 'step': 0},
+                                mtu={'start': 1400, 'direction': 'increment', 'step': 0},                                
+                                )
         """
-        url = self.ixnObj.httpHeader+deviceGroupObj + '/ethernet'
-        response = self.ixnObj.post(url)
-        ethernetObj = response.json()['links'][0]['href']
-        ethObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj)
-        if ethernetName != None:
-            self.ixnObj.patch(self.ixnObj.httpHeader+ethernetObj, data={'name': ethernetName})
+        createNewEthernetObj = True
 
-        if macAddress != None:
+        # To create a new Ethernet object
+        if 'ethernet' not in obj:
+            url = self.ixnObj.httpHeader+obj + '/ethernet'
+            response = self.ixnObj.post(url)
+            ethernetObj = response.json()['links'][0]['href']
+
+        # To modify 
+        if 'ethernet' in obj:
+            ethernetObj = obj
+            createNewEthernetObj = False
+
+        ethObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj)
+
+        if 'ethernetName' in kwargs or 'name' in kwargs:
+            if 'ethernetName' in kwargs:
+                # This is to handle backward compatibility. This attribute should not be created. 
+                # Should be using 'name'.
+                name = kwargs['ethernetName']
+            if 'name' in kwargs:
+                name = kwargs['name']
+            self.ixnObj.patch(self.ixnObj.httpHeader+ethernetObj, data={'name': name})
+
+        if 'macAddress' in kwargs:
             multivalue = ethObjResponse.json()['mac']
-            if type(macAddress) == str:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': macAddress})
-            else:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=macAddress)
+            self.configMultivalue(multivalue, 'counter', data=kwargs['macAddress'])
 
             # Config Mac Address Port Step        
             portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
-            if macAddressPortStep != 'disabled':
-                self.ixnObj.patch(portStepMultivalue, data={'step': macAddressPortStep})
+            if 'macAddressPortStep' in kwargs:
+                if kwargs['macAddressPortStep'] != 'disabled':
+                    self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['macAddressPortStep']})
+                if kwargs['macAddressPortStep'] == 'disabled':
+                    self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
 
-            if macAddressPortStep == 'disabled':
-                self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
-
-        if vlanId != None:
+        if 'vlanId' in kwargs:
             # Enable VLAN
-            multivalue = ethObjResponse.json()['enableVlans']
-            self.ixnObj.patch(self.ixnObj.httpHeader + multivalue+'/singleValue', data={'value': True})
-
+            if createNewEthernetObj == True:
+                multivalue = ethObjResponse.json()['enableVlans']
+                #self.ixnObj.patch(self.ixnObj.httpHeader + multivalue+'/singleValue', data={'value': True})
+                self.configMultivalue(multivalue, 'singleValue', data={'value': True})
+                
             # CREATE vlan object (Creating vlanID always /vlan/1 and then do a get for 'vlanId')
             vlanIdObj = self.ixnObj.httpHeader+ethernetObj+'/vlan/1'
             vlanIdResponse = self.ixnObj.get(vlanIdObj)
             multivalue = vlanIdResponse.json()['vlanId']
 
             # CONFIG VLAN ID
-            if type(vlanId) == str:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': int(vlanId)})
-            else:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=vlanId)
+            #self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=kwargs['vlanId'])
+            self.configMultivalue(multivalue, 'counter', data=kwargs['vlanId'])
 
             # CONFIG VLAN PRIORITY
-            if vlanPriority != None:
+            if 'vlanPriority' in kwargs:
                 multivalue = vlanIdResponse.json()['priority']
-                if type(vlanPriority) is dict:
-                    self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=vlanPriority)
-                else:
-                    self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': int(vlanPriority)})
+                self.configMultivalue(multivalue, 'counter', data=kwargs['vlanPriority'])
 
-        if mtu != None:
+        if 'mtu' in kwargs:
             multivalue = ethObjResponse.json()['mtu']
-            if type(mtu) == str:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': int(mtu)})
-            else:
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=json.dumps(mtu))
-
+            self.configMultivalue(multivalue, 'counter', data=kwargs['mtu'])
+            
         return ethernetObj
 
-    def createIsIsL3Ngpf(self, ethernetObj, **data):
+    def configIsIsL3Ngpf(self, ethernetObj, **data):
         """
         Description
-            Create ISISL3
+            Create or modify ISISL3
 
         Parameters
             ethernetObj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
@@ -236,83 +249,236 @@ class Protocol(object):
         isisObj = response.json()['links'][0]['href']
         return isisObj
 
-    def createIpv4Ngpf(self, ethernetObj, name=None, ipv4Address='', ipv4AddressPortStep='disabled', gateway=None,
-                       gatewayPortStep='disabled', prefix=None, resolveGateway=True):
+    def createIpv4Ngpf(self, obj, **kwargs):
         """
         Description
-            Create an IPv4 header.
+            Create or modify NGPF IPv4.
+            To create a new IPv4 stack in NGPF, pass in the Ethernet object.
+            To modify an existing IPv4 stack in NGPF, pass in the IPv4 object.
 
         Parameters
-            ethernetObj: The Ethernet Object
-                         Example: '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1'
+            obj: <str>: Ethernet obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
+                        IPv4 obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1'
 
-            ipv4Address: Single value or {'start': '100.1.1.100', 'direction': 'increment', 'step': '0.0.0.1'},
-            ipv4AddressPortStep: Incrementing the IP address on each port based on your input.
+            ipv4Address: <dict>: {'start': '100.1.1.100', 'direction': 'increment', 'step': '0.0.0.1'},
+            ipv4AddressPortStep: <str>|<dict>:  disable|0.0.0.1 
+                                 Incrementing the IP address on each port based on your input.
                                  0.0.0.1 means to increment the last octet on each port.
-                                 Options:
-                                    - 'disable' or 0.0.0.1 format
 
-            gateway: Single value or {'start': '100.1.1.1', 'direction': 'increment', 'step': '0.0.0.1'},
-            gatewayPortStep: Same as ipv4AddressPortStep
-            prefix: Single value:  Example: 24
-            rsolveGateway: True or False
+            gateway: <dict>: {'start': '100.1.1.1', 'direction': 'increment', 'step': '0.0.0.1'},
+            gatewayPortStep:  <str>|<dict>:  disable|0.0.0.1 
+                              Incrementing the IP address on each port based on your input.
+                              0.0.0.1 means to increment the last octet on each port.
+
+            prefix: <int>:  Example: 24
+            rsolveGateway: <bool>
 
          Example:
              ipv4Obj1 = createIpv4Ngpf(ethernetObj1,
-                                  ipv4Address={'start': '100.1.1.1', 'direction': 'increment', 'step': '0.0.0.1'},
-                                  ipv4AddressPortStep='disabled',
-                                  gateway={'start': '100.1.1.100', 'direction': 'increment', 'step': '0.0.0.0'},
-                                  gatewayPortStep='disabled',
-                                  prefix=24,
-                                  resolveGateway=True)
+                                       ipv4Address={'start': '100.1.1.1', 'direction': 'increment', 'step': '0.0.0.1'},
+                                       ipv4AddressPortStep='disabled',
+                                       gateway={'start': '100.1.1.100', 'direction': 'increment', 'step': '0.0.0.0'},
+                                       gatewayPortStep='disabled',
+                                       prefix=24,
+                                       resolveGateway=True)
         """
-        ipv4Url = self.ixnObj.httpHeader+ethernetObj+'/ipv4'
-        response = self.ixnObj.post(ipv4Url)
-        ipv4Obj = response.json()['links'][0]['href']
+        createNewIpv4Obj = True
+
+        if 'ipv4' in obj:
+            # To modify IPv4
+            ipv4Obj = obj
+            createNewIpv4Obj = False
+        else:
+            # To create a new IPv4 object
+            ipv4Url = self.ixnObj.httpHeader+obj+'/ipv4'
+            response = self.ixnObj.post(ipv4Url)
+            ipv4Obj = response.json()['links'][0]['href']
+
         ipv4Response = self.ixnObj.get(self.ixnObj.httpHeader+ipv4Obj)
 
-        if name != None:
-            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4Obj, data={'name': name})
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4Obj, data={'name': kwargs['name']})
 
         # Config IPv4 address
-        multivalue = ipv4Response.json()['address']
-        if type(ipv4Address) == str:
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': ipv4Address})
-        else:
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/counter", data=ipv4Address)
+        if 'ipv4Address' in kwargs:
+            multivalue = ipv4Response.json()['address']
+            self.configMultivalue(multivalue, 'counter', data=kwargs['ipv4Address'])
 
         # Config IPv4 port step
-        portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
-        if ipv4AddressPortStep != 'disabled':
-            self.ixnObj.patch(portStepMultivalue, data={'step': ipv4AddressPortStep})
-
-        if ipv4AddressPortStep == 'disabled':
-            self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
+        # disabled|0.0.0.1
+        if 'ipv4AddressPortStep' in kwargs:
+            portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
+            if kwargs['ipv4AddressPortStep'] != 'disabled':
+                self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['ipv4AddressPortStep']})
+            if kwargs['ipv4AddressPortStep'] == 'disabled':
+                self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
 
         # Config Gateway
-        multivalue = ipv4Response.json()['gatewayIp']
-        if type(gateway) == str:
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': gateway})
-        else:
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/counter", data=gateway)
+        if 'gateway' in kwargs:
+            multivalue = ipv4Response.json()['gatewayIp']
+            self.configMultivalue(multivalue, 'counter', data=kwargs['gateway'])
 
         # Config Gateway port step
-        portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
-        if gatewayPortStep != 'disabled':
-            self.ixnObj.patch(portStepMultivalue, data={'step': gatewayPortStep})
-
-        if gatewayPortStep == 'disabled':
-            self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
+        if 'gatewayPortStep' in kwargs:
+            portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
+            if kwargs['gatewayPortStep'] != 'disabled':
+                self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['gatewayPortStep']})
+            if kwargs['gatewayPortStep'] == 'disabled':
+                self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
 
         # Config resolve gateway
-        multivalue = ipv4Response.json()['resolveGateway']
-        self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': resolveGateway})
+        if 'resolveGateway' in kwargs:
+            multivalue = ipv4Response.json()['resolveGateway']
+            self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['resolveGateway']})
 
-        multivalue = ipv4Response.json()['prefix']
-        self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': prefix})
+        if 'prefix' in kwargs:
+            multivalue = ipv4Response.json()['prefix']
+            self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['prefix']})
 
-        self.configuredProtocols.append(ipv4Obj)
+        if createNewIpv4Obj == True:
+            self.configuredProtocols.append(ipv4Obj)
+
         return ipv4Obj
+
+    def configV4DhcpClient(self, obj, **kwargs):
+        """
+        Description
+            Create or modify DHCP V4 Client in NGPF.
+            To create a new DCHP v4 Client stack in NGPF, pass in the Ethernet object.
+            To modify an existing DHCP V4 Client stack in NGPF, pass in the dhcpv4client object.
+
+        Parameters
+            obj: <str>: To create new DHCP obj: Ethernet example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+            obj: <str>: To Modify DHCP client: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4client/1
+
+            dhcp4Broadcast: <bool>
+            multiplier: <int>: The amount of DHCP clients to create.
+            dhcp4ServerAddress: <str>: The DHCP server IP address.
+            dhcp4UseFirstServer: <bool>: Default=True
+            dhcp4GatewayMac: <str>: Gateway mac address in the format of 00:00:00:00:00:00
+            useRapdCommit: <bool>: Default=False
+            renewTimer: <int>: Default=0
+        
+        Example:
+            dhcpClientObj = protocolObj.configV4DhcpClient(ethernetObj1,
+                                                           dhcp4Broadcast=True,
+                                                           multiplier = 10,
+                                                           dhcp4ServerAddress='1.1.1.11',
+                                                           dhcp4UseFirstServer=True,
+                                                           dhcp4GatewayMac='00:00:00:00:00:00',
+                                                           useRapdCommit=False,
+                                                           renewTimer=0)
+        """
+        # To create new DHCP object
+        if 'dhcp' not in obj:
+            dhcpUrl = self.ixnObj.httpHeader+obj+'/dhcpv4client'
+            response = self.ixnObj.post(dhcpUrl)
+            # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4client/1
+            dhcpObj = response.json()['links'][0]['href']
+
+        # To modify DHCP
+        if 'dhcp' in obj:
+            dhcpObj = obj
+
+        dhcpObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+dhcpObj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+dhcpObj, data={'name': kwargs['name']})
+
+        # All of these DHCP attributes configures multivalue singleValue. So just loop them to do the same thing.
+        dhcpAttributes = ['dhcp4Broadcast', 'dhcp4UseFirstServer', 'dhcp4ServerAddress', 'dhcp4GatewayMac', 'dhcp4GatewayAddress'
+                          'useRapidCommit', 'dhcp4GatewayMac', 'renewTimer']
+
+        for dhcpAttribute in dhcpAttributes:
+            if dhcpAttribute in kwargs:
+                multiValue = dhcpObjResponse.json()[dhcpAttribute]
+                self.ixnObj.logInfo('\nConfiguring DHCP Client attribute: %s' % dhcpAttribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[dhcpAttribute]})
+
+        self.configuredProtocols.append(dhcpObj)
+        return dhcpObj
+
+    def configV4DhcpServer(self, obj, **kwargs):
+        """
+        Description
+            Create or modify DHCP v4 Server in NGPF.
+            To create a new DCHP v4 server stack in NGPF, pass in the IPv4 object.
+            To modify an existing DHCP V4 server stack in NGPF, pass in the dhcpv4server object.
+
+        Parameters
+            obj: <str>: To create new DHCP: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+            obj: <str>: To modify DHCP server: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4server/1
+
+            useRapidCommit: <bool>: Default=False
+            multiplier: <int>: Default-1
+            subnetAddrAssign: <bool>: Default=False
+            defaultLeaseTime: <int>: Default=86400
+            echoRelayInfo: <bool>: Default=True
+            ipAddress: <str>: The DHCP server IP address.
+            ipAddressIncrement: <str>: format='0.0.0.1'
+            ipDns1: <str>: Default='0.0.0.0'
+            ipDns2: <str>: Default=='0.0.0.0'
+            ipGateway: <str>: The DHCP server gateway IP address.
+            ipPrefix: <int>: The DHCP server IP address prefix. Ex: 16.
+            poolSize: <int>: The DHCP server pool size.
+
+        Example:
+            protocolObj.configV4DhcpServer('/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1',
+                                           name='DHCP-Server-1',
+                                           multiplier='1',
+                                           useRapidCommit=False,
+                                           subnetAddrAssign=False,
+                                           defaultLeaseTime=86400,
+                                           echoRelayInfo=True,
+                                           ipAddress='1.1.1.1',
+                                           ipAddressIncrement='0.0.0.1',
+                                           ipDns1='0.0.0.0',
+                                           ipDns2='0.0.0.0',
+                                           ipGateway='1.1.1.11',
+                                           ipPrefix=24,
+                                           poolSize=10)
+        """
+        # To create new DHCP serverobject
+        if 'dhcp' not in obj:
+            dhcpUrl = self.ixnObj.httpHeader+obj+'/dhcpv4server'
+            response = self.ixnObj.post(dhcpUrl)
+            # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4server/1
+            dhcpObj = response.json()['links'][0]['href']
+
+        # To modify DHCP server
+        if 'dhcp' in obj:
+            dhcpObj = obj
+
+        dhcpObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+dhcpObj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+dhcpObj, data={'name': kwargs['name']})
+
+        # All of these DHCP attributes configures multivalue singleValue. So just loop them to do the same thing.
+        dhcpServerAttributes = ['useRapidCommit', 'subnetAddrAssign']
+
+        for dhcpAttribute in dhcpServerAttributes:
+            if dhcpAttribute in kwargs:
+                multiValue = dhcpObjResponse.json()[dhcpAttribute]
+                self.ixnObj.logInfo('\nConfiguring DHCP Server attribute: %s' % dhcpAttribute)
+                print('---- type:', type(dhcpAttribute))
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[dhcpAttribute]})
+
+        if 'multiplier' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+dhcpObj, data={'multiplier': kwargs['multiplier']})
+
+        dhcpServerSessionObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+dhcpObj+'/dhcp4ServerSessions')
+        dhcpServerSessionAttributes = ['defaultLeaseTime', 'echoRelayInfo', 'ipAddress', 'ipAddressIncrement',
+                                       'ipDns1', 'ipDns2', 'ipGateway', 'ipPrefix', 'poolSize']
+
+        for dhcpAttribute in dhcpServerSessionAttributes:
+            if dhcpAttribute in kwargs:
+                multiValue = dhcpServerSessionObjResponse.json()[dhcpAttribute]
+                self.ixnObj.logInfo('\nConfiguring DHCP Server session attribute: %s' % dhcpAttribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[dhcpAttribute]})
+
+        #self.configuredProtocols.append(dhcpObj)
+        return dhcpObj
 
     def configOspf(self, obj, **kwargs):
         """
@@ -378,7 +544,7 @@ class Protocol(object):
             kwargs: BGP configuration attributes. The attributes could be obtained from the IxNetwork API browser.
 
         Example:
-            createBgp(obj,
+            configBgp(ipv4Obj,
                   name = 'bgp_1',
                   enableBgp = True,
                   holdTimer = 90,
@@ -431,6 +597,47 @@ class Protocol(object):
         self.configuredProtocols.append(bgpObj)
         return bgpObj
 
+    def configIgmpHost(self, ipObj, **kwargs):
+        """
+        Description
+            Create or modify IGMP host.
+            Provide an IPv4|IPv6 obj to create a new IGMP host object.
+            Provide an IGMP host object to modify.
+
+        Parameters
+            ipObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+            igmpObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmp/1
+
+        Example:
+        """
+        # To create new IGMP object
+        if 'igmp' not in obj:
+            igmpUrl = self.ixnObj.httpHeader+obj+'/igmp'
+            response = self.ixnObj.post(igmpUrl)
+            # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmp/1
+            igmpObj = response.json()['links'][0]['href']
+
+        # To modify OSPF
+        if 'igmp' in obj:
+            igmpObj = obj
+
+        igmpObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+igmpObj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+igmpObj, data={'name': kwargs['name']})
+
+        # All of these BGP attributes configures multivalue singleValue. So just loop them to do the same thing.
+        igmpAttributes = ['areaId', 'neighborIp', 'helloInterval', 'areadIdIp', 'networkType', 'deadInterval']
+
+        for igmpAttribute in igmpAttributes:
+            if igmpAttribute in kwargs:
+                multiValue = igmpObjResponse.json()[igmpAttribute]
+                self.ixnObj.logInfo('\nConfiguring IGMP attribute: %s' % igmpAttribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[igmpAttribute]})
+
+        self.configuredProtocols.append(igmpObj)
+        return igmpObj
+
     def configMpls(self, ethernetObj, **kwargs):
         """
         Description
@@ -441,7 +648,7 @@ class Protocol(object):
                          Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
 
         Example:
-            mplsObj1 = protocolObj.configMpls(ethernetObj=ethernetObj1,
+            mplsObj1 = protocolObj.configMpls(ethernetObj1,
                                       name = 'mpls-1',
                                       destMac = {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'},
                                       exp = {'start': 0, 'direction': 'increment', 'step': 1},
@@ -482,19 +689,15 @@ class Protocol(object):
             Create or modify a VXLAN.  If creating a new VXLAN header, provide an IPv4 object handle.
             If modifying a VXLAN header, provide the VXLAN object handle.
 
-
         Parameters
-            IPv4 object handle example:
-               obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
-
-            VXLAN object handle example:
-               obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/vxlan/1
+               obj: <str>: IPv4 Obj example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+                           VxLAN Obj example:/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/vxlan/1
 
         Example:
             createVxlanNgpf(ipv4Object='/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
-                        vtepName='vtep_1',
-                        vtepVni={'start':2008, 'step':2, 'direction':'increment'},
-                        vtepIpv4Multicast={'start':'225.8.0.1', 'step':'0.0.0.1', 'direction':'increment'})
+                            vtepName='vtep_1',
+                            vtepVni={'start':2008, 'step':2, 'direction':'increment'},
+                            vtepIpv4Multicast={'start':'225.8.0.1', 'step':'0.0.0.1', 'direction':'increment'})
 
          start = The starting value
          step  = 0 means don't increment or decrement.
@@ -521,17 +724,15 @@ class Protocol(object):
 
             if key == 'vtepVni':
                 multivalue = vxlanResponse.json()['vni']
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter',
-                           data={'start':kwargs['vtepVni']['start'],
-                                 'step':kwargs['vtepVni']['step'],
-                                 'direction':kwargs['vtepVni']['direction']})
+                self.ixnObj.logInfo('\nConfiguring VxLAN attribute: %s: %s' % (key, value))
+                data={'start':kwargs['vtepVni']['start'], 'step':kwargs['vtepVni']['step'], 'direction':kwargs['vtepVni']['direction']}
+                self.configMultivalue(multivalue, 'counter', data=data)
 
             if key == 'vtepIpv4Multicast':
                 multivalue = vxlanResponse.json()['ipv4_multicast']
-                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter',
-                        data={'start':kwargs['vtepIpv4Multicast']['start'],
-                              'step':kwargs['vtepIpv4Multicast']['step'],
-                              'direction':kwargs['vtepIpv4Multicast']['direction']})
+                data={'start':kwargs['vtepIpv4Multicast']['start'], 'step':kwargs['vtepIpv4Multicast']['step'], 
+                      'direction':kwargs['vtepIpv4Multicast']['direction']}
+                self.configMultivalue(multivalue, 'counter', data=data)
 
         self.configuredProtocols.append(vxlanId)
         return vxlanId
@@ -543,7 +744,7 @@ class Protocol(object):
             is no RSVR-TE configured.
 
         Parameter
-            ipv4Obj: The IPv4 Object handle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+            ipv4Obj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
         """
         response = self.ixnObj.post(self.ixnObj.httpHeader+ipv4Obj+'/rsvpteLsps')
         return response.json()['links'][0]['href']
@@ -555,7 +756,7 @@ class Protocol(object):
             Note: Deleting the last tunnel will also delete the RSVR-TE Interface.
 
         Parameter
-            rsvrTunnelObj: Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/rsvpteLsps/12
+            rsvrTunnelObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/rsvpteLsps/12
         """
         self.ixnObj.delete(self.ixnObj.httpHeader+rsvpTunnelObj)
 
@@ -565,12 +766,11 @@ class Protocol(object):
             Create or modify a Network Group for network advertisement.
 
         Parameters
-            deviceGroupObj: Optional: For creating a new Network Group.
+            deviceGroupObj: <str>: Optional: Device Group obj. For creating a new Network Group.
                             /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
 
         Example:
-            To create a Network Group:
-               Note: Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+               Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
                configNetworkGroup(create=deviceGroupObj
                                   name='networkGroup1',
                                   multiplier = 100,
@@ -578,7 +778,6 @@ class Protocol(object):
                                   prefixLength = 24)
 
             To modify a Network Group:
-               Note: Network Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
                configNetworkGroup(modify=networkGroupObj,
                                   name='networkGroup-ospf',
                                   multiplier = 500,
@@ -633,9 +832,9 @@ class Protocol(object):
            Configure multivalues.
 
         Parameters
-           multivalueUrl: (str): The multivalue: /api/v1/sessions/{1}/ixnetwork/multivalue/1
-           multivalueType: (str): counter|singleValue|valueList
-           data: (dict): singleValue: data={'value': '1.1.1.1'})
+           multivalueUrl: <str>: The multivalue: /api/v1/sessions/{1}/ixnetwork/multivalue/1
+           multivalueType: <str>: counter|singleValue|valueList
+           data: <dict>: singleValue: data={'value': '1.1.1.1'})
                              valueList:   data needs to be in a [list]:  data={'values': [list]}
                              counter:     data={'start': value, 'direction': increment|decrement, 'step': value}
         """
@@ -658,8 +857,8 @@ class Protocol(object):
            Get the multivalue values.
 
         Parameters
-           multivalueObj: (str): The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
-           silentMode: (bool): True=Display the GET and status code. False=Don't display.
+           multivalueObj: <str>: The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
+           silentMode: <bool>: True=Display the GET and status code. False=Don't display.
         
         Requirements
            self.ixnObj.waitForComplete()
@@ -682,9 +881,13 @@ class Protocol(object):
             Verify all specified protocols sessions for UP.
 
         Parameter
-            protocolViewName: The protocol view name.
+            protocolViewName: <str>: The protocol view name. Get this name from API browser or in IxNetwork GUI statistic tabs.
+        
+            timeout: <int>: The timeout value to declare as failed. Default = 60 seconds.
 
         protocolViewName options:
+            'DHCPV4 Client Per Port'
+            'DHCPV4 Server Per Port'
             'ISIS-L3 RTR Per Port'
             'BGP Peer Per Port'
             'OSPFv2-RTR Per Port'
@@ -862,7 +1065,7 @@ class Protocol(object):
             Start the specified protocol by its object handle.
 
         Parameters
-            protocolObj: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+            protocolObj: <str>: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
         """
         self.ixnObj.post(self.ixnObj.httpHeader+protocolObj+'/operations/start', data={'arg1': [protocolObj]})
 
@@ -872,7 +1075,7 @@ class Protocol(object):
             Stop the specified protocol by its object handle.
 
         Parameters
-            protocolObj: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+            protocolObj: <str>: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
         """
         self.ixnObj.post(self.ixnObj.httpHeader+protocolObj+'/operations/stop', data={'arg1': [protocolObj]})
 
@@ -882,7 +1085,7 @@ class Protocol(object):
             Start a Topology Group and all of its protocol stacks.
 
         Parameters
-            topologyObjList: 'all' or a list of Topology Group href.
+            topologyObjList: <str>|<list>: 'all' or a list of Topology Group href.
                              Ex: ['/api/v1/sessions/1/ixnetwork/topology/1']
         """
         if topologyObjList == 'all':
@@ -910,7 +1113,7 @@ class Protocol(object):
             Stop the running Topology and all protocol sessions.
 
         Parameters
-            topologyObjList: A list of Topology Group href.
+            topologyObjList: <list>: A list of Topology Group href.
                              Ex: ['/api/v1/sessions/1/ixnetwork/topology/1']
         """
         if topologyObjList == 'all':
@@ -936,7 +1139,7 @@ class Protocol(object):
             Start a Topology Group and all of its protocol stacks.
 
         Parameters
-            topologyObjList: 'all' or a list of Topology Group href.
+            topologyObjList: <str>|<list>: 'all' or a list of Topology Group href.
                              Ex: ['/api/v1/sessions/1/ixnetwork/topology/1']
         """
         if deviceGroupObjList == 'all':
@@ -968,21 +1171,22 @@ class Protocol(object):
             When verifying IPv4, this API will verify ARP failures and return you a list of IP interfaces
             that failed ARP.
 
+        Parameters
+            protocolObjList: <list>: A list of protocol objects.  Default = None.  The class will automatically verify all
+                                     of the configured protocols.
+                         Ex: ['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1',
+                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
+                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1',
+                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1',]
+
+            timeout: <int>: Total wait time for all the protocols in the provided list to come up.
+
         Syntaxes
             GET:  http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
-            GET RESPONSE:  [u'notStarted', u'notStarted', u'notStarted', u'notStarted', u'notStarted', u'notStarted']
+            RESPONSE:  [u'notStarted', u'notStarted', u'notStarted', u'notStarted', u'notStarted', u'notStarted']
             GET:  http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
-            GET RESPONSE:  [u'up', u'up', u'up', u'up', u'up', u'up', u'up', u'up']
+            RESPONSE:  [u'up', u'up', u'up', u'up', u'up', u'up', u'up', u'up']
             GET:  http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
-
-        Parameters
-            protocolObjList: A list of protocol objects.  Default = None.  The class will automatically verify all
-                             of the configured protocols.
-            Ex: ['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1',
-                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
-                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1',
-                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1',]
-            timeout: Total wait time for all the protocols in the provided list to come up.
         """
         timerStop = timeout
         if protocolObjList is None:
@@ -1042,12 +1246,23 @@ class Protocol(object):
 
                         raise IxNetRestApiException('Verify protocol sessions failed: {0}'.format(protocolName))
 
-    def verifyAllProtocolSessionsInternal(self, protocol, timeout=120):
+    def verifyAllProtocolSessionsInternal(self, protocol, timeout=120, silentMode=True):
+        """
+        Description
+            Verify protocol sessions for UP state.
+            Initially created for verifyAllProtocolSessionsNgpf(), but this API will also work
+            by passing in a protocol object.
+
+        Parameters
+           protocol: <str>: The protocol object to verify the session state.
+           timeout: <int>: The timeout value for declaring as failed. Default = 120 seconds.
+           silentMode: <bool>: True to not display less on the terminal.  False for debugging purpose.
+        """
         sessionDownList = ['down', 'notStarted']
         startCounter = 1
-        response = self.ixnObj.get(self.ixnObj.httpHeader+protocol, silentMode=True)
+        response = self.ixnObj.get(self.ixnObj.httpHeader+protocol, silentMode=silentMode)
         protocolActiveMultivalue = response.json()['active']
-        response = self.ixnObj.getMultivalueValues(protocolActiveMultivalue, silentMode=True)
+        response = self.ixnObj.getMultivalueValues(protocolActiveMultivalue, silentMode=silentMode)
         self.ixnObj.logInfo('\n%s' % protocol)
         self.ixnObj.logInfo('\tProtocol is enabled: %s' % response[0])
         if response[0] == 'false':
@@ -1074,16 +1289,20 @@ class Protocol(object):
             if timer == timeout and [element for element in sessionDownList if element in currentStatus] != []:
                 raise IxNetRestApiException
 
-    def verifyAllProtocolSessionsNgpf(self, timeout=120):
+    def verifyAllProtocolSessionsNgpf(self, timeout=120, silentMode=True):
         """
         Description
             Loop through each Topology Group and its enabled Device Groups and verify
             all the created and activated protocols for session up.
             Applies to Ethernet, IPv4 and IPv6.
+
+        Parameters
+           timeout: <int>: The timeout value for declaring as failed. Default = 120 seconds.
+           silentMode: <bool>: True to not display less on the terminal.  False for debugging purpose.            
         """
-        l2ProtocolList = ['dhcpv4client', 'dhcpv6client', 'isisL3', 'lacp', 'mpls']
+        l2ProtocolList = ['isisL3', 'lacp', 'mpls']
         l3ProtocolList = ['ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
-                          'dhcpv4server', 'dhcpv6server', 'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
+                          'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
                           'lac', 'ldpBasicRouter', 'ldpBasicRouterV6', 'ldpConnectedInterface', 'ldpv6ConnectedInterface',
                           'ldpTargetedRouter', 'ldpTargetedRouterV6', 'lns', 'mldHost', 'mldQuerier', 'ptp', 'ipv6sr',
                           'openFlowController', 'openFlowSwitch', 'ospfv2', 'ospfv3', 'ovsdbcontroller', 'ovsdbserver',
@@ -1112,7 +1331,7 @@ class Protocol(object):
                 if response[0] == 'false':
                     continue
 
-                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroup+'/ethernet', silentMode=True)
+                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroup+'/ethernet', silentMode=silentMode)
                 match = re.match('/api/v[0-9]+/sessions/[0-9]+/ixnetwork(.*)', deviceGroup)
                 queryData = {'from': match.group(1),
                              'nodes': [{'node': 'ethernet', 'properties': [], 'where': []}]
@@ -1124,27 +1343,27 @@ class Protocol(object):
                 for ethernet in ethernetList:
                     # Verify Layer2 first
                     for protocol in l2ProtocolList:
-                        response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/'+protocol, silentMode=True, ignoreError=True)
+                        response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/'+protocol, silentMode=silentMode, ignoreError=True)
                         if response.json() == [] or 'errors' in response.json():
                             continue
                         currentProtocolList = ['%s/%s/%s' % (ethernet, protocol, str(i["id"])) for i in response.json()]
                         for currentProtocol in currentProtocolList:
                             if 'isis' in currentProtocol:
-                                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroup+'/isisL3Router', silentMode=True)
+                                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroup+'/isisL3Router', silentMode=silentMode)
                             self.verifyAllProtocolSessionsInternal(currentProtocol)
 
-                    response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/ipv4', silentMode=True)
+                    response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/ipv4', silentMode=silentMode)
                     ipv4List = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
-                    response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/ipv6', silentMode=True)
+                    response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/ipv6', silentMode=silentMode)
                     ipv6List = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
                     for layer3Ip in ipv4List+ipv6List:
                         for protocol in l3ProtocolList:
-                            response = self.ixnObj.get(self.ixnObj.httpHeader+layer3Ip+'/'+protocol, silentMode=True, ignoreError=True)
+                            response = self.ixnObj.get(self.ixnObj.httpHeader+layer3Ip+'/'+protocol, silentMode=silentMode, ignoreError=True)
                             if response.json() == [] or 'errors' in response.json():
                                 continue
                             currentProtocolList = ['%s/%s/%s' % (layer3Ip, protocol, str(i["id"])) for i in response.json()]
                             for currentProtocol in currentProtocolList:
-                                self.verifyAllProtocolSessionsInternal(currentProtocol)
+                                self.verifyAllProtocolSessionsInternal(currentProtocol, silentMode=silentMode)
 
     def getIpObjectsByTopologyObject(self, topologyObj, ipType='ipv4'):
         """
@@ -1169,6 +1388,8 @@ class Protocol(object):
         """
         Description
            If Topology exists: Returns a list of created Topologies.
+
+        Return
            If no Topology exists: Returns []
         """
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/topology')
@@ -1183,10 +1404,16 @@ class Protocol(object):
 
     def modifyTopologyPortsNgpf(self, topologyObj, portList, topologyName=None):
         """
-        add/remove Topology ports.
-        portList = A list of all the ports that you want for the Topology even if the port exists in
-                   the Topology.
+        Description
+           Add/remove Topology ports.
 
+        Parameters
+           topologyObj: <str>: The Topology Group object.
+           portList: <list>: A list of all the ports that you want for the Topology even if the port exists in
+                             the Topology.
+
+           topologyName: <st>: The Topology Group name to modify.
+           
         Requirements:
             1> You must have already connected all the required ports for your configuration. Otherwise,
                adding additional port(s) that doesn't exists in your configuration's assigned port list
@@ -1194,13 +1421,12 @@ class Protocol(object):
 
             2> This API requires getVports()
 
-        topologyUrl = '/api/v1/sessions/1/ixnetwork/topology/1'
+        Examples
+           topologyObj = '/api/v1/sessions/1/ixnetwork/topology/1'
 
-        portList format = [(str(chassisIp), str(slotNumber), str(portNumber))]
-            Example 1: [ ['192.168.70.10', '1', '1'] ]
-            Example 2: [ ['192.168.70.10', '1', '1'], ['192.168.70.10', '2', '1'] ]
-
-        Return 1 if Failed.
+           portList format = [(str(chassisIp), str(slotNumber), str(portNumber))]
+               Example 1: [ ['192.168.70.10', '1', '1'] ]
+               Example 2: [ ['192.168.70.10', '1', '1'], ['192.168.70.10', '2', '1'] ]
         """
         vportList = self.portMgmtObj.getVports(portList)
         if len(vportList) != len(portList):
@@ -1215,7 +1441,7 @@ class Protocol(object):
             Get all the configured ports in the Topology.
 
         Parameter
-            topologyObj = '/api/v1/sessions/1/ixnetwork/topology/1'
+            topologyObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1
 
         Returns
             A list of ports: [('192.168.70.10', '1', '1') ('192.168.70.10', '1', '2')]
@@ -1242,7 +1468,7 @@ class Protocol(object):
         Description
             Send ARP out of all the IPv4 objects that you provide in a list.
 
-        ipv4ObjList = Provide a list of one or more IPv4 object handles to send arp.
+        ipv4ObjList: <str>:  Provide a list of one or more IPv4 object handles to send arp.
                       Ex: ["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1"]
         """
         if type(ipv4ObjList) != list:
@@ -1260,9 +1486,9 @@ class Protocol(object):
             object that has the srcIp address.
 
         Parameters
-            srcIpList: The srcIp addresses in a list.  Could be 1 or more src IP addresses, but must
+            srcIpList: <list>: The srcIp addresses in a list.  Could be 1 or more src IP addresses, but must
                        be in a list.  This API will look up the IPv4 object that has the srcIp.
-            destIp: The destination IP to ping.
+            destIp: <str>: The destination IP to ping.
 
         Returns
             Success: 1 requests sent, 1 replies received.
@@ -1313,11 +1539,11 @@ class Protocol(object):
     def verifyNgpfProtocolStarted(self, protocolObj, timeout=30):
         """
         Description
-           Verify NGPF protocol started.
+           Verify if NGPF protocol started.
 
         Parameter
-           protocolObj:  /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
-           timeout: The timeout value
+           protocolObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+           timeout: <int>: The timeout value. Default=30 seconds.
         """
         for counter in range(1,timeout+1):
             sessionStatus = self.getSessionStatus(protocolObj)
@@ -1334,27 +1560,27 @@ class Protocol(object):
                 self.ixnObj.logInfo('\tProtocol sessions all started')
                 return
 
-    def deviceGroupProtocolStackNgpf(self, deviceGroupObj, ipType, arpTimeout=60):
+    def deviceGroupProtocolStackNgpf(self, deviceGroupObj, ipType, arpTimeout=60, silentMode=True):
         """
         Description
-            This Proc is an internal API for VerifyArpNgpf.
+            This API is an internal API for VerifyArpNgpf.
             It's created because each deviceGroup has IPv4/IPv6 and
             a deviceGroup could have inner deviceGroup that has IPv4/IPv6.
             Therefore, you can loop device groups.
 
+        Parameters
+            deviceGroupObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+            ipType: <str>: ipv4|ipv6
+            arpTimeout:  <int>: Timeout value. Default=60 seconds.
+
         Requires
             self.verifyNgpfProtocolStarted()
-
-        Parameters
-            deviceGroupObj: (str): /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
-            ipType: (str): ipv4|ipv6
-            arpTimeout:  (int): Timeout value
         """
         unresolvedArpList = []
-        response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet', silentMode=True)
+        response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet', silentMode=silentMode)
         ethernetObjList = ['%s/%s/%s' % (deviceGroupObj, 'ethernet', str(i["id"])) for i in response.json()]
         for ethernetObj in ethernetObjList:
-            response = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/'+ipType, ignoreError=True, silentMode=True)
+            response = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/'+ipType, ignoreError=True, silentMode=silentMode)
             if response.status_code != 200:
                 self.ixnObj.logInfo('deviceGroupProtocolStackNgpf: %s' % response.text)
                 raise IxNetRestApiException(response.text)
@@ -1381,7 +1607,8 @@ class Protocol(object):
                         # Let it flow down to get the unresolved ARPs
                         pass
 
-                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader+ipProtocol+'?includes=resolvedGatewayMac', ignoreError=True, silentMode=True)
+                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader+ipProtocol+'?includes=resolvedGatewayMac',
+                                                   ignoreError=True, silentMode=silentMode)
                 resolvedGatewayMac = protocolResponse.json()['resolvedGatewayMac']
 
                 # sessionStatus: ['up', 'up']
@@ -1393,11 +1620,11 @@ class Protocol(object):
                 for index in range(0, len(resolvedGatewayMac)):
                     if (bool(re.search('.*Unresolved.*', resolvedGatewayMac[index]))):
                         multivalue = protocolResponse.json()['address']
-                        multivalueResponse = self.ixnObj.getMultivalueValues(multivalue, silentMode=True)
+                        multivalueResponse = self.ixnObj.getMultivalueValues(multivalue, silentMode=silentMode)
                         # Get the IP Address of the unresolved mac address
                         srcIpAddrNotResolved = multivalueResponse[index]
                         gatewayMultivalue = protocolResponse.json()['gatewayIp']
-                        response = self.ixnObj.getMultivalueValues(gatewayMultivalue, silentMode=True)
+                        response = self.ixnObj.getMultivalueValues(gatewayMultivalue, silentMode=silentMode)
                         gatewayIp = response[index]
                         self.ixnObj.logInfo('\tFailed to resolve ARP: srcIp:{0} gateway:{1}'.format(srcIpAddrNotResolved, gatewayIp))
                         unresolvedArpList.append((srcIpAddrNotResolved, gatewayIp))
@@ -1408,7 +1635,7 @@ class Protocol(object):
         else:
             return unresolvedArpList
 
-    def verifyArp(self, ipType='ipv4'):
+    def verifyArp(self, ipType='ipv4', silentMode=True):
         """
         Description
             Verify for ARP resolvement on every enabled Device Group including inner Device Groups.
@@ -1428,6 +1655,7 @@ class Protocol(object):
 
         Parameter
             ipType:  ipv4 or ipv6
+            silentMode: <bool>: True to show less display on the terminal. False for debugging purposes.
         """
         self.ixnObj.logInfo('\nVerify ARP: %s' % ipType)
         unresolvedArpList = []
@@ -1441,16 +1669,16 @@ class Protocol(object):
             for deviceGroup in topology['deviceGroup']:
                 deviceGroupObj = deviceGroup['href']
 
-                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=True)
+                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=silentMode)
                 # Verify if the Device Group is enabled. If not, don't go further.
                 enabledMultivalue = response.json()['enabled']
-                response = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=True)
+                response = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=silentMode)
                 if response[0] == 'false':
                     continue
 
                 timeout = 30
                 for counter in range(1,timeout+1):
-                    response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=True)
+                    response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=silentMode)
                     deviceGroupStatus = response.json()['status']
                     self.ixnObj.logInfo('\n%s' % deviceGroupObj)
                     if deviceGroupStatus == 'notStarted':
@@ -1467,20 +1695,20 @@ class Protocol(object):
 
                 if deviceGroupStatus in ['started', 'mixed']:
                     startFlag = 1
-                    arpResult = self.deviceGroupProtocolStackNgpf(deviceGroupObj, ipType)
+                    arpResult = self.deviceGroupProtocolStackNgpf(deviceGroupObj, ipType, silentMode=silentMode)
                     if arpResult != 0:
                         unresolvedArpList = unresolvedArpList + arpResult
 
-                    response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/deviceGroup', silentMode=True)
+                    response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/deviceGroup', silentMode=silentMode)
                     if response.status_code == 200 and response.json() != []:
                         innerDeviceGroupObj = response.json()[0]['links'][0]['href']
                         self.ixnObj.logInfo('\n%s' % self.ixnObj.httpHeader+innerDeviceGroupObj)
-                        response = self.ixnObj.get(self.ixnObj.httpHeader+innerDeviceGroupObj, silentMode=True)
+                        response = self.ixnObj.get(self.ixnObj.httpHeader+innerDeviceGroupObj, silentMode=silentMode)
                         deviceGroupStatus1 = response.json()['status']
                         self.ixnObj.logInfo('\tdeviceGroup Status: %s' % deviceGroupStatus1)
 
                         if deviceGroupStatus == 'started':
-                            arpResult = self.deviceGroupProtocolStackNgpf(innerDeviceGroupObj, ipType)
+                            arpResult = self.deviceGroupProtocolStackNgpf(innerDeviceGroupObj, ipType, silentMode=silentMode)
                             if arpResult != 0:
                                 unresolvedArpList = unresolvedArpList + arpResult
 
@@ -1499,7 +1727,7 @@ class Protocol(object):
             session status must be UP.
 
         Parameter
-            gatewayIp: The gateway IP address.
+            gatewayIp: <str>: The gateway IP address.
 
         Return:
             - 0: No Gateway IP address found.
@@ -1553,6 +1781,9 @@ class Protocol(object):
             Search each Topology's Device Group for the provided srcIpAddress.
             If found, get the gateway IP address.
 
+        Parameter
+           srcIpAddress: <str>: The source IP address.
+
         Returns
             0: Failed. No srcIpAddress found in any Device Group.
             Gateway IP address
@@ -1593,6 +1824,9 @@ class Protocol(object):
             in the GUI or API server.  Please verify how the configured 
             IPv6 format looks like on either the GUI or API server when you
             are testing your script during development.
+
+        Parameter
+           srcIpAddress: <str>: The source IP address.
 
         Returns
             0: Failed. No srcIpAddress found in any Device Group.
@@ -1635,6 +1869,9 @@ class Protocol(object):
             The ipAddress cannot be a range. It has to be an actual IP address
             within the range.
 
+        Parameter
+           ipAddress: <str>: The network group IP address.
+
         Returns
             0: Failed. No ipAddress found in any NetworkGroup.
             network group Object: The Network Group object.
@@ -1671,7 +1908,7 @@ class Protocol(object):
             Get the index ID of the IP address.
 
         Parameter
-            ipAddress: The IP address to search for its index .
+            ipAddress: <str>: The IP address to search for its index .
         """
         queryData = {'from': '/',
                     'nodes': [{'node': 'topology',    'properties': [], 'where': []},
@@ -1698,7 +1935,7 @@ class Protocol(object):
             Get the IPv4 object by the port name.
 
         Parameter
-            portName: The name of the port.
+            portName: <str>: Optional: The name of the port.  Default=None.
         """
         # Step 1 of 3: Get the Vport by the portName.
         queryData = {'from': '/',
@@ -1736,9 +1973,9 @@ class Protocol(object):
             Active or deactivate the IGMP host session ID by the portName and IPv4 host address.
 
         Parameters:
-            portName: The name of the port in which this API will search in all the Topology Groups.
-            ipAddress: Within the Topology Group, the IPv4 address for the IGMP host.
-            activate:  True|False
+            portName: <str>: The name of the port in which this API will search in all the Topology Groups.
+            ipAddress: <str>: Within the Topology Group, the IPv4 address for the IGMP host.
+            activate: <bool>: To activate or not to activate.
         """
         # Get the IPv4 address index.  This index position is the same index position for the IGMP host sessionID.
         # Will use this variable to change the value of the IGMP host object's active valueList.

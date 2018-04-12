@@ -139,7 +139,7 @@ try:
                                                           'direction': 'increment',
                                                           'step':0})
 
-    dhcpClientObj = protocolObj.configV4DhcpClient(ethernetObj1,
+    dhcpClientObj = protocolObj.configDhcpClientV4(ethernetObj1,
                                                    dhcp4Broadcast=True,
                                                    multiplier = 10,
                                                    dhcp4ServerAddress='1.1.1.11',
@@ -161,7 +161,7 @@ try:
                                           prefix=24,
                                           resolveGateway=True)
     
-    dhcpServerObj= protocolObj.configV4DhcpServer(ipv4Obj2,
+    dhcpServerObj= protocolObj.configDhcpServerV4(ipv4Obj2,
                                                   name='DHCP-Server-1',
                                                   multiplier='1',
                                                   useRapidCommit=False,

@@ -11,94 +11,104 @@
 #
 
 from __future__ import absolute_import, print_function, division
-import os, re, sys, requests, json, time, subprocess, traceback
+import os, re, sys, requests, json, time, subprocess, traceback, time
 
 class IxNetRestApiException(Exception): pass
 
-
-class Connect(object):
+class Connect:
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', webQuickTest=False,
                  username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
                  apiKey=None, generateRestLogFile=False, httpInsecure=True):
         """
         Description
-            Class Connect()
-            Initial settings for this Class.
+           Initializing default parameters and making a connection to the API server
 
-        Note
+        Notes
             Starting IxNetwork 8.50, https will be enforced even for Windows connection.
             If you still want to use http, you need to add -restInsecure to the IxNetwork.exe appliaction under "target".
-            For example:  Right click on "IxNetwork API server", select properties and under target 
-                          ixnetwork.exe -restInsecure -restPort 11009 -restOnAllInterfaces -tclPort 8009
+
+        Examples  
+            Right click on "IxNetwork API server", select properties and under target 
+            ixnetwork.exe -restInsecure -restPort 11009 -restOnAllInterfaces -tclPort 8009
 
         Parameters
-            serverIp: The REST API server IP address.
-            serverPort: The server IP address socket port.
-            apiServer: windows, windowsConnectionMgr or linux
-            webQuickTest: True|False: True for using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
-            includeDebugTraceback: True or False.
-                                   If True, traceback messsages are included in raised exceptions.
-                                   If False, no traceback.  Less verbose.
+           serverIp: (str): The API server IP address.
+           serverPort: (str): The API server IP address socket port.
+           apiServer: (str): What are you connecting to: windows | windowsConnectionMgr | linux
+           webQuickTest: (bool): True: Using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
+           includeDebugTraceback: (bool):
+                                   True: Traceback messsages are included in raised exceptions.
+                                   False: No traceback.  Less verbose for debugging.
+           username: (str): The login username. For Linux API server only.
+           password: (str): The login password. For Linux API server only.
+           licenseServerIp: (str): The license server IP address.
+           licenseMode: (str): subscription | perpetual | mixed
+           licenseTier: (str): tier1 | tier2 | tier3
+           deleteSessionAfterTest: (bool): True: Delete the session.
+                                               False: Don't delete the session.
+           verifySslCert: (str): Optional: Include your SSL certificate for added security.
+           apiServerPlatform: (str): Defaults to windows. windows | linux.
+           includeDebugTraceback: (bool): True: Include tracebacks in raised exceptions.
+           sessionId: (str): The session ID on the Linux API server to connect to.
+           apiKey: (str): The Linux API server user account API-Key to use for the sessionId connection.
+           generateRestLogFile: True|False|<log file name>.  If you want to generate a log file, provide 
+                                the log file name.
+                                True = Then the log file default name is restApiLog.txt
+                                False = Disable generating a log file.
+                                <log file name> = The full path + file name of the log file to create.
+           httpInsecure: (bool): This parameter is only for Windows connections.
+                                     True: Using http.  False: Using https.
+                                     Starting 8.50: IxNetwork defaults to use https.
+                                     If you are using versions prior to 8.50, it needs to be a http connection.
+                                     In this case, set httpInsecure=True.
 
-            The rest of the parameters are for connecting to a Linux API server only.
-               username: The login username.
-               password: The login password.
-               licenseServerIp: The license server IP address.
-               licenseMode: subscription, perpetual or mixed.
-               licenseTier: tier1, tier2, tier3.
-               isLinuxApiServerNewlyInstalled: True or False.
-                                               If True, then configure the global license server settings also.
-               deleteSessionAfterTest: True or False.
-                                       If True, delete the session.
-                                       If False, session is not deleted for debugging or for viewing.
-               verifySslCert: Include your SSL certificate for added access security.
-               apiServerPlatform: windows or linux.  Defaults to windows.
-               includeDebugTraceback: True or False. If True, include tracebacks in raised exceptions
-               sessionId: To session ID on the Linux API server to connect to.
-               apiKey: The Linux API server user API-KEY to use for the sessionId connection.
-               httpInsecure: True|False: This parameter is only for Windows connection.
-                             True: Using http.  False: Using https.
-                             Starting 8.50: IxNetwork defaults to use https.
-                             If you are using versions prior to 8.50, it needs to be a http connection.
-                             In this case, set httpInsecure=True.
+        Notes
+            Class attributes
+            apiServerPlatform: windows | windowsConnectionMgr | linux
+            sessionUrl: The session's URL: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
+            sessionId : http://{apiServerIp:{port}}/api/v1/sessions/{1}
+            httpHeader: http://{apiServerIp}:{port}
+            jsonHeader: The default header: {"content-type": "application/json"}
+            apiKey: For Linux API server only. Automatically provided by the server when login 
+                               successfully authenticated.
+                               You could also provide an API-Key to connect to an existing session.
+                               Get the API-Key from the Linux API server user account.
 
-       Class Variables:
-            apiServerPlatform: windows, windowsConnectionMgr, linux
-            sessionUrl: The session's URL: http://{apiServerIp:11009}/api/v1/sessions/1/ixnetwork
-            sessionId : http://{apiServerIp:11009}/api/v1/sessions/1
-            jsonHeader: The default URL header: {"content-type": "application/json"}
-            apiKey: For Linux API server only. Automatically provided by the server when connecting and authenticating.
-                    You could also provide an API-Key to connect to an existing session. Get the API-Key from the Linux API server.
-
-        Steps to connect to Linux API server steps:
-            1> POST: https://192.168.70.108/api/v1/auth/session
-               DATA: {"username": "admin", "password": "admin"}
-               HEADERS: {'content-type': 'application/json'}
+        Examples:
+           Steps to connect to Linux API server steps:
+               1> POST: https://{apiServerIp}/api/v1/auth/session
+                  DATA: {"username": "admin", "password": "admin"}
+                  HEADERS: {'content-type': 'application/json'}
         
-            2> POST: https://192.168.70.108:443/api/v1/sessions
-               DATA: {"applicationType": "ixnrest"}
-               HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+               2> POST: https://{apiServerIp:{port}/api/v1/sessions
+                  DATA: {"applicationType": "ixnrest"}
+                  HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa464788hgee'}
 
-            3> POST: https://192.168.70.108:443/api/v1/sessions/4/operations/start
-               DATA: {}
-               HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+               3> POST: https://{apiServerIp}:443/api/v1/sessions/4/operations/start
+                  DATA: {}
+                  HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa464788hgee'}
 
-            sessionId = https://192.168.70.108:443/api/v1/sessions/<id>
+               sessionId = https://{apiServerIp}:443/api/v1/sessions/{id}
 
-        Steps to connect to Linux Web Quick Test:
-            1> POST: https://192.168.70.108:443/api/v1/auth/session
-               DATA: {"username": "admin", "password": "admin"}
-               HEADERS: {'content-type': 'application/json'}
+           Steps to connect to Linux Web Quick Test:
+               1> POST: https://{apiServerIp}:443/api/v1/auth/session
+                  DATA: {"username": "admin", "password": "admin"}
+                  HEADERS: {'content-type': 'application/json'}
 
-            2> POST: https://192.168.70.108:443/api/v1/sessions
-               DATA: {'applicationType': 'ixnetwork'}
+               2> POST: https://{apiServeIp}:443/api/v1/sessions
+                  DATA: {'applicationType': 'ixnetwork'}
 
-            3> POST: https://192.168.70.108:443/api/v1/sessions/2/operations/start
-               DATA: {'applicationType': 'ixnetwork'}
+               3> POST: https://{apiServerIp}:443/api/v1/sessions/2/operations/start
+                  DATA: {'applicationType': 'ixnetwork'}
 
-            sessionId = https://192.168.70.108/ixnetworkweb/api/v1/sessions/<id>
-               
+            sessionId = https://{apiServerIp}/ixnetworkweb/api/v1/sessions/{id}
+
+           Notes
+              To connect to an existing configuration.
+                 Windows: Nothing special. The session ID is always "1".
+                 linux API server: Include the api-key and sessionId that you want to connect to.
+        
         """
         from requests.exceptions import ConnectionError
         from requests.packages.urllib3.connection import HTTPConnection
@@ -110,6 +120,7 @@ class Connect(object):
         from requests.packages.urllib3.exceptions import InsecureRequestWarning
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+        self.apiServerPlatform = serverOs ;# windows|linux|windowsConnectionMgr
         self.jsonHeader = {"content-type": "application/json"}
         self.httpInsecure = httpInsecure
         self.apiKey = None
@@ -118,34 +129,46 @@ class Connect(object):
         self.apiServerPort = serverIpPort
         self.webQuickTest = webQuickTest
         self.generateRestLogFile = generateRestLogFile
+
         if generateRestLogFile:
-            self.restLogFile = 'restApiLog.txt'
+            if generateRestLogFile == True:
+                # Default the log file if user did not provide one.
+                self.restLogFile = 'restApiLog.txt'
+            else:
+                if '/' in generateRestLogFile and len(generateRestLogFile.split('/')) > 1:
+                    path = generateRestLogFile.split('/')[:-1]
+                    path = list(filter(None, path))
+                    path = '/' + '/'.join(path)
+                    if os.path.exists(path) == False:
+                        raise IxNetRestApiException('\nError: No such path for generateRestLogFile: %s' % path)
+
+                self.restLogFile = generateRestLogFile
+            # Instantiate a new log file here.
             with open(self.restLogFile, 'w') as restLogFile:
                 restLogFile.write('')
 
-        if serverOs in ['windows', 'windowsConnectionMgr']:
-            self.apiServerPlatform = serverOs
-            self.getSessionUrl(apiServerIp, serverIpPort)
-
         if serverOs == 'windows':
             self.sessionIdNumber = 1
+            self.getSessionUrl(apiServerIp, serverIpPort)
 
         if serverOs == 'windowsConnectionMgr':
-            # TODO: Dynamically get the session Id number            
+            # User connecting to existing sessionId
             if sessionId:
-                self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(apiServerIp, serverIpPort, str(sessionId))
-                self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(apiServerIp, serverIpPort, str(sessionId))
+                self.sessionId = 'http://{0}:{1}/api/v1/sessions/{2}'.format(apiServerIp, serverIpPort, str(sessionId))
+                self.sessionUrl = 'http://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(apiServerIp, serverIpPort, str(sessionId))
+                self.httpHeader = self.sessionUrl.split('/api')[0]
+            else:
+                # Create a new session
+                self.getSessionUrl(apiServerIp, serverIpPort)
 
         if serverOs == 'linux':
-            # Disable SSL warning messages
-            #requests.packages.urllib3.disable_warnings()
             if self.apiServerPort == None:
                 self.apiServerPort == 443
-            self.apiServerPlatform = 'linux'
 
             # Connect to an existing session on the Linux API server
             if apiKey != None and sessionId == None:
                 raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
+            # Connect to an existing opened session
             if apiKey and sessionId:
                 if self.webQuickTest == False:
                     self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
@@ -158,6 +181,7 @@ class Connect(object):
                 self.apiKey = apiKey
                 self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
 
+            # connectToLinuxApiServer API knows whether to create a new session or connect to an existing session by looking at the self.apiKey.
             self.connectToLinuxApiServer(apiServerIp, username=username, password=password, verifySslCert=verifySslCert)
 
             if licenseServerIp or licenseMode or licenseTier:
@@ -172,13 +196,16 @@ class Connect(object):
     def get(self, restApi, data={}, stream=False, silentMode=False, ignoreError=False):
         """
         Description
-           A HTTP GET function to send REST APIs.
+            A HTTP GET function to send REST APIs.
 
         Parameters
-           restApi: The REST API URL.
-           data: The data payload for the URL.
-           silentMode: True or False.  To display URL, data and header info.
-           ignoreError: True or False.  If False, the response will be returned.
+           restApi: (str): The REST API URL.
+           data: (dict): The data payload for the URL.
+           silentMode: (bool):  To display on stdout: URL, data and header info.
+           ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
+
+        Syntax
+            /api/v1/sessions/1/ixnetwork/operations
         """
         if silentMode is False or self.generateRestLogFile is True:
             self.logInfo('\nGET: {0}'.format(restApi))
@@ -206,17 +233,16 @@ class Connect(object):
     def post(self, restApi, data={}, headers=None, silentMode=False, noDataJsonDumps=False, ignoreError=False):
         """
         Description
-           A HTTP POST function to mainly used to create or start operations.
+           A HTTP POST function to create and start operations.
 
-        Parameters
-           restApi: The REST API URL.
-           data: The data payload for the URL.
-           headers: The special header to use for the URL.
-           silentMode: True or False.  To display URL, data and header info.
-           noDataJsonDumps: True or False. If True, use json dumps. Else, accept the data as-is.
-           ignoreError: True or False.  If False, the response will be returned. No exception will be raised.
+        Parameters   
+           restApi: (str): The REST API URL.
+           data: (dict): The data payload for the URL.
+           headers: (str): The special header to use for the URL.
+           silentMode: (bool):  To display on stdout: URL, data and header info.
+           noDataJsonDumps: (bool): True: Use json dumps. False: Accept the data as-is.
+           ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
         """
-
         if headers != None:
             originalJsonHeader = self.jsonHeader
             self.jsonHeader = headers
@@ -256,11 +282,10 @@ class Connect(object):
            A HTTP PATCH function to modify configurations.
 
         Parameters
-           restApi: The REST API URL.
-           data: The data payload for the URL.
-           silentMode: True or False.  To display URL, data and header info.
+           restApi: (str): The REST API URL.
+           data: (dict): The data payload for the URL.
+           silentMode: (bool):  To display on stdout: URL, data and header info.
         """
-
         if silentMode == False:
             self.logInfo('\nPATCH: %s' % restApi)
             self.logInfo('DATA: %s' % data)
@@ -283,14 +308,13 @@ class Connect(object):
         """
         Description
            A HTTP DELETE function to delete the session.
-           For Linux API server only.
+           For Linux and Windows Connection Mgr API server only.
 
-        Parameters
-           restApi: The REST API URL.
-           data: The data payload for the URL.
-           headers: The header to use for the URL.
+        Paramters
+           restApi: (str): The REST API URL.
+           data: (dict): The data payload for the URL.
+           headers: (str): The headers to use for the URL.
         """
-
         if headers != None:
             self.jsonHeader = headers
 
@@ -308,43 +332,64 @@ class Connect(object):
             raise IxNetRestApiException('DELETE error: {0}\n'.format(errMsg))
 
     def getSelfObject(self):
-        # For Robot Framework support only.
-        return self
-
-    def getSessionUrl(self, ixNetRestServerIp, ixNetRestServerPort=11009):
         """
         Description
-            Connect to a Windows IxNetwork API Server to create a session URL.
-            http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork
+           For Robot Framework support only.
+        
+        Return
+           The instance object.
+        """
+        return self
 
-         ixNetRestServerIp: The IxNetwork API Server IP address.
-         ixNetRestServerPort: Provide a port number to connect to your non Linux API Server.
-                              On a Linux API Server, a socket port is not needed. State "None".
+    def getSessionUrl(self, ixNetRestServerIp, ixNetRestServerPort='11009'):
+        """
+        Description
+           Connect to a Windows IxNetwork API Server to create a session URL.
+        
+        Parameter
+          ixNetRestServerIp: (str): The Windows IxNetwork API Server IP address.
+          ixNetRestServerPort: (str): Default: 11009.  Provide a port number to connect to.
+                               On a Linux API Server, a socket port is not needed. State "None".
+
+        Return
+           http://{apiServerIp}:{port}/api/v1/sessions/{1}/ixnetwork
         """
         if self.httpInsecure:
             httpVerb = 'http'
         else:
             httpVerb = 'https'
 
+        # Handle __import__(IxNetRestApi) to not error out
+        if ixNetRestServerIp == None: return
+
         url = '{0}://{1}:{2}/api/v1/sessions'.format(httpVerb, ixNetRestServerIp, ixNetRestServerPort)
-        serverAndPort = ixNetRestServerIp+':'+str(ixNetRestServerPort)
+        serverAndPort = '{0}:{1}'.format(ixNetRestServerIp, str(ixNetRestServerPort))
 
         if self.apiServerPlatform == 'windowsConnectionMgr':
             # For Connection Manager, requires a POST to automatically get the next session.
             # {'links': [{'href': '/api/v1/sessions/8020', 'method': 'GET', 'rel': 'self'}]}
-            self.logInfo('\nPlease wait while IxNetwork starts up...')
+            self.logInfo('\nPlease wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
             response = self.post(url)
             # Just get the session ID number
-            sessionId = response.json()['links'][0]['href'].split('/')[-1]
+            sessionIdNumber = response.json()['links'][0]['href'].split('/')[-1]
+            sessionIdUrl = url+'/'+sessionIdNumber
+            response = self.get(url)
+            if response.json()[0]['state'] != 'ACTIVE':
+                raise IxNetRestApiException('\nError: New Windows session state failed to become ACTVIE state')
+
+            # Windows connection mgr takes additional time after becoming ACTIVE.
+            self.logInfo('\tWait for Windows session to become ready')
+            time.sleep(20)
 
         if self.apiServerPlatform == 'windows':
             response = self.get(url)
-            sessionId = response.json()[0]['id']
+            sessionIdNumber = response.json()[0]['id']
 
         self.sessionUrl = '{http}://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(http=httpVerb,
-                                                                                            apiServer=ixNetRestServerIp,
-                                                                                            port=ixNetRestServerPort,
-                                                                                            id=sessionId)
+                                                                                              apiServer=ixNetRestServerIp,
+                                                                                              port=ixNetRestServerPort,
+                                                                                              id=sessionIdNumber)
+
         # http://192.168.70.127:11009
         self.httpHeader = self.sessionUrl.split('/api')[0]
 
@@ -353,35 +398,74 @@ class Connect(object):
         return self.sessionUrl
 
     def deleteSession(self):
-        # Mainly for Windows Connection Manager
+        """
+        Description
+           Delete the instance session ID. For Linux and Windows Connection Manager only.
+        """
         if self.deleteSessionAfterTest:
             self.delete(self.sessionId)
 
     def logInfo(self, msg, end='\n'):
+        """
+        Description
+           An internal function to print info to stdout
+        
+        Parameters
+           msg: (str): The message to print.
+        """
         print('{0}'.format(msg), end=end)
         if self.generateRestLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write(msg+end)
 
     def logWarning(self, msg, end='\n'):
+        """
+        Description
+           An internal function to print warnings to stdout.
+        
+        Parameter
+           msg: (str): The message to print.
+        """
         print('Warning: {0}'.format(msg), end=end)
+        if self.generateRestLogFile:
+            with open(self.restLogFile, 'a') as restLogFile:
+                restLogFile.write('Warning: '+msg+end)
 
     def logError(self, msg, end='\n'):
+        """
+        Description
+           An internal function to print error to stdout.
+        
+        Parameter
+           msg: (str): The message to print.
+        """
         print('\nERROR: {0}'.format(msg), end=end)
+        if self.generateRestLogFile:
+            with open(self.restLogFile, 'a') as restLogFile:
+                restLogFile.write('Error: '+msg+end)
 
     def getIxNetworkVersion(self):
+        """
+        Description
+           Get the IxNetwork version.
+
+        Syntax
+            GET: /api/v1/sessions/{id}/globals
+        """
         response = self.get(self.sessionUrl+'/globals', silentMode=True)
         return response.json()['buildNumber']
 
     def showErrorMessage(self, silentMode=False):
         """
         Description
-            Show all the error messages from IxNetwork.
+           Show all the error messages from IxNetwork.
+
+        Parameter
+          silentMode: (bool): True: Don't print the REST API on stdout.
 
         Syntax
-            GET: http://{apiServerIp:port}/api/v1/sessions/{id}/globals/appErrors/error
+            GET: /api/v1/sessions/{id}/globals/appErrors/error
         """
-
         errorList = []
         response = self.get(self.sessionUrl+'/globals/appErrors/error', silentMode=silentMode)
         print()
@@ -396,17 +480,17 @@ class Connect(object):
     def waitForComplete(self, response='', url='', silentMode=True, timeout=90):
         """
         Description
-            Wait for an operation progress to complete.
+           Wait for an operation progress to complete.
 
         Parameters
-            response: The POST action response.  Generally, after an /operations action.
-                      Such as /operations/startallprotocols, /operations/assignports
-            silentMode: True or False. If True, display info messages.
-            timeout: The time allowed to wait for success completion in seconds.
+           response: (json response/dict): The POST action response.  Generally, after an /operations action.
+                         Such as /operations/startallprotocols, /operations/assignports.
+           silentMode: (bool):  If True, display info messages on stdout.
+           timeout: (int): The time allowed to wait for success completion in seconds.
         """
-
         if silentMode == False:
-            self.logInfo('\nwaitForComplete...')
+            self.logInfo('\nwaitForComplete:')
+            #self.logInfo('\tId: %s\n' % url)
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
         if response.json() == '' and response.json()['state'] == 'SUCCESS':
@@ -424,7 +508,7 @@ class Connect(object):
             raise IxNetRestApiException('\nWaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
 
         for counter in range(1,timeout+1):
-            response = self.get(url, silentMode=True)
+            response = self.get(url, silentMode=silentMode)
             state = response.json()["state"]
             if silentMode == False:
                 if state != 'SUCCESS':
@@ -447,23 +531,24 @@ class Connect(object):
         """
         Description
            Connect to an Ixia chassis.
-           This needs to be done prior to assigning ports for testing.
+
+        Paramter
+           chassisIp: (str): The chassis IP address.  This could be hardware and virtual chassis.
 
         Syntax
-           /api/v1/sessions/1/ixnetwork/availableHardware/chassis
-
-        Parameter
-           chassisIp: The chassis IP address.
+           /api/v1/sessions/{id}/ixnetwork/availableHardware/chassis
         """
         url = self.sessionUrl+'/availableHardware/chassis'
         data = {'hostname': chassisIp}
+        self.logInfo('\nConnect to Ixia chassis')
         response = self.post(url, data=data)
         chassisIdObj = response.json()['links'][0]['href']
         # Chassis states: down, polling, ready
+        self.logInfo('\nWait for chassis connection to come up\n')
         for timer in range(1,61):
             response = self.get(self.httpHeader + chassisIdObj, silentMode=True)
             currentStatus = response.json()['state']
-            self.logInfo('connectIxChassis {0}: Status: {1}'.format(chassisIp, currentStatus))
+            self.logInfo('\tconnectIxChassis {0}: Status: {1}'.format(chassisIp, currentStatus))
             if currentStatus != 'ready' and timer < 60:
                 time.sleep(1)
             if currentStatus != 'ready' and timer == 60:
@@ -477,13 +562,13 @@ class Connect(object):
     def disconnectIxChassis(self, chassisIp):
         """
         Description
-            Disconnect the chassis (both hardware or virtualChassis).
-
-        Syntax
-            http://{apiServerIp:11009}/api/v1/sessions/1/ixnetwork/availableHardware/chassis/<id>
+           Disconnect the chassis (For both hardware or virtualChassis).
 
         Parameter
-            chassisIp: The chassis IP address.
+           chassisIp: (str): The chassis IP address.
+
+        Syntax
+            DELETE: /api/v1/sessions/{id}/ixnetwork/availableHardware/chassis/{id}
         """
         url = self.sessionUrl+'/availableHardware/chassis'
         response = self.get(url)
@@ -496,16 +581,16 @@ class Connect(object):
     def connectToLinuxApiServer(self, linuxServerIp, username='admin', password='admin', verifySslCert=False):
         """
         Description
-            Connect to a secured access Linux API server.
+           Connect to a Linux API server.
 
         Parameters
-            linuxServerIp: The Linux API server IP address.
-            username: Login username. Default = admin.
-            password: Login password. Default = admin.
-            verifySslCert: The SSL Certificate to secure access verification.
-
-        Syntax
-            POST: 'https://{linuxApiServerIp}/api/v1/auth/session'
+           linuxServerIp: (str): The Linux API server IP address.
+           username: (str): Login username. Default = admin.
+           password: (str): Login password. Default = admin.
+           verifySslCert: (str): Defalt: None.  The SSL Certificate for secure access verification.
+ 
+       Syntax
+            POST: /api/v1/auth/session
         """
         self.verifySslCert = verifySslCert
 
@@ -515,7 +600,6 @@ class Connect(object):
             self.logInfo('\nconnectToLinuxApiServer: %s' % url)
             response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)
             if not str(response.status_code).startswith('2'):
-            #if not re.match('2[0-9][0-9]', str(response.status_code)):
                 raise IxNetRestApiException('\nLogin username/password failed\n')
             self.apiKey = response.json()['apiKey']
 
@@ -560,22 +644,17 @@ class Connect(object):
     def linuxServerConfigGlobalLicenseServer(self, linuxServerIp, licenseServerIp, licenseMode, licenseTier):
         """
         Description
-           On a new Linux API Linux installation, you need to set the global license server once.
-           When a new session is created, it will check the global license settings and config the
-           license settings on the new session.
+           Configure a license server in the global setting.
 
         Parameters
-            linuxServerIp: IP address of the Linux API server.
-            licenseServerIp: Type = list. [IP address of the license server]
-            licenseMode: subscription, perpetual or mixed
-            licenseier: tier1, tier2, tier3
+           linuxServerIp: (str): IP address of the Linux API server.
+           licenseServerIp: (list): IP address of all the license server in a list.
+           licenseMode: (str): subscription |  perpetual | mixed
+           licenseier: (str): tier1 | tier2 | tier3
 
         Syntax
-           PATCH: https://<apiServerIp>/api/v1/sessions/9999/ixnetworkglobals/license
-           DATA:  {'servers': list(licenseServerIp),
-                   'mode': str(licenseMode),
-                   'tier': str(licenseTier)
-                  }
+           PATCH: /api/v1/sessions/9999/ixnetworkglobals/license
+           DATA:  {'servers': [list(licenseServerIp]), 'mode': licenseMode, 'tier': licenseTier}
         """
 
         staticUrl = 'https://{linuxServerIp}/api/v1/sessions/9999/ixnetworkglobals/license'.format(linuxServerIp=linuxServerIp)
@@ -595,13 +674,13 @@ class Connect(object):
     def linuxServerGetGlobalLicense(self, linuxServerIp):
         """
         Description
-            Get the global license server details from the Linux API server.
+           Get the global license server details from the Linux API server.
 
-        Parameter
-            linuxServerIp: The IP address of the Linux API server.
+        Paramters
+           linuxServerIp: (str): The IP address of the Linux API server.
 
         Syntax
-            GET: 'https://{linuxServerIp}/api/v1/sessions/9999/ixnetworkglobals/license'
+            GET: /api/v1/sessions/9999/ixnetworkglobals/license
         """
         staticUrl = 'https://{linuxServerIp}/api/v1/sessions/9999/ixnetworkglobals/license'.format(linuxServerIp=linuxServerIp)
         self.logInfo('\nlinuxServerGetGlobalLicense: %s ' % linuxServerIp)
@@ -620,13 +699,13 @@ class Connect(object):
         Description
            Configure license server details: license server IP, license mode and license tier.
 
-        Parameter
-            licenseServer: License server IP address(s) in a list.
-            licenseMode: subscription|perpetual}mixed
-            licenseTier: tier1, tier2, tier3 ...
+        Parameters
+           licenseServer: (str): License server IP address(s) in a list.
+           licenseMode: (str): subscription | perpetual | mixed
+           licenseTier: (str): tier1 | tier2 | tier3 ...
 
         Syntax
-           PATCH: https://{apiServerIp}/api/v1/sessions/{id}/ixnetwork/globals/licensing
+           PATCH: /api/v1/sessions/{id}/ixnetwork/globals/licensing
         """
         # Each new session requires configuring the new session's license details.
         data = {}
@@ -643,9 +722,11 @@ class Connect(object):
     def showLicenseDetails(self):
         """
         Description
-            Verify the new session's license details.
-        """
+           Display the new session's license details.
 
+        Syntax
+            GET: /api/v1/sessions/{id}/globals/licensing
+        """
         response = self.get(self.sessionUrl+'/globals/licensing')
         self.logInfo('\nVerifying sessionId license server: %s' % self.sessionUrl)
         self.logInfo('\t%s' % response.json()['licensingServers'])
@@ -658,8 +739,8 @@ class Connect(object):
            Wrapper to stop and delete the session ID on the Linux API server.
 
         Requirements
-           * linuxServerStopOperations()
-           * linuxServerDeleteSession()
+           linuxServerStopOperations()
+           linuxServerDeleteSession()
 
         Syntax
            GET = https://{apiServerIp}/api/v1/sessions/{id}
@@ -671,7 +752,16 @@ class Connect(object):
     def linuxServerStopOperations(self, sessionId=None):
         """
         Description
-            Stop the session ID on the Linux API server
+           Stop the session ID on the Linux API server.
+
+        Parameter
+           sessionId: (str): The session ID to stop.
+
+        Requirement
+           self.linuxServerWaitForSuccess()
+
+        Syntax
+            POST: /api/v1/sessions/{id}/operations/stop
         """
         if sessionId != None:
             sessionId = sessionId
@@ -686,10 +776,13 @@ class Connect(object):
     def linuxServerDeleteSession(self, sessionId=None):
         """
         Description
-            Delete the session ID on the Linux API server.
+           Delete the session ID on the Linux API server.
+
+        Paramter
+          sessionId: (str): The session ID to delete on the Linux API server.
 
         Syntax
-            DELETE: https://{linuxApiServerIp}/api/v1/sessions/{id}/operations/stop
+            DELETE: /api/v1/sessions/{id}/operations/stop
         """
         if sessionId != None:
             sessionId = sessionId
@@ -702,10 +795,11 @@ class Connect(object):
     def linuxServerWaitForSuccess(self, url, timeout=120):
         """
         Description
-            Wait for success completion on the Linux API server.
+           Wait for a success completion on the Linux API server.
 
-        Parameter
-            url: The URL's ID of the operation to verify
+        Paramters
+           url: (str): The URL's ID of the operation to verify.
+           timeout: (int): The timeout value.
         """
         data = {'applicationType': 'ixnrest'}
         jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
@@ -723,15 +817,16 @@ class Connect(object):
     def newBlankConfig(self):
         """
         Description
-            Start a new blank configuration.
+           Start a new blank configuration.
 
-        Note
-            Requires waitForComplete API also.
+        Requirement
+            self.waitForComplete()
 
-        Syntax: http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/operations/newconfig
+        Syntax:
+           /api/v1/sessions/{1}/ixnetwork/operations/newconfig
         """
         url = self.sessionUrl+'/operations/newconfig'
-        self.logInfo('\nnewBlankConfig:', url)
+        self.logInfo('\nnewBlankConfig')
         response = self.post(url)
         url = self.sessionUrl+'/operations/newconfig/'+response.json()['id']
         self.waitForComplete(response, url)
@@ -739,14 +834,17 @@ class Connect(object):
     def refreshHardware(self, chassisObj):
         """
         Description
-            Refresh the chassis
-
-        Syntax
-            http://{apiServerIp:11009}/availableHardware/chassis/operations/refreshinfo
+           Refresh the chassis
 
         Parameter
-            chassisObj:  The chassis object
-                         Ex: '/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1'
+           chassisObj: (str):The chassis object.
+                           Ex: /api/v1/sessions/{1}/ixnetwork/availableHardware/chassis/1
+
+        Requirement
+           self.waitForComplete()
+
+        Syntax
+            /api/v1/sessions/{1}/ixnetwork/availableHardware/chassis/operations/refreshinfo
         """
         response = self.post(self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo', data={'arg1': [chassisObj]})
         self.waitForComplete(response, self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo')
@@ -754,16 +852,22 @@ class Connect(object):
     def query(self, data, silentMode=True):
         """
         Description
-           To query for the object in order to modify the configuration.
+           Query for objects using filters.
 
-        Parameter
-            # Assuming this is a BGP configuration, which has two Topologies. Below demonstrates how to query the BGP host object by
-            # drilling down the Topology by its name and the specific the BGP attributes to modify at the
-            # BGPIpv4Peer node: flap, downtimeInSec, uptimeInSec.
-            # The from '/' is the entry point to the API tree.
-            # Notice all the node. This represents the API tree from the / entry point and starting at Topology level to the BGP
-            # host level.
-            # NOTE: Use the API Browser tool on the IxNetwork GUI to view the API tree.
+        Paramater
+           silentMode: (bool): True: Don't display any output on stdout.
+
+        Notes
+            Assuming this is a BGP configuration, which has two Topologies.
+            Below demonstrates how to query the BGP host object by
+            drilling down the Topology by its name and the specific the BGP attributes to modify at the
+            BGPIpv4Peer node: flap, downtimeInSec, uptimeInSec.
+            The from '/' is the entry point to the API tree.
+            Notice all the node. This represents the API tree from the / entry point and starting at 
+            Topology level to the BGP host level.
+
+        Notes
+           Use the API Browser tool on the IxNetwork GUI to view the API tree.
             data: {'from': '/',
                     'nodes': [{'node': 'topology',    'properties': ['name'], 'where': [{'property': 'name', 'regex': 'Topo1'}]},
                               {'node': 'deviceGroup', 'properties': [], 'where': []},
@@ -772,7 +876,10 @@ class Connect(object):
                               {'node': 'bgpIpv4Peer', 'properties': ['flap', 'downtimeInSec', 'uptimeInSec'], 'where': []}]
                 }
 
-        Example:
+        Requirements
+            self.waitForComplete()
+
+        Examples
             response = restObj.query(data=queryData)
             bgpHostAttributes = response.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'][0]
 
@@ -785,7 +892,6 @@ class Connect(object):
             restObj.configMultivalue(bgpHostFlapUpTimeMultivalue, multivalueType='singleValue', data={'value': '60'})
             restObj.configMultivalue(bgpHostFlapDownTimeMultivalue, multivalueType='singleValue', data={'value': '30'})
         """
-
         url = self.sessionUrl+'/operations/query'
         reformattedData = {'selects': [data]}
         response = self.post(url, data=reformattedData, silentMode=silentMode)
@@ -795,18 +901,17 @@ class Connect(object):
     def configMultivalue(self, multivalueUrl, multivalueType, data):
         """
         Description
-            Configure multivalues.
+           Configure multivalues.
 
         Parameters
-            multivalueUrl: The multivalue href. Ex: /api/v1/sessions/1/ixnetwork/multivalue/1
-            multivalueType: counter|singleValue|valueList
-            data = In Python Dict format. Ex:
-                   If singleValue, data={'value': '1.1.1.1'})
-                   If valueList,   data needs to be in a [list]:  data={'values': [list]}
-                   If counter,     data={'start': value, 'direction': increment|decrement, 'step': value}
+           multivalueUrl: (str): The multivalue: /api/v1/sessions/{1}/ixnetwork/multivalue/1
+           multivalueType: (str): counter|singleValue|valueList
+           data: (dict): singleValue: data={'value': '1.1.1.1'})
+                             valueList:   data needs to be in a [list]:  data={'values': [list]}
+                             counter:     data={'start': value, 'direction': increment|decrement, 'step': value}
         """
         if multivalueType == 'counter':
-            # Example: macAddress = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
+            # Examples: macAddress = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
             #          data=macAddress)
             self.patch(self.httpHeader+multivalueUrl+'/counter', data=data)
 
@@ -821,11 +926,14 @@ class Connect(object):
     def getMultivalueValues(self, multivalueObj, silentMode=False):
         """
         Description
-            A more efficient method to get the multivalue values.
+           Get the multivalue values.
 
         Parameters
-            multivalueObj: The multivalue object: /api/v1/sessions/1/ixnetwork/multivalue/208
-            silentMode: True|False: True=Display the GET and status code. False=Don't display.
+           multivalueObj: (str): The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
+           silentMode: (bool): True=Display the GET and status code. False=Don't display.
+        
+        Requirements
+           self.waitForComplete()
         """
         response = self.get(self.httpHeader+multivalueObj+'?includes=count', silentMode=silentMode)
         count = response.json()['count']
@@ -842,18 +950,25 @@ class Connect(object):
     def stdoutRedirect(self):
         """
         Description
-        For Robot Framework.  Robot captures the stdout. This stdoutRedirect
-        will redirect the output back to stdout so you could see the test progress
-        and to troubleshoot.
+           For Robot Framework.  Robot captures the stdout. This stdoutRedirect
+           will redirect the output back to stdout so you could see the test progress
+           and to troubleshoot.
         """
         for attr in ('stdin', 'stdout', 'stderr'):
             setattr(sys, attr, getattr(sys, '__%s__' %attr))        
             
     @staticmethod
     def prettyprintAllOperations(sessionUrl):
-        # Dispaly all the operation commands and its description:
-        #    http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/operations
+        """
+        Description
+           A staticmethod to rendering a nice output of an operations options and descriptions.
 
+        Parameter
+           sessionUrl: (str): http://{apiServerIp}:{port}/api/v1/sessions/1/ixnetwork
+
+        Syntax:
+            /api/v1/sessions/{1}/ixnetwork/operations
+        """
         response = requests.get(sessionUrl+'/operations')
         for item in response.json():
             if 'operation' in item.keys():
@@ -866,7 +981,8 @@ class Connect(object):
     @staticmethod
     def printDict(obj, nested_level=0, output=sys.stdout):
         """
-        Self.LogInfo each dict key with indentions for readability.
+        Description
+           Print each dict key with indentions for human readability.
         """
         spacing = '   '
         spacing2 = ' '

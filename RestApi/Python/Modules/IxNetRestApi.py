@@ -50,7 +50,7 @@ class Connect:
            verifySslCert: (str): Optional: Include your SSL certificate for added security.
            apiServerPlatform: (str): Defaults to windows. windows | linux.
            includeDebugTraceback: (bool): True: Include tracebacks in raised exceptions.
-           sessionId: (str): The session ID on the Linux API server to connect to.
+           sessionId: (str): The session ID on the Linux API server or Windows Connection Mgr to connect to.
            apiKey: (str): The Linux API server user account API-Key to use for the sessionId connection.
            generateRestLogFile: True|False|<log file name>.  If you want to generate a log file, provide 
                                 the log file name.
@@ -65,15 +65,15 @@ class Connect:
 
         Notes
             Class attributes
-            apiServerPlatform: windows | windowsConnectionMgr | linux
-            sessionUrl: The session's URL: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
-            sessionId : http://{apiServerIp:{port}}/api/v1/sessions/{1}
-            httpHeader: http://{apiServerIp}:{port}
-            jsonHeader: The default header: {"content-type": "application/json"}
-            apiKey: For Linux API server only. Automatically provided by the server when login 
-                               successfully authenticated.
-                               You could also provide an API-Key to connect to an existing session.
-                               Get the API-Key from the Linux API server user account.
+               self.apiServerPlatform: windows|windowsConnectionMgr|linux
+               self.httpHeader: http://{apiServerIp}:{port}
+               self.sessionId : http://{apiServerIp}:{port}/api/v1/sessions/{id}
+               self.sessionUrl: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
+               self.jsonHeader: The default header: {"content-type": "application/json"}
+               self.apiKey: For Linux API server only. Automatically provided by the server when login 
+                            successfully authenticated.
+                            You could also provide an API-Key to connect to an existing session.
+                            Get the API-Key from the Linux API server user account.
 
         Examples:
            Steps to connect to Linux API server steps:
@@ -106,9 +106,9 @@ class Connect:
 
            Notes
               To connect to an existing configuration.
-                 Windows: Nothing special. The session ID is always "1".
-                 linux API server: Include the api-key and sessionId that you want to connect to.
-        
+                 Windows: Nothing special to include. The session ID is always "1".
+                 Linux API server: Include the api-key and sessionId that you want to connect to.
+                 Windows Connection Manager: Include just the sessionId: For example: 8021.
         """
         from requests.exceptions import ConnectionError
         from requests.packages.urllib3.connection import HTTPConnection
@@ -132,7 +132,7 @@ class Connect:
 
         if generateRestLogFile:
             if generateRestLogFile == True:
-                # Default the log file if user did not provide one.
+                # Default the log filename if user did not provide one.
                 self.restLogFile = 'restApiLog.txt'
             else:
                 if '/' in generateRestLogFile and len(generateRestLogFile.split('/')) > 1:
@@ -148,8 +148,7 @@ class Connect:
                 restLogFile.write('')
 
         if serverOs == 'windows':
-            self.sessionIdNumber = 1
-            self.getSessionUrl(apiServerIp, serverIpPort)
+            self.createWindowsSession(apiServerIp, serverIpPort)
 
         if serverOs == 'windowsConnectionMgr':
             # User connecting to existing sessionId
@@ -159,7 +158,7 @@ class Connect:
                 self.httpHeader = self.sessionUrl.split('/api')[0]
             else:
                 # Create a new session
-                self.getSessionUrl(apiServerIp, serverIpPort)
+                self.createWindowsSession(apiServerIp, serverIpPort)
 
         if serverOs == 'linux':
             if self.apiServerPort == None:
@@ -168,16 +167,18 @@ class Connect:
             # Connect to an existing session on the Linux API server
             if apiKey != None and sessionId == None:
                 raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
-            # Connect to an existing opened session
             if apiKey and sessionId:
                 if self.webQuickTest == False:
                     self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
                     self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(self.linuxApiServerIp, self.apiServerPort, sessionId)
                     self.httpHeader = self.sessionUrl.split('/api')[0]
+
                 if self.webQuickTest:
-                    self.sessionId = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
-                    self.sessionUrl = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
+                    self.sessionId = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
+                                                                                               self.apiServerPort, str(sessionId))
+                    self.sessionUrl = self.sessionId
                     self.httpHeader = self.sessionUrl.split('/ixnetworkweb')[0]
+
                 self.apiKey = apiKey
                 self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
 
@@ -187,7 +188,7 @@ class Connect:
             if licenseServerIp or licenseMode or licenseTier:
                 self.configLicenseServerDetails(licenseServerIp, licenseMode, licenseTier)
 
-        # For Linux API Server only: Delete the session when script is done.
+        # For Linux API Server and Windoww Connection Mgr only: Delete the session when script is done if deleteSessionAfterTest = True.
         self.deleteSessionAfterTest = deleteSessionAfterTest
 
         if includeDebugTraceback == False:
@@ -341,18 +342,18 @@ class Connect:
         """
         return self
 
-    def getSessionUrl(self, ixNetRestServerIp, ixNetRestServerPort='11009'):
+    def createWindowsSession(self, ixNetRestServerIp, ixNetRestServerPort='11009'):
         """
         Description
-           Connect to a Windows IxNetwork API Server to create a session URL.
-        
+           Connect to a Windows IxNetwork API Server to create a session URL. This is 
+           for both Windows and Windows server with IxNetwork Connection Manager.
+           This will set up the session URL to use throughout the test.
+        
         Parameter
           ixNetRestServerIp: (str): The Windows IxNetwork API Server IP address.
           ixNetRestServerPort: (str): Default: 11009.  Provide a port number to connect to.
                                On a Linux API Server, a socket port is not needed. State "None".
 
-        Return
-           http://{apiServerIp}:{port}/api/v1/sessions/{1}/ixnetwork
         """
         if self.httpInsecure:
             httpVerb = 'http'
@@ -382,8 +383,8 @@ class Connect:
             time.sleep(20)
 
         if self.apiServerPlatform == 'windows':
-            response = self.get(url)
-            sessionIdNumber = response.json()[0]['id']
+            # windows sessionId is always 1 because it only supports one session.
+            sessionIdNumber = 1
 
         self.sessionUrl = '{http}://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(http=httpVerb,
                                                                                               apiServer=ixNetRestServerIp,
@@ -395,7 +396,7 @@ class Connect:
 
         # http://192.168.70.127:11009/api/v1/sessions/1
         self.sessionId = self.sessionUrl.split('/ixnetwork')[0]
-        return self.sessionUrl
+        #return self.sessionUrl
 
     def deleteSession(self):
         """

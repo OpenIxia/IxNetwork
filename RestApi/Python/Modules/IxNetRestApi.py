@@ -396,7 +396,6 @@ class Connect:
 
         # http://192.168.70.127:11009/api/v1/sessions/1
         self.sessionId = self.sessionUrl.split('/ixnetwork')[0]
-        #return self.sessionUrl
 
     def deleteSession(self):
         """

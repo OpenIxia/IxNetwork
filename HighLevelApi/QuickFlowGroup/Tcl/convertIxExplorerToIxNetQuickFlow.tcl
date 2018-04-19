@@ -13,18 +13,21 @@
 #
 #    This script is a sample to show how to use customer's existing HL API parameters/values
 #    and automatically ...
-#        - Create a Quick Flow Group (Traffic Item)
-#        - Get all the configured vports and add all vports to the HLAPI parameter -port_handle2
-#          as receiving ports.
+#        - Create one Traffic Item and circuit_type = Quick Flow
+#        - Get all the configured vports (excluding the TxPort) and 
+#          add all vports to the HLAPI parameter -port_handle2 as receiving ports.
 #        - Enable traffic item Ingress tracking.
 #        - Regenerate Traffic Item.
 #        - Start traffic
-#        - Get Port Statistics stats.
+#        - Get Flow Statistics stats.
 #        - Look for all the ports that received traffic.
 
 package req Ixia
 
 set ixnetworkTclServer 192.168.70.3
+set chassisIp 192.168.70.11
+set userName hgee
+set portList {1/1 2/1}
 set port_1 1/1/1
 set port_2 1/2/1
 
@@ -58,11 +61,13 @@ proc GetVportConnectedToPort {vport} {
 proc ConfigQuickFlowGroup {portHandle trafficParam} {
     # Description
     #    Using IxExplorer-FT HL APIs to configure IxNetwork Quick Flow Group.
-    #    For Quick Flow Group, only one QFG is allowed and required.
-    #    If you have multiple streams, they all fall under this QFG.
+    #    For Quick Flow Group, only one Traffic Item is allowed and required.
+    #    If you have multiple streams (QFG), they all fall under this Traffic Item.
     
     upvar $trafficParam params
     
+    # Create just ONE Traffic Item for Quick Flow Group. Cannot and should not create more than one Traffic Item.
+    # After creating one Traffic Item, you could add multiple Quick Flow Groups.
     puts "\nExisting Traffic Item: [ixNet getList [ixNet getRoot]/traffic trafficItem]"
     if {[ixNet getList [ixNet getRoot]/traffic trafficItem] == ""} {
 	puts "\nCreating new traffic item for Quick Flow Group"
@@ -75,16 +80,19 @@ proc ConfigQuickFlowGroup {portHandle trafficParam} {
 	puts "QuickFlowGroupObj: $quickFlowGroupObj"
     }
     
+    # Create a list of receiving ports and exclude the transmitting port
     puts "ConfigQuickFlowGroup: [array get params name]"
     set portList {}
     foreach vport [ixNet getList [ixNet getRoot] vport] {
 	set port [GetVportConnectedToPort $vport]
+	# Don't append the Tx Port in the recieving port list.
 	if {$portHandle != $port} {
 	    lappend portList $port
 	}
     }
     puts "\nAll vport list for Rx ports: $portList"
     
+    # Add the receiving port(s) and make the Traffic Item type as quick_flows
     #params.update({'port_handle': portHandle, 'port_handle2': ' '.join(portList), 'circuit_type':'quick_flows'})
     set params(-port_handle) $portHandle
     set params(-port_handle2) [list $portList]
@@ -406,8 +414,45 @@ set trafficItem2(-number_of_packets_per_stream) 50000
 set connect(-ixnetwork_tcl_server) $ixnetworkTclServer
 set connect(-username) "hgee"
 set connect(-session_resume_keys) 1
-set status [ResumeHlt ::connect]
+#set status [ResumeHlt ::connect]
+
+set status [::ixia::connect  \
+		-reset 1 \
+		-device $chassisIp \
+		-port_list $portList \
+		-ixnetwork_tcl_server $ixnetworkTclServer \
+		-tcl_server $chassisIp \
+		-username hgee \
+	       ]
 puts [KeylPrint status]
+
+set port1Status [::ixia::interface_config \
+		     -mode config \
+		     -port_handle $port_1 \
+		     -intf_ip_addr 1.1.1.1 \
+		     -gateway 1.1.1.2 \
+		     -netmask 255.255.255.0 \
+		     -src_mac_addr 00:01:01:01:00:01 \
+		    ]
+set port1Interface [keylget port1Status interface_handle]
+
+set port2Status [::ixia::interface_config \
+		     -mode config \
+		     -port_handle $port_2 \
+		     -intf_ip_addr 1.1.1.2 \
+		     -gateway 1.1.1.1 \
+		     -netmask 255.255.255.0 \
+		     -src_mac_addr 00:01:01:02:00:02 \
+		    ]
+set port2Interface [keylget port2Status interface_handle]
+
+# port1Interface = ::ixNet::OBJ-/vport:1/interface:1
+# port2Interface = ::ixNet::OBJ-/vport:2/interface:1
+
+after 3000
+
+set port1ArpStatus [::ixia::interface_config -port_handle $port_1 -arp_send_req 1 -arp_req_retries 3]
+set port2ArpStatus [::ixia::interface_config -port_handle $port_2 -arp_send_req 1 -arp_req_retries 3]
 
 ConfigQuickFlowGroup $port_1 trafficItem1
 ConfigQuickFlowGroup $port_2 trafficItem2
@@ -416,5 +461,5 @@ RegenerateAllTrafficItems
 StartTrafficNgpfHlt
 
 after 15000
-set stats [GetStats "Port Statistics"]
+set stats [GetStats "Flow Statistics"]
 puts [KeylPrint stats]

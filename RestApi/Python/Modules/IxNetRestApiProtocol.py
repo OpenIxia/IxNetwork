@@ -66,11 +66,13 @@ class Protocol(object):
 
             topologyName: <str>: Give a name to the Topology Group.
 
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology
+
         Return
-            /api/v1/sessions/<id>/topology/<id>
+            /api/v1/sessions/{id}/topology/{id}
         """
         url = self.ixnObj.sessionUrl+'/topology'
-        self.ixnObj.logInfo('createTopology: Getting vport list: %s' % portList)
         vportList = self.portMgmtObj.getVports(portList)
         if len(vportList) != len(portList):
             raise IxNetRestApiException('createTopologyNgpf: There is not enough vports created to match the number of ports.')
@@ -79,6 +81,7 @@ class Protocol(object):
         if topologyName != None:
             topologyData['name'] = topologyName
 
+        self.ixnObj.logInfo('\nCreate new Topology Group')
         response = self.ixnObj.post(url, data=topologyData)
         topologyObj = response.json()['links'][0]['href']
         return topologyObj
@@ -93,16 +96,20 @@ class Protocol(object):
             multiplier: <int>: The amount of host to create (In integer).
             deviceGroupName: <str>: Optional: Device Group name.
 
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup
+
         Returns:
-            /api/v1/sessions/1/ixnetwork/topology/{id}/deviceGroup/{id}
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}
         """
         url = self.ixnObj.httpHeader+topologyObj+'/deviceGroup'
         deviceGroupData = {'multiplier': int(multiplier)}
         if deviceGroupName != None:
             deviceGroupData['name'] = deviceGroupName
+
+        self.ixnObj.logInfo('\nCreate new Device Group')
         response = self.ixnObj.post(url, data=deviceGroupData)
         deviceGroupObj = response.json()['links'][0]['href']
-        self.ixnObj.logInfo('createDeviceGroup: %s' % deviceGroupObj)
         return deviceGroupObj
 
     def createLacpNgpf(self, ethernetObj, **kwargs):
@@ -120,11 +127,19 @@ class Protocol(object):
             actorKey: <int>: Default=1
             actorPortNumber: <int>: Default=1
             actorPortPriority: <int>: Default=1
+
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/lacp
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/lacp/{id}
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/lacp/{id}
         """
         response = self.ixnObj.post(self.ixnObj.httpHeader+ethernetObj+'/lacp')
         lacpObj = response.json()['links'][0]['href']
         self.configuredProtocols.append(lacpObj)
         
+        self.ixnObj.logInfo('\nCreate new LACP NGPF')
         lacpResponse = self.ixnObj.get(self.ixnObj.httpHeader+lacpObj)
 
         lacpAttributes = ['administrativeKey', 'actorSystemId', 'actorSystemPriority', 'actorKey', 'actorPortNumber', 'actorPortPriority']
@@ -135,6 +150,7 @@ class Protocol(object):
                 self.ixnObj.logInfo('\nConfiguring LACP attribute: %s' % lacpAttribute)
                 self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[lacpAttribute]})
 
+        return lacpObj
 
     def createEthernetNgpf(self, obj, **kwargs):
         """
@@ -160,6 +176,10 @@ class Protocol(object):
             vlanPriority: <dict>:  Example: {'start': 2, 'direction': 'increment', 'step': 1}
             mtu: <dict>: Example: {'start': 1300, 'direction': 'increment', 'step': 1})
 
+         Syntax
+             POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet
+             PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}
+
          Example:
              createEthernetNgpf(deviceGroupObj1,
                                 ethernetName='Eth1',
@@ -177,6 +197,7 @@ class Protocol(object):
         # To create a new Ethernet object
         if 'ethernet' not in obj:
             url = self.ixnObj.httpHeader+obj + '/ethernet'
+            self.ixnObj.logInfo('\nCreate new Ethernet on NGPF')
             response = self.ixnObj.post(url)
             ethernetObj = response.json()['links'][0]['href']
 
@@ -194,13 +215,16 @@ class Protocol(object):
                 name = kwargs['ethernetName']
             if 'name' in kwargs:
                 name = kwargs['name']
+                self.ixnObj.logInfo('\nConfigure MAC address name')
             self.ixnObj.patch(self.ixnObj.httpHeader+ethernetObj, data={'name': name})
 
         if 'macAddress' in kwargs:
             multivalue = ethObjResponse.json()['mac']
+            self.ixnObj.logInfo('\nConfigure MAC address. Attribute for multivalueId = jsonResponse["mac"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['macAddress'])
 
-            # Config Mac Address Port Step        
+            # Config Mac Address Port Step
+            self.ixnObj.logInfo('\nConfigure MAC address port step')
             portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
             if 'macAddressPortStep' in kwargs:
                 if kwargs['macAddressPortStep'] != 'disabled':
@@ -212,7 +236,7 @@ class Protocol(object):
             # Enable VLAN
             if createNewEthernetObj == True:
                 multivalue = ethObjResponse.json()['enableVlans']
-                #self.ixnObj.patch(self.ixnObj.httpHeader + multivalue+'/singleValue', data={'value': True})
+                self.ixnObj.logInfo('\nEnabling VLAN ID.  Attribute for multivalueId = jsonResponse["enablevlans"]')
                 self.configMultivalue(multivalue, 'singleValue', data={'value': True})
                 
             # CREATE vlan object (Creating vlanID always /vlan/1 and then do a get for 'vlanId')
@@ -221,16 +245,18 @@ class Protocol(object):
             multivalue = vlanIdResponse.json()['vlanId']
 
             # CONFIG VLAN ID
-            #self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/counter', data=kwargs['vlanId'])
+            self.ixnObj.logInfo('\nConfigure VLAN ID. Attribute for multivalueId = jsonResponse["vlanId"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['vlanId'])
 
             # CONFIG VLAN PRIORITY
             if 'vlanPriority' in kwargs:
                 multivalue = vlanIdResponse.json()['priority']
+                self.ixnObj.logInfo('\nConfigure VLAN ID priority. Attribute for multivalue = jsonResponse["priority"]')
                 self.configMultivalue(multivalue, 'counter', data=kwargs['vlanPriority'])
 
         if 'mtu' in kwargs:
             multivalue = ethObjResponse.json()['mtu']
+            self.ixnObj.logInfo('\nConfigure MTU. Attribute for multivalueId = jsonResponse["mtu"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['mtu'])
             
         return ethernetObj
@@ -243,8 +269,16 @@ class Protocol(object):
         Parameters
             ethernetObj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
             data: The ISISL3 attributes.  You could view all the attributes from the IxNetwork API browser.
+
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/isisL3
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/isisL3/{id}
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/isisL3/{id}
         """
         url = self.ixnObj.httpHeader+ethernetObj + '/isisL3'
+        self.ixnObj.logInfo('\nCreating new ISIS in NGPF')
         response = self.ixnObj.post(url, data=data)
         isisObj = response.json()['links'][0]['href']
         return isisObj
@@ -273,7 +307,11 @@ class Protocol(object):
             prefix: <int>:  Example: 24
             rsolveGateway: <bool>
 
-         Example:
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}
+
+        Example:
              ipv4Obj1 = createIpv4Ngpf(ethernetObj1,
                                        ipv4Address={'start': '100.1.1.1', 'direction': 'increment', 'step': '0.0.0.1'},
                                        ipv4AddressPortStep='disabled',
@@ -281,6 +319,9 @@ class Protocol(object):
                                        gatewayPortStep='disabled',
                                        prefix=24,
                                        resolveGateway=True)
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}
         """
         createNewIpv4Obj = True
 
@@ -291,6 +332,7 @@ class Protocol(object):
         else:
             # To create a new IPv4 object
             ipv4Url = self.ixnObj.httpHeader+obj+'/ipv4'
+            self.ixnObj.logInfo('\nCreating new IPv4 in NGPF')
             response = self.ixnObj.post(ipv4Url)
             ipv4Obj = response.json()['links'][0]['href']
 
@@ -302,12 +344,14 @@ class Protocol(object):
         # Config IPv4 address
         if 'ipv4Address' in kwargs:
             multivalue = ipv4Response.json()['address']
+            self.ixnObj.logInfo('\nConfiguring IPv4 address. Attribute for multivalueId = jsonResponse["address"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['ipv4Address'])
 
         # Config IPv4 port step
         # disabled|0.0.0.1
         if 'ipv4AddressPortStep' in kwargs:
             portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
+            self.ixnObj.logInfo('\nConfigure IPv4 address port step')
             if kwargs['ipv4AddressPortStep'] != 'disabled':
                 self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['ipv4AddressPortStep']})
             if kwargs['ipv4AddressPortStep'] == 'disabled':
@@ -316,11 +360,13 @@ class Protocol(object):
         # Config Gateway
         if 'gateway' in kwargs:
             multivalue = ipv4Response.json()['gatewayIp']
+            self.ixnObj.logInfo('\nConfigure IPv4 gateway. Attribute for multivalueId = jsonResponse["gatewayIp"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['gateway'])
 
         # Config Gateway port step
         if 'gatewayPortStep' in kwargs:
             portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
+            self.ixnObj.logInfo('\nConfigure IPv4 gateway port step')
             if kwargs['gatewayPortStep'] != 'disabled':
                 self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['gatewayPortStep']})
             if kwargs['gatewayPortStep'] == 'disabled':
@@ -329,10 +375,12 @@ class Protocol(object):
         # Config resolve gateway
         if 'resolveGateway' in kwargs:
             multivalue = ipv4Response.json()['resolveGateway']
+            self.ixnObj.logInfo('\nConfigure IPv4 gateway to resolve gateway. Attribute for multivalueId = jsonResponse["resolveGateway"]')
             self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['resolveGateway']})
 
         if 'prefix' in kwargs:
             multivalue = ipv4Response.json()['prefix']
+            self.ixnObj.logInfo('\nConfigure IPv4 prefix. Attribute for multivalueId = jsonResponse["prefix"]')
             self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['prefix']})
 
         if createNewIpv4Obj == True:
@@ -358,7 +406,11 @@ class Protocol(object):
             dhcp4GatewayMac: <str>: Gateway mac address in the format of 00:00:00:00:00:00
             useRapdCommit: <bool>: Default=False
             renewTimer: <int>: Default=0
-        
+    
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/dhcpv4client
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/dhcpv4client/{id}
+
         Example:
             dhcpClientObj = protocolObj.configV4DhcpClient(ethernetObj1,
                                                            dhcp4Broadcast=True,
@@ -368,10 +420,14 @@ class Protocol(object):
                                                            dhcp4GatewayMac='00:00:00:00:00:00',
                                                            useRapdCommit=False,
                                                            renewTimer=0)
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/dhcpv4client/{id}
         """
         # To create new DHCP object
         if 'dhcp' not in obj:
             dhcpUrl = self.ixnObj.httpHeader+obj+'/dhcpv4client'
+            self.ixnObj.logInfo('\nCreate new DHCP client V4')
             response = self.ixnObj.post(dhcpUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4client/1
             dhcpObj = response.json()['links'][0]['href']
@@ -422,6 +478,10 @@ class Protocol(object):
             ipPrefix: <int>: The DHCP server IP address prefix. Ex: 16.
             poolSize: <int>: The DHCP server pool size.
 
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/dhcpv4server
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/dhcpv4server/{id}
+
         Example:
             protocolObj.configV4DhcpServer('/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1',
                                            name='DHCP-Server-1',
@@ -437,10 +497,14 @@ class Protocol(object):
                                            ipGateway='1.1.1.11',
                                            ipPrefix=24,
                                            poolSize=10)
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/dhcpv4server/{id}
         """
         # To create new DHCP serverobject
         if 'dhcp' not in obj:
             dhcpUrl = self.ixnObj.httpHeader+obj+'/dhcpv4server'
+            self.ixnObj.logInfo('\nCreate new DHCP server v4')
             response = self.ixnObj.post(dhcpUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4server/1
             dhcpObj = response.json()['links'][0]['href']
@@ -461,7 +525,6 @@ class Protocol(object):
             if dhcpAttribute in kwargs:
                 multiValue = dhcpObjResponse.json()[dhcpAttribute]
                 self.ixnObj.logInfo('\nConfiguring DHCP Server attribute: %s' % dhcpAttribute)
-                print('---- type:', type(dhcpAttribute))
                 self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[dhcpAttribute]})
 
         if 'multiplier' in kwargs:
@@ -492,6 +555,10 @@ class Protocol(object):
             OSPF object handle example:
             obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1
 
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/ospfv2
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/ospfv2/{id}
+
         Example:
             ospfObj1 = configOspf(ipv4Obj,
                           name = 'ospf_1',
@@ -501,10 +568,14 @@ class Protocol(object):
                           areaIdIp = '0.0.0.0',
                           networkType = 'pointtomultipoint',
                           deadInterval = '40')
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/ospfv2/{id}
         """
         # To create new OSPF object
         if 'ospf' not in obj:
             ospfUrl = self.ixnObj.httpHeader+obj+'/ospfv2'
+            self.ixnObj.logInfo('\nCreate new OSPFv2 in NGPF')
             response = self.ixnObj.post(ospfUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/ospfv2/1
             ospfObj = response.json()['links'][0]['href']
@@ -543,6 +614,10 @@ class Protocol(object):
 
             kwargs: BGP configuration attributes. The attributes could be obtained from the IxNetwork API browser.
 
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/bgpIpv4Peer
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/bgpIpv4Peer/{id}
+
         Example:
             configBgp(ipv4Obj,
                   name = 'bgp_1',
@@ -557,11 +632,15 @@ class Protocol(object):
                   staleTime = 0,
                   flap = ['false', 'false', 'false', 'false']
 
-        # flap = true or false.  Provide a list of total true or false according to the total amount of host IP interfaces.
+            # flap = true or false.  Provide a list of total true or false according to the total amount of host IP interfaces.
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/bgpIpv4Peer/{id}
         """
         # To create a new BGP stack using IPv4 object.
         if 'bgp' not in obj:
             bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv4Peer'
+            self.ixnObj.logInfo('\nCreate new BGP in NGPF')
             response = self.ixnObj.post(bgpUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
             bgpObj = response.json()['links'][0]['href']
@@ -577,21 +656,23 @@ class Protocol(object):
 
         if 'enableBgp' in kwargs and kwargs['enableBgp'] == True:
             multiValue = bgpObjResponse.json()['enableBgpId']
+            self.ixnObj.logInfo('\nEnabling BGP protocol. Attribut for multivalue = enableBgpId')
             self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': True})
 
         if 'dutIp' in kwargs:
             multiValue = bgpObjResponse.json()['dutIp']
-
+            self.ixnObj.logInfo('\nConfigure BGP DUT IP. Attribut for multivalue = dutIp')
             self.configMultivalue(multiValue, 'counter', data=kwargs['dutIp'])
 
         # All of these BGP attributes configures multivalue singleValue. So just loop them to do the same thing.
-        bgpAttributes = ['localAs2Bytes', 'enableGracefulRestart', 'restartTime', 'type',
-                         'staleTime', 'flap', 'holdTimer', 'enableBgpIdSameasRouterId']
+        # Note: Don't include flap.  Call flapBgp instead because the uptime and downtime needs to be configured.
+        bgpAttributes = ['localAs2Bytes', 'localAs4Bytes', 'enable4ByteAs', 'enableGracefulRestart', 'restartTime', 'type',
+                         'staleTime', 'holdTimer', 'enableBgpIdSameasRouterId']
 
         for bgpAttribute in bgpAttributes:
             if bgpAttribute in kwargs:
                 multiValue = bgpObjResponse.json()[bgpAttribute]
-                self.ixnObj.logInfo('\nConfiguring BGP attribute: %s' % bgpAttribute)
+                self.ixnObj.logInfo('\nConfiguring BGP multivalue attribute: %s' % bgpAttribute)
                 self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[bgpAttribute]})
             
         self.configuredProtocols.append(bgpObj)
@@ -608,11 +689,19 @@ class Protocol(object):
             ipObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
             igmpObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmp/1
 
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/igmp
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/igmp/{id}
+        
         Example:
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/igmp/{id}
         """
         # To create new IGMP object
         if 'igmp' not in obj:
             igmpUrl = self.ixnObj.httpHeader+obj+'/igmp'
+            self.ixnObj.logInfo('\nCreate new IGMP V4 host')
             response = self.ixnObj.post(igmpUrl)
             # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmp/1
             igmpObj = response.json()['links'][0]['href']
@@ -632,7 +721,7 @@ class Protocol(object):
         for igmpAttribute in igmpAttributes:
             if igmpAttribute in kwargs:
                 multiValue = igmpObjResponse.json()[igmpAttribute]
-                self.ixnObj.logInfo('\nConfiguring IGMP attribute: %s' % igmpAttribute)
+                self.ixnObj.logInfo('\nConfiguring IGMP host attribute: %s' % igmpAttribute)
                 self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[igmpAttribute]})
 
         self.configuredProtocols.append(igmpObj)
@@ -647,6 +736,10 @@ class Protocol(object):
             ethernetObj: <str>: The Ethernet object handle.
                          Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
 
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/mpls
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/mpls/{id}
+
         Example:
             mplsObj1 = protocolObj.configMpls(ethernetObj1,
                                       name = 'mpls-1',
@@ -655,10 +748,14 @@ class Protocol(object):
                                       ttl = {'start': 16, 'direction': 'increment', 'step': 1},
                                       rxLabelValue = {'start': 288, 'direction': 'increment', 'step': 1},
                                       txLabelValue = {'start': 888, 'direction': 'increment', 'step': 1})
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/mpls/{id}
         """
         # To create a new MPLS
         if 'mpls' not in ethernetObj:
             mplsUrl = self.ixnObj.httpHeader+ethernetObj+'/mpls'
+            self.ixnObj.logInfo('\nCreate new MPLS protocol in NGPF')
             response = self.ixnObj.post(mplsUrl)
             mplsObj = response.json()['links'][0]['href']
 
@@ -666,6 +763,7 @@ class Protocol(object):
         if 'mpls' in ethernetObj:
             mplsObj = ethernetObj
 
+        self.ixnObj.logInfo('\nGET ATTRIBUTE MULTIVALUE IDs')
         mplsResponse = self.ixnObj.get(self.ixnObj.httpHeader+mplsObj)
 
         if 'name' in kwargs:
@@ -687,11 +785,16 @@ class Protocol(object):
         """
         Description
             Create or modify a VXLAN.  If creating a new VXLAN header, provide an IPv4 object handle.
+            If creating a new VxLAN object, provide an IPv4 object handle.
             If modifying a VXLAN header, provide the VXLAN object handle.
-
+            
         Parameters
                obj: <str>: IPv4 Obj example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
-                           VxLAN Obj example:/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/vxlan/1
+                           VxLAN Obj example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/vxlan/1
+
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/vxlan
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/vxlan/{id}
 
         Example:
             createVxlanNgpf(ipv4Object='/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
@@ -699,13 +802,17 @@ class Protocol(object):
                             vtepVni={'start':2008, 'step':2, 'direction':'increment'},
                             vtepIpv4Multicast={'start':'225.8.0.1', 'step':'0.0.0.1', 'direction':'increment'})
 
-         start = The starting value
-         step  = 0 means don't increment or decrement.
-                 For IP step = 0.0.0.1.  Increment on the last octet.
-                               0.0.1.0.  Increment on the third octet.
-         direction = increment or decrement the starting value.
+            start = The starting value
+            step  = 0 means don't increment or decrement.
+                    For IP step = 0.0.0.1.  Increment on the last octet.
+                                  0.0.1.0.  Increment on the third octet.
+            direction = increment or decrement the starting value.
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/vxlan/{id}
         """
         if 'vxlan' not in obj:
+            self.ixnObj.logInfo('\nCreate new VxLAN in NGPF')
             response = self.ixnObj.post(self.ixnObj.httpHeader+obj+'/vxlan')
             vxlanId = response.json()['links'][0]['href']
             self.ixnObj.logInfo('\ncreateVxlanNgpf: %s' % vxlanId)
@@ -717,8 +824,6 @@ class Protocol(object):
         vxlanResponse = self.ixnObj.get(self.ixnObj.httpHeader+vxlanId)
 
         for key,value in kwargs.items():
-            self.ixnObj.logInfo('key:%s = %s' % (key,value))
-
             if key == 'vtepName':
                 self.ixnObj.patch(self.ixnObj.httpHeader+vxlanId, data={'name': value})
 
@@ -729,6 +834,7 @@ class Protocol(object):
                 self.configMultivalue(multivalue, 'counter', data=data)
 
             if key == 'vtepIpv4Multicast':
+                self.ixnObj.logInfo('\nConfiguring VxLAN IPv4 multicast')
                 multivalue = vxlanResponse.json()['ipv4_multicast']
                 data={'start':kwargs['vtepIpv4Multicast']['start'], 'step':kwargs['vtepIpv4Multicast']['step'], 
                       'direction':kwargs['vtepIpv4Multicast']['direction']}
@@ -745,7 +851,14 @@ class Protocol(object):
 
         Parameter
             ipv4Obj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/rsvpteLsps
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/rsvrteLsps/{id}
         """
+        self.ixnObj.logInfo('\nCreating new RSVP TE LSPS')
         response = self.ixnObj.post(self.ixnObj.httpHeader+ipv4Obj+'/rsvpteLsps')
         return response.json()['links'][0]['href']
         
@@ -757,6 +870,9 @@ class Protocol(object):
 
         Parameter
             rsvrTunnelObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/rsvpteLsps/12
+
+        Syntax
+            DELETE: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/rsvpteLsps/{id}
         """
         self.ixnObj.delete(self.ixnObj.httpHeader+rsvpTunnelObj)
 
@@ -768,6 +884,10 @@ class Protocol(object):
         Parameters
             deviceGroupObj: <str>: Optional: Device Group obj. For creating a new Network Group.
                             /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools
 
         Example:
                Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
@@ -783,19 +903,21 @@ class Protocol(object):
                                   multiplier = 500,
                                   networkAddress = {'start': '200.1.0.0', 'step': '0.0.0.1', 'direction': 'increment'},
                                   prefixLength = 32)
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}
         """
         if 'create' not in kwargs and 'modify' not in kwargs:
             raise IxNetRestApiException('configNetworkGroup requires either a create or modify parameter.')
 
         if 'create' in kwargs:
             deviceGroupObj = kwargs['create']
+            self.ixnObj.logInfo('\nCreating new Network Group')
             response = self.ixnObj.post(self.ixnObj.httpHeader+deviceGroupObj+'/networkGroup')
             networkGroupObj = response.json()['links'][0]['href']
 
         if 'modify' in kwargs:
             networkGroupObj = kwargs['modify']
-
-        self.ixnObj.logInfo('\nconfigNetworkGroup: %s' % networkGroupObj)
 
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+networkGroupObj, data={'name': kwargs['name']})
@@ -804,6 +926,7 @@ class Protocol(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+networkGroupObj, data={'multiplier': kwargs['multiplier']})
 
         if 'create' in kwargs:
+            self.ixnObj.logInfo('\nCreate new Network Group IPv4 Prefix Pools')
             response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools')
             ipv4PrefixObj = self.ixnObj.httpHeader + response.json()['links'][0]['href']
         else:
@@ -811,14 +934,15 @@ class Protocol(object):
 
         # prefixPoolId = /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/3/ipv4PrefixPools/1
         response = self.ixnObj.get(ipv4PrefixObj)
-
+        self.ixnObj.logInfo('\nConfig Network Group advertising routes')
         multivalue = response.json()['networkAddress']
         data={'start': kwargs['networkAddress']['start'],
-                        'step': kwargs['networkAddress']['step'],
-                        'direction': kwargs['networkAddress']['direction']}
+              'step': kwargs['networkAddress']['step'],
+              'direction': kwargs['networkAddress']['direction']}
         self.ixnObj.configMultivalue(multivalue, 'counter', data)
 
         if 'prefixLength' in kwargs:
+            self.ixnObj.logInfo('\nConfig Network Group prefix pool length')
             response = self.ixnObj.get(ipv4PrefixObj)
             multivalue = response.json()['prefixLength']
             data={'value': kwargs['prefixLength']}
@@ -837,6 +961,11 @@ class Protocol(object):
            data: <dict>: singleValue: data={'value': '1.1.1.1'})
                              valueList:   data needs to be in a [list]:  data={'values': [list]}
                              counter:     data={'start': value, 'direction': increment|decrement, 'step': value}
+
+        Syntax
+            PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/singleValue
+            PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/counter
+            PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/valueList
         """
         if multivalueType == 'counter':
             # Examples: macAddress = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
@@ -860,8 +989,14 @@ class Protocol(object):
            multivalueObj: <str>: The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
            silentMode: <bool>: True=Display the GET and status code. False=Don't display.
         
+        Syntax
+            /api/v1/sessions/{id}/ixnetwork/multivalue/{id}?includes=count
+
         Requirements
            self.ixnObj.waitForComplete()
+
+        Returns
+           The multivalue values
         """
         response = self.ixnObj.get(self.ixnObj.httpHeader+multivalueObj+'?includes=count', silentMode=silentMode)
         count = response.json()['count']

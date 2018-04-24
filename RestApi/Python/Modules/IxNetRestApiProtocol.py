@@ -232,7 +232,7 @@ class Protocol(object):
                 if kwargs['macAddressPortStep'] == 'disabled':
                     self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
 
-        if 'vlanId' in kwargs:
+        if 'vlanId' in kwargs and kwargs['vlanId'] != None:
             # Enable VLAN
             if createNewEthernetObj == True:
                 multivalue = ethObjResponse.json()['enableVlans']
@@ -248,13 +248,13 @@ class Protocol(object):
             self.ixnObj.logInfo('\nConfigure VLAN ID. Attribute for multivalueId = jsonResponse["vlanId"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['vlanId'])
 
-            # CONFIG VLAN PRIORITY
-            if 'vlanPriority' in kwargs:
-                multivalue = vlanIdResponse.json()['priority']
-                self.ixnObj.logInfo('\nConfigure VLAN ID priority. Attribute for multivalue = jsonResponse["priority"]')
-                self.configMultivalue(multivalue, 'counter', data=kwargs['vlanPriority'])
+        # CONFIG VLAN PRIORITY
+        if 'vlanPriority' in kwargs and kwargs['vlanPriority'] != None:
+            multivalue = vlanIdResponse.json()['priority']
+            self.ixnObj.logInfo('\nConfigure VLAN ID priority. Attribute for multivalue = jsonResponse["priority"]')
+            self.configMultivalue(multivalue, 'counter', data=kwargs['vlanPriority'])
 
-        if 'mtu' in kwargs:
+        if 'mtu' in kwargs and kwargs['mtu'] != None:
             multivalue = ethObjResponse.json()['mtu']
             self.ixnObj.logInfo('\nConfigure MTU. Attribute for multivalueId = jsonResponse["mtu"]')
             self.configMultivalue(multivalue, 'counter', data=kwargs['mtu'])

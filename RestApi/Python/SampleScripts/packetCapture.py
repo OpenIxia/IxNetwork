@@ -5,11 +5,11 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - Python 3.6
+#    - Python2.7 - Python 3+
 #    - Python module: requests
 #
 # DESCRIPTION
-#     Capturing packets. Make sure traffic is running in continuous mode.
+#     Capturing packets. Make sure traffic is configured for continuous mode.
 #     Enable data plane and/or control plane capturing.
 #     Saved the .cap files (dataPlane and/or controlPlane) to local filesystem.
 #     Save packet capturing in wireshark style with header details.
@@ -34,40 +34,44 @@ connectToApiServer = 'windows'
 
 try:
     #---------- Preference Settings --------------
-    forceTakePortOwnership = True
-    releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    # Optional: Mainly for connecting to Linux API server.
-    licenseServerIp = '192.168.70.3'
-    licenseModel = 'subscription'
-    licenseTier = 'tier3'
-
+    apiServerIp = '192.168.70.3'
+    apiServerIpPort = 11009
     ixChassisIp = '192.168.70.11'
-    # [chassisIp, cardNumber, slotNumber]
-    portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+    packetCapturePort = [ixChassisIp, '2', '1']
 
     if connectToApiServer in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
-                          serverIpPort='11009',
-                          serverOs=connectToApiServer,
-                          deleteSessionAfterTest=deleteSessionAfterTest)
+        mainObj = Connect(apiServerIp=apiServerIp,
+                          serverIpPort=apiServerIpPort,
+                          serverOs=connectToApiServer
+        )
         
     #---------- Preference Settings End --------------
 
-    # NOTE: Make sure traffic is running continuously
-
+    trafficObj = Traffic(mainObj)
     pktCaptureObj = PacketCapture(mainObj)
-    pktCaptureObj.packetCaptureConfigPortMode([ixChassisIp, '2', '1'], enableDataPlane=True, enableControlPlane=False)
+
+    # Stop the traffic if it is running in order to configure the packet capture modes.
+    if trafficObj.checkTrafficState(expectedState=['stopped'], timeout=1, ignoreException=True) == 1:
+        trafficObj.stopTraffic()
+
+    # portRxMode: Options: capture|captureAndMeasure
+    pktCaptureObj.packetCaptureConfigPortMode(port=packetCapturePort,
+                                              portRxMode='captureAndMeasure',
+                                              enableDataPlane=True, enableControlPlane=False)
+
     pktCaptureObj.packetCaptureClearTabs()
+    trafficObj.startTraffic(applyTraffic=True)
+    trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
+
     pktCaptureObj.packetCaptureStart()
     time.sleep(10)
     pktCaptureObj.packetCaptureStop()
 
     # If there is no folder called c:\\Results, it will be created.  c:\\Results is an example. Give any name you like.
-    pktCaptureObj.getCapFile(port=[ixChassisIp, '2', '1'], typeOfCapture='data', saveToTempLocation='c:\\Results',
+    # typeOfCapture: Options: data|control
+    pktCaptureObj.getCapFile(port=packetCapturePort, typeOfCapture='data', saveToTempLocation='c:\\Results',
                              localLinuxLocation='.', appendToSavedCapturedFile=None)
 
     # Optional: Wireshark style details
@@ -80,9 +84,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
-    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
-        if releasePortsWhenDone and forceTakePortOwnership:
-            portObj.releasePorts(portList)
-        if connectToApiServer == 'windowsConnectionMgr':
-            if deleteSessionAfterTest:
-                mainObj.deleteSession()

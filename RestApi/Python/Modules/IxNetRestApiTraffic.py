@@ -1126,7 +1126,20 @@ class Traffic(object):
         """
         self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic', data={'enableMinFrameSize': enable})
 
-
+    def suspendTrafficItem(self, trafficItemObj, suspend=True):
+        """
+        Description
+           Suspend the Traffic Item from sending traffic.
+        
+        Parameter
+           trafficItemObj: <str>: The Traffic Item object.
+           suspend: <bool>: True=suspend traffic.
+        
+        Syntax
+           PATCH: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}
+           DATA:  {'suspend': True}
+        """
+        self.ixnObj.patch(self.ixnObj.httpHeader+trafficItemObj, data={'suspend': suspend})
 
 
 

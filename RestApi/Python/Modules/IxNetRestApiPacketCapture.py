@@ -50,7 +50,7 @@ class PacketCapture(object):
         self.ixnObj = mainObject
         self.portMgmtObj.setMainObject(mainObject)
 
-    def packetCaptureConfigPortMode(self, port, enableControlPlane=True, enableDataPlane=True):
+    def packetCaptureConfigPortMode(self, port, portRxMode='capture', enableControlPlane=True, enableDataPlane=True):
         """
         Description
            Enable|Disable port capturing for control plane and data plane.
@@ -60,9 +60,10 @@ class PacketCapture(object):
               -hardwareEnabled == Data Plane
 
         Parameters
-            port: [ixChassisIp, 1, 3] => [ixChasssisIp, str(cardNumber), str(portNumber)]
-            enableControlPlane: True|False
-            enableDataPlane: True|False
+            port: <list>:  [ixChassisIp, '1', '3'] => [ixChasssisIp, str(cardNumber), str(portNumber)]
+            portRxMode: <str>: capture|captureAndMeasure
+            enableControlPlane: <bool>
+            enableDataPlane: <bool>
         """
         if enableControlPlane == True:
             self.enableControlPlane = True
@@ -71,8 +72,7 @@ class PacketCapture(object):
 
         self.captureRxPort = port
         vport = self.portMgmtObj.getVports([port])[0]
-        self.ixnObj.patch(self.ixnObj.httpHeader+vport, data={'rxMode': 'capture'})
-        #self.ixnObj.patch(self.ixnObj.httpHeader+vport, data={'rxMode': 'captureAndMeasure'})
+        self.ixnObj.patch(self.ixnObj.httpHeader+vport, data={'rxMode': portRxMode})
         self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/capture', data={'softwareEnabled': enableControlPlane,
                                                                          'hardwareEnabled': enableDataPlane})
 
@@ -211,5 +211,11 @@ class PacketCapture(object):
             capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_HW.cap'
 
         fileMgmtObj = FileMgmt(self.ixnObj)
-        fileMgmtObj.copyFileWindowsToLocalLinux(windowsPathAndFileName=capFileToGet, localPath=localLinuxLocation,
-                                                renameDestinationFile=None)
+
+        if self.ixnObj.serverOs == 'windows':
+            print('\nRetreiving CAP file:', capFileToGet)
+            fileMgmtObj.copyFileWindowsToLocalLinux(windowsPathAndFileName=capFileToGet, localPath=localLinuxLocation,
+                                                    renameDestinationFile=None)
+        if self.ixnObj.serverOs == 'linux':
+            fileMgmtObj.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=capFileToGet, localPath=localLinuxLocation,
+                                                  renameDestinationFile=None)

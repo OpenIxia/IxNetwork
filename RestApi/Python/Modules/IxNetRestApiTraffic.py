@@ -217,6 +217,7 @@ class Traffic(object):
                     endpointSrcDst['name'] = endPoint['name']
                 endpointSrcDst['sources'] = endPoint['sources']
                 endpointSrcDst['destinations'] = endPoint['destinations']
+                self.ixnObj.logInfo('\nConfig Traffic Item Endpoints')        
                 response = self.ixnObj.post(self.ixnObj.httpHeader+trafficItemObj+'/endpointSet', data=endpointSrcDst)
 
                 if 'highLevelStreamElements' in endPoint:
@@ -285,6 +286,7 @@ class Traffic(object):
         # Cannot configure tracking until endpoints are created. This is why
         # tracking config is at the end here.
         if mode in ['create', 'modify'] and 'trackBy' in locals():
+            self.ixnObj.logInfo('\nConfig Traffic Item statistic trackings')
             self.ixnObj.patch(self.ixnObj.httpHeader+trafficItemObj+'/tracking', data={'trackBy': trackBy})
 
         # API server needs some time to complete processing the highlevel stream configuration before entering regenerate.
@@ -805,7 +807,7 @@ class Traffic(object):
     def disablePacketLossDuration(self):
         self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic/statistics/packetLossDuration', data={'enabled': 'false'})
 
-    def checkTrafficState(self, expectedState=['stopped'], timeout=45):
+    def checkTrafficState(self, expectedState=['stopped'], timeout=45, ignoreException=False):
         """
         Description
             Check the traffic state for the expected state.
@@ -816,22 +818,25 @@ class Traffic(object):
             stoppedWaitingForStats, txStopWatchExpected, locked, unapplied
 
         Parameters
-            expectedState = Input a list of expected traffic state.
+            expectedState: <str>:  Input a list of expected traffic state.
                             Example: ['started', startedWaitingForStats'] <-- This will wait until stats has arrived.
 
-            timeout = The amount of seconds you want to wait for the expected traffic state.
+            timeout: <int>: The amount of seconds you want to wait for the expected traffic state.
                       Defaults to 45 seconds.
                       In a situation where you have more than 10 pages of stats, you will
                       need to increase the timeout time.
+
+            ignoreException: <bool>: If True, return 1 as failed, but don't raise an Exception.
+                            
         """
         if type(expectedState) != list:
             expectedState.split(' ')
 
-        self.ixnObj.logInfo('\nExpecting traffic state: {0}\n'.format(expectedState))
+        self.ixnObj.logInfo('\ncheckTrafficState: Expecting state: {0}\n'.format(expectedState))
         for counter in range(1,timeout+1):
-            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic', silentMode=True)
+            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic')
             currentTrafficState = response.json()['state']
-            self.ixnObj.logInfo('checkTrafficState: {trafficState}: Waited {counter}/{timeout} seconds'.format(
+            self.ixnObj.logInfo('\ncheckTrafficState: {trafficState}: Waited {counter}/{timeout} seconds'.format(
                 trafficState=currentTrafficState,
                 counter=counter,
                 timeout=timeout))
@@ -842,8 +847,11 @@ class Traffic(object):
                 time.sleep(8)
                 self.ixnObj.logInfo('\ncheckTrafficState: Done\n')
                 return 0
-
-        raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s):', expectedState)
+        
+        if ignoreException == False:
+            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s):', expectedState)
+        else:
+            return 1
 
     def getRawTrafficItemSrcIp(self, trafficItemName):
         """

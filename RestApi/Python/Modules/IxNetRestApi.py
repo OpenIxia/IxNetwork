@@ -121,6 +121,7 @@ class Connect:
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
         self.apiServerPlatform = serverOs ;# windows|linux|windowsConnectionMgr
+        self.serverOs = serverOs ;# windows|linux
         self.jsonHeader = {"content-type": "application/json"}
         self.httpInsecure = httpInsecure
         self.apiKey = None
@@ -132,17 +133,12 @@ class Connect:
 
         if generateRestLogFile:
             if generateRestLogFile == True:
-                # Default the log filename if user did not provide one.
+                # Default the log file name
                 self.restLogFile = 'restApiLog.txt'
-            else:
-                if '/' in generateRestLogFile and len(generateRestLogFile.split('/')) > 1:
-                    path = generateRestLogFile.split('/')[:-1]
-                    path = list(filter(None, path))
-                    path = '/' + '/'.join(path)
-                    if os.path.exists(path) == False:
-                        raise IxNetRestApiException('\nError: No such path for generateRestLogFile: %s' % path)
 
+            if type(generateRestLogFile) != bool:
                 self.restLogFile = generateRestLogFile
+
             # Instantiate a new log file here.
             with open(self.restLogFile, 'w') as restLogFile:
                 restLogFile.write('')
@@ -348,7 +344,7 @@ class Connect:
            Connect to a Windows IxNetwork API Server to create a session URL. This is 
            for both Windows and Windows server with IxNetwork Connection Manager.
            This will set up the session URL to use throughout the test.
-        
+
         Parameter
           ixNetRestServerIp: (str): The Windows IxNetwork API Server IP address.
           ixNetRestServerPort: (str): Default: 11009.  Provide a port number to connect to.

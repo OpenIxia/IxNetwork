@@ -204,7 +204,7 @@ class Statistics(object):
         self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/clearstats')
 
     def takeSnapshot(self, viewName='Flow Statistics', windowsPath=None, localLinuxPath=None,
-                    renameDestinationFile=None, includeTimestamp=False):
+                     renameDestinationFile=None, includeTimestamp=False, mode='overwrite'):
         """
         Description
             Take a snapshot of the vieweName statistics.  This is a two step process.
@@ -218,6 +218,8 @@ class Statistics(object):
                        The stat file will remain on Windows c: drive.
             renameDestinationFile: None or a name of the file other than the viewName.
             includeTimestamp: True|False: To include a timestamp at the end of the file.
+            mode: append|overwrite: append=To append stats to an existing stat file.
+                                    overwrite=Don't append stats. Create a new stat file.
 
         Example:
             takeSnapshot(viewName='Flow Statistics', windowsPath='C:\\Results', localLinuxPath='/home/hgee',
@@ -227,12 +229,18 @@ class Statistics(object):
         #    POST /api/v1/sessions/1/ixnetwork/operations/getdefaultsnapshotsettings
         #    "Snapshot.View.Csv.Location: \"/root/.local/share/Ixia/IxNetwork/data/logs/Snapshot CSV\""
 
-        if windowsPath is None: raise IxNetRestApiException('\nMust include windowsPath\n')
+        if windowsPath is None:
+            raise IxNetRestApiException('\nMust include windowsPath\n')
+
+        if mode == 'append':
+            mode = 'kAppendCSVFile'
+        if mode == 'overwrite':
+            mode = 'kOverwriteCSVFile'
 
         data = {'arg1': [viewName], 'arg2': [
                             "Snapshot.View.Contents: \"allPages\"",
                             "Snapshot.View.Csv.Location: \"{0}\"".format(windowsPath),
-                            "Snapshot.View.Csv.GeneratingMode: \"kOverwriteCSVFile\"",
+                            "Snapshot.View.Csv.GeneratingMode: \"%s\"" % mode,
                             "Snapshot.View.Csv.StringQuotes: \"True\"",
                             "Snapshot.View.Csv.SupportsCSVSorting: \"False\"",
                             "Snapshot.View.Csv.FormatTimestamp: \"True\"",
@@ -267,7 +275,7 @@ class Statistics(object):
             "Port Summary"
             "OSPFv2-RTR Drill Down"
             "OSPFv2-RTR Per Port"
-xo            "IPv4 Drill Down"
+            "IPv4 Drill Down"
             "L2-L3 Test Summary Statistics"
             "Flow Statistics"
             "Traffic Item Statistics"

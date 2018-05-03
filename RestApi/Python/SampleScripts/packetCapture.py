@@ -30,7 +30,12 @@ from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiStatistics import Statistics
 from IxNetRestApiPacketCapture import PacketCapture
 
-connectToApiServer = 'windows'
+osPlatform = 'windows'
+
+if len(sys.argv) > 1:
+    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
+        sys.exit("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % sys.argv[1])
+    osPlatform = sys.argv[1]
 
 try:
     #---------- Preference Settings --------------
@@ -41,10 +46,10 @@ try:
     ixChassisIp = '192.168.70.11'
     packetCapturePort = [ixChassisIp, '2', '1']
 
-    if connectToApiServer in ['windows', 'windowsConnectionMgr']:
+    if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp=apiServerIp,
                           serverIpPort=apiServerIpPort,
-                          serverOs=connectToApiServer
+                          serverOs=osPlatform
         )
         
     #---------- Preference Settings End --------------

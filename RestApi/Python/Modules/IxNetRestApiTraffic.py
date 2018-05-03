@@ -261,7 +261,6 @@ class Traffic(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+endpointSetObj, data=endpointSrcDst)
 
         if isHighLevelStreamTrue == False and configElements != None:
-            # Modify config elements
             if mode == 'create' and type(configElements) != list:
                 raise IxNetRestApiException('configTrafficItem error: Provide configElements in a list')
 
@@ -313,7 +312,7 @@ class Traffic(object):
             self.ixnObj.patch(configElementObj+'/frameRate', data={'type': configElements['frameRateType']})
 
         if 'frameRate' in configElements:
-            self.ixnObj.patch(configElementObj+'/frameRate', data={'rate': int(configElements['frameRate'])})
+            self.ixnObj.patch(configElementObj+'/frameRate', data={'rate': float(configElements['frameRate'])})
 
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
@@ -331,11 +330,11 @@ class Traffic(object):
         if 'duration' in flowGroupElements:
             self.ixnObj.patch(highLevelStreamObj+'/transmissionControl', data={'duration': int(flowGroupElements['duration'])})
 
-        if 'frameRate' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/frameRate', data={'rate': int(flowGroupElements['frameRate'])})
-
         if 'frameRateType' in flowGroupElements:
             self.ixnObj.patch(highLevelStreamObj+'/frameRate', data={'type': flowGroupElements['frameRateType']})
+
+        if 'frameRate' in flowGroupElements:
+            self.ixnObj.patch(highLevelStreamObj+'/frameRate', data={'rate': float(flowGroupElements['frameRate'])})
 
         if 'frameSize' in flowGroupElements:
             self.ixnObj.patch(highLevelStreamObj+'/frameSize', data={'fixedSize': int(flowGroupElements['frameSize'])})

@@ -212,8 +212,7 @@ class PacketCapture(object):
 
         fileMgmtObj = FileMgmt(self.ixnObj)
 
-        if self.ixnObj.serverOs == 'windows':
-            print('\nRetreiving CAP file:', capFileToGet)
+        if self.ixnObj.serverOs in ['windows', 'windowsConnectionMgr']:
             fileMgmtObj.copyFileWindowsToLocalLinux(windowsPathAndFileName=capFileToGet, localPath=localLinuxLocation,
                                                     renameDestinationFile=None)
         if self.ixnObj.serverOs == 'linux':

@@ -35,6 +35,7 @@ class Connect:
         Parameters
            serverIp: (str): The API server IP address.
            serverPort: (str): The API server IP address socket port.
+           serverOs: (str): windows|windowsConnectionMgr|linux
            apiServer: (str): What are you connecting to: windows | windowsConnectionMgr | linux
            webQuickTest: (bool): True: Using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
            includeDebugTraceback: (bool):
@@ -65,7 +66,7 @@ class Connect:
 
         Notes
             Class attributes
-               self.apiServerPlatform: windows|windowsConnectionMgr|linux
+               self.serverOs: windows|windowsConnectionMgr|linux
                self.httpHeader: http://{apiServerIp}:{port}
                self.sessionId : http://{apiServerIp}:{port}/api/v1/sessions/{id}
                self.sessionUrl: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
@@ -120,8 +121,7 @@ class Connect:
         from requests.packages.urllib3.exceptions import InsecureRequestWarning
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-        self.apiServerPlatform = serverOs ;# windows|linux|windowsConnectionMgr
-        self.serverOs = serverOs ;# windows|linux
+        self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
         self.jsonHeader = {"content-type": "application/json"}
         self.httpInsecure = httpInsecure
         self.apiKey = None
@@ -362,7 +362,7 @@ class Connect:
         url = '{0}://{1}:{2}/api/v1/sessions'.format(httpVerb, ixNetRestServerIp, ixNetRestServerPort)
         serverAndPort = '{0}:{1}'.format(ixNetRestServerIp, str(ixNetRestServerPort))
 
-        if self.apiServerPlatform == 'windowsConnectionMgr':
+        if self.serverOs == 'windowsConnectionMgr':
             # For Connection Manager, requires a POST to automatically get the next session.
             # {'links': [{'href': '/api/v1/sessions/8020', 'method': 'GET', 'rel': 'self'}]}
             self.logInfo('\nPlease wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
@@ -378,7 +378,7 @@ class Connect:
             self.logInfo('\tWait for Windows session to become ready')
             time.sleep(20)
 
-        if self.apiServerPlatform == 'windows':
+        if self.serverOs == 'windows':
             # windows sessionId is always 1 because it only supports one session.
             sessionIdNumber = 1
 
@@ -741,7 +741,7 @@ class Connect:
         Syntax
            GET = https://{apiServerIp}/api/v1/sessions/{id}
         """
-        if self.apiServerPlatform == 'linux' and self.deleteSessionAfterTest==True:
+        if self.serverOs == 'linux' and self.deleteSessionAfterTest==True:
             self.linuxServerStopOperations()
             self.linuxServerDeleteSession()
 

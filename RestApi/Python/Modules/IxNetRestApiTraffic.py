@@ -83,8 +83,10 @@ class Traffic(object):
             burstPacketCount: (For bursty traffic)
 
             frameRate: The rate to transmit packets
-            frameRateType: percentLineRate or framesPerSecond
-            trackBy: put in a list:
+            frameRateType: bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate
+            trackBy: <list>: Some options: flowGroup0, vlanVlanId0, ethernetIiDestinationaddress0, ethernetIiSourceaddress0,
+                             sourcePort0, sourceDestPortPair0, ipv4DestIp0, ipv4SourceIp0, ipv4Precedence0,
+                             ethernetIiPfcQueue0, frameSize0
 
         For bursty packet count,
               transmissionType = 'custom',
@@ -259,6 +261,7 @@ class Traffic(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+endpointSetObj, data=endpointSrcDst)
 
         if isHighLevelStreamTrue == False and configElements != None:
+            # Modify config elements
             if mode == 'create' and type(configElements) != list:
                 raise IxNetRestApiException('configTrafficItem error: Provide configElements in a list')
 
@@ -306,11 +309,11 @@ class Traffic(object):
         if 'duration' in configElements:
             self.ixnObj.patch(configElementObj+'/transmissionControl', data={'duration': int(configElements['duration'])})
 
-        if 'frameRate' in configElements:
-            self.ixnObj.patch(configElementObj+'/frameRate', data={'rate': int(configElements['frameRate'])})
-
         if 'frameRateType' in configElements:
             self.ixnObj.patch(configElementObj+'/frameRate', data={'type': configElements['frameRateType']})
+
+        if 'frameRate' in configElements:
+            self.ixnObj.patch(configElementObj+'/frameRate', data={'rate': int(configElements['frameRate'])})
 
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
@@ -826,8 +829,10 @@ class Traffic(object):
                       In a situation where you have more than 10 pages of stats, you will
                       need to increase the timeout time.
 
-            ignoreException: <bool>: If True, return 1 as failed, but don't raise an Exception.
-                            
+            ignoreException: <bool>: If True, return 1 as failed, and don't raise an Exception.
+
+        Return
+            1: If failed.
         """
         if type(expectedState) != list:
             expectedState.split(' ')
@@ -836,6 +841,10 @@ class Traffic(object):
         for counter in range(1,timeout+1):
             response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic')
             currentTrafficState = response.json()['state']
+            if currentTrafficState == 'unapplied':
+                self.ixnObj.logWarning('\nCheckTrafficState: Traffic is UNAPPLIED')
+                return 1
+
             self.ixnObj.logInfo('\ncheckTrafficState: {trafficState}: Waited {counter}/{timeout} seconds'.format(
                 trafficState=currentTrafficState,
                 counter=counter,

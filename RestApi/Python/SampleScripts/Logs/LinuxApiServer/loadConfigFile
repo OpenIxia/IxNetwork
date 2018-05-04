@@ -1,0 +1,161 @@
+
+connectToLinuxApiServer: https://192.168.70.108/api/v1/auth/session
+
+POST: https://192.168.70.108/api/v1/auth/session
+DATA: {"username": "admin", "password": "admin"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+linuxServerCreateSession
+
+POST: https://192.168.70.108:443/api/v1/sessions
+DATA: {"applicationType": "ixnrest"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+
+linuxServerStartSession: https://192.168.70.108:443/api/v1/sessions/3
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/operations/start
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+CurrentStatus: Operation in progress  1/60 seconds
+CurrentStatus: Operation in progress  2/60 seconds
+CurrentStatus: Operation in progress  3/60 seconds
+CurrentStatus: Operation in progress  4/60 seconds
+CurrentStatus: Operation in progress  5/60 seconds
+CurrentStatus: Operation in progress  6/60 seconds
+CurrentStatus: Operation in progress  7/60 seconds
+CurrentStatus: Operation in progress  8/60 seconds
+CurrentStatus: Operation in progress  9/60 seconds
+CurrentStatus: Operation successfully completed  10/60 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/3
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+sessionId: https://192.168.70.108:443/api/v1/sessions/3
+
+sessionUrl: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork
+apiKey: d9f4da46f3c142f48dddfa4647887d74
+
+Connect to chassis
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/availableHardware/chassis
+DATA: {"hostname": "192.168.70.11"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+	connectIxChassis 192.168.70.11: Status: polling. Wait 1/30 seconds
+	connectIxChassis 192.168.70.11: Status: polling. Wait 2/30 seconds
+	connectIxChassis 192.168.70.11: Status: ready. Wait 3/30 seconds
+
+Verify if ports are currently owned
+
+Querying for 192.168.70.11/1/1
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/availableHardware", "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": "192.168.70.11"}]}, {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": "1"}]}, {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": "1"}]}]}]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+Port currently owned by: IxNetwork/ixnetworkweb/admin-2-21852
+Port is still owned: 192.168.70.11/cardId:1/portId:1
+
+Querying for 192.168.70.11/2/1
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/availableHardware", "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": "192.168.70.11"}]}, {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": "2"}]}, {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": "1"}]}]}]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+Port currently owned by: IxNetwork/ixnetworkweb/admin-2-21852
+Port is still owned: 192.168.70.11/cardId:2/portId:1
+
+Ports are still owned: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/vport
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/vport
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/availableHardware/chassis
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/availableHardware/chassis/1/card/1/port/1/operations/clearownership
+DATA: {"arg1": ["/api/v1/sessions/3/ixnetwork/availableHardware/chassis/1/card/1/port/1"]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/availableHardware/chassis/1/card/2/port/1/operations/clearownership
+DATA: {"arg1": ["/api/v1/sessions/3/ixnetwork/availableHardware/chassis/1/card/2/port/1"]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/vport
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/vport/operations/releaseport
+DATA: {"arg1": []}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/globals/licensing
+DATA: {'licensingServers': ['192.168.70.3'], 'mode': 'subscription', 'tier': 'tier3'}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/globals/licensing
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+Verifying sessionId license server: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork
+	['192.168.70.3']
+	subscription
+	tier3
+
+Reading saved config file
+
+Uploading file to server: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/files?filename=spitfire_acl_ipv4v6.ixncfg
+
+POST: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig
+DATA: {"arg1": "/api/v1/sessions/1/ixnetwork/files/spitfire_acl_ipv4v6.ixncfg"}
+HEADERS: {'content-type': 'application/octet-stream', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+waitForComplete:
+	State: IN_PROGRESS 
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 1/140 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 2/140 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 3/140 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 4/140 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 5/140 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/3/ixnetwork/operations/loadconfig/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: SUCCESS
+
+

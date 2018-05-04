@@ -1,0 +1,1275 @@
+
+connectToLinuxApiServer: https://192.168.70.108/api/v1/auth/session
+
+POST: https://192.168.70.108/api/v1/auth/session
+DATA: {"username": "admin", "password": "admin"}
+HEADERS: {'content-type': 'application/json'}
+STATUS CODE: 200
+
+linuxServerCreateSession
+
+POST: https://192.168.70.108:443/api/v1/sessions
+DATA: {"applicationType": "ixnrest"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+
+linuxServerStartSession: https://192.168.70.108:443/api/v1/sessions/5
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/operations/start
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+CurrentStatus: Operation in progress  1/60 seconds
+CurrentStatus: Operation in progress  2/60 seconds
+CurrentStatus: Operation in progress  3/60 seconds
+CurrentStatus: Operation in progress  4/60 seconds
+CurrentStatus: Operation in progress  5/60 seconds
+CurrentStatus: Operation in progress  6/60 seconds
+CurrentStatus: Operation in progress  7/60 seconds
+CurrentStatus: Operation in progress  8/60 seconds
+CurrentStatus: Operation successfully completed  9/60 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+sessionId: https://192.168.70.108:443/api/v1/sessions/5
+
+sessionUrl: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork
+apiKey: d9f4da46f3c142f48dddfa4647887d74
+
+Connect to chassis
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/availableHardware/chassis
+DATA: {"hostname": "192.168.70.11"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+	connectIxChassis 192.168.70.11: Status: polling. Wait 1/30 seconds
+	connectIxChassis 192.168.70.11: Status: polling. Wait 2/30 seconds
+	connectIxChassis 192.168.70.11: Status: ready. Wait 3/30 seconds
+
+Verify if ports are currently owned
+
+Querying for 192.168.70.11/1/1
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/availableHardware", "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": "192.168.70.11"}]}, {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": "1"}]}, {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": "1"}]}]}]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+Port currently owned by: 
+
+Querying for 192.168.70.11/2/1
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/query
+DATA: {"selects": [{"from": "/availableHardware", "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": "192.168.70.11"}]}, {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": "2"}]}, {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": "1"}]}]}]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+Port currently owned by: 
+
+Ports are still owned: []
+
+newBlankConfig
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/newconfig
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport/operations/releaseport
+DATA: {"arg1": []}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/globals/licensing
+DATA: {'licensingServers': ['192.168.70.3'], 'mode': 'subscription', 'tier': 'tier3'}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/globals/licensing
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+Verifying sessionId license server: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork
+	['192.168.70.3']
+	subscription
+	tier3
+
+Creating a new virtual port
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	Name: 1/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport/1
+DATA: {'name': '1/1'}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+Creating a new virtual port
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport/2
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	Name: 2/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport/2
+DATA: {'name': '2/1'}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+createVports: ['/api/v1/sessions/5/ixnetwork/vport/1', '/api/v1/sessions/5/ixnetwork/vport/2']
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports
+DATA: {"arg1": [{"arg1": "192.168.70.11", "arg2": "1", "arg3": "1"}, {"arg1": "192.168.70.11", "arg2": "2", "arg3": "1"}], "arg2": [], "arg3": ["/api/v1/sessions/5/ixnetwork/vport/1", "/api/v1/sessions/5/ixnetwork/vport/2"], "arg4": "true"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+waitForComplete:
+	State: IN_PROGRESS 
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 1/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 2/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 3/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 4/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 5/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 6/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 7/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 8/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 9/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 10/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 11/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 12/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 13/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 14/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 15/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 16/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 17/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 18/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 19/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 20/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 21/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 22/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 23/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 24/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 25/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 26/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 27/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 28/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 29/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 30/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 31/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 32/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 33/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 34/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 35/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: IN_PROGRESS: Wait 36/120 seconds
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/operations/assignports/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	State: SUCCESS
+
+
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/vport
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+Port: 192.168.70.11:1:1
+	VerifyPortState: up
+	Waiting 1/70 seconds
+
+Port: 192.168.70.11:2:1
+	VerifyPortState: up
+	Waiting 1/70 seconds
+
+configTrafficItem: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem : {'name': 'Raw MPLS/UDP', 'trafficType': 'raw'}
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem
+DATA: {"name": "Raw MPLS/UDP", "trafficType": "raw"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+
+Config Traffic Item Endpoints
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/endpointSet
+DATA: {"name": "Flow-Group-1", "sources": ["/api/v1/sessions/5/ixnetwork/vport/1/protocols"], "destinations": ["/api/v1/sessions/5/ixnetwork/vport/2/protocols"]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 201
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/endpointSet/1
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/endpointSet
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
+DATA: {'type': 'fixedFrameCount'}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
+DATA: {'frameCount': 50000}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/frameRate
+DATA: {'rate': 88}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/frameRate
+DATA: {'type': 'percentLineRate'}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/frameSize
+DATA: {'fixedSize': 128}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+Config Traffic Item statistic trackings
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/tracking
+DATA: {'trackBy': ['flowGroup0']}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: IEC 61883-4 Source Packet
+2: IEC 61883-6 24-Bit Data
+3: RTCP
+4: IEC 61883-1
+5: H.264 CSRC
+6: H.264 Specific Header
+7: AVTP 17221
+8: H.264
+9: JPEG 2000 Video Format
+10: JPEG Video Format
+11: SDI Video Format
+12: MPEG2TS Payload
+13: MMA Data Payload
+14: G723 Sid Mode
+15: G723 Frame Packing
+16: G723 Frame Packing 5.3
+17: CN
+18: RTCP 1733
+19: AAL5 
+20: ATM Cell 
+21: Atm Aal5 Frame
+22: Ethernet ARP
+23: Cisco HDLC
+24: Cisco ISL
+25: Cisco Frame Relay
+26: Ethernet II
+27: Ethernet II without FCS
+28: Frame Relay
+29: PPP IPCP
+30: PPP IPV6CP
+31: LACP with Ethernet
+32: LACP
+33: LLC-PPP
+34: Connectivity Fault Management (CFM)
+35: Link OAM
+36: E-LMI
+37: LLC Bridged Ethernet 802.3
+38: LLC 
+39: L2VPN ATM Cell CW
+40: L2VPN ATM CW Frame
+41: L2VPN Ethernet Frame
+42: L2VPN FR CW
+43: L2VPN FR-RFC4619 CW
+44: L2VPN FR
+45: L2VPN PPP-HDLC Frame
+46: L2VPN HDLC
+47: L2VPN PPP
+48: L2VPN VC Type IP CW
+49: MAC in MAC
+50: MAC in MAC (No FCS)
+51: Marker PDU
+52: MPLS
+53: MPLS
+54: MSTP BPDU
+55: MPLS-TP Ethernet Frame
+56: OAM-Depricated
+57: PPP
+58: PPP without HDLC
+59: PPP LCP
+60: PPP PAP/CHAP
+61: PPPoE - Discovery
+62: PPPoE - Session
+63: PTPv2
+64: Ethernet RARP
+65: RSTP BPDU
+66: LLC-SNAP
+67: SNAP
+68: STP Configuration BPDU
+69: STP TCN BPDU
+70: Virtual Circuit Multiplexed Bridged Ethernet 802.3
+71: VCMux-PPP
+72: VLAN
+73: VNTAG
+74: VIC
+75: VPLS Ethernet Frame
+76: FCoE
+77: FCoE Fabric LOGO
+78: FCoE Fabric LOGO LS_ACC
+79: FCoE Fabric LOGO LS_RJT
+80: FCoE FLOGI LS_ACC
+81: FCoE FLOGI LS_RJT
+82: FCoE FLOGI Request
+83: FCoE PLOGI LS_ACC
+84: FCoE PLOGI LS_RJT
+85: FCoE PLOGI Request
+86: FCoE NPIV FDISC LS_ACC
+87: FCoE NPIV FDISC LS_RJT
+88: FCoE NPIV FDISC Request
+89: FCoE RSCN
+90: FCoE SCR Request
+91: FCoE GCS_ID
+92: FCoE GA_NXT
+93: FCoE GIEIL
+94: FCoE GID_PN
+95: FCoE GFPN_ID
+96: FCoE GPSC
+97: FCoE GSES
+98: FCoE GPN_FT
+99: FCoE GIEILN
+100: FCoE GAPNL
+101: FCoE GSPN_ID
+102: FCoE RSNN_NN
+103: FCoE GNPL
+104: FCoE GPL
+105: FCoE GNID
+106: FCoE RPLT
+107: FCoE RIELN
+108: FCoE GPNL
+109: FCoE GNN_FT
+110: FCoE GPLNL
+111: FCoE RFT_ID
+112: FCoE GPLML
+113: FCoE GPS
+114: FCoE RCS_ID
+115: FCoE GSNN_NN
+116: FCoE GNN_ID
+117: FCoE GMID
+118: FCoE GIET
+119: FCoE RPLM
+120: FCoE GPAB
+121: FCoE GIEAG
+122: FCoE GIEL
+123: FCoE GPAG
+124: FCoE GID_FT
+125: FCoE GFF_ID
+126: FCoE GMAL
+127: FCoE GPT
+128: FCoE GPT_ID
+129: FCoE GATIN
+130: FCoE RFF_ID
+131: FCoE RPNL
+132: FCoE GDID
+133: FCoE GTIN
+134: FCoE RPL
+135: FCoE GPLT
+136: FCoE RNN_ID
+137: FCoE GPPN
+138: FCoE GPFCP
+139: FCoE GPLI
+140: FCoE GFN
+141: FCoE RPAB
+142: FCoE GFT_ID
+143: FCoE RSPN_ID
+144: FCoE GID_NN
+145: FCoE GPN_ID
+146: FCoE EFP SW_RJT
+147: FCoE EFP SW_ACC
+148: FCoE ESC SW_ACC
+149: FCoE RDI SW_RJT
+150: FCoE MR Request
+151: FCoE LSA Request
+152: FCoE DIA SW_RJT
+153: FCoE MR SW_RJT
+154: FCoE DIA SW_ACC
+155: FCoE RDI SW_ACC
+156: FCoE ESC SW_RJT
+157: FCoE LSU Request
+158: FCoE ESC Request
+159: FCoE ELP SW_ACC
+160: FCoE ELP SW_RJT
+161: FCoE MR SW_ACC
+162: FCoE ELP Request
+163: FCoE DIA Request
+164: FCoE RDI Request
+165: FCoE HLO Request
+166: FCoE EFP Request
+167: FIP
+168: FIP Clear Virtual Links (FCF)
+169: FIP Discovery Advertisement (FCF)
+170: FIP Discovery Solicitation (ENode)
+171: FIP Discovery Solicitation (FCF)
+172: FIP ELP Request (FCF)
+173: FIP ELP SW_ACC (FCF)
+174: FIP ELP SW_RJT (FCF)
+175: FIP Fabric LOGO (ENode)
+176: FIP Fabric LOGO LS_ACC (FCF)
+177: FIP Fabric LOGO LS_RJT (FCF)
+178: FIP FLOGI LS_ACC (FCF)
+179: FIP FLOGI LS_RJT (FCF)
+180: FIP FLOGI Request (ENode)
+181: FIP Keep Alive (ENode)
+182: FIP Keep Alive (VN_Port)
+183: FIP NPIV FDISC LS_ACC (FCF)
+184: FIP NPIV FDISC LS_RJT (FCF)
+185: FIP NPIV FDISC Request (ENode)
+186: FIP Vendor Specific
+187: FIP VLAN Notification (FCF)
+188: FIP VLAN Request
+189: FC Fabric LOGO
+190: FC Fabric LOGO LS_ACC
+191: FC Fabric LOGO LS_RJT
+192: FC FLOGI LS_ACC
+193: FC FLOGI LS_RJT
+194: FC FLOGI Request
+195: FC PLOGI LS_ACC
+196: FC PLOGI LS_RJT
+197: FC PLOGI Request
+198: FC NPIV FDISC LS_ACC
+199: FC NPIV FDISC LS_RJT
+200: FC NPIV FDISC Request
+201: FC SCR Request
+202: FC RSCN
+203: FC GCS_ID
+204: FC GA_NXT
+205: FC GIEIL
+206: FC GID_PN
+207: FC GFPN_ID
+208: FC GPSC
+209: FC GSES
+210: FC GPN_FT
+211: FC GIEILN
+212: FC GAPNL
+213: FC GSPN_ID
+214: FC RSNN_NN
+215: FC GNPL
+216: FC GPL
+217: FC GNID
+218: FC RPLT
+219: FC RIELN
+220: FC GPNL
+221: FC GNN_FT
+222: FC GPLNL
+223: FC RFT_ID
+224: FC GPLML
+225: FC GPS
+226: FC RCS_ID
+227: FC GSNN_NN
+228: FC GNN_ID
+229: FC GMID
+230: FC GIET
+231: FC RPLM
+232: FC GPAB
+233: FC GIEAG
+234: FC GIEL
+235: FC GPAG
+236: FC GID_FT
+237: FC GFF_ID
+238: FC GMAL
+239: FC GPT
+240: FC GPT_ID
+241: FC GATIN
+242: FC RFF_ID
+243: FC RPNL
+244: FC GDID
+245: FC GTIN
+246: FC RPL
+247: FC GPLT
+248: FC RNN_ID
+249: FC GPPN
+250: FC GPFCP
+251: FC GPLI
+252: FC GFN
+253: FC DA_ID
+254: FC RPAB
+255: FC GFT_ID
+256: FC RSPN_ID
+257: FC GID_NN
+258: FC GPN_ID
+259: FC EFP SW_RJT
+260: FC EFP SW_ACC
+261: FC ESC SW_ACC
+262: FC RDI SW_RJT
+263: FC MR Request
+264: FC LSA Request
+265: FC DIA SW_RJT
+266: FC MR SW_RJT
+267: FC DIA SW_ACC
+268: FC RDI SW_ACC
+269: FC ESC SW_RJT
+270: FC LSU Request
+271: FC ESC Request
+272: FC ELP SW_ACC
+273: FC ELP SW_RJT
+274: FC MR SW_ACC
+275: FC ELP Request
+276: FC DIA Request
+277: FC RDI Request
+278: FC HLO Request
+279: FC EFP Request
+280: MAC in MAC v4.2
+281: PFC PAUSE (802.1Qbb)
+282: T-MPLS Ethernet Unicast
+283: LLDP
+284: ECP
+285: ESMC
+286: TRILL
+287: TRILL RB Channel
+288: TRILL OAM Echo Request
+289: TRILL OAM Echo Reply
+290: FabricPath
+291: PBB Header
+292: AVTP
+293: MAC Address Acquisition Header
+294: MSRP Message
+295: MSRP Vector Attribute
+296: MMRP Message
+297: MMRP Vector Attribute
+298: MVRP Message
+299: MVRP Vector Attribute
+300: MRP Three Packed Event
+301: MRP Four Packed Event
+302: MRP End Mark
+303: BMAC Header
+304: BVLAN Header
+305: I-Tag Header
+306: Preferred PW MPLS Control Word
+307: AMT
+308: CGMP
+309: DDP 
+310: IS-IS Level 1 Complete Sequence Number PDU
+311: IS-IS Level 1 LAN Hello PDU
+312: IS-IS Level 1 Link State PDU
+313: IS-IS Level 1 Partial Sequence Numbers PDU
+314: IS-IS Level 2 Complete Sequence Number PDU
+315: IS-IS Level 2 LAN Hello PDU
+316: IS-IS Level 2 Link State PDU
+317: IS-IS Level 2 Partial Sequence Numbers PDU
+318: IS-IS Point to Point Hello PDU
+319: IS-IS Level 1 MCAST Complete Sequence Number PDU
+320: IS-IS Level 1 MCAST Link State PDU
+321: IS-IS Level 1 MCAST Partial Sequence Numbers PDU
+322: IPv6 Authentication Header
+323: IPv6 Encapsulation Header
+324: IPv6 Pseudo Header
+325: IPv6 Routing Header
+326: IPv6 Routing Header Type 0
+327: IPv6 Routing Header Type 2
+328: IPv6 Routing Header Type 4
+329: IPv4
+330: IPv6 
+331: IPv6 Fragment Header
+332: IPv6 Hop-by-Hop Options Header
+333: IPv6 Destination Options Header
+334: ICMP Msg Types: 3,4,5,11,12
+335: ICMP Msg Types: 0,8,13,14,15,16
+336: ICMP Msg Type: 9
+337: ICMPv6
+338: IGMPv1
+339: IGMPv2
+340: IGMPv3 Membership Query
+341: IGMPv3 Membership Report
+342: IPX
+343: GRE
+344: GTPu Optional Fields
+345: GTPu
+346: L2TPv3 Control Message Over IP
+347: L2TPv3 Data Message Over IP
+348: Minimal IP
+349: MLDv1 
+350: MLDv2 Query
+351: MLDv2 Report
+352: Mobile IPv6
+353: NVGRE
+354: OSPFv2 Hello Packet
+355: OSPFv2 Database Description Packet
+356: OSPFv2 LSA ACK Packet
+357: OSPFv2 LSA Request Packet
+358: OSPFv2 LSA Update Packet
+359: OSPFv3 Hello
+360: OSPFv3 Database Description Packet
+361: OSPFv3 LSA Acknowledgement Packet
+362: OSPFv3 LSA Request Packet
+363: OSPFv3 LSA Update Packet
+364: PIM-DM Assert Message
+365: PIM-DM Graft/Graft-Ack Message
+366: PIM-DM Hello Message
+367: PIM-DM Join/Prune Message
+368: PIM-DM State Refresh Message
+369: PIM Assert Message
+370: PIM Bootstrap Message
+371: PIM Candidate-RP-Adv Message
+372: PIM Hello Message
+373: PIM Join/Prune Message
+374: PIM Register Message
+375: PIM Register Stop Message
+376: RSVP
+377: RGMP
+378: RTMP
+379: VXLAN
+380: Geneve
+381: TCP
+382: UDP
+383: BFD (Bidirectional Forwarding Detection)
+384: LISP Map-Register
+385: LISP Map-Request
+386: LISP Map-Reply
+387: LISP Encapsulated-Control-Message
+388: LISP Map-Notify
+389: LISP
+390: DHCP
+391: DHCPv6 (Client/Server Message)
+392: DHCPv6 (Relay Agent/Server Message)
+393: LDP Notification Message
+394: LDP Hello Message
+395: LDP Initialization Message
+396: LDP Keep Alive Message
+397: LDP Address Message
+398: LDP Address Withdraw Message
+399: LDP Label Mapping Message
+400: LDP Label Request Message
+401: LDP Label Abort Request Message
+402: LDP Label Withdraw Message
+403: LDP Label Release Message
+404: L2TPv2 Control Message
+405: L2TPv2 Data Message
+406: L2TPv3 Control Message Over UDP
+407: L2TPv3 Data Message Over UDP
+408: Mobile IP
+409: MSDP
+410: PTPv2 - All Messages
+411: RIP1 
+412: RIP2 
+413: RIPng 
+414: RTP
+415: HTTP Get
+416: HTTP 200 OK
+417: RTSP DESCRIBE
+418: RTSP Reply
+419: IMAP Request Capability
+420: IMAP Response Capability OK
+421: POP RETR 1
+422: POP +OK
+423: SMTP MAIL FROM
+424: SMTP 250 OK
+425: TDS Remote Procedure Call
+426: TDS Response
+427: iSCSI Data Out
+428: iSCSI Data In
+429: NTP
+430: Custom
+431: FC
+432: IGMPv1
+433: IGMPv2
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+	Returning: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1
+
+showPacketHeaderFieldNames: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	1: Destination MAC Address
+	2: Source MAC Address
+	3: Ethernet-Type
+	4: PFC Queue
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field/1
+DATA: {'valueType': 'increment', 'startValue': '00:0c:29:84:37:16', 'stepValue': '00:00:00:00:00:01', 'countValue': 1}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field/2
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1/field/2
+DATA: {'valueType': 'increment', 'startValue': '00:0c:29:aa:86:e0', 'stepValue': '00:00:00:00:00:01', 'countValue': 1}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+protocolTemplateId: /api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/operations/appendprotocol
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/1", "arg2": "/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+addTrafficItemPacketStack: Returning: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2
+
+showPacketHeaderFieldNames: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2/field
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	1: Label Value
+	2: MPLS Exp
+	3: Bottom of Stack Bit
+	4: Time To Live
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2/field/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2/field/1
+DATA: {'valueType': 'increment', 'startValue': '16', 'stepValue': '1', 'countValue': 2, 'auto': False}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: MPLS
+3: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+protocolTemplateId: /api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/operations/appendprotocol
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/2", "arg2": "/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+addTrafficItemPacketStack: Returning: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/3
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/3/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/3/field/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/3/field/1
+DATA: {'valueType': 'increment', 'startValue': '16', 'stepValue': '1', 'countValue': 2, 'auto': False}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: MPLS
+3: MPLS
+4: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+protocolTemplateId: /api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/operations/appendprotocol
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/3", "arg2": "/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+addTrafficItemPacketStack: Returning: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4/field/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4/field/1
+DATA: {'valueType': 'increment', 'startValue': '16', 'stepValue': '1', 'countValue': 2, 'auto': False}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: MPLS
+3: MPLS
+4: MPLS
+5: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+protocolTemplateId: /api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/operations/appendprotocol
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4", "arg2": "/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/53"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+addTrafficItemPacketStack: Returning: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/5
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/5/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/5/field/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/5/field/1
+DATA: {'valueType': 'increment', 'startValue': '16', 'stepValue': '1', 'countValue': 2, 'auto': False}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: MPLS
+3: MPLS
+4: MPLS
+5: MPLS
+6: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+protocolTemplateId: /api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/329
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/operations/appendprotocol
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/5", "arg2": "/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/329"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+addTrafficItemPacketStack: Returning: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6
+
+showPacketHeaderFieldNames: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	1: Version
+	2: Header Length
+	3: Raw priority
+	4: Precedence
+	5: Delay
+	6: Throughput
+	7: Reliability
+	8: Monetary
+	9: Unused
+	10: Default PHB
+	11: Unused
+	12: Class selector PHB
+	13: Unused
+	14: Assured forwarding PHB
+	15: Unused
+	16: Expedited forwarding PHB
+	17: Unused
+	18: Total Length (octets)
+	19: Identification
+	20: Reserved
+	21: Fragment
+	22: Last Fragment
+	23: Fragment offset
+	24: TTL (Time to live)
+	25: Protocol
+	26: Header checksum
+	27: Source Address
+	28: Destination Address
+	29: No operation
+	30: Security type
+	31: Option length
+	32: Security
+	33: Compartments
+	34: Handling restrictions
+	35: Transmission control code
+	36: Option type
+	37: Option length
+	38: Pointer
+	39: Route data
+	40: Option type
+	41: Option length
+	42: Option type
+	43: Option length
+	44: Option type
+	45: Option length
+	46: Stream identifier
+	47: Option type
+	48: Option length
+	49: Pointer
+	50: Overflow
+	51: Flags
+	52: Address
+	53: Timestamp
+	54: End of options
+	55: Option type
+	56: Option length
+	57: Router alert value
+	58: Padding
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field/27
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field/27
+DATA: {'valueType': 'increment', 'startValue': '1.1.1.1', 'stepValue': '0.0.0.1', 'countValue': 1}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field/28
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6/field/28
+DATA: {'valueType': 'increment', 'startValue': '1.1.1.2', 'stepValue': '0.0.0.1', 'countValue': 1}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: MPLS
+3: MPLS
+4: MPLS
+5: MPLS
+6: IPv4 
+7: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate?skip=0&take=end
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+protocolTemplateId: /api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/382
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/operations/appendprotocol
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6", "arg2": "/api/v1/sessions/5/ixnetwork/traffic/protocolTemplate/382"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+addTrafficItemPacketStack: Returning: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7
+
+showPacketHeaderFieldNames: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+	1: UDP-Source-Port
+	2: UDP-Dest-Port
+	3: UDP-Length
+	4: UDP-Checksum
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field/1
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field/1
+DATA: {'valueType': 'increment', 'startValue': 1001, 'stepValue': 1, 'countValue': 2, 'auto': False}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+configPacketHeaderFieldId:  fieldIdObj: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field/2
+
+PATCH: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack/7/field/2
+DATA: {'valueType': 'increment', 'startValue': 1008, 'stepValue': 1, 'countValue': 2, 'auto': False}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/stack
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+1: Ethernet II
+2: MPLS
+3: MPLS
+4: MPLS
+5: MPLS
+6: IPv4 
+7: UDP
+8: Frame Check Sequence CRC-32
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+Regenerating traffic items: ['/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1']
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/operations/generate
+DATA: {"arg1": ["/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1"]}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/operations/apply
+DATA: {"arg1": "/api/v1/sessions/5/ixnetwork/traffic"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+startTraffic: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/operations/start
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/operations/start
+DATA: {"arg1": "https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic"}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+
+checkTrafficState: Expecting state: ['started', 'startedWaitingForStats']
+
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+checkTrafficState: startedWaitingForStats: Waited 1/45 seconds
+
+checkTrafficState: Done
+
+startTraffic: Successfully started
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+
+checkTrafficState: Expecting state: ['stopped', 'stoppedWaitingForStats']
+
+
+GET: https://192.168.70.108:443/api/v1/sessions/5/ixnetwork/traffic
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 200
+checkTrafficState: stoppedWaitingForStats: Waited 1/45 seconds
+
+checkTrafficState: Done
+
+
+Row: 1
+	Tx Port: 1/1
+	Rx Port: 2/1
+	Traffic Item: Raw MPLS/UDP
+	Flow Group: Raw MPLS/UDP-Flow-Group-1 - Flow Group 0001
+	Tx Frames: 50000
+	Rx Frames: 50000
+	Frames Delta: 0
+	Loss %: 0
+	Tx Frame Rate: 0
+	Rx Frame Rate: 0
+	Tx L1 Rate (bps): 0
+	Rx L1 Rate (bps): 0
+	Rx Bytes: 6400000
+	Tx Rate (Bps): 0
+	Rx Rate (Bps): 0
+	Tx Rate (bps): 0
+	Rx Rate (bps): 0
+	Tx Rate (Kbps): 0
+	Rx Rate (Kbps): 0
+	Tx Rate (Mbps): 0
+	Rx Rate (Mbps): 0
+	Store-Forward Avg Latency (ns): 63042566
+	Store-Forward Min Latency (ns): 16300
+	Store-Forward Max Latency (ns): 145259700
+	First TimeStamp: 00:00:01.007
+	Last TimeStamp: 00:00:01.980
+
+linuxServerStopOperations: https://192.168.70.108:443/api/v1/sessions/5
+
+POST: https://192.168.70.108:443/api/v1/sessions/5/operations/stop
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}
+STATUS CODE: 202
+CurrentStatus: Operation in progress  1/90 seconds
+CurrentStatus: Operation in progress  2/90 seconds
+CurrentStatus: Operation in progress  3/90 seconds
+CurrentStatus: Operation in progress  4/90 seconds
+CurrentStatus: Operation in progress  5/90 seconds
+CurrentStatus: Operation in progress  6/90 seconds
+CurrentStatus: Operation in progress  7/90 seconds
+CurrentStatus: Operation successfully completed  8/90 seconds
+
+linuxServerDeleteSession: Deleting...https://192.168.70.108:443/api/v1/sessions/5
+
+DELETE: https://192.168.70.108:443/api/v1/sessions/5
+DATA: {}
+HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa4647887d74'}

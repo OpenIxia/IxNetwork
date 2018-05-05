@@ -261,7 +261,7 @@ class Protocol(object):
             
         return ethernetObj
 
-    def configIsIsL3Ngpf(self, ethernetObj, **data):
+    def configIsIsL3Ngpf(self, obj, **data):
         """
         Description
             Create or modify ISISL3
@@ -277,11 +277,48 @@ class Protocol(object):
         Return
             /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/isisL3/{id}
         """
-        url = self.ixnObj.httpHeader+ethernetObj + '/isisL3'
-        self.ixnObj.logInfo('\nCreating new ISIS in NGPF')
-        response = self.ixnObj.post(url, data=data)
-        isisObj = response.json()['links'][0]['href']
+        createNewIsIsObj = True
+
+        if 'isis' in obj:
+            # To modify ISIS
+            isisObj = obj
+            createNewIsIsObj = False
+        else:
+            # To create a new ISIS object
+            url = self.ixnObj.httpHeader+obj + '/isisL3'
+            self.ixnObj.logInfo('\nCreating new ISIS in NGPF')
+            response = self.ixnObj.post(url, data=data)
+            isisObj = response.json()['links'][0]['href']
+            
+        response = self.ixnObj.get(self.ixnObj.httpHeader+isisObj)
+        self.configuredProtocols.append(isisObj)
         return isisObj
+
+    def getDeviceGroupIsIsL3RouterObj(self, deviceGroupObj):
+        """ 
+        Description
+           Get and return the Device Group's ISIS L3 Router object.
+          
+        Parameter
+           deviceGroupObj: <str:obj>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{1}
+
+        Return
+           IsIsL3Router obj: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/isisL3Router/{id}
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj + '/isisL3Router')
+        return response.json()[0]['links'][0]['href']
+
+    def configIsIsL3RouterNgpf(self, isisL3RouterObj, **data):
+        """
+        Description
+           Configure ISIS L3 Router
+
+        Parameter
+           isisL3RouterObj: <str:obj>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/isisL3Router/{id}
+
+           **data: <dict>:  Get attributes from the IxNetwork API browser.
+        """
+        self.ixnObj.patch(self.ixnObj.httpHeader + isisL3RouterObj, data=data)
 
     def createIpv4Ngpf(self, obj, **kwargs):
         """

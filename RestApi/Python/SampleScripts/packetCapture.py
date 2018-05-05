@@ -67,7 +67,7 @@ try:
                                               enableDataPlane=True, enableControlPlane=False)
 
     pktCaptureObj.packetCaptureClearTabs()
-    trafficObj.startTraffic(applyTraffic=True)
+    trafficObj.startTraffic(regenerateTraffic=False, applyTraffic=True)
     trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
     pktCaptureObj.packetCaptureStart()

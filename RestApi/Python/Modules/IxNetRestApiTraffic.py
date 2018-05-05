@@ -245,7 +245,7 @@ class Traffic(object):
                     configElementObjList = None ;# Don't configure config elements if user is configuring highLevelStreams
                     streamNum = 1
                     for eachHighLevelStream in highLevelStream:
-                        self.configHighLevelStream(self.ixnObj.httpHeader+trafficItemObj+'/highLevelStream/'+str(streamNum), eachHighLevelStream)
+                        self.configConfigElements(self.ixnObj.httpHeader+trafficItemObj+'/highLevelStream/'+str(streamNum), eachHighLevelStream)
                         streamNum += 1
 
         if mode == 'modify' and endpoints != None:
@@ -296,48 +296,55 @@ class Traffic(object):
             return [trafficItemObj, endpointSetObjList, configElementObjList]
 
     def configConfigElements(self, configElementObj, configElements):
-        if 'transmissionType' in configElements:
-            self.ixnObj.patch(configElementObj+'/transmissionControl', data={'type': configElements['transmissionType']})
+        """
+        Description
+           Configure Traffic Item Config Elements. This function will collect all the ReST API's attributes
+           and execute a PATCH in one single command instead of sending a a PATCH for each attribute.
+           This avoids dependency breakage because some APIs require the type to be configured first.
 
-        if 'burstPacketCount' in configElements:
-            self.ixnObj.patch(configElementObj+'/transmissionControl', data={'burstPacketCount': int(configElements['burstPacketCount'])})
+           This function also handles high level stream configurations since the attributes are the same. 
+           Pass in the highLevelStream obj for the parameter configElementObj
 
-        if 'frameCount' in configElements:
-            self.ixnObj.patch(configElementObj+'/transmissionControl', data={'frameCount': int(configElements['frameCount'])})
+        Parameters
+           configElementObj: <str:obj>: The config element object:
+                             Ex: /api/v1/sessions/{1}/ixnetwork/traffic/trafficItem/{1}/configElement/{1}
+                             highLevelStream obj Ex: /api/v1/sessions/{1}/ixnetwork/traffic/trafficItem/{1}/highLevelStream/{1}
+        
+           configElements: <dict>: This could also be highLevelStream elements.  
+                           configElements = {'transmissionType': 'fixedFrameCount',
+                                              'frameCount': 50000,
+                                              'frameRate': 88,
+                                              'frameRateType': 'percentLineRate',
+                                              'frameSize': 128
+                                            }
+        """
+        transmissionControlData = {}
+        for item in ['transmissionType', 'bursePacketCount', 'frameCount', 'duration']:
+            if item in configElements.keys() :
+                # These attributes are int type
+                if item in ['bursePacketCount', 'frameCount', 'duration']: 
+                    transmissionControlData.update({item: int(configElements[item])})
 
-        if 'duration' in configElements:
-            self.ixnObj.patch(configElementObj+'/transmissionControl', data={'duration': int(configElements['duration'])})
+                if item == 'transmissionType':
+                    transmissionControlData.update({'type': str(configElements[item])})
 
-        if 'frameRateType' in configElements:
-            self.ixnObj.patch(configElementObj+'/frameRate', data={'type': configElements['frameRateType']})
+        if transmissionControlData != {}:
+            self.ixnObj.patch(configElementObj+'/transmissionControl', data=transmissionControlData)
 
-        if 'frameRate' in configElements:
-            self.ixnObj.patch(configElementObj+'/frameRate', data={'rate': float(configElements['frameRate'])})
+        frameRateData = {}
+        for item in ['frameRateType', 'frameRate']:
+            if item in configElements.keys() :
+                if item == 'frameRateType': 
+                    frameRateData.update({'type': str(configElements[item])})
+
+                if item == 'frameRate': 
+                    frameRateData.update({'rate': float(configElements[item])})
+
+        if frameRateData != {}:
+            self.ixnObj.patch(configElementObj+'/frameRate', data=frameRateData)
 
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
-
-    def configHighLevelStream(self, highLevelStreamObj, flowGroupElements):
-        if 'transmissionType' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/transmissionControl', data={'type': flowGroupElements['transmissionType']})
-
-        if 'burstPacketCount' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/transmissionControl', data={'burstPacketCount': int(flowGroupElements['burstPacketCount'])})
-
-        if 'frameCount' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/transmissionControl', data={'frameCount': int(flowGroupElements['frameCount'])})
-
-        if 'duration' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/transmissionControl', data={'duration': int(flowGroupElements['duration'])})
-
-        if 'frameRateType' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/frameRate', data={'type': flowGroupElements['frameRateType']})
-
-        if 'frameRate' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/frameRate', data={'rate': float(flowGroupElements['frameRate'])})
-
-        if 'frameSize' in flowGroupElements:
-            self.ixnObj.patch(highLevelStreamObj+'/frameSize', data={'fixedSize': int(flowGroupElements['frameSize'])})
 
     def getTransmissionType(self, configElement):
         # configElement: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1
@@ -992,24 +999,30 @@ class Traffic(object):
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
-    def startTraffic(self, applyTraffic=True, blocking=False):
+    def startTraffic(self, regenerateTraffic=True, applyTraffic=True, blocking=False):
         """
         Description
             Start traffic and verify traffic is started.
+            This function will also give you the option to regenerate and apply traffic.
 
         Parameter
-            applyTraffic: True|False: 
+            regenerateTraffic: <bool>
+                          
+            applyTraffic: <bool> 
                           In a situation like packet capturing, you cannot apply traffic after
                           starting packet capture because this will stop packet capturing. 
                           You need to set applyTraffic to False in this case.
 
-            blocking: True|False: Blocking doesn't return until the server has
+            blocking: <bool> Blocking doesn't return until the server has
                       started traffic and ready for stats.  Unblocking is the opposite.
 
         Syntax
-            POST: http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/traffic/operations/start
-                  data={arg1: http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/traffic}
+            POST: /api/v1/sessions/1/ixnetwork/traffic/operations/start
+                  data={arg1: '/api/v1/sessions/1/ixnetwork/traffic'}
         """
+        if regenerateTraffic:
+            self.regenerateTrafficItems()
+
         if applyTraffic:
             self.applyTraffic()
 
@@ -1035,8 +1048,8 @@ class Traffic(object):
             Stop traffic and verify traffic has stopped.
 
         Syntax
-            POST: http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/traffic/operations/stop
-                  data={arg1: http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/traffic}
+            POST: /api/v1/sessions/1/ixnetwork/traffic/operations/stop
+                  data={arg1: '/api/v1/sessions/1/ixnetwork/traffic'}
         """
         self.ixnObj.logInfo('\nstopTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/stop')
         self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/stop', data={'arg1': self.ixnObj.sessionUrl+'/traffic'})

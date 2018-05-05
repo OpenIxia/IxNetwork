@@ -135,7 +135,6 @@ try:
                                               vlanId={'start': 103,
                                                       'direction': 'increment',
                                                       'step':0})
-
     ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
                                       ipv4Address={'start': '1.1.1.1',
                                                    'direction': 'increment',
@@ -202,8 +201,7 @@ try:
                                  obj=endpointObj,
                                  endpoints = {'name':'Flow-Group-10'})
     
-    trafficObj.regenerateTrafficItems()
-    trafficObj.startTraffic()
+    trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":

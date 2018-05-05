@@ -266,12 +266,12 @@ try:
     trafficObj.applyTraffic()
     trafficObj.configEgressCustomTracking(trafficItemObj, offsetBit, bitWidth)
     statview = trafficObj.createEgressStatView(trafficItemObj, egressTrackingPort, offsetBit, bitWidth,
-                                    egressStatViewName, ingressTrackingFilterName)
+                                               egressStatViewName, ingressTrackingFilterName)
     
-    # Already called applyTraffic() few lines above.
+    # Already called regenerateTrafficItems() and applyTraffic() few lines above.
     # Don't call it again or else egress stats will disappear.
-    trafficObj.startTraffic(applyTraffic=False)
-    
+    trafficObj.startTraffic(regenerateTraffic=False, applyTraffic=False)
+
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
         trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)

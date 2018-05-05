@@ -69,18 +69,18 @@ try:
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
-                                serverIpPort='443',
-                                username='admin',
-                                password='admin',
-                                deleteSessionAfterTest=deleteSessionAfterTest,
-                                verifySslCert=False,
-                                serverOs='linux')
+                          serverIpPort='443',
+                          username='admin',
+                          password='admin',
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          verifySslCert=False,
+                          serverOs='linux')
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
-                                serverIpPort='11009',
-                                serverOs=osPlatform,
-                                deleteSessionAfterTest=deleteSessionAfterTest)
+                          serverIpPort='11009',
+                          serverOs=osPlatform,
+                          deleteSessionAfterTest=deleteSessionAfterTest)
 
     #---------- Preference Settings End --------------
 
@@ -103,9 +103,10 @@ try:
 
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.loadConfigFile(configFile)
+
     portObj.assignPorts(portList)
     portObj.verifyPortState()
-
+    
     protocolObj = Protocol(mainObj)
 
     # MODIFY BGP CONFIG:
@@ -124,8 +125,7 @@ try:
     protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
 
     trafficObj = Traffic(mainObj)
-    trafficObj.regenerateTrafficItems()
-    trafficObj.startTraffic()
+    trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
     # Uncomment this if traffic is fixed packet count because you want to assure that
     # the stats are completely stopped before getting stats.

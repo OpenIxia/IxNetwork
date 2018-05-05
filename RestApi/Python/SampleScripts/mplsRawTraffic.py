@@ -207,8 +207,7 @@ try:
                                              'countValue': 1})
     
     trafficObj.showTrafficItemPacketStack(configElementObj)
-    trafficObj.regenerateTrafficItems()
-    trafficObj.startTraffic()
+    trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
     
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":

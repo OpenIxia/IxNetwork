@@ -81,7 +81,6 @@ try:
                           )
 
     #---------- Preference Settings End --------------
-
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -175,13 +174,14 @@ try:
                                            'direction': 'increment',
                                            'step': '0.0.0.0'},
                                     localAs2Bytes = 101,
+                                    #localAs4Bytes = 108,
+                                    #enable4ByteAs = True,
                                     enableGracefulRestart = False,
                                     restartTime = 45,
                                     type = 'internal',
                                     enableBgpIdSameasRouterId = True,
-                                    staleTime = 0,
-                                    flap = False)
-    
+                                    staleTime = 0)
+
     bgpObj2 = protocolObj.configBgp(ipv4Obj2,
                                     name = 'bgp_2',
                                     enableBgp = True,
@@ -214,12 +214,11 @@ try:
                                                   prefixLength = 32)
     
     protocolObj.startAllProtocols()
-    protocolObj.verifyProtocolSessionsNgpf()
+    protocolObj.verifyAllProtocolSessionsNgpf()
 
     # For all parameter options, go to the API configTrafficItem.
     # mode = create or modify
     trafficObj = Traffic(mainObj)
-
     trafficStatus = trafficObj.configTrafficItem(
         mode='create',
         trafficItem = {
@@ -245,13 +244,12 @@ try:
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]
 
-    trafficObj.regenerateTrafficItems()
-    trafficObj.startTraffic()
+    trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
     # Check the traffic state to assure traffic has stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
         trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
-
+    
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics', silentMode=False)
 

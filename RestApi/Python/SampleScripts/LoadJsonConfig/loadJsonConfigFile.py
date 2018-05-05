@@ -142,8 +142,7 @@ try:
     protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
 
     trafficObj = Traffic(mainObj)
-    trafficObj.regenerateTrafficItems()
-    trafficObj.startTraffic()
+    trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
     # Uncomment this if traffic is fixed packet count because you want to assure that
     # the stats are completely stopped before getting stats

@@ -33,10 +33,9 @@ class Connect:
             ixnetwork.exe -restInsecure -restPort 11009 -restOnAllInterfaces -tclPort 8009
 
         Parameters
-           serverIp: (str): The API server IP address.
-           serverPort: (str): The API server IP address socket port.
+           apiServerIp: (str): The API server IP address.
+           serverIpPort: (str): The API server IP address socket port.
            serverOs: (str): windows|windowsConnectionMgr|linux
-           apiServer: (str): What are you connecting to: windows | windowsConnectionMgr | linux
            webQuickTest: (bool): True: Using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
            includeDebugTraceback: (bool):
                                    True: Traceback messsages are included in raised exceptions.
@@ -47,9 +46,9 @@ class Connect:
            licenseMode: (str): subscription | perpetual | mixed
            licenseTier: (str): tier1 | tier2 | tier3
            deleteSessionAfterTest: (bool): True: Delete the session.
-                                               False: Don't delete the session.
+                                           False: Don't delete the session.
            verifySslCert: (str): Optional: Include your SSL certificate for added security.
-           apiServerPlatform: (str): Defaults to windows. windows | linux.
+           serverOs: (str): Defaults to windows. windows|windowsConnectionMgr|linux.
            includeDebugTraceback: (bool): True: Include tracebacks in raised exceptions.
            sessionId: (str): The session ID on the Linux API server or Windows Connection Mgr to connect to.
            apiKey: (str): The Linux API server user account API-Key to use for the sessionId connection.
@@ -291,7 +290,7 @@ class Connect:
         try:
             response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
             if silentMode == False:
-                print('STATUS CODE:', response.status_code)
+                self.logInfo('STATUS CODE: %s' % response.status_code)
             if not str(response.status_code).startswith('2'):
                 if 'message' in response.json() and response.json()['messsage'] != None:
                     self.logWarning('\n%s' % response.json()['message'])
@@ -320,7 +319,7 @@ class Connect:
         self.logInfo('HEADERS: %s' % self.jsonHeader)
         try:
             response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
-            print('STATUS CODE:', response.status_code)
+            self.logInfo('STATUS CODE: %s' % response.status_code)
             if not str(response.status_code).startswith('2'):
                 self.showErrorMessage()
                 raise IxNetRestApiException('DELETE error: {0}\n'.format(response.text))
@@ -486,7 +485,6 @@ class Connect:
         """
         if silentMode == False:
             self.logInfo('\nwaitForComplete:')
-            #self.logInfo('\tId: %s\n' % url)
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
         if response.json() == '' and response.json()['state'] == 'SUCCESS':
@@ -646,7 +644,7 @@ class Connect:
            linuxServerIp: (str): IP address of the Linux API server.
            licenseServerIp: (list): IP address of all the license server in a list.
            licenseMode: (str): subscription |  perpetual | mixed
-           licenseier: (str): tier1 | tier2 | tier3
+           licenseTier: (str): tier1 | tier2 | tier3
 
         Syntax
            PATCH: /api/v1/sessions/9999/ixnetworkglobals/license
@@ -739,7 +737,7 @@ class Connect:
            linuxServerDeleteSession()
 
         Syntax
-           GET = https://{apiServerIp}/api/v1/sessions/{id}
+           GET = /api/v1/sessions/{id}
         """
         if self.serverOs == 'linux' and self.deleteSessionAfterTest==True:
             self.linuxServerStopOperations()

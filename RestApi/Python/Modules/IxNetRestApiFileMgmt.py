@@ -33,7 +33,7 @@ class FileMgmt(object):
         if os.path.exists(configFile) is False:
             raise IxNetRestApiException("Config file doesn't exists: %s" % configFile)
 
-        if self.ixnObj.apiServerPlatform == 'linux':
+        if self.ixnObj.serverOs == 'linux':
             octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
         else:
             octetStreamHeader = self.ixnObj.jsonHeader
@@ -369,7 +369,7 @@ class FileMgmt(object):
         fileName = jsonFileName.split('/')[-1]
 
         # 2> Upload it to the server and give it any name you want for the filename
-        if self.ixnObj.apiServerPlatform == 'linux':
+        if self.ixnObj.serverOs == 'linux':
             octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
         else:
             octetStreamHeader = self.ixnObj.jsonHeader
@@ -443,21 +443,20 @@ class FileMgmt(object):
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
         absolutePath = response.json()['absolute']
 
-        if self.ixnObj.apiServerPlatform in ['windows', 'windowsConnectionMgr']:
-            #absolutePath.replace('\\', '\\\\')+'\\\\'+fileName
+        if self.ixnObj.serverOs in ['windows', 'windowsConnectionMgr']:
             absolutePath = absolutePath.replace('\\', '\\\\')
             absolutePath = absolutePath + '\\\\'+fileName
 
-        if self.ixnObj.apiServerPlatform == 'linux':
+        if self.ixnObj.serverOs == 'linux':
             absolutePath = absolutePath+'/'+fileName
 
-        if self.ixnObj.apiServerPlatform in ['windows', 'windowsConnectionMgr']:
+        if self.ixnObj.serverOs in ['windows', 'windowsConnectionMgr']:
             self.copyFileWindowsToLocalLinux(windowsPathAndFileName=absolutePath,
                                              localPath=destinationPath,
                                              renameDestinationFile=None,
                                              includeTimestamp=False)
 
-        if self.ixnObj.apiServerPlatform == 'linux':
+        if self.ixnObj.serverOs == 'linux':
             self.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=absolutePath,
                                            localPath=destinationPath,
                                            renameDestinationFile=None,

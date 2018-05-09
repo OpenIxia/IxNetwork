@@ -19,7 +19,7 @@ class Connect:
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', webQuickTest=False,
                  username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
-                 apiKey=None, generateRestLogFile=False, httpInsecure=True):
+                 apiKey=None, generateRestLogFile=False, robotFrameworkStdout=False, httpInsecure=True):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -57,6 +57,7 @@ class Connect:
                                 True = Then the log file default name is restApiLog.txt
                                 False = Disable generating a log file.
                                 <log file name> = The full path + file name of the log file to create.
+           robotFrameworkStdout: (bool):  True = Print to stdout.
            httpInsecure: (bool): This parameter is only for Windows connections.
                                      True: Using http.  False: Using https.
                                      Starting 8.50: IxNetwork defaults to use https.
@@ -129,6 +130,7 @@ class Connect:
         self.apiServerPort = serverIpPort
         self.webQuickTest = webQuickTest
         self.generateRestLogFile = generateRestLogFile
+        self.robotFrameworkStdout = robotFrameworkStdout
 
         if generateRestLogFile:
             if generateRestLogFile == True:
@@ -141,6 +143,11 @@ class Connect:
             # Instantiate a new log file here.
             with open(self.restLogFile, 'w') as restLogFile:
                 restLogFile.write('')
+
+        # Make Robot print to stdout
+        if self.robotFrameworkStdout:
+            from robot.libraries.BuiltIn import _Misc
+            self.robotStdout = _Misc()
 
         if serverOs == 'windows':
             self.createWindowsSession(apiServerIp, serverIpPort)
@@ -413,6 +420,9 @@ class Connect:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write(msg+end)
 
+        if self.robotFrameworkStdout:
+            self.robotStdout.log_to_console(msg)
+
     def logWarning(self, msg, end='\n'):
         """
         Description
@@ -426,6 +436,9 @@ class Connect:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write('Warning: '+msg+end)
 
+        if self.robotFrameworkStdout:
+            self.robotStdout.log_to_console(msg)
+
     def logError(self, msg, end='\n'):
         """
         Description
@@ -438,6 +451,9 @@ class Connect:
         if self.generateRestLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write('Error: '+msg+end)
+
+        if self.robotFrameworkStdout:
+            self.robotStdout.log_to_console(msg)
 
     def getIxNetworkVersion(self):
         """

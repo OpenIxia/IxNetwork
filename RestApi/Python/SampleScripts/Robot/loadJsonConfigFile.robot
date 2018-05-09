@@ -20,7 +20,7 @@ Library  BuiltIn
 Library  Collections
 
 # Must add the ../../Modules path to PYTHONPATH.
-Library  IxNetRestApi.Connect  ${apiServerIp}  ${apiServerPort}  ${apiServerOs}  WITH NAME  ixnObj
+Library  IxNetRestApi.Connect  ${apiServerIp}  ${apiServerPort}  ${apiServerOs}  robotFrameworkStdout=True  WITH NAME  ixnObj
 Library  IxNetRestApiPortMgmt.PortMgmt      WITH NAME  portMgmtObj  
 Library  IxNetRestApiFileMgmt.FileMgmt      WITH NAME  fileMgmtObj  
 Library  IxNetRestApiTraffic.Traffic        WITH NAME  trafficObj

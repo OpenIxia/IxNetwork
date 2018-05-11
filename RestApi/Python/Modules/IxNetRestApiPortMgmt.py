@@ -250,7 +250,6 @@ class PortMgmt(object):
         vportList = []
 
         for vportAttributes in response.json():
-            #print(vportAttributes, end='\n')
             currentVportId = vportAttributes['links'][0]['href']
             # "assignedTo": "192.168.70.10:1:1
             assignedTo = vportAttributes['assignedTo']
@@ -271,6 +270,29 @@ class PortMgmt(object):
         # ['/api/v1/sessions/1/ixnetwork/vport/1', /api/v1/sessions/1/ixnetwork/vport/2']
         return vportList
 
+    def getPhysicalPortsFromCreatedVports(self):
+        """
+        Description
+            Get all the ports that are configured.
+
+        Return
+            None or a list of ports in format: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+        """
+        portList = []
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        vportList = ['%s' % vport['links'][0]['href'] for vport in response.json()]
+
+        for eachVport in vportList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+eachVport)
+            assignedTo = response.json()['assignedTo']
+            # assignedTo: 192.168.70.11:2:1
+            if assignedTo:
+                chassis = assignedTo.split(':')[0]
+                card = assignedTo.split(':')[1]
+                port = assignedTo.split(':')[2]
+                portList.append([chassis, card, port])
+        return portList
+
     def getPhysicalPortFromVport(self, vportList):
         """
         Description
@@ -286,7 +308,8 @@ class PortMgmt(object):
         for eachVport in vportList:
             response = self.ixnObj.get(self.ixnObj.httpHeader+eachVport)
             assignedTo = response.json()['assignedTo']
-            portList.append(assignedTo)
+            if assignedTo:
+                portList.append(assignedTo)
         return portList
 
     def assignPorts(self, portList, createVports=False, rawTraffic=False, timeout=90):
@@ -298,22 +321,24 @@ class PortMgmt(object):
         Parameters
             portList: <list>: A list of ports in a list: [ [ixChassisIp, '1','1'], [ixChassisIp, '1','2'] ]
 
-            createVports: <bool>: To automatically create virtual ports prior to assigning ports.
-                          This must be set to True if you are building a configuration from scratch.
+            createVports: <bool>: Optional:
+                          If True: Create vports to the amount of portList.
+                          If False: Automatically create vport on the server side. Optimized for port bootup performance. 
 
             rawTraffic: <bool>:  If traffic config is raw, then vport needs to be /vport/{id}/protocols
            
             timeout: <int>: Timeout for port up state. Default=90 seconds.
 
         Syntaxes
-            POST: http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/assignports
+            POST: /api/v1/sessions/{id}/ixnetwork/operations/assignports
                   data={arg1: [{arg1: ixChassisIp, arg2: 1, arg3: 1}, {arg1: ixChassisIp, arg2: 1, arg3: 2}],
                         arg2: [],
                         arg3: ['/api/v1/sessions/{1}/ixnetwork/vport/1',
                                '/api/v1/sessions/{1}/ixnetwork/vport/2'],
                         arg4: true}  <-- True will clear port ownership
                   headers={'content-type': 'application/json'}
-            GET:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/assignports/1
+
+            GET:  /api/v1/sessions/{id}/ixnetwork/operations/assignports/1
                   data={}
                   headers={}
             Expecting:   RESPONSE:  SUCCESS
@@ -323,22 +348,34 @@ class PortMgmt(object):
 
         if createVports:
             self.createVports(portList)
-        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
-        preamble = self.ixnObj.sessionUrl.split('/api')[1]
-        vportList = ["/api%s/vport/%s" % (preamble, str(i["id"])) for i in response.json()]
-        if len(vportList) != len(portList):
-            raise IxNetRestApiException('assignPorts: The amount of configured virtual ports:{0} is not equal to the amount of  portList:{1}'.format(len(vportList), len(portList)))
+            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+            preamble = self.ixnObj.sessionUrl.split('/api')[1]
 
-        data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": "true"}
+            vportList = ["/api%s/vport/%s" % (preamble, str(i["id"])) for i in response.json()]
+            if len(vportList) != len(portList):
+                raise IxNetRestApiException('assignPorts: The amount of configured virtual ports:{0} is not equal to the amount of  portList:{1}'.format(len(vportList), len(portList)))
+
+        if not createVports:
+            vportList = []
+
+        data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": 'true'}
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/assignports', data=data)
-        print('\n', response.json())
         self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'],
                                     silentMode=False, timeout=timeout)
-        
+
+        if createVports == False:
+            # Name the vports
+            for vportObj in self.getAllVportList():
+                port = self.getPhysicalPortFromVport([vportObj])[0]
+                chassisIp = port.split(':')[0]
+                card = port.split(':')[1]
+                port = port.split(':')[2]
+                self.ixnObj.patch(self.ixnObj.httpHeader+vportObj, data={'name': card+'/'+port})
+
         if rawTraffic:
             vportProtocolList = []
-            for vport in vportList:
+            for vport in self.getAllVportList():
                 vportProtocolList.append(vport+'/protocols')
             return vportProtocolList
         else:

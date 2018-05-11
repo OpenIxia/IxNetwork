@@ -144,20 +144,21 @@ class FileMgmt(object):
         currentTimestamp = datetime.datetime.now().strftime('%H%M%S')
 
         # Step 1 of 2:
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/copyfile',
+        url = self.ixnObj.sessionUrl+'/operations/copyfile'
+        response = self.ixnObj.post(url,
                              data={"arg1": windowsPathAndFileName, "arg2": destinationPath})
 
         # curl http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/files/AggregateResults.csv -O -H "Content-Type: application/octet-stream" -output /home/hgee/AggregateResults.csv
 
         # Step 2 of 2:
         #requestStatus = self.ixnObj.get(self.ixnObj.sessionUrl+'/files/%s' % (fileName), stream=True, ignoreError=True)
-        requestStatus = self.ixnObj.get(self.ixnObj.sessionUrl+'/files?filename=%s' % (fileName), stream=True, ignoreError=True)
+        url = self.ixnObj.sessionUrl+'/files?filename=%s' % (fileName)
+        requestStatus = self.ixnObj.get(url, stream=True, ignoreError=True)
         if requestStatus.status_code == 200:
             if renameDestinationFile is not None:
                 fileName = renameDestinationFile
 
             contents = requestStatus.raw.read()
-
             if includeTimestamp:
                 tempFileName = fileName.split('.')
                 if len(tempFileName) > 1:
@@ -172,8 +173,6 @@ class FileMgmt(object):
 
             with open(localPath, 'wb') as downloadedFileContents:
                 downloadedFileContents.write(contents)
-
-            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
 
             self.ixnObj.logInfo('\nA copy of your saved file/report is in:\n\t%s' % (windowsPathAndFileName))
             self.ixnObj.logInfo('\ncopyFileWindowsToLocalLinux: %s' % localPath)
@@ -250,7 +249,8 @@ class FileMgmt(object):
         currentTimestamp = datetime.datetime.now().strftime('%H%M%S')
 
         # Step 1 of 2:
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/copyfile',
+        url = self.ixnObj.sessionUrl+'/operations/copyfile'
+        response = self.ixnObj.post(url,
                              data={"arg1": linuxApiServerPathAndFileName, "arg2": destinationPath})
 
         # curl http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/files/AggregateResults.csv -O -H "Content-Type: application/octet-stream" -output /home/hgee/AggregateResults.csv
@@ -278,7 +278,7 @@ class FileMgmt(object):
             with open(localPath, 'wb') as downloadedFileContents:
                 downloadedFileContents.write(contents)
 
-            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
+            #response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
 
             self.ixnObj.logInfo('\nA copy of your saved file/report is in:\n\t%s' % (linuxApiServerPathAndFileName))
             self.ixnObj.logInfo('\ncopyFileLinuxToLocalLinux: %s' % localPath)
@@ -589,3 +589,24 @@ class FileMgmt(object):
            Display the JSON data in human readable format with indentations.
         """
         print('\n', json.dumps(data, indent=4, sort_keys=sortKeys))
+
+    def collectDiagnostics(self, diagZipFilename='ixiaDiagnostics.zip'):
+        """
+        Description
+           Collect diagnostics for debugging.
+        
+        Parameter
+           diagZipFileName: <str>: The diagnostic filename to name with .zip extension.
+        """
+        url = self.ixnObj.sessionUrl+'/operations/collectlogs'
+        data = {'arg1': diagZipFilename}
+        response = self.ixnObj.post(url, data=data)
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=900)
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
+        absolutePath = response.json()['absolute']
+
+        if self.ixnObj.serverOs in ['windows', 'windowsConnectionMgr']:
+            self.copyFileWindowsToLocalLinux(windowsPathAndFileName=absolutePath+'\\'+diagZipFilename, localPath='.')
+
+        if self.ixnObj.serverOs == 'linux':
+            self.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=absolutePath+'/'+diagZipFilename, localPath='.')

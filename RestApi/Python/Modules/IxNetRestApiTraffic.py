@@ -999,7 +999,7 @@ class Traffic(object):
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
-    def startTraffic(self, regenerateTraffic=True, applyTraffic=True, blocking=False):
+    def startTraffic(self, regenerateTraffic=True, applyTraffic=True, blocking=True):
         """
         Description
             Start traffic and verify traffic is started.
@@ -1026,33 +1026,54 @@ class Traffic(object):
         if applyTraffic:
             self.applyTraffic()
 
-        self.ixnObj.logInfo('\nstartTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/start')
-
         if blocking == False:
             self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/start', data={'arg1': self.ixnObj.sessionUrl+'/traffic'})
             self.checkTrafficState(expectedState=['started', 'startedWaitingForStats'], timeout=45)
 
         if blocking == True:
             queryData = {"from": "/traffic",
-                "nodes": [{"node": "trafficItem", "properties": ["enabled"], "where": [{"property": "enabled", "regex": "true"}]}]}
+                "nodes": [{"node": "trafficItem", "properties": ["enabled"], "where": [{"property": "enabled", "regex": "True"}]}]}
             queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
             enabledTrafficItemHrefList = [trafficItem['href'] for trafficItem in queryResponse.json()['result'][0]['trafficItem']]
             self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/startstatelesstrafficblocking', data={'arg1': enabledTrafficItemHrefList})
-            # Wait a few seconds before calling getStats() or else viewObj is not created.
-            time.sleep(8)
+
         self.ixnObj.logInfo('startTraffic: Successfully started')
 
-    def stopTraffic(self):
+    def stopTraffic(self, blocking=True):
         """
         Description
             Stop traffic and verify traffic has stopped.
 
+        Parameters
+           blocking: <bool>: True=Synchronous mode. Server will not accept APIs until the process is complete.
+
         Syntax
-            POST: /api/v1/sessions/1/ixnetwork/traffic/operations/stop
-                  data={arg1: '/api/v1/sessions/1/ixnetwork/traffic'}
+            For blocking synchronous mode: POST: /api/v1/sessions/{id}/ixnetwork/traffic/operations/stopstatelesstrafficblocking
+            data={arg1: [<traffic item list]}
+    
+            For no blocking asynch mode: POST: /api/v1/sessions/{id}/ixnetwork/traffic/operations/stop
+            data={'arg1': '/api/v1/sessions/{id}/ixnetwork/traffic'}
         """
-        self.ixnObj.logInfo('\nstopTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/stop')
-        self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/stop', data={'arg1': self.ixnObj.sessionUrl+'/traffic'})
+        if blocking == True:
+            queryData = {"from": "/traffic",
+                "nodes": [{"node": "trafficItem", "properties": ["enabled"], "where": [{"property": "enabled", "regex": "True"}]}]}
+
+            queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+            enabledTrafficItemHrefList = [trafficItem['href'] for trafficItem in queryResponse.json()['result'][0]['trafficItem']]
+            self.ixnObj.logInfo('stopTraffic on Traffic Items: %s' % enabledTrafficItemHrefList)
+            url = self.ixnObj.sessionUrl+'/traffic/operations/stopstatelesstrafficblocking'
+            response = self.ixnObj.post(url, data={'arg1': enabledTrafficItemHrefList})
+
+            # 8.40 Notes: We should be verifying for IN_PROGRESS, SUCCESS and ERROR, but the stopstatelesstrafficblocking 
+            #             is returning an ERROR from server even though there isn't a problem.  
+            #self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
+
+        if blocking == False:
+            self.ixnObj.logInfo('\nstopTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/stop')
+            url = self.ixnObj.sessionUrl+'/traffic/operations/stop'            
+            response = self.ixnObj.post(url, data={'arg1': self.ixnObj.apiSessionId + '/traffic'})
+            self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
+
         self.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'])
         time.sleep(3)
 

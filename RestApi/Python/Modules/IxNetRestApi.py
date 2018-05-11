@@ -70,6 +70,7 @@ class Connect:
                self.httpHeader: http://{apiServerIp}:{port}
                self.sessionId : http://{apiServerIp}:{port}/api/v1/sessions/{id}
                self.sessionUrl: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
+               self.apiSessionId: /api/v1/sessions/{id}/ixnetwork
                self.jsonHeader: The default header: {"content-type": "application/json"}
                self.apiKey: For Linux API server only. Automatically provided by the server when login 
                             successfully authenticated.
@@ -124,7 +125,7 @@ class Connect:
         self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
         self.jsonHeader = {"content-type": "application/json"}
         self.httpInsecure = httpInsecure
-        self.apiKey = None
+        self.apiKey = apiKey
         self.verifySslCert = verifySslCert
         self.linuxApiServerIp = apiServerIp
         self.apiServerPort = serverIpPort
@@ -157,6 +158,7 @@ class Connect:
             if sessionId:
                 self.sessionId = 'http://{0}:{1}/api/v1/sessions/{2}'.format(apiServerIp, serverIpPort, str(sessionId))
                 self.sessionUrl = 'http://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(apiServerIp, serverIpPort, str(sessionId))
+                self.apiSessionId = '/api/v1/sessions/{0}/ixnetwork'.format(str(sessionId))
                 self.httpHeader = self.sessionUrl.split('/api')[0]
             else:
                 # Create a new session
@@ -166,14 +168,29 @@ class Connect:
             if self.apiServerPort == None:
                 self.apiServerPort == 443
 
-            # Connect to an existing session on the Linux API server
             if apiKey != None and sessionId == None:
                 raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
+
+            # Connect to an existing session on the Linux API server
             if apiKey and sessionId:
+                self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
+
+                response = self.get('https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId)))
+
                 if self.webQuickTest == False:
-                    self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId))
-                    self.sessionUrl = 'https://{0}:{1}/api/v1/sessions/{2}/ixnetwork'.format(self.linuxApiServerIp, self.apiServerPort, sessionId)
-                    self.httpHeader = self.sessionUrl.split('/api')[0]
+                    # https://192.168.70.108/ixnetworkweb/api/v1/sessions/4
+                    self.sessionId = response.json()['links'][0]['href']
+
+                    # https://192.168.70.108/ixnetworkweb/api/v1/sessions/4/ixnetork
+                    self.sessionUrl = self.sessionId + '/ixnetwork'
+
+                    # /api/v1/sessions/4/ixnetwork
+                    match = re.match('.*(/api.*)', self.sessionId)
+                    self.apiSessionId = match.group(1) + '/ixnetwork'
+
+                    # https://10.10.10.1:443
+                    matchHeader = re.match('(https://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(:[0-9]+)?)', self.sessionId)
+                    self.httpHeader = matchHeader.group(1)
 
                 if self.webQuickTest:
                     self.sessionId = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
@@ -181,11 +198,10 @@ class Connect:
                     self.sessionUrl = self.sessionId
                     self.httpHeader = self.sessionUrl.split('/ixnetworkweb')[0]
 
-                self.apiKey = apiKey
-                self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
-
-            # connectToLinuxApiServer API knows whether to create a new session or connect to an existing session by looking at the self.apiKey.
-            self.connectToLinuxApiServer(apiServerIp, username=username, password=password, verifySslCert=verifySslCert)
+            # Create new session: connectToLinuxApiServer API knows whether to create a new session or connect to an existing
+            #                     session by looking at the self.apiKey.
+            if apiKey == None and sessionId == None:
+                self.connectToLinuxApiServer(self.linuxApiServerIp, self.apiServerPort, username=username, password=password, verifySslCert=verifySslCert)
 
             if licenseServerIp or licenseMode or licenseTier:
                 self.configLicenseServerDetails(licenseServerIp, licenseMode, licenseTier)
@@ -398,6 +414,7 @@ class Connect:
 
         # http://192.168.70.127:11009/api/v1/sessions/1
         self.sessionId = self.sessionUrl.split('/ixnetwork')[0]
+        self.apiSessionId = '/api/v1/sessions/{0}/ixnetwork'.format(sessionIdNumber)
 
     def deleteSession(self):
         """
@@ -588,7 +605,7 @@ class Connect:
                 self.logInfo('\ndisconnectIxChassis: %s' % chassisIdUrl)
                 response = self.delete(self.httpHeader+chassisIdUrl)
 
-    def connectToLinuxApiServer(self, linuxServerIp, username='admin', password='admin', verifySslCert=False):
+    def connectToLinuxApiServer(self, linuxServerIp, linuxServerIpPort, username='admin', password='admin', verifySslCert=False):
         """
         Description
            Connect to a Linux API server.
@@ -606,7 +623,7 @@ class Connect:
 
         if self.apiKey is None:
             # 1: Connect to the Linux API server
-            url = 'https://{0}/api/v1/auth/session'.format(linuxServerIp)
+            url = 'https://{0}:{1}/api/v1/auth/session'.format(linuxServerIp, linuxServerIpPort)
             self.logInfo('\nconnectToLinuxApiServer: %s' % url)
             response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)
             if not str(response.status_code).startswith('2'):
@@ -614,10 +631,10 @@ class Connect:
             self.apiKey = response.json()['apiKey']
 
             # 2: Create new session
-            if self.apiServerPort != None:
-                linuxServerIp = linuxServerIp + ':' + str(self.apiServerPort)
+            #if self.apiServerPort != None:
+            #    linuxServerIp = linuxServerIp + ':' + str(self.apiServerPort)
 
-            url = 'https://{0}/api/v1/sessions'.format(linuxServerIp)
+            url = 'https://{0}:{1}/api/v1/sessions'.format(linuxServerIp, linuxServerIpPort)
             if self.webQuickTest == False:
                 data = {'applicationType': 'ixnrest'}
             if self.webQuickTest == True:
@@ -628,10 +645,27 @@ class Connect:
             response = self.post(url, data=data, headers=self.jsonHeader)
 
             self.sessionIdNumber = response.json()['id']
-            self.sessionId = 'https://{0}/api/v1/sessions/{1}'.format(linuxServerIp, self.sessionIdNumber)
-            self.sessionUrl = 'https://{0}/api/v1/sessions/{1}/ixnetwork'.format(linuxServerIp, self.sessionIdNumber)
-            self.httpHeader = self.sessionUrl.split('/api')[0]
+            response = self.get(url+'/'+str(self.sessionIdNumber))
 
+            # https://192.168.70.108/ixnetworkweb/api/v1/sessions/7
+            self.sessionId = response.json()['links'][0]['href']
+            #self.sessionId = 'https://{0}/api/v1/sessions/{1}'.format(linuxServerIp, self.sessionIdNumber)
+
+            # https://10.10.10.1:443
+            matchHeader = re.match('(https://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(:[0-9]+)?)', self.sessionId)
+            self.httpHeader = matchHeader.group(1)
+
+            if ':' not in self.httpHeader:
+                self.httpHeader + '/' + linuxServerIpPort
+            
+            self.sessionUrl = self.sessionId+'/ixnetwork'
+            #self.sessionUrl = 'https://{0}/api/v1/sessions/{1}/ixnetwork'.format(linuxServerIp, self.sessionIdNumber)
+            #self.httpHeader = self.sessionUrl.split('/api')[0]
+
+            # /api/v1/sessions/4/ixnetwork
+            match = re.match('.*(/api.*)', self.sessionId)
+            self.apiSessionId = match.group(1) + '/ixnetwork'
+            
             # 3: Start the new session
             self.logInfo('\nlinuxServerStartSession: %s' % self.sessionId)
             response = self.post(self.sessionId+'/operations/start')

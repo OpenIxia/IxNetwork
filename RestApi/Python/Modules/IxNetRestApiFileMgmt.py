@@ -490,7 +490,7 @@ class FileMgmt(object):
         if xpathList == None:
             xpathList = ['/descendant-or-self::*']
         
-        data = {'arg1': "/api/v1/sessions/1/ixnetwork/resourceManager",
+        data = {'arg1': self.ixnObj.apiSessionId+"/resourceManager",
                 'arg2': xpathList,
                 'arg3': True,
                 'arg4': 'json'

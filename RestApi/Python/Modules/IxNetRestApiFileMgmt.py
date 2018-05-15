@@ -386,13 +386,17 @@ class FileMgmt(object):
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=300)
 
-    def exportJsonConfigFile(self, jsonFileName):
+    def exportJsonConfigFile(self, jsonFileName, xpathList=None):
         """
         Description
             Export the current configuration to a JSON format config file and copy it to local filesystem.
 
         Parameters
             jsonFileName: (str): The JSON config file name to create. Could include absolute path also.
+
+            xpathList:  <list> 
+                        To get entire configuration = ['/descendant-or-self::*']
+                        To get code fragments such as /vport = ['/vport/descendant-or-self::*']
 
         Requirements
             self.ixnObj.waitForComplete()
@@ -412,7 +416,11 @@ class FileMgmt(object):
 
         Example
             restObj.exportJsonConfigFile(jsonFileName='/path/exportedJsonConfig.json')
+        
         """
+        if xpathList == None:
+            xpathList = ['/descendant-or-self::*']
+
         jsonFileNameTemp = jsonFileName.split('/')
         if jsonFileNameTemp[0] == '':
             jsonFileNameTemp.pop(0)
@@ -430,7 +438,7 @@ class FileMgmt(object):
         sessionId = self.ixnObj.sessionUrl.split(self.ixnObj.httpHeader)[1]
 
         data = {'arg1': sessionId+"/resourceManager",
-                'arg2': ['/descendant-or-self::*'],
+                'arg2': xpathList,
                 'arg3': True,
                 'arg4': 'json',
                 'arg5': sessionId+'/files/'+fileName
@@ -466,17 +474,24 @@ class FileMgmt(object):
         jsonObj = self.jsonReadConfig(jsonFileName)
         self.jsonWriteToFile(jsonObj, jsonFileName)
 
-    def exportJsonConfigToDict(self):
+    def exportJsonConfigToDict(self, xpathList=None):
         """
         Description
             Export the current configuration to a JSON config format and convert to a
             Python Dict.
 
+        Parameter
+            xpathList:  To get entire configuration = ['/descendant-or-self::*']
+                        To get code fragments such as /vport = ['/vport/descendant-or-self::*']
+
         Return
             JSON config in a dictionary format.
         """
+        if xpathList == None:
+            xpathList = ['/descendant-or-self::*']
+        
         data = {'arg1': "/api/v1/sessions/1/ixnetwork/resourceManager",
-                'arg2': ['/descendant-or-self::*'],
+                'arg2': xpathList,
                 'arg3': True,
                 'arg4': 'json'
         }

@@ -180,6 +180,8 @@ class Connect:
                 if self.webQuickTest == False:
                     # https://192.168.70.108/ixnetworkweb/api/v1/sessions/4
                     self.sessionId = response.json()['links'][0]['href']
+                    # Remove the redirect /ixnetworkweb from the URL. IxNetwork 8.50 will resolve this.
+                    self.sessionId = self.sessionId.replace('ixnetworkweb/', '')
 
                     # https://192.168.70.108/ixnetworkweb/api/v1/sessions/4/ixnetork
                     self.sessionUrl = self.sessionId + '/ixnetwork'
@@ -649,7 +651,8 @@ class Connect:
 
             # https://192.168.70.108/ixnetworkweb/api/v1/sessions/7
             self.sessionId = response.json()['links'][0]['href']
-            #self.sessionId = 'https://{0}/api/v1/sessions/{1}'.format(linuxServerIp, self.sessionIdNumber)
+            # Remove the redirect /ixnetworkweb from the URL. IxNetwork 8.50 will resolve this.
+            self.sessionId = self.sessionId.replace('ixnetworkweb/', '')
 
             # https://10.10.10.1:443
             matchHeader = re.match('(https://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(:[0-9]+)?)', self.sessionId)

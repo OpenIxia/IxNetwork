@@ -934,6 +934,27 @@ class Traffic(object):
         response = self.ixnObj.get(self.ixnObj.httpHeader+trafficItemObj)
         return response.json()['name']
 
+    def getAllTrafficItemObjects(self, getEnabledTrafficItemsOnly=False):
+        """
+        Description
+            Get all the Traffic Item objects.
+        
+        Parameter
+            getEnabledTrafficItemOnly: <bool>
+        Return
+            A list of Traffic Items
+        """
+        trafficItemObjList = []
+        response = self.ixnObj.get(self.ixnObj.sessionUrl + '/traffic/trafficItem')
+        for eachTrafficItem in response.json():
+            if getEnabledTrafficItemsOnly == True:
+                if eachTrafficItem['enabled'] == True:
+                    trafficItemObjList.append(eachTrafficItem['links'][0]['href'])
+            else:
+                trafficItemObjList.append(eachTrafficItem['links'][0]['href'])
+
+        return trafficItemObjList
+
     def getAllTrafficItemNames(self):
         """
         Description
@@ -1031,13 +1052,9 @@ class Traffic(object):
             self.checkTrafficState(expectedState=['started', 'startedWaitingForStats'], timeout=45)
 
         if blocking == True:
-            queryData = {"from": "/traffic",
-                "nodes": [{"node": "trafficItem", "properties": ["enabled"], "where": [{"property": "enabled", "regex": "True"}]}]}
-            queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
-            enabledTrafficItemHrefList = [trafficItem['href'] for trafficItem in queryResponse.json()['result'][0]['trafficItem']]
-            self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/startstatelesstrafficblocking', data={'arg1': enabledTrafficItemHrefList})
-
-        self.ixnObj.logInfo('startTraffic: Successfully started')
+            enabledTrafficItemList = self.getAllTrafficItemObjects(getEnabledTrafficItemsOnly=True)
+            self.ixnObj.post(self.ixnObj.sessionUrl+'/traffic/operations/startstatelesstrafficblocking',
+                             data={'arg1': enabledTrafficItemList})
 
     def stopTraffic(self, blocking=True):
         """

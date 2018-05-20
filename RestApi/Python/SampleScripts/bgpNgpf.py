@@ -100,8 +100,7 @@ try:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
-    # Set createVports = True if building config from scratch.
-    portObj.assignPorts(portList, createVports=True)
+    portObj.assignPorts(portList)
 
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
@@ -218,6 +217,7 @@ try:
 
     # For all parameter options, go to the API configTrafficItem.
     # mode = create or modify
+    # Note: Check API configTrafficItem for options.
     trafficObj = Traffic(mainObj)
     trafficStatus = trafficObj.configTrafficItem(
         mode='create',
@@ -236,6 +236,7 @@ try:
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,
+                           'duration': 10,
                            'frameRateType': 'percentLineRate',
                            'frameSize': 128
                        }])
@@ -246,12 +247,15 @@ try:
 
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
-    # Check the traffic state to assure traffic has stopped before checking for stats.
-    if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
-        trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
+    # Check the traffic state before getting stats.
+    #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
+    #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
+    #    or do you expect traffic to be started such as in continuous mode.
+    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
     
     statObj = Statistics(mainObj)
-    stats = statObj.getStats(viewName='Flow Statistics', silentMode=False)
+    stats = statObj.getStats(viewName='Flow Statistics')
 
     print('\n{txPort:10} {txFrames:15} {rxPort:10} {rxFrames:15} {frameLoss:10}'.format(
         txPort='txPort', txFrames='txFrames', rxPort='rxPort', rxFrames='rxFrames', frameLoss='frameLoss'))

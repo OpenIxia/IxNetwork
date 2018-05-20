@@ -203,9 +203,13 @@ try:
     
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
-    # Check the traffic state to assure traffic has indeed stopped before checking for stats.
-    if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
-        trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
+
+    # Check the traffic state before getting stats.
+    #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
+    #    If you expect traffic to be stopped such as in fixedFrameCount and fixedDuration
+    #    or do you expect traffic to be started such as in continuous mode
+    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['started], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

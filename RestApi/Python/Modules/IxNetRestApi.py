@@ -16,10 +16,10 @@ import os, re, sys, requests, json, time, subprocess, traceback, time
 class IxNetRestApiException(Exception): pass
 
 class Connect:
-    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', webQuickTest=False,
-                 username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
+    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None,
+                 webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
-                 apiKey=None, generateRestLogFile=False, robotFrameworkStdout=False, httpInsecure=True):
+                 apiKey=None, generateRestLogFile=True, robotFrameworkStdout=False, httpInsecure=True):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -36,6 +36,7 @@ class Connect:
            apiServerIp: (str): The API server IP address.
            serverIpPort: (str): The API server IP address socket port.
            serverOs: (str): windows|windowsConnectionMgr|linux
+           connectToLinuxChassis: (str): Connect to a Linux OS chassis IP address.
            webQuickTest: (bool): True: Using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
            includeDebugTraceback: (bool):
                                    True: Traceback messsages are included in raised exceptions.
@@ -54,7 +55,7 @@ class Connect:
            apiKey: (str): The Linux API server user account API-Key to use for the sessionId connection.
            generateRestLogFile: True|False|<log file name>.  If you want to generate a log file, provide 
                                 the log file name.
-                                True = Then the log file default name is restApiLog.txt
+                                True = Then the log file default name is ixNetRestApi_debugLog.txt
                                 False = Disable generating a log file.
                                 <log file name> = The full path + file name of the log file to create.
            robotFrameworkStdout: (bool):  True = Print to stdout.
@@ -125,6 +126,8 @@ class Connect:
         self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
         self.jsonHeader = {"content-type": "application/json"}
         self.httpInsecure = httpInsecure
+        self.username = username
+        self.password = password
         self.apiKey = apiKey
         self.verifySslCert = verifySslCert
         self.linuxApiServerIp = apiServerIp
@@ -132,11 +135,12 @@ class Connect:
         self.webQuickTest = webQuickTest
         self.generateRestLogFile = generateRestLogFile
         self.robotFrameworkStdout = robotFrameworkStdout
+        self.connectToLinuxChassisIp = connectToLinuxChassisIp
 
         if generateRestLogFile:
             if generateRestLogFile == True:
                 # Default the log file name
-                self.restLogFile = 'restApiLog.txt'
+                self.restLogFile = 'ixNetRestApi_debugLog.txt'
 
             if type(generateRestLogFile) != bool:
                 self.restLogFile = generateRestLogFile
@@ -149,6 +153,10 @@ class Connect:
         if self.robotFrameworkStdout:
             from robot.libraries.BuiltIn import _Misc
             self.robotStdout = _Misc()
+
+        if connectToLinuxChassisIp:
+            self.connectToLinuxIxosChassis(self.connectToLinuxChassisIp, self.username, self.password)
+            return
 
         if serverOs == 'windows':
             self.createWindowsSession(apiServerIp, serverIpPort)
@@ -228,7 +236,7 @@ class Connect:
         Syntax
             /api/v1/sessions/1/ixnetwork/operations
         """
-        if silentMode is False or self.generateRestLogFile is True:
+        if silentMode is False:
             self.logInfo('\nGET: {0}'.format(restApi))
             self.logInfo('HEADERS: {0}'.format(self.jsonHeader))
 
@@ -273,13 +281,18 @@ class Connect:
         else:
             data = json.dumps(data)
 
-        if silentMode == False or self.generateRestLogFile is True:
+        if silentMode == False:
             self.logInfo('\nPOST: %s' % restApi)
             self.logInfo('DATA: %s' % data)
             self.logInfo('HEADERS: %s' % self.jsonHeader)
 
         try:
-            response = requests.post(restApi, data=data, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+            if self.connectToLinuxChassisIp and json.loads(data) == {}:
+                # Interacting with LinuxOS chassis doesn't like empty data payload. So excluding it here.
+                response = requests.post(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+            else:
+                response = requests.post(restApi, data=data, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+
             # 200 or 201
             if silentMode == False:
                 self.logInfo('STATUS CODE: %s' % response.status_code)
@@ -507,7 +520,7 @@ class Connect:
         print()
         return errorList
 
-    def waitForComplete(self, response='', url='', silentMode=True, timeout=90):
+    def waitForComplete(self, response='', url='', silentMode=False, timeout=90):
         """
         Description
            Wait for an operation progress to complete.
@@ -520,37 +533,39 @@ class Connect:
         """
         if silentMode == False:
             self.logInfo('\nwaitForComplete:')
+            self.logInfo("\tState: %s " %response.json()["state"])
+
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
+
         if response.json() == '' and response.json()['state'] == 'SUCCESS':
-            self.logInfo('\tState: SUCCESS')
             return 
+
         if 'errors' in response.json():
             raise IxNetRestApiException(response.json()["errors"][0])
-        if silentMode == False:
-            self.logInfo("\tState: %s " %response.json()["state"])
+
         if response.json()['state'] == "SUCCESS":
-            if silentMode == False:
-                self.logInfo('\n')
             return 0
+
         if response.json()['state'] in ["ERROR", "EXCEPTION"]:
             raise IxNetRestApiException('\nWaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
 
         for counter in range(1,timeout+1):
-            response = self.get(url, silentMode=silentMode)
+            response = self.get(url, silentMode=True)
             state = response.json()["state"]
-            if silentMode == False:
-                if state != 'SUCCESS':
-                    self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout))
-                if state == 'SUCCESS':
-                    self.logInfo("\tState: {0}".format(state))
+            if state != 'SUCCESS':
+                self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout))
+            if state == 'SUCCESS':
+                self.logInfo("\tState: {0}".format(state))
 
             if counter < timeout and state in ["IN_PROGRESS", "down"]:
                 time.sleep(1)
                 continue
 
+            if counter < timeout and state in ["ERROR"]:
+                raise IxNetRestApiException('\n%s' % response.text)
+
             if counter < timeout and state == 'SUCCESS':
-                if silentMode == False:self.logInfo('\n')
                 return
 
             if counter == timeout and state != 'SUCCESS':
@@ -606,6 +621,20 @@ class Connect:
                 chassisIdUrl = eachChassisId['links'][0]['href']
                 self.logInfo('\ndisconnectIxChassis: %s' % chassisIdUrl)
                 response = self.delete(self.httpHeader+chassisIdUrl)
+
+    def connectToLinuxIxosChassis(self, chassisIp, username, password):
+        url = 'https://{0}/platform/api/v1/auth/session'.format(chassisIp)
+        response = self.post(url, data={'username': username, 'password': password})
+        self.apiKey = response.json()['apiKey']
+        self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
+
+        # userAccountUrl: https://{ip}/platform/api/v1/auth/users/{id}
+        self.userSessionId = response.json()['userAccountUrl']
+
+        self.ixosHeader = 'https://{0}/chassis/api/v2/ixos'.format(chassisIp)
+        self.diagnosticsHeader = 'https://{0}/chassis/api/v1/diagnostics'.format(chassisIp)
+        self.authenticationHeader = 'https://{0}/chassis/api/v1/auth'.format(chassisIp)
+        self.sessionUrl = self.ixosHeader
 
     def connectToLinuxApiServer(self, linuxServerIp, linuxServerIpPort, username='admin', password='admin', verifySslCert=False):
         """

@@ -723,8 +723,8 @@ class Protocol(object):
             Provide an IGMP host object to modify.
 
         Parameters
-            ipObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
-            igmpObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmp/1
+            ipObj: <str:obj>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+            igmpObj: <str:obj>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmp/1
 
         Syntax
             POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/igmp
@@ -1170,13 +1170,14 @@ class Protocol(object):
         for topology in queryResponse.json()['result'][0]['topology']:
             for deviceGroup in topology['deviceGroup']:
                 deviceGroupObj = deviceGroup['href']
-                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=True)
+                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=False)
                 # Verify if the Device Group is enabled. If not, don't go further.
                 enabledMultivalue = response.json()['enabled']
-                enabled = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=True)
+                # touched
+                enabled = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=False)
                 if enabled[0] == 'true':
                     for counter in range(1,deviceGroupTimeout+1):
-                        response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=True)
+                        response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=False)
                         deviceGroupStatus = response.json()['status']
                         self.ixnObj.logInfo('\n%s' % deviceGroupObj)
                         self.ixnObj.logInfo('\tStatus: %s' % deviceGroupStatus)
@@ -1211,9 +1212,8 @@ class Protocol(object):
             Start all protocols in NGPF and verify all Device Groups are started.
 
         Syntax
-            POST:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/startallprotocols
+            POST: /api/v1/sessions/{id}/ixnetwork/operations/startallprotocols
         """
-        #response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/startallprotocols', data={'arg1': 'sync'})
         url = self.ixnObj.sessionUrl+'/operations/startallprotocols'
         response = self.ixnObj.post(url)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
@@ -1225,7 +1225,7 @@ class Protocol(object):
             Stop all protocols in NGPF
 
         Syntax
-            POST:  http://{apiServerIp:port}/api/v1/sessions/{id}/ixnetwork/operations/stopallprotocols
+            POST: /api/v1/sessions/{id}/ixnetwork/operations/stopallprotocols
         """
         url = self.ixnObj.sessionUrl+'/operations/stopallprotocols'
         response = self.ixnObj.post(url, data={'arg1': 'sync'})
@@ -1237,9 +1237,15 @@ class Protocol(object):
             Start the specified protocol by its object handle.
 
         Parameters
-            protocolObj: <str>: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+            protocolObj: <str|obj>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+        
+        Syntax
+            POST: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1/operations/start
+            DATA: {['arg1': [/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1']}
         """
-        self.ixnObj.post(self.ixnObj.httpHeader+protocolObj+'/operations/start', data={'arg1': [protocolObj]})
+        url = self.ixnObj.httpHeader+protocolObj+'/operations/start'
+        response = self.ixnObj.post(url, data={'arg1': [protocolObj]})
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def stopProtocol(self, protocolObj):
         """
@@ -1247,9 +1253,15 @@ class Protocol(object):
             Stop the specified protocol by its object handle.
 
         Parameters
-            protocolObj: <str>: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+            protocolObj: <str|obj>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+
+        Syntax
+            POST: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1/operations/stop
+            DATA: {['arg1': [/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1']}
         """
-        self.ixnObj.post(self.ixnObj.httpHeader+protocolObj+'/operations/stop', data={'arg1': [protocolObj]})
+        url = self.ixnObj.httpHeader+protocolObj+'/operations/stop'
+        response = self.ixnObj.post(url, data={'arg1': [protocolObj]})
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
     def startTopology(self, topologyObjList='all'):
         """

@@ -12,7 +12,7 @@
 # 
 #        - Read a parameter file that is in a Python dictionary data structure.
 #        - Testing with two back-to-back Ixia ports.
-#        - This utility is scalable.  Meaning you could create n number of Topology Groups and Traffic Items.
+#        - This script is scalable.  Meaning you could create n number of Topology Groups and Traffic Items.
 #        - The dictionary parameter file model reflects the IxNework API tree structure.
 #        - Connecting to Windows IxNetwork API server or Linux API server.
 #        - Written in Python3 and supports Python 2 
@@ -82,7 +82,7 @@ def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupData):
                           'direction': ethernet['macAddress']['direction'],
                           'step': ethernet['macAddress']['step']
                       },
-            macAddressPortStep = ethernet['macAddress']['portStep'],
+            macAddressPortStep = ethernet['macAddressPortStep'],
             vlanId = {'start': ethernet['vlanId']['start'],
                       'direction': ethernet['vlanId']['direction'],
                       'step': ethernet['vlanId']['step']
@@ -95,11 +95,11 @@ def configDeviceGroupProtocolStack(deviceGroupObj, deviceGroupData):
                     ipv4Address = {'start': ipv4['address']['start'],
                                    'direction': ipv4['address']['direction'],
                                    'step': ipv4['address']['step']},
-                    ipv4AddressPortStep = ipv4['address']['portStep'],
+                    ipv4AddressPortStep = ipv4['ipv4AddressPortStep'],
                     gateway = {'start': ipv4['gateway']['start'],
                                'direction': ipv4['gateway']['direction'],
                                'step': ipv4['gateway']['step']},
-                    gatewayPortStep = ipv4['gateway']['portStep'],
+                    gatewayPortStep = ipv4['gatewayPortStep'],
                     prefix = ipv4['prefix'])
 
                 if 'bgp' in ipv4:
@@ -177,7 +177,7 @@ try:
         mainObj.configLicenseServerDetails(param['licenseServerIp'], param['licenseModel'], param['licenseTier'])
 
     # Set createVports = True if building config from scratch.
-    portObj.assignPorts(param['portList'], createVports=True)
+    portObj.assignPorts(param['portList'])
     protocolObj = Protocol(mainObj)
 
     for topologyGroup in param['topology']:
@@ -240,11 +240,11 @@ try:
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
     # Check the traffic state to assure traffic has stopped before checking for stats.
-    if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
-        trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
+    if trafficObj.getTransmissionType(configElementObj) in ["fixedFrameCount", "fixedDuration"]:
+        trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
 
     statObj = Statistics(mainObj)
-    stats = statObj.getStats(viewName='Flow Statistics', silentMode=False)
+    stats = statObj.getStats(viewName='Flow Statistics')
 
     # Example to show how to get specific stats from the stats dictionary that contains all the stats.
     print('\n{txPort:10} {txFrames:15} {rxPort:10} {rxFrames:15} {frameLoss:10}'.format(

@@ -26,14 +26,17 @@ params = {
 		    "ethernet": [
 			{
 			    "name": "Ethernet-1",
-			    "macAddress": {"start": "00:01:01:00:00:01", "direction": "increment", "step": "00:00:00:00:00:01", "portStep": "disabled"},
+			    "macAddress": {"start": "00:01:01:00:00:01", "direction": "increment", "step": "00:00:00:00:00:01"},
+                            "macAddressPortStep": "disabled",
 			    "vlanId": {"start": 101, "direction": "increment", "step": 0},
 			    "ipv4": [
 				{
 				    "name": "ipv4-2",
-				    "address": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1", "portStep": "disabled"},
-				    "gateway": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1", "portStep": "disabled"},
-				    "prefix": 24
+				    "address": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1"},
+				    "gateway": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1"},
+				    "prefix": 24,
+                                    "ipv4AddressPortStep": "disabled",
+                                    "gatewayPortStep": "disabled"
 				}
 			    ]
 			}
@@ -51,14 +54,17 @@ params = {
 		    "ethernet": [
 			{
 			    "name": "Ethernet-2",
-			    "macAddress": {"start": "00:01:01:00:00:02", "direction": "increment", "step": "00:00:00:00:00:01", "portStep": "disabled"},
+			    "macAddress": {"start": "00:01:01:00:00:02", "direction": "increment", "step": "00:00:00:00:00:01"},
+                            "macAddressPortStep": "disabled",
 			    "vlanId": {"start": 101, "direction": "increment", "step": 0},
 			    "ipv4": [
 				{
 				    "name": "ipv4-2",
-				    "address": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1", "portStep": "disabled"},
-				    "gateway": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1", "portStep": "disabled"},
-				    "prefix": 24
+				    "address": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1"},
+				    "gateway": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1"},
+				    "prefix": 24,
+                                    "ipv4AddressPortStep": "disabled",
+                                    "gatewayPortStep": "disabled"
 				}
 			    ]
 			}
@@ -74,12 +80,11 @@ params = {
 	    "bidirectional": True,
 	    "trackBy": ["flowGroup0", "vlanVlanId0"],
 	    "endpoints": [
-		{"name": "FlowGroup-1", "sources": ["/topology/1"], "destinations": ["/topology/2"], "highLevelStreamElements": {}} 
-	    ],
+		{"name": "FlowGroup-1", "sources": ["/topology/1"], "destinations": ["/topology/2"]}],
 	    "configElements": [
 		{
-		    "transmissionType": "fixedPacketCount",
-		    "frameCount": 2000000,
+		    "transmissionType": "fixedFrameCount",
+		    "frameCount": 50000,
 		    "frameRate": 100,
 		    "frameRateType": "percentLineRate",
 		    "frameSize": 64

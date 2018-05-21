@@ -97,7 +97,7 @@ Configuring BGP in NGPF
     ...  AND  ixnObj.Config License Server Details  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
 
     Log To Console  Assigning ports ...
-    portMgmtObj.assignPorts  ${portList}  createVports=True
+    portMgmtObj.assignPorts  ${portList}  
 
     ${topology1Obj} =     protocolObj.Create Topology Ngpf  portList=${topology1Port}  topologyName=Topo1
     ${topology2Obj} =     protocolObj.Create Topology Ngpf  portList=${topology2Port}  topologyName=Topo2
@@ -143,7 +143,7 @@ Configuring BGP in NGPF
     
     # Check the traffic state before checking stats
     ${result} =  trafficObj.Get Transmission Type  ${configElementObj}
-    @{expectedTrafficState}  Create List  stopped  stoppedWaitingForStats
+    @{expectedTrafficState}  Create List  stopped
     Run Keyword If  ('${result}' == "fixedFrameCount")  RunKeyword
     ...  trafficObj.Check Traffic State  expectedState=${expectedTrafficState}
 

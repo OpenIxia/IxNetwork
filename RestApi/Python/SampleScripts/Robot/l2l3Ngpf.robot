@@ -96,7 +96,7 @@ Configuring basic L2L3 in NGPF
     ...  AND  ixnObj.Config License Server Details  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
 
     Log To Console  Assigning ports ...
-    portMgmtObj.Assign Ports  ${portList}  createVports=True
+    portMgmtObj.Assign Ports  ${portList}
 
     Log To Console  Creating NGPF protocol stacks ...
     ${topology1Obj} =  protocolObj.Create Topology Ngpf  portList=${topology1Port}  topologyName=Topo1
@@ -133,7 +133,7 @@ Configuring basic L2L3 in NGPF
     
     # Check the traffic state before checking stats
     ${result} =  trafficObj.Get Transmission Type  ${configElementObj}
-    @{expectedTrafficState}  Create List  stopped  stoppedWaitingForStats
+    @{expectedTrafficState}  Create List  stopped
     Run Keyword If  ('${result}' == "fixedFrameCount")  RunKeyword
     ...  trafficObj.Check Traffic State  expectedState=${expectedTrafficState}
 

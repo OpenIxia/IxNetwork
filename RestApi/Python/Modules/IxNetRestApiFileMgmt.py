@@ -340,7 +340,12 @@ class FileMgmt(object):
                            "arg3": arg3}
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfig'
         response = self.ixnObj.post(url, data=dataReformatted, silentMode=silentMode)
-        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=timeout)
+        response = self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=timeout)
+        if response.json()['result'] != []:
+            for errorMsg in response.json()['result']:
+                self.ixnObj.logError('JSON Import: %s' % errorMsg)
+        else:
+            self.ixnObj.logInfo('\nimportJsonConfigObj: No error in JSON import')
 
     def importJsonConfigFile(self, jsonFileName, option='modify'):
         """

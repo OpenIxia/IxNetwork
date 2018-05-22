@@ -566,7 +566,7 @@ class Connect:
                 raise IxNetRestApiException('\n%s' % response.text)
 
             if counter < timeout and state == 'SUCCESS':
-                return
+                return response
 
             if counter == timeout and state != 'SUCCESS':
                 raise IxNetRestApiException('\n%s' % response.text)

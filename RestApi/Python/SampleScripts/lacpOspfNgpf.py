@@ -22,6 +22,9 @@
 #        - Start Traffic
 #        - Get stats
 #
+# NOTE
+#   - For IxVM ports, only VMware is supported. Not supported for KVM because of kernel limitations.
+#
 # USAGE
 #    python <script>.py windows
 #    python <script>.py linux

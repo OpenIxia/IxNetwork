@@ -6,7 +6,6 @@
 #
 # REQUIREMENTS
 #    - Python2.7 (Supports Python 2 and 3)
-#    - Python2.7
 #    - Python modules: requests
 #
 # DESCRIPTION

@@ -112,7 +112,7 @@ class Protocol(object):
         deviceGroupObj = response.json()['links'][0]['href']
         return deviceGroupObj
 
-    def createLacpNgpf(self, ethernetObj, **kwargs):
+    def configLacpNgpf(self, ethernetObj, **kwargs):
         """
         Description
             Create new LACP group.
@@ -144,11 +144,13 @@ class Protocol(object):
 
         lacpAttributes = ['administrativeKey', 'actorSystemId', 'actorSystemPriority', 'actorKey', 'actorPortNumber', 'actorPortPriority']
 
+        data = {}
         for lacpAttribute in lacpAttributes:
             if lacpAttribute in kwargs:
                 multiValue = lacpResponse.json()[lacpAttribute]
                 self.ixnObj.logInfo('\nConfiguring LACP attribute: %s' % lacpAttribute)
                 self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[lacpAttribute]})
+                data.update({'value': kwargs[lacpAttribute]})
 
         return lacpObj
 
@@ -224,13 +226,14 @@ class Protocol(object):
             self.configMultivalue(multivalue, 'counter', data=kwargs['macAddress'])
 
             # Config Mac Address Port Step
-            self.ixnObj.logInfo('\nConfigure MAC address port step')
-            portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
             if 'macAddressPortStep' in kwargs:
-                if kwargs['macAddressPortStep'] != 'disabled':
-                    self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['macAddressPortStep']})
-                if kwargs['macAddressPortStep'] == 'disabled':
-                    self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
+                self.ixnObj.logInfo('\nConfigure MAC address port step')
+                portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
+                if 'macAddressPortStep' in kwargs:
+                    if kwargs['macAddressPortStep'] != 'disabled':
+                        self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['macAddressPortStep']})
+                    if kwargs['macAddressPortStep'] == 'disabled':
+                        self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
 
         if 'vlanId' in kwargs and kwargs['vlanId'] != None:
             # Enable VLAN
@@ -286,7 +289,6 @@ class Protocol(object):
         else:
             # To create a new ISIS object
             url = self.ixnObj.httpHeader+obj + '/isisL3'
-            self.ixnObj.logInfo('\nCreating new ISIS in NGPF')
             response = self.ixnObj.post(url, data=data)
             isisObj = response.json()['links'][0]['href']
             
@@ -1173,7 +1175,6 @@ class Protocol(object):
                 response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=False)
                 # Verify if the Device Group is enabled. If not, don't go further.
                 enabledMultivalue = response.json()['enabled']
-                # touched
                 enabled = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=False)
                 if enabled[0] == 'true':
                     for counter in range(1,deviceGroupTimeout+1):
@@ -4082,3 +4083,113 @@ class Protocol(object):
         count = response.json()['count']
         newList = [asSetMode for counter in range(0,count)]
         self.ixnObj.configMultivalue(asSetModeMultivalue, 'valueList', {'values': newList})
+
+    def getNgpfObject(self, ngpfEndpointObjectName, name=None):
+        """
+        Description
+           Get the object handle based on the NGPF object name and the object's label name.
+        
+           For example:
+              protocolObj.getNgpfObject(ngpfEndpointObjectName='topology', name='Topo2')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/2
+
+              protocolObj.getNgpfObject(ngpfEndpointObjectName='ipv4', name='IPv4 1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+
+              protocolObj.getNgpfObject(ngpfEndpointObjectName='bgpIpv4Peer', name='bgp_2')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/2
+
+              protocolObj.getNgpfObject(ngpfEndpointObjectName='networkGroup', name='networkGroup1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
+
+              protocolObj.getNgpfObject(ngpfEndpointObjectName='ipv4PrefixPools', name='Basic IPv4 Addresses 1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup1/ipv4PrefixPools/1
+
+           ngpfObjectName: 
+              'topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6'
+              'isisL3', 'lacp', 'mpls'
+              'ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
+              'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
+              'lac', 'ldpBasicRouter', 'ldpBasicRouterV6', 'ldpConnectedInterface', 'ldpv6ConnectedInterface',
+              'ldpTargetedRouter', 'ldpTargetedRouterV6', 'lns', 'mldHost', 'mldQuerier', 'ptp', 'ipv6sr',
+              'openFlowController', 'openFlowSwitch', 'ospfv2', 'ospfv3', 'ovsdbcontroller', 'ovsdbserver',
+              'pcc', 'pce', 'pcepBackupPCEs', 'pimV4Interface', 'pimV6Interface', 'ptp', 'rsvpteIf',
+              'rsvpteLsps', 'tag', 'vxlan'
+
+           name: The name of the NGPF object.
+        """
+        ngpfMainObjectList = ['topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6', 'networkGroup', 'ipv4PrefixPools', 'ipv4PrefixPools']
+
+        ngpfL2ObjectList = ['isisL3', 'lacp', 'mpls']
+
+        ngpfL3ObjectList = ['ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
+                            'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
+                            'lac', 'ldpBasicRouter', 'ldpBasicRouterV6', 'ldpConnectedInterface', 'ldpv6ConnectedInterface',
+                            'ldpTargetedRouter', 'ldpTargetedRouterV6', 'lns', 'mldHost', 'mldQuerier', 'ptp', 'ipv6sr',
+                            'openFlowController', 'openFlowSwitch', 'ospfv2', 'ospfv3', 'ovsdbcontroller', 'ovsdbserver',
+                            'pcc', 'pce', 'pcepBackupPCEs', 'pimV4Interface', 'pimV6Interface', 'ptp', 'rsvpteIf',
+                            'rsvpteLsps', 'tag', 'vxlan'
+                        ]
+        
+        if ngpfEndpointObjectName not in ngpfL2ObjectList+ngpfL3ObjectList+ngpfMainObjectList:
+            raise IxNetRestApiException('\nError: No such ngpfEndpointObjectName: %s' % ngpfEndpointObjectName)
+
+        if ngpfEndpointObjectName in ngpfL2ObjectList + ngpfL3ObjectList:
+            if ngpfEndpointObjectName in ngpfL2ObjectList:
+                nodesList = [{'node': 'topology', 'properties': [], 'where': []},
+                             {'node': 'deviceGroup', 'properties': [], 'where': []},
+                             {'node': 'ethernet', 'properties': [], 'where': []}
+                ]
+
+            if ngpfEndpointObjectName in ngpfL3ObjectList:
+                nodesList = [{'node': 'topology', 'properties': [], 'where': []},
+                             {'node': 'deviceGroup', 'properties': [], 'where': []},
+                             {'node': 'ethernet', 'properties': [], 'where': []},
+                             {'node': 'ipv4', 'properties': [], 'where': []},
+                             {'node': 'ipv6', 'properties': [], 'where': []}
+                ]
+
+            nodesList.insert(len(nodesList), {'node': ngpfEndpointObjectName, 'properties': ['name'],
+                                              'where': [{'property': 'name', 'regex': name}]})
+
+        if ngpfEndpointObjectName not in ngpfL2ObjectList + ngpfL3ObjectList:
+            nodesList = []
+            ngpfEndpointIndex = ngpfMainObjectList.index(ngpfEndpointObjectName)
+            for eachNgpfEndpoint in ngpfMainObjectList[:ngpfEndpointIndex+1]:
+                if eachNgpfEndpoint == ngpfEndpointObjectName:
+                    nodesList.append({'node': eachNgpfEndpoint, 'properties': ['name'],
+                                      'where': [{'property': 'name', 'regex': name}]})
+                else:
+                    nodesList.append({'node': eachNgpfEndpoint, 'properties': [], 'where': []})
+
+        queryData = {'from': '/', 'nodes': nodesList}
+        queryResponse = self.ixnObj.query(data=queryData)
+
+        # Get a list of all the nested keys
+        def getObject(keys):
+            object = None
+            for key,value in keys.items():
+                # All the Topology Groups
+                if type(value) is list:
+                    for keyValue in value:
+                        # {'id': 1, 'href': '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1',
+                        #   'ethernet': [{'id': 1, 'href': '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1',
+                        #                 'ipv6': [],
+                        #                 'ipv4': [{'id': 1,
+                        #                           'href': '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1',
+                        #                           'bgpIpv4Peer': [{'id': 1, 'href': '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1', 'name': 'bgp_2'}]}]}], 'deviceGroup': []}
+
+                        for key,value in keyValue.items():
+                            if key == 'name' and value == name:
+                                return keyValue['href']
+
+                        object = getObject(keyValue)
+                        if object != None:
+                            return object
+            return None
+
+        objectHandle = getObject(queryResponse.json()['result'][0])
+        self.ixnObj.logInfo('\ngetNgpfObject: %s' % objectHandle)
+        return objectHandle
+
+

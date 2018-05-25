@@ -1023,6 +1023,33 @@ class Connect:
         self.waitForComplete(response, self.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'])
         return response.json()['result']
 
+    def getAttributeValue(self, obj, attribute):
+        """
+        Description
+           Based on the object handle, get the attribute and return the value.
+        
+        Parameter
+           obj: <str:obj>: An object handle: 
+                For example: If you want the ethernet MTU, then pass in the ethernet object handle:
+                            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}
+                            and set attribute='mtu'
+
+        Note:
+           Where to get the object's attribute names:
+              - Use the API browser and go to your object.
+              - All the attributes are listed on the right pane.
+        """
+        response = self.get(self.httpHeader + obj)
+        
+        # value: Could be /api/v1/sessions/{id}/ixnetwork/multivalue/{id} or the actual value
+        value = response.json()[attribute]
+        if type(value) == str and 'multivalue' in value:
+            multivalueObj = value
+            value = self.getMultivalueValues(multivalueObj)
+            return value
+        else:
+            return value
+
     def stdoutRedirect(self):
         """
         Description

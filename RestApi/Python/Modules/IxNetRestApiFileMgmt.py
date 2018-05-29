@@ -511,7 +511,7 @@ class FileMgmt(object):
         }
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/exportconfig'
         response = self.ixnObj.post(url, data=data)
-        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False)
+        response = self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False)
         return json.loads(response.json()['result'])
 
     def getJsonConfigPortList(self, jsonData):

@@ -55,7 +55,7 @@ try:
     enableDebugTracing = False
     deleteSessionAfterTest = True
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -94,10 +94,7 @@ try:
         else:
             raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
@@ -127,9 +124,12 @@ try:
     trafficObj = Traffic(mainObj)
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
-    # Uncomment this if traffic is fixed packet count because you want to assure that
-    # the stats are completely stopped before getting stats.
-    #mainObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
+    # Check the traffic state before getting stats.
+    #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
+    #    If you expect traffic to be stopped such as in fixedFrameCount and fixedDuration
+    #    or do you expect traffic to be started such as in continuous mode
+    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['started], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

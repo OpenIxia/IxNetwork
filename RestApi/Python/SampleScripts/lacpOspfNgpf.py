@@ -54,7 +54,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -95,7 +95,7 @@ try:
     # If the license is activated on the chassis's license server, this variable should be True.
     # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
@@ -119,10 +119,10 @@ try:
     ethernetLacpObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1, ethernetName='Ethernet-LACP')
     ethernetLacpObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2, ethernetName='Ethernet-LACP')
 
-    lacpObj1 = protocolObj.createLacpNgpf(ethernetLacpObj1, actorSystemId='00 00 00 00 00 01', actorKey=1,
+    lacpObj1 = protocolObj.configLacpNgpf(ethernetLacpObj1, actorSystemId='00 00 00 00 00 01', actorKey=1,
                                           administrativeKey=1, actorSystemPriority=1, actorPortNumber=1, actorPortPriority=1)
 
-    lacpObj2 = protocolObj.createLacpNgpf(ethernetLacpObj2, actorSystemId='00 00 00 00 00 02', actorKey=1,
+    lacpObj2 = protocolObj.configLacpNgpf(ethernetLacpObj2, actorSystemId='00 00 00 00 00 02', actorKey=1,
                                           administrativeKey=1, actorSystemPriority=1, actorPortNumber=1, actorPortPriority=1)
 
     # Device Group for protocols

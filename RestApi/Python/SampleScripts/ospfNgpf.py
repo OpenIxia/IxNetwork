@@ -50,7 +50,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -88,10 +88,7 @@ try:
 
     mainObj.newBlankConfig()
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
@@ -218,9 +215,9 @@ try:
     # Check the traffic state before getting stats.
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
     #    If you expect traffic to be stopped such as in fixedFrameCount and fixedDuration
-    #    or do you expect traffic to be started such as in continuous mode.
-    trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
-    #trafficObj.checkTrafficState(expectedState=['started', 'startedWaitingForStats'], timeout=45)
+    #    or do you expect traffic to be started such as in continuous mode
+    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['started], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

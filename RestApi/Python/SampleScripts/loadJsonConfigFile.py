@@ -49,8 +49,9 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True
     jsonConfigFile = 'bgp.json'
+    jsonConfigFile = 'bgp_ngpf_hw_8.42.json'
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -87,10 +88,7 @@ try:
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
@@ -98,8 +96,7 @@ try:
     jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
 
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
-    fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=300)
-    portObj.verifyPortState()
+    portObj.assignPorts(portList)
 
     # Example: How to modify
     #    Mofify the BGP configuration using JSON XPATH. XPATH are obtained from a JSON exported config file.
@@ -127,8 +124,8 @@ try:
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
     #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
     #    or do you expect traffic to be started such as in continuous mode.
-    #trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
-    trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
+    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

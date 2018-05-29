@@ -52,7 +52,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -93,25 +93,20 @@ try:
 
     mainObj.newBlankConfig()
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     portObj.assignPorts(portList)
 
     protocolObj = Protocol(mainObj, portObj)
-    topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
-                                                  topologyName='Topo1')
+    topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]], topologyName='Topo1')
     
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
     
-    topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
-                                                  topologyName='Topo2')
+    topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
     
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
@@ -161,40 +156,29 @@ try:
                                           prefix=24,
                                           resolveGateway=True)
     
-    # flap = true or false.
-    #    If there is only one host IP interface, then single value = True or False.
-    #    If there are multiple host IP interfaces, then single value = a list ['true', 'false']
-    #           Provide a list of total true or false according to the total amount of host IP interfaces.
     bgpObj1 = protocolObj.configBgp(ipv4Obj1,
                                     name = 'bgp_1',
                                     enableBgp = True,
                                     holdTimer = 90,
-                                    dutIp={'start': '1.1.1.2',
-                                           'direction': 'increment',
-                                           'step': '0.0.0.0'},
+                                    dutIp={'start': '1.1.1.2', 'direction': 'increment', 'step': '0.0.0.0'},
                                     localAs2Bytes = 101,
                                     #localAs4Bytes = 108,
                                     #enable4ByteAs = True,
                                     enableGracefulRestart = False,
                                     restartTime = 45,
                                     type = 'internal',
-                                    enableBgpIdSameasRouterId = True,
-                                    staleTime = 0)
+                                    enableBgpIdSameasRouterId = True)
 
     bgpObj2 = protocolObj.configBgp(ipv4Obj2,
                                     name = 'bgp_2',
                                     enableBgp = True,
                                     holdTimer = 90,
-                                    dutIp={'start': '1.1.1.1',
-                                           'direction': 'increment',
-                                           'step': '0.0.0.0'},
+                                    dutIp={'start': '1.1.1.1', 'direction': 'increment', 'step': '0.0.0.0'},
                                     localAs2Bytes = 101,
                                     enableGracefulRestart = False,
                                     restartTime = 45,
                                     type = 'internal',
-                                    enableBgpIdSameasRouterId = True,
-                                    staleTime = 0,
-                                    flap = False)
+                                    enableBgpIdSameasRouterId = True)
 
     networkGroupObj1 = protocolObj.configNetworkGroup(create=deviceGroupObj1,
                                                       name='networkGroup1',

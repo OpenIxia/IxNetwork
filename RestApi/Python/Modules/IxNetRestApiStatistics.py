@@ -96,7 +96,7 @@ class Statistics(object):
             response = self.ixnObj.get(viewObject+'/page', silentMode=silentMode)
             totalPages = response.json()['totalPages']
             if totalPages == 'null':
-                self.ixnObj.logInfo('\nGetting total pages is not ready yet. Waiting %d/30 seconds' % counter)
+                self.ixnObj.logInfo('\nGetting total pages is not ready yet. Waiting %d/30 seconds' % counter, timestamp=False)
                 time.sleep(1)
             if totalPages != 'null':
                 break
@@ -136,14 +136,14 @@ class Statistics(object):
                 if csvFile != None:
                     csvWriteObj.writerow(statValue[0])
                 if displayStats:
-                    self.ixnObj.logInfo('\nRow: %d' % flowNumber)
+                    self.ixnObj.logInfo('\nRow: %d' % flowNumber, timestamp=False)
                 statDict[flowNumber] = {}
                 index = 0
                 for statValue in statValue[0]:
                     statName = columnList[index]
                     statDict[flowNumber].update({statName: statValue})
                     if displayStats:
-                        self.ixnObj.logInfo('\t%s: %s' % (statName, statValue))
+                        self.ixnObj.logInfo('\t%s: %s' % (statName, statValue), timestamp=False)
                     index += 1
                 flowNumber += 1
 

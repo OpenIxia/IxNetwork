@@ -11,7 +11,7 @@
 #
 
 from __future__ import absolute_import, print_function, division
-import os, re, sys, requests, json, time, subprocess, traceback, time
+import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
 
 class IxNetRestApiException(Exception): pass
 
@@ -147,7 +147,7 @@ class Connect:
 
             # Instantiate a new log file here.
             with open(self.restLogFile, 'w') as restLogFile:
-                restLogFile.write('')
+                restLogFile.write('Date: {0}\nTime: {1}\n\n'.format(self.getDate, self.getTime))
 
         # Make Robot print to stdout
         if self.robotFrameworkStdout:
@@ -174,7 +174,7 @@ class Connect:
 
         if serverOs == 'linux':
             if self.apiServerPort == None:
-                self.apiServerPort == 443
+                self.apiServerPort = 443
 
             if apiKey != None and sessionId == None:
                 raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
@@ -237,8 +237,9 @@ class Connect:
             /api/v1/sessions/1/ixnetwork/operations
         """
         if silentMode is False:
-            self.logInfo('\nGET: {0}'.format(restApi))
-            self.logInfo('HEADERS: {0}'.format(self.jsonHeader))
+            #self.logInfo('\nGET: {0}'.format(restApi))
+            #self.logInfo('HEADERS: {0}'.format(self.jsonHeader))
+            self.logInfo('\n\tGET: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
 
         try:
             # For binary file
@@ -248,7 +249,7 @@ class Connect:
                 response = requests.get(restApi, headers=self.jsonHeader, verify=self.verifySslCert)
 
             if silentMode is False:
-                self.logInfo('STATUS CODE: {0}'.format(response.status_code))
+                self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
             if not str(response.status_code).startswith('2'):
                 if ignoreError == False:
                     if 'message' in response.json() and response.json()['messsage'] != None:
@@ -282,9 +283,10 @@ class Connect:
             data = json.dumps(data)
 
         if silentMode == False:
-            self.logInfo('\nPOST: %s' % restApi)
-            self.logInfo('DATA: %s' % data)
-            self.logInfo('HEADERS: %s' % self.jsonHeader)
+            #self.logInfo('\nPOST: %s' % restApi)
+            #self.logInfo('DATA: %s' % data)
+            #self.logInfo('HEADERS: %s' % self.jsonHeader)
+            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
             if self.connectToLinuxChassisIp and json.loads(data) == {}:
@@ -295,7 +297,7 @@ class Connect:
 
             # 200 or 201
             if silentMode == False:
-                self.logInfo('STATUS CODE: %s' % response.status_code)
+                self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
             if str(response.status_code).startswith('2') == False:
                 if ignoreError == False:
                     if 'errors' in response.json():
@@ -321,14 +323,15 @@ class Connect:
            silentMode: (bool):  To display on stdout: URL, data and header info.
         """
         if silentMode == False:
-            self.logInfo('\nPATCH: %s' % restApi)
-            self.logInfo('DATA: %s' % data)
-            self.logInfo('HEADERS: %s' % self.jsonHeader)
+            #self.logInfo('\nPATCH: %s' % restApi)
+            #self.logInfo('DATA: %s' % data)
+            #self.logInfo('HEADERS: %s' % self.jsonHeader)
+            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
             response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
             if silentMode == False:
-                self.logInfo('STATUS CODE: %s' % response.status_code)
+                self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
             if not str(response.status_code).startswith('2'):
                 if 'message' in response.json() and response.json()['messsage'] != None:
                     self.logWarning('\n%s' % response.json()['message'])
@@ -352,18 +355,28 @@ class Connect:
         if headers != None:
             self.jsonHeader = headers
 
-        self.logInfo('\nDELETE: %s' % restApi)
-        self.logInfo('DATA: %s' % data)
-        self.logInfo('HEADERS: %s' % self.jsonHeader)
+        #self.logInfo('\nDELETE: %s' % restApi)
+        #self.logInfo('DATA: %s' % data)
+        #self.logInfo('HEADERS: %s' % self.jsonHeader)
+        self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+
         try:
             response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
-            self.logInfo('STATUS CODE: %s' % response.status_code)
+            self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
             if not str(response.status_code).startswith('2'):
                 self.showErrorMessage()
                 raise IxNetRestApiException('DELETE error: {0}\n'.format(response.text))
             return response
         except requests.exceptions.RequestException as errMsg:
             raise IxNetRestApiException('DELETE error: {0}\n'.format(errMsg))
+
+    def getDate(self):
+        dateAndTime = str(datetime.datetime.now()).split(' ')
+        return dateAndTime[0]
+
+    def getTime(self):
+        dateAndTime = str(datetime.datetime.now()).split(' ')
+        return dateAndTime[1]
 
     def getSelfObject(self):
         """
@@ -402,7 +415,7 @@ class Connect:
         if self.serverOs == 'windowsConnectionMgr':
             # For Connection Manager, requires a POST to automatically get the next session.
             # {'links': [{'href': '/api/v1/sessions/8020', 'method': 'GET', 'rel': 'self'}]}
-            self.logInfo('\nPlease wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
+            self.logInfo('Please wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
             response = self.post(url)
             # Just get the session ID number
             sessionIdNumber = response.json()['links'][0]['href'].split('/')[-1]
@@ -439,7 +452,7 @@ class Connect:
         if self.deleteSessionAfterTest:
             self.delete(self.sessionId)
 
-    def logInfo(self, msg, end='\n'):
+    def logInfo(self, msg, end='\n', timestamp=True):
         """
         Description
            An internal function to print info to stdout
@@ -447,6 +460,14 @@ class Connect:
         Parameters
            msg: (str): The message to print.
         """
+        currentTime = self.getTime()
+
+        if timestamp:
+            msg = '\n' + currentTime + ': ' + msg
+        else:
+            # No timestamp and no newline are mainly for verifying states and status
+            msg = msg
+
         print('{0}'.format(msg), end=end)
         if self.generateRestLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
@@ -455,7 +476,7 @@ class Connect:
         if self.robotFrameworkStdout:
             self.robotStdout.log_to_console(msg)
 
-    def logWarning(self, msg, end='\n'):
+    def logWarning(self, msg, end='\n', timestamp=True):
         """
         Description
            An internal function to print warnings to stdout.
@@ -463,7 +484,15 @@ class Connect:
         Parameter
            msg: (str): The message to print.
         """
-        print('Warning: {0}'.format(msg), end=end)
+        currentTime = self.getTime()
+
+        if timestamp:
+            msg = '\n' + currentTime + ': ' + msg
+        else:
+            # No timestamp and no newline are mainly for verifying states and status
+            msg = msg
+
+        print('{0}'.format(msg), end=end)
         if self.generateRestLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write('Warning: '+msg+end)
@@ -471,7 +500,7 @@ class Connect:
         if self.robotFrameworkStdout:
             self.robotStdout.log_to_console(msg)
 
-    def logError(self, msg, end='\n'):
+    def logError(self, msg, end='\n', timestamp=True):
         """
         Description
            An internal function to print error to stdout.
@@ -479,7 +508,16 @@ class Connect:
         Parameter
            msg: (str): The message to print.
         """
-        print('\nERROR: {0}'.format(msg), end=end)
+
+        currentTime = self.getTime()
+
+        if timestamp:
+            msg = '\n' + currentTime + ': ' + msg
+        else:
+            # No timestamp and no newline are mainly for verifying states and status
+            msg = msg
+
+        print('{0}'.format(msg), end=end)
         if self.generateRestLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write('Error: '+msg+end)
@@ -532,8 +570,8 @@ class Connect:
            timeout: (int): The time allowed to wait for success completion in seconds.
         """
         if silentMode == False:
-            self.logInfo('\nwaitForComplete:')
-            self.logInfo("\tState: %s " %response.json()["state"])
+            self.logInfo('\nwaitForComplete:', timestamp=False)
+            self.logInfo("\tState: %s " % response.json()["state"], timestamp=False)
 
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
@@ -545,7 +583,7 @@ class Connect:
             raise IxNetRestApiException(response.json()["errors"][0])
 
         if response.json()['state'] == "SUCCESS":
-            return 0
+            return response
 
         if response.json()['state'] in ["ERROR", "EXCEPTION"]:
             raise IxNetRestApiException('\nWaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
@@ -554,15 +592,15 @@ class Connect:
             response = self.get(url, silentMode=True)
             state = response.json()["state"]
             if state != 'SUCCESS':
-                self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout))
+                self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout), timestamp=False)
             if state == 'SUCCESS':
-                self.logInfo("\tState: {0}".format(state))
+                self.logInfo("\tState: {0}".format(state), timestamp=False)
 
             if counter < timeout and state in ["IN_PROGRESS", "down"]:
                 time.sleep(1)
                 continue
 
-            if counter < timeout and state in ["ERROR"]:
+            if counter < timeout and state in ["ERROR", "EXCEPTION"]:
                 raise IxNetRestApiException('\n%s' % response.text)
 
             if counter < timeout and state == 'SUCCESS':
@@ -571,6 +609,7 @@ class Connect:
             if counter == timeout and state != 'SUCCESS':
                 raise IxNetRestApiException('\n%s' % response.text)
 
+    '''
     def connectIxChassis(self, chassisIp):
         """
         Description
@@ -584,15 +623,15 @@ class Connect:
         """
         url = self.sessionUrl+'/availableHardware/chassis'
         data = {'hostname': chassisIp}
-        self.logInfo('\nConnect to Ixia chassis')
+        self.logInfo('Connect to Ixia chassis')
         response = self.post(url, data=data)
         chassisIdObj = response.json()['links'][0]['href']
         # Chassis states: down, polling, ready
-        self.logInfo('\nWait for chassis connection to come up\n')
+        self.logInfo('Wait for chassis connection to come up\n')
         for timer in range(1,61):
             response = self.get(self.httpHeader + chassisIdObj, silentMode=True)
             currentStatus = response.json()['state']
-            self.logInfo('\tconnectIxChassis {0}: Status: {1}'.format(chassisIp, currentStatus))
+            self.logInfo('connectIxChassis {0}: Status: {1}'.format(chassisIp, currentStatus), timestamp=False)
             if currentStatus != 'ready' and timer < 60:
                 time.sleep(1)
             if currentStatus != 'ready' and timer == 60:
@@ -619,8 +658,9 @@ class Connect:
         for eachChassisId in response.json():
             if eachChassisId['hostname'] == chassisIp:
                 chassisIdUrl = eachChassisId['links'][0]['href']
-                self.logInfo('\ndisconnectIxChassis: %s' % chassisIdUrl)
+                self.logInfo('disconnectIxChassis: %s' % chassisIdUrl)
                 response = self.delete(self.httpHeader+chassisIdUrl)
+    '''
 
     def connectToLinuxIxosChassis(self, chassisIp, username, password):
         url = 'https://{0}/platform/api/v1/auth/session'.format(chassisIp)
@@ -655,15 +695,11 @@ class Connect:
         if self.apiKey is None:
             # 1: Connect to the Linux API server
             url = 'https://{0}:{1}/api/v1/auth/session'.format(linuxServerIp, linuxServerIpPort)
-            self.logInfo('\nconnectToLinuxApiServer: %s' % url)
+            self.logInfo('connectToLinuxApiServer: %s' % url)
             response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)
             if not str(response.status_code).startswith('2'):
                 raise IxNetRestApiException('\nLogin username/password failed\n')
             self.apiKey = response.json()['apiKey']
-
-            # 2: Create new session
-            #if self.apiServerPort != None:
-            #    linuxServerIp = linuxServerIp + ':' + str(self.apiServerPort)
 
             url = 'https://{0}:{1}/api/v1/sessions'.format(linuxServerIp, linuxServerIpPort)
             if self.webQuickTest == False:
@@ -672,7 +708,7 @@ class Connect:
                 data = {'applicationType': 'ixnetwork'}
 
             self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
-            self.logInfo('\nlinuxServerCreateSession')
+            self.logInfo('linuxServerCreateSession')
             response = self.post(url, data=data, headers=self.jsonHeader)
 
             self.sessionIdNumber = response.json()['id']
@@ -691,15 +727,12 @@ class Connect:
                 self.httpHeader + '/' + linuxServerIpPort
             
             self.sessionUrl = self.sessionId+'/ixnetwork'
-            #self.sessionUrl = 'https://{0}/api/v1/sessions/{1}/ixnetwork'.format(linuxServerIp, self.sessionIdNumber)
-            #self.httpHeader = self.sessionUrl.split('/api')[0]
 
             # /api/v1/sessions/4/ixnetwork
             match = re.match('.*(/api.*)', self.sessionId)
             self.apiSessionId = match.group(1) + '/ixnetwork'
             
             # 3: Start the new session
-            self.logInfo('\nlinuxServerStartSession: %s' % self.sessionId)
             response = self.post(self.sessionId+'/operations/start')
             if self.linuxServerWaitForSuccess(response.json()['url'], timeout=60) == 1:
                 raise IxNetRestApiException
@@ -712,10 +745,6 @@ class Connect:
         # If an API-Key is provided, then verify the session ID connection.
         if self.apiKey:
             self.get(self.sessionId)
-
-        self.logInfo('sessionId: %s' % self.sessionId)
-        self.logInfo('\nsessionUrl: %s' % self.sessionUrl)
-        self.logInfo('apiKey: %s' % self.apiKey)
 
     def linuxServerConfigGlobalLicenseServer(self, linuxServerIp, licenseServerIp, licenseMode, licenseTier):
         """
@@ -734,15 +763,17 @@ class Connect:
         """
 
         staticUrl = 'https://{linuxServerIp}/api/v1/sessions/9999/ixnetworkglobals/license'.format(linuxServerIp=linuxServerIp)
-        self.logInfo('\nlinuxServerConfigGlobalLicenseServer:\n\t{0}\n\t{1}\n\t{2}\n'. format(licenseServerIp,
-                                                                                       licenseMode,
-                                                                                       licenseTier))
+        self.logInfo('linuxServerConfigGlobalLicenseServer:\n\t{0}\n\t{1}\n\t{2}\n'. format(licenseServerIp,
+                                                                                            licenseMode,
+                                                                                            licenseTier),
+                     timestamp=False)
+
         response = self.patch(staticUrl, data={'servers': [licenseServerIp], 'mode': licenseMode, 'tier': licenseTier})
         response = self.get(staticUrl)
         licenseServerIp = response.json()['servers'][0]
         licenseServerMode = response.json()['mode']
         licenseServerTier = response.json()['tier']
-        self.logInfo('\nLinuxApiServer static license server:')
+        self.logInfo('LinuxApiServer static license server:')
         self.logInfo('\t', licenseServerIp)
         self.logInfo('\t', licenseServerMode)
         self.logInfo('\t', licenseServerTier)
@@ -759,12 +790,12 @@ class Connect:
             GET: /api/v1/sessions/9999/ixnetworkglobals/license
         """
         staticUrl = 'https://{linuxServerIp}/api/v1/sessions/9999/ixnetworkglobals/license'.format(linuxServerIp=linuxServerIp)
-        self.logInfo('\nlinuxServerGetGlobalLicense: %s ' % linuxServerIp)
+        self.logInfo('linuxServerGetGlobalLicense: %s ' % linuxServerIp)
         response = self.get(staticUrl, silentMode=False)
         licenseServerIp = response.json()['servers'][0]
         licenseServerMode = response.json()['mode']
         licenseServerTier = response.json()['tier']
-        self.logInfo('\nlinuxServerGetGlobalLicenses:')
+        self.logInfo('linuxServerGetGlobalLicenses:')
         self.logInfo('\t%s' % licenseServerIp)
         self.logInfo('\t%s' % licenseServerMode)
         self.logInfo('\t%s' % licenseServerTier)
@@ -804,10 +835,10 @@ class Connect:
             GET: /api/v1/sessions/{id}/globals/licensing
         """
         response = self.get(self.sessionUrl+'/globals/licensing')
-        self.logInfo('\nVerifying sessionId license server: %s' % self.sessionUrl)
-        self.logInfo('\t%s' % response.json()['licensingServers'])
-        self.logInfo('\t%s'%  response.json()['mode'])
-        self.logInfo('\t%s' % response.json()['tier'])
+        self.logInfo('\nVerifying sessionId license server: %s' % self.sessionUrl, timestamp=False)
+        self.logInfo('\t%s' % response.json()['licensingServers'], timestamp=False)
+        self.logInfo('\t%s'%  response.json()['mode'], timestamp=False)
+        self.logInfo('\t%s' % response.json()['tier'], timestamp=False)
 
     def linuxServerStopAndDeleteSession(self):
         """
@@ -844,7 +875,6 @@ class Connect:
         else:
             sessionId = self.sessionId
 
-        self.logInfo('\nlinuxServerStopOperations: %s' % sessionId)
         response = self.post(sessionId+'/operations/stop')
         if self.linuxServerWaitForSuccess(response.json()['url'], timeout=90) == 1:
             raise IxNetRestApiException
@@ -865,7 +895,6 @@ class Connect:
         else:
             sessionId = self.sessionId
 
-        self.logInfo('\nlinuxServerDeleteSession: Deleting...%s' % sessionId)
         response = self.delete(sessionId)
 
     def linuxServerWaitForSuccess(self, url, timeout=120):
@@ -879,10 +908,11 @@ class Connect:
         """
         data = {'applicationType': 'ixnrest'}
         jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
+        self.logInfo('linuxServerWaitForSuccess')
         for counter in range(1,timeout+1):
             response = self.get(url, data=data, silentMode=True)
             currentStatus = response.json()['message']
-            self.logInfo('CurrentStatus: {0}  {1}/{2} seconds'.format(currentStatus, counter, timeout))
+            self.logInfo('\tCurrentStatus: {0}:  {1}/{2} seconds'.format(currentStatus, counter, timeout), timestamp=False)
             if counter < timeout+1 and currentStatus != 'Operation successfully completed':
                 time.sleep(1)
             if counter == timeout+1 and currentStatus != 'Operation successfully completed':
@@ -902,7 +932,6 @@ class Connect:
            /api/v1/sessions/{1}/ixnetwork/operations/newconfig
         """
         url = self.sessionUrl+'/operations/newconfig'
-        self.logInfo('\nnewBlankConfig')
         response = self.post(url)
         url = self.sessionUrl+'/operations/newconfig/'+response.json()['id']
         self.waitForComplete(response, url)
@@ -925,7 +954,7 @@ class Connect:
         response = self.post(self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo', data={'arg1': [chassisObj]})
         self.waitForComplete(response, self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo')
 
-    def query(self, data, silentMode=True):
+    def query(self, data, silentMode=False):
         """
         Description
            Query for objects using filters.
@@ -1014,7 +1043,7 @@ class Connect:
         response = self.get(self.httpHeader+multivalueObj+'?includes=count', silentMode=silentMode)
         count = response.json()['count']
         if silentMode == False:
-            self.logInfo('\ngetMultivalueValues: {0} Count={1}'.format(multivalueObj, count))
+            self.logInfo('getMultivalueValues: {0} Count={1}'.format(multivalueObj, count))
         data = {'arg1': multivalueObj,
                 'arg2': 0,
                 'arg3': count
@@ -1023,10 +1052,10 @@ class Connect:
         self.waitForComplete(response, self.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'])
         return response.json()['result']
 
-    def getAttributeValue(self, obj, attribute):
+    def getObjAttributeValue(self, obj, attribute):
         """
         Description
-           Based on the object handle, get the attribute and return the value.
+           Based on the object handle, get any property attribute and return the value.
         
         Parameter
            obj: <str:obj>: An object handle: 
@@ -1050,6 +1079,94 @@ class Connect:
         else:
             return value
 
+    def getObjectFromQueryDict_backup(self, queryDict, name=None, endpointAttribute=None):
+        object = None
+        for key,value in queryDict.items():
+            # All the Topology Groups
+            if type(value) is list:
+                for keyValue in value:
+                    for deepKey,deepValue in keyValue.items():
+                        if deepKey == 'name' and deepValue == name:
+                            return keyValue['href']
+                            
+                    object = self.getObjectFromQueryDict(keyValue, name)
+                    if object != None:
+                        return object
+
+        return object
+
+    def getMtu(self, routerId):
+        deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
+        ethernetObjHandle = deviceGroupObjHandle + '/ethernet/1'
+        return self.getObjAttributeValue(ethernetObjHandle, 'mtu')
+
+    def getMac(self, routerId):
+        # 1> Get the Device Group that has routerId
+        deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
+        # 2> Append the /ethernet/1 endpoint object to the Device Group object.
+        ethernetObjHandle = deviceGroupObjHandle + '/ethernet/1'
+        # 3> Get the mac address using the ethernetObjHandle
+        return self.getObjAttributeValue(ethernetObjHandle, 'mac')
+
+    def getRouterIdDeviceGroupObjHandle(self, routerId=None, queryDict=None, runQuery=True):
+        """
+        Description
+            Get the Device Group object handle for the routerId.
+            
+            Note:
+               A Device Group could have many IP host (sessions). This is configured as multipliers in
+               a Device Group.  If multiplier = 5, there will be 5 IP host. Each host will
+               have a unique router ID identifier.
+               To get the Device Group that has a specific router ID, pass in the router ID for the
+               parameter routerId.
+
+        Parameter
+            queryDict: <dict>: This parameter is only used internally. Ignore this parameter.
+            routerId: <str>: The router ID in the format of 192.0.0.1.
+            runQuery: <bool>: This parameter is only used internally.  Ignore this parameter.
+
+        Example:
+            obj = mainObj.getRouterIdDeviceGroupObjHandle(routerId='192.0.0.3')
+
+        Return
+            - deviceGroup object handle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+            - Exception error if routerId is not found in any Device Group
+        """
+        if runQuery:
+            queryData = {'from': '/',
+                        'nodes': [{'node': 'topology',    'properties': ['name'], 'where': []},
+                                  {'node': 'deviceGroup', 'properties': [], 'where': []},
+                                  {'node': 'routerData', 'properties': ['routerId'], 'where': []}
+                              ]
+                        }
+            queryResponse = self.query(data=queryData)
+            queryDict = queryResponse.json()['result'][0]
+        
+        object = None
+        for key,value in queryDict.items():
+            # All the Topology Groups
+            if type(value) is list:
+                for keyValue in value:
+                    print()
+                    for deepKey,deepValue in keyValue.items():
+                        if deepKey == 'routerId':
+                            # deepValue = /api/v1/sessions/1/ixnetwork/multivalue/1054
+                            # ['192.0.0.1', '192.0.0.2', '192.0.0.3']
+                            multivalueObj = deepValue
+                            value = self.getMultivalueValues(multivalueObj)
+                            if routerId in value:
+                                # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/routerData/1
+                                match = re.match('(/api.*)/routerData', keyValue['href'])
+                                deviceGroupObj = match.group(1)
+                                self.logInfo('deviceGroupHandle for routerId: {0}\n\t{1}'.format(routerId, deviceGroupObj))
+                                return deviceGroupObj
+
+                    object = self.getRouterIdDeviceGroupObjHandle(queryDict=keyValue, routerId=routerId, runQuery=False)
+                    if object != None:
+                        return object
+
+        raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
+        
     def stdoutRedirect(self):
         """
         Description

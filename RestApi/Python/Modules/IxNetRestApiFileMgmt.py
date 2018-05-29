@@ -1,4 +1,4 @@
-import re, os, json
+import sys, re, os, json
 from IxNetRestApi import IxNetRestApiException
 
 class FileMgmt(object):
@@ -332,20 +332,29 @@ class FileMgmt(object):
         """
         if option is 'modify':
             arg3 = False
+            self.jsonPrettyprint(dataObj)
+
         if option is 'newConfig':
             arg3 = True
 
         dataReformatted = {"arg1": "/api/v1/sessions/1/ixnetwork/resourceManager",
                            "arg2": json.dumps(dataObj),
                            "arg3": arg3}
+
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfig'
         response = self.ixnObj.post(url, data=dataReformatted, silentMode=silentMode)
         response = self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=timeout)
         if response.json()['result'] != []:
-            for errorMsg in response.json()['result']:
-                self.ixnObj.logError('JSON Import: %s' % errorMsg)
+            if option == 'modify':
+                errorFlag = 0
+                for errorMsg in response.json()['result']:
+                    self.ixnObj.logError('JSON Import: %s' % errorMsg, timestamp=False)
+                    errorFlag = 1
+
+                if errorFlag:
+                    raise IxNetRestApiException('\nimportJsonConfigObj Error')
         else:
-            self.ixnObj.logInfo('\nimportJsonConfigObj: No error in JSON import')
+            self.ixnObj.logInfo('importJsonConfigObj: No error in JSON import')
 
     def importJsonConfigFile(self, jsonFileName, option='modify'):
         """
@@ -367,7 +376,7 @@ class FileMgmt(object):
             arg3 = True
 
         # 1> Read the config file
-        self.ixnObj.logInfo('\nReading saved config file')
+        self.ixnObj.logInfo('Reading saved config file')
         with open(jsonFileName, mode='r') as file:
             configContents = file.read()
 
@@ -380,7 +389,7 @@ class FileMgmt(object):
             octetStreamHeader = self.ixnObj.jsonHeader
 
         uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
-        self.ixnObj.logInfo('\nUploading file to server:', uploadFile)
+        self.ixnObj.logInfo('Uploading file to server:', uploadFile)
         response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=True)
 
         # 3> Tell IxNetwork to import the JSON config file
@@ -436,7 +445,7 @@ class FileMgmt(object):
         else:
             destinationPath = os.getcwd()
 
-        self.ixnObj.logInfo('\nStoring the exported file to: %s' % destinationPath)
+        self.ixnObj.logInfo('Storing the exported file to: %s' % destinationPath)
 
         fileName = jsonFileNameTemp[-1]
         # sessionId example: /api/v1/sessions/{id}/ixnetwork
@@ -521,6 +530,54 @@ class FileMgmt(object):
             portList.append([match.group(1), match.group(2), match.group(3)])
         return portList
 
+    def jsonAssignPorts_backup(self, jsonObject, portList, timeout=90):
+        """
+        Description
+            Reassign ports.  Will remove the existing JSON config datas: availableHardware, cardId, portId.
+            Then recreate JSON datas for availableHardware based on the portList input.
+
+        Parameters
+            jsonObject: (json object): The JSON config object.
+            portList: (list) 
+               Example:
+                        portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
+            timeout: (int): The timeout value to declare as failed.
+        """
+        #jsonObject.pop("availableHardware")
+        #self.jsonPrettyprint(jsonObject)
+        #import sys
+        #sys.exit()
+        #self.importJsonConfigObj(dataObj=jsonObject, option='modify')
+        #return
+
+        jsonObject = []
+        ixChassisId = 1
+        vportId = 1
+        for ports in portList:
+            ixChassisIp = ports[0]
+            cardId = ports[1]
+            portId = ports[2]
+        
+            print('\n----- Updating:', ixChassisIp, cardId, portId)
+            # Update availableHardware
+            jsonObject.append({'xpath': '/availableHardware/chassis[1]', 'hostname': ixChassisIp})
+
+            jsonObject.append({"xpath": "/availableHardware/chassis[@alias = '{0}']/card[{1}]".format(ixChassisIp, cardId)})
+            jsonObject.append({'xpath': "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
+
+            # Update vport
+            jsonObject.append({"xpath": "/vport[{0}]".format(vportId),
+                               "connectedTo": "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
+
+            vportId += 1
+            ixChassisId += 1
+
+
+        self.jsonPrettyprint(jsonObject)
+        self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
+        self.ixnObj.logInfo('Ports rebooting ...')
+        self.importJsonConfigObj(dataObj=jsonObject, option='modify', timeout=timeout)
+
     def jsonAssignPorts(self, jsonObject, portList, timeout=90):
         """
         Description
@@ -557,17 +614,20 @@ class FileMgmt(object):
             cardList = []
             if cardId not in cardList:
                 # If card doesn't exist in list, create a new card.
-                jsonObject["availableHardware"]["chassis"][0]["card"].insert(0, {"xpath": "/availableHardware/chassis[@alias = {0}/card[{1}]".format(ixChassisIp, cardId)})
+                jsonObject["availableHardware"]["chassis"][0]["card"].insert(0, {"xpath": "/availableHardware/chassis[@alias = '{0}']/card[{1}]".format(ixChassisIp, cardId)})
                 jsonObject["availableHardware"]["chassis"][0]["card"][0].update({"port": []})
                 cardList.append(cardId)
+
             self.ixnObj.logInfo('\njsonAssignPorts: %s %s %s' % (ixChassisIp, cardId, portId))
-            jsonObject["availableHardware"]["chassis"][0]["card"][0]["port"].insert(0, {"xpath": "/availableHardware/chassis[@alias = {0}/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
-            jsonObject["vport"][vportId-1].update({"connectedTo": "/availableHardware/chassis[@alias = {0}]/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId),
+            jsonObject["availableHardware"]["chassis"][0]["card"][0]["port"].insert(0, {"xpath": "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
+
+            jsonObject["vport"][vportId-1].update({"connectedTo": "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId),
                                             "xpath": "/vport[{0}]".format(vportId)
                                           })
             vportId += 1
             ixChassisId += 1
-        self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
+
+        self.ixnObj.logInfo('Importing port mapping to IxNetwork')
         self.ixnObj.logInfo('Ports rebooting ...')
         self.importJsonConfigObj(dataObj=jsonObject, option='modify', timeout=timeout)
 
@@ -579,7 +639,6 @@ class FileMgmt(object):
         Parameter
            jsonFile: (json object): The json file to read.
         """
-        import sys
         if os.path.isfile(jsonFile) == False:
             raise IxNetRestApiException("JSON param file doesn't exists: %s" % jsonFile)
 
@@ -598,17 +657,17 @@ class FileMgmt(object):
            jsonFile (str): The the destination json file to write the json data.
            sortKeys: (bool): To sort the json object keys.
         """
-        print('\njsonWriteToFile ...')
+        self.ixnObj.logInfo('jsonWriteToFile ...')
         with open(jsonFile, 'w') as outFile:
             json.dump(dataObj, outFile, sort_keys=sortKeys, indent=4)
 
-    @staticmethod
-    def jsonPrettyprint(data, sortKeys=False, **kwargs):
+    def jsonPrettyprint(self,data, sortKeys=False, **kwargs):
         """
         Description
            Display the JSON data in human readable format with indentations.
         """
-        print('\n', json.dumps(data, indent=4, sort_keys=sortKeys))
+        self.ixnObj.logInfo('\nimportJsonConfigObj pretty print:', timestamp=False)
+        self.ixnObj.logInfo('\n\n{0}'.format(json.dumps(data, indent=4, sort_keys=sortKeys)), timestamp=False)
 
     def collectDiagnostics(self, diagZipFilename='ixiaDiagnostics.zip'):
         """

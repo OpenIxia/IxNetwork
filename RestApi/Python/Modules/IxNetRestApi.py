@@ -609,59 +609,6 @@ class Connect:
             if counter == timeout and state != 'SUCCESS':
                 raise IxNetRestApiException('\n%s' % response.text)
 
-    '''
-    def connectIxChassis(self, chassisIp):
-        """
-        Description
-           Connect to an Ixia chassis.
-
-        Paramter
-           chassisIp: (str): The chassis IP address.  This could be hardware and virtual chassis.
-
-        Syntax
-           /api/v1/sessions/{id}/ixnetwork/availableHardware/chassis
-        """
-        url = self.sessionUrl+'/availableHardware/chassis'
-        data = {'hostname': chassisIp}
-        self.logInfo('Connect to Ixia chassis')
-        response = self.post(url, data=data)
-        chassisIdObj = response.json()['links'][0]['href']
-        # Chassis states: down, polling, ready
-        self.logInfo('Wait for chassis connection to come up\n')
-        for timer in range(1,61):
-            response = self.get(self.httpHeader + chassisIdObj, silentMode=True)
-            currentStatus = response.json()['state']
-            self.logInfo('connectIxChassis {0}: Status: {1}'.format(chassisIp, currentStatus), timestamp=False)
-            if currentStatus != 'ready' and timer < 60:
-                time.sleep(1)
-            if currentStatus != 'ready' and timer == 60:
-                raise IxNetRestApiException('connectIxChassis: Connecting to chassis {0} failed'.format(chassisIp))
-            if currentStatus == 'ready' and timer < 60:
-                break
-
-        # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1
-        return self.httpHeader + chassisIdObj
-
-    def disconnectIxChassis(self, chassisIp):
-        """
-        Description
-           Disconnect the chassis (For both hardware or virtualChassis).
-
-        Parameter
-           chassisIp: (str): The chassis IP address.
-
-        Syntax
-            DELETE: /api/v1/sessions/{id}/ixnetwork/availableHardware/chassis/{id}
-        """
-        url = self.sessionUrl+'/availableHardware/chassis'
-        response = self.get(url)
-        for eachChassisId in response.json():
-            if eachChassisId['hostname'] == chassisIp:
-                chassisIdUrl = eachChassisId['links'][0]['href']
-                self.logInfo('disconnectIxChassis: %s' % chassisIdUrl)
-                response = self.delete(self.httpHeader+chassisIdUrl)
-    '''
-
     def connectToLinuxIxosChassis(self, chassisIp, username, password):
         url = 'https://{0}/platform/api/v1/auth/session'.format(chassisIp)
         response = self.post(url, data={'username': username, 'password': password})
@@ -745,38 +692,6 @@ class Connect:
         # If an API-Key is provided, then verify the session ID connection.
         if self.apiKey:
             self.get(self.sessionId)
-
-    def linuxServerConfigGlobalLicenseServer(self, linuxServerIp, licenseServerIp, licenseMode, licenseTier):
-        """
-        Description
-           Configure a license server in the global setting.
-
-        Parameters
-           linuxServerIp: (str): IP address of the Linux API server.
-           licenseServerIp: (list): IP address of all the license server in a list.
-           licenseMode: (str): subscription |  perpetual | mixed
-           licenseTier: (str): tier1 | tier2 | tier3
-
-        Syntax
-           PATCH: /api/v1/sessions/9999/ixnetworkglobals/license
-           DATA:  {'servers': [list(licenseServerIp]), 'mode': licenseMode, 'tier': licenseTier}
-        """
-
-        staticUrl = 'https://{linuxServerIp}/api/v1/sessions/9999/ixnetworkglobals/license'.format(linuxServerIp=linuxServerIp)
-        self.logInfo('linuxServerConfigGlobalLicenseServer:\n\t{0}\n\t{1}\n\t{2}\n'. format(licenseServerIp,
-                                                                                            licenseMode,
-                                                                                            licenseTier),
-                     timestamp=False)
-
-        response = self.patch(staticUrl, data={'servers': [licenseServerIp], 'mode': licenseMode, 'tier': licenseTier})
-        response = self.get(staticUrl)
-        licenseServerIp = response.json()['servers'][0]
-        licenseServerMode = response.json()['mode']
-        licenseServerTier = response.json()['tier']
-        self.logInfo('LinuxApiServer static license server:')
-        self.logInfo('\t', licenseServerIp)
-        self.logInfo('\t', licenseServerMode)
-        self.logInfo('\t', licenseServerTier)
 
     def linuxServerGetGlobalLicense(self, linuxServerIp):
         """
@@ -1079,94 +994,6 @@ class Connect:
         else:
             return value
 
-    def getObjectFromQueryDict_backup(self, queryDict, name=None, endpointAttribute=None):
-        object = None
-        for key,value in queryDict.items():
-            # All the Topology Groups
-            if type(value) is list:
-                for keyValue in value:
-                    for deepKey,deepValue in keyValue.items():
-                        if deepKey == 'name' and deepValue == name:
-                            return keyValue['href']
-                            
-                    object = self.getObjectFromQueryDict(keyValue, name)
-                    if object != None:
-                        return object
-
-        return object
-
-    def getMtu(self, routerId):
-        deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
-        ethernetObjHandle = deviceGroupObjHandle + '/ethernet/1'
-        return self.getObjAttributeValue(ethernetObjHandle, 'mtu')
-
-    def getMac(self, routerId):
-        # 1> Get the Device Group that has routerId
-        deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
-        # 2> Append the /ethernet/1 endpoint object to the Device Group object.
-        ethernetObjHandle = deviceGroupObjHandle + '/ethernet/1'
-        # 3> Get the mac address using the ethernetObjHandle
-        return self.getObjAttributeValue(ethernetObjHandle, 'mac')
-
-    def getRouterIdDeviceGroupObjHandle(self, routerId=None, queryDict=None, runQuery=True):
-        """
-        Description
-            Get the Device Group object handle for the routerId.
-            
-            Note:
-               A Device Group could have many IP host (sessions). This is configured as multipliers in
-               a Device Group.  If multiplier = 5, there will be 5 IP host. Each host will
-               have a unique router ID identifier.
-               To get the Device Group that has a specific router ID, pass in the router ID for the
-               parameter routerId.
-
-        Parameter
-            queryDict: <dict>: This parameter is only used internally. Ignore this parameter.
-            routerId: <str>: The router ID in the format of 192.0.0.1.
-            runQuery: <bool>: This parameter is only used internally.  Ignore this parameter.
-
-        Example:
-            obj = mainObj.getRouterIdDeviceGroupObjHandle(routerId='192.0.0.3')
-
-        Return
-            - deviceGroup object handle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
-            - Exception error if routerId is not found in any Device Group
-        """
-        if runQuery:
-            queryData = {'from': '/',
-                        'nodes': [{'node': 'topology',    'properties': ['name'], 'where': []},
-                                  {'node': 'deviceGroup', 'properties': [], 'where': []},
-                                  {'node': 'routerData', 'properties': ['routerId'], 'where': []}
-                              ]
-                        }
-            queryResponse = self.query(data=queryData)
-            queryDict = queryResponse.json()['result'][0]
-        
-        object = None
-        for key,value in queryDict.items():
-            # All the Topology Groups
-            if type(value) is list:
-                for keyValue in value:
-                    print()
-                    for deepKey,deepValue in keyValue.items():
-                        if deepKey == 'routerId':
-                            # deepValue = /api/v1/sessions/1/ixnetwork/multivalue/1054
-                            # ['192.0.0.1', '192.0.0.2', '192.0.0.3']
-                            multivalueObj = deepValue
-                            value = self.getMultivalueValues(multivalueObj)
-                            if routerId in value:
-                                # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/routerData/1
-                                match = re.match('(/api.*)/routerData', keyValue['href'])
-                                deviceGroupObj = match.group(1)
-                                self.logInfo('deviceGroupHandle for routerId: {0}\n\t{1}'.format(routerId, deviceGroupObj))
-                                return deviceGroupObj
-
-                    object = self.getRouterIdDeviceGroupObjHandle(queryDict=keyValue, routerId=routerId, runQuery=False)
-                    if object != None:
-                        return object
-
-        raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
-        
     def stdoutRedirect(self):
         """
         Description

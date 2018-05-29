@@ -4190,4 +4190,72 @@ class Protocol(object):
         self.ixnObj.logInfo('getNgpfObject: %s' % objectHandle)
         return objectHandle
 
+    def getRouterIdDeviceGroupObjHandle(self, routerId=None, queryDict=None, runQuery=True):
+        """
+        Description
+            Get the Device Group object handle for the routerId.
+            
+            Note:
+               A Device Group could have many IP host (sessions). This is configured as multipliers in
+               a Device Group.  If multiplier = 5, there will be 5 IP host. Each host will
+               have a unique router ID identifier.
+               To get the Device Group that has a specific router ID, pass in the router ID for the
+               parameter routerId.
+
+        Parameter
+            routerId: <str>: The router ID in the format of 192.0.0.1.
+            queryDict: <dict>: Ignore this parameter. This parameter is only used internally. 
+            runQuery: Ignore this parameter.  <bool>: This parameter is only used internally.  
+
+        Example:
+            obj = mainObj.getRouterIdDeviceGroupObjHandle(routerId='192.0.0.3')
+
+
+           How to getMac:
+               Step 1> Get the Device Group that has routerId
+                       deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
+               Step 2> Append the /ethernet/1 endpoint object to the Device Group object.
+                       ethernetObjHandle = deviceGroupObjHandle + '/ethernet/1'
+               Step 3> Get the mac address using the ethernetObjHandle
+                       return self.getObjAttributeValue(ethernetObjHandle, 'mac')
+
+        Return
+            - deviceGroup object handle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+            - Exception error if routerId is not found in any Device Group
+        """
+        if runQuery:
+            queryData = {'from': '/',
+                        'nodes': [{'node': 'topology',    'properties': ['name'], 'where': []},
+                                  {'node': 'deviceGroup', 'properties': [], 'where': []},
+                                  {'node': 'routerData', 'properties': ['routerId'], 'where': []}
+                              ]
+                        }
+            queryResponse = self.ixnObj.query(data=queryData)
+            queryDict = queryResponse.json()['result'][0]
+        
+        object = None
+        for key,value in queryDict.items():
+            # All the Topology Groups
+            if type(value) is list:
+                for keyValue in value:
+                    print()
+                    for deepKey,deepValue in keyValue.items():
+                        if deepKey == 'routerId':
+                            # deepValue = /api/v1/sessions/1/ixnetwork/multivalue/1054
+                            # ['192.0.0.1', '192.0.0.2', '192.0.0.3']
+                            multivalueObj = deepValue
+                            value = self.ixnObj.getMultivalueValues(multivalueObj)
+                            if routerId in value:
+                                # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/routerData/1
+                                match = re.match('(/api.*)/routerData', keyValue['href'])
+                                deviceGroupObj = match.group(1)
+                                self.ixnObj.logInfo('deviceGroupHandle for routerId: {0}\n\t{1}'.format(routerId, deviceGroupObj), timestamp=False)
+                                return deviceGroupObj
+
+                    object = self.getRouterIdDeviceGroupObjHandle(queryDict=keyValue, routerId=routerId, runQuery=False)
+                    if object != None:
+                        return object
+
+        raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
+        
 

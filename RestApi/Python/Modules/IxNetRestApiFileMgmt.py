@@ -530,54 +530,6 @@ class FileMgmt(object):
             portList.append([match.group(1), match.group(2), match.group(3)])
         return portList
 
-    def jsonAssignPorts_backup(self, jsonObject, portList, timeout=90):
-        """
-        Description
-            Reassign ports.  Will remove the existing JSON config datas: availableHardware, cardId, portId.
-            Then recreate JSON datas for availableHardware based on the portList input.
-
-        Parameters
-            jsonObject: (json object): The JSON config object.
-            portList: (list) 
-               Example:
-                        portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
-            timeout: (int): The timeout value to declare as failed.
-        """
-        #jsonObject.pop("availableHardware")
-        #self.jsonPrettyprint(jsonObject)
-        #import sys
-        #sys.exit()
-        #self.importJsonConfigObj(dataObj=jsonObject, option='modify')
-        #return
-
-        jsonObject = []
-        ixChassisId = 1
-        vportId = 1
-        for ports in portList:
-            ixChassisIp = ports[0]
-            cardId = ports[1]
-            portId = ports[2]
-        
-            print('\n----- Updating:', ixChassisIp, cardId, portId)
-            # Update availableHardware
-            jsonObject.append({'xpath': '/availableHardware/chassis[1]', 'hostname': ixChassisIp})
-
-            jsonObject.append({"xpath": "/availableHardware/chassis[@alias = '{0}']/card[{1}]".format(ixChassisIp, cardId)})
-            jsonObject.append({'xpath': "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
-
-            # Update vport
-            jsonObject.append({"xpath": "/vport[{0}]".format(vportId),
-                               "connectedTo": "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
-
-            vportId += 1
-            ixChassisId += 1
-
-
-        self.jsonPrettyprint(jsonObject)
-        self.ixnObj.logInfo('\nImporting port mapping to IxNetwork')
-        self.ixnObj.logInfo('Ports rebooting ...')
-        self.importJsonConfigObj(dataObj=jsonObject, option='modify', timeout=timeout)
-
     def jsonAssignPorts(self, jsonObject, portList, timeout=90):
         """
         Description

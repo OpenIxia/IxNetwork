@@ -50,8 +50,10 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
+    # If the licenses are activated in the Linux based XGS chassis or if the licenses are configured 
+    # in the Windows IxNetwork GUI API server in preferences, then you won't need to config license.
     configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
@@ -99,7 +101,7 @@ try:
 
     portObj.assignPorts(portList)
 
-    protocolObj = Protocol(mainObj, portObj)
+    protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]], topologyName='Topo1')
     
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
@@ -107,7 +109,7 @@ try:
                                                         deviceGroupName='DG1')
     
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
-    
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')

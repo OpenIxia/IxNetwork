@@ -312,7 +312,20 @@ class PortMgmt(object):
                 portList.append(assignedTo)
         return portList
 
-    def assignPorts(self, portList, createVports=False, rawTraffic=False, timeout=120):
+    def verifyPortLicenseError(self):
+        """
+        Description
+           Verify for port license error.
+        """
+        errorMessageResponse = self.ixnObj.get(self.ixnObj.sessionUrl+'/globals/appErrors/error', silentMode=False)
+        if errorMessageResponse.json() != []:
+            for errorMsg in errorMessageResponse.json():
+                if 'name' in errorMsg and errorMsg['name'] == 'License Error':
+                    raise IxNetRestApiException('\nLicense Error: {0}'.format(errorMsg['description']))
+
+        self.ixnObj.logInfo('No port license error')
+
+    def assignPorts(self, portList, createVports=False, rawTraffic=False, configPortName=True, timeout=120):
         """
         Description
             Assuming that you already connected to an ixia chassis and ports are available for usage.
@@ -346,22 +359,12 @@ class PortMgmt(object):
         # Verify if the portList has duplicates.
         self.verifyForDuplicatePorts(portList)
 
-        '''
-        if createVports:
-            self.createVports(portList)
-            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
-            preamble = self.ixnObj.sessionUrl.split('/api')[1]
-
-            vportList = ["/api%s/vport/%s" % (preamble, str(i["id"])) for i in response.json()]
-            if len(vportList) != len(portList):
-                raise IxNetRestApiException('assignPorts: The amount of configured virtual ports:{0} is not equal to the amount of  portList:{1}'.format(len(vportList), len(portList)))
-        '''
-
         # Verify if there is existing vports. If yes, user either loaded a saved config file or 
         # the configuration already has vports.
         # If loading a saved config file and reassigning ports, assign ports to existing vports.
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
 
+        # If response.json() != [], means there are existing vports created already.
         if response.json() != []:
             mode = 'modify'
             preamble = self.ixnObj.sessionUrl.split('/api')[1]
@@ -386,10 +389,11 @@ class PortMgmt(object):
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         url = self.ixnObj.sessionUrl+'/operations/assignports'
         response = self.ixnObj.post(url, data=data)
-
+        time.sleep(10)
+        self.verifyPortLicenseError()
         self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=timeout)
         
-        if createVports == False:
+        if configPortName:
             # Name the vports
             for vportObj in self.getAllVportList():
                 port = self.getPhysicalPortFromVport([vportObj])[0]
@@ -597,8 +601,13 @@ class PortMgmt(object):
         vportList = [metaDatas["links"][0]['href'] for metaDatas in response.json()]
         for eachVport in vportList:
             for counter in range(1,timeout+1):
-                stateResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=state', silentMode=True)
+                stateResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=state,connectionStatus', silentMode=True)
                 assignedToResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=assignedTo', silentMode=True)
+
+                if 'License Failed' in stateResponse.json()['connectionStatus']:
+                    self.ixnObj.logError('Port License Error')
+                    self.verifyPortLicenseError()
+
                 if stateResponse.json()['state'] == 'unassigned':
                     self.ixnObj.logWarning('\nThe vport {0} is not assigned to a physical port. Skipping this vport verification.'.format(eachVport))
                     break
@@ -614,3 +623,63 @@ class PortMgmt(object):
                     # Failed
                     raise IxNetRestApiException('Port failed to come up')
 
+    def getVportFromPortList(self, portList):
+        """
+        Description
+           Get a list of vports from the specified portList.
+
+        Parameter
+           portList: <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
+    
+        Return
+           A list of vports.
+           [] if vportList is empty.
+        """
+        vportList = []
+        for eachPort in portList:
+            chassisIp = eachPort[0]
+            card = eachPort[1]
+            portNum = eachPort[2]
+            port = chassisIp+':'+card+':'+portNum
+            # {'href': '/api/v1/sessions/1/ixnetwork/',
+            # 'vport': [{'id': 2, 'href': '/api/v1/sessions/1/ixnetwork/vport/2', 'assignedTo': '10.10.10.8:1:2'}]}
+            queryData = {"from": "/",
+                         "nodes": [{"node": "vport", "properties": ["assignedTo"],
+                                    "where": [{"property": "assignedTo", "regex": port}]
+                                }]}
+            
+            queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+            vport = queryResponse.json()['result'][0]['vport']
+            if vport == []:
+                raise IxNetRestApiException('getVportFromPortList error: The port has no vport and not assigned. Check for port typo: {0}'.format(port))
+
+            if vport:
+                # Appending vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+                vportList.append(vport[0]['href'])
+        return vportList
+                                
+    def modifyPortMediaType(self, portList='all', mediaType='fiber'):
+        """
+        Description
+           Modify the port media type: fiber, copper, SGMII
+
+        Parameters
+           portList: <'all'|list of ports>: 
+                     <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
+                     Or if portList ='all', will modify all assigned ports to the specified mediaType.
+
+           mediaType: <str>: copper, fiber or SGMII
+        """
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        
+        if portList == 'all':
+            #vportList = self.getAllVportList()
+            portList = self.getPhysicalPortsFromCreatedVports()
+
+        # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+        vportList = self.getVportFromPortList(portList)
+
+        for vport in vportList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
+            portType = response.json()['type']
+            self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data={'media': mediaType})

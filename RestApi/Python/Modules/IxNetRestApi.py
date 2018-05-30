@@ -577,7 +577,7 @@ class Connect:
             raise IxNetRestApiException('waitForComplete: response is empty.')
 
         if response.json() == '' and response.json()['state'] == 'SUCCESS':
-            return 
+            return response 
 
         if 'errors' in response.json():
             raise IxNetRestApiException(response.json()["errors"][0])

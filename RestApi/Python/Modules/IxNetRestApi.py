@@ -558,7 +558,7 @@ class Connect:
         print()
         return errorList
 
-    def waitForComplete(self, response='', url='', silentMode=False, timeout=90):
+    def waitForComplete(self, response='', url='', silentMode=False, ignoreException=False, timeout=90):
         """
         Description
            Wait for an operation progress to complete.
@@ -567,6 +567,9 @@ class Connect:
            response: (json response/dict): The POST action response.  Generally, after an /operations action.
                          Such as /operations/startallprotocols, /operations/assignports.
            silentMode: (bool):  If True, display info messages on stdout.
+           ignoreException: (bool): ignoreException is for assignPorts.  Don't want to exit test.
+                            Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
+
            timeout: (int): The time allowed to wait for success completion in seconds.
         """
         if silentMode == False:
@@ -601,12 +604,18 @@ class Connect:
                 continue
 
             if counter < timeout and state in ["ERROR", "EXCEPTION"]:
+                # ignoreException is for assignPorts.  Don't want to exit test.
+                # Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
+                if ignoreException:
+                    return response
                 raise IxNetRestApiException('\n%s' % response.text)
 
             if counter < timeout and state == 'SUCCESS':
                 return response
 
             if counter == timeout and state != 'SUCCESS':
+                if ignoreException:
+                    return response
                 raise IxNetRestApiException('\n%s' % response.text)
 
     def connectToLinuxIxosChassis(self, chassisIp, username, password):

@@ -312,20 +312,21 @@ class PortMgmt(object):
                 portList.append(assignedTo)
         return portList
 
-    def verifyPortLicenseError(self):
+    def verifyPortConnectionStatus(self, vport=None):
         """
         Description
-           Verify for port license error.
+           Verify port connection status for errors such as License Failed, 
+           Version Mismatch, Incompatible IxOS version, or any other error.
         """
-        errorMessageResponse = self.ixnObj.get(self.ixnObj.sessionUrl+'/globals/appErrors/error', silentMode=False)
-        if errorMessageResponse.json() != []:
-            for errorMsg in errorMessageResponse.json():
-                if 'name' in errorMsg and errorMsg['name'] == 'License Error':
-                    raise IxNetRestApiException('\nLicense Error: {0}'.format(errorMsg['description']))
+        self.ixnObj.logInfo('verifyPortConnectionStatus')
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
 
-        self.ixnObj.logInfo('No port license error')
+        for vport in response.json():
+            connectionStatus = vport['connectionStatus']
+            if 'Port Released' in connectionStatus:
+                raise IxNetRestApiException(connectionStatus)
 
-    def assignPorts(self, portList, createVports=False, rawTraffic=False, configPortName=True, timeout=120):
+    def assignPorts(self, portList, createVports=False, rawTraffic=False, configPortName=True, timeout=100):
         """
         Description
             Assuming that you already connected to an ixia chassis and ports are available for usage.
@@ -389,9 +390,8 @@ class PortMgmt(object):
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         url = self.ixnObj.sessionUrl+'/operations/assignports'
         response = self.ixnObj.post(url, data=data)
-        time.sleep(10)
-        self.verifyPortLicenseError()
-        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=timeout)
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=timeout, ignoreException=True)
+        self.verifyPortConnectionStatus()
         
         if configPortName:
             # Name the vports
@@ -604,9 +604,8 @@ class PortMgmt(object):
                 stateResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=state,connectionStatus', silentMode=True)
                 assignedToResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=assignedTo', silentMode=True)
 
-                if 'License Failed' in stateResponse.json()['connectionStatus']:
-                    self.ixnObj.logError('Port License Error')
-                    self.verifyPortLicenseError()
+                if 'Port Released' in stateResponse.json()['connectionStatus']:
+                    raise IxNetRestApiException(stateResponse.json()['connectionStatus'])
 
                 if stateResponse.json()['state'] == 'unassigned':
                     self.ixnObj.logWarning('\nThe vport {0} is not assigned to a physical port. Skipping this vport verification.'.format(eachVport))

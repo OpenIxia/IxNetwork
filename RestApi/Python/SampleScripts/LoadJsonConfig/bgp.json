@@ -9,10 +9,11 @@
   "releasePortsWhenDone": false,
   "enableDebugTracing": true,
   "deleteSessionAfterTest": false,
-  "licenseIsInChassis": false,  
+  "configLicense": true,  
   "licenseServerIp": "192.168.70.3",
   "licenseModel": "subscription",
-  "licenseTier": "tier3",    
+  "licenseTier": "tier3",
+  "modifyPortMediaType": "None",
 
   "xpath": "/",
   "vport": [

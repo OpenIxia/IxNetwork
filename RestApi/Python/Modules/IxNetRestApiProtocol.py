@@ -72,8 +72,11 @@ class Protocol(object):
         Return
             /api/v1/sessions/{id}/topology/{id}
         """
+        self.ixnObj.logInfo('\n--- portList: %s' % portList)
         url = self.ixnObj.sessionUrl+'/topology'
         vportList = self.portMgmtObj.getVports(portList)
+
+        self.ixnObj.logInfo('\n--- vportList: %s' % vportList)
         if len(vportList) != len(portList):
             raise IxNetRestApiException('createTopologyNgpf: There is not enough vports created to match the number of ports.')
 
@@ -4259,3 +4262,31 @@ class Protocol(object):
         raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
         
 
+    def getMacAddress(self, routerId):
+        """
+        Description
+           Example to show the steps to take for getting the NGPF Mac Address.
+        
+        Parameter
+           routerId: <str>: The IP address of the routerId.
+
+        Returns:
+           None|<List>: Mac Address
+        """
+        # 1> Get the Device Group that has routerId.
+        #    This function gets the device group obj handle.
+        deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
+
+        # 2> Get the Ethernet object handle from the deviceGroupHandle.
+        queryData = {'from': deviceGroupObjHandle,
+                     'nodes': [{'node': 'ethernet', 'properties': [], 'where': []} ]}
+        queryResponse = self.ixnObj.query(data=queryData)
+        try:
+            ethernetObjHandle = queryResponse.json()['result'][0]['ethernet'][0]['href']
+        except:
+            raise IxNetRestApiException('\nError: No Ethernet created for Device Group:\n\t{0}\n\tRouterId: {1}'.format(
+            deviceGroupObjHandle, routerId))
+
+        # 3> Get the mac address using the ethernetObjHandle
+        # Returns: ['00:01:01:00:00:01']
+        return self.ixnObj.getObjAttributeValue(ethernetObjHandle, 'mac')

@@ -3,9 +3,15 @@
 #    This class demonstrates sample IxNetwork REST API usage for
 #    demo and reference purpose only.
 #    It is subject to change for updates without warning.
+#
+# Getting object handles:
+#    getNgpfObjectHandleByName: Get the NGPF object handle by the NGPF component name.
+#    getNgpfObjectHandleByRouterId: Get the NGPF object handle by the Router ID.
+#    getDeviceGroupByRouterId: Get the NGPF object handle by the Router ID.
 
 import re, time
 from IxNetRestApi import IxNetRestApiException
+
 
 # 8.40 updates:
 #    sessionStatus uses ?includes=sessionStatus and then response.json()['sessionStatus']
@@ -22,8 +28,8 @@ class Protocol(object):
     def __init__(self, ixnObj=None, portMgmtObj=None):
         """
         Parameters
-        ixnObj: <str>: The main connection object.
-        portMgmtObj: <str>: Optional. It's deprecated. Leaving it here for backward compatibility
+           ixnObj: <str>: The main connection object.
+           portMgmtObj: <str>: Optional. This is deprecated. Leaving it here for backward compatibility.
         """
         self.ixnObj = ixnObj
         self.configuredProtocols = []
@@ -72,11 +78,9 @@ class Protocol(object):
         Return
             /api/v1/sessions/{id}/topology/{id}
         """
-        self.ixnObj.logInfo('\n--- portList: %s' % portList)
         url = self.ixnObj.sessionUrl+'/topology'
         vportList = self.portMgmtObj.getVports(portList)
 
-        self.ixnObj.logInfo('\n--- vportList: %s' % vportList)
         if len(vportList) != len(portList):
             raise IxNetRestApiException('createTopologyNgpf: There is not enough vports created to match the number of ports.')
 
@@ -121,8 +125,8 @@ class Protocol(object):
             Create new LACP group.
 
         Parameter
-            ethernetObj: <str>:The Ethernet stack object to create the LACP.
-                               Example: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+            ethernetObj: <str>: The Ethernet stack object to create the LACP.
+                         Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
 
             administrativeKey: <int>: Default=1
             actorSystemId: <str>: Default='00 00 00 00 00 01'.
@@ -321,7 +325,7 @@ class Protocol(object):
         Parameter
            isisL3RouterObj: <str:obj>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/isisL3Router/{id}
 
-           **data: <dict>:  Get attributes from the IxNetwork API browser.
+           data: <dict>:  Get attributes from the IxNetwork API browser.
         """
         self.ixnObj.patch(self.ixnObj.httpHeader + isisL3RouterObj, data=data)
 
@@ -438,8 +442,11 @@ class Protocol(object):
             To modify an existing DHCP V4 Client stack in NGPF, pass in the dhcpv4client object.
 
         Parameters
-            obj: <str>: To create new DHCP obj: Ethernet example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
-            obj: <str>: To Modify DHCP client: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4client/1
+            obj: <str>: To create new DHCP obj.
+                 Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+
+            obj: <str>: To Modify DHCP client.
+                 Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/dhcpv4client/1
 
             dhcp4Broadcast: <bool>
             multiplier: <int>: The amount of DHCP clients to create.
@@ -776,7 +783,7 @@ class Protocol(object):
 
         Parameters
             ethernetObj: <str>: The Ethernet object handle.
-                         Example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+                         Example: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}
 
         Syntax
             POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/mpls
@@ -831,8 +838,8 @@ class Protocol(object):
             If modifying a VXLAN header, provide the VXLAN object handle.
             
         Parameters
-               obj: <str>: IPv4 Obj example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
-                           VxLAN Obj example: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/vxlan/1
+               obj: <str>: IPv4 Obj example: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}
+                           VxLAN Obj example: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/vxlan/{id}
 
         Syntax
             POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/vxlan
@@ -911,7 +918,7 @@ class Protocol(object):
             Note: Deleting the last tunnel will also delete the RSVR-TE Interface.
 
         Parameter
-            rsvrTunnelObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/rsvpteLsps/12
+            rsvrTunnelObj: <str>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/rsvpteLsps/{id}
 
         Syntax
             DELETE: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/rsvpteLsps/{id}
@@ -1028,7 +1035,7 @@ class Protocol(object):
            Get the multivalue values.
 
         Parameters
-           multivalueObj: <str>: The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
+           multivalueObj: <str>: The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/{id}
            silentMode: <bool>: True=Display the GET and status code. False=Don't display.
         
         Syntax
@@ -1241,7 +1248,7 @@ class Protocol(object):
             Start the specified protocol by its object handle.
 
         Parameters
-            protocolObj: <str|obj>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+            protocolObj: <str|obj>: Ex: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
         
         Syntax
             POST: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1/operations/start
@@ -3914,31 +3921,6 @@ class Protocol(object):
         except IndexError:
             raise IxNetRestApiException('\nVerify the topologyName and bgpAttributeList input: {0} / {1}\n'.format(topologyName, bgpAttributeList))
 
-    def getDeviceGroupByRouterId(self, routerId):
-        """
-        Description
-            Get the Device Group object based on the router ID.
-
-        Parameter
-            routerId: The  Device Group's router ID.
-
-        Return
-            The Device Group object
-            0 if router ID is not found in any Device Group.
-        """
-        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/topology')
-        for topology in response.json():
-            topologyObj = topology['links'][0]['href']
-            response = self.ixnObj.get(self.ixnObj.httpHeader+topologyObj+'/deviceGroup')
-            for deviceGroup in response.json():
-                deviceGroupObj = deviceGroup['links'][0]['href']
-                response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/routerData')
-                routeDataMultivalue = response.json()[0]['routerId']
-                routerIdList = self.ixnObj.getMultivalueValues(routeDataMultivalue)
-                if routerId in routerIdList:
-                    return deviceGroupObj
-        return 0
-
     def isRouterIdInDeviceGroupObj(self, routerId, deviceGroupObj):
         routerIdMultivalue = deviceGroup['routerData'][0]['routerId']
         routerIdList = self.ixnObj.getMultivalueValues(routerIdMultivalue, silentMode=True)
@@ -4088,43 +4070,34 @@ class Protocol(object):
         newList = [asSetMode for counter in range(0,count)]
         self.ixnObj.configMultivalue(asSetModeMultivalue, 'valueList', {'values': newList})
 
-    def getNgpfObject(self, ngpfEndpointObject, name=None):
+    def getNgpfObjectHandleByName(self, stackName=None, ngpfEndpointObject=None):
         """
         Description
-           Get the object handle based on the NGPF object name and the object's label name.
-           You need to know the name of the NGPF object.  This is something that you could 
-           configure.  Filtering by a name is the best way to query for objects.
+           Get the NGPF object handle filtering by the NGPF component name.
+           The NGPF object name is something that you could configure for each NGPF stack.
+           Stack meaning: topology, deviceGroup, ethernet, ipv44, bgpIpv4Peer, etc
 
            For example:
-              protocolObj.getNgpfObject(ngpfEndpointObject='topology', name='Topo2')
+              protocolObj.getNgpfObject(ngpfEndpointObject='topology', stackName='Topo2')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/2
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4', name='IPv4 1')
+              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4', stackName='IPv4 1')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='bgpIpv4Peer', name='bgp_2')
+              protocolObj.getNgpfObject(ngpfEndpointObject='bgpIpv4Peer', stackName='bgp_2')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/2
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='networkGroup', name='networkGroup1')
+              protocolObj.getNgpfObject(ngpfEndpointObject='networkGroup', stackName='networkGroup1')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4PrefixPools', name='Basic IPv4 Addresses 1')
+              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4PrefixPools', stackName='Basic IPv4 Addresses 1')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup1/ipv4PrefixPools/1
 
-           ngpfObjectName: 
-              'topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6'
-              'isisL3', 'lacp', 'mpls'
-              'ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
-              'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
-              'lac', 'ldpBasicRouter', 'ldpBasicRouterV6', 'ldpConnectedInterface', 'ldpv6ConnectedInterface',
-              'ldpTargetedRouter', 'ldpTargetedRouterV6', 'lns', 'mldHost', 'mldQuerier', 'ptp', 'ipv6sr',
-              'openFlowController', 'openFlowSwitch', 'ospfv2', 'ospfv3', 'ovsdbcontroller', 'ovsdbserver',
-              'pcc', 'pce', 'pcepBackupPCEs', 'pimV4Interface', 'pimV6Interface', 'ptp', 'rsvpteIf',
-              'rsvpteLsps', 'tag', 'vxlan'
-
-           name: The name of the NGPF object.
+           ngpfObjectName:  See below ngpfL2ObjectList and ngpfL3ObjectList. 
+           stackName: The name of the NGPF component object.
         """
-        ngpfMainObjectList = ['topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6', 'networkGroup', 'ipv4PrefixPools', 'ipv4PrefixPools']
+        ngpfMainObjectList = ['topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6',
+                              'networkGroup', 'ipv4PrefixPools', 'ipv6PrefixPools']
 
         ngpfL2ObjectList = ['isisL3', 'lacp', 'mpls']
 
@@ -4156,18 +4129,23 @@ class Protocol(object):
                 ]
 
             nodesList.insert(len(nodesList), {'node': ngpfEndpointObject, 'properties': ['name'],
-                                              'where': [{'property': 'name', 'regex': name}]})
+                                              'where': [{'property': 'name', 'regex': stackName}]})
 
+        # Get the NGPF top level objects that are not a protocol:
+        #    topology, deviceGroup, ethernet, ipv4, ipv6, networkGroup ...
         if ngpfEndpointObject not in ngpfL2ObjectList + ngpfL3ObjectList:
             nodesList = []
+            # Get the index position of the ngptEndpointObject in the ngpfMainObjectList
             ngpfEndpointIndex = ngpfMainObjectList.index(ngpfEndpointObject)
+            # Example:
+            #    If ngpfEndpointObject is 'ethernet',
+            #    then do a for loop from the topology level to the ethernet level.
             for eachNgpfEndpoint in ngpfMainObjectList[:ngpfEndpointIndex+1]:
                 # topology, deviceGroup, ethernet, ipv4, ipv6, networkGroup ...
                 if eachNgpfEndpoint == ngpfEndpointObject:
                     nodesList.append({'node': eachNgpfEndpoint, 'properties': ['name'],
-                                      'where': [{'property': 'name', 'regex': name}]})
+                                      'where': [{'property': 'name', 'regex': stackName}]})
                 else:
-                    # protocol endpoints: bgpIpv4Peer, ospfv2, etc
                     nodesList.append({'node': eachNgpfEndpoint, 'properties': [], 'where': []})
 
         queryData = {'from': '/', 'nodes': nodesList}
@@ -4181,7 +4159,7 @@ class Protocol(object):
                 if type(value) is list:
                     for keyValue in value:
                         for key,value in keyValue.items():
-                            if key == 'name' and value == name:
+                            if key == 'name' and value == stackName:
                                 return keyValue['href']
 
                         object = getObject(keyValue)
@@ -4190,10 +4168,123 @@ class Protocol(object):
             return None
 
         objectHandle = getObject(queryResponse.json()['result'][0])
+        self.ixnObj.logInfo('getNgpfObjectHandleByName: %s' % objectHandle)
+        return objectHandle
+
+    def getNgpfObjectHandleByRouterId(self, ngpfEndpointObject, routerId):
+        """
+        Description
+           Get the NGPF object handle filtering by the routerId.
+           All host interface has a router ID by default and the router ID is located in the 
+           Device Group in the IxNetwork GUI.  The API endpoint is: /topology/deviceGroup/routerData
+
+        Parameters
+           ngpfEndpointObject: <str>: The NGPF endpoint. Example:
+                               deviceGroup, ethernet, ipv4, ipv6, bgpIpv4Peer, ospfv2, etc.
+                               These endpoint object names are the IxNetwork API endpoints and you could
+                               view them in the IxNetwork API browser.
+
+           routerId: <str>: The router ID IP address.
+
+        Example:
+              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4', routerId='192.0.0.1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+
+              protocolObj.getNgpfObject(ngpfEndpointObject='bgpIpv4Peer', routerId='193.0.0.1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/2
+
+              protocolObj.getNgpfObject(ngpfEndpointObject='networkGroup', routerId='193.0.0.1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
+
+              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4PrefixPools', routerId='193.0.0.1')
+                 return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup1/ipv4PrefixPools/1
+        """
+        ngpfMainObjectList = ['topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6',
+                              'networkGroup', 'ipv4PrefixPools', 'ipv6PrefixPools']
+
+        ngpfL2ObjectList = ['isisL3', 'lacp', 'mpls']
+
+        ngpfL3ObjectList = ['ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
+                            'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
+                            'lac', 'ldpBasicRouter', 'ldpBasicRouterV6', 'ldpConnectedInterface', 'ldpv6ConnectedInterface',
+                            'ldpTargetedRouter', 'ldpTargetedRouterV6', 'lns', 'mldHost', 'mldQuerier', 'ptp', 'ipv6sr',
+                            'openFlowController', 'openFlowSwitch', 'ospfv2', 'ospfv3', 'ovsdbcontroller', 'ovsdbserver',
+                            'pcc', 'pce', 'pcepBackupPCEs', 'pimV4Interface', 'pimV6Interface', 'ptp', 'rsvpteIf',
+                            'rsvpteLsps', 'tag', 'vxlan'
+                        ]
+        
+        if ngpfEndpointObject not in ngpfL2ObjectList + ngpfL3ObjectList + ngpfMainObjectList:
+            raise IxNetRestApiException('\nError: No such ngpfEndpointObject: %s' % ngpfEndpointObject)
+
+        if ngpfEndpointObject in ngpfL2ObjectList + ngpfL3ObjectList:
+            if ngpfEndpointObject in ngpfL2ObjectList:
+                nodesList = [{'node': 'topology', 'properties': [], 'where': []},
+                             {'node': 'deviceGroup', 'properties': [], 'where': []},
+                             {'node': 'routerData', 'properties': ['routerId'], 'where': []},
+                             {'node': 'ethernet', 'properties': [], 'where': []}
+                ]
+
+            if ngpfEndpointObject in ngpfL3ObjectList:
+                nodesList = [{'node': 'topology', 'properties': [], 'where': []},
+                             {'node': 'deviceGroup', 'properties': [], 'where': []},
+                             {'node': 'routerData', 'properties': ['routerId'], 'where': []},
+                             {'node': 'ethernet', 'properties': [], 'where': []},
+                             {'node': 'ipv4', 'properties': [], 'where': []},
+                             {'node': 'ipv6', 'properties': [], 'where': []}
+                ]
+
+            # Add the protocol level to the end of the list.
+            nodesList.insert(len(nodesList), {'node': ngpfEndpointObject, 'properties': [], 'where': []})
+
+        # User is looking for non protocol object handle such as deviceGroup, ethernet, ipv4 or ipv6
+        if ngpfEndpointObject not in ngpfL2ObjectList + ngpfL3ObjectList:
+                nodesList = [{'node': 'topology', 'properties': [], 'where': []},
+                             {'node': 'deviceGroup', 'properties': [], 'where': []},
+                             {'node': 'networkGroup', 'properties': [], 'where': []},
+                             {'node': 'ethernet', 'properties': [], 'where': []},
+                             {'node': 'ipv4PrefixPools', 'properties': [], 'where': []},
+                             {'node': 'ipv6Prefixpools', 'properties': [], 'where': []},
+                             {'node': 'routerData', 'properties': ['routerId'], 'where': []},
+                             {'node': 'ethernet', 'properties': [], 'where': []},
+                             {'node': 'ipv4', 'properties': [], 'where': []},
+                             {'node': 'ipv6', 'properties': [], 'where': []}
+                ]
+
+        queryData = {'from': '/', 'nodes': nodesList}
+        queryResponse = self.ixnObj.query(data=queryData)
+
+        # This is for getObject out of scope variable tracking
+        class getObjectVar:
+            protocolObjHandle= None
+            foundRouterId = False
+
+        def getObject(keys):
+            object = None
+            for key,value in keys.items():
+                # All the Topology Groups
+                if type(value) is list:
+                    for keyValue in value:
+                        print()
+                        for key,value in keyValue.items():
+                            if key == ngpfEndpointObject and value != []:
+                                getObjectVar.protocolObjHandle = value[0]['href']
+
+                            if key == 'routerId':
+                                routerIdMultivalue = value
+                                routerIdList = self.getMultivalueValues(routerIdMultivalue)
+                                if routerId in routerIdList:
+                                    getObjectVar.foundRouterId = True
+                                    return
+
+                        object = getObject(keyValue)
+                        if getObjectVar.foundRouterId == True:
+                            return getObjectVar.protocolObjHandle
+
+        objectHandle = getObject(queryResponse.json()['result'][0])
         self.ixnObj.logInfo('getNgpfObject: %s' % objectHandle)
         return objectHandle
 
-    def getRouterIdDeviceGroupObjHandle(self, routerId=None, queryDict=None, runQuery=True):
+    def getDeviceGroupByRouterId(self, routerId=None, queryDict=None, runQuery=True):
         """
         Description
             Get the Device Group object handle for the routerId.
@@ -4211,12 +4302,12 @@ class Protocol(object):
             runQuery: Ignore this parameter.  <bool>: This parameter is only used internally.  
 
         Example:
-            obj = mainObj.getRouterIdDeviceGroupObjHandle(routerId='192.0.0.3')
+            obj = mainObj.getDeviceGroupByRouterId(routerId='192.0.0.3')
 
 
            How to getMac:
                Step 1> Get the Device Group that has routerId
-                       deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
+                       deviceGroupObjHandle = self.getDeviceGroupByRouterId(routerId=routerId)
                Step 2> Append the /ethernet/1 endpoint object to the Device Group object.
                        ethernetObjHandle = deviceGroupObjHandle + '/ethernet/1'
                Step 3> Get the mac address using the ethernetObjHandle
@@ -4255,38 +4346,29 @@ class Protocol(object):
                                 self.ixnObj.logInfo('deviceGroupHandle for routerId: {0}\n\t{1}'.format(routerId, deviceGroupObj), timestamp=False)
                                 return deviceGroupObj
 
-                    object = self.getRouterIdDeviceGroupObjHandle(queryDict=keyValue, routerId=routerId, runQuery=False)
+                    object = self.getDeviceGroupByRouterId(queryDict=keyValue, routerId=routerId, runQuery=False)
                     if object != None:
                         return object
 
         raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
-        
 
-    def getMacAddress(self, routerId):
+    def getEthernetPropertyValue(self, routerId=None, ngpfName=None, property=None):
         """
         Description
-           Example to show the steps to take for getting the NGPF Mac Address.
-        
-        Parameter
-           routerId: <str>: The IP address of the routerId.
+            Get any NGPF Ethernet property value based on the router ID or by the NGPF 
+            component name.
 
-        Returns:
-           None|<List>: Mac Address
+        Parameters
+            routerId: <str>: The router ID IP address.
+            ngpfName: <str>: The NGPF component name.
+            property: <str>: The NGPF Ethernet property.
+                      Choices: name, mac, mtu, status, vlanCount, enableVlans 
         """
-        # 1> Get the Device Group that has routerId.
-        #    This function gets the device group obj handle.
-        deviceGroupObjHandle = self.getRouterIdDeviceGroupObjHandle(routerId=routerId)
+        if routerId:
+            ethernetObj = self.getNgpfObjectHandleByRouterId(routerId=routerId, ngpfEndpointObject='ethernet')
+        
+        if name:
+            ethernetObj = self.getNgpfObjectHandleByName(stackName=ngpfName, ngpfEndpointObject='ethernet')
 
-        # 2> Get the Ethernet object handle from the deviceGroupHandle.
-        queryData = {'from': deviceGroupObjHandle,
-                     'nodes': [{'node': 'ethernet', 'properties': [], 'where': []} ]}
-        queryResponse = self.ixnObj.query(data=queryData)
-        try:
-            ethernetObjHandle = queryResponse.json()['result'][0]['ethernet'][0]['href']
-        except:
-            raise IxNetRestApiException('\nError: No Ethernet created for Device Group:\n\t{0}\n\tRouterId: {1}'.format(
-            deviceGroupObjHandle, routerId))
+        return self.ixnObj.getObjAttributeValue(ethernetObj, property)
 
-        # 3> Get the mac address using the ethernetObjHandle
-        # Returns: ['00:01:01:00:00:01']
-        return self.ixnObj.getObjAttributeValue(ethernetObjHandle, 'mac')

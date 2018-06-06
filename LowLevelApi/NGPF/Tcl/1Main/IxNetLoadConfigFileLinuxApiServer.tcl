@@ -14,12 +14,17 @@
 
 # To support ixNet low level API against the Linux API server:
 #
-#   
-#   - Version from 8.0 up to 8.40, you need to download the IxTclNetwork package from the Linux API server.
-#   - The problem is that the IxTclNetwork in it is the same file name as the installed IxNetwork file in the lib directory.
-#   - This is one way to handle the filename conflict.
+#   Get IxTclNetwork.tcl:   
+#       - Version from 8.0 up to 8.40, you need to download the IxTclNetwork package from the Linux API server.
+#       - On a web browser, enter the IP address of your Linux API server.
+#       - Login admin/admin.
+#       - Click on "Download A Client"
 #
-#   - Untar it.
+#   - The problem is that the IxTclNetwork is the same file name as the installed IxNetwork file in the lib directory.
+#   - You don't want to overwrite the existing file.  Ixia is addressing this issue on the next release.
+#   - Below is a way to handle the filename conflict.
+#
+#   - After you downloaded the IxTclNetwork.py file, untar it.
 #   - Put it in the Ixia installation folder: /ixia/ixnetwork/8.40.1124.8/lib/IxTclNetwork and rename it to LinuxApiServer:
 #          Example: /ixia/ixnetwork/8.40.1124.8/lib/IxTclNetwork/LinuxApiServer
 #   - Go into the LinuxApiServer folder and:

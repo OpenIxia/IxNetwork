@@ -4070,31 +4070,32 @@ class Protocol(object):
         newList = [asSetMode for counter in range(0,count)]
         self.ixnObj.configMultivalue(asSetModeMultivalue, 'valueList', {'values': newList})
 
-    def getNgpfObjectHandleByName(self, stackName=None, ngpfEndpointObject=None):
+    def getNgpfObjectHandleByName(self, ngpfEndpointName=None, ngpfEndpointObject=None):
         """
         Description
            Get the NGPF object handle filtering by the NGPF component name.
            The NGPF object name is something that you could configure for each NGPF stack.
            Stack meaning: topology, deviceGroup, ethernet, ipv44, bgpIpv4Peer, etc
 
-           For example:
-              protocolObj.getNgpfObject(ngpfEndpointObject='topology', stackName='Topo2')
+        Parameters
+           ngpfEndpointObject: See below ngpfL2ObjectList and ngpfL3ObjectList. 
+           ngpfEndpointName:   The name of the NGPF component object.
+
+        Examples:
+           protocolObj.getNgpfObject(ngpfEndpointObject='topology', stackName='Topo2')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/2
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4', stackName='IPv4 1')
+           protocolObj.getNgpfObject(ngpfEndpointObject='ipv4', stackName='IPv4 1')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='bgpIpv4Peer', stackName='bgp_2')
+           protocolObj.getNgpfObject(ngpfEndpointObject='bgpIpv4Peer', stackName='bgp_2')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/2
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='networkGroup', stackName='networkGroup1')
+           protocolObj.getNgpfObject(ngpfEndpointObject='networkGroup', stackName='networkGroup1')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
 
-              protocolObj.getNgpfObject(ngpfEndpointObject='ipv4PrefixPools', stackName='Basic IPv4 Addresses 1')
+           protocolObj.getNgpfObject(ngpfEndpointObject='ipv4PrefixPools', stackName='Basic IPv4 Addresses 1')
                  return objectHandle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup1/ipv4PrefixPools/1
-
-           ngpfObjectName:  See below ngpfL2ObjectList and ngpfL3ObjectList. 
-           stackName: The name of the NGPF component object.
         """
         ngpfMainObjectList = ['topology', 'deviceGroup', 'ethernet', 'ipv4', 'ipv6',
                               'networkGroup', 'ipv4PrefixPools', 'ipv6PrefixPools']
@@ -4129,7 +4130,7 @@ class Protocol(object):
                 ]
 
             nodesList.insert(len(nodesList), {'node': ngpfEndpointObject, 'properties': ['name'],
-                                              'where': [{'property': 'name', 'regex': stackName}]})
+                                              'where': [{'property': 'name', 'regex': ngpfEndpointName}]})
 
         # Get the NGPF top level objects that are not a protocol:
         #    topology, deviceGroup, ethernet, ipv4, ipv6, networkGroup ...
@@ -4144,7 +4145,7 @@ class Protocol(object):
                 # topology, deviceGroup, ethernet, ipv4, ipv6, networkGroup ...
                 if eachNgpfEndpoint == ngpfEndpointObject:
                     nodesList.append({'node': eachNgpfEndpoint, 'properties': ['name'],
-                                      'where': [{'property': 'name', 'regex': stackName}]})
+                                      'where': [{'property': 'name', 'regex': ngpfEndpointName}]})
                 else:
                     nodesList.append({'node': eachNgpfEndpoint, 'properties': [], 'where': []})
 
@@ -4159,7 +4160,7 @@ class Protocol(object):
                 if type(value) is list:
                     for keyValue in value:
                         for key,value in keyValue.items():
-                            if key == 'name' and value == stackName:
+                            if key == 'name' and value == ngpfEndpointName:
                                 return keyValue['href']
 
                         object = getObject(keyValue)
@@ -4352,7 +4353,7 @@ class Protocol(object):
 
         raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
 
-    def getEthernetPropertyValue(self, routerId=None, ngpfName=None, property=None):
+    def getEthernetPropertyValue(self, routerId=None, ngpfEndpointName=None, property=None):
         """
         Description
             Get any NGPF Ethernet property value based on the router ID or by the NGPF 
@@ -4360,15 +4361,19 @@ class Protocol(object):
 
         Parameters
             routerId: <str>: The router ID IP address.
-            ngpfName: <str>: The NGPF component name.
+            ngpfEndpointName: <str>: The NGPF component name.
             property: <str>: The NGPF Ethernet property.
                       Choices: name, mac, mtu, status, vlanCount, enableVlans 
         """
+        ethernetProperties = ['name', 'mac', 'mtu', 'status', 'vlanCount', 'enableVlans']
+        if property not in ethernetProperties:
+            raise IxNetRestApiException('\nError: No such Ethernet property: %s.\n\nAvailable NGPF Ethernet properies: %s' % (property, ethernetProperties))
+
         if routerId:
             ethernetObj = self.getNgpfObjectHandleByRouterId(routerId=routerId, ngpfEndpointObject='ethernet')
         
-        if name:
-            ethernetObj = self.getNgpfObjectHandleByName(stackName=ngpfName, ngpfEndpointObject='ethernet')
+        if ngpfEndpointName:
+            ethernetObj = self.getNgpfObjectHandleByName(ngpfEndpointName=ngpfEndpointName, ngpfEndpointObject='ethernet')
 
         return self.ixnObj.getObjAttributeValue(ethernetObj, property)
 

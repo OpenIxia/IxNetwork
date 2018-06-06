@@ -17,8 +17,9 @@
 #             - TLS for TCL in order to connect to a Linux API server.
 #               Download from: https://sourceforge.net/projects/tls/files/tls
 #
+#    - Open README_LinuxApiServer file to download IxTclNetwork.
 #    - TCL must have Tclx package
-#      If you could, install ActiveState TCL. 
+#      If you could, install and use ActiveState TCL.
 #
 # Suports Windows API server and Linux API server
 #

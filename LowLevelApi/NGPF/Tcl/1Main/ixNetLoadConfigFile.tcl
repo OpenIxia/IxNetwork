@@ -11,13 +11,25 @@
 #    Start traffic
 #    Get stats
 #
+# Prerequisites
+#    - If connecting to a Linux API server:
+#        - The Linux API server is a secured access device.
+#        - Uses SSL (HTTPS).
+#        - You must install:
+#             - OpenSSL for your Linux OS if running this script from Linux.
+#             - TLS for TCL in order to connect to a Linux API server.
+#               Download from: https://sourceforge.net/projects/tls/files/tls
+#
+#    - TCL must have Tclx package
+#      If you could, install ActiveState TCL. 
+#
 # Suports Windows API server and Linux API server
 #
 
 package req Tclx
 source api.tcl
 
-set osPlatform linux ;# windows|linux
+set osPlatform windows ;# windows|linux
 
 if {$osPlatform == "windows"} {
     set apiServerIp 192.168.70.3
@@ -60,6 +72,8 @@ if {[ClearPortOwnership $portList]} {
     exit
 }
 
+# Configuring the license server details are optional. If you need to configure them,
+# this is the spot to do it.  You need to release the ports before you could configure them.
 if {[ConfigLicenseServer $licenseServerIp $licenseMode $licenseTier]} {
     exit
 }

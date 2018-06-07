@@ -237,8 +237,6 @@ class Connect:
             /api/v1/sessions/1/ixnetwork/operations
         """
         if silentMode is False:
-            #self.logInfo('\nGET: {0}'.format(restApi))
-            #self.logInfo('HEADERS: {0}'.format(self.jsonHeader))
             self.logInfo('\n\tGET: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
 
         try:
@@ -283,9 +281,6 @@ class Connect:
             data = json.dumps(data)
 
         if silentMode == False:
-            #self.logInfo('\nPOST: %s' % restApi)
-            #self.logInfo('DATA: %s' % data)
-            #self.logInfo('HEADERS: %s' % self.jsonHeader)
             self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
@@ -323,10 +318,7 @@ class Connect:
            silentMode: (bool):  To display on stdout: URL, data and header info.
         """
         if silentMode == False:
-            #self.logInfo('\nPATCH: %s' % restApi)
-            #self.logInfo('DATA: %s' % data)
-            #self.logInfo('HEADERS: %s' % self.jsonHeader)
-            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+            self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
             response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
@@ -355,10 +347,7 @@ class Connect:
         if headers != None:
             self.jsonHeader = headers
 
-        #self.logInfo('\nDELETE: %s' % restApi)
-        #self.logInfo('DATA: %s' % data)
-        #self.logInfo('HEADERS: %s' % self.jsonHeader)
-        self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+        self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
             response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)

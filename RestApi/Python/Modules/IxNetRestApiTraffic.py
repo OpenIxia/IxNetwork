@@ -346,6 +346,99 @@ class Traffic(object):
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
 
+    def getConfigElementObj(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None):
+        """
+        Description
+           Get the config element object handle.
+
+           Use case #1: trafficItemName + endpointSetName
+           Use case #2: trafficItemObj + endpointSetName
+
+           Use case #3: trafficItemName only (Will assume there is only one configElement object which will be returned)
+           Use case #4: trafficItemObj only  (Will assume there is only one configElement object which will be returned)
+
+        Parameters
+             
+           trafficItemObj: <str obj>: The Traffic Item object.
+           trafficItemName: <str>: The Traffic Item name.
+           endpointSetName: <str>: The Traffic Item's EndpointSet name.
+
+           How this works:
+               - Users could create multiple EndpointSets within a Traffic Item.
+               - Each EndpointSet has a unique object ID by default.
+               - For each EndpointSet is created, a config element object is also created.
+               - Each config element object handle is associated with an EndpointSet ID.
+               - To be able to get the right config element object handle, we need to query
+                 for the EndpointSet that you need for modifying.
+               - Another terminology for EndpointSet is FlowGroup.
+               - If you have multiple EndpointSets, you should give each EndpointSet a name
+                 to make querying possible.
+               - Otherwise, this function will assume there is only one EndpointSet created which will be returned.
+
+        Usage examples:
+           trafficObj.getConfigElementObj(trafficItemName='Raw MPLS/UDP', endpointSetName='EndpointSet-2')
+
+           trafficObj.getConfigElementObj(trafficItemName='Raw MPLS/UDP', endpointSetName=None)
+
+           trafficObj.getConfigElementObj(trafficItemObj='/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1', 
+                                          trafficItemName=None, endpointSetName=None)
+
+           trafficObj.getConfigElementObj(trafficItemObj='/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1', 
+                                          trafficItemName=None, endpointSetName='EndpointSet-2')
+
+        Return
+           configElement: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}/configElement/{id}
+        """
+        if trafficItemObj:
+            trafficItemName = self.getTrafficItemName(trafficItemObj)
+
+        if trafficItemName:
+            if endpointSetName:
+                queryData = {'from': '/traffic',
+                             'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                        'where': [{'property': 'name', 'regex': trafficItemName}]},
+                                       {'node': 'endpointSet', 'properties': ['name'],
+                                        'where': [{'property': 'name', 'regex': endpointSetName}]},
+                      ]}
+
+            if endpointSetName == None:
+                queryData = {'from': '/traffic',
+                             'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                        'where': [{'property': 'name', 'regex': trafficItemName}]},
+                                       {'node': 'endpointSet', 'properties': [],
+                                        'where': []},
+                      ]}
+
+            queryResponse = self.ixnObj.query(data=queryData)
+
+            trafficItemList = queryResponse.json()['result'][0]['trafficItem']
+            if trafficItemList == []:
+                raise IxNetRestApiException('\nError: No traffic item name found: {0}'.format(trafficItemName))
+
+            endpointSetList = queryResponse.json()['result'][0]['trafficItem'][0]['endpointSet']
+            if endpointSetList == []:
+                raise IxNetRestApiException('\nError: No endpointSet name: {0} found in Traffic Item name: {1}'.format(
+                    endpointSetName, trafficItemName))
+
+            endpointSetObj = queryResponse.json()['result'][0]['trafficItem'][0]['endpointSet'][0]['href']
+            endpointSetId = endpointSetObj.split('/')[-1]
+
+            # With the traffic item name and endpointSetId, get the Traffic Item's config element object handle.
+            queryData = {'from': '/traffic',
+                         'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                    'where': [{'property': 'name', 'regex': trafficItemName}]},
+                                   {'node': 'configElement', 'properties': ['endpointSetId'],
+                                    'where': [{'property': 'endpointSetId', 'regex': endpointSetId}]}
+                  ]}
+
+            queryResponse = self.ixnObj.query(data=queryData)
+            configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
+            print(configElementObj)
+            return configElementObj
+
+
+
+
     def getTransmissionType(self, configElement):
         # configElement: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1
         # Returns: fixedFrameCount, continuous

@@ -436,9 +436,6 @@ class Traffic(object):
             print(configElementObj)
             return configElementObj
 
-
-
-
     def getTransmissionType(self, configElement):
         # configElement: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1
         # Returns: fixedFrameCount, continuous
@@ -559,7 +556,7 @@ class Traffic(object):
         self.ixnObj.logInfo('addTrafficItemPacketStack: Returning: %s' % response.json()['result'], timestamp=False)
         return response.json()['result']
 
-    def getTrafficItemPktHeaderObj(self, configElementObj=None, trafficItemName=None, packetHeaderName=None):
+    def getTrafficItemPktHeaderStackObj(self, configElementObj=None, trafficItemName=None, packetHeaderName=None):
         """
         Description
            Get the Traffic Item packet header stack object.
@@ -573,14 +570,18 @@ class Traffic(object):
 
            packetHeaderName: <str>: Mandatory: The packet header name.
                              Example: ethernet, mpls, ipv4, ...
+
+        Return
+           The stack object
         """
-        if configElementObj != None:
-            response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+        #if configElementObj != None:
+        #    response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
 
         if configElementObj == None:
             # Expect user to pass in the Traffic Item name if user did not pass in a configElement object.
             queryData = {'from': '/traffic',
-                         'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]}]}
+                         'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                    'where': [{'property': 'name', 'regex': trafficItemName}]}]}
 
             queryResponse = self.ixnObj.query(data=queryData)
 
@@ -592,8 +593,10 @@ class Traffic(object):
         
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
 
+        print('\n--- packetHeaderName:', packetHeaderName)
+
         for eachStack in response.json():
-            self.ixnObj.logInfo('stack', eachStack, eachStack['stackTypeId'], timestamp=False)
+            self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, eachStack['stackTypeId']), timestamp=False)
             if bool(re.match(packetHeaderName, eachStack['stackTypeId'], re.I)):
                 stackObj = eachStack['links'][0]['href']
                 break
@@ -627,6 +630,7 @@ class Traffic(object):
         Desciption
            This API should be called after calling showTrafficItemPacketStack(configElementObj) in
            order to know the stack ID number to use.  Such as ...
+
             Stack1: Ethernet II
             Stack2: MPLS
             Stack3: MPLS
@@ -650,22 +654,118 @@ class Traffic(object):
                 self.ixnObj.logInfo('\tReturning: %s' % self.ixnObj.httpHeader+eachHeader['links'][0]['href'], timestamp=False)
                 return eachHeader['links'][0]['href']
 
-    def modifyTrafficItemDestMacAddress(self, trafficItemName, destMacAddress):
-        trafficItemObj = self.getTrafficItemObjByName(trafficItemName)
-        response = self.ixnObj.get(self.ixnObj.httpHeader+trafficItemObj)
-        if response.json()['trafficType'] != 'raw':
-            raise IxNetRestApiException('Traffic Item is not Raw type. Cannot modify Traffic Item: %s' % trafficItemName)
+    def modifyTrafficItemPacketHeader(self, configElementObj, packetHeaderName, fieldName, values):
+        """
+        Description
+           Modify any Traffic Item packet header.  You will need to use the IxNetwor API browser
+           to understand the packetHeaderName, fieldName and data to modify.
 
-        configElementObj = trafficItemObj+'/configElement/1'
-        stackObj = self.getPacketHeaderStackIdObj(configElementObj, stackId=1)
-        self.configPacketHeaderField(stackObj,
-                                     fieldName='Destination MAC Address',
-                                     data={'valueType': 'increment',
-                                           'startValue': destMacAddress,
-                                           'stepValue': '00:00:00:00:00:00',
-                                           'countValue': 1,
-                                           'auto': False})
+           Since a Traffic Item could contain many endpointSet (Flow Groups), a Traffic Item could 
+           have multiple configElement objects.  A configElementObj is the object handle for an 
+           endpointSet.  You have to get the configElement object first.  To get the ConfigElement
+           object, you call getConfigElementObj().  
+
+           self.getConfigElementObj(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None):
+           Use case #1: trafficItemName + endpointSetName
+           Use case #2: trafficItemObj + endpointSetName
+           Use case #3: trafficItemName only (Will assume there is only one configElement object which will be returned)
+           Use case #4: trafficItemObj only  (Will assume there is only one configElement object which will be returned)
+
+        Parameters
+           configElementObj: <str|obj>: The Traffic Item's Config Element object handle.
+           packetHeaderName: <str>: The packet header name. You could get the list of names from the 
+                                    IxNetwork API browser under trafficItem/{id}/configElement/{id}/stack.
+           fieldName: <str>: The packet header field name. View API browser under:
+                             trafficItem/{id}/configElement/{id}/stack/{id}/field
+           values: <dict>: Any amount of attributes from the /stack/{id}/field/{id} to modify.
+
+        Example:  For IP Precedence TOS 
+           packetHeaderName='ipv4'
+           fieldName='Precedence'
+           values={'fieldValue': '011 Flash'}
+        """
+        # /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6
+        stackIdObj = self.getTrafficItemPktHeaderStackObj(configElementObj=configElementObj,
+                                                          packetHeaderName=packetHeaderName)
         
+        self.configPacketHeaderField(stackIdObj, fieldName, values)
+
+    def modifyTrafficItemIpPriorityTos(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None,
+                                       packetHeaderName='ipv4', fieldName='Precedence', values=None):
+        """
+        Description
+           Modify a Traffic Item Flow group IP Priority TOS fields.
+
+        Parameters
+           value: <dict>: {'fieldValue': '000 Routine'|'001 Priority'|'010 Immediate'|'011 Flash'|'100 Flash Override'
+                           '101 CRITIC/ECP'|'110 Internetwork Control'}
+        
+           trafficItemObj: <str|obj>: The Traffic Item object handle.
+           trafficItemName: <str|obj>: The Traffic Item name.
+           endpointSetName: <str|obj>: The endpointSet name (Flow-Group).
+
+           Option #1: trafficItemName + endpointSetName
+           Option #2: trafficItemObj + endpointSetName
+           Option #3: trafficItemName only (Will assume there is only one configElement object)
+           Option #4: trafficItemObj only  (Will assume there is only one configElement object)
+
+        Requirement
+           Call self.getConfigElementObj() to get the config element object first.
+
+        Example
+           trafficObj.modifyTrafficItemIpPriorityTos(trafficItemName='Raw MPLS/UDP', values={'fieldValue': '001 Priority'})
+        """
+        configElementObj = self.getConfigElementObj(trafficItemObj=trafficItemObj, trafficItemName=trafficItemName,
+                                                    endpointSetName=endpointSetName)
+
+        self.modifyTrafficItemPacketHeader(configElementObj, packetHeaderName=packetHeaderName,
+                                           fieldName=fieldName, values=values)
+
+    def modifyTrafficItemDestMacAddress(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None, values=None):
+        """
+        Description
+           Modify a Traffic Item Flow group IP Priority TOS fields.
+
+        Parameters
+           value: <'str'|dict>: 
+                  If str: The mac address address
+                  If dict: Any or all the properties and the values:
+
+                          {'valueType': 'increment',
+                           'startValue': destMacAddress,
+                           'stepValue': '00:00:00:00:00:00',
+                           'countValue': 1,
+                           'auto': False}
+           
+           trafficItemObj: <str|obj>: The Traffic Item object handle.
+           trafficItemName: <str|obj>: The Traffic Item name.
+           endpointSetName: <str|obj>: The endpointSet name (Flow-Group).
+
+           Option #1: trafficItemName + endpointSetName
+           Option #2: trafficItemObj + endpointSetName
+           Option #3: trafficItemName only (Will assume there is only one configElement object)
+           Option #4: trafficItemObj only  (Will assume there is only one configElement object)
+
+        Requirement
+           Call self.getConfigElementObj() to get the config element object first.
+
+        Example
+           trafficObj.modifyTrafficItemDestMacAddress(trafficItemName='Raw MPLS/UDP', values='00:01:01:02:00:01')
+        """
+        
+        if type(values) == str:
+            values = {'valueType': 'increment',
+                      'startValue': values,
+                      'stepValue': '00:00:00:00:00:00',
+                      'countValue': 1,
+                      'auto': False}
+
+        configElementObj = self.getConfigElementObj(trafficItemObj=trafficItemObj, trafficItemName=trafficItemName,
+                                                    endpointSetName=endpointSetName)
+
+        self.modifyTrafficItemPacketHeader(configElementObj, packetHeaderName='ethernet',
+                                           fieldName='Destination MAC Address', values=values)
+
     def showPacketHeaderFieldNames(self, stackObj):
         """
         Description
@@ -718,7 +818,7 @@ class Traffic(object):
              data={'valueType': 'increment', 'startValue': 1001, 'stepValue': 1, 'countValue': 2, 'auto': False}
         
         Example: To modify MPLS field:
-            packetHeaderObj = trafficObj.getTrafficItemPktHeaderObj(trafficItemName='Raw MPLS/UDP', packetHeaderName='mpls')
+            packetHeaderObj = trafficObj.getTrafficItemPktHeaderStackObj(trafficItemName='Raw MPLS/UDP', packetHeaderName='mpls')
             trafficObj.configPacketHeaderField(packetHeaderObj,
                                                fieldName='MPLS Exp',
                                                data={'valueType': 'increment',

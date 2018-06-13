@@ -13,13 +13,20 @@
 from __future__ import absolute_import, print_function, division
 import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
 
-class IxNetRestApiException(Exception): pass
+class IxNetRestApiException(Exception):
+    def __init__(self, msg):
+        if Connect.enableDebugLogFile:
+            with open(Connect.debugLogFile, 'a') as restLogFile:
+                restLogFile.write('IxNetRestApiException error: '+msg)
 
 class Connect:
+    debugLogFile = None
+    enableDebugLogFile = False
+
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
-                 apiKey=None, generateRestLogFile=True, robotFrameworkStdout=False, httpInsecure=True):
+                 apiKey=None, generateRestLogFile=True, robotFrameworkStdout=False):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -125,7 +132,6 @@ class Connect:
 
         self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
         self.jsonHeader = {"content-type": "application/json"}
-        self.httpInsecure = httpInsecure
         self.username = username
         self.password = password
         self.apiKey = apiKey
@@ -141,6 +147,8 @@ class Connect:
             if generateRestLogFile == True:
                 # Default the log file name
                 self.restLogFile = 'ixNetRestApi_debugLog.txt'
+                Connect.enableDebugLogFile = True
+                Connect.debugLogFile = self.restLogFile
 
             if type(generateRestLogFile) != bool:
                 self.restLogFile = generateRestLogFile
@@ -252,11 +260,15 @@ class Connect:
                 if ignoreError == False:
                     if 'message' in response.json() and response.json()['messsage'] != None:
                         self.logWarning('\n%s' % response.json()['message'])
-                    raise IxNetRestApiException('GET error:{0}\n'.format(response.text))
+                    errMsg = 'GET Exception error: {0}'.format(response.text)
+                    self.logError(errMsg)
+                    raise IxNetRestApiException(errMsg)
             return response
 
         except requests.exceptions.RequestException as errMsg:
-            raise IxNetRestApiException('GET error: {0}\n'.format(errMsg))
+            errMsg = 'GET Exception error: {0}'.format(errMsg)
+            self.logError(errMsg)
+            raise IxNetRestApiException(errMsg)
 
     def post(self, restApi, data={}, headers=None, silentMode=False, noDataJsonDumps=False, ignoreError=False):
         """
@@ -296,7 +308,10 @@ class Connect:
             if str(response.status_code).startswith('2') == False:
                 if ignoreError == False:
                     if 'errors' in response.json():
-                        raise IxNetRestApiException('POST error: {0}\n'.format(response.json()['errors'][0]['detail']))
+                        errMsg = 'POST Exception error: {0}\n'.format(response.json()['errors'][0]['detail'])
+                        self.logError(errMsg)
+                        raise IxNetRestApiException(errMsg)
+                    errMsg = 'POST Exception error: {0}\n'.format(response.text)
                     raise IxNetRestApiException('POST error: {0}\n'.format(response.text))
 
             # Change it back to the original json header
@@ -305,7 +320,9 @@ class Connect:
             return response
 
         except requests.exceptions.RequestException as errMsg:
-            raise IxNetRestApiException('POST error: {0}\n'.format(errMsg))
+            errMsg = 'POST Exception error: {0}'.format(errMsg)
+            self.logError(errMsg)
+            raise IxNetRestApiException(errMsg)
 
     def patch(self, restApi, data={}, silentMode=False):
         """
@@ -328,10 +345,15 @@ class Connect:
                 if 'message' in response.json() and response.json()['messsage'] != None:
                     self.logWarning('\n%s' % response.json()['message'])
 
-                raise IxNetRestApiException('PATCH error: {0}\n'.format(response.text))
+                errMsg = 'PATCH Exception error: {0}\n'.format(response.text)
+                self.logError(errMsg)
+                raise IxNetRestApiException(errMsg)
             return response
+
         except requests.exceptions.RequestException as errMsg:
-            raise IxNetRestApiException('PATCH error: {0}\n'.format(errMsg))
+            errMsg = 'PATCH Exception error: {0}\n'.format(errMsg)
+            self.logError(errMsg)
+            raise IxNetRestApiException(errMsg)
 
     def delete(self, restApi, data={}, headers=None):
         """
@@ -354,10 +376,15 @@ class Connect:
             self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
             if not str(response.status_code).startswith('2'):
                 self.showErrorMessage()
-                raise IxNetRestApiException('DELETE error: {0}\n'.format(response.text))
+                errMsg = 'DELETE Exception error: {0}\n'.format(response.text)
+                self.logError(errMsg)
+                raise IxNetRestApiException(errMsg)
             return response
+
         except requests.exceptions.RequestException as errMsg:
-            raise IxNetRestApiException('DELETE error: {0}\n'.format(errMsg))
+            errMsg = 'DELETE Exception error: {0}\n'.format(errMsg)
+            self.logError(errMsg)
+            raise IxNetRestApiException(errMsg)
 
     def getDate(self):
         dateAndTime = str(datetime.datetime.now()).split(' ')
@@ -388,17 +415,11 @@ class Connect:
           ixNetRestServerIp: (str): The Windows IxNetwork API Server IP address.
           ixNetRestServerPort: (str): Default: 11009.  Provide a port number to connect to.
                                On a Linux API Server, a socket port is not needed. State "None".
-
         """
-        if self.httpInsecure:
-            httpVerb = 'http'
-        else:
-            httpVerb = 'https'
-
         # Handle __import__(IxNetRestApi) to not error out
         if ixNetRestServerIp == None: return
 
-        url = '{0}://{1}:{2}/api/v1/sessions'.format(httpVerb, ixNetRestServerIp, ixNetRestServerPort)
+        url = 'http://{0}:{1}/api/v1/sessions'.format(ixNetRestServerIp, ixNetRestServerPort)
         serverAndPort = '{0}:{1}'.format(ixNetRestServerIp, str(ixNetRestServerPort))
 
         if self.serverOs == 'windowsConnectionMgr':
@@ -421,10 +442,9 @@ class Connect:
             # windows sessionId is always 1 because it only supports one session.
             sessionIdNumber = 1
 
-        self.sessionUrl = '{http}://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(http=httpVerb,
-                                                                                              apiServer=ixNetRestServerIp,
-                                                                                              port=ixNetRestServerPort,
-                                                                                              id=sessionIdNumber)
+        self.sessionUrl = 'http://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(apiServer=ixNetRestServerIp,
+                                                                                            port=ixNetRestServerPort,
+                                                                                            id=sessionIdNumber)
 
         # http://192.168.70.127:11009
         self.httpHeader = self.sessionUrl.split('/api')[0]
@@ -497,7 +517,6 @@ class Connect:
         Parameter
            msg: (str): The message to print.
         """
-
         currentTime = self.getTime()
 
         if timestamp:
@@ -868,6 +887,55 @@ class Connect:
         self.waitForComplete(response, self.sessionUrl+'/availableHardware/chassis/operations/refreshinfo')
 
     def query(self, data, silentMode=False):
+        """
+        Description
+           Query for objects using filters.
+
+        Paramater
+           silentMode: (bool): True: Don't display any output on stdout.
+
+        Notes
+            Assuming this is a BGP configuration, which has two Topologies.
+            Below demonstrates how to query the BGP host object by
+            drilling down the Topology by its name and the specific the BGP attributes to modify at the
+            BGPIpv4Peer node: flap, downtimeInSec, uptimeInSec.
+            The from '/' is the entry point to the API tree.
+            Notice all the node. This represents the API tree from the / entry point and starting at 
+            Topology level to the BGP host level.
+
+        Notes
+           Use the API Browser tool on the IxNetwork GUI to view the API tree.
+            data: {'from': '/',
+                    'nodes': [{'node': 'topology',    'properties': ['name'], 'where': [{'property': 'name', 'regex': 'Topo1'}]},
+                              {'node': 'deviceGroup', 'properties': [], 'where': []},
+                              {'node': 'ethernet',    'properties': [], 'where': []},
+                              {'node': 'ipv4',        'properties': [], 'where': []},
+                              {'node': 'bgpIpv4Peer', 'properties': ['flap', 'downtimeInSec', 'uptimeInSec'], 'where': []}]
+                }
+
+        Requirements
+            self.waitForComplete()
+
+        Examples
+            response = restObj.query(data=queryData)
+            bgpHostAttributes = response.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'][0]
+
+            # GET THE BGP ATTRIBUTES TO MODIFY
+            bgpHostFlapMultivalue = bgpHostAttributes['flap']
+            bgpHostFlapUpTimeMultivalue = bgpHostAttributes['uptimeInSec']
+            bgpHostFlapDownTimeMultivalue = bgpHostAttributes['downtimeInSec']
+
+            restObj.configMultivalue(bgpHostFlapMultivalue, multivalueType='valueList', data={'values': ['true', 'true']})
+            restObj.configMultivalue(bgpHostFlapUpTimeMultivalue, multivalueType='singleValue', data={'value': '60'})
+            restObj.configMultivalue(bgpHostFlapDownTimeMultivalue, multivalueType='singleValue', data={'value': '30'})
+        """
+        url = self.sessionUrl+'/operations/query'
+        reformattedData = {'selects': [data]}
+        response = self.post(url, data=reformattedData, silentMode=silentMode)
+        self.waitForComplete(response, url+'/'+response.json()['id'])
+        return response
+
+    def query_backup(self, data, silentMode=False):
         """
         Description
            Query for objects using filters.

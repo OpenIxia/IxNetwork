@@ -52,8 +52,11 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    # If the licenses are activated in the Linux based XGS chassis or if the licenses are configured 
-    # in the Windows IxNetwork GUI API server in preferences, then you won't need to config license.
+    # Set configLicense to False if:
+    #    - You are using a Linux based XGS chassis and the licenses are activated in the chassis.
+    #    - Or the license settings are configured in the Windows IxNetwork GUI in Preferences.
+    # Set configLicense to True if:
+    #    - You are using IxVM chassis/ports and OVA Linux API server and the licenses are not activated in the vm chassis.
     configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
@@ -78,8 +81,7 @@ try:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest,
-                          httpInsecure=True
+                          deleteSessionAfterTest=True
                           )
 
     #---------- Preference Settings End --------------
@@ -103,18 +105,18 @@ try:
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]], topologyName='Topo1')
-    
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
 
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -123,8 +125,8 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -133,8 +135,8 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -145,8 +147,8 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -157,7 +159,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     bgpObj1 = protocolObj.configBgp(ipv4Obj1,
                                     name = 'bgp_1',
                                     enableBgp = True,
@@ -189,7 +191,7 @@ try:
                                                                         'step': '0.0.0.1',
                                                                         'direction': 'increment'},
                                                       prefixLength = 32)
-    
+
     networkGroupObj2 = protocolObj.configNetworkGroup(create=deviceGroupObj2,
                                                   name='networkGroup2',
                                                   multiplier = 100,
@@ -197,7 +199,7 @@ try:
                                                                     'step': '0.0.0.1',
                                                                     'direction': 'increment'},
                                                   prefixLength = 32)
-    
+
     protocolObj.startAllProtocols()
     protocolObj.verifyAllProtocolSessionsNgpf()
 
@@ -235,11 +237,11 @@ try:
 
     # Check the traffic state before getting stats.
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
-    #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
-    #    or do you expect traffic to be started such as in continuous mode.
+    #    'stopped': If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration.
+    #    'started': If you expect traffic to be started such as in continuous mode.
     trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
     #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
-    
+
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')
 

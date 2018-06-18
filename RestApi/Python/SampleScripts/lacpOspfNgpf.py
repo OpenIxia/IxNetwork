@@ -116,8 +116,8 @@ try:
                                                         deviceGroupName='DG2-LACP')
 
     # Ethernet stack for LACP
-    ethernetLacpObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1, ethernetName='Ethernet-LACP')
-    ethernetLacpObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2, ethernetName='Ethernet-LACP')
+    ethernetLacpObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1, ethernetName='Ethernet-LACP')
+    ethernetLacpObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2, ethernetName='Ethernet-LACP')
 
     lacpObj1 = protocolObj.configLacpNgpf(ethernetLacpObj1, actorSystemId='00 00 00 00 00 01', actorKey=1,
                                           administrativeKey=1, actorSystemPriority=1, actorPortNumber=1, actorPortPriority=1)
@@ -136,7 +136,7 @@ try:
                                                         deviceGroupName='DG4-Protocols')
 
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj3,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj3,
                                                   ethernetName='Ethernet',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -144,14 +144,14 @@ try:
                                                   macAddressPortStep='disabled')
     
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj4,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj4,
                                                   ethernetName='Ethernet',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
                                                               'step': '00:00:00:00:00:01'},
                                                   macAddressPortStep='disabled')
     
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -163,7 +163,7 @@ try:
                                           prefix=24,
                                           resolveGateway=True)
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -272,13 +272,16 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
+
     print('\nException Error! %s\n' % errMsg)
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

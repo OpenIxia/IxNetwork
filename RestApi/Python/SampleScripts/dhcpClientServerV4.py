@@ -76,8 +76,7 @@ try:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest,
-                          httpInsecure=True
+                          deleteSessionAfterTest=deleteSessionAfterTest
                           )
 
     #---------- Preference Settings End --------------
@@ -116,7 +115,7 @@ try:
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -126,7 +125,7 @@ try:
                                                           'direction': 'increment',
                                                           'step':0})
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -146,7 +145,7 @@ try:
                                                    renewTimer=0
                                                )
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.11',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},

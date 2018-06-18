@@ -93,7 +93,7 @@ try:
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
-    portObj.assignPorts(portList, createVports=True)
+    portObj.assignPorts(portList)
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
@@ -110,7 +110,7 @@ try:
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -118,7 +118,7 @@ try:
                                                   macAddressPortStep='disabled',
                                                   vlanId=100)
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -126,7 +126,7 @@ try:
                                                   macAddressPortStep='disabled',
                                                   vlanId=100)
     
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '100.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -138,7 +138,7 @@ try:
                                           prefix=16,
                                           resolveGateway=True)
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '100.1.3.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -172,14 +172,14 @@ try:
     vxlanDeviceGroupObj1 = protocolObj.createDeviceGroupNgpf(deviceGroupObj1,
                                                              multiplier=3, deviceGroupName='vxlanHost1')
     
-    vxlanEthernetObj1 = protocolObj.createEthernetNgpf(vxlanDeviceGroupObj1,
+    vxlanEthernetObj1 = protocolObj.configEthernetNgpf(vxlanDeviceGroupObj1,
                                                        ethernetName='VxLan1-Eth1',
                                                        macAddress={'start': '00:01:11:00:00:01',
                                                                    'direction': 'increment',
                                                                    'step': '00:00:00:00:00:01'},
                                                        vlanId='101')
-    
-    vxlanIpv4Obj1 = protocolObj.createIpv4Ngpf(vxlanEthernetObj1,
+
+    vxlanIpv4Obj1 = protocolObj.configIpv4Ngpf(vxlanEthernetObj1,
                                                ipv4Address={'start': '10.1.1.1',
                                                             'step': '0.0.0.0',
                                                             'direction': 'increment'},
@@ -191,14 +191,14 @@ try:
     
     vxlanDeviceGroupObj2 = protocolObj.createDeviceGroupNgpf(deviceGroupObj2, multiplier=3, deviceGroupName='vxlanHost2')
     
-    vxlanEthernetObj2 = protocolObj.createEthernetNgpf(vxlanDeviceGroupObj2,
+    vxlanEthernetObj2 = protocolObj.configEthernetNgpf(vxlanDeviceGroupObj2,
                                                        ethernetName='VxLan1-Eth1',
                                                        macAddress={'start': '00:01:22:00:00:01',
                                                                    'direction': 'increment',
                                                                    'step': '00:00:00:00:00:01'},
                                                        vlanId='101')
     
-    vxlanIpv4Obj2 = protocolObj.createIpv4Ngpf(vxlanEthernetObj2,
+    vxlanIpv4Obj2 = protocolObj.configIpv4Ngpf(vxlanEthernetObj2,
                                                ipv4Address={'start': '10.1.3.1',
                                                             'step': '0.0.0.0',
                                                             'direction': 'increment'},

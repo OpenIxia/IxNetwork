@@ -117,7 +117,7 @@ ingressTrackingFilterName = 'VLAN:VLAN-ID'
 
 # STEP 4:
 # Sometime you might not want to remove the created egress stat view so you could debug.
-removeAllTclStatViews = True
+removeAllTclStatViews = False
 
 #--------------- Egress tracking variable settings ends ----------
 
@@ -189,7 +189,7 @@ try:
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -199,7 +199,7 @@ try:
                                                           'direction': 'increment',
                                                           'step':0})
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -209,7 +209,7 @@ try:
                                                           'step':0},
                                                   macAddressPortStep='disabled')
 
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -221,7 +221,7 @@ try:
                                           prefix=24,
                                           resolveGateway=True)
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},

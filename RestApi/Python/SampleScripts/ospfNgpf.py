@@ -55,10 +55,10 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.120'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-               [ixChassisIp, '2', '1']]
+               [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
@@ -107,7 +107,7 @@ try:
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -115,14 +115,14 @@ try:
                                                   macAddressPortStep='disabled')
     
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
                                                               'step': '00:00:00:00:00:01'},
                                                   macAddressPortStep='disabled')
     
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -134,7 +134,7 @@ try:
                                           prefix=24,
                                           resolveGateway=True)
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},

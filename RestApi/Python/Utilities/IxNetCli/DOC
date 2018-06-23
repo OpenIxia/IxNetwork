@@ -34,23 +34,23 @@ Table of Contents
 
 Overview
 --------
-   - This is an IxNetwork ReST API application that emulates CLI interactions.
+   - This is an IxNetwork ReST API application that emulates a CLI in a Python shell.
    - It is written in Python 3. Will work in Python 2 also.
    - This is intended for environments that configures simple configurations,
      send traffic and get stats.
    - This app allow users to use the CLI to modify traffic configurations, run and rerun traffic
      and get stats. 
-   - This app uses the Python Interpreter for CLI interactions.
-   - All users have to do is enter the Python shell and import the ixnetCli.py
-     module and start entering CLI commands by calling its function names.
+   - This app uses the Python shell for CLI interactions.
+   - All users have to do is enter the Python shell and enter "from ixnetCli import *" and 
+     start entering CLI commands by calling function names.
    - The CLI commands are nothing but Python functions.
-   - The Python functions are high level APIs that calls functions in the the IxNetRestApi* modules.
+   - The Python functions are high level wrappers that calls functions in the the IxNetRestApi* modules.
 
 
 Python and Feature support
 --------------------------
    - This app supports Python 2.7 and Python 3+
-   - Supports Python in both Linux and Windows
+   - Supports Python in both Linux and Windows based chassis.
 
 
 Requirements
@@ -152,10 +152,15 @@ Getting Started:
 	    jsonConfigFile = '/bgpJsonOriginal.json'
 	    ixncfgConfigFile = 'bgp_ngpf_8.30.ixncfg'
 	    apiServerType = 'windows' ;# Options: windows|linux
+
+	    # For Windows
 	    windowsApiServerIp = '192.168.70.127'
 	    windowsApiServerIpPort = 11009
+
 	    chassisIp = '192.168.70.11'
 	    portList = [[chassisIp, 1,1], [chassisIp, 2,1]]
+
+	    # For Linux API server only
 	    linuxApiServerIp = '192.168.70.144'
 	    linuxApiServerIpPort = 443
 	    apiKey = 'eaebe82c72d541cfab384e911496b063'
@@ -164,9 +169,10 @@ Getting Started:
 	    licenseServerIp = '192.168.70.127'
 	    licenseMode = 'subscription'
 	    licenseTier = 'tier3'
-	    forceTakePortOwnership = True
 	    deleteSessionAfterTest = True ;# For Linux only
-	    enableDebugTracing = False ;# Display error tracebacks
+
+	    forceTakePortOwnership = True
+	    enableDebugTracing = False ;# Display Python error tracebacks
  
 
 3 configuration methods
@@ -177,13 +183,13 @@ Getting Started:
 
     1> Create a configuration from scratch
        -----------------------------------
-        - Currently, as of this writing, there is only a BGP and MPLS templates available to create from scratch.
-	- Enter: configbgp("<bgpConfig.py>").
-	         For example: If you created a config file called bgpConfig.py, then enter it as the value.
-                              configbgp('bgpConfig.py')
+        - Currently, as of this writing, there is only a L2L3, BGP, MPLS templates available to create from scratch.
+	- Enter: config("<bgpConfig.py>").
+	         For example: If you created a config file called bgpConfig.py, then enter:
+                              config('bgpConfig.py')
 		 
-	- The configbgp() API resides in the application module ixnetCli.py.
-	      - Read the bgpConfig.py file.
+	- The config() function resides in the application module ixnetCli.py.
+	      - Reads the bgpConfig.py parameter file, which is a Python dict file.
 	      - Configures a two port Topology (Tx and Rx ports).
 	      - Start BGP protocol.
 	      - Verifies ARP and BGP.
@@ -210,7 +216,7 @@ Choices are:  Windows and Linux
 	- Supports only 1 user session.
 
     2> Linux
-        - Supports up to 15 concurrent user sessions.
+        - Supports up to 10 concurrent user sessions.
 
         - The Linux API server comes in multiple methods:
 
@@ -243,7 +249,7 @@ How to use ixnetCli.py
 
 	    Step 4:
 	        Configure IxNetwork
-		   Enter: configbgp('bgpParams.py')
+		   Enter: config('bgpParams.py')
 
 	    Step 5:
 	        Enter: starttraffic()
@@ -256,16 +262,17 @@ How to use ixnetCli.py
 
 	 - Docstring support:
 
-	      Enter help('The_function_name')
+	      Enter: help('The_function_name')
 
 
 Modify existing configurations, rerun traffic and get stats
 -----------------------------------------------------------
 
-    Once you are in the Python Shell interpreter mode, every CLI command is a
+    Once you are in the Python Shell, every CLI command is a
     Python syntax.  As you see below how to enter the CLI commands.    
     
-    Worth mentionings:
+    Notes:
+
        - Modifying Traffic Item requires the Traffic Item's name as the first parameter.
          In case there are more than one Traffic Items, this app will get the Traffic Item's
          object by filtering the name.

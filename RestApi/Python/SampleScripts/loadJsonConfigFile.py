@@ -128,8 +128,8 @@ try:
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
     #    'stopped': If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration.
     #    'started': If you expect traffic to be started such as in continuous mode.
-    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
-    #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

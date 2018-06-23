@@ -1331,27 +1331,27 @@ class Traffic(object):
         queryResponse = self.ixnObj.query(data=queryData)
         self.ixnObj.logInfo('\n', end='')
         for ti in queryResponse.json()['result'][0]['trafficItem']:
-            self.ixnObj.logInfo('TrafficItem: {0}\n\tName: {1}  Enabled: {2}  State: {3}'.format(ti['id'], ti['name'], ti['enabled'], ti['state']))
-            self.ixnObj.logInfo('\tTrafficType: {0}  BiDirectional: {1}'.format(ti['trafficType'], ti['biDirectional']))
+            self.ixnObj.logInfo('TrafficItem: {0}\n\tName: {1}  Enabled: {2}  State: {3}'.format(ti['id'], ti['name'], ti['enabled'], ti['state']), timestamp=False)
+            self.ixnObj.logInfo('\tTrafficType: {0}  BiDirectional: {1}'.format(ti['trafficType'], ti['biDirectional']), timestamp=False)
             for tracking in ti['tracking']:
-                self.ixnObj.logInfo('\tTrackings: {0}'.format(tracking['trackBy']))
+                self.ixnObj.logInfo('\tTrackings: {0}'.format(tracking['trackBy']), timestamp=False)
 
             for endpointSet, cElement in zip(ti['endpointSet'], ti['configElement']):
-                self.ixnObj.logInfo('\tEndpointSetId: {0}  EndpointSetName: {1}'.format(endpointSet['id'], endpointSet['name']))
+                self.ixnObj.logInfo('\tEndpointSetId: {0}  EndpointSetName: {1}'.format(endpointSet['id'], endpointSet['name']), timestamp=False)
                 srcList = []
                 for src in endpointSet['sources']:
                     srcList.append(src.split('/ixnetwork')[1])
                 dstList = []
                 for dest in endpointSet['destinations']:
                     dstList.append(dest.split('/ixnetwork')[1])
-                self.ixnObj.logInfo('\t    Sources: {0}'.format(srcList))
-                self.ixnObj.logInfo('\t    Destinations: {0}'.format(dstList))
-                self.ixnObj.logInfo('\t    FrameType: {0}  FrameSize: {1}'.format(cElement['frameSize']['type'], cElement['frameSize']['fixedSize']))
+                self.ixnObj.logInfo('\t    Sources: {0}'.format(srcList), timestamp=False)
+                self.ixnObj.logInfo('\t    Destinations: {0}'.format(dstList), timestamp=False)
+                self.ixnObj.logInfo('\t    FrameType: {0}  FrameSize: {1}'.format(cElement['frameSize']['type'], cElement['frameSize']['fixedSize']), timestamp=False)
                 self.ixnObj.logInfo('\t    TranmissionType: {0}  FrameCount: {1}  BurstPacketCount: {2}'.format(cElement['transmissionControl']['type'],
                                                                                                 cElement['transmissionControl']['frameCount'],
-                                                                                                cElement['transmissionControl']['burstPacketCount']))
-                self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(cElement['frameRate']['type'], cElement['frameRate']['rate']))
-            self.ixnObj.logInfo('\n', end='')
+                                                                                                cElement['transmissionControl']['burstPacketCount']), timestamp=False)
+                self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(cElement['frameRate']['type'], cElement['frameRate']['rate']), timestamp=False)
+            self.ixnObj.logInfo('\n', end='', timestamp=False)
 
     def setFrameSize(self, trafficItemName, **kwargs):
         """

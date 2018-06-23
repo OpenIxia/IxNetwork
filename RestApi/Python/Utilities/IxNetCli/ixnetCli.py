@@ -4,10 +4,14 @@ PLEASE READ DISCLAIMER
     This is a sample script for demo and reference purpose only.
     It is subject to change for content updates without warning.
 
+Author: Hubert Gee
+
  REQUIREMENTS
     - Python2.7.9+
     - Python modules: requests
-    - preference.py:  Set your preferences in this file.
+    - preference.py:  
+         - Make a copy of the preference.py template file and give it
+           any name.
     
     - All the IxNetwork ReST API modules:
          IxNetRestApi.py
@@ -18,27 +22,37 @@ PLEASE READ DISCLAIMER
          IxNetRestApiStatistics.py
 
  DESCRIPTION
-    This sample script demonstrates:
-        - REST API configurations using two back-to-back Ixia ports.
-        - Connecting to Windows IxNetwork API server or Linux API server.
+    This is a utility that emulates a CLI in a Python shell.
+    Please read the DOC for all the details.
 
-        - Verify for sufficient amount of port licenses before testing.
-        - Verify port ownership.
-        - Configure two IPv4/BGP Topology Groups
+        - Connecting to a Windows IxNetwork API server or Linux API server.
+        - Either create a config from scratch or load a saved config file (json or ixncfg).
+        - Assign ports
         - Start protocols
-        - Verify BGP protocol sessions
+        - Verify protocol sessions
         - Create a Traffic Item
         - Apply Traffic
         - Start Traffic
         - Get stats
 
  USAGE
-    - python
-    - from ixnetCli import *
-    - showcommands()
-    - connecttowindows() or connecttolinux()
-    - configbgp('bgpParams.py')
-    - runconfig
+    - Enter: python
+    - Enter: from ixnetCli import *
+    - For help, enter: showcommands()
+    - Enter either: connecttowindows() or connecttolinux()
+
+    - 3 options to build a configurations:
+         1> configbgp('file.py')
+         2> runjsonconfig('file.json')
+         3> runixncfgconfig('file.ixncfg')
+
+    - starttraffic()
+    - getstats()
+
+UTILITIES
+    - showtopologies()
+    - showtrafficitems()
+
 """
 
 from __future__ import absolute_import, print_function, division
@@ -118,22 +132,27 @@ try:
 
         if command == None:
             print('\n\n  Example:')
-            print('\t1> setpreference("preference.py")')
-            print('\n\t2> Windows: connecttowindows("192.168.70.127")')
-            print('\t   Linux:   connecttolinux("192.168.70.144", "5443")')
+            print('\tThe first thing you need to do is create a preference file.')
+            print('\tMake a copy of the provided preference.py template file and give it a meaningful name.')
+
+            print('\n\t1> Enter: setpreference("Your preference file")')
+            print('\n\t2> For Windows chassis connection, enter: connecttowindows("192.168.70.127")')
+            print('\t   For Linux chassis connection, enter:   connecttolinux("192.168.70.144", "5443")')
             print()
             print('\t3> To load a saved config file:')
-            print('\t      Option 1> runjsonconfig("json_config_file.json")')
-            print('\t      Option 2> runixncfgconfig("ixncfg_file.ixncfg", ixChassisIp="1.1.1.1")')
+            print('\t      Option 1> Enter: runjsonconfig("json_config_file.json")')
+            print('\t      Option 2> Enter: runixncfgconfig("ixncfg_file.ixncfg")')
             print()
-            print('\t   To load a saved config file and use different chassis/ports:')
-            print('\t      runjsonconfig("json_config_file.json", chassisIp=<ip>, ')
-            print('\t                    portList=[[ixChassisIp, "1", "1"], [ixChassisIp, "2", "1"]])')
-            #print('\t      Option 2> runixncfgconfig("ixncfg_file.ixncfg", ixChassisIp="1.1.1.1")')
+            print('\t   To load a saved config file and use different chassis and ports:')
+            print('\t      JSON config file>   Enter: runjsonconfig("json_config_file.json", chassisIp=<ip>, ')
+            print('\t                                 portList=[[ixChassisIp, "1", "1"], [ixChassisIp, "2", "1"]])')
+            print()
+            print('\t     ixncfg config file>  Enter: runixncfgconfig("ixncfg_file.ixncfg", ixChassisIp="1.1.1.1")')
             print()
             print('\t   To create a config from scratch:')
-            print('\t      configbgp("bgpParams.py")')
-            print('\t      configmpls("mplsParams.py")')
+            print('\t      Enter: config("l2l3Params.py")')
+            print('\t      Enter: config("bgpParams.py")')
+            print('\t      Enter: config("mplsParams.py")')
             print()
 
     def setpreference(preferenceFile):
@@ -180,35 +199,37 @@ try:
         else:
             print('\nThere is currently no opened Linux sessions\n')
 
-    def connecttolinux(apiServerIp=None, apiServerIpPort=None, resume=False,
+    def connecttolinux(apiServerIp=None, serverIpPort=None, resume=False,
                        apiKey=None, sessionId=None, username='admin', password='admin', deleteSessionAfterTest=True):
         """Connect to a Linux API server.
 
         :param apiServerIp: (str) The API server IP address.
-        :param apiServerIpPort: (int) The API server TCP port.
-        :param apiServerType: (str) windows|linux.
+        :param serverIpPort: (int) The API server TCP port.
         :param resume: (bool) True|False: To connect to an existing session.
         :param apiKey: (str) The Linux API server user account's API Key.
         :param sessionId: (int) The session ID.
         :param username: (str) The login username.
         :param password: (str) The login password.
-        :param deleteSessionAfterTest: (bool) True|False: To Delete the session when test is done."""
+        :param deleteSessionAfterTest: (bool) True|False: To Delete the session when test is done.
+        """
+
         middleware.preference.apiServerType = 'linux'
-        connect(apiServerIp=apiServerIp, apiServerIpPort=apiServerIpPort,
+
+        connect(apiServerIp=apiServerIp, serverIpPort=serverIpPort,
                 resume=resume, apiKey=apiKey, sessionId=sessionId, username=username, password=password,
                 deleteSessionAfterTest=deleteSessionAfterTest)
 
-    def connecttowindows(apiServerIp=None, apiServerIpPort=None, resume=False):
+    def connecttowindows(apiServerIp=None, serverIpPort=None, resume=False):
         """Connect to a Windows API server.
 
-        :param apiServerIp: (str) The API server IP address.
+        :param serverIp: (str) The API server IP address.
         :param apiServerIpPort: (int) The API server TCP port.
         :param resume: (bool) True|False: To connect to an existing session.
         """
         middleware.preference.apiServerType = 'windows'
-        connect(apiServerIp=apiServerIp, apiServerIpPort=apiServerIpPort, resume=resume)
+        connect(apiServerIp=apiServerIp, serverIpPort=serverIpPort, resume=resume)
 
-    def connect(apiServerIp=None, apiServerIpPort=None, resume=False,
+    def connect(apiServerIp=None, serverIpPort=None, resume=False,
                 apiKey=None, sessionId=None, username='admin', password='admin', deleteSessionAfterTest=True):
         """Internal use only. Used by connecttowindows and connecttolinux.  Connect to an API server.
 
@@ -217,12 +238,12 @@ try:
                        If apiServerType is Linux, provide the apiServerIpAddress, apiServerIpPort, apiKey and sessionId number.
                        If apiServerType is windows, provide the apiServerIpAddress and apiServerIpPort.
         :param apiServerIp: (str): The IP address of the IxNetwork API server to connect to.
-        :param apiServerIpPort: (int): The API server IP port number to use.
+        :param serverIpPort: (int): The API server IP port number to use.
                         Windows default port = 11009.
                         Linux default port = 443.
         :param apiKey: (str): For Linux API server only. The API-KEY of the Linux API server.
                         You could get this in the Web UI, under My Account, and in show API-KEY.
-        :param sessionID: (int): For Linux API server only. The existing session ID to connect to.
+        :param sessionId: (int): For Linux API server only. The existing session ID to connect to.
         :param username: For Linux API serer only. The login username.
         :param password: For Linux API server only. The login password.
 
@@ -232,27 +253,29 @@ try:
            - To resume on Linux: resume=True, apiKey=<apiKey>, sessionId=<session ID>,
            - To resume on Windows with currently connected apiServerIp: resume=True, apiServerIp=<apiServerIp>
            - To resume on Windows with a different apiServerIp: resume='windows', apiServerIp=<apiServerIp>, apiServerIpPort=<apiSeverIpPort>
-           - To resume on WindowConnectionMgr = Not supported yet."""
+           - To resume on WindowConnectionMgr = Not supported."""
         if resume == True:
             middleware.resume = True
             if middleware.preference.apiServerType == 'linux':
-                if (apiKey is None and sessionId is None) or \
-                    (apiKey is None and sessionId is not None) or \
-                    (apiKey is not None and sessionId is None):
-                        print('\nError: To resume on Linux API server, you must provide both apiKey and sessionId.\n')
-                        return
+                if middleware.preference.apiKey == None and apiKey == None:
+                    print('\nError: To resume on Linux API server, you must provide apiKey.\n')
+                    return 
+
+                if sessionId == None:
+                    print('\nError: To resume on Linux API server, you must provide a sessionId to connect to.\n')
+                    return
 
         if resume == False:
             # Check to see if resuming on Windows
             if middleware.preference.apiServerType == 'windows':
                 if apiServerIp == None and middleware.preference.windowsApiServerIp == None:
                     print('\nError: You must include apiServerIp\n') ;# return
-                if apiServerIpPort == None and middleware.preference.windowsApiServerIpPort == None:
+                if serverIpPort == None and middleware.preference.windowsApiServerIpPort == None:
                     print('\nError: You must include apiServerIpPort\n') ;# return
 
                 if apiServerIp != None:
                     middleware.preference.windowsApiServerIp = apiServerIp
-                if apiServerIpPort != None:
+                if serverIpPort != None:
                     middleware.preference.windowsApiServerIpPort = apiServerIpPort
 
             if middleware.preference.apiServerType == 'linux':
@@ -263,38 +286,46 @@ try:
 
                 if apiServerIp != None:
                     middleware.preference.linuxApiServerIp = apiServerIp
-                if apiServerIpPort != None:
-                    middleware.preference.linuxApiServerIpPort = apiServerIpPort
+                if serverIpPort != None:
+                    middleware.preference.linuxApiServerIpPort = serverIpPort
 
         if middleware.preference.apiServerType == 'windows':
-            ixn = Connect(apiServerIp=middleware.preference.windowsApiServerIp,
+            ixnObj = Connect(apiServerIp=middleware.preference.windowsApiServerIp,
                           serverIpPort=middleware.preference.windowsApiServerIpPort,
                           serverOs='windows')
+
             middleware.connectedTo = 'windows'
 
         if middleware.preference.apiServerType == 'linux':
-            ixn = Connect(apiServerIp=middleware.preference.linuxApiServerIp,
-                          serverIpPort=str(middleware.preference.linuxApiServerIpPort),
-                          username=middleware.preference.username,
-                          password=middleware.preference.password,
-                          deleteSessionAfterTest=deleteSessionAfterTest,
-                          serverOs='linux',
-                          apiKey=apiKey,
-                          sessionId=str(sessionId))
+            if resume == True and apiKey == None:
+                apiKey = middleware.preference.apiKey
+                
+            print('', middleware.preference.linuxApiServerIp, str(middleware.preference.linuxApiServerIpPort), 
+                  middleware.preference.username, middleware.preference.password, str(sessionId))
+
+            ixnObj = Connect(apiServerIp=middleware.preference.linuxApiServerIp,
+                             serverIpPort=str(middleware.preference.linuxApiServerIpPort),
+                             username=middleware.preference.username,
+                             password=middleware.preference.password,
+                             deleteSessionAfterTest=deleteSessionAfterTest,
+                             serverOs='linux',
+                             apiKey=apiKey,
+                             sessionId=sessionId)
 
             middleware.connectedTo = 'linux'
             # Record the current apiKey and sessionId
-            middleware.apiKey = ixn.apiKey
-            middleware.linuxServerSessionId = ixn.sessionId
+            middleware.apiKey = ixnObj.apiKey
+            middleware.linuxServerSessionId = ixnObj.sessionId
+            
 
         middleware.connected = True
-        middleware.sessionId = ixn.sessionId.split('/')[-1]
-        middleware.ixn = ixn
-        middleware.portMgmtObj = PortMgmt(ixn)
-        middleware.fileMgmtObj = FileMgmt(ixn)
-        middleware.trafficObj = Traffic(ixn)
-        middleware.protocolObj = Protocol(ixn, middleware.portMgmtObj)
-        middleware.statsObj = Statistics(ixn)
+        middleware.sessionId = ixnObj.sessionId.split('/')[-1]
+        middleware.ixn = ixnObj
+        middleware.portMgmtObj = PortMgmt(ixnObj)
+        middleware.fileMgmtObj = FileMgmt(ixnObj)
+        middleware.trafficObj = Traffic(ixnObj)
+        middleware.protocolObj = Protocol(ixnObj)
+        middleware.statsObj = Statistics(ixnObj)
 
         match = re.match('http.*(/api.*ixnetwork)', middleware.ixn.sessionUrl)
         middleware.sessionHeader = match.group(1)
@@ -338,33 +369,35 @@ try:
         if jsonConfigFile == None:
             if middleware.preference.jsonConfigFile == None:
                 print('\nYou must include a jsonConfigFile')
+
             if middleware.preference.jsonConfigFile != None:
                 jsonConfigFile = middleware.preference.jsonConfigFile
 
+        # TODO: get only the chassis
         jsonData = middleware.fileMgmtObj.jsonReadConfig(jsonConfigFile)
-        if portList != None:
-            middleware.fileMgmtObj.jsonAssignPorts(jsonData, portList)
 
         if portList == None:
             if middleware.preference.portList == None:
                 portList = middleware.fileMgmtObj.getJsonConfigPortList(jsonData)
                 if portList == []:
                     raise IxNetRestApiException('\nFailed to get portList from JSON config data\n')
+
             if middleware.preference.portList != None:
                 portList = middleware.preference.portList
-            middleware.fileMgmtObj.jsonAssignPorts(jsonData, portList)
 
         if chassisIp is None:
             if middleware.preference.chassisIp != None:
                 chassisIp = middleware.preference.chassisIp
+
             if middleware.preference.chassisIp == None:
                 chassisIp = jsonData['availableHardware']['chassis'][0]['hostname']
 
         # Need to support multiple chassis's.  If user passed in a string of chassis, convert it to a list.
         if chassisIp is not list:
             chassisIp = chassisIp.split(' ')
+
         for eachChassisIp in chassisIp:
-            middleware.ixn.connectIxChassis(eachChassisIp)
+            middleware.portMgmtObj.connectIxChassis(eachChassisIp)
 
         if middleware.portMgmtObj.arePortsAvailable(portList, raiseException=False) != 0:
             if middleware.preference.forceTakePortOwnership == True:
@@ -379,12 +412,12 @@ try:
                                                   middleware.preference.licenseMode,
                                                   middleware.preference.licenseTier)
         middleware.fileMgmtObj.importJsonConfigObj(jsonData, option='newConfig')
+        middleware.portMgmtObj.assignPorts(portList, configPortName=False)
         middleware.portMgmtObj.verifyPortState()
         middleware.protocolObj.startAllProtocols()
         middleware.protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
-        middleware.trafficObj.regenerateTrafficItems()
         middleware.trafficObj.startTraffic()
-        getstats(includeCrc=includeCrc)
+        #getstats(includeCrc=includeCrc)
 
     def runixncfgconfig(ixncfgConfigFile=None, chassisIp=None, portList=None, includeCrc=False):
         """Loads a saved ixncfg config file, reassign ports, start protocols, verify protocols, start traffic and get stats.
@@ -424,7 +457,7 @@ try:
         if chassisIp is not list:
             chassisIp = chassisIp.split(' ')
         for eachChassisIp in chassisIp:
-            middleware.ixn.connectIxChassis(eachChassisIp)
+            middleware.portMgmtObj.connectIxChassis(eachChassisIp)
 
         if portList == None:
             if middleware.preference.portList != None:
@@ -456,7 +489,7 @@ try:
         middleware.protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
         middleware.trafficObj.regenerateTrafficItems()
         middleware.trafficObj.startTraffic()
-        getstats(includeCrc=includeCrc)
+        #getstats(includeCrc=includeCrc)
 
     def showlinuxsession():
         """Show the Linux API server session ID"""
@@ -464,10 +497,14 @@ try:
         print('Session ID: {0}'.format(middleware.ixn.sessionId.split('/')[-1]))
         print()
 
-    def stoptopology(topologyName):
+    def stoptopology(topologyName='all'):
         """Stop a running Topology Group and all of its protocol stacks.
 
-        :param topologyName: (str) The Topology Group name."""
+        :param topologyName: (str) The Topology Group name. 'all' to stop all protocols."""
+        if topologyName == 'all':
+            middleware.protocolObj.stopAllProtocols()
+            return
+
         queryData = {'from': '/',
                     'nodes': [{'node': 'topology',    'properties': ['name'], 'where': [{'property': 'name', 'regex': topologyName}]}]
                     }
@@ -478,10 +515,14 @@ try:
             print('\nError: Verify the topologyName', topologyName)
         middleware.protocolObj.stopTopology([topologyObj])
 
-    def starttopology(topologyName):
+    def starttopology(topologyName='all'):
         """Start a Topology Group and all of its protocol stacks.
 
-        :param topologyName: (str) The Topology Group name."""
+        :param topologyName: (str) The Topology Group name. 'all' to start all protocols"""
+        if topologyName == 'all':
+            middleware.protocolObj.startAllProtocols()
+            return
+
         queryData = {'from': '/',
                     'nodes': [{'node': 'topology',    'properties': ['name'], 'where': [{'property': 'name', 'regex': topologyName}]}]
                     }
@@ -491,7 +532,7 @@ try:
         except:
             print('\nError: Verify the topologyName', topologyName)
         middleware.protocolObj.startTopology([topologyObj])
-        middleware.protocolObj.verifyProtocolSessionsNgpf()
+        #middleware.protocolObj.verifyProtocolSessionsNgpf()
 
     def startbgp(topologyName, bgpName):
         """Start BGP protocol.
@@ -556,7 +597,6 @@ try:
 
     def starttraffic():
         """Start traffic."""
-        middleware.trafficObj.regenerateTrafficItems()
         middleware.trafficObj.startTraffic()
 
     def stoptraffic():
@@ -763,7 +803,7 @@ try:
             if middleware.preference.chassisIp == None:
                 middleware.preference.chassisIp = middleware.params['ixChassisIp']
 
-        middleware.ixn.connectIxChassis(middleware.preference.chassisIp)
+        middleware.portMgmtObj.connectIxChassis(middleware.preference.chassisIp)
 
         if portList:
             middleware.preference.portList = portList
@@ -798,9 +838,9 @@ try:
 
 
                 for ethernet in deviceGroup['ethernet']:
-                    ethernetObj = middleware.protocolObj.createEthernetNgpf(
+                    ethernetObj = middleware.protocolObj.configEthernetNgpf(
                         deviceGroupObj,
-                        ethernetName = ethernet['name'],
+                        name = ethernet['name'],
                         macAddress = {'start': ethernet['macAddress']['start'],
                                       'direction': ethernet['macAddress']['direction'],
                                       'step': ethernet['macAddress']['step']
@@ -813,7 +853,7 @@ try:
 
                     if 'ipv4'in ethernet:
                         for ipv4 in ethernet['ipv4']:
-                            ipv4Obj = middleware.protocolObj.createIpv4Ngpf(ethernetObj,
+                            ipv4Obj = middleware.protocolObj.configIpv4Ngpf(ethernetObj,
                                                                             ipv4Address = {'start': ipv4['address']['start'],
                                                                                            'direction': ipv4['address']['direction'],
                                                                                            'step': ipv4['address']['step']},
@@ -893,11 +933,14 @@ try:
         if isAnyTrafficItemConfigured == 0:
             raise IxNetRestApiException('No Traffic Item was enabled for configuring')
 
-    def configbgp(paramFile=None, chassisIp=None, portList=None):
-        """Configure BGP and Traffic Item from scratch.  Getting all the settings from the user
-        defined JSON config file.
+    def config(paramFile=None, chassisIp=None, portList=None):
+        """Read a parameter file and onfigure NGPF and Traffic Item from scratch.
 
-        :param jsonConfigFile: (str) The JSON parameter file to load for this configuration."""
+        :paramFile: (str) The Python dict parameter file to load for this configuration.
+        :chassisIp: (str) The chassis IP address.
+        :portList:  (list) [ixChassisIp, cardNumber, portNumber]
+        """
+
         if paramFile == None:
             raise IxNetRestApiException('\nError: You must provide a paramFile\n')
 
@@ -905,8 +948,16 @@ try:
             raise IxNetRestApiException("Param file doesn't exists: %s" % paramFile)
 
         middleware.params = __import__(paramFile.split('.')[0]).params
-        configIxNetworkFromScratch(chassisIp, portList)
 
+        if chassisIp == None:
+            chassisIp = middleware.params['ixChassisIp']
+            middleware.preference.chassisIp = chassisIp
+
+        if portList == None:
+            portList = middleware.params['portList']
+            middleware.preference.portList = portList
+
+        configIxNetworkFromScratch(chassisIp, portList)
 
     def configmpls(paramFile=None, chassisIp=None, portList=None):
         """Configure MPLS raw Traffic Item.  Getting all the settings from the user

@@ -188,7 +188,12 @@ class Connect:
                 raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
 
             # Connect to an existing session on the Linux API server
+
             if apiKey and sessionId:
+                self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
+                                                                              self.apiServerPort, str(sessionId))
+                self.sessionUrl = self.sessionId + '/ixnetwork'
+                self.httpHeader = self.sessionUrl.split('/ixnetworkweb')[0]
                 self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
 
                 response = self.get('https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp, self.apiServerPort, str(sessionId)))
@@ -211,7 +216,7 @@ class Connect:
                     self.httpHeader = matchHeader.group(1)
 
                 if self.webQuickTest:
-                    self.sessionId = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
+                    self.sessionId = 'https://{0}:{1}/ixnetwork/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
                                                                                                self.apiServerPort, str(sessionId))
                     self.sessionUrl = self.sessionId
                     self.httpHeader = self.sessionUrl.split('/ixnetworkweb')[0]
@@ -602,10 +607,11 @@ class Connect:
         for counter in range(1,timeout+1):
             response = self.get(url, silentMode=True)
             state = response.json()["state"]
-            if state != 'SUCCESS':
-                self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout), timestamp=False)
-            if state == 'SUCCESS':
-                self.logInfo("\tState: {0}".format(state), timestamp=False)
+            if silentMode == False:
+                if state != 'SUCCESS':
+                    self.logInfo("\tState: {0}: Wait {1}/{2} seconds".format(state, counter, timeout), timestamp=False)
+                if state == 'SUCCESS':
+                    self.logInfo("\tState: {0}".format(state), timestamp=False)
 
             if counter < timeout and state in ["IN_PROGRESS", "down"]:
                 time.sleep(1)
@@ -932,56 +938,7 @@ class Connect:
         url = self.sessionUrl+'/operations/query'
         reformattedData = {'selects': [data]}
         response = self.post(url, data=reformattedData, silentMode=silentMode)
-        self.waitForComplete(response, url+'/'+response.json()['id'])
-        return response
-
-    def query_backup(self, data, silentMode=False):
-        """
-        Description
-           Query for objects using filters.
-
-        Paramater
-           silentMode: (bool): True: Don't display any output on stdout.
-
-        Notes
-            Assuming this is a BGP configuration, which has two Topologies.
-            Below demonstrates how to query the BGP host object by
-            drilling down the Topology by its name and the specific the BGP attributes to modify at the
-            BGPIpv4Peer node: flap, downtimeInSec, uptimeInSec.
-            The from '/' is the entry point to the API tree.
-            Notice all the node. This represents the API tree from the / entry point and starting at 
-            Topology level to the BGP host level.
-
-        Notes
-           Use the API Browser tool on the IxNetwork GUI to view the API tree.
-            data: {'from': '/',
-                    'nodes': [{'node': 'topology',    'properties': ['name'], 'where': [{'property': 'name', 'regex': 'Topo1'}]},
-                              {'node': 'deviceGroup', 'properties': [], 'where': []},
-                              {'node': 'ethernet',    'properties': [], 'where': []},
-                              {'node': 'ipv4',        'properties': [], 'where': []},
-                              {'node': 'bgpIpv4Peer', 'properties': ['flap', 'downtimeInSec', 'uptimeInSec'], 'where': []}]
-                }
-
-        Requirements
-            self.waitForComplete()
-
-        Examples
-            response = restObj.query(data=queryData)
-            bgpHostAttributes = response.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv4'][0]['bgpIpv4Peer'][0]
-
-            # GET THE BGP ATTRIBUTES TO MODIFY
-            bgpHostFlapMultivalue = bgpHostAttributes['flap']
-            bgpHostFlapUpTimeMultivalue = bgpHostAttributes['uptimeInSec']
-            bgpHostFlapDownTimeMultivalue = bgpHostAttributes['downtimeInSec']
-
-            restObj.configMultivalue(bgpHostFlapMultivalue, multivalueType='valueList', data={'values': ['true', 'true']})
-            restObj.configMultivalue(bgpHostFlapUpTimeMultivalue, multivalueType='singleValue', data={'value': '60'})
-            restObj.configMultivalue(bgpHostFlapDownTimeMultivalue, multivalueType='singleValue', data={'value': '30'})
-        """
-        url = self.sessionUrl+'/operations/query'
-        reformattedData = {'selects': [data]}
-        response = self.post(url, data=reformattedData, silentMode=silentMode)
-        self.waitForComplete(response, url+'/'+response.json()['id'])
+        self.waitForComplete(response, url+'/'+response.json()['id'], silentMode=silentMode)
         return response
 
     def configMultivalue(self, multivalueUrl, multivalueType, data):

@@ -1,0 +1,29 @@
+---
+- name: BGP test
+  hosts: IxNetRestApiServer
+
+  tasks:
+    - name: Configuring BGP NGPF
+      bgpModule:
+        apiServerIp: '192.168.70.3'
+        apiServerIpPort: 11009
+        osPlatform: 'windows'
+        forceTakePortOwnership: True
+        releasePortsWhenDone: False
+        enableDebugTracing: True
+        deleteSessionAfterTest: True
+        ixChassisIp: '192.168.70.11'
+        portList: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+        linuxUsername: 'admin'
+        linuxPassword: 'admin'
+        configLicense: True
+        licenseServerIp: '192.168.70.3'
+        licenseMode: 'subscription'
+        licenseTier: 'tier3'
+#      register: out
+#    - debug: var=out
+
+
+
+
+

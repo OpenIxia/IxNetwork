@@ -1,0 +1,180 @@
+By: Hubert Gee
+
+Description:
+     A short tutorial on Ansible.
+
+Requirements:
+    - Python 2.7
+    - Linux
+    - Windows is not supported in Ansible.
+
+Installation:
+    On Linux:
+       - yum install -y ansible
+
+    For Python:
+       - sudo ./pip3.6 install ansible
+
+Default setups:
+    - Setup the log file path location:
+         - Edit /etc/ansible/ansible.cfg
+             - Add: log_path=/path/ansible.log
+
+What is Ansible:
+    Ansible is a configuration management and provisioning tool, similar to Chef, Puppet or Salt.
+    It uses SSH to connect to servers and run the configured Tasks.
+
+
+Ansible Tower:
+    - This is a web-based solution that makes Ansible even more easy to use for IT teams of all kinds.
+      It is  designed to be the hub for all of your automation tasks.
+    - https://www.ansible.com/products/tower
+
+
+The Ansible model contains three components:
+
+    1> Inventory (The host file)
+    2> Playbook  (Task execution)
+    3> Modules   (A Script)
+
+    1> Inventory:
+	- A host file is an inventory of servers.
+	- Host files need to be stored in /etc/ansible.
+	- http://docs.ansible.com/ansible/latest/intro_inventory.html
+
+    2> Playbook:
+	- Uses YAML data format.
+	- Think of Playbooks as tasks to be executed.
+	- For each task, you could set instructions such as:
+	    - Which inventory to use.
+	    - Which module to use.
+	        - Pass in parameters to the API module that you are calling.
+	- http://docs.ansible.com/ansible/latest/playbooks.html
+
+    3> Modules:
+	- Ansible has 750+ modules that you could download.
+	    - They are created by Ansible core developers and Ansible community users.
+        - Ansible comes with a number of modules called "module library".
+	- Users can also write their own modules.
+	- Modules could be written in any language.
+	- They are found in the path specified by ANSIBLE_LIBRARY or the --module-path command line option.
+
+	How to develop your own modules:
+	    - http://docs.ansible.com/ansible/latest/dev_guide/developing_modules.html
+
+    Directory structure:
+        Ansible
+           - Inventory
+           - Playbook
+           - Modules
+
+
+Playbook example:
+    - This examples show 2 plays: webservers and databases
+    - Noticed the dash for hosts: webservers and databases. 
+    - Dashes signifies a list for YAML.
+    - Inside each Play, there is a list of tasks called "name".
+    - Playbooks are executed in sequential order, from top to bottom.
+
+---
+- name: BGP test
+  hosts: IxNetRestApiServer
+
+  tasks:
+    - name: Configuring BGP NGPF
+      bgpModule:
+        apiServerIp: '192.168.70.3'
+        apiServerIpPort: 11009
+        osPlatform: 'windows'
+        forceTakePortOwnership: True
+        releasePortsWhenDone: False
+        enableDebugTracing: True
+        deleteSessionAfterTest: True
+        ixChassisIp: '192.168.70.11'
+        portList: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+        linuxUsername: 'admin'
+        linuxPassword: 'admin'
+        configLicense: True
+        licenseServerIp: '192.168.70.3'
+        licenseMode: 'subscription'
+        licenseTier: 'tier3'
+ 
+
+Running Ansible:
+
+    - It will attempt to connect as the user it is being run as.
+    - ansible_python_interpreter = /usr/local/python3.6.3/bin/python3.6
+
+    - Example 1: 
+          ansible-playbook Playbooks/playBgp.yml -i Inventory/hostsIxia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.6.3/bin/python3.6 -v
+
+    - Example 2:  Run multiple playbooks 
+          ansible-playbook Playbooks/playBgp.yml Playbooks/playOspf.yml -i Inventory/hostsIxia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.6.3/bin/python3.6 -v
+
+Output:
+
+   [hgee@clone-1 Ansible]$ ansible-playbook Playbooks/playBgp.yml -i Inventory/hostsIxia --module-path Modules -c local -e a   nsible_python_interpreter=/usr/local/python3.6.3/bin/python3.6 -v
+   Using /etc/ansible/ansible.cfg as config file
+
+   PLAY [BGP test] **************************************************************************
+
+   TASK [Gathering Facts] *******************************************************************
+   ok: [192.168.70.3]
+
+   TASK [Configuring BGP NGPF] **************************************************************
+   ok: [192.168.70.3] => {
+       "changed": false,
+       "test": "Passed"
+   }
+
+   PLAY RECAP *******************************************************************************
+   192.168.70.3               : ok=2    changed=0    unreachable=0    failed=0 
+
+
+
+Simple Ping to your inventory:
+
+    - Create a host file  = hostIxia in the Ansible/Inventory directory
+         Inside the hostIxia inventory file contains:
+
+            [IxNetRestApiServers]   <= Group name
+            192.168.70.3            <= The IxNetwork ReST API server IP address
+
+      Ansible CLI command:
+      	      ansible IxNetRestApiServer -i Inventory/hostsIxia -m ping -c local
+
+      Ansible successful Ping response:
+
+              192.168.70.3 | SUCCESS => {
+                  "changed": false,
+                  "ping": "pong"
+              }
+
+      The parameters used for this example:
+
+          IxNetRestApiServer:  The group name in which the server that you want to ping.
+          -i:  The inventory file to use.
+          -m:  The Ansible module to use for pinging.
+          -c:  The connection.  In this example, tell Ansible not to use SSH.
+
+Printing to STDOUT:
+   Ansible cannot show Python print statements on stdout.
+   It is a continuous system that aims to handle ability to run over a bunch of servers
+   and displaying real-time stdout results can be very unconvenient.
+
+   To view real-time loggings:
+      - Running OpenIxia ReST API sample scripts generates a real-time log file called 
+        ixNetRestApi_debugLog.txt in the Playbook directory.
+
+      - tail -f ixNetRestApi_debugLog.txt
+
+For a custom module template:
+   Use: moduleTemplate.py
+   Or see bgpModule.py for sample
+
+To make Ansible display failures:
+    Edit /etc/ansible/ansible.cfg
+    [defaults]
+    # Add stdout_callback
+    stdout_callback = debug
+

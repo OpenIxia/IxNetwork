@@ -1669,7 +1669,7 @@ class Protocol(object):
                 time.sleep(1)
                 continue
             if timer == timeout and [element for element in sessionDownList if element in currentStatus] != []:
-                raise IxNetRestApiException
+                raise IxNetRestApiException('\nError: Protocols failed')
 
     def verifyAllProtocolSessionsNgpf(self, timeout=120, silentMode=False):
         """
@@ -2101,7 +2101,7 @@ class Protocol(object):
             return 1
         if unresolvedArpList != [] and startFlag == 1:
             print()
-            raise IxNetRestApiException
+            raise IxNetRestApiException('\nError: Unresolved ARP: {0}'.format(unresolvedArpList))
 
     def getNgpfGatewayIpMacAddress(self, gatewayIp):
         """

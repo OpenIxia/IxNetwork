@@ -14,7 +14,7 @@ from __future__ import absolute_import, print_function, division
 import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
 
 class IxNetRestApiException(Exception):
-    def __init__(self, msg):
+    def __init__(self, msg=None):
         if Connect.enableDebugLogFile:
             with open(Connect.debugLogFile, 'a') as restLogFile:
                 restLogFile.write('IxNetRestApiException error: '+msg)
@@ -457,6 +457,10 @@ class Connect:
         # http://192.168.70.127:11009/api/v1/sessions/1
         self.sessionId = self.sessionUrl.split('/ixnetwork')[0]
         self.apiSessionId = '/api/v1/sessions/{0}/ixnetwork'.format(sessionIdNumber)
+
+        # Verify the API server IP and port connection.
+        self.logInfo('\nVerifying API server connection...')
+        self.get(self.sessionId)
 
     def deleteSession(self):
         """

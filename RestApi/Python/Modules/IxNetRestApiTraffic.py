@@ -77,13 +77,15 @@ class Traffic(object):
 
         ConfigElement Parameters
             transmissionType:
-               - continuous, fixedFrameCount
+               - continuous|fixedFrameCount
                - custom (for burstPacketCount)
             frameCount: (For continuous and fixedFrameCount traffic)
             burstPacketCount: (For bursty traffic)
-
+            frameSize: The packet size.
             frameRate: The rate to transmit packets
             frameRateType: bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate
+            portDistribution: applyRateToAll|splitRateEvenly.  Default=applyRateToAll
+            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
             trackBy: <list>: Some options: flowGroup0, vlanVlanId0, ethernetIiDestinationaddress0, ethernetIiSourceaddress0,
                              sourcePort0, sourceDestPortPair0, ipv4DestIp0, ipv4SourceIp0, ipv4Precedence0,
                              ethernetIiPfcQueue0, frameSize0
@@ -134,7 +136,10 @@ class Traffic(object):
                                                   'frameCount': 50000,
                                                   'frameRate': 88,
                                                   'frameRateType': 'percentLineRate',
-                                                  'frameSize': 128}]
+                                                  'frameSize': 128,
+                                                  'portDistribution': 'applyRateToAll',
+                                                  'streamDistribution': 'splitRateEvenly'
+                                                  }]
             )
 
             To create a new Traffic Item and configure the highLevelStream:
@@ -315,8 +320,14 @@ class Traffic(object):
                                               'frameCount': 50000,
                                               'frameRate': 88,
                                               'frameRateType': 'percentLineRate',
-                                              'frameSize': 128
+                                              'frameSize': 128,
+                                              'portDistribution': 'applyRateToAll',
+                                              'streamDistribution': 'splitRateEvenly'
                                             }
+           transmissionType:   fixedFrameCount|continuous
+           frameRateType:      percentLineRate|framesPerSecond
+           portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
+           streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
         transmissionControlData = {}
         for item in ['transmissionType', 'bursePacketCount', 'frameCount', 'duration']:
@@ -345,6 +356,19 @@ class Traffic(object):
 
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
+
+        frameRateDistribution = {}
+        for item in ['portDistribution', 'streamDistribution']:
+            if item in configElements.keys() :
+                if item == 'portDistribution': 
+                    frameRateDistribution.update({'portDistribution': configElements[item]})
+
+                if item == 'streamDistribution': 
+                    frameRateDistribution.update({'streamDistribution': configElements[item]})
+
+        if frameRateDistribution != {}:
+            self.ixnObj.patch(configElementObj+'/frameRateDistribution', data=frameRateDistribution)
+        
 
     def getConfigElementObj(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None):
         """

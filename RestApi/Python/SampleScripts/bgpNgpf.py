@@ -64,8 +64,7 @@ try:
 
     ixChassisIp = '192.168.70.11'
     # [chassisIp, cardNumber, slotNumber]
-    portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
@@ -85,6 +84,7 @@ try:
                           )
 
     #---------- Preference Settings End --------------
+
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -109,7 +109,7 @@ try:
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-
+                                                  
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
 
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
@@ -210,23 +210,29 @@ try:
     trafficStatus = trafficObj.configTrafficItem(
         mode='create',
         trafficItem = {
-            'name':'Topo1 to Topo2',
-            'trafficType':'ipv4',
-            'biDirectional':True,
-            'srcDestMesh':'one-to-one',
-            'routeMesh':'oneToOne',
-            'allowSelfDestined':False,
+            'name': 'Topo1 to Topo2',
+            'trafficType': 'ipv4',
+            'biDirectional': True,
+            'srcDestMesh': 'one-to-one',
+            'routeMesh': 'oneToOne',
+            'allowSelfDestined': False,
             'trackBy': ['flowGroup0', 'vlanVlanId0']},
-        endpoints = [{'name':'Flow-Group-1',
+        endpoints = [{'name': 'Flow-Group-1',
                       'sources': [topologyObj1],
                       'destinations': [topologyObj2]
                   }],
+        # transmissionType:   fixedFrameCount|continuous
+        # frameRateType:      percentLineRate|framesPerSecond
+        # portDistribution:   applyRateToAll|splitRateEvenly
+        # streamDistribution: splitRateEvenly|applyRateToAll
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,
                            'duration': 10,
                            'frameRateType': 'percentLineRate',
-                           'frameSize': 128
+                           'frameSize': 128,
+                           'portDistribution': 'applyRateToAll',
+                           'streamDistribution': 'splitRateEvenly'
                        }])
 
     trafficItemObj   = trafficStatus[0]

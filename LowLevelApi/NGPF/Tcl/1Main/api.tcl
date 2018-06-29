@@ -95,21 +95,38 @@ proc Connect {args} {
     return 0
 }
 
-proc ConnectToIxChassis {ixChassisIp} {
-    if {[catch {set chassisObj [ixNet add [ixNet getRoot]/availableHardware "chassis"]} errMsg]} {
-	puts "Error: ConnectToIxChassis: $errMsg"
-	return 1
-    }
+proc ConnectToIxChassis {ixChassisIpList} {
+    foreach ixChassisIp $ixChassisIpList {
+	if {[catch {set chassisObj [ixNet add [ixNet getRoot]/availableHardware "chassis"]} errMsg]} {
+	    puts "Error: ConnectToIxChassis: $errMsg"
+	    return 1
+	}
+	
+	puts "\nConnectToIxChassis: $ixChassisIp"
+	if {[catch {set status [ixNet setAttribute $chassisObj -hostname $ixChassisIp]} errMsg]} {
+	    puts "\nError: ConnectToIxChassis: $errMsg"
+	    return 1
+	}
+	ixNet commit
 
-    puts "\nConnectToIxChassis: $ixChassisIp"
-    if {[catch {set status [ixNet setAttribute $chassisObj -hostname $ixChassisIp]} errMsg]} {
-	puts "\nError: ConnectToIxChassis: $errMsg"
-	return 1
+	set chassisObj [ixNet remapIds $chassisObj]
+	#set status [ixNet getList [ixNet getRoot]/availableHardware chassis]
+	#puts "ConnectToIxChassis: Connected: $status"
+	for {set counter 1} {$counter <= 60} {incr counter} {
+	    set currentState [ixNet getAttribute $chassisObj -state]
+	    if {$counter < 60 && $currentState != "ready"} {
+		puts "Chassis $ixChassisIp is not ready yet. Wait $counter/60 seconds"
+		after 1000
+	    }
+	    if {$counter == 60 && $currentState != "ready"} {
+		puts "\nError: Chassis $ixChassisIp failed to connect"
+	    }
+	    if {$counter < 60 && $currentState == "ready"} {
+		puts "Chassis $ixChassisIp is up"
+		break
+	    }
+	}
     }
-    ixNet commit
-    set chassisObj [ixNet remapIds $chassisObj]
-    set status [ixNet getList [ixNet getRoot]/availableHardware chassis]
-    puts "ConnectToIxChassis: Connected: $status"
 }
 
 proc GetApiKey {apiServerIp {username admin} {password admin} {apiKeyFilePath ./apiKeyFile}} {
@@ -255,33 +272,6 @@ proc AssignPorts {ixChassisIp {portList None}} {
     }
 
     puts "\nAssignPorts"
-
-    if 0 {
-    if {$vportList == ""} {
-	# WARNING: This is dangerous.
-	#          GetPorts will get ALL the ports from the $ixChassisIP.
-	#          Use this only if you are for sure you want to use all the ports in the chassis.
-	#          Otherwise, pass in a $portList.
-	set portList [GetPorts $ixChassisIp]
-	if {$portList == "None"} {
-	    puts "\nError: AssignPorts: No ports found in the configuration."
-	    puts "Either manually add ports to your configuration or pass in a list of ports"
-	    return
-	}
-
-	# Create a list of vports in the same amount as the portList.
-	puts "AssignPorts: No vports found. Creating new vports"
-	set vportList {}
-	# At this point, $portList is ALL the ports!
-	foreach port $portList {
-	    set vport [ixNet add [ixNet getRoot] vport]
-	    ixNet commit
-	    puts "\tAssignPorts: Creating new vport: $vport"
-	}
-	set vportList [ixNet getList [ixNet getRoot] vport]
-    }
-    }
-
     if {$vportList == ""} {
 	# vports will be automatically created by ixTclNet::AssignPorts
 	set vportList {}
@@ -3429,7 +3419,6 @@ proc CreateTopology { args } {
     append paramList " -vports [list $vportList]"
 
     puts "\nCreateTopologyNgpf: $paramList"
-
     set topologyObj [ixNet add [ixNet getRoot] "topology"]
 
     if {[catch {eval ixNet setMultiAttribute $topologyObj $paramList} errMsg]} {
@@ -3481,6 +3470,7 @@ proc CreateDeviceGroup { args } {
 proc CreateEthernetNgpf {args} {
     set direction increment
     set step 00:00:00:00:00:00
+    set enableVlan false
 
     set paramList {}
     set argIndex 0
@@ -3511,6 +3501,14 @@ proc CreateEthernetNgpf {args} {
 		append paramList " -step $step"
 		incr argIndex 2
 	    }
+	    -macAddressPortStep {
+		set macAddressPortStep [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -enableVlan {
+		set enableVlan [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
 	    default {
 		puts "Connect: No such parameter: $currentArg"
 		return 1
@@ -3529,8 +3527,72 @@ proc CreateEthernetNgpf {args} {
 	return 1
     }
     ixNet commit
-    return [lindex [ixNet remapIds $ethernetObj] 0]
+
+    set ethernetObj [lindex [ixNet remapIds $ethernetObj] 0]
+
+    puts "\nConfiguring macAddressPortStep: $ethernetMultivalue/nest:1 $macAddressPortStep"
+    ixNet setAttribute $ethernetMultivalue/nest:1 -step $macAddressPortStep
+    ixNet commit
+
+    if {$enableVlan == "true"} {
+	puts "\nEnabling vlan for: $ethernetObj"
+	set enableVlanMultivalue [ixNet getAttribute $ethernetObj -enableVlans]
+	puts "---- enableVlanMultivalue: $enableVlanMultivalue"
+	if {[catch {ixNet setAttribute $enableVlanMultivalue/singleValue -value true} errMsg]} {
+	    puts "\nEnabling vlan failed for $ethernetObj"
+	    return 1
+	}
+	puts "---- enableVlanMultivalue 2: $enableVlanMultivalue"
+	ixNet commit
+    }
+
+    #return [lindex [ixNet remapIds $ethernetObj] 0]
+    return $ethernetObj
 }
+
+proc ConfigVlanIdNgpf {args} {
+    set direction increment
+    set step 0
+
+    set paramList {}
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -ethernetObj {
+		set ethernetObj [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -start {
+		set vlanId [lindex $args [expr $argIndex + 1]]
+		append paramList " -start $vlanId"
+		incr argIndex 2
+	    }
+	    -step {
+		set step [lindex $args [expr $argIndex + 1]]
+		append paramList " -step $step"
+		incr argIndex 2
+	    }
+	    -direction {
+		set direction [lindex $args [expr $argIndex + 1]]
+		append paramList " -direction $direction"
+		incr argIndex 2
+	    }
+	    default {
+		puts "Connect: No such parameter: $currentArg"
+		return 1
+	    }
+	}
+    }
+
+    puts "\nConfigVlanIdNgpf: start:$vlanId step:$step direction:$direction"
+    set vlanMultivalue [ixNet getAttribute $ethernetObj/vlan:1 -vlanId]
+    if {[catch {eval ixNet setMultiAttribute $vlanMultivalue/counter $paramList} errMsg]} {
+	puts "\nConfigVlanIdNgpf failed: start:$vlanId step:$step direction:$direction"
+	return 1
+    }
+    ixNet commit
+} 
 
 proc CreateIpv4Ngpf {args} {
     set direction increment
@@ -3561,8 +3623,12 @@ proc CreateIpv4Ngpf {args} {
 		incr argIndex 2
 	    }
 	    -step {
-		set step [lindex $args [expr $argIndex + 1]]
+ 		set step [lindex $args [expr $argIndex + 1]]
 		append paramList " -step $step"
+		incr argIndex 2
+	    }
+	    -ipv4PortStep {
+ 		set ipv4PortStep [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
 	    }
 	    default {
@@ -3584,6 +3650,11 @@ proc CreateIpv4Ngpf {args} {
 	return 1
     }
     ixNet commit
+
+    puts "\nConfiguring ipv4PortStep: $ipv4Multivalue/nest:1 $ipv4PortStep"
+    ixNet setAttribute $ipv4Multivalue/nest:1 -step $ipv4PortStep
+    ixNet commit
+
     return [lindex [ixNet remapIds $ipv4Obj] 0]
 }
 
@@ -3615,6 +3686,10 @@ proc ConfigIpv4GatewayIpNgpf {args} {
 		append paramList " -step $step"
 		incr argIndex 2
 	    }
+	    -ipv4GatewayPortStep {
+		set ipv4GatewayPortStep [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
 	    default {
 		puts "Connect: No such parameter: $currentArg"
 		return 1
@@ -3630,6 +3705,11 @@ proc ConfigIpv4GatewayIpNgpf {args} {
 	return 1
     }
     ixNet commit
+
+    puts "\nConfiguring ConfigIpv4GatewayIpNgpf port step: $gatewayMultivalue/nest:1 $ipv4GatewayPortStep"
+    ixNet setAttribute $gatewayMultivalue/nest:1 -step $ipv4GatewayPortStep
+    ixNet commit
+
 }
 
 proc ConfigBgpNgpf {args} {

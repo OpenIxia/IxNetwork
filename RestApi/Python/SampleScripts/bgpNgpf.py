@@ -5,7 +5,6 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - 3.6
 #    - Python modules: requests
 #
 # DESCRIPTION

@@ -278,12 +278,15 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

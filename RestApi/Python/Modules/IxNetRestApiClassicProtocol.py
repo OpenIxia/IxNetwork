@@ -9,7 +9,7 @@
 
 from IxNetRestApi import IxNetRestApiException
 
-class ClassicFrameworkProtocol(object):
+class ClassicProtocol(object):
     def __init__(self, ixnObj=None):
         """
         Parameters

@@ -36,16 +36,15 @@ if {$osPlatform == "linux"} {
     set apiServerIp 192.168.70.108
 }
 
-set ixChassisIp 192.168.70.11
 set ixNetworkVersion 8.40
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
-set licenseServerIp $ixChassisIp ;# This could be on an ixChassisIp or a remote Windows PC.
 set licenseMode subscription 
-set licenseMode perpetual
 set licenseTier tier3
+
+set ixChassisIp 192.168.70.11
 set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
 set port1 [list $ixChassisIp 1 1]
-set port2 [list $ixChassisIp 2 2]
+set port2 [list $ixChassisIp 2 1]
 
 if {$osPlatform == "linux"} {
     package req IxTclNetworkLinuxApiServer 

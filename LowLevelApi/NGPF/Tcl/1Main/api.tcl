@@ -3415,10 +3415,12 @@ proc CreateTopology { args } {
 	return 1
     }
 
+    puts "\nCreate Topology: Getting vport for: $portList"
     set vportList [GetVportMappingToPhyPort $portList]
+    puts "Create Topology: Vport: $vportList"
     append paramList " -vports [list $vportList]"
 
-    puts "\nCreateTopologyNgpf: $paramList"
+    puts "\nCreateTopology: $paramList"
     set topologyObj [ixNet add [ixNet getRoot] "topology"]
 
     if {[catch {eval ixNet setMultiAttribute $topologyObj $paramList} errMsg]} {
@@ -3530,19 +3532,18 @@ proc CreateEthernetNgpf {args} {
 
     set ethernetObj [lindex [ixNet remapIds $ethernetObj] 0]
 
-    puts "\nConfiguring macAddressPortStep: $ethernetMultivalue/nest:1 $macAddressPortStep"
-    ixNet setAttribute $ethernetMultivalue/nest:1 -step $macAddressPortStep
-    ixNet commit
-
+    if {[info exists macAddressPortStep]} {
+	ixNet setAttribute $ethernetMultivalue/nest:1 -step $macAddressPortStep
+	ixNet commit
+    }
+    
     if {$enableVlan == "true"} {
 	puts "\nEnabling vlan for: $ethernetObj"
 	set enableVlanMultivalue [ixNet getAttribute $ethernetObj -enableVlans]
-	puts "---- enableVlanMultivalue: $enableVlanMultivalue"
 	if {[catch {ixNet setAttribute $enableVlanMultivalue/singleValue -value true} errMsg]} {
 	    puts "\nEnabling vlan failed for $ethernetObj"
 	    return 1
 	}
-	puts "---- enableVlanMultivalue 2: $enableVlanMultivalue"
 	ixNet commit
     }
 
@@ -3651,9 +3652,11 @@ proc CreateIpv4Ngpf {args} {
     }
     ixNet commit
 
-    puts "\nConfiguring ipv4PortStep: $ipv4Multivalue/nest:1 $ipv4PortStep"
-    ixNet setAttribute $ipv4Multivalue/nest:1 -step $ipv4PortStep
-    ixNet commit
+    if {[info exists ipv4PortStep]} {
+	puts "\nConfiguring ipv4PortStep: $ipv4Multivalue/nest:1 $ipv4PortStep"
+	ixNet setAttribute $ipv4Multivalue/nest:1 -step $ipv4PortStep
+	ixNet commit
+    }
 
     return [lindex [ixNet remapIds $ipv4Obj] 0]
 }
@@ -3706,10 +3709,11 @@ proc ConfigIpv4GatewayIpNgpf {args} {
     }
     ixNet commit
 
-    puts "\nConfiguring ConfigIpv4GatewayIpNgpf port step: $gatewayMultivalue/nest:1 $ipv4GatewayPortStep"
-    ixNet setAttribute $gatewayMultivalue/nest:1 -step $ipv4GatewayPortStep
-    ixNet commit
-
+    if {[info exists ipv4GatewayPortStep]} {
+	puts "\nConfiguring ConfigIpv4GatewayIpNgpf port step: $gatewayMultivalue/nest:1 $ipv4GatewayPortStep"
+	ixNet setAttribute $gatewayMultivalue/nest:1 -step $ipv4GatewayPortStep
+	ixNet commit
+    }
 }
 
 proc ConfigBgpNgpf {args} {

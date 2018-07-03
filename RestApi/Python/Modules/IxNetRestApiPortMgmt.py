@@ -59,8 +59,12 @@ class PortMgmt(object):
         for chassisIpAddress in chassisIp:
             data = {'hostname': chassisIpAddress}
             response = self.ixnObj.post(url, data=data)
-            chassisIdObj = response.json()['links'][0]['href']
-
+            if type(response.json()) == list:
+                # 8.50 json response is a list.
+                chassisIdObj = response.json()[0]['links'][0]['href']
+            else:
+                chassisIdObj = response.json()['links'][0]['href']
+ 
             self.ixnObj.logInfo('\n', timestamp=False)
             # Chassis states: down, polling, ready
             for timer in range(1,timeout+1):

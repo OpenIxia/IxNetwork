@@ -128,8 +128,8 @@ try:
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
     #    If you expect traffic to be stopped such as in fixedFrameCount and fixedDuration
     #    or do you expect traffic to be started such as in continuous mode
-    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
-    #trafficObj.checkTrafficState(expectedState=['started], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')
@@ -162,12 +162,15 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
     print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

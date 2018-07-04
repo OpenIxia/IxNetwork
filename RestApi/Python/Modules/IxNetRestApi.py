@@ -232,6 +232,9 @@ class Connect:
         # For Linux API Server and Windoww Connection Mgr only: Delete the session when script is done if deleteSessionAfterTest = True.
         self.deleteSessionAfterTest = deleteSessionAfterTest
 
+        match = re.match('http.*(/api.*/sessions/[0-9]+)/ixnetwork', self.sessionUrl)
+        self.noHttpHeaderSessionId = match.group(1)
+
         if includeDebugTraceback == False:
             sys.tracebacklimit = 0
 
@@ -306,7 +309,6 @@ class Connect:
                 response = requests.post(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
             else:
                 response = requests.post(restApi, data=data, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
-
             # 200 or 201
             if silentMode == False:
                 self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
@@ -357,6 +359,42 @@ class Connect:
 
         except requests.exceptions.RequestException as errMsg:
             errMsg = 'PATCH Exception error: {0}\n'.format(errMsg)
+            self.logError(errMsg)
+            raise IxNetRestApiException(errMsg)
+
+    def options(self, restApi, data={}, silentMode=False, ignoreError=False):
+        """
+        Description
+            A HTTP OPTIONS function to send REST APIs.
+
+        Parameters
+           restApi: (str): The REST API URL.
+           silentMode: (bool):  To display on stdout: URL, data and header info.
+           ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
+
+        """
+        if silentMode is False:
+            self.logInfo('\n\tOPTIONS: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
+
+        try:
+            # For binary file
+            response = requests.get(restApi, headers=self.jsonHeader, verify=self.verifySslCert)
+
+            if silentMode is False:
+                self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
+
+            if not str(response.status_code).startswith('2'):
+                if ignoreError == False:
+                    if 'message' in response.json() and response.json()['messsage'] != None:
+                        self.logWarning('\n%s' % response.json()['message'])
+
+                    errMsg = 'OPTIONS Exception error: {0}'.format(response.text)
+                    self.logError(errMsg)
+                    raise IxNetRestApiException(errMsg)
+            return response
+
+        except requests.exceptions.RequestException as errMsg:
+            errMsg = 'OPTIONS Exception error: {0}'.format(errMsg)
             self.logError(errMsg)
             raise IxNetRestApiException(errMsg)
 

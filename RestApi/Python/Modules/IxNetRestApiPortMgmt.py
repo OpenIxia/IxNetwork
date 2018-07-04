@@ -577,7 +577,7 @@ class PortMgmt(object):
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['id']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['portId']
             except:
-                raise IxNetRestApiException('\nNot found:', chassisIp, cardId, portId)
+                raise IxNetRestApiException('\nNot found: {0}:{1}:{2}'.format(chassisIp, cardId, portId))
 
             self.ixnObj.logInfo('Port currently owned by: %s' % queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['owner'])
             if queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['owner'] != '':
@@ -588,7 +588,7 @@ class PortMgmt(object):
 
         if portOwnedList != []:
             if raiseException:
-                raise IxNetRestApiException
+                raise IxNetRestApiException('arePortsAvailable: Ports are still owned')
             else:
                 return portOwnedList
         return 0

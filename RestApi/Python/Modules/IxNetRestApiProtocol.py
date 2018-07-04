@@ -2746,7 +2746,7 @@ class Protocol(object):
             Apply configuration changes on the fly while Topology is running.
         """
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly',
-                             data={'arg1': '/api/v1/sessions/1/ixnetwork/globals/topology'})
+                                    data={'arg1': '{0}/ixnetwork/globals/topology'.format(self.ixnObj.noHttpHeaderSessionId)})
         self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly'+response.json()['id'])
 
     def getProtocolListByPort(self, port):

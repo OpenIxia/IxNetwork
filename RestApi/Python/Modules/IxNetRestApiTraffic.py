@@ -1085,7 +1085,7 @@ class Traffic(object):
                 return 0
         
         if ignoreException == False:
-            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s):', expectedState)
+            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s): %s' % expectedState)
         else:
             return 1
 

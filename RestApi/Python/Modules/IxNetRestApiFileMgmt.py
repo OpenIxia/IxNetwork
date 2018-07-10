@@ -51,7 +51,7 @@ class FileMgmt(object):
         response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=True)
 
         # 3> Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
-        payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.noHttpHeaderSessionId, fileName)}
+        payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.headlessSessionId, fileName)}
 
         loadConfigUrl = self.ixnObj.sessionUrl+'/operations/loadconfig'
 
@@ -79,7 +79,7 @@ class FileMgmt(object):
         fileName = windowsPathAndFileName.split('\\')[-1]
         fileName = fileName.replace(' ', '_')
         # Default location: "C:\\Users\\<user name>\\AppData\\Local\\sdmStreamManager\\common"
-        destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.noHttpHeaderSessionId) + fileName
+        destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
         currentTimestamp = datetime.datetime.now().strftime('%H%M%S')
 
         # Step 1 of 2:
@@ -140,7 +140,7 @@ class FileMgmt(object):
         self.ixnObj.logInfo('\ncopyFileWindowsToLocalLinux: From: %s to %s\n' % (windowsPathAndFileName, localPath))
         fileName = windowsPathAndFileName.split('\\')[-1]
         fileName = fileName.replace(' ', '_')
-        destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.noHttpHeaderSessionId) + fileName
+        destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
         currentTimestamp = datetime.datetime.now().strftime('%H%M%S')
 
         # Step 1 of 2:
@@ -337,7 +337,7 @@ class FileMgmt(object):
         if option is 'newConfig':
             arg3 = True
 
-        dataReformatted = {"arg1": "{0}/ixnetwork/resourceManager".format(self.ixnObj.noHttpHeaderSessionId),
+        dataReformatted = {"arg1": "{0}/ixnetwork/resourceManager".format(self.ixnObj.headlessSessionId),
                            "arg2": json.dumps(dataObj),
                            "arg3": arg3}
 
@@ -393,8 +393,8 @@ class FileMgmt(object):
         response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=True)
 
         # 3> Tell IxNetwork to import the JSON config file
-        data = {"arg1": "{0}/ixnetwork/resourceManager".format(self.ixnObj.noHttpHeaderSessionId),
-                "arg2": "{0}/ixnetwork/files/{1}".format(self.ixnObj.noHttpHeaderSessionId, fileName),
+        data = {"arg1": "{0}/ixnetwork/resourceManager".format(self.ixnObj.headlessSessionId),
+                "arg2": "{0}/ixnetwork/files/{1}".format(self.ixnObj.headlessSessionId, fileName),
                 "arg3": arg3}
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfigfile'
         response = self.ixnObj.post(url, data=data)

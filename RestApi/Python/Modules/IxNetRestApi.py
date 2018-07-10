@@ -264,13 +264,16 @@ class Connect:
 
             if silentMode is False:
                 self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
+
             if not str(response.status_code).startswith('2'):
                 if ignoreError == False:
                     if 'message' in response.json() and response.json()['messsage'] != None:
                         self.logWarning('\n%s' % response.json()['message'])
+
                     errMsg = 'GET Exception error: {0}'.format(response.text)
                     self.logError(errMsg)
                     raise IxNetRestApiException(errMsg)
+
             return response
 
         except requests.exceptions.RequestException as errMsg:
@@ -312,18 +315,20 @@ class Connect:
             # 200 or 201
             if silentMode == False:
                 self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
+
             if str(response.status_code).startswith('2') == False:
                 if ignoreError == False:
                     if 'errors' in response.json():
                         errMsg = 'POST Exception error: {0}\n'.format(response.json()['errors'][0]['detail'])
                         self.logError(errMsg)
                         raise IxNetRestApiException(errMsg)
-                    errMsg = 'POST Exception error: {0}\n'.format(response.text)
+
                     raise IxNetRestApiException('POST error: {0}\n'.format(response.text))
 
             # Change it back to the original json header
             if headers != None:
                 self.jsonHeader = originalJsonHeader
+
             return response
 
         except requests.exceptions.RequestException as errMsg:
@@ -331,7 +336,7 @@ class Connect:
             self.logError(errMsg)
             raise IxNetRestApiException(errMsg)
 
-    def patch(self, restApi, data={}, silentMode=False):
+    def patch(self, restApi, data={}, silentMode=False, ignoreError=False):
         """
         Description
            A HTTP PATCH function to modify configurations.
@@ -348,13 +353,14 @@ class Connect:
             response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
             if silentMode == False:
                 self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
-            if not str(response.status_code).startswith('2'):
-                if 'message' in response.json() and response.json()['messsage'] != None:
-                    self.logWarning('\n%s' % response.json()['message'])
 
-                errMsg = 'PATCH Exception error: {0}\n'.format(response.text)
-                self.logError(errMsg)
-                raise IxNetRestApiException(errMsg)
+                if ignoreError == False:
+                    if not str(response.status_code).startswith('2'):
+                        if response.json() and  'errors' in response.json():
+                            errMsg = 'PATCH Exception error: {0}\n'.format(response.json()['errors'][0]['detail'])
+                            self.logError(errMsg)
+                            raise IxNetRestApiException('PATCH error: {0}\n'.format(errMsg))
+
             return response
 
         except requests.exceptions.RequestException as errMsg:

@@ -387,7 +387,7 @@ class Protocol(object):
             To create a new IPv4 stack in NGPF, pass in the Ethernet object.
             If modifying, there are four options. 2-4 will query for the IP object handle.
 
-               1> Provide the BGP object handle using the obj parameter.
+               1> Provide the IPv4 object handle using the obj parameter.
                2> Set port: The physical port.
                3> Set portName: The vport port name.
                4> Set NGPF IP name that you configured.
@@ -1514,7 +1514,7 @@ class Protocol(object):
     def startStopDeviceGroup(self, deviceGroupObjList='all', action='start'):
         """
         Description
-            Start one or more Device Group and all its protocols.
+            Start one or more Device Groups and all its protocols.
 
         Parameters
             deviceGroupObj: <str>|<list>: 'all' or a list of Device Group objects.
@@ -2095,11 +2095,12 @@ class Protocol(object):
                             if arpResult != 0:
                                 unresolvedArpList = unresolvedArpList + arpResult
 
-        if unresolvedArpList == [] and startFlag == 1:
-            return 0
         if unresolvedArpList == [] and startFlag == 0:
-            return 1
+            # Device group status is not started.
+            raise IxNetRestApiException("\nError: Device Group is not started. It must've went down. Can't verify arp.")
+
         if unresolvedArpList != [] and startFlag == 1:
+            # Device group status is started and there are arp unresolved.
             print()
             raise IxNetRestApiException('\nError: Unresolved ARP: {0}'.format(unresolvedArpList))
 
@@ -3041,21 +3042,27 @@ class Protocol(object):
     def getEndpointObjByDeviceGroupName(self, deviceGroupName, endpointObj):
         """
         Description
-            Based on the Device Group name, return the configured endpointObj object handle.
-            The endpointObj is the NGPF endpoint: ethernet, ipv4|ipv6, bgpIpv4Peer, ospfv2, igmpHost, etc.
+            Based on the Device Group name, return the specified endpointObj object handle.
+            The endpointObj is the NGPF endpoint: topology, deviceGroup, networkGroup, ethernet, ipv4|ipv6,
+            bgpIpv4Peer, ospfv2, igmpHost, etc.  The exact endpoint name could be found in the
+            IxNetwork API Browser.
 
         Parameter
             deviceGroupName: <str>: The Device Group name.
-
+            endpointObj: <str>: The NGPF endpoint object handle to get.
+            
         Example usage:
             # This example shows how to get the bgp object handle from the Device Group named DG-2.
 
             protocolObj = Protocol(mainObj)
-            bgpObject = protocolObj.getEndpointObjByDeviceGroupName('DG-2', 'bgpIpv4Peer')
-        
+            obj = protocolObj.getEndpointObjByDeviceGroupName('DG-2', 'bgpIpv4Peer')
+            returns: ['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer']
+
+            obj = protocolObj.getEndpointObjByDeviceGroupName('DG-2', 'topology')
+            returns: ['/api/v1/sessions/1/ixnetwork/topology/2']
+
         Returns
-           None|The NGPF endpoint object handle
-           Exampe: /api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer
+           []|The NGPF endpoint object handle(s) in a list.
         """
         self.ixnObj.logInfo('{0}...'.format('\ngetProtocolListByIpHostNgpf'), timestamp=False)
 
@@ -3073,14 +3080,52 @@ class Protocol(object):
                 deviceGroupObj = '/api' + deviceGroup.split('/api')[1]
                 response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj)
                 if response.json()['name'] == deviceGroupName:
-                    response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=False)
+                    if endpointObj == 'topology':
+                        return topologyObj
 
+                    if endpointObj == 'deviceGroup':
+                        return deviceGroupObj
+
+                    response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=False)
                     ethernetList = ['%s/%s/%s' % (deviceGroup, 'ethernet', str(i["id"])) for i in response.json()]
+                    if endpointObj == 'ethernet':
+                        headlessEthernetList = []
+                        for eachEthernetObj in ethernetList:
+                            match = re.match('http.*(/api.*)', eachEthernetObj)
+                            if match:
+                                headlessEthernetList.append(match.group(1))
+                        return headlessEthernetList
+
+                    response = self.ixnObj.get(deviceGroup+'/networkGroup', silentMode=False)
+                    networkGroupList = ['%s/%s/%s' % (deviceGroup, 'networkGroup', str(i["id"])) for i in response.json()]
+                    if endpointObj == 'networkGroup':
+                        headlessNetworkGroupList = []
+                        for eachNetworkGroupObj in networkGroupList:
+                            match = re.match('http.*(/api.*)', eachNetworkGroupObj)
+                            if match:
+                                headlessNetworkGroupList.append(match.group(1))
+                        return headlessNetworkGroupList
+
                     for ethernet in ethernetList:
                         response = self.ixnObj.get(ethernet+'/ipv4', silentMode=False)
                         ipv4List = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
+                        if endpointObj == 'ipv4':
+                            headlessIpv4List = []
+                            for obj in ipv4List:
+                                match = re.match('http.*(/api.*)', obj)
+                                if match:
+                                    headlessIpv4List.append(match.group(1))
+                            return headlessIpv4List
+
                         response = self.ixnObj.get(ethernet+'/ipv6', silentMode=False)
                         ipv6List = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
+                        if endpointObj == 'ipv6':
+                            headlessIpv6List = []
+                            for obj in ipv6List:
+                                match = re.match('http.*(/api.*)', obj)
+                                if match:
+                                    headlessIpv6List.append(match.group(1))
+                            return headlessIpv6List
 
                         for layer3Ip in ipv4List+ipv6List:
                             url = layer3Ip+'?links=true'
@@ -3091,6 +3136,7 @@ class Protocol(object):
                                     continue
                                 if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+/port$', currentProtocol))):
                                     continue
+
                                 url = self.ixnObj.httpHeader+currentProtocol
                                 response = self.ixnObj.get(url, silentMode=False)
                                 if response.json() == []:
@@ -4609,6 +4655,8 @@ class Protocol(object):
            Get the NGPF object handle filtering by the routerId.
            All host interface has a router ID by default and the router ID is located in the 
            Device Group in the IxNetwork GUI.  The API endpoint is: /topology/deviceGroup/routerData
+        
+           Note: Router ID exists only if there are protocols configured.
 
         Parameters
            ngpfEndpointObject: <str>: The NGPF endpoint. Example:
@@ -4808,4 +4856,164 @@ class Protocol(object):
             ethernetObj = self.getNgpfObjectHandleByName(ngpfEndpointName=ngpfEndpointName, ngpfEndpointObject='ethernet')
 
         return self.ixnObj.getObjAttributeValue(ethernetObj, property)
+
+    def sendNsNgpf(self, ipv6ObjList):
+        # """
+        # Description
+        #     Send NS out of all the IPv6 objects that you provide in a list.
+        #
+        # Parameter
+        #    ipv6ObjList: <str>:  Provide a list of one or more IPv6 object handles to send arp.
+        #                 Ex: ["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1"]
+        # """
+        if type(ipv6ObjList) != list:
+            raise IxNetRestApiException('sendNsNgpf error: The parameter ipv6ObjList must be a list of objects.')
+
+        url = self.ixnObj.sessionUrl + '/topology/deviceGroup/ethernet/ipv6/operations/sendns'
+        data = {'arg1': ipv6ObjList}
+        response = self.ixnObj.post(url, data=data)
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
+
+    def configIpv6Ngpf(self, obj=None, port=None, portName=None, ngpfEndpointName=None, **kwargs):
+        """
+        Description
+            Create or modify NGPF IPv6.
+            To create a new IPv6 stack in NGPF, pass in the Ethernet object.
+            If modifying, there are four options. 2-4 will query for the IP object handle.
+
+               1> Provide the BGP object handle using the obj parameter.
+               2> Set port: The physical port.
+               3> Set portName: The vport port name.
+               4> Set NGPF IP name that you configured.
+
+        Parameters
+            obj: <str>: None or Ethernet obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
+                                IPv6 obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1'
+
+            port: <list>: Format: [ixChassisIp, str(cardNumber), str(portNumber)]
+            portName: <str>: The virtual port name.
+            ngpfEndpointName: <str>: The name that you configured for the NGPF BGP.
+
+            kwargs:
+               ipv6Address: <dict>: {'start': '2000:0:0:1:0:0:0:1', 'direction': 'increment', 'step': '0:0:0:0:0:0:0:1'},
+               ipv6AddressPortStep: <str>|<dict>:  disable|0:0:0:0:0:0:0:1
+                                    Incrementing the IP address on each port based on your input.
+                                    0:0:0:0:0:0:0:1 means to increment the last octet on each port.
+
+               gateway: <dict>: {'start': '2000:0:0:1:0:0:0:2', 'direction': 'increment', 'step': '0:0:0:0:0:0:0:1'},
+               gatewayPortStep:  <str>|<dict>:  disable|0:0:0:0:0:0:0:1
+                                 Incrementing the IP address on each port based on your input.
+                                 0:0:0:0:0:0:0:1 means to increment the last octet on each port.
+
+               prefix: <int>:  Example: 64
+               resolveGateway: <bool>
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6/{id}
+
+        Example to create a new IPv6 object:
+             ipv6Obj = configIpv4Ngpf(ethernetObj1,
+                                      ipv6Address={'start': '2000:0:0:1:0:0:0:1',
+                                                   'direction': 'increment',
+                                                   'step': '0:0:0:0:0:0:0:1'},
+                                      ipv6AddressPortStep='disabled',
+                                      gateway={'start': '2000:0:0:1:0:0:0:2',
+                                               'direction': 'increment',
+                                               'step': '0:0:0:0:0:0:0:0'},
+                                      gatewayPortStep='disabled',
+                                      prefix=64,
+                                      resolveGateway=True)
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6/{id}
+        """
+        createNewIpv6Obj = True
+
+        if obj != None:
+            if 'ipv6' in obj:
+                # To modify IPv6
+                ipv6Obj = obj
+                createNewIpv6Obj = False
+            else:
+                # To create a new IPv6 object
+                ipv6Url = self.ixnObj.httpHeader+obj+'/ipv6'
+                self.ixnObj.logInfo('Creating new IPv6 in NGPF')
+                response = self.ixnObj.post(ipv6Url)
+                ipv6Obj = response.json()['links'][0]['href']
+                
+        # To modify
+        if ngpfEndpointName:
+            ipv6Obj = self.getNgpfObjectHandleByName(ngpfEndpointName=ngpfEndpointName, ngpfEndpointObject='ipv6')
+            createNewIpv6Obj = False
+
+        # To modify
+        if port:
+            x = self.getProtocolListByPortNgpf(port=port)
+            ipv6Obj = self.getProtocolObjFromProtocolList(x['deviceGroup'], 'ipv6')[0]
+            createNewIpv6Obj = False
+
+        # To modify
+        if portName:
+            x = self.getProtocolListByPortNgpf(portName=portName)
+            ipv6Obj = self.getProtocolObjFromProtocolList(x['deviceGroup'], 'ipv6')[0]
+            createNewIpv6Obj = False
+
+        ipv6Response = self.ixnObj.get(self.ixnObj.httpHeader+ipv6Obj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+ipv6Obj, data={'name': kwargs['name']})
+
+        if 'multiplier' in kwargs:
+            devicegroup = re.search("(.*deviceGroup/\d).*",ipv6Obj)
+            devicegroup_url = self.ixnObj.httpHeader+devicegroup.group(1)
+            self.ixnObj.patch(devicegroup_url,data = {"multiplier": kwargs['multiplier']})
+
+        # Config IPv6 address
+        if 'ipv6Address' in kwargs:
+            multivalue = ipv6Response.json()['address']
+            self.ixnObj.logInfo('Configuring IPv6 address. Attribute for multivalueId = jsonResponse["address"]')
+            self.configMultivalue(multivalue, 'counter', data=kwargs['ipv6Address'])
+
+            # Config IPv6 port step
+            # disabled|0.0.0.1
+            if 'ipv6AddressPortStep' in kwargs:
+                portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
+                self.ixnObj.logInfo('Configure IPv6 address port step')
+                if kwargs['ipv6AddressPortStep'] != 'disabled':
+                    self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['ipv6AddressPortStep']})
+
+                if kwargs['ipv6AddressPortStep'] == 'disabled':
+                    self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
+
+        # Config Gateway
+        if 'gateway' in kwargs:
+            multivalue = ipv6Response.json()['gatewayIp']
+            self.ixnObj.logInfo('Configure IPv6 gateway. Attribute for multivalueId = jsonResponse["gatewayIp"]')
+            self.configMultivalue(multivalue, 'counter', data=kwargs['gateway'])
+
+        # Config Gateway port step
+        if 'gatewayPortStep' in kwargs:
+            portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
+            self.ixnObj.logInfo('Configure IPv6 gateway port step')
+            if kwargs['gatewayPortStep'] != 'disabled':
+                self.ixnObj.patch(portStepMultivalue, data={'step': kwargs['gatewayPortStep']})
+
+            if kwargs['gatewayPortStep'] == 'disabled':
+                self.ixnObj.patch(portStepMultivalue, data={'enabled': False})
+
+        # Config resolve gateway
+        if 'resolveGateway' in kwargs:
+            multivalue = ipv6Response.json()['resolveGateway']
+            self.ixnObj.logInfo('Configure IPv6 gateway to resolve gateway. Attribute for multivalueId = jsonResponse["resolveGateway"]')
+            self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['resolveGateway']})
+
+        if 'prefix' in kwargs:
+            multivalue = ipv6Response.json()['prefix']
+            self.ixnObj.logInfo('Configure IPv6 prefix. Attribute for multivalueId = jsonResponse["prefix"]')
+            self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['prefix']})
+
+        if createNewIpv6Obj == True:
+            self.configuredProtocols.append(ipv6Obj)
+
+        return ipv6Obj
 

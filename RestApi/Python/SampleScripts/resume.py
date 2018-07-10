@@ -51,13 +51,12 @@ try:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest,
-                          httpInsecure=True
+                          deleteSessionAfterTest=deleteSessionAfterTest
                           )
 
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))
     print(errMsg)
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()

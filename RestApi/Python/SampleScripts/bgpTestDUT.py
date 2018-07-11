@@ -19,7 +19,7 @@
 #    python <script>.py windows
 #    python <script>.py linux
 
-import sys, traceback, napalm
+import sys, traceback, pprint, napalm
 
 sys.path.insert(0, '../Modules')
 from IxNetRestApi import *

@@ -313,11 +313,11 @@ class Protocol(object):
             
         return ethernetObj
 
-
+    # Was configIsIsL3Ngpf
     def configIsIsL3Ngpf(self, obj, **data):
         """
         Description
-            Create or modify ISISL3
+            Create or modify ethernet/ISISL3
 
         Parameters
             ethernetObj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
@@ -349,7 +349,8 @@ class Protocol(object):
     def getDeviceGroupIsIsL3RouterObj(self, deviceGroupObj):
         """ 
         Description
-           Get and return the Device Group's ISIS L3 Router object.
+           Get and the Device Group's ISIS L3 Router object.
+           Mainly used after configIsIsNgpf().
           
         Parameter
            deviceGroupObj: <str:obj>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{1}
@@ -370,7 +371,33 @@ class Protocol(object):
 
            data: <dict>:  Get attributes from the IxNetwork API browser.
         """
-        self.ixnObj.patch(self.ixnObj.httpHeader + isisL3RouterObj, data=data)
+        response = self.ixnObj.get(self.ixnObj.httpHeader + isisL3RouterObj)
+
+        if 'enableBIER' in data:
+            self.ixnObj.patch(self.ixnObj.httpHeader + isisL3RouterObj, data={'enableBIER': data['enableBIER']})
+
+        for attribute in ['active', 'bierNFlag', 'bierRFlag']:
+            if attribute in data:
+                multivalue = response.json()[attribute]
+                self.ixnObj.logInfo('Configuring ISIS BIER Subdomain multivalue attribute: %s' % attribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
+
+    def configIsIsBierSubDomainListNgpf(self, isisL3RouterObj, **data):
+        """
+        Description
+           Configure ISIS BIER Subdomain.
+
+        Parameter
+           isisL3RouterObj: <str:obj>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/isisL3Router/{id}
+
+           data: <dict>:  active, subDomainId, BAR
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader + isisL3RouterObj + '/isisBierSubDomainList')
+        for attribute in ['active', 'subDomainId', 'BAR']:
+            if attribute in data:
+                multiValue = response.json()[attribute]
+                self.ixnObj.logInfo('Configuring ISIS DIER Subdomain multivalue attribute: %s' % attribute)
+                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': data[attribute]})
 
     def createIpv4Ngpf(self, obj=None, port=None, portName=None, ngpfEndpointName=None, **kwargs):
         """
@@ -1659,15 +1686,18 @@ class Protocol(object):
                 if eachStatus != 'up':
                     totalDownSessions += 1
             self.ixnObj.logInfo('\tTotal sessions Down: %d' % totalDownSessions, timestamp=False)
+            self.ixnObj.logInfo('\tCurrentStatus: %s' % currentStatus)
 
             if timer < timeout and [element for element in sessionDownList if element in currentStatus] == []:
                 self.ixnObj.logInfo('Protocol sessions are all up')
                 startCounter = timer
                 break
+
             if timer < timeout and [element for element in sessionDownList if element in currentStatus] != []:
                 self.ixnObj.logInfo('\tWait %d/%d seconds' % (timer, timeout), timestamp=False)
                 time.sleep(1)
                 continue
+
             if timer == timeout and [element for element in sessionDownList if element in currentStatus] != []:
                 raise IxNetRestApiException('\nError: Protocols failed')
 

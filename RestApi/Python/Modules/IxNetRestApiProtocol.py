@@ -364,7 +364,7 @@ class Protocol(object):
     def configIsIsL3RouterNgpf(self, isisL3RouterObj, **data):
         """
         Description
-           Configure ISIS L3 Router
+           Configure ISIS L3 Router.
 
         Parameter
            isisL3RouterObj: <str:obj>: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/isisL3Router/{id}
@@ -376,6 +376,7 @@ class Protocol(object):
         if 'enableBIER' in data:
             self.ixnObj.patch(self.ixnObj.httpHeader + isisL3RouterObj, data={'enableBIER': data['enableBIER']})
 
+        # Note: Feel free to add additional parameters.
         for attribute in ['active', 'bierNFlag', 'bierRFlag']:
             if attribute in data:
                 multivalue = response.json()[attribute]
@@ -1187,12 +1188,12 @@ class Protocol(object):
         if 'create' in kwargs:
             self.ixnObj.logInfo('Create new Network Group IPv4 Prefix Pools')
             response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools')
-            ipv4PrefixObj = self.ixnObj.httpHeader + response.json()['links'][0]['href']
+            ipv4PrefixObj = response.json()['links'][0]['href']
         else:
-            ipv4PrefixObj = self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools/1'
+            ipv4PrefixObj = networkGroupObj+'/ipv4PrefixPools/1'
 
         # prefixPoolId = /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/3/ipv4PrefixPools/1
-        response = self.ixnObj.get(ipv4PrefixObj)
+        response = self.ixnObj.get(self.ixnObj.httpHeader + ipv4PrefixObj)
         self.ixnObj.logInfo('Config Network Group advertising routes')
         multivalue = response.json()['networkAddress']
         data={'start': kwargs['networkAddress']['start'],
@@ -1202,12 +1203,34 @@ class Protocol(object):
 
         if 'prefixLength' in kwargs:
             self.ixnObj.logInfo('Config Network Group prefix pool length')
-            response = self.ixnObj.get(ipv4PrefixObj)
+            response = self.ixnObj.get(self.ixnObj.httpHeader + ipv4PrefixObj)
             multivalue = response.json()['prefixLength']
             data={'value': kwargs['prefixLength']}
             self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
 
         return ipv4PrefixObj
+
+    def configPrefixPoolsIsisL3RouteProperty(self, prefixPoolsObj, **data):
+        """
+        Description
+            Configure Network Group Prefix Pools ISIS L3 Route properties.
+            Supports both IPv4PrefixPools and IPv6PrefiPools.
+            For more property and value references, use the IxNetwork API browser.
+
+        Parameters
+            prefixPoolsObj: <str>: Example:
+                  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}
+
+            data: Properties: active, advIPv6Prefix, BAR, BFRId, BFRIdStep, BIERBitStingLength, eFlag, labelRangeSize,
+                  labelStart, nFlag, pFlag, rFlag, vFlag, redistribution,  routeOrigin, subDomainId
+        Syntax
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader + prefixPoolsObj + '/isisL3RouteProperty/1')
+        for attribute, value in data.items():
+            multivalue = response.json()[attribute]
+            self.ixnObj.logInfo('Configuring PrefixPools ISIS L3 Route Property multivalue attribute: %s' % attribute)
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
 
     def configMultivalue(self, multivalueUrl, multivalueType, data):
         """

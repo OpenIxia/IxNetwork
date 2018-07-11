@@ -50,8 +50,8 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    configFile = 'C:\\IxiaAutomation\\RestApi\\Python\\SampleScripts\\bgp_dut_8.50.ixncfg'
-    dutConfigFile = 'C:\\IxiaAutomation\\RestApi\\Python\\SampleScripts\\bgp_eos.cfg'
+    configFile = 'bgp_dut_8.50.ixncfg'
+    dutConfigFile = 'bgp_eos.cfg'
 
     ixChassisIp = '10.36.79.186'
     # [chassisIp, cardNumber, slotNumber]

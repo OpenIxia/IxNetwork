@@ -233,7 +233,7 @@ class Connect:
         self.deleteSessionAfterTest = deleteSessionAfterTest
 
         match = re.match('http.*(/api.*/sessions/[0-9]+)/ixnetwork', self.sessionUrl)
-        self.noHttpHeaderSessionId = match.group(1)
+        self.headlessSessionId = match.group(1)
 
         if includeDebugTraceback == False:
             sys.tracebacklimit = 0

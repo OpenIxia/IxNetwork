@@ -2803,10 +2803,10 @@ class Protocol(object):
     def applyOnTheFly(self):
         """
          Description
-            Apply configuration changes on the fly while Topology is running.
+            Apply NGPF configuration changes on the fly while Topology protocols are running.
         """
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly',
-                                    data={'arg1': '{0}/ixnetwork/globals/topology'.format(self.ixnObj.noHttpHeaderSessionId)})
+                                    data={'arg1': '{0}/globals/topology'.format(self.ixnObj.sessionUrl)})
         self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly'+response.json()['id'])
 
     def getProtocolListByPort(self, port):
@@ -5089,6 +5089,5 @@ class Protocol(object):
         deviceGroupObject = re.search("(.*deviceGroup/\d).*", objectHandle)
         deviceGroupObjectUrl = self.ixnObj.httpHeader+deviceGroupObject.group(1)
         self.ixnObj.patch(deviceGroupObjectUrl, data={"multiplier": int(multiplier)})
-        if applyOnTheFly:
-            self.ixnObj.post(self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly',
-                             data={'arg1': '/api/v1/sessions/1/ixnetwork/globals/topology'})
+        if applyOnTheFly: self.applyOnTheFly()
+

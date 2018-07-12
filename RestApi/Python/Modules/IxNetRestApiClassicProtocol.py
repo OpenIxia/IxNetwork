@@ -583,3 +583,4 @@ class ClassicProtocol(object):
                 return False
             self.logInfo('\n\tWait {0}/{1} seconds\n'.format(counter, timeout), timestamp=False)
             time.sleep(1)
+

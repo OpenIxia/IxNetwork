@@ -269,6 +269,9 @@ class Protocol(object):
                 self.ixnObj.logInfo('Configure MAC address name')
             self.ixnObj.patch(self.ixnObj.httpHeader+ethernetObj, data={'name': name})
 
+        if 'multiplier' in kwargs:
+            self.configDeviceGroupMultiplier(objectHandle=ethernetObj, multiplier=kwargs['multiplier'], applyOnTheFly=False)
+
         if 'macAddress' in kwargs:
             multivalue = ethObjResponse.json()['mac']
             self.ixnObj.logInfo('Configure MAC address. Attribute for multivalueId = jsonResponse["mac"]')
@@ -493,6 +496,9 @@ class Protocol(object):
 
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+ipv4Obj, data={'name': kwargs['name']})
+
+        if 'multiplier' in kwargs:
+            self.configDeviceGroupMultiplier(objectHandle=ipv4Obj, multiplier=kwargs['multiplier'], applyOnTheFly=False)
 
         # Config IPv4 address
         if 'ipv4Address' in kwargs:
@@ -2043,8 +2049,8 @@ class Protocol(object):
                         # Let it flow down to get the unresolved ARPs
                         pass
 
-                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader+ipProtocol+'?includes=resolvedGatewayMac',
-                                                   ignoreError=True, silentMode=silentMode)
+                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader+ipProtocol+'?includes=resolvedGatewayMac,address,gatewayIp', ignoreError=True, silentMode=silentMode)
+
                 resolvedGatewayMac = protocolResponse.json()['resolvedGatewayMac']
 
                 # sessionStatus: ['up', 'up']
@@ -3834,7 +3840,7 @@ class Protocol(object):
 
         action = start or stop
         """
-        if type(isisObjList) != list:
+        if type(ldpObjList) != list:
             raise IxNetRestApiException('startStopLdpBasicRouterNgpf error: The parameter ldpObjList must be a list of objects.')
 
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/ldpBasicRouter/operations/'+action
@@ -5017,9 +5023,7 @@ class Protocol(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+ipv6Obj, data={'name': kwargs['name']})
 
         if 'multiplier' in kwargs:
-            devicegroup = re.search("(.*deviceGroup/\d).*",ipv6Obj)
-            devicegroup_url = self.ixnObj.httpHeader+devicegroup.group(1)
-            self.ixnObj.patch(devicegroup_url,data = {"multiplier": kwargs['multiplier']})
+            self.configDeviceGroupMultiplier(objectHandle=ipv6Obj, multiplier=kwargs['multiplier'], applyOnTheFly=False)
 
         # Config IPv6 address
         if 'ipv6Address' in kwargs:
@@ -5070,3 +5074,21 @@ class Protocol(object):
 
         return ipv6Obj
 
+    def configDeviceGroupMultiplier(self, objectHandle, multiplier, applyOnTheFly=False):
+        """
+        Description
+           Configure a Device Group multiplier.  Pass in a NGPF object handle and
+           this API will parse out the Device Group object to use for configuring 
+           the multiplier.
+        
+        Parameter
+           objectHandle: <str>: A NGPF object handle.
+           multiplier: <int>: The number of multiplier.
+           applyOnTheFly: <bool>: Default to False. applyOnTheFly is for protocols already running.
+        """
+        deviceGroupObject = re.search("(.*deviceGroup/\d).*", objectHandle)
+        deviceGroupObjectUrl = self.ixnObj.httpHeader+deviceGroupObject.group(1)
+        self.ixnObj.patch(deviceGroupObjectUrl, data={"multiplier": int(multiplier)})
+        if applyOnTheFly:
+            self.ixnObj.post(self.ixnObj.sessionUrl+'/globals/topology/operations/applyonthefly',
+                             data={'arg1': '/api/v1/sessions/1/ixnetwork/globals/topology'})

@@ -5,8 +5,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - Python 3+
-#    - Python module: requests
+#    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #     Capturing packets. Make sure traffic is configured for continuous mode.
@@ -19,9 +19,10 @@
 # USAGE
 #    python <script>.py windows
 
-import sys, traceback, time
+import sys, os, traceback, time
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiTraffic import Traffic
@@ -84,8 +85,8 @@ try:
 
     pktCaptureObj.packetCaptureClearTabs()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+

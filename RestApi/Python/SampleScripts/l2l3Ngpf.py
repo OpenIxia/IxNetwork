@@ -5,8 +5,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -27,9 +27,9 @@
 #    python <script>.py windows
 #    python <script>.py linux
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -98,7 +98,7 @@ try:
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
-    portObj.assignPorts(portList, createVports=True)
+    portObj.assignPorts(portList)
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
@@ -236,17 +236,19 @@ try:
     if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

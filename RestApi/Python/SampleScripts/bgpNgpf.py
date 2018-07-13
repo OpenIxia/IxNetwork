@@ -6,6 +6,7 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -26,9 +27,10 @@
 #    python <script>.py windows
 #    python <script>.py linux
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -277,7 +279,6 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
 
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:

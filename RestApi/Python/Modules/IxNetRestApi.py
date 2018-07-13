@@ -679,7 +679,7 @@ class Connect:
             if counter == timeout and state != 'SUCCESS':
                 if ignoreException:
                     return response
-                raise IxNetRestApiException('\n%s' % response.text)
+                raise IxNetRestApiException('\nwaitForComplete failed: %s' % response.json())
 
     def connectToLinuxIxosChassis(self, chassisIp, username, password):
         url = 'https://{0}/platform/api/v1/auth/session'.format(chassisIp)

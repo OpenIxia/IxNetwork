@@ -15,6 +15,7 @@ import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
 
 class IxNetRestApiException(Exception):
     def __init__(self, msg=None):
+        print('\nIxNetRestApiException error: {0}\n'.format(msg))
         if Connect.enableDebugLogFile:
             with open(Connect.debugLogFile, 'a') as restLogFile:
                 restLogFile.write('IxNetRestApiException error: '+msg)

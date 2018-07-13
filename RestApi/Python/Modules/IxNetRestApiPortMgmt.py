@@ -394,9 +394,23 @@ class PortMgmt(object):
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         url = self.ixnObj.sessionUrl+'/operations/assignports'
         response = self.ixnObj.post(url, data=data)
-        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=timeout, ignoreException=True)
-        self.verifyPortConnectionStatus()
-        
+        response = self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=timeout, ignoreException=True)
+
+        if response.json()['state'] != 'SUCCESS':
+            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+            for vport in response.json():
+                chassisIp = vport['assignedTo'].split(':')[0]
+                slot = vport['assignedTo'].split(':')[1]
+                port = vport['assignedTo'].split(':')[2]
+                currentPort = [chassisIp, int(slot), int(port)]
+                for chassis,card,port in portList:
+                    currentPortList = [chassis, int(card), int(port)]
+                    if set(currentPort) & set(currentPortList):
+                        if 'License Failed' in vport['connectionStatus']:
+                            raise IxNetRestApiException('Port License failed.')
+                        if vport['connectionStatus'] == 'connectedLinkDown':
+                            raise IxNetRestApiException('Port link connection is down: {0}'.format(vport['assignedTo']))
+
         if configPortName:
             # Name the vports
             for vportObj in self.getAllVportList():

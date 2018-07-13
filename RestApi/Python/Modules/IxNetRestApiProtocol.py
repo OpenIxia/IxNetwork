@@ -5091,3 +5091,59 @@ class Protocol(object):
         self.ixnObj.patch(deviceGroupObjectUrl, data={"multiplier": int(multiplier)})
         if applyOnTheFly: self.applyOnTheFly()
 
+    def startStopLdpBasicRouterV6Ngpf(self, ldpV6ObjList, action='start'):
+        """
+        Description
+            Start or stop LDP Basic Router V6 protocol.
+
+        Parameters
+            ldpV6ObjList: <list>: Provide a list of one or more ldpBasicRouterV6 object handles to start or stop.
+                      Ex: ["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ldpBasicRouterV6/1", ...]
+            action: <str>: start or stop
+        """
+        if type(ldpV6ObjList) != list:
+            raise IxNetRestApiException('startStopLdpBasicRouterV6Ngpf error: The parameter ldpV6ObjList must be a list of objects.')
+
+        url = self.ixnObj.sessionUrl+'/topology/deviceGroup/ldpBasicRouterV6/operations/'+action
+        data = {'arg1': ldpV6ObjList }
+        self.ixnObj.logInfo('startStopLdpBasicRouterV6Ngpf: {0}'.format(action))
+        self.ixnObj.logInfo('\t%s' % ldpObjList)
+        response = self.ixnObj.post(url, data=data)
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
+
+    def startStopLdpConnectedInterfaceNgpf(self, ldpConnectedIntObjList, action='start'):
+        """
+        Description
+            Start or stop LDP Basic Router Connected Interface protocol.
+
+        Parameters
+            ldpConnectedIntObjList: <list>: Provide a list of one or more ldpBasicRouter
+                                    object handles to start or stop.
+                Ex: ["/api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv4/{id}/ldpConnectedInterface/{id}", ...]
+            action: <str>: start or stop
+        """
+        if type(ldpConnectedIntObjList) != list:
+            raise IxNetRestApiException('startStopLdpConnectedInterfaceNgpf error: The parameter ldpObjList must be a list of objects.')
+
+        url = self.ixnObj.sessionUrl + '/topology/deviceGroup/ethernet/ipv4/ldpConnectedInterface/operations/'+action
+        data = {'arg1': ldpConnectedIntObjList}
+        response = self.ixnObj.post(url, data=data)
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
+
+    def startStopLdpV6ConnectedInterfaceNgpf(self, ldpV6ConnectedIntObjList, action='start'):
+        """
+        Description
+            Start or stop LDP Basic Router V6 Connected Interface protocol.
+
+        Parameters
+            ldpV6ConnectedIntObjList: <list>:  Provide a list of one or more ldpBasicRouter object handles to start or stop.
+                      Ex: ["/api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6/{id}/ldpConnectedInterface/{id}", ...]
+            action = start or stop
+        """
+        if type(ldpV6ConnectedIntObjList) != list:
+            raise IxNetRestApiException('startStopLdpV6ConnectedInterfaceNgpf error: The parameter ldpV6ConnectedIntObjList must be a list of objects.')
+
+        url = self.ixnObj.sessionUrl + '/topology/deviceGroup/ethernet/ipv6/ldpv6ConnectedInterface/operations/'+action
+        data = {'arg1': ldpV6ConnectedIntObjList}
+        response = self.ixnObj.post(url, data=data)
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])

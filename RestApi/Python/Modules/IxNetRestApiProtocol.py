@@ -3835,7 +3835,7 @@ class Protocol(object):
             Start or stop LDP Basic Router protocol.
 
         Parameters
-            isisObjList: Provide a list of one or more ldpBasicRouter object handles to start or stop.
+            ldpObjList: Provide a list of one or more ldpBasicRouter object handles to start or stop.
                       Ex: ["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ldpBasicRouter/3", ...]
 
         action = start or stop

@@ -1,12 +1,12 @@
 import re, time
 from IxNetRestApi import IxNetRestApiException
+from IxNetRestApiFileMgmt import FileMgmt
 
 class Statistics(object):
     def __init__(self, ixnObj=None):
         self.ixnObj = ixnObj
 
         # For takesnapshot()
-        from IxNetRestApiFileMgmt import FileMgmt
         self.fileMgmtObj = FileMgmt(self.ixnObj)
 
     def setMainObject(self, mainObject):

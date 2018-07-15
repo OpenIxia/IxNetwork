@@ -28,6 +28,8 @@
 
 import re, time
 from IxNetRestApi import IxNetRestApiException
+from IxNetRestApiPortMgmt import PortMgmt
+from IxNetRestApiStatistics import Statistics
 
 # 8.40 updates:
 #    sessionStatus uses ?includes=sessionStatus and then response.json()['sessionStatus']
@@ -49,11 +51,7 @@ class Protocol(object):
         """
         self.ixnObj = ixnObj
         self.configuredProtocols = []
-
-        from IxNetRestApiPortMgmt import PortMgmt
         self.portMgmtObj = PortMgmt(self.ixnObj)
-
-        from IxNetRestApiStatistics import Statistics
         self.statObj = Statistics(self.ixnObj)
 
     def setMainObject(self, mainObject):

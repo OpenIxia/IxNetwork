@@ -27,7 +27,7 @@ class Connect:
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
-                 apiKey=None, generateRestLogFile=True, robotFrameworkStdout=False):
+                 apiKey=None, generateLogFile=True, robotFrameworkStdout=False):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -61,7 +61,7 @@ class Connect:
            includeDebugTraceback: (bool): True: Include tracebacks in raised exceptions.
            sessionId: (str): The session ID on the Linux API server or Windows Connection Mgr to connect to.
            apiKey: (str): The Linux API server user account API-Key to use for the sessionId connection.
-           generateRestLogFile: True|False|<log file name>.  If you want to generate a log file, provide 
+           generateLogFile: True|False|<log file name>.  If you want to generate a log file, provide 
                                 the log file name.
                                 True = Then the log file default name is ixNetRestApi_debugLog.txt
                                 False = Disable generating a log file.
@@ -140,19 +140,19 @@ class Connect:
         self.linuxApiServerIp = apiServerIp
         self.apiServerPort = serverIpPort
         self.webQuickTest = webQuickTest
-        self.generateRestLogFile = generateRestLogFile
+        self.generateLogFile = generateLogFile
         self.robotFrameworkStdout = robotFrameworkStdout
         self.connectToLinuxChassisIp = connectToLinuxChassisIp
 
-        if generateRestLogFile:
-            if generateRestLogFile == True:
+        if generateLogFile:
+            if generateLogFile == True:
                 # Default the log file name
                 self.restLogFile = 'ixNetRestApi_debugLog.txt'
                 Connect.enableDebugLogFile = True
                 Connect.debugLogFile = self.restLogFile
 
-            if type(generateRestLogFile) != bool:
-                self.restLogFile = generateRestLogFile
+            if type(generateLogFile) != bool:
+                self.restLogFile = generateLogFile
 
             # Instantiate a new log file here.
             with open(self.restLogFile, 'w') as restLogFile:
@@ -532,7 +532,7 @@ class Connect:
             msg = msg
 
         print('{0}'.format(msg), end=end)
-        if self.generateRestLogFile:
+        if self.generateLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write(msg+end)
 
@@ -556,7 +556,7 @@ class Connect:
             msg = msg
 
         print('{0}'.format(msg), end=end)
-        if self.generateRestLogFile:
+        if self.generateLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write('Warning: '+msg+end)
 
@@ -580,7 +580,7 @@ class Connect:
             msg = msg
 
         print('{0}'.format(msg), end=end)
-        if self.generateRestLogFile:
+        if self.generateLogFile:
             with open(self.restLogFile, 'a') as restLogFile:
                 restLogFile.write('Error: '+msg+end)
 

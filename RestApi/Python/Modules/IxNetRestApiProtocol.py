@@ -3074,18 +3074,19 @@ class Protocol(object):
                         url = layer3Ip+'?links=true'
                         response = self.ixnObj.get(url, silentMode=True)
                         for protocol in response.json()['links']:
-                            currentProtocol = protocol['href']
+                            currentProtocol = protocol['href']                            
                             if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+$', currentProtocol))):
                                 continue
                             if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+/port$', currentProtocol))):
                                 continue
+
                             url = self.ixnObj.httpHeader+currentProtocol
                             response = self.ixnObj.get(url, silentMode=True)
                             if response.json() == []:
                                 # The currentProtocol is not configured.
                                 continue
                             else:
-                                deviceGroupObjects.append(currentProtocol)
+                                deviceGroupObjects.append(response.json()[0]['links'][0]['href'])
 
                 if isHostIpFound:
                     topologyDict['deviceGroup'].insert(len(topologyDict['deviceGroup']), deviceGroupObjects)

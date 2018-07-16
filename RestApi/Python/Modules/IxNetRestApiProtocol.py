@@ -5106,7 +5106,7 @@ class Protocol(object):
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/ldpBasicRouterV6/operations/'+action
         data = {'arg1': ldpV6ObjList }
         self.ixnObj.logInfo('startStopLdpBasicRouterV6Ngpf: {0}'.format(action))
-        self.ixnObj.logInfo('\t%s' % ldpObjList)
+        self.ixnObj.logInfo('\t%s' % ldpV6ObjList)
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 

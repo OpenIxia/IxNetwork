@@ -3004,12 +3004,12 @@ class Protocol(object):
              'deviceGroup': [['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1',
                               '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1',
                               '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1',
-                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer'],
+                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1'],
 
                              ['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2',
                               '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2/ethernet/1',
                               '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2/ethernet/1/ipv4/1',
-                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2/ethernet/1/ipv4/1/ospfv2']
+                              '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2/ethernet/1/ipv4/1/ospfv2/1']
                             ]
             }]
         """

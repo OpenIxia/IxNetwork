@@ -5,8 +5,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - 3.6
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -25,9 +25,10 @@
 #    python <script>.py windows
 #    python <script>.py linux
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -50,7 +51,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -88,15 +89,12 @@ try:
 
     mainObj.newBlankConfig()
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
-    portObj.assignPorts(portList, createVports=True)
+    portObj.assignPorts(portList)
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
@@ -113,7 +111,7 @@ try:
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -121,7 +119,7 @@ try:
                                                   macAddressPortStep='disabled',
                                                   vlanId=100)
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -129,7 +127,7 @@ try:
                                                   macAddressPortStep='disabled',
                                                   vlanId=100)
     
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '100.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -141,7 +139,7 @@ try:
                                           prefix=16,
                                           resolveGateway=True)
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '100.1.3.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -175,14 +173,14 @@ try:
     vxlanDeviceGroupObj1 = protocolObj.createDeviceGroupNgpf(deviceGroupObj1,
                                                              multiplier=3, deviceGroupName='vxlanHost1')
     
-    vxlanEthernetObj1 = protocolObj.createEthernetNgpf(vxlanDeviceGroupObj1,
+    vxlanEthernetObj1 = protocolObj.configEthernetNgpf(vxlanDeviceGroupObj1,
                                                        ethernetName='VxLan1-Eth1',
                                                        macAddress={'start': '00:01:11:00:00:01',
                                                                    'direction': 'increment',
                                                                    'step': '00:00:00:00:00:01'},
                                                        vlanId='101')
-    
-    vxlanIpv4Obj1 = protocolObj.createIpv4Ngpf(vxlanEthernetObj1,
+
+    vxlanIpv4Obj1 = protocolObj.configIpv4Ngpf(vxlanEthernetObj1,
                                                ipv4Address={'start': '10.1.1.1',
                                                             'step': '0.0.0.0',
                                                             'direction': 'increment'},
@@ -194,14 +192,14 @@ try:
     
     vxlanDeviceGroupObj2 = protocolObj.createDeviceGroupNgpf(deviceGroupObj2, multiplier=3, deviceGroupName='vxlanHost2')
     
-    vxlanEthernetObj2 = protocolObj.createEthernetNgpf(vxlanDeviceGroupObj2,
+    vxlanEthernetObj2 = protocolObj.configEthernetNgpf(vxlanDeviceGroupObj2,
                                                        ethernetName='VxLan1-Eth1',
                                                        macAddress={'start': '00:01:22:00:00:01',
                                                                    'direction': 'increment',
                                                                    'step': '00:00:00:00:00:01'},
                                                        vlanId='101')
     
-    vxlanIpv4Obj2 = protocolObj.createIpv4Ngpf(vxlanEthernetObj2,
+    vxlanIpv4Obj2 = protocolObj.configIpv4Ngpf(vxlanEthernetObj2,
                                                ipv4Address={'start': '10.1.3.1',
                                                             'step': '0.0.0.0',
                                                             'direction': 'increment'},
@@ -276,15 +274,17 @@ try:
     if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             mainObj.deleteSession()

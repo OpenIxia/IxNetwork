@@ -6,8 +6,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - 3.6
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -34,9 +34,10 @@
 #    If you use VM ports to do back to back, you probably will not see traffic. Use a physical ports instead.
 #
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -57,7 +58,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -96,10 +97,7 @@ try:
 
     mainObj.newBlankConfig()
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
@@ -279,17 +277,19 @@ try:
     if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

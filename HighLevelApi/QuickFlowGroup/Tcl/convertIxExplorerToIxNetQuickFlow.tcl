@@ -21,6 +21,10 @@
 #        - Start traffic
 #        - Get Flow Statistics stats.
 #        - Look for all the ports that received traffic.
+#
+#    All you need to get out of this script are:
+#         - ConfigQuickFlowGroup
+#         - GetVportConnectedToPort
 
 package req Ixia
 
@@ -58,14 +62,17 @@ proc GetVportConnectedToPort {vport} {
     return 1/$card/$port
 }
 
-proc ConfigQuickFlowGroup {portHandle trafficParam} {
+proc ConfigQuickFlowGroup {trafficParam} {
     # Description
     #    Using IxExplorer-FT HL APIs to configure IxNetwork Quick Flow Group.
     #    For Quick Flow Group, only one Traffic Item is allowed and required.
     #    If you have multiple streams (QFG), they all fall under this Traffic Item.
     
     upvar $trafficParam params
-    
+
+    set portHandle $params(-port_handle)
+    array unset params -port_handle 
+
     # Create just ONE Traffic Item for Quick Flow Group. Cannot and should not create more than one Traffic Item.
     # After creating one Traffic Item, you could add multiple Quick Flow Groups.
     puts "\nExisting Traffic Item: [ixNet getList [ixNet getRoot]/traffic trafficItem]"
@@ -371,6 +378,7 @@ proc KeylPrint {keylist {space ""}} {
 
 set trafficItem1(-name) rule1
 set trafficItem1(-mode) create
+set trafficItem1(-port_handle) $port_1
 set trafficItem1(-mac_dst_mode) fixed
 set trafficItem1(-mac_src_mode) fixed
 set trafficItem1(-mac_src) 00:0C:29:AA:86:E0
@@ -392,6 +400,7 @@ set trafficItem1(-number_of_packets_per_stream) 50000
 
 set trafficItem2(-name) rule2
 set trafficItem2(-mode) create
+set trafficItem2(-port_handle) $port_2
 set trafficItem2(-mac_dst_mode) fixed
 set trafficItem2(-mac_src_mode) fixed
 set trafficItem2(-mac_src) 00:0C:29:84:37:16
@@ -454,8 +463,8 @@ after 3000
 set port1ArpStatus [::ixia::interface_config -port_handle $port_1 -arp_send_req 1 -arp_req_retries 3]
 set port2ArpStatus [::ixia::interface_config -port_handle $port_2 -arp_send_req 1 -arp_req_retries 3]
 
-ConfigQuickFlowGroup $port_1 trafficItem1
-ConfigQuickFlowGroup $port_2 trafficItem2
+ConfigQuickFlowGroup trafficItem1
+ConfigQuickFlowGroup trafficItem2
 
 RegenerateAllTrafficItems
 StartTrafficNgpfHlt

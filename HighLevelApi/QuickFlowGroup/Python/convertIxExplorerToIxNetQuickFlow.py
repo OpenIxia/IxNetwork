@@ -20,7 +20,14 @@
 #        - Start traffic
 #        - Get Port Statistics stats.
 #        - Look for all the ports that received traffic.
+#
+#    All you need to get out of this script are:
+#         - ConfigQuickFlowGroup()
+#         - GetVportConnectedToPortPy()
 
+# Supports Python2.7 and Python3
+
+from __future__ import absolute_import, print_function, division
 import sys, os
 import time, re
 
@@ -50,42 +57,49 @@ def GetVportConnectedToPortPy(vport):
     port = connectedTo[1].split(':')[1]
     return '1/'+card+'/'+port
 
-def ConfigQuickFlowGroup(portHandle, **trafficParams):
+def ConfigQuickFlowGroup(**trafficParams):
     """
     Desciption
         Using IxExplorer-FT HL APIs to configure IxNetwork Quick Flow Group.
         For Quick Flow Group, only one QFG is allowed and required.
         If you have multiple streams, they all fall under this QFG.
     """
-    print '\nExisting Traffic Item:', ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem') 
+    print('\nExisting Traffic Item:', ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem') )
+
+    portHandle = trafficParams['port_handle']
 
     if ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem') == []:
-        print '\nCreating new traffic item for Quick Flow Group'
+        print('\nCreating new traffic item for Quick Flow Group')
         quickFlowGroupObj = ixNet.add(ixNet.getRoot()+'/traffic', 'trafficItem')
         ixNet.setMultiAttribute(quickFlowGroupObj ,'-trafficItemType', 'quick', '-trafficType', 'raw')
         ixNet.commit()
         quickFlowGroupObj = ixNet.remapIds(quickFlowGroupObj)[0]
-        print 'QuickFlowGroupObj:', quickFlowGroupObj
+        print('QuickFlowGroupObj:', quickFlowGroupObj)
 
-    print 'ConfigQuickFlowGroup:', trafficParams['name']
+    print('ConfigQuickFlowGroup:', trafficParams['name'])
 
     # Get a list of all the configured ports as the receiving ports.
     portList = []
     for eachVport in ixNet.getList(ixNet.getRoot(), 'vport'):
         port = GetVportConnectedToPortPy(eachVport)
+
+        # Don't include the Tx port into the receiving list of ports
         if portHandle != port:
             portList.append(port)
-    print '\nAll vport list for Rx ports:', portList
+    print('\nAll vport list for Rx ports:', portList)
 
+    # Insert additional parameters to make Quick Flow Group work
     trafficParams.update({'port_handle': portHandle, 'port_handle2': ' '.join(portList), 'circuit_type':'quick_flows'})
-    print '\nConfiguring HLT params:', trafficParams
+
+    print('\nConfiguring HLT params:', trafficParams)
     result = ixia_hlt.traffic_config(**trafficParams)
-    print '\nResult:', result
+    print('\nResult:', result)
 
     # Enable ingress tracking
-    print 'Enabling Quick Flow Group statistics tracking'
+    print('\nEnabling Quick Flow Group statistics tracking')
     quickFlowGroupObj = ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem')[0]
-    ixNet.setAttribute(quickFlowGroupObj + '/tracking', '-trackBy', ['trackingenabled0'])
+    status = ixNet.setAttribute(quickFlowGroupObj + '/tracking', '-trackBy', ['trackingenabled0'])
+    print('\n--- ingregressTracking status:', status)
     ixNet.commit()
 
 def RegenerateAllTrafficItemsPy():
@@ -93,15 +107,15 @@ def RegenerateAllTrafficItemsPy():
         result = ixNet.execute('generate', trafficItem)
         
         if result != '::ixNet::OK':
-            print '\nRegenerate_All_TrafficItems failed: ', trafficItem
+            print('\nRegenerate_All_TrafficItems failed: ', trafficItem)
             ixNet.disconnect()
             sys.exit()
 
 def StartTrafficNgpfHlPy():
-    print '\nStartTrafficNgpfHlPy'
+    print('\nStartTrafficNgpfHlPy')
     status = ixia_ngpf.traffic_control(action = 'run')    
     if status == 1:
-        print '\nStartTrafficNgpfHlPy failed: ', status['log']
+        print('\nStartTrafficNgpfHlPy failed: ', status['log'])
         return 1
 
     return status
@@ -141,7 +155,7 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
     statViewSelection = getStatsBy
     try:
         statsViewIndex = viewList.index('::ixNet::OBJ-/statistics/view:"' + getStatsBy +'"')
-    except Exception, errMsg:
+    except Exception as errMsg:
         sys.exit('\nNo such statistic name: %s' % getStatsBy)
 
     # ::ixNet::OBJ-/statistics/view:"Flow Statistics"
@@ -169,10 +183,10 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
 
     startTime = 1
     stopTime = 30
-    for timer in xrange(startTime, stopTime + 1):
+    for timer in range(startTime, stopTime + 1):
         totalPages = ixNet.getAttribute(view+'/page', '-totalPages')
         if totalPages == 'null':
-            print 'GetStatView: Getting total pages for %s is not ready: %s/%s' % (getStatsBy, startTime, stopTime)
+            print('GetStatView: Getting total pages for %s is not ready: %s/%s' % (getStatsBy, startTime, stopTime))
             time.sleep(2)
         else:
             break
@@ -180,31 +194,31 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
     row = 0
     statDict = {}
 
-    print '\nPlease wait for all the stats to be queried ...'
-    for currentPage in xrange(1, int(totalPages)+1):
+    print('\nPlease wait for all the stats to be queried ...')
+    for currentPage in range(1, int(totalPages)+1):
         ixNet.setAttribute(view+'/page', '-currentPage', currentPage)
         ixNet.commit()
 
         whileLoopStopCounter = 0
         while (ixNet.getAttribute(view+'/page', '-isReady')) != 'true':
             if whileLoopStopCounter == 5:
-                print'\nGetStatView: Could not get stats'
+                print('\nGetStatView: Could not get stats')
                 return 1
 
             if whileLoopStopCounter < 5:
-                print'\nGetStatView: Not ready yet. Waiting %s/5 seconds ...' % whileLoopStopCounter
+                print('\nGetStatView: Not ready yet. Waiting %s/5 seconds ...' % whileLoopStopCounter)
                 time.sleep(1)
                 whileLoopStopCounter += 1
 
         pageList = ixNet.getAttribute(view+'/page', '-rowValues')
         totalFlowStatistics = len(pageList)
 
-        for pageListIndex in xrange(0, totalFlowStatistics):
+        for pageListIndex in range(0, totalFlowStatistics):
             rowList = pageList[pageListIndex]
             if csvFile != None:
                 csvWriteObj.writerow(rowList[0])
 
-            for rowIndex in xrange(0, len(rowList)):
+            for rowIndex in range(0, len(rowList)):
                 row += 1
                 cellList = rowList[rowIndex]
                 statDict[row] = {}
@@ -218,34 +232,37 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
         csvFile.close()
     return statDict
 
-
 def PrintDict(obj, nested_level=0, output=sys.stdout):
     """
-    Print each dict key with indentions for readability.
+    Description
+       Print each dict key with indentions for human readability.
     """
     spacing = '   '
+    spacing2 = ' '
     if type(obj) == dict:
-        print >> output, '%s' % ((nested_level) * spacing)
+        print( '%s' % ((nested_level) * spacing), file=output)
         for k, v in obj.items():
             if hasattr(v, '__iter__'):
-                print >> output, '%s%s:' % ((nested_level + 1) * spacing, k)
-                PrintDict(v, nested_level + 1, output)
+                print('%s%s:' % ( (nested_level+1) * spacing, k), file=output, end='')
+                PrintDict(v, nested_level+1, output)
             else:
-                print >> output, '%s%s: %s' % ((nested_level + 1) * spacing, k, v)
+                print('%s%s: %s' % ( (nested_level + 1) * spacing, k, v), file=output)
 
-        print >> output, '%s' % (nested_level * spacing)
+        print('%s' % (nested_level * spacing), file=output)
     elif type(obj) == list:
-        print >> output, '%s[' % ((nested_level) * spacing)
+        print('%s[' % ((nested_level) * spacing), file=output)
         for v in obj:
             if hasattr(v, '__iter__'):
-                PrintDict(v, nested_level + 1, output)
+                PrintDict(v, nested_level + 1, file=output)
             else:
-                print >> output, '%s%s' % ((nested_level + 1) * spacing, v)
-        print >> output, '%s]' % ((nested_level) * spacing)
+                print('%s%s' % ((nested_level + 1) * spacing, v), file=output)
+        print('%s]' % ((nested_level) * spacing), output)
     else:
-        print >> output, '%s%s' % (nested_level * spacing, obj)
+        print('%s%s' % ((nested_level * spacing2), obj), file=output)
+
 
 trafficItem1 = { 'name': 'rule1',
+                 'port_handle': port_1,
                  'mode': 'create',
                  'mac_dst_mode' : 'fixed',
                  'mac_src_mode' : 'fixed',
@@ -264,10 +281,12 @@ trafficItem1 = { 'name': 'rule1',
                  'ip_dst_count': '1',
                  'rate_percent': '10',
                  'frame_size': '1000',
+                 'bidirectional': '0',
                  'number_of_packets_per_stream': 50000
              }
 
 trafficItem2 = { 'name': 'rule2',
+                 'port_handle': port_1,
                  'mode': 'create',
                  'mac_dst_mode' : 'fixed',
                  'mac_src_mode' : 'fixed',
@@ -286,6 +305,7 @@ trafficItem2 = { 'name': 'rule2',
                  'ip_dst_count': '1',
                  'rate_percent': '10',
                  'frame_size': '1000',
+                 'bidirectional': '0',
                  'number_of_packets_per_stream': 50000
              }
 
@@ -295,8 +315,10 @@ connect_result = ixia_ngpf.connect (
     break_locks = '1'
     ) 
 
-ConfigQuickFlowGroup(portHandle=port_1, **trafficItem1)
-ConfigQuickFlowGroup(portHandle=port_2, **trafficItem2)
+PrintDict(connect_result)
+
+ConfigQuickFlowGroup(**trafficItem1)
+#ConfigQuickFlowGroup(**trafficItem2)
 
 RegenerateAllTrafficItemsPy()
 StartTrafficNgpfHlPy()

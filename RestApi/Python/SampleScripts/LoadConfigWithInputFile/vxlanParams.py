@@ -7,7 +7,7 @@ params = {
     "releasePortsWhenDone": False,
     "enableDebugTracing": True,
     "deleteSessionAfterTest": False,
-    "licenseIsInChassis": False,
+    "configLicense": True,
     "licenseServerIp": ["192.168.70.3"],
     "licenseModel": "subscription",
     "licenseTier": "tier3",    

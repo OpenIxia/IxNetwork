@@ -84,7 +84,7 @@ try:
     enableDebugTracing = jsonData['enableDebugTracing']
     deleteSessionAfterTest = jsonData['deleteSessionAfterTest']
     
-    licenseIsInChassis = jsonData['licenseIsInChassis']
+    configLicense = jsonData['configLicense']
     licenseServerIp = jsonData['licenseServerIp']
     licenseModel = jsonData['licenseModel']
     licenseTier = jsonData['licenseTier']
@@ -128,17 +128,19 @@ try:
     # If the license is activated on the chassis's license server, this variable should be True.
     # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if jsonData['configLicense'] == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
-    fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=90)
-    portObj.verifyPortState()
+    portObj.assignPorts(portList, configPortName=False)
+
+    if jsonData['modifyPortMediaType'] != "None":
+        portObj.modifyPortMediaType(portList=portList, mediaType=modifyPortMediaType)
+        portObj.verifyPortState()
 
     protocolObj = Protocol(mainObj)
     protocolObj.startAllProtocols()
-    protocolObj.verifyArp(ipType='ipv4')
     protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
 
     trafficObj = Traffic(mainObj)
@@ -146,10 +148,10 @@ try:
 
     # Check the traffic state before getting stats.
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
-    #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
-    #    or do you expect traffic to be started such as in continuous mode.
-    #trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
-    trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
+    #    'stopped': If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration.
+    #    'started': If you expect traffic to be started such as in continuous mode.
+    trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+    #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

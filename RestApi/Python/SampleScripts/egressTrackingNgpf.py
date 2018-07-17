@@ -5,8 +5,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -70,9 +70,10 @@
 #        First TimeStamp: 00:00:01.002
 #        Last TimeStamp: 00:00:02.510
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiProtocol import Protocol
@@ -80,12 +81,12 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
  
 # Default the API server to either windows or linux.
-connectToApiServer = 'windows'
+osPlatform = 'windows'
 
 if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'linux']:
+    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
         sys.exit("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % sys.argv[1])
-    connectToApiServer = sys.argv[1]
+    osPlatform = sys.argv[1]
 
 #--------------- Egress tracking variable settings -----------------
 # STEP 1:
@@ -117,7 +118,7 @@ ingressTrackingFilterName = 'VLAN:VLAN-ID'
 
 # STEP 4:
 # Sometime you might not want to remove the created egress stat view so you could debug.
-removeAllTclStatViews = True
+removeAllTclStatViews = False
 
 #--------------- Egress tracking variable settings ends ----------
 
@@ -128,7 +129,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    # Optional: Mainly for connecting to Linux API server.
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -138,18 +139,18 @@ try:
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '2', '1']]
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=connectToApiServer)
-
-    if connectToApiServer in ['windows', 'windowsConnectionMgr']:
+                          serverOs=osPlatform)
+        
+    if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
-                          serverOs=connectToApiServer,
+                          serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest)
 
     #---------- Preference Settings End --------------
@@ -167,8 +168,9 @@ try:
 
     # Uncomment this to configure license server.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    portObj.releaseAllPorts()
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    if configLicense == True:
+        portObj.releaseAllPorts()
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
     portObj.assignPorts(portList, createVports=True)
@@ -188,7 +190,7 @@ try:
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
     
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -198,7 +200,7 @@ try:
                                                           'direction': 'increment',
                                                           'step':0})
     
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -208,7 +210,7 @@ try:
                                                           'step':0},
                                                   macAddressPortStep='disabled')
 
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -220,7 +222,7 @@ try:
                                           prefix=24,
                                           resolveGateway=True)
     
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -301,21 +303,22 @@ try:
     if releasePortsWhenDone == True:
         portObj.releasePorts(portList)
 
-    if connectToApiServer == 'linux':
+    if osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
 
-    if connectToApiServer == 'windowsConnectionMgr':
+    if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
-    if 'mainObj' in locals() and connectToApiServer == 'linux':
+
+    if 'mainObj' in locals() and osPlatform == 'linux':
         mainObj.linuxServerStopAndDeleteSession()
-    if 'mainObj' in locals() and connectToApiServer in ['windows', 'windowsConnectionMgr']:
+
+    if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
-        if connectToApiServer == 'windowsConnectionMgr':
+        if osPlatform == 'windowsConnectionMgr':
             mainObj.deleteSession()

@@ -5,10 +5,11 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - 3.6
+#    - Python 2.7 minimum
 #    - Python modules: requests
-#    - NGPF configuration. (Classic Framework is not supported in REST)
-#
+#    - NGPF configuration. (Classic Framework is not supported in ReST)
+#    - For ReST API, use Web QuickTest
+  
 # DESCRIPTION
 #    This sample script demonstrates:
 #        - REST API configurations using two back-to-back Ixia ports.
@@ -28,9 +29,10 @@
 #    Linux API server.  If connecting to a Linux API server and the API
 #    server is newly installed, it configures the one time global license server settings.
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -174,17 +176,19 @@ try:
     if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

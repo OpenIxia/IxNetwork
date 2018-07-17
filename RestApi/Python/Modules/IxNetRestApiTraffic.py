@@ -77,13 +77,15 @@ class Traffic(object):
 
         ConfigElement Parameters
             transmissionType:
-               - continuous, fixedFrameCount
+               - continuous|fixedFrameCount
                - custom (for burstPacketCount)
             frameCount: (For continuous and fixedFrameCount traffic)
             burstPacketCount: (For bursty traffic)
-
+            frameSize: The packet size.
             frameRate: The rate to transmit packets
             frameRateType: bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate
+            portDistribution: applyRateToAll|splitRateEvenly.  Default=applyRateToAll
+            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
             trackBy: <list>: Some options: flowGroup0, vlanVlanId0, ethernetIiDestinationaddress0, ethernetIiSourceaddress0,
                              sourcePort0, sourceDestPortPair0, ipv4DestIp0, ipv4SourceIp0, ipv4Precedence0,
                              ethernetIiPfcQueue0, frameSize0
@@ -134,7 +136,10 @@ class Traffic(object):
                                                   'frameCount': 50000,
                                                   'frameRate': 88,
                                                   'frameRateType': 'percentLineRate',
-                                                  'frameSize': 128}]
+                                                  'frameSize': 128,
+                                                  'portDistribution': 'applyRateToAll',
+                                                  'streamDistribution': 'splitRateEvenly'
+                                                  }]
             )
 
             To create a new Traffic Item and configure the highLevelStream:
@@ -188,7 +193,7 @@ class Traffic(object):
                 trackBy = trafficItem['trackBy']
                 del trafficItem['trackBy']
 
-            self.ixnObj.logInfo('\nconfigTrafficItem: %s : %s' % (trafficItemUrl, trafficItem))
+            self.ixnObj.logInfo('configTrafficItem: %s : %s' % (trafficItemUrl, trafficItem), timestamp=False)
             response = self.ixnObj.post(trafficItemUrl, data=trafficItem)
             trafficItemObj = response.json()['links'][0]['href']
 
@@ -219,7 +224,7 @@ class Traffic(object):
                     endpointSrcDst['name'] = endPoint['name']
                 endpointSrcDst['sources'] = endPoint['sources']
                 endpointSrcDst['destinations'] = endPoint['destinations']
-                self.ixnObj.logInfo('\nConfig Traffic Item Endpoints')        
+                self.ixnObj.logInfo('Config Traffic Item Endpoints', timestamp=False)
                 response = self.ixnObj.post(self.ixnObj.httpHeader+trafficItemObj+'/endpointSet', data=endpointSrcDst)
 
                 if 'highLevelStreamElements' in endPoint:
@@ -288,7 +293,7 @@ class Traffic(object):
         # Cannot configure tracking until endpoints are created. This is why
         # tracking config is at the end here.
         if mode in ['create', 'modify'] and 'trackBy' in locals():
-            self.ixnObj.logInfo('\nConfig Traffic Item statistic trackings')
+            self.ixnObj.logInfo('Config Traffic Item statistic trackings', timestamp=False)
             self.ixnObj.patch(self.ixnObj.httpHeader+trafficItemObj+'/tracking', data={'trackBy': trackBy})
 
         # API server needs some time to complete processing the highlevel stream configuration before entering regenerate.
@@ -315,8 +320,14 @@ class Traffic(object):
                                               'frameCount': 50000,
                                               'frameRate': 88,
                                               'frameRateType': 'percentLineRate',
-                                              'frameSize': 128
+                                              'frameSize': 128,
+                                              'portDistribution': 'applyRateToAll',
+                                              'streamDistribution': 'splitRateEvenly'
                                             }
+           transmissionType:   fixedFrameCount|continuous
+           frameRateType:      percentLineRate|framesPerSecond
+           portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
+           streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
         transmissionControlData = {}
         for item in ['transmissionType', 'bursePacketCount', 'frameCount', 'duration']:
@@ -346,6 +357,109 @@ class Traffic(object):
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
 
+        frameRateDistribution = {}
+        for item in ['portDistribution', 'streamDistribution']:
+            if item in configElements.keys() :
+                if item == 'portDistribution': 
+                    frameRateDistribution.update({'portDistribution': configElements[item]})
+
+                if item == 'streamDistribution': 
+                    frameRateDistribution.update({'streamDistribution': configElements[item]})
+
+        if frameRateDistribution != {}:
+            self.ixnObj.patch(configElementObj+'/frameRateDistribution', data=frameRateDistribution)
+        
+
+    def getConfigElementObj(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None):
+        """
+        Description
+           Get the config element object handle.
+
+           Use case #1: trafficItemName + endpointSetName
+           Use case #2: trafficItemObj + endpointSetName
+
+           Use case #3: trafficItemName only (Will assume there is only one configElement object which will be returned)
+           Use case #4: trafficItemObj only  (Will assume there is only one configElement object which will be returned)
+
+        Parameters
+             
+           trafficItemObj: <str obj>: The Traffic Item object.
+           trafficItemName: <str>: The Traffic Item name.
+           endpointSetName: <str>: The Traffic Item's EndpointSet name.
+
+           How this works:
+               - Users could create multiple EndpointSets within a Traffic Item.
+               - Each EndpointSet has a unique object ID by default.
+               - For each EndpointSet is created, a config element object is also created.
+               - Each config element object handle is associated with an EndpointSet ID.
+               - To be able to get the right config element object handle, we need to query
+                 for the EndpointSet that you need for modifying.
+               - Another terminology for EndpointSet is FlowGroup.
+               - If you have multiple EndpointSets, you should give each EndpointSet a name
+                 to make querying possible.
+               - Otherwise, this function will assume there is only one EndpointSet created which will be returned.
+
+        Usage examples:
+           trafficObj.getConfigElementObj(trafficItemName='Raw MPLS/UDP', endpointSetName='EndpointSet-2')
+
+           trafficObj.getConfigElementObj(trafficItemName='Raw MPLS/UDP', endpointSetName=None)
+
+           trafficObj.getConfigElementObj(trafficItemObj='/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1', 
+                                          trafficItemName=None, endpointSetName=None)
+
+           trafficObj.getConfigElementObj(trafficItemObj='/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1', 
+                                          trafficItemName=None, endpointSetName='EndpointSet-2')
+
+        Return
+           configElement: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}/configElement/{id}
+        """
+        if trafficItemObj:
+            trafficItemName = self.getTrafficItemName(trafficItemObj)
+
+        if trafficItemName:
+            if endpointSetName:
+                queryData = {'from': '/traffic',
+                             'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                        'where': [{'property': 'name', 'regex': trafficItemName}]},
+                                       {'node': 'endpointSet', 'properties': ['name'],
+                                        'where': [{'property': 'name', 'regex': endpointSetName}]},
+                      ]}
+
+            if endpointSetName == None:
+                queryData = {'from': '/traffic',
+                             'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                        'where': [{'property': 'name', 'regex': trafficItemName}]},
+                                       {'node': 'endpointSet', 'properties': [],
+                                        'where': []},
+                      ]}
+
+            queryResponse = self.ixnObj.query(data=queryData)
+
+            trafficItemList = queryResponse.json()['result'][0]['trafficItem']
+            if trafficItemList == []:
+                raise IxNetRestApiException('\nError: No traffic item name found: {0}'.format(trafficItemName))
+
+            endpointSetList = queryResponse.json()['result'][0]['trafficItem'][0]['endpointSet']
+            if endpointSetList == []:
+                raise IxNetRestApiException('\nError: No endpointSet name: {0} found in Traffic Item name: {1}'.format(
+                    endpointSetName, trafficItemName))
+
+            endpointSetObj = queryResponse.json()['result'][0]['trafficItem'][0]['endpointSet'][0]['href']
+            endpointSetId = endpointSetObj.split('/')[-1]
+
+            # With the traffic item name and endpointSetId, get the Traffic Item's config element object handle.
+            queryData = {'from': '/traffic',
+                         'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                    'where': [{'property': 'name', 'regex': trafficItemName}]},
+                                   {'node': 'configElement', 'properties': ['endpointSetId'],
+                                    'where': [{'property': 'endpointSetId', 'regex': endpointSetId}]}
+                  ]}
+
+            queryResponse = self.ixnObj.query(data=queryData)
+            configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
+            print(configElementObj)
+            return configElementObj
+
     def getTransmissionType(self, configElement):
         # configElement: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1
         # Returns: fixedFrameCount, continuous
@@ -370,7 +484,7 @@ class Traffic(object):
         # Get a list of all the protocol templates:
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic/protocolTemplate?skip=0&take=end')
         for eachProtocol in response.json()['data']:
-            self.ixnObj.logInfo('%s: %s' % (eachProtocol['id'], eachProtocol['displayName']))
+            self.ixnObj.logInfo('%s: %s' % (eachProtocol['id'], eachProtocol['displayName']), timestamp=False)
 
     def showTrafficItemPacketStack(self, configElementObj):
         """
@@ -388,8 +502,9 @@ class Traffic(object):
        """
         print()
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+        self.ixnObj.logInfo('\n', timestamp=False)
         for (index, eachHeader) in enumerate(response.json()):
-            self.ixnObj.logInfo('%s: %s' % (str(index+1), eachHeader['displayName']))
+            self.ixnObj.logInfo('%s: %s' % (str(index+1), eachHeader['displayName']), timestamp=False)
 
     def addTrafficItemPacketStack(self, configElementObj, protocolStackNameToAdd, stackNumber, action='append'):
         """
@@ -442,7 +557,7 @@ class Traffic(object):
         # Display a list of the current packet stack
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
         for (index, eachHeader) in enumerate(response.json()):
-            self.ixnObj.logInfo('{0}: {1}'.format(index+1, eachHeader['displayName']))
+            self.ixnObj.logInfo('{0}: {1}'.format(index+1, eachHeader['displayName']), timestamp=False)
 
         # Get a list of all the protocol templates:
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic/protocolTemplate?skip=0&take=end')
@@ -455,17 +570,17 @@ class Traffic(object):
 
         if protocolTemplateId == None:
             raise IxNetRestApiException('No such protocolTemplate name found: {0}'.format(protocolStackNameToAdd))
-        self.ixnObj.logInfo('\nprotocolTemplateId: %s' % protocolTemplateId)
+        self.ixnObj.logInfo('protocolTemplateId: %s' % protocolTemplateId, timestamp=False)
         data = {'arg1': arg1, 'arg2': protocolTemplateId}
         response = self.ixnObj.post(self.ixnObj.httpHeader+configElementObj+'/stack/operations/%s' % action, data=data)
 
         self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+configElementObj+'/stack/operations/appendprotocol/'+response.json()['id'])
 
         # /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4
-        self.ixnObj.logInfo('\naddTrafficItemPacketStack: Returning: %s' % response.json()['result'])
+        self.ixnObj.logInfo('addTrafficItemPacketStack: Returning: %s' % response.json()['result'], timestamp=False)
         return response.json()['result']
 
-    def getTrafficItemPktHeaderObj(self, configElementObj=None, trafficItemName=None, packetHeaderName=None):
+    def getTrafficItemPktHeaderStackObj(self, configElementObj=None, trafficItemName=None, packetHeaderName=None):
         """
         Description
            Get the Traffic Item packet header stack object.
@@ -479,14 +594,18 @@ class Traffic(object):
 
            packetHeaderName: <str>: Mandatory: The packet header name.
                              Example: ethernet, mpls, ipv4, ...
+
+        Return
+           The stack object
         """
-        if configElementObj != None:
-            response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+        #if configElementObj != None:
+        #    response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
 
         if configElementObj == None:
             # Expect user to pass in the Traffic Item name if user did not pass in a configElement object.
             queryData = {'from': '/traffic',
-                         'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]}]}
+                         'nodes': [{'node': 'trafficItem', 'properties': ['name'],
+                                    'where': [{'property': 'name', 'regex': trafficItemName}]}]}
 
             queryResponse = self.ixnObj.query(data=queryData)
 
@@ -498,8 +617,10 @@ class Traffic(object):
         
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
 
+        print('\n--- packetHeaderName:', packetHeaderName)
+
         for eachStack in response.json():
-            print('\nstack', eachStack, eachStack['stackTypeId'])
+            self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, eachStack['stackTypeId']), timestamp=False)
             if bool(re.match(packetHeaderName, eachStack['stackTypeId'], re.I)):
                 stackObj = eachStack['links'][0]['href']
                 break
@@ -521,10 +642,10 @@ class Traffic(object):
 
         stackList = []
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stackLink')
-        self.ixnObj.logInfo('\n')
+        self.ixnObj.logInfo('\n', timestamp=False)
         for eachStackLink in response.json():
             if eachStackLink['linkedTo'] != 'null':
-                self.ixnObj.logInfo(eachStackLink['linkedTo'])
+                self.ixnObj.logInfo(eachStackLink['linkedTo'], timestamp=False)
                 stackList.append(eachStackLink['linkedTo'])
         return stackList
 
@@ -533,6 +654,7 @@ class Traffic(object):
         Desciption
            This API should be called after calling showTrafficItemPacketStack(configElementObj) in
            order to know the stack ID number to use.  Such as ...
+
             Stack1: Ethernet II
             Stack2: MPLS
             Stack3: MPLS
@@ -549,28 +671,125 @@ class Traffic(object):
          Return stack ID object: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/{id}/configElement/{id}/stack/{id}
         """
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+        self.ixnObj.logInfo('\n', timestamp=False)
         for (index, eachHeader) in enumerate(response.json()):
-            self.ixnObj.logInfo('{0}: {1}'.format(index+1, eachHeader['displayName']))
+            self.ixnObj.logInfo('{0}: {1}'.format(index+1, eachHeader['displayName']), timestamp=False)
             if stackId == index+1:
-                self.ixnObj.logInfo('\tReturning: %s' % self.ixnObj.httpHeader+eachHeader['links'][0]['href'])
+                self.ixnObj.logInfo('\tReturning: %s' % self.ixnObj.httpHeader+eachHeader['links'][0]['href'], timestamp=False)
                 return eachHeader['links'][0]['href']
 
-    def modifyTrafficItemDestMacAddress(self, trafficItemName, destMacAddress):
-        trafficItemObj = self.getTrafficItemObjByName(trafficItemName)
-        response = self.ixnObj.get(self.ixnObj.httpHeader+trafficItemObj)
-        if response.json()['trafficType'] != 'raw':
-            raise IxNetRestApiException('Traffic Item is not Raw type. Cannot modify Traffic Item: %s' % trafficItemName)
+    def modifyTrafficItemPacketHeader(self, configElementObj, packetHeaderName, fieldName, values):
+        """
+        Description
+           Modify any Traffic Item packet header.  You will need to use the IxNetwor API browser
+           to understand the packetHeaderName, fieldName and data to modify.
 
-        configElementObj = trafficItemObj+'/configElement/1'
-        stackObj = self.getPacketHeaderStackIdObj(configElementObj, stackId=1)
-        self.configPacketHeaderField(stackObj,
-                                     fieldName='Destination MAC Address',
-                                     data={'valueType': 'increment',
-                                           'startValue': destMacAddress,
-                                           'stepValue': '00:00:00:00:00:00',
-                                           'countValue': 1,
-                                           'auto': False})
+           Since a Traffic Item could contain many endpointSet (Flow Groups), a Traffic Item could 
+           have multiple configElement objects.  A configElementObj is the object handle for an 
+           endpointSet.  You have to get the configElement object first.  To get the ConfigElement
+           object, you call getConfigElementObj().  
+
+           self.getConfigElementObj(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None):
+           Use case #1: trafficItemName + endpointSetName
+           Use case #2: trafficItemObj + endpointSetName
+           Use case #3: trafficItemName only (Will assume there is only one configElement object which will be returned)
+           Use case #4: trafficItemObj only  (Will assume there is only one configElement object which will be returned)
+
+        Parameters
+           configElementObj: <str|obj>: The Traffic Item's Config Element object handle.
+           packetHeaderName: <str>: The packet header name. You could get the list of names from the 
+                                    IxNetwork API browser under trafficItem/{id}/configElement/{id}/stack.
+           fieldName: <str>: The packet header field name. View API browser under:
+                             trafficItem/{id}/configElement/{id}/stack/{id}/field
+           values: <dict>: Any amount of attributes from the /stack/{id}/field/{id} to modify.
+
+        Example:  For IP Precedence TOS 
+           packetHeaderName='ipv4'
+           fieldName='Precedence'
+           values={'fieldValue': '011 Flash'}
+        """
+        # /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/6
+        stackIdObj = self.getTrafficItemPktHeaderStackObj(configElementObj=configElementObj,
+                                                          packetHeaderName=packetHeaderName)
         
+        self.configPacketHeaderField(stackIdObj, fieldName, values)
+
+    def modifyTrafficItemIpPriorityTos(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None,
+                                       packetHeaderName='ipv4', fieldName='Precedence', values=None):
+        """
+        Description
+           Modify a Traffic Item Flow group IP Priority TOS fields.
+
+        Parameters
+           value: <dict>: {'fieldValue': '000 Routine'|'001 Priority'|'010 Immediate'|'011 Flash'|'100 Flash Override'
+                           '101 CRITIC/ECP'|'110 Internetwork Control'}
+        
+           trafficItemObj: <str|obj>: The Traffic Item object handle.
+           trafficItemName: <str|obj>: The Traffic Item name.
+           endpointSetName: <str|obj>: The endpointSet name (Flow-Group).
+
+           Option #1: trafficItemName + endpointSetName
+           Option #2: trafficItemObj + endpointSetName
+           Option #3: trafficItemName only (Will assume there is only one configElement object)
+           Option #4: trafficItemObj only  (Will assume there is only one configElement object)
+
+        Requirement
+           Call self.getConfigElementObj() to get the config element object first.
+
+        Example
+           trafficObj.modifyTrafficItemIpPriorityTos(trafficItemName='Raw MPLS/UDP', values={'fieldValue': '001 Priority'})
+        """
+        configElementObj = self.getConfigElementObj(trafficItemObj=trafficItemObj, trafficItemName=trafficItemName,
+                                                    endpointSetName=endpointSetName)
+
+        self.modifyTrafficItemPacketHeader(configElementObj, packetHeaderName=packetHeaderName,
+                                           fieldName=fieldName, values=values)
+
+    def modifyTrafficItemDestMacAddress(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None, values=None):
+        """
+        Description
+           Modify a Traffic Item Flow group IP Priority TOS fields.
+
+        Parameters
+           value: <'str'|dict>: 
+                  If str: The mac address address
+                  If dict: Any or all the properties and the values:
+
+                          {'valueType': 'increment',
+                           'startValue': destMacAddress,
+                           'stepValue': '00:00:00:00:00:00',
+                           'countValue': 1,
+                           'auto': False}
+           
+           trafficItemObj: <str|obj>: The Traffic Item object handle.
+           trafficItemName: <str|obj>: The Traffic Item name.
+           endpointSetName: <str|obj>: The endpointSet name (Flow-Group).
+
+           Option #1: trafficItemName + endpointSetName
+           Option #2: trafficItemObj + endpointSetName
+           Option #3: trafficItemName only (Will assume there is only one configElement object)
+           Option #4: trafficItemObj only  (Will assume there is only one configElement object)
+
+        Requirement
+           Call self.getConfigElementObj() to get the config element object first.
+
+        Example
+           trafficObj.modifyTrafficItemDestMacAddress(trafficItemName='Raw MPLS/UDP', values='00:01:01:02:00:01')
+        """
+        
+        if type(values) == str:
+            values = {'valueType': 'increment',
+                      'startValue': values,
+                      'stepValue': '00:00:00:00:00:00',
+                      'countValue': 1,
+                      'auto': False}
+
+        configElementObj = self.getConfigElementObj(trafficItemObj=trafficItemObj, trafficItemName=trafficItemName,
+                                                    endpointSetName=endpointSetName)
+
+        self.modifyTrafficItemPacketHeader(configElementObj, packetHeaderName='ethernet',
+                                           fieldName='Destination MAC Address', values=values)
+
     def showPacketHeaderFieldNames(self, stackObj):
         """
         Description
@@ -585,12 +804,12 @@ class Traffic(object):
            3: Ethernet-Type
            4: PFC Queue
         """
-        self.ixnObj.logInfo('\nshowPacketHeaderFieldNames: %s' % stackObj+'/field')
+        self.ixnObj.logInfo('showPacketHeaderFieldNames: %s' % stackObj+'/field', timestamp=False)
         response = self.ixnObj.get(self.ixnObj.httpHeader+stackObj+'/field')
         for eachField in  response.json():
             id = eachField['id']
             fieldName = eachField['displayName']
-            self.ixnObj.logInfo('\t{0}: {1}'.format(id, fieldName))
+            self.ixnObj.logInfo('\t{0}: {1}'.format(id, fieldName), timestamp=False)
 
     def convertTrafficItemToRaw(self, trafficItemName):
         """
@@ -623,7 +842,7 @@ class Traffic(object):
              data={'valueType': 'increment', 'startValue': 1001, 'stepValue': 1, 'countValue': 2, 'auto': False}
         
         Example: To modify MPLS field:
-            packetHeaderObj = trafficObj.getTrafficItemPktHeaderObj(trafficItemName='Raw MPLS/UDP', packetHeaderName='mpls')
+            packetHeaderObj = trafficObj.getTrafficItemPktHeaderStackObj(trafficItemName='Raw MPLS/UDP', packetHeaderName='mpls')
             trafficObj.configPacketHeaderField(packetHeaderObj,
                                                fieldName='MPLS Exp',
                                                data={'valueType': 'increment',
@@ -642,7 +861,7 @@ class Traffic(object):
         if fieldId == None:
             raise IxNetRestApiException('Failed to located your provided fieldName:', fieldName)
 
-        self.ixnObj.logInfo('\nconfigPacketHeaderFieldId:  fieldIdObj: %s' % stackIdObj+'/field/'+str(fieldId))
+        self.ixnObj.logInfo('configPacketHeaderFieldId:  fieldIdObj: %s' % stackIdObj+'/field/'+str(fieldId), timestamp=False)
         response = self.ixnObj.patch(self.ixnObj.httpHeader+stackIdObj+'/field/'+str(fieldId), data=data)
 
     def configEgressCustomTracking(self, trafficItemObj, offsetBits, widthBits):
@@ -676,7 +895,7 @@ class Traffic(object):
 
         # Get EgressStats
         # Create Egress Stats
-        self.ixnObj.logInfo('\nCreating new statview for egress stats...')
+        self.ixnObj.logInfo('Creating new statview for egress stats...')
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/statistics/view',
                              data={'caption': egressStatViewName,
                                    'treeViewNodeName': 'Egress Custom Views',
@@ -684,23 +903,23 @@ class Traffic(object):
                                    'visible': True})
 
         egressStatView = response.json()['links'][0]['href']
-        self.ixnObj.logInfo('\negressStatView Object: %s' % egressStatView)
+        self.ixnObj.logInfo('egressStatView Object: %s' % egressStatView)
         # /api/v1/sessions/1/ixnetwork/statistics/view/12
 
-        self.ixnObj.logInfo('\nCreating layer23TrafficFlowFilter')
+        self.ixnObj.logInfo('Creating layer23TrafficFlowFilter')
         # Dynamically get the PortFilterId
         response = self.ixnObj.get(self.ixnObj.httpHeader+egressStatView+'/availablePortFilter')
         portFilterId = []
         for eachPortFilterId in response.json():
             #192.168.70.10/Card2/Port1
-            self.ixnObj.logInfo('\tAvailable PortFilterId: %s' % eachPortFilterId['name'])
+            self.ixnObj.logInfo('\tAvailable PortFilterId: %s' % eachPortFilterId['name'], timestamp=False)
             if eachPortFilterId['name'] == egressTrackingPort:
-                self.ixnObj.logInfo('\tLocated egressTrackingPort: %s' % egressTrackingPort)
+                self.ixnObj.logInfo('\tLocated egressTrackingPort: %s' % egressTrackingPort, timestamp=False)
                 portFilterId.append(eachPortFilterId['links'][0]['href'])
                 break
         if portFilterId == []:
             raise IxNetRestApiException('No port filter ID found')
-        self.ixnObj.logInfo('\nPortFilterId: %s' % portFilterId)
+        self.ixnObj.logInfo('PortFilterId: %s' % portFilterId)
 
         # Dynamically get the Traffic Item Filter ID
         response = self.ixnObj.get(self.ixnObj.httpHeader+egressStatView+'/availableTrafficItemFilter')
@@ -712,11 +931,11 @@ class Traffic(object):
         if availableTrafficItemFilterId == []:
             raise IxNetRestApiException('No traffic item filter ID found.')
 
-        self.ixnObj.logInfo('\navailableTrafficItemFilterId: %s' % availableTrafficItemFilterId)
+        self.ixnObj.logInfo('availableTrafficItemFilterId: %s' % availableTrafficItemFilterId, timestamp=False)
         # /api/v1/sessions/1/ixnetwork/statistics/view/12
-        self.ixnObj.logInfo('\negressStatView: %s' % egressStatView)
+        self.ixnObj.logInfo('egressStatView: %s' % egressStatView, timestamp=False)
         layer23TrafficFlowFilter = self.ixnObj.httpHeader+egressStatView+'/layer23TrafficFlowFilter'
-        self.ixnObj.logInfo('\nlayer23TrafficFlowFilter: %s' % layer23TrafficFlowFilter)
+        self.ixnObj.logInfo('layer23TrafficFlowFilter: %s' % layer23TrafficFlowFilter, timestamp=False)
         response = self.ixnObj.patch(layer23TrafficFlowFilter,
                               data={'egressLatencyBinDisplayOption': 'showEgressRows',
                                     'trafficItemFilterId': availableTrafficItemFilterId[0],
@@ -727,9 +946,9 @@ class Traffic(object):
         egressTrackingFilter = None
         ingressTrackingFilter = None
         response = self.ixnObj.get(self.ixnObj.httpHeader+egressStatView+'/availableTrackingFilter')
-        self.ixnObj.logInfo('\nAvailable tracking filters for both ingress and egress...')
+        self.ixnObj.logInfo('Available tracking filters for both ingress and egress...', timestamp=False)
         for eachTrackingFilter in response.json():
-            self.ixnObj.logInfo('\tFilter Name: {0}: {1}'.format(eachTrackingFilter['id'], eachTrackingFilter['name']))
+            self.ixnObj.logInfo('\tFilter Name: {0}: {1}'.format(eachTrackingFilter['id'], eachTrackingFilter['name']), timestamp=False)
             if bool(re.match('Custom: *\([0-9]+ bits at offset [0-9]+\)', eachTrackingFilter['name'])):
                 egressTrackingFilter = eachTrackingFilter['links'][0]['href']
 
@@ -741,14 +960,14 @@ class Traffic(object):
             raise IxNetRestApiException('Failed to locate your defined custom offsets: {0}'.format(egressTrackingOffsetFilter))
 
         # /api/v1/sessions/1/ixnetwork/statistics/view/23/availableTrackingFilter/3
-        self.ixnObj.logInfo('\nLocated egressTrackingFilter: %s' % egressTrackingFilter)
+        self.ixnObj.logInfo('Located egressTrackingFilter: %s' % egressTrackingFilter, timestamp=False)
         enumerationFilter = layer23TrafficFlowFilter+'/enumerationFilter'
         response = self.ixnObj.post(enumerationFilter,
                              data={'sortDirection': 'ascending',
                                    'trackingFilterId': egressTrackingFilter})
 
         if ingressTrackingFilterName is not None:
-            self.ixnObj.logInfo('\nLocated ingressTrackingFilter: %s' % egressTrackingFilter)
+            self.ixnObj.logInfo('Located ingressTrackingFilter: %s' % egressTrackingFilter, timestamp=False)
             response = self.ixnObj.post(enumerationFilter,
                                  data={'sortDirection': 'ascending',
                                        'trackingFilterId': ingressTrackingFilter})
@@ -763,11 +982,11 @@ class Traffic(object):
         for eachEgressStatCounter in response.json():
             eachStatCounterObject = eachEgressStatCounter['links'][0]['href']
             eachStatCounterName = eachEgressStatCounter['caption']
-            self.ixnObj.logInfo('\tEnabling egress stat counter: %s' % eachStatCounterName)
+            self.ixnObj.logInfo('\tEnabling egress stat counter: %s' % eachStatCounterName, timestamp=False)
             self.ixnObj.patch(self.ixnObj.httpHeader+eachStatCounterObject, data={'enabled': True})
 
         self.ixnObj.patch(self.ixnObj.httpHeader+egressStatView, data={'enabled': True})
-        self.ixnObj.logInfo('\ncreateEgressCustomStatView: Done')
+        self.ixnObj.logInfo('createEgressCustomStatView: Done')
 
         return egressStatView
 
@@ -843,17 +1062,18 @@ class Traffic(object):
         if type(expectedState) != list:
             expectedState.split(' ')
 
-        self.ixnObj.logInfo('\ncheckTrafficState: Expecting state: {0}\n'.format(expectedState))
+        self.ixnObj.logInfo('checkTrafficState: Expecting state: {0}\n'.format(expectedState))
         for counter in range(1,timeout+1):
-            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic')
+            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/traffic', silentMode=True)
             currentTrafficState = response.json()['state']
             if currentTrafficState == 'unapplied':
                 self.ixnObj.logWarning('\nCheckTrafficState: Traffic is UNAPPLIED')
                 self.ixnObj.applyTraffic()
 
             self.ixnObj.logInfo('\ncheckTrafficState: {trafficState}: Expecting: {expectedStates}.'.format(trafficState=currentTrafficState,
-                                                                                                           expectedStates=expectedState))
-            self.ixnObj.logInfo('Waited {counter}/{timeout} seconds'.format(counter=counter, timeout=timeout))
+                                                                                                           expectedStates=expectedState),
+                                timestamp=False)
+            self.ixnObj.logInfo('\tWaited {counter}/{timeout} seconds'.format(counter=counter, timeout=timeout), timestamp=False)
             
             if counter < timeout and currentTrafficState not in expectedState:
                 time.sleep(1)
@@ -861,11 +1081,11 @@ class Traffic(object):
 
             if counter < timeout and currentTrafficState in expectedState:
                 time.sleep(8)
-                self.ixnObj.logInfo('\ncheckTrafficState: Done\n')
+                self.ixnObj.logInfo('checkTrafficState: Done\n')
                 return 0
         
         if ignoreException == False:
-            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s):', expectedState)
+            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s): %s' % expectedState)
         else:
             return 1
 
@@ -1017,7 +1237,7 @@ class Traffic(object):
 
         url = self.ixnObj.sessionUrl+"/traffic/trafficItem/operations/generate"
         data = {"arg1": trafficItemList}
-        self.ixnObj.logInfo('\nRegenerating traffic items: %s' % trafficItemList)
+        self.ixnObj.logInfo('Regenerating traffic items: %s' % trafficItemList)
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
@@ -1106,12 +1326,13 @@ class Traffic(object):
             self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], timeout=120)
 
         if blocking == False:
-            self.ixnObj.logInfo('\nstopTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/stop')
+            self.ixnObj.logInfo('stopTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/stop')
             url = self.ixnObj.sessionUrl+'/traffic/operations/stop'            
             response = self.ixnObj.post(url, data={'arg1': self.ixnObj.apiSessionId + '/traffic'})
             self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], timeout=120)
 
         self.checkTrafficState(expectedState=['stopped'])
+        time.sleep(3)
 
     def showTrafficItems(self):
         """
@@ -1134,27 +1355,27 @@ class Traffic(object):
         queryResponse = self.ixnObj.query(data=queryData)
         self.ixnObj.logInfo('\n', end='')
         for ti in queryResponse.json()['result'][0]['trafficItem']:
-            self.ixnObj.logInfo('TrafficItem: {0}\n\tName: {1}  Enabled: {2}  State: {3}'.format(ti['id'], ti['name'], ti['enabled'], ti['state']))
-            self.ixnObj.logInfo('\tTrafficType: {0}  BiDirectional: {1}'.format(ti['trafficType'], ti['biDirectional']))
+            self.ixnObj.logInfo('TrafficItem: {0}\n\tName: {1}  Enabled: {2}  State: {3}'.format(ti['id'], ti['name'], ti['enabled'], ti['state']), timestamp=False)
+            self.ixnObj.logInfo('\tTrafficType: {0}  BiDirectional: {1}'.format(ti['trafficType'], ti['biDirectional']), timestamp=False)
             for tracking in ti['tracking']:
-                self.ixnObj.logInfo('\tTrackings: {0}'.format(tracking['trackBy']))
+                self.ixnObj.logInfo('\tTrackings: {0}'.format(tracking['trackBy']), timestamp=False)
 
             for endpointSet, cElement in zip(ti['endpointSet'], ti['configElement']):
-                self.ixnObj.logInfo('\n\tEndpointSetId: {0}  EndpointSetName: {1}'.format(endpointSet['id'], endpointSet['name']))
+                self.ixnObj.logInfo('\tEndpointSetId: {0}  EndpointSetName: {1}'.format(endpointSet['id'], endpointSet['name']), timestamp=False)
                 srcList = []
                 for src in endpointSet['sources']:
                     srcList.append(src.split('/ixnetwork')[1])
                 dstList = []
                 for dest in endpointSet['destinations']:
                     dstList.append(dest.split('/ixnetwork')[1])
-                self.ixnObj.logInfo('\t    Sources: {0}'.format(srcList))
-                self.ixnObj.logInfo('\t    Destinations: {0}'.format(dstList))
-                self.ixnObj.logInfo('\t    FrameType: {0}  FrameSize: {1}'.format(cElement['frameSize']['type'], cElement['frameSize']['fixedSize']))
+                self.ixnObj.logInfo('\t    Sources: {0}'.format(srcList), timestamp=False)
+                self.ixnObj.logInfo('\t    Destinations: {0}'.format(dstList), timestamp=False)
+                self.ixnObj.logInfo('\t    FrameType: {0}  FrameSize: {1}'.format(cElement['frameSize']['type'], cElement['frameSize']['fixedSize']), timestamp=False)
                 self.ixnObj.logInfo('\t    TranmissionType: {0}  FrameCount: {1}  BurstPacketCount: {2}'.format(cElement['transmissionControl']['type'],
                                                                                                 cElement['transmissionControl']['frameCount'],
-                                                                                                cElement['transmissionControl']['burstPacketCount']))
-                self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(cElement['frameRate']['type'], cElement['frameRate']['rate']))
-            self.ixnObj.logInfo('\n', end='')
+                                                                                                cElement['transmissionControl']['burstPacketCount']), timestamp=False)
+                self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(cElement['frameRate']['type'], cElement['frameRate']['rate']), timestamp=False)
+            self.ixnObj.logInfo('\n', end='', timestamp=False)
 
     def setFrameSize(self, trafficItemName, **kwargs):
         """

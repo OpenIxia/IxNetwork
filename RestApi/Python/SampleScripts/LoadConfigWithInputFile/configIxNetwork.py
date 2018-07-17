@@ -172,7 +172,7 @@ try:
     # If the license is activated on the chassis's license server, this variable should be True.
     # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if param['licenseIsInChassis'] == False:
+    if param['configLicense'] == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails(param['licenseServerIp'], param['licenseModel'], param['licenseTier'])
 
@@ -206,11 +206,12 @@ try:
 
     # For all traffic parameter options, go to the API configTrafficItem.
     # mode = create or modify
-    endpointList = []
-    match = re.match('http.*(/api.*ixnetwork)', mainObj.sessionUrl)
-    sessionHeader = match.group(1)
+    #endpointList = []
+    #match = re.match('http.*(/api.*ixnetwork)', mainObj.sessionUrl)
+    #sessionHeader = match.group(1)
 
     for trafficItem in param['trafficItem']:
+        '''
         endpoints = {}
         endpoints['sources'] = []
         endpoints['destinations'] = []
@@ -222,6 +223,7 @@ try:
             for destinations in endpoint['destinations']:
                 endpoints['destinations'].append(sessionHeader + destinations)
         endpointList.append(endpoints)
+        '''
 
         trafficObj = Traffic(mainObj)
         trafficStatus = trafficObj.configTrafficItem(
@@ -237,11 +239,15 @@ try:
         )
 
     configElementObj = trafficStatus[2][0]
+
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
     # Check the traffic state to assure traffic has stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) in ["fixedFrameCount", "fixedDuration"]:
         trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
+
+    if trafficObj.getTransmissionType(configElementObj) in ["continuous"]:
+        trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')

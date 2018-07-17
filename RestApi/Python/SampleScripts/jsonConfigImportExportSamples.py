@@ -17,6 +17,16 @@ Description
         - How to add additional configurations to a JSON config file:
             - Such as adding additional Traffic Items.
 
+   How to modify large amount of ports with one execution.
+        For example:
+            If there are 100 ports and you need to modify the same attributes, do the following steps:
+                1> Export the configuration into a JSON file.
+                2> Read the JSON config file into memory. Now you have an object variable containing the configuration.
+                3> Modify everything you need.
+                4> Use API to import the object to the IxNetwork API server.
+            
+            Note: If the configuration is large, allow time for exporting and importing.
+
 Instructions
     - Uncomment out the topic area one at a time to try each out.
     - To view the actual ReST APIs and steps, view the functions inside
@@ -37,7 +47,8 @@ from IxNetRestApiFileMgmt import FileMgmt
 jsonConfigFile = 'bgpSimplified.json'
 
 # Where to store the exported JSON config file
-exportJsonConfigFile = '/home/hgee/exportedJsonConfig.json'
+#exportJsonConfigFile = '/home/hgee/exportedJsonConfig.json'
+exportJsonConfigFile = 'bgp_ngpf_hw_8.40.json'
 
 try:
     restObj = Connect(apiServerIp='192.168.70.3', serverIpPort='11009')
@@ -49,7 +60,6 @@ try:
 
     # How to load a complete json config file
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
-
 
     # Read a JSON config file and store all the datas into an object.
     # Use the jsonData object to make your modifications.
@@ -105,7 +115,6 @@ try:
     copy['xpath'] = '/traffic/trafficItem[%s]' % str(currentTotalTrafficItems+1)
     jsonData["traffic"]["trafficItem"].append(copy)
     fileMgmtObj.jsonWriteToFile(jsonData, jsonConfigFile)
-
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))

@@ -5,8 +5,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 (Supports Python 2 and 3)
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -27,9 +27,9 @@
 #    python <script>.py windows
 #    python <script>.py linux
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -46,13 +46,13 @@ if len(sys.argv) > 1:
 
 try:
     #---------- Preference Settings --------------
-    licenseIsInChassis = False
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
     # Optional: Mainly for connecting to Linux API server.
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -93,12 +93,12 @@ try:
     # If the license is activated on the chassis's license server, this variable should be True.
     # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
     # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set createVports True if building config from scratch.
-    portObj.assignPorts(portList, createVports=True)
+    portObj.assignPorts(portList)
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
@@ -115,48 +115,48 @@ try:
                                                     multiplier=1,
                                                     deviceGroupName='DG2')
 
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
-                                              ethernetName='MyEth1',
-                                              macAddress={'start': '00:01:01:00:00:01',
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
+                                                  ethernetName='MyEth1',
+                                                  macAddress={'start': '00:01:01:00:00:01',
+                                                              'direction': 'increment',
+                                                              'step': '00:00:00:00:00:01'},
+                                                  macAddressPortStep='disabled',
+                                                  vlanId={'start': 103,
                                                           'direction': 'increment',
-                                                          'step': '00:00:00:00:00:01'},
-                                              macAddressPortStep='disabled',
-                                              vlanId={'start': 103,
-                                                      'direction': 'increment',
-                                                      'step':0})
+                                                          'step':0})
 
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
-                                              ethernetName='MyEth2',
-                                              macAddress={'start': '00:01:02:00:00:01',
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
+                                                  ethernetName='MyEth2',
+                                                  macAddress={'start': '00:01:02:00:00:01',
+                                                              'direction': 'increment',
+                                                              'step': '00:00:00:00:00:01'},
+                                                  macAddressPortStep='disabled',
+                                                  vlanId={'start': 103,
                                                           'direction': 'increment',
-                                                          'step': '00:00:00:00:00:01'},
-                                              macAddressPortStep='disabled',
-                                              vlanId={'start': 103,
-                                                      'direction': 'increment',
-                                                      'step':0})
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
-                                      ipv4Address={'start': '1.1.1.1',
+                                                          'step':0})
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
+                                          ipv4Address={'start': '1.1.1.1',
+                                                       'direction': 'increment',
+                                                       'step': '0.0.0.1'},
+                                          ipv4AddressPortStep='disabled',
+                                          gateway={'start': '1.1.1.2',
                                                    'direction': 'increment',
-                                                   'step': '0.0.0.1'},
-                                      ipv4AddressPortStep='disabled',
-                                      gateway={'start': '1.1.1.2',
-                                               'direction': 'increment',
-                                               'step': '0.0.0.0'},
-                                      gatewayPortStep='disabled',
-                                      prefix=24,
-                                      resolveGateway=True)
+                                                   'step': '0.0.0.0'},
+                                          gatewayPortStep='disabled',
+                                          prefix=24,
+                                          resolveGateway=True)
 
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
-                                      ipv4Address={'start': '1.1.1.2',
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
+                                          ipv4Address={'start': '1.1.1.2',
+                                                       'direction': 'increment',
+                                                       'step': '0.0.0.1'},
+                                          ipv4AddressPortStep='disabled',
+                                          gateway={'start': '1.1.1.1',
                                                    'direction': 'increment',
-                                                   'step': '0.0.0.1'},
-                                      ipv4AddressPortStep='disabled',
-                                      gateway={'start': '1.1.1.1',
-                                               'direction': 'increment',
-                                               'step': '0.0.0.0'},
-                                      gatewayPortStep='disabled',
-                                      prefix=24,
-                                      resolveGateway=True)
+                                                   'step': '0.0.0.0'},
+                                          gatewayPortStep='disabled',
+                                          prefix=24,
+                                          resolveGateway=True)
 
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsNgpf()
@@ -236,17 +236,19 @@ try:
     if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

@@ -5,8 +5,8 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - 3.6
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -27,9 +27,10 @@
 #    python <script>.py windows
 #    python <script>.py linux
 
-import sys, traceback
+import sys, os, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiTraffic import Traffic
@@ -50,17 +51,21 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
+    # Set configLicense to False if:
+    #    - You are using a Linux based XGS chassis and the licenses are activated in the chassis.
+    #    - Or the license settings are configured in the Windows IxNetwork GUI in Preferences.
+    # Set configLicense to True if:
+    #    - You are using IxVM chassis/ports and OVA Linux API server and the licenses are not activated in the vm chassis.
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
     ixChassisIp = '192.168.70.11'
     # [chassisIp, cardNumber, slotNumber]
-    portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
@@ -76,11 +81,11 @@ try:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest,
-                          httpInsecure=True
+                          deleteSessionAfterTest=True
                           )
 
     #---------- Preference Settings End --------------
+
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -93,31 +98,26 @@ try:
 
     mainObj.newBlankConfig()
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     portObj.assignPorts(portList)
 
-    protocolObj = Protocol(mainObj, portObj)
-    topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
-                                                  topologyName='Topo1')
-    
+    protocolObj = Protocol(mainObj)
+    topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]], topologyName='Topo1')
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
-    topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
-                                                  topologyName='Topo2')
-    
+                                                  
+    topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
-    ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
+
+    ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
                                                               'direction': 'increment',
@@ -126,8 +126,8 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
-    ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
+
+    ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
                                                               'direction': 'increment',
@@ -136,8 +136,8 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
-    ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
+
+    ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -148,8 +148,8 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
-    ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
+
+    ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
                                                        'step': '0.0.0.1'},
@@ -160,41 +160,30 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
-    # flap = true or false.
-    #    If there is only one host IP interface, then single value = True or False.
-    #    If there are multiple host IP interfaces, then single value = a list ['true', 'false']
-    #           Provide a list of total true or false according to the total amount of host IP interfaces.
+
     bgpObj1 = protocolObj.configBgp(ipv4Obj1,
                                     name = 'bgp_1',
                                     enableBgp = True,
                                     holdTimer = 90,
-                                    dutIp={'start': '1.1.1.2',
-                                           'direction': 'increment',
-                                           'step': '0.0.0.0'},
+                                    dutIp={'start': '1.1.1.2', 'direction': 'increment', 'step': '0.0.0.0'},
                                     localAs2Bytes = 101,
                                     #localAs4Bytes = 108,
                                     #enable4ByteAs = True,
                                     enableGracefulRestart = False,
                                     restartTime = 45,
                                     type = 'internal',
-                                    enableBgpIdSameasRouterId = True,
-                                    staleTime = 0)
+                                    enableBgpIdSameasRouterId = True)
 
     bgpObj2 = protocolObj.configBgp(ipv4Obj2,
                                     name = 'bgp_2',
                                     enableBgp = True,
                                     holdTimer = 90,
-                                    dutIp={'start': '1.1.1.1',
-                                           'direction': 'increment',
-                                           'step': '0.0.0.0'},
+                                    dutIp={'start': '1.1.1.1', 'direction': 'increment', 'step': '0.0.0.0'},
                                     localAs2Bytes = 101,
                                     enableGracefulRestart = False,
                                     restartTime = 45,
                                     type = 'internal',
-                                    enableBgpIdSameasRouterId = True,
-                                    staleTime = 0,
-                                    flap = False)
+                                    enableBgpIdSameasRouterId = True)
 
     networkGroupObj1 = protocolObj.configNetworkGroup(create=deviceGroupObj1,
                                                       name='networkGroup1',
@@ -203,7 +192,7 @@ try:
                                                                         'step': '0.0.0.1',
                                                                         'direction': 'increment'},
                                                       prefixLength = 32)
-    
+
     networkGroupObj2 = protocolObj.configNetworkGroup(create=deviceGroupObj2,
                                                   name='networkGroup2',
                                                   multiplier = 100,
@@ -211,7 +200,7 @@ try:
                                                                     'step': '0.0.0.1',
                                                                     'direction': 'increment'},
                                                   prefixLength = 32)
-    
+
     protocolObj.startAllProtocols()
     protocolObj.verifyAllProtocolSessionsNgpf()
 
@@ -222,23 +211,29 @@ try:
     trafficStatus = trafficObj.configTrafficItem(
         mode='create',
         trafficItem = {
-            'name':'Topo1 to Topo2',
-            'trafficType':'ipv4',
-            'biDirectional':True,
-            'srcDestMesh':'one-to-one',
-            'routeMesh':'oneToOne',
-            'allowSelfDestined':False,
+            'name': 'Topo1 to Topo2',
+            'trafficType': 'ipv4',
+            'biDirectional': True,
+            'srcDestMesh': 'one-to-one',
+            'routeMesh': 'oneToOne',
+            'allowSelfDestined': False,
             'trackBy': ['flowGroup0', 'vlanVlanId0']},
-        endpoints = [{'name':'Flow-Group-1',
+        endpoints = [{'name': 'Flow-Group-1',
                       'sources': [topologyObj1],
                       'destinations': [topologyObj2]
                   }],
+        # transmissionType:   fixedFrameCount|continuous
+        # frameRateType:      percentLineRate|framesPerSecond
+        # portDistribution:   applyRateToAll|splitRateEvenly
+        # streamDistribution: splitRateEvenly|applyRateToAll
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,
                            'duration': 10,
                            'frameRateType': 'percentLineRate',
-                           'frameSize': 128
+                           'frameSize': 128,
+                           'portDistribution': 'applyRateToAll',
+                           'streamDistribution': 'splitRateEvenly'
                        }])
 
     trafficItemObj   = trafficStatus[0]
@@ -249,11 +244,11 @@ try:
 
     # Check the traffic state before getting stats.
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
-    #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
-    #    or do you expect traffic to be started such as in continuous mode.
+    #    'stopped': If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration.
+    #    'started': If you expect traffic to be started such as in continuous mode.
     trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
     #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
-    
+
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName='Flow Statistics')
 
@@ -284,13 +279,15 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

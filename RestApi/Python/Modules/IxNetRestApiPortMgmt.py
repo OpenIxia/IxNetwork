@@ -58,16 +58,20 @@ class PortMgmt(object):
         url = self.ixnObj.sessionUrl+'/availableHardware/chassis'
         for chassisIpAddress in chassisIp:
             data = {'hostname': chassisIpAddress}
-            self.ixnObj.logInfo('\nConnect to chassis')
             response = self.ixnObj.post(url, data=data)
-            chassisIdObj = response.json()['links'][0]['href']
-
+            if type(response.json()) == list:
+                # 8.50 json response is a list.
+                chassisIdObj = response.json()[0]['links'][0]['href']
+            else:
+                chassisIdObj = response.json()['links'][0]['href']
+ 
+            self.ixnObj.logInfo('\n', timestamp=False)
             # Chassis states: down, polling, ready
             for timer in range(1,timeout+1):
                 response = self.ixnObj.get(self.ixnObj.httpHeader + chassisIdObj, silentMode=True)
                 currentStatus = response.json()['state']
-                self.ixnObj.logInfo('\tconnectIxChassis {0}: Status: {1}. Wait {2}/{3} seconds'.format(
-                    chassisIpAddress, currentStatus, timer, timeout))
+                self.ixnObj.logInfo('connectIxChassis {0}: Status: {1}. Wait {2}/{3} seconds'.format(
+                    chassisIpAddress, currentStatus, timer, timeout), timestamp=False)
                 if currentStatus != 'ready' and timer < timeout:
                     time.sleep(1)
                 if currentStatus != 'ready' and timer == timeout:
@@ -95,7 +99,7 @@ class PortMgmt(object):
         for eachChassisId in response.json():
             if eachChassisId['hostname'] == chassisIp:
                 chassisIdUrl = eachChassisId['links'][0]['href']
-                self.ixnObj.logInfo('\ndisconnectIxChassis: %s' % chassisIdUrl)
+                self.ixnObj.logInfo('disconnectIxChassis: %s' % chassisIdUrl)
                 response = self.ixnObj.delete(self.ixnObj.httpHeader+chassisIdUrl)
 
     def getChassisId(self, chassisIp):
@@ -161,7 +165,7 @@ class PortMgmt(object):
         """
         createdVportList = []
         for index in range(0, len(portList)):
-            self.ixnObj.logInfo('\nCreating a new virtual port')
+            self.ixnObj.logInfo('Creating a new virtual port')
             response = self.ixnObj.post(self.ixnObj.sessionUrl+'/vport')
             vportObj = response.json()['links'][0]['href']
             if rawTrafficVportStyle:
@@ -179,7 +183,7 @@ class PortMgmt(object):
         if createdVportList == []:
             raise IxNetRestApiException('No vports created')
 
-        self.ixnObj.logInfo('\ncreateVports: %s' % createdVportList)
+        self.ixnObj.logInfo('createVports: %s' % createdVportList)
         return createdVportList
 
     def getVportObjectByName(self, portName):
@@ -312,7 +316,21 @@ class PortMgmt(object):
                 portList.append(assignedTo)
         return portList
 
-    def assignPorts(self, portList, createVports=False, rawTraffic=False, timeout=90):
+    def verifyPortConnectionStatus(self, vport=None):
+        """
+        Description
+           Verify port connection status for errors such as License Failed, 
+           Version Mismatch, Incompatible IxOS version, or any other error.
+        """
+        self.ixnObj.logInfo('verifyPortConnectionStatus')
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+
+        for vport in response.json():
+            connectionStatus = vport['connectionStatus']
+            if 'Port Released' in connectionStatus:
+                raise IxNetRestApiException(connectionStatus)
+
+    def assignPorts(self, portList, createVports=False, rawTraffic=False, configPortName=True, timeout=120):
         """
         Description
             Assuming that you already connected to an ixia chassis and ports are available for usage.
@@ -325,8 +343,8 @@ class PortMgmt(object):
                           If True: Create vports to the amount of portList.
                           If False: Automatically create vport on the server side. Optimized for port bootup performance. 
 
-            rawTraffic: <bool>:  If traffic config is raw, then vport needs to be /vport/{id}/protocols
-           
+            rawTraffic: <bool>:  If traffic item is raw, then vport needs to be /vport/{id}/protocols
+            resetPortCput: <bool>: Default=False. Some cards like the Novus 10GigLan requires a cpu reboot.
             timeout: <int>: Timeout for port up state. Default=90 seconds.
 
         Syntaxes
@@ -346,25 +364,66 @@ class PortMgmt(object):
         # Verify if the portList has duplicates.
         self.verifyForDuplicatePorts(portList)
 
-        if createVports:
-            self.createVports(portList)
-            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
-            preamble = self.ixnObj.sessionUrl.split('/api')[1]
+        # Verify if there is existing vports. If yes, user either loaded a saved config file or 
+        # the configuration already has vports.
+        # If loading a saved config file and reassigning ports, assign ports to existing vports.
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
 
+        # If response.json() != [], means there are existing vports created already.
+        if response.json() != []:
+            mode = 'modify'
+            preamble = self.ixnObj.sessionUrl.split('/api')[1]
             vportList = ["/api%s/vport/%s" % (preamble, str(i["id"])) for i in response.json()]
             if len(vportList) != len(portList):
                 raise IxNetRestApiException('assignPorts: The amount of configured virtual ports:{0} is not equal to the amount of  portList:{1}'.format(len(vportList), len(portList)))
 
-        if not createVports:
-            vportList = []
+        else:
+            if createVports == False:
+                vportList = []
+
+            if createVports:
+                self.createVports(portList)
+                response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+                preamble = self.ixnObj.sessionUrl.split('/api')[1]
+
+                vportList = ["/api%s/vport/%s" % (preamble, str(i["id"])) for i in response.json()]
+                if len(vportList) != len(portList):
+                    raise IxNetRestApiException('assignPorts: The amount of configured virtual ports:{0} is not equal to the amount of  portList:{1}'.format(len(vportList), len(portList)))
 
         data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": 'true'}
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/assignports', data=data)
-        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/assignports/'+response.json()['id'],
-                                    silentMode=False, timeout=timeout)
+        url = self.ixnObj.sessionUrl+'/operations/assignports'
+        response = self.ixnObj.post(url, data=data)
+        response = self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=timeout, ignoreException=True)
 
-        if createVports == False:
+        if response.json()['state'] == 'EXCEPTION':
+            # Some cards like the Novus 10gLan sometimes requires a cpu reboot.
+            # To reboot the port cpu, the ports have to be assigned to a vport first.
+            # So it has to be done at this spot.
+            self.resetPortCpu(vportList=vportList, portList=portList)
+            self.verifyPortState()
+            
+            raise IxNetRestApiException('assignPort Error: {}'.format(response.json()['message']))
+
+        elif response.json()['state'] == 'IN_PROGRESS':
+            raise IxNeRestApiException('assignPort Error: Port failed to boot up after 120 seconds')
+
+        else:
+            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+            for vport in response.json():
+                chassisIp = vport['assignedTo'].split(':')[0]
+                slot = vport['assignedTo'].split(':')[1]
+                port = vport['assignedTo'].split(':')[2]
+                currentPort = [chassisIp, int(slot), int(port)]
+                for chassis,card,port in portList:
+                    currentPortList = [chassis, int(card), int(port)]
+                    if set(currentPort) & set(currentPortList):
+                        if 'License Failed' in vport['connectionStatus']:
+                            raise IxNetRestApiException('Port License failed.')
+                        if vport['connectionStatus'] == 'connectedLinkDown':
+                            raise IxNetRestApiException('Port link connection is down: {0}'.format(vport['assignedTo']))
+
+        if configPortName:
             # Name the vports
             for vportObj in self.getAllVportList():
                 port = self.getPhysicalPortFromVport([vportObj])[0]
@@ -419,21 +478,38 @@ class PortMgmt(object):
     def releasePorts(self, portList):
         """
         Description
-            Release the specified ports in portList.
+            Release the specified ports in a list.
 
         Parameter
             portList: <list>: A list of ports in a list, to release in format of...
-                      [[ixChassisIp, str(cardNum), str(portNum)], ...]
+                      [[ixChassisIp, str(cardNum), str(portNum)], [], [] ...]
         """
+        vportList = []
         for port in portList:
             vport = self.getVports([port])
             if vport == []:
                 continue
-            url = self.ixnObj.httpHeader+vport[0]+'/operations/releaseport'
-            response = self.ixnObj.post(url, data={'arg1': vport})
-            if response.json()['state'] == 'SUCCESS': continue
-            if response.json()['id'] != '':
-                self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120)
+            vportList.append(vport[0])
+
+        url = self.ixnObj.sessionUrl+'/vport/operations/releaseport'
+        response = self.ixnObj.post(url, data={'arg1': vportList})
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120)
+
+    def resetPortCpu(self, vportList=None, portList=None, timeout=90):
+        """
+        Description
+            Reset/Reboot ports CPU.
+            Must call IxNetRestApi.py waitForComplete() afterwards to verify port state
+        
+        Parameter
+            vportList: <list>: A list of one or more vports to reset.
+        """
+        url = self.ixnObj.sessionUrl+'/vport/operations/resetportcpu'
+        if vportList == None:
+            vportList = self.getVportFromPortList(portList)
+
+        response = self.ixnObj.post(url, data={'arg1': vportList})
+        self.ixnObj.waitForComplete(response, url + '/' +response.json()['id'], silentMode=False, timeout=timeout)
 
     def clearPortOwnership(self, portList):
         """
@@ -513,7 +589,7 @@ class PortMgmt(object):
         # Verify if the portList has duplicates.
         self.verifyForDuplicatePorts(portList)
 
-        self.ixnObj.logInfo('\nVerify if ports are currently owned')
+        self.ixnObj.logInfo('Verify if ports are currently owned')
         portOwnedList = []
         for port in portList:
             chassisIp = port[0]
@@ -525,24 +601,24 @@ class PortMgmt(object):
                                         {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": cardId}]},
                                         {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": portId}]}]}
 
-                self.ixnObj.logInfo('\nQuerying for %s/%s/%s' % (chassisIp, cardId, portId))
+                self.ixnObj.logInfo('Querying for %s/%s/%s' % (chassisIp, cardId, portId))
                 queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
                 queryResponse.json()['result'][0]['chassis'][0]['ip']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['id']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['portId']
             except:
-                raise IxNetRestApiException('\nNot found:', chassisIp, cardId, portId)
+                raise IxNetRestApiException('\nNot found: {0}:{1}:{2}'.format(chassisIp, cardId, portId))
 
-            self.ixnObj.logInfo('\nPort currently owned by: %s' % queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['owner'])
+            self.ixnObj.logInfo('Port currently owned by: %s' % queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['owner'])
             if queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['owner'] != '':
                 self.ixnObj.logInfo('Port is still owned: {0}/cardId:{1}/portId:{2}'.format(chassisIp, cardId, portId))
                 portOwnedList.append([chassisIp, cardId, portId])
 
-        self.ixnObj.logInfo('\nPorts are still owned: %s' % portOwnedList)
+        self.ixnObj.logInfo('Ports are still owned: %s' % portOwnedList)
 
         if portOwnedList != []:
             if raiseException:
-                raise IxNetRestApiException
+                raise IxNetRestApiException('arePortsAvailable: Ports are still owned')
             else:
                 return portOwnedList
         return 0
@@ -559,14 +635,18 @@ class PortMgmt(object):
         vportList = [metaDatas["links"][0]['href'] for metaDatas in response.json()]
         for eachVport in vportList:
             for counter in range(1,timeout+1):
-                stateResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=state', silentMode=True)
+                stateResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=state,connectionStatus', silentMode=True)
                 assignedToResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=assignedTo', silentMode=True)
+
+                if 'Port Released' in stateResponse.json()['connectionStatus']:
+                    raise IxNetRestApiException(stateResponse.json()['connectionStatus'])
+
                 if stateResponse.json()['state'] == 'unassigned':
-                    print('\nThe vport {0} is not assigned to a physical port. Skipping this vport verification.'.format(eachVport))
+                    self.ixnObj.logWarning('\nThe vport {0} is not assigned to a physical port. Skipping this vport verification.'.format(eachVport))
                     break
 
-                self.ixnObj.logInfo('\nPort: %s' % assignedToResponse.json()['assignedTo'])
-                self.ixnObj.logInfo('\tVerifyPortState: %s\n\tWaiting %s/%s seconds' % (stateResponse.json()['state'], counter, timeout))
+                self.ixnObj.logInfo('Port: %s' % assignedToResponse.json()['assignedTo'])
+                self.ixnObj.logInfo('\tVerifyPortState: %s\n\tWaiting %s/%s seconds' % (stateResponse.json()['state'], counter, timeout), timestamp=False)
                 if counter < timeout and stateResponse.json()['state'] in ['down', 'busy']:
                     time.sleep(1)
                     continue
@@ -576,3 +656,64 @@ class PortMgmt(object):
                     # Failed
                     raise IxNetRestApiException('Port failed to come up')
 
+    def getVportFromPortList(self, portList):
+        """
+        Description
+           Get a list of vports from the specified portList.
+
+        Parameter
+           portList: <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
+    
+        Return
+           A list of vports.
+           [] if vportList is empty.
+        """
+        vportList = []
+        for eachPort in portList:
+            chassisIp = eachPort[0]
+            card = eachPort[1]
+            portNum = eachPort[2]
+            port = chassisIp+':'+card+':'+portNum
+            # {'href': '/api/v1/sessions/1/ixnetwork/',
+            # 'vport': [{'id': 2, 'href': '/api/v1/sessions/1/ixnetwork/vport/2', 'assignedTo': '10.10.10.8:1:2'}]}
+            queryData = {"from": "/",
+                         "nodes": [{"node": "vport", "properties": ["assignedTo"],
+                                    "where": [{"property": "assignedTo", "regex": port}]
+                                }]}
+            
+            queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+            vport = queryResponse.json()['result'][0]['vport']
+            if vport == []:
+                raise IxNetRestApiException('getVportFromPortList error: The port has no vport and not assigned. Check for port typo: {0}'.format(port))
+
+            if vport:
+                # Appending vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+                vportList.append(vport[0]['href'])
+        return vportList
+                                
+    def modifyPortMediaType(self, portList='all', mediaType='fiber'):
+        """
+        Description
+           Modify the port media type: fiber, copper, SGMII
+
+        Parameters
+           portList: <'all'|list of ports>: 
+                     <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
+                     Or if portList ='all', will modify all assigned ports to the specified mediaType.
+
+           mediaType: <str>: copper, fiber or SGMII
+        """
+        self.ixnObj.logInfo('modifyPortMediaType: {0}'.format(mediaType))
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        if portList == 'all':
+            #vportList = self.getAllVportList()
+            portList = self.getPhysicalPortsFromCreatedVports()
+
+        # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+        vportList = self.getVportFromPortList(portList)
+        print('\n---- modifyPortMediaType vportList:', vportList)
+
+        for vport in vportList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
+            portType = response.json()['type']
+            self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data={'media': mediaType})

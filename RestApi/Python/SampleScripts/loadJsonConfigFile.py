@@ -5,26 +5,23 @@
 #    It is subject to change for content updates without warning.
 #
 # REQUIREMENTS
-#    - Python2.7 - 3.6
 #    - Python modules: requests
+#    - Python 2.7 minimum
 #
 # DESCRIPTION
 #    A sample script to:
-#        - Read a saved JSON config file into an JSON object..
-#        - Load the configuration:  Import the JSON config object to IxNetwork.
-#        - Modify just the BGP configuration fragments.
-#          Two ways to do this:
-#             1> Using the XPATH.
-#             2> Using the JSON config object in Dict format.
+#        - Load a saved JSON configuration file.
+#        - Modify just the BGP configuration using XPATH's from the JSON config file.
 #        - Start all protocols.
 #        - Verify protocol sessions including ARP.
 #        - Start traffic.
 #        - Get stats.
 
 
-import json, sys
+import json, os, sys, traceback
 
-sys.path.insert(0, '../Modules')
+# These  modules are one level above.
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -50,7 +47,7 @@ try:
     deleteSessionAfterTest = True
     jsonConfigFile = 'bgp.json'
 
-    licenseIsInChassis = False
+    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
@@ -59,6 +56,11 @@ try:
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '2', '1']]
+
+    # For Novus cards only:
+    #     Novus cards support multiple media types. When assigning port, it will default to fiber.
+    #     Use this variable to set your port media type correctly.
+    modifyPortMediaType = None ;# None or copper|fiber|SGMII
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
@@ -87,25 +89,25 @@ try:
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
+    if configLicense == True:
         portObj.releaseAllPorts()
         mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     fileMgmtObj = FileMgmt(mainObj)
-    jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
-
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
-    fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=300)
-    portObj.verifyPortState()
+
+    # Set configPortName=False because loading a saved config file assumes ports already have configured names. Don't overwrite them.
+    portObj.assignPorts(portList, configPortName=False)
+
+    if modifyPortMediaType:
+        portObj.modifyPortMediaType(portList=portList, mediaType=modifyPortMediaType)
+        portObj.verifyPortState()
 
     # Example: How to modify
     #    Mofify the BGP configuration using JSON XPATH. XPATH are obtained from a JSON exported config file.
     #       1> Export the JSON configuration to a file.
-    #       2> Get the XPATH to where you want to modify the configuraiton.
-    #       3> Import the modified JSON to IxNetwork
+    #       2> Get the XPATH for what you want to modify the configuraiton.
+    #       3> Import the modified JSON data object to IxNetwork.
     xpathObj = [{"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] flap']/singleValue",
                  "value": "true"},
                 {"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] uptimeInSec']/singleValue",
@@ -113,11 +115,11 @@ try:
                 {"xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] downtimeInSec']/singleValue",
                  "value": "68"}
             ]
+
     fileMgmtObj.importJsonConfigObj(dataObj=xpathObj, option='modify')
 
     protocolObj = Protocol(mainObj)
     protocolObj.startAllProtocols()
-    protocolObj.verifyArp(ipType='ipv4')
     protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
 
     trafficObj = Traffic(mainObj)
@@ -125,8 +127,8 @@ try:
 
     # Check the traffic state before getting stats.
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
-    #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
-    #    or do you expect traffic to be started such as in continuous mode.
+    #    'stopped': If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration.
+    #    'started': If you expect traffic to be started such as in continuous mode.
     #trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
     trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
 
@@ -156,17 +158,19 @@ try:
     if osPlatform == 'windowsConnectionMgr':
         mainObj.deleteSession()
 
-except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+except (IxNetRestApiException, Exception, KeyboardInterrupt):
     if enableDebugTracing:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if releasePortsWhenDone and forceTakePortOwnership:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()

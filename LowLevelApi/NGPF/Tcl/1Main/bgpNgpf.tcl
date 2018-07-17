@@ -8,6 +8,19 @@
 #    Start traffic
 #    Get stats
 #
+# Prerequisites
+#    - If connecting to a Linux API server:
+#        - The Linux API server is a secured access device.
+#        - Uses SSL (HTTPS).
+#        - You must install:
+#             - OpenSSL for your Linux OS if running this script from Linux.
+#             - TLS for TCL in order to connect to a Linux API server.
+#               Download from: https://sourceforge.net/projects/tls/files/tls
+#
+#    - Open README_LinuxApiServer file to download IxTclNetwork.
+#    - TCL must have Tclx package
+#      If you could, install and use ActiveState TCL.
+#
 # Suports Windows API server and Linux API server
 #
 
@@ -18,17 +31,20 @@ set osPlatform windows;# windows|linux
 
 if {$osPlatform == "windows"} {
     set apiServerIp 192.168.70.3
-}
+ }
 if {$osPlatform == "linux"} {
     set apiServerIp 192.168.70.108
 }
 
-set ixChassisIp 192.168.70.11
 set ixNetworkVersion 8.40
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
 set licenseMode subscription 
 set licenseTier tier3
+
+set ixChassisIp 192.168.70.11
 set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
+set port1 [list $ixChassisIp 1 1]
+set port2 [list $ixChassisIp 2 1]
 
 if {$osPlatform == "linux"} {
     package req IxTclNetworkLinuxApiServer 
@@ -75,8 +91,8 @@ if {[VerifyPortState]} {
     exit
 }
 
-set topology1Obj [CreateTopology -name Topo-1 -portList [list "$ixChassisIp 1 1"]]
-set topology2Obj [CreateTopology -name Topo-2 -portList [list "$ixChassisIp 2 1"]]
+set topology1Obj [CreateTopology -name Topo-1 -portList [list $port1]]
+set topology2Obj [CreateTopology -name Topo-2 -portList [list $port2]]
 
 set deviceGroup1Obj [CreateDeviceGroup -topologyObj $topology1Obj -name DG-1 -multiplier 3]
 set deviceGroup2Obj [CreateDeviceGroup -topologyObj $topology2Obj -name DG-2 -multiplier 3]

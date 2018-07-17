@@ -3122,30 +3122,35 @@ class Protocol(object):
         Returns
            []|The NGPF endpoint object handle(s) in a list.
         """
-        self.ixnObj.logInfo('{0}...'.format('\ngetProtocolListByIpHostNgpf'), timestamp=False)
-
+        returnList = []
+        self.ixnObj.logInfo('{0}...'.format('\ngetEndpointObjByDeviceGroupName'), timestamp=False)
         # Loop each Topology and search for matching port or portName
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/topology', silentMode=False)
         topologyList = ['%s/%s/%s' % (self.ixnObj.sessionUrl, 'topology', str(i["id"])) for i in response.json()]
         for topology in topologyList:
             response = self.ixnObj.get(topology, silentMode=False)
             topologyObj = response.json()['links'][0]['href']
-
+            print('topoObj:', topologyObj)
             response = self.ixnObj.get(topology+'/deviceGroup', silentMode=False)
             deviceGroupList = ['%s/%s/%s' % (topology, 'deviceGroup', str(i["id"])) for i in response.json()]
 
             for deviceGroup in deviceGroupList:
                 deviceGroupObj = '/api' + deviceGroup.split('/api')[1]
                 response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj)
+                
                 if response.json()['name'] == deviceGroupName:
+
                     if endpointObj == 'topology':
-                        return topologyObj
+                        return [topologyObj]
 
                     if endpointObj == 'deviceGroup':
-                        return deviceGroupObj
+                        return [deviceGroupObj]
 
                     response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=False)
                     ethernetList = ['%s/%s/%s' % (deviceGroup, 'ethernet', str(i["id"])) for i in response.json()]
+                    if ethernetList == []:
+                        continue
+
                     if endpointObj == 'ethernet':
                         headlessEthernetList = []
                         for eachEthernetObj in ethernetList:
@@ -3154,55 +3159,50 @@ class Protocol(object):
                                 headlessEthernetList.append(match.group(1))
                         return headlessEthernetList
 
-                    response = self.ixnObj.get(deviceGroup+'/networkGroup', silentMode=False)
-                    networkGroupList = ['%s/%s/%s' % (deviceGroup, 'networkGroup', str(i["id"])) for i in response.json()]
                     if endpointObj == 'networkGroup':
+                        response = self.ixnObj.get(deviceGroup+'/networkGroup', silentMode=False)
+                        networkGroupList = ['%s/%s/%s' % (deviceGroup, 'networkGroup', str(i["id"])) for i in response.json()]
                         headlessNetworkGroupList = []
                         for eachNetworkGroupObj in networkGroupList:
                             match = re.match('http.*(/api.*)', eachNetworkGroupObj)
                             if match:
                                 headlessNetworkGroupList.append(match.group(1))
-                        return headlessNetworkGroupList
+                            return headlessNetworkGroupList
 
                     for ethernet in ethernetList:
-                        response = self.ixnObj.get(ethernet+'/ipv4', silentMode=False)
-                        ipv4List = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
-                        if endpointObj == 'ipv4':
-                            headlessIpv4List = []
-                            for obj in ipv4List:
-                                match = re.match('http.*(/api.*)', obj)
-                                if match:
-                                    headlessIpv4List.append(match.group(1))
-                            return headlessIpv4List
+                        # Dynamically get all Ethernet child endpoints
+                        response = self.ixnObj.get(ethernet+'?links=true', silentMode=False)
+                        for ethernetChild in response.json()['links']:
+                            print('Ethernet child:', ethernetChild['href'])
+                            currentChildName = ethernetChild['href'].split('/')[-1]
+                            if currentChildName == endpointObj:
+                                response = self.ixnObj.get(self.ixnObj.httpHeader+ethernetChild['href'])
+                                if response.json() == []: 
+                                    raise IxNetRestApiException('getEndpointObjByDeviceGroupName: The endpointObj you specified "{0}" is not configured. No endpointObj found'.format(endpointObj))
 
-                        response = self.ixnObj.get(ethernet+'/ipv6', silentMode=False)
-                        ipv6List = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
-                        if endpointObj == 'ipv6':
-                            headlessIpv6List = []
-                            for obj in ipv6List:
-                                match = re.match('http.*(/api.*)', obj)
-                                if match:
-                                    headlessIpv6List.append(match.group(1))
-                            return headlessIpv6List
+                                returnList.append(response.json()[0]['links'][0]['href'])
 
-                        for layer3Ip in ipv4List+ipv6List:
-                            url = layer3Ip+'?links=true'
-                            response = self.ixnObj.get(url, silentMode=False)
-                            for protocol in response.json()['links']:
-                                currentProtocol = protocol['href']
-                                if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+$', currentProtocol))):
-                                    continue
-                                if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+/port$', currentProtocol))):
-                                    continue
-
-                                url = self.ixnObj.httpHeader+currentProtocol
-                                response = self.ixnObj.get(url, silentMode=False)
+                            # Search IPv4/IPv6
+                            if currentChildName in ['ipv4']:
+                                l3Obj = currentChildName
+                                # ethernet = http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1
+                                response = self.ixnObj.get(ethernet+'/'+l3Obj+'?links=true', silentMode=True)
                                 if response.json() == []:
-                                    # The currentProtocol is not configured.
+                                    # L3 is not configured
                                     continue
-                                else:
-                                    if (bool(re.search('.*%s' % endpointObj, currentProtocol))):
-                                        return currentProtocol
+
+                                for child in response.json():
+                                    for l3Child in child['links']:
+                                        print('L3Child:', l3Child['href'])
+                                        currentL3ChildName = l3Child['href'].split('/')[-1]
+                                        if currentL3ChildName == endpointObj:
+                                            response = self.ixnObj.get(self.ixnObj.httpHeader+l3Child['href'], silentMode=True)
+                                            if response.json() == []: 
+                                                raise IxNetRestApiException('getEndpointObjByDeviceGroupName: The endpointObj you specified "{0}" is not configured. No endpointObj found.'.format(endpointObj))
+
+                                            returnList.append(l3Child['href'])
+                                    
+        return returnList
 
     def getProtocolObjFromProtocolList(self, protocolList, protocol, deviceGroupName=None):
         """
@@ -5105,8 +5105,6 @@ class Protocol(object):
 
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/ldpBasicRouterV6/operations/'+action
         data = {'arg1': ldpV6ObjList }
-        self.ixnObj.logInfo('startStopLdpBasicRouterV6Ngpf: {0}'.format(action))
-        self.ixnObj.logInfo('\t%s' % ldpV6ObjList)
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 

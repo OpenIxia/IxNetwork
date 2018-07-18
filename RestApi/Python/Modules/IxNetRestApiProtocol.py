@@ -1281,7 +1281,7 @@ class Protocol(object):
         Requirements
            self.ixnObj.waitForComplete()
 
-        Returns
+        Return
            The multivalue values
         """
         response = self.ixnObj.get(self.ixnObj.httpHeader+multivalueObj+'?includes=count', silentMode=silentMode)
@@ -1976,7 +1976,7 @@ class Protocol(object):
         if srcIpIndexList == []:
             raise IxNetRestApiException('No srcIp addresses found in configuration: {0}'.format(srcIpList))
 
-    def verifyNgpfProtocolStarted(self, protocolObj, timeout=30):
+    def verifyNgpfProtocolStarted(self, protocolObj, ignoreFailure=False, timeout=30):
         """
         Description
            Verify if NGPF protocol started.
@@ -1986,21 +1986,124 @@ class Protocol(object):
            timeout: <int>: The timeout value. Default=30 seconds.
         """
         for counter in range(1,timeout+1):
+            # sessionStatus is a list of status for each 'session' (host)
             sessionStatus = self.getSessionStatus(protocolObj)
-            self.ixnObj.logInfo('\n%s' % protocolObj, timestamp=False)
-            self.ixnObj.logInfo('\tSessionStatus: %s' % sessionStatus, timestamp=False)
-            if counter < timeout and 'notStarted' in sessionStatus:
+            self.ixnObj.logInfo('\nVerifyNgpfProtocolStarted: %s' % protocolObj, timestamp=False)
+            #self.ixnObj.logInfo('\tSessionStatus: %s' % sessionStatus, timestamp=False)
+
+            if counter < timeout:
+                count = 0
+                for session in sessionStatus:
+                    if session in ['notStarted', 'down']:
+                        count += 1
+                self.ixnObj.logInfo('\t{0} out of {1} sessions are still down'.format(count, len(sessionStatus)), timestamp=False)
                 self.ixnObj.logInfo('\tWait %d/%d seconds' % (counter, timeout), timestamp=False)
                 time.sleep(1)
 
-            if counter == timeout and 'notStarted' in sessionStatus:
-                raise IxNetRestApiException('Protocol sessions failed to start')
+            if counter == timeout:
+                count = 0
+                for session in sessionStatus:
+                    if session in ['notStarted', 'down']:
+                        count += 1
+                
+                if count != 0:
+                    errMsg = '{0} out of {1} sessions failed to start'.format(count, len(sessionStatus))
+                    self.ixnObj.logError(errMsg)
+                    if ignoreFailure == False:
+                        raise IxNetRestApiException(errMsg)
+                    else:
+                        return 1
 
-            if counter < timeout and 'notStarted' not in sessionStatus:
-                self.ixnObj.logInfo('Protocol sessions all started')
-                return
+            if counter < timeout:
+                flag = 0
+                for session in sessionStatus:
+                    if session in ['notStarted', 'down']:
+                        flag = 1
+                if flag == 0:
+                    self.ixnObj.logInfo('\tTotal of {0} sessions started'.format(len(sessionStatus)), timestamp=False)
+                    return 0
 
-    def deviceGroupProtocolStackNgpf(self, deviceGroupObj, ipType, arpTimeout=60, silentMode=True):
+    def deviceGroupProtocolStackNgpf(self, deviceGroupObj, ipType, arpTimeout=3, silentMode=True):
+        """
+        Description
+            This API is an internal API for VerifyArpNgpf.
+            It's created because each deviceGroup has IPv4/IPv6 and
+            a deviceGroup could have inner deviceGroup that has IPv4/IPv6.
+            Therefore, you can loop device groups.
+
+        Parameters
+            deviceGroupObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+            ipType: <str>: ipv4|ipv6
+            arpTimeout:  <int>: Timeout value. Default=60 seconds.
+
+        Requires
+            self.verifyNgpfProtocolStarted()
+        """
+        unresolvedArpList = []
+        response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet', silentMode=silentMode)
+        ethernetObjList = ['%s/%s/%s' % (deviceGroupObj, 'ethernet', str(i["id"])) for i in response.json()]
+        for ethernetObj in ethernetObjList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/'+ipType, ignoreError=True, silentMode=silentMode)
+            if response.status_code != 200:
+                raise IxNetRestApiException(response.text)
+
+            ipProtocolList = ['%s/%s/%s' % (ethernetObj, ipType, str(i["id"])) for i in response.json()]
+            if ipProtocolList == []:
+                raise IxNetRestApiException('Layer3 is not configured in {0}'.format(ethernetObj))
+
+            for ipProtocol in ipProtocolList:
+                # match.group(1): /topology/1/deviceGroup/1/deviceGroup/1/ethernet/1/ipv4/1
+                match = re.match('.*(/topology.*)', ipProtocol)
+                # sessionStatus could be: down, up, notStarted
+
+                # result == 0 means passed. 1 means failed.
+                result = self.verifyNgpfProtocolStarted(ipProtocol, ignoreFailure=True)
+                if result == 1:
+                    raise IxNetRestApiException('Protocol session failed to start. ARP could not be resolved:\n\t{0}'.format(ipPorotocol))
+
+                self.ixnObj.logInfo('Verifying ARP now...')
+                for counter in range(1,arpTimeout+1):
+                    sessionStatus = self.getSessionStatus(ipProtocol)
+                    if counter < arpTimeout and 'down' in sessionStatus:
+                        self.ixnObj.logInfo('\tARP is not resolved yet. Wait {0}/{1}'.format(counter, arpTimeout), timestamp=False)
+                        time.sleep(1)
+                        continue
+                    if counter < arpTimeout and 'down' not in sessionStatus:
+                        break
+                    if counter == arpTimeout and 'down' in sessionStatus:
+                        #raise IxNetRestApiException('\nARP is not getting resolved')
+                        # Let it flow down to get the unresolved ARPs
+                        pass
+
+                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader+ipProtocol+'?includes=resolvedGatewayMac,address,gatewayIp', ignoreError=True, silentMode=silentMode)
+
+                resolvedGatewayMac = protocolResponse.json()['resolvedGatewayMac']
+
+                # sessionStatus: ['up', 'up']
+                # resolvedGatewayMac ['00:0c:29:8d:d8:35', '00:0c:29:8d:d8:35']
+
+                # Only care for unresolved ARPs.
+                # resolvedGatewayMac: 00:01:01:01:00:01 00:01:01:01:00:02 removePacket[Unresolved]
+                # Search each mac to see if they're resolved or not.
+                for index in range(0, len(resolvedGatewayMac)):
+                    if (bool(re.search('.*Unresolved.*', resolvedGatewayMac[index]))):
+                        multivalue = protocolResponse.json()['address']
+                        multivalueResponse = self.ixnObj.getMultivalueValues(multivalue, silentMode=silentMode)
+                        # Get the IP Address of the unresolved mac address
+                        srcIpAddrNotResolved = multivalueResponse[index]
+                        gatewayMultivalue = protocolResponse.json()['gatewayIp']
+                        response = self.ixnObj.getMultivalueValues(gatewayMultivalue, silentMode=silentMode)
+                        gatewayIp = response[index]
+                        self.ixnObj.logError('Failed to resolve ARP: srcIp:{0} gateway:{1}'.format(srcIpAddrNotResolved, gatewayIp))
+                        unresolvedArpList.append((srcIpAddrNotResolved, gatewayIp))
+
+        if unresolvedArpList == []:
+            self.ixnObj.logInfo('ARP is resolved')
+            return 0
+        else:
+            return unresolvedArpList
+
+    def deviceGroupProtocolStackNgpf_backup(self, deviceGroupObj, ipType, arpTimeout=60, silentMode=True):
         """
         Description
             This API is an internal API for VerifyArpNgpf.
@@ -2066,7 +2169,7 @@ class Protocol(object):
                         gatewayMultivalue = protocolResponse.json()['gatewayIp']
                         response = self.ixnObj.getMultivalueValues(gatewayMultivalue, silentMode=silentMode)
                         gatewayIp = response[index]
-                        self.ixnObj.logInfo('\tFailed to resolve ARP: srcIp:{0} gateway:{1}'.format(srcIpAddrNotResolved, gatewayIp))
+                        self.ixnObj.logError('Failed to resolve ARP: srcIp:{0} gateway:{1}'.format(srcIpAddrNotResolved, gatewayIp))
                         unresolvedArpList.append((srcIpAddrNotResolved, gatewayIp))
 
         if unresolvedArpList == []:
@@ -2112,7 +2215,7 @@ class Protocol(object):
                 response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=silentMode)
                 # Verify if the Device Group is enabled. If not, don't go further.
                 enabledMultivalue = response.json()['enabled']
-                response = self.ixnObj.getMultivalueValues(enabledMultivalue, silentMode=silentMode)
+                response = self.getMultivalueValues(enabledMultivalue, silentMode=silentMode)
                 if response[0] == 'false':
                     continue
 
@@ -2120,7 +2223,6 @@ class Protocol(object):
                 for counter in range(1,timeout+1):
                     response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=silentMode)
                     deviceGroupStatus = response.json()['status']
-                    #self.ixnObj.logInfo('%s' % deviceGroupObj, timestamp=False)
                     if deviceGroupStatus == 'notStarted':
                         raise IxNetRestApiException('\nDevice Group is not started.')
 
@@ -4916,14 +5018,14 @@ class Protocol(object):
         return self.ixnObj.getObjAttributeValue(ethernetObj, property)
 
     def sendNsNgpf(self, ipv6ObjList):
-        # """
-        # Description
-        #     Send NS out of all the IPv6 objects that you provide in a list.
-        #
-        # Parameter
-        #    ipv6ObjList: <str>:  Provide a list of one or more IPv6 object handles to send arp.
-        #                 Ex: ["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1"]
-        # """
+        """
+        Description
+            Send NS out of all the IPv6 objects that you provide in a list.
+        
+        Parameter
+            ipv6ObjList: <str>:  Provide a list of one or more IPv6 object handles to send arp.
+                         Ex: ["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1"]
+        """
         if type(ipv6ObjList) != list:
             raise IxNetRestApiException('sendNsNgpf error: The parameter ipv6ObjList must be a list of objects.')
 
@@ -5144,3 +5246,121 @@ class Protocol(object):
         data = {'arg1': ldpV6ConnectedIntObjList}
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
+
+    def verifyDhcpClientBind(self, deviceGroupName=None, protocol=None, **kwargs):
+        """
+        Description
+            Check DHCP Client Bound/Idle/Not started and return count of Idle,Bound,notStarted,Bound Devices dictionary.
+            Using getEndpointObjByDeviceGroupName() to get dhcpv4client or dhcpv6client handle.
+
+        Parameters
+            deviceGroupName: <str>: The DeviceGroupName param is optional
+                             Example: deviceGroupName = 'dhcp'
+            protocol: <str>: Optional. It is the NGPF endpoint object name.
+                      Example: protocol = 'dhcpv4client'
+            kwargs:
+                  portName: <str>: The virtual port name.
+                            Example: portName = '1/2/9'
+        Examples:
+            protocolObj.verifyDhcpClientBind(device=None, protocol=None, **kwargs)
+
+        Returns:
+              Dictionary {'IDLE': [], 'notStarted': [], 'Bound': [], 'boundCount': 0}
+        """
+        portName = kwargs.get('portName',None)
+        if protocol == None:
+            protocols = ['ipv4','ipv6']
+        else:
+            protocols = [protocol]
+
+        boundCount = 0
+        idleBoundDict = {}
+        idletempdict = {}
+        notStartedtempdict = {}
+        boundidletempdict = {}
+        tempList = []
+        for protocol in protocols:
+            self.ixnObj.logInfo('Verifying DHCP IDLE/BOUND/NOTSTARTED for {0} protocol'.format(protocol))
+            #Verify DHCP Bound for ipv4 and ipv6 protocols
+            deviceList = []
+            if portName:
+                #Get all deviceGroups configured with Port
+                ProtocolList = self.getProtocolListByPortNgpf(portName=portName)
+                topology = ProtocolList['deviceGroup'][0][0].split("deviceGroup")[0]
+                response = self.ixnObj.get(self.ixnObj.httpHeader + topology + '/deviceGroup')
+                for deviceGroupObj in response.json():
+                    deviceList.append(deviceGroupObj['name'])
+            elif deviceGroupName == None:
+                # Get all deviceGroups in all topology lists
+                topologyList = self.getAllTopologyList()
+                #['/api/v1/sessions/1/ixnetwork/topology/1', '/api/v1/sessions/1/ixnetwork/topology/2']
+                for topology in topologyList:
+                    response = self.ixnObj.get(topology + '/deviceGroup')
+                    for deviceGroupObj in response.json():
+                        deviceList.append(deviceGroupObj['name'])
+            else:
+                deviceList.append(deviceGroupName)
+
+            for eachDevice in deviceList:
+                dhcpClientObjList = []
+                if (protocol == 'ipv6'):
+                    #Get ethernet end point objects for dhcpv6
+                    ethObjList = self.getEndpointObjByDeviceGroupName(eachDevice, 'dhcpv6client')
+                else:
+                    # Get ethernet end point objects for dhcpv4
+                    ethObjList = self.getEndpointObjByDeviceGroupName(eachDevice, 'dhcpv4client')
+
+                if ethObjList == None:
+                    raise IxNetRestApiException("Device Group not configured")
+
+                for ethObj in ethObjList:
+                    ethObj = '/api'+ ethObj.split('/api')[1]
+                    if protocol == 'ipv6':
+                        response = self.ixnObj.get(self.ixnObj.httpHeader + ethObj + '/dhcpv6client?includes=count')
+                    else:
+                        response = self.ixnObj.get(self.ixnObj.httpHeader + ethObj + '/dhcpv4client?includes=count')
+
+                    for dhcpClient in response.json():
+                        dhcpClientObjList.append(dhcpClient['links'][0]['href'])
+
+                for dhcpClientObj in dhcpClientObjList:
+                    #dhcpClientObj = '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2/ethernet/1/dhcpv4client/1'
+                    response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=name')
+                    dhcpObjName = response.json()['name']
+                    response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=count')
+                    dhcpClientObjDeviceCount = response.json()['count']
+                    response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=discoveredAddresses')
+                    discoveredAddressList =  response.json()['discoveredAddresses']
+                    response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=sessionStatus')
+                    sessionStatusList =  response.json()['sessionStatus']
+
+                    idleList = []
+                    notStartedList = []
+                    boundList = []
+                    for count in range(dhcpClientObjDeviceCount):
+                        if('[Unresolved]' in discoveredAddressList[count] and sessionStatusList[count] == 'down'):
+                            idleList.append((count+1))
+                        elif('[Unresolved]' in discoveredAddressList[count] and sessionStatusList[count] == 'notStarted'):
+                            notStartedList.append(str(count+1))
+                        else:
+                            boundList.append(str(count+1))
+                            boundCount += 1
+
+                    tempList.append(["IDLE",dhcpObjName,idleList])
+                    tempList.append(["Notstarted",dhcpObjName,notStartedList])
+                    tempList.append(["Bound",dhcpObjName,boundList])
+
+        for ele in tempList:
+            if ele[0] == 'IDLE':
+                idletempdict[ele[1]] = ele[2]
+            elif ele[0] == 'Notstarted':
+                notStartedtempdict[ele[1]] = ele[2]
+            elif ele[0] == 'Bound':
+                boundidletempdict[ele[1]] = ele[2]
+
+        idleBoundDict['IDLE'] = idletempdict
+        idleBoundDict['Notstarted'] = notStartedtempdict
+        idleBoundDict['Bound'] = boundidletempdict
+        idleBoundDict['boundCount'] = boundCount
+        return idleBoundDict
+

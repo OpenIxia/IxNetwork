@@ -15,10 +15,11 @@ import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
 
 class IxNetRestApiException(Exception):
     def __init__(self, msg=None):
-        print('\nIxNetRestApiException error: {0}\n'.format(msg))
+        showErrorMsg = '\nIxNetRestApiException error: {0}\n\n'.format(msg)
+        print(showErrorMsg)
         if Connect.enableDebugLogFile:
             with open(Connect.debugLogFile, 'a') as restLogFile:
-                restLogFile.write('IxNetRestApiException error: '+msg)
+                restLogFile.write(showErrorMsg)
 
 class Connect:
     debugLogFile = None
@@ -550,7 +551,7 @@ class Connect:
         currentTime = self.getTime()
 
         if timestamp:
-            msg = '\n' + currentTime + ': ' + msg
+            msg = '\n{0}: Warning: {1}'.format(currentTime, msg)
         else:
             # No timestamp and no newline are mainly for verifying states and status
             msg = msg
@@ -574,10 +575,10 @@ class Connect:
         currentTime = self.getTime()
 
         if timestamp:
-            msg = '\n' + currentTime + ': ' + msg
+            msg = '\n{0}: Error: {1}'.format(currentTime, msg)
         else:
             # No timestamp and no newline are mainly for verifying states and status
-            msg = msg
+            msg = '\nError: {0}'.format(msg)
 
         print('{0}'.format(msg), end=end)
         if self.generateLogFile:

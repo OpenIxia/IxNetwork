@@ -3135,9 +3135,9 @@ class Protocol(object):
 
             for deviceGroup in deviceGroupList:
                 deviceGroupObj = '/api' + deviceGroup.split('/api')[1]
-
                 response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=True)
                 ethernetList = ['%s/%s/%s' % (deviceGroup, 'ethernet', str(i["id"])) for i in response.json()]
+                print('ethernetList:', ethernetList)
                 for ethernet in ethernetList:
                     response = self.ixnObj.get(ethernet+'/ipv4', silentMode=True)
                     ipv4List = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
@@ -3146,6 +3146,7 @@ class Protocol(object):
                             response = self.ixnObj.get(ipv4Obj)
                             multivalue = response.json()['address']
                             ipv4HostList = self.getMultivalueValues(multivalue)
+                            print('', hostIp, ipv4HostList)
                             if hostIp in ipv4HostList:
                                 if 'topology' not in topologyDict:
                                     topologyDict = {'topology': topologyObj, 'deviceGroup': []}
@@ -3164,7 +3165,8 @@ class Protocol(object):
                             if hostIp in ipv6HostList:
                                 if 'topology' not in topologyDict:
                                     topologyDict = {'topology': topologyObj, 'deviceGroup': []}
-                                deviceGroupObjects.append(deviceGroupObj)
+                                if deviceGroupObj not in deviceGroupObjects:
+                                    deviceGroupObjects.append(deviceGroupObj)
                                 deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
                                 deviceGroupObjects.append('/api'+ipv6List[0].split('/api')[1])
                                 isHostIpFound = True
@@ -3424,6 +3426,12 @@ class Protocol(object):
             for eachDeviceGroup in element['deviceGroup']:                
                 self.ixnObj.logInfo('\n{0}'.format(eachDeviceGroup), timestamp=False)
 
+                # Example: deviceGroupEndpoint are:
+                #    /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+                #    /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1
+                #    /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
+                #    /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
+                #    /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/ldpv6ConnectedInterface/1
                 for deviceGroupEndpoint in eachDeviceGroup:
                     if protocol in ['deviceGroup', 'networkGroup', 'ethernet', 'ipv4', 'ipv6']:
                         match = re.search(r'(/api/v1/sessions/[0-9]+/ixnetwork/topology/[0-9]+.*%s/[0-9]+)$' % protocol,
@@ -3437,8 +3445,6 @@ class Protocol(object):
         if objectHandle:
             self.ixnObj.logInfo('\nObject handles: {0}'.format(str(objectHandle)), timestamp=False)
             return objectHandle
-        else:
-            return None
 
     def getPortsByProtocol(self, protocolName):
         """

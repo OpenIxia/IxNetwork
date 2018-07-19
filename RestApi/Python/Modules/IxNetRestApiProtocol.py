@@ -2103,81 +2103,6 @@ class Protocol(object):
         else:
             return unresolvedArpList
 
-    def deviceGroupProtocolStackNgpf_backup(self, deviceGroupObj, ipType, arpTimeout=60, silentMode=True):
-        """
-        Description
-            This API is an internal API for VerifyArpNgpf.
-            It's created because each deviceGroup has IPv4/IPv6 and
-            a deviceGroup could have inner deviceGroup that has IPv4/IPv6.
-            Therefore, you can loop device groups.
-
-        Parameters
-            deviceGroupObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
-            ipType: <str>: ipv4|ipv6
-            arpTimeout:  <int>: Timeout value. Default=60 seconds.
-
-        Requires
-            self.verifyNgpfProtocolStarted()
-        """
-        unresolvedArpList = []
-        response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet', silentMode=silentMode)
-        ethernetObjList = ['%s/%s/%s' % (deviceGroupObj, 'ethernet', str(i["id"])) for i in response.json()]
-        for ethernetObj in ethernetObjList:
-            response = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/'+ipType, ignoreError=True, silentMode=silentMode)
-            if response.status_code != 200:
-                self.ixnObj.logInfo('deviceGroupProtocolStackNgpf: %s' % response.text)
-                raise IxNetRestApiException(response.text)
-            ipProtocolList = ['%s/%s/%s' % (ethernetObj, ipType, str(i["id"])) for i in response.json()]
-
-            for ipProtocol in ipProtocolList:
-                # match.group(1): /topology/1/deviceGroup/1/deviceGroup/1/ethernet/1/ipv4/1
-                match = re.match('.*(/topology.*)', ipProtocol)
-                # sessionStatus could be: down, up, notStarted
-                self.verifyNgpfProtocolStarted(ipProtocol)
-                self.ixnObj.logInfo('\n', timestamp=False)
-
-                for counter in range(1,arpTimeout+1):
-                    sessionStatus = self.getSessionStatus(ipProtocol)
-                    self.ixnObj.logInfo('\tARP SessionStatus: %s' % sessionStatus, timestamp=False)
-                    if counter < arpTimeout and 'down' in sessionStatus:
-                        self.ixnObj.logInfo('\tARP is not resolved yet. Wait %d/%d' % (counter, arpTimeout), timestamp=False)
-                        time.sleep(1)
-                        continue
-                    if counter < arpTimeout and 'down' not in sessionStatus:
-                        break
-                    if counter == arpTimeout and 'down' in sessionStatus:
-                        #raise IxNetRestApiException('\nARP is not getting resolved')
-                        # Let it flow down to get the unresolved ARPs
-                        pass
-
-                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader+ipProtocol+'?includes=resolvedGatewayMac,address,gatewayIp', ignoreError=True, silentMode=silentMode)
-
-                resolvedGatewayMac = protocolResponse.json()['resolvedGatewayMac']
-
-                # sessionStatus: ['up', 'up']
-                # resolvedGatewayMac ['00:0c:29:8d:d8:35', '00:0c:29:8d:d8:35']
-
-                # Only care for unresolved ARPs.
-                # resolvedGatewayMac: 00:01:01:01:00:01 00:01:01:01:00:02 removePacket[Unresolved]
-                # Search each mac to see if they're resolved or not.
-                for index in range(0, len(resolvedGatewayMac)):
-                    if (bool(re.search('.*Unresolved.*', resolvedGatewayMac[index]))):
-                        multivalue = protocolResponse.json()['address']
-                        multivalueResponse = self.ixnObj.getMultivalueValues(multivalue, silentMode=silentMode)
-                        # Get the IP Address of the unresolved mac address
-                        srcIpAddrNotResolved = multivalueResponse[index]
-                        gatewayMultivalue = protocolResponse.json()['gatewayIp']
-                        response = self.ixnObj.getMultivalueValues(gatewayMultivalue, silentMode=silentMode)
-                        gatewayIp = response[index]
-                        self.ixnObj.logError('Failed to resolve ARP: srcIp:{0} gateway:{1}'.format(srcIpAddrNotResolved, gatewayIp))
-                        unresolvedArpList.append((srcIpAddrNotResolved, gatewayIp))
-
-        if unresolvedArpList == []:
-            self.ixnObj.logInfo('ARP is resolved')
-            return 0
-        else:
-            return unresolvedArpList
-
     def verifyArp(self, ipType='ipv4', silentMode=True):
         """
         Description
@@ -3194,10 +3119,11 @@ class Protocol(object):
 
                 if isHostIpFound:
                     topologyDict['deviceGroup'].insert(len(topologyDict['deviceGroup']), deviceGroupObjects)
-                    deviceGroupObjects = []
+                    container.append(topologyDict)
+                    break
 
             if isHostIpFound:
-                container.append(topologyDict)
+                break
 
         return container
 

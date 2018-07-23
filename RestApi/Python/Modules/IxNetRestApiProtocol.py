@@ -1479,6 +1479,86 @@ class Protocol(object):
         response = self.ixnObj.post(url, data={'arg1': 'sync'})
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
 
+    def startStopProtocolsNgpf(self, endpointNameList, portNameList=None, hostIp=None, action='start'):
+        """
+        Description
+           This API has three options to start or stop NGPF Device Group protocols.
+
+              1> If portNameList is provided, this API will call self.getProtocolListByPortNgpf() to
+                 search all the configured Topologies with the assigned portName and start the specified 
+                 NGPF endpoint protocol.
+
+              2> If hostIp is provided, this API will search for the IP address in all the created device Groups
+                 that has the endpoint protocol name configured.  If there is duplicate IP address across some 
+                 device groups, this API will start|stop endpoint protocols on all the device groups.
+
+              3> if no portNameList and hostIp are provided, this API will enable the specified endpoint
+                 protocol object names in all the configured Device Groups.
+
+        Parameters
+           endpointNameList: <list>: Mandatory: A list of NGPF endpoint names to start its protocol.
+
+           portNameList: <list>: Optional:  A list of port names used as filters to get its Device Group where
+                                 the NGPF endpoint protocol resides.  `
+           hostIp: <list>: Optional: The host IP address used as a filter to get its Device Group where 
+                           the NGPF protocol resides.
+
+        Examples:
+            protocolObj = Protocol(mainObj)
+            protocolObj.startStopProtocolsNgpf(['bgpIpv4Peer'], action='start')
+            protocolObj.startStopProtocolsNgpf(['bgpIpv4Peer'], portNameList=['2/1'], action='stop')
+            protocolObj.startStopProtocolsNgpf(['bgpIpv4Peer'], hostIp='1.1.1.2', action='start')
+        """
+        for endpointName in endpointNameList:
+            if portNameList:
+                for eachPortName in portNameList:
+                    obj = self.getProtocolListByPortNgpf(portName=eachPortName)
+                    # obj:
+                    #  {'topology': '/api/v1/sessions/1/ixnetwork/topology/2',
+                    #    'deviceGroup': [['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1',
+                    #                     '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1',
+                    #                     '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1',
+                    #                     '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1' 
+                     #                ]]}
+                    objHandle = self.getProtocolObjFromProtocolList(obj['deviceGroup'], endpointName)
+                    if objHandle:
+                        if action == 'start':
+                            self.startProtocol(objHandle[0])
+                        else:
+                            self.stopProtocol(objHandle[0])
+                    else:
+                        raise Exception("Incorrect Obj handle: %s or Port: %s"%(objHandle, eachPortName))
+
+            elif hostIp:
+                protocolList = self.getProtocolListByHostIpNgpf(hostIp)
+                objHandle = self.getProtocolObjFromHostIp(protocolList, protocol=endpointName)
+                # Same IP address could be configured across multiple Device Groups.
+                # This will start|stop all the endpoint protocols in all the Device Group where the host IP is configured.
+                for eachObjHandle in objHandle:
+                    if action == 'start':
+                        self.startProtocol(eachObjHandle)
+                    else:
+                        self.stopProtocol(eachObjHandle)
+
+            else:
+                topologyList = self.getAllTopologyList()
+                deviceNameList = []
+                for topology in topologyList:
+                    response = self.ixnObj.get(topology + '/deviceGroup')
+                    for deviceObj in response.json():
+                        deviceNameList.append(deviceObj['name'])
+
+                for devicName in deviceNameList:
+                    objHandle = self.getEndpointObjByDeviceGroupName(devicName, endpointName)[0]
+                    if objHandle:
+                        obj_url = self.ixnObj.httpHeader+objHandle
+                        response = self.ixnObj.get(obj_url)
+                        objHandle = objHandle+'/'+str(response.json()[0]['id'])
+                        if action == 'start':
+                            self.startProtocol(objHandle)
+                        else:
+                            self.stopProtocol(objHandle)
+
     def startProtocol(self, protocolObj):
         """
         Description

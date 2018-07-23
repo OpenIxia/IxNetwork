@@ -1527,7 +1527,7 @@ class Protocol(object):
                         else:
                             self.stopProtocol(objHandle[0])
                     else:
-                        raise Exception("Incorrect Obj handle: %s or Port: %s"%(objHandle, eachPortName))
+                        raise IxNetRestApiException('No NGPF endpoint protocol {0} found for portName {1}'.format(endpointName, eachPortName))
 
             elif hostIp:
                 protocolList = self.getProtocolListByHostIpNgpf(hostIp)

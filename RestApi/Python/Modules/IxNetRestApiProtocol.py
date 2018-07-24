@@ -4,26 +4,41 @@
 #    demo and reference purpose only.
 #    It is subject to change for updates without warning.
 #
-# Getting object handles:
-#    getNgpfObjectHandleByName: Get the NGPF object handle by the NGPF component name.
-#    getDeviceGroupByRouterId: Get the NGPF object handle by the Router ID.
+# Here are some APIs that get object handles:
 #
-#    ethernetObj = self.getNgpfObjectHandleByRouterId(routerId=routerId, ngpfEndpointObject='ethernet')
+#    obj = getNgpfObjectHandleByName(ngpfEndpointObject='bgpIpv4Peer', ngpfEndpointName='bgp_2')
 #
+#    Get all device group objects for all the created topology groups
+#       obj = getTopologyObjAndDeviceGroupObjByPortName(portName='2/1'):
+#       Returns: ['/api/v1/sessions/1/ixnetwork/topology/2', ['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1']]
+#
+#    deviceGroupObj = getDeviceGroupObjAndIpObjBySrcIp(srcIpAddress='1.1.1.1')
+#       Returns: ('/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1',
+#                 '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1')
+#    deviceGroupObj = getDeviceGroupByRouterId(routerId='192.0.0.3')
+#
+#    ethernetObj = getNgpfObjectHandleByRouterId(routerId=routerId, ngpfEndpointObject='ethernet')
+#    ipv4Obj = getIpv4ObjByPortName(portName='1/2')
+#
+#    gatewayObj = getDeviceGroupSrcIpGatewayIp(srcIpAddress)
+# 
+#    indexNumber = getIpAddrIndexNumber('10.10.10.1')
+#    networkGroupObj = getNetworkGroupObjByIp(networkGroupIpAddress='10.10.10.1')
+
 #    Get any NGPF object handle by host IP:
-#       x = protocolObj.getProtocolListByHostIpNgpf('1.1.1.1')
-#       objHandle = protocolObj.getProtocolObjFromHostIp(x, protocol='bgpIpv4Peer')
+#       x = getProtocolListByHostIpNgpf('1.1.1.1')
+#       objHandle = getProtocolObjFromHostIp(x, protocol='bgpIpv4Peer')
 #
 #    Get any NGPF object handle by either the physical port or by the vport name.
-#       x = protocolObj.getProtocolListByPortNgpf(port=['192.168.70.120', '1', '1'])
-#       x = protocolObj.getProtocolListByPortNgpf(portName='1/1')
-#       objHandle = protocolObj.getProtocolObjFromProtocolList(x['deviceGroup'], 'bgpIpv4Peer')
+#       x = getProtocolListByPortNgpf(port=['192.168.70.120', '1', '1'])
+#       x = getProtocolListByPortNgpf(portName='1/1')
+#       objHandle = getProtocolObjFromProtocolList(x['deviceGroup'], 'bgpIpv4Peer')
 #
 #       Filter by the deviceGroupName if there are multiple device groups
-#       x = protocolObj.getProtocolObjFromProtocolList(x['deviceGroup'], 'ethernet', deviceGroupName='DG2')
+#       x = getProtocolObjFromProtocolList(x['deviceGroup'], 'ethernet', deviceGroupName='DG2')
 #
 #    Get a NGPF object handle that is configured in a Device Group by the name.
-#    x = protocolObj.getEndpointObjByDeviceGroupName('DG-2', 'bgpIpv4Peer')
+#    x = getEndpointObjByDeviceGroupName('DG-2', 'bgpIpv4Peer')
 #
 
 import re, time
@@ -1674,7 +1689,7 @@ class Protocol(object):
                     deviceGroupObjList.append(dgHref['href'])
 
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/operations/%s' % action
-        response = self.ixnObj.post(url, data={'arg1': deviceGroupObjList})
+        response = oself.ixnObj.post(url, data={'arg1': deviceGroupObjList})
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
         time.sleep(3)
 
@@ -2364,7 +2379,7 @@ class Protocol(object):
         """
         Description
             Search each Topology/Device Group for the srcIpAddress.
-            If found, return the Device Group object and the IPv4|Ipv6 object.
+            If found, return the Device Group object and the IPv4|Ipv6 objects.
 
             if srcIpAddress is IPv6, the format must match what is shown
             in the GUI or API server.  Please verify how the configured 
@@ -2439,21 +2454,21 @@ class Protocol(object):
                 if portName == vportName:
                     return topologyObj, deviceGroupList
 
-    def getNetworkGroupObjByIp(self, ipAddress):
+    def getNetworkGroupObjByIp(self, networkGroupIpAddress):
         """
         Description
-            Search each Device Group's Network Group for the ipAddress.
+            Search each Device Group's Network Group for the networkGroupIpAddress.
             If found, return the Network Group object.
             Mainly used for Traffic Item source/destination endpoints.
 
-            The ipAddress cannot be a range. It has to be an actual IP address
+            The networkGroupIpAddress cannot be a range. It has to be an actual IP address
             within the range.
 
         Parameter
-           ipAddress: <str>: The network group IP address.
+           networkGroupIpAddress: <str>: The network group IP address.
 
         Returns
-            0: Failed. No ipAddress found in any NetworkGroup.
+            None: No ipAddress found in any NetworkGroup.
             network group Object: The Network Group object.
         """
         queryData = {'from': '/',
@@ -2466,9 +2481,9 @@ class Protocol(object):
 
         queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
 
-        if '.' in ipAddress:
+        if '.' in networkGroupIpAddress:
             prefixPoolType = 'ipv4PrefixPools'
-        if ':' in ipAddress:
+        if ':' in networkGroupIpAddress:
             prefixPoolType = 'ipv6PrefixPools'
 
         for topology in queryResponse.json()['result'][0]['topology']:
@@ -2477,10 +2492,8 @@ class Protocol(object):
                     for prefixPool in networkGroup[prefixPoolType]:
                         prefixPoolRangeMultivalue = prefixPool['networkAddress']
                         response = self.ixnObj.getMultivalueValues(prefixPoolRangeMultivalue)
-                        if ipAddress in response:
+                        if networkGroupIpAddress in response:
                             return networkGroup['href']
-
-        return 0
 
     def getIpAddrIndexNumber(self, ipAddress):
         """
@@ -3452,58 +3465,22 @@ class Protocol(object):
             self.ixnObj.logInfo('\nObject handles: {0}'.format(str(objectHandle)), timestamp=False)
             return objectHandle
 
-    def getPortsByProtocol(self, protocolName):
-        """
-        Description
-            For IxNetwork Classic Framework only:
-            Based on the specified protocol, return all ports associated withe the protocol.
-
-        Parameter
-           protocolName options:
-              bfd, bgp, cfm, eigrp, elmi, igmp, isis, lacp, ldp, linkOam, lisp, mld,
-              mplsOam, mplsTp, openFlow, ospf, ospfV3, pimsm, ping, rip, ripng, rsvp,
-              static, stp
-
-         Returns: [chassisIp, cardNumber, portNumber]
-                  Example: [('10.219.117.101', '1', '1'), ('10.219.117.101', '1', '2')]
-
-         Returns [] if no port is configured with the specified protocolName
-        """
-        portList = []
-        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
-        # ['http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/vport/1']
-        vportList = ['%s/%s/%s' % (self.ixnObj.sessionUrl, 'vport', str(i["id"])) for i in response.json()]
-
-        # Go through each port that has the protocol enabled.
-        for vport in vportList:
-            # http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/vport/1/protocols/ospf
-            currentProtocol = vport+'/protocols/'+protocolName
-            response = self.ixnObj.get(currentProtocol)
-            if response.json()['enabled'] == True:
-                # 10.219.117.101:1:5
-                response = self.ixnObj.get(vport)
-                assignedTo = response.json()['assignedTo']
-                currentChassisIp  = str(assignedTo.split(':')[0])
-                currentCardNumber = str(assignedTo.split(':')[1])
-                currentPortNumber = str(assignedTo.split(':')[2])
-                currentPort = (currentChassisIp, currentCardNumber, currentPortNumber)
-                portList.append(currentPort)
-
-        return portList
-
-    def getPortsByProtocolNgpf(self, protocolName):
+    def getPortsByProtocolNgpf(self, ngpfEndpointName):
         """
         Description
             For IxNetwork NGPF only:
-            Based on the specified protocol, return all ports associated with the protocol.
+            Based on the specified NGPF endpoint name, return all ports associated with the protocol.
+
+        Parameter
+            ngpfEndpointName: <str>: See below for all the NGPF endpoint protocol names.
 
          Returns
             [chassisIp, cardNumber, portNumber]
             Example: [['10.219.117.101', '1', '1'], ['10.219.117.101', '1', '2']]
 
-            Returns [] if no port is configured with the specified protocolName
+            Returns [] if no port is configured with the specified ngpfEndpointName
 
-         protocolName options:
+         ngpfEndpointName options:
             'ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
             'dhcpv4server', 'dhcpv6server', 'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
             'lac', 'ldpBasicRouter', 'ldpBasicRouterV6', 'ldpConnectedInterface', 'ldpv6ConnectedInterface',
@@ -3527,11 +3504,12 @@ class Protocol(object):
                     response = self.ixnObj.get(ethernet+'/ipv6')
                     ipv6List = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
                     for layer3Ip in ipv4List+ipv6List:
-                        url = layer3Ip+'/'+protocolName
+                        url = layer3Ip+'/'+ngpfEndpointName
                         print('\nProtocol URL:', url)
                         response = self.ixnObj.get(url)
                         if response.json() == []:
                             continue
+
                         response = self.ixnObj.get(topology)
                         vportList = response.json()['vports']
                         for vport in vportList:

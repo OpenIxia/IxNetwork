@@ -15,6 +15,8 @@ import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
 
 class IxNetRestApiException(Exception):
     def __init__(self, msg=None):
+        super().__init__(msg)
+
         showErrorMsg = '\nIxNetRestApiException error: {0}\n\n'.format(msg)
         print(showErrorMsg)
         if Connect.enableDebugLogFile:
@@ -641,18 +643,15 @@ class Connect:
 
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
-
-        if response.json() == '' and response.json()['state'] == 'SUCCESS':
+            
+        if response.json() == '' or response.json()['state'] == 'SUCCESS':
             return response 
 
         if 'errors' in response.json():
             raise IxNetRestApiException(response.json()["errors"][0])
 
-        if response.json()['state'] == "SUCCESS":
-            return response
-
         if response.json()['state'] in ["ERROR", "EXCEPTION"]:
-            raise IxNetRestApiException('\nWaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
+            raise IxNetRestApiException('WaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
 
         for counter in range(1,timeout+1):
             response = self.get(url, silentMode=True)
@@ -672,7 +671,7 @@ class Connect:
                 # Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
                 if ignoreException:
                     return response
-                raise IxNetRestApiException('\n%s' % response.text)
+                raise IxNetRestApiException(response.text)
 
             if counter < timeout and state == 'SUCCESS':
                 return response
@@ -680,7 +679,7 @@ class Connect:
             if counter == timeout and state != 'SUCCESS':
                 if ignoreException:
                     return response
-                raise IxNetRestApiException('\nwaitForComplete failed: %s' % response.json())
+                raise IxNetRestApiException('waitForComplete failed: %s' % response.json())
 
     def connectToLinuxIxosChassis(self, chassisIp, username, password):
         url = 'https://{0}/platform/api/v1/auth/session'.format(chassisIp)

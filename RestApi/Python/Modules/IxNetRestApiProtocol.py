@@ -210,6 +210,11 @@ class Protocol(object):
                         Ethernet obj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1'
 
             name|ethernetName: <str>:  Ethernet name.
+            macAddressMultivalueType: Default=counter.
+                                      Options: alternate, custom, customDistributed, random, repeatableRandom,
+                                                                repeatableRandomRange, valueList
+                                    To get the multivalue settings, refer to the API browser.
+
             macAddress: <dict>: By default, IxNetwork will generate unique Mac Addresses.
                                {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
                                Note: step: '00:00:00:00:00:00' means don't increment.
@@ -288,7 +293,12 @@ class Protocol(object):
         if 'macAddress' in kwargs:
             multivalue = ethObjResponse.json()['mac']
             self.ixnObj.logInfo('Configure MAC address. Attribute for multivalueId = jsonResponse["mac"]')
-            self.configMultivalue(multivalue, 'counter', data=kwargs['macAddress'])
+            if 'macAddressMultivalueType' in kwargs:
+                multivalueType = kwargs['macAddressMultivalueType']
+            else:
+                # Default to counter
+                multivalueType = 'counter'
+            self.configMultivalue(multivalue, multivalueType, data=kwargs['macAddress'])
 
             # Config Mac Address Port Step
             if 'macAddressPortStep' in kwargs:
@@ -442,9 +452,14 @@ class Protocol(object):
 
             port: <list>: Format: [ixChassisIp, str(cardNumber), str(portNumber)]
             portName: <str>: The virtual port name.
-            ngpfEndpointName: <str>: The name that you configured for the NGPF BGP.
+            ngpfEndpointName: <str>: The name that you configured for the NGPF IPv4 endpoint.
 
             kwargs:
+               ipv4AddressMultivalueType & gatewayMultivalueType:
+                                    Default='counter'. Options: alternate, custom, customDistributed, random, repeatableRandom,
+                                                                repeatableRandomRange, valueList
+                                    To get the multivalue settings, refer to the API browser.
+
                ipv4Address: <dict>: {'start': '100.1.1.100', 'direction': 'increment', 'step': '0.0.0.1'},
                ipv4AddressPortStep: <str>|<dict>:  disable|0.0.0.1 
                                     Incrementing the IP address on each port based on your input.
@@ -517,7 +532,12 @@ class Protocol(object):
         if 'ipv4Address' in kwargs:
             multivalue = ipv4Response.json()['address']
             self.ixnObj.logInfo('Configuring IPv4 address. Attribute for multivalueId = jsonResponse["address"]')
-            self.configMultivalue(multivalue, 'counter', data=kwargs['ipv4Address'])
+            if 'ipv4AddressMultivalueType' in kwargs:
+                multivalueType = kwargs['ipv4AddressMultivalueType']
+            else:
+                # Default to counter
+                multivalueType = 'counter'
+            self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv4Address'])
 
         # Config IPv4 port step
         # disabled|0.0.0.1
@@ -533,7 +553,12 @@ class Protocol(object):
         if 'gateway' in kwargs:
             multivalue = ipv4Response.json()['gatewayIp']
             self.ixnObj.logInfo('Configure IPv4 gateway. Attribute for multivalueId = jsonResponse["gatewayIp"]')
-            self.configMultivalue(multivalue, 'counter', data=kwargs['gateway'])
+            if 'gatewayMultivalueType' in kwargs:
+                gatewayMultivalueType = kwargs['gatewayMultivalueType']
+            else:
+                # Default to counter
+                gatewayMultivalueType = 'counter'
+            self.configMultivalue(multivalue, gatewayMultivalueType, data=kwargs['gateway'])
 
         # Config Gateway port step
         if 'gatewayPortStep' in kwargs:
@@ -1268,6 +1293,9 @@ class Protocol(object):
             PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/counter
             PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/valueList
         """
+        self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/'+multivalueType, data=data)
+
+        '''
         if multivalueType == 'counter':
             # Examples: macAddress = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
             #          data=macAddress)
@@ -1280,6 +1308,7 @@ class Protocol(object):
         if multivalueType == 'valueList':
             # data={'values': ['item1', 'item2']}
             self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/valueList', data=data)
+        '''
 
     def getMultivalueValues(self, multivalueObj, silentMode=False):
         """
@@ -1493,86 +1522,6 @@ class Protocol(object):
         url = self.ixnObj.sessionUrl+'/operations/stopallprotocols'
         response = self.ixnObj.post(url, data={'arg1': 'sync'})
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
-
-    def startStopProtocolsNgpf(self, endpointNameList, portNameList=None, hostIp=None, action='start'):
-        """
-        Description
-           This API has three options to start or stop NGPF Device Group protocols.
-
-              1> If portNameList is provided, this API will call self.getProtocolListByPortNgpf() to
-                 search all the configured Topologies with the assigned portName and start the specified 
-                 NGPF endpoint protocol.
-
-              2> If hostIp is provided, this API will search for the IP address in all the created device Groups
-                 that has the endpoint protocol name configured.  If there is duplicate IP address across some 
-                 device groups, this API will start|stop endpoint protocols on all the device groups.
-
-              3> if no portNameList and hostIp are provided, this API will enable the specified endpoint
-                 protocol object names in all the configured Device Groups.
-
-        Parameters
-           endpointNameList: <list>: Mandatory: A list of NGPF endpoint names to start its protocol.
-
-           portNameList: <list>: Optional:  A list of port names used as filters to get its Device Group where
-                                 the NGPF endpoint protocol resides.  `
-           hostIp: <list>: Optional: The host IP address used as a filter to get its Device Group where 
-                           the NGPF protocol resides.
-
-        Examples:
-            protocolObj = Protocol(mainObj)
-            protocolObj.startStopProtocolsNgpf(['bgpIpv4Peer'], action='start')
-            protocolObj.startStopProtocolsNgpf(['bgpIpv4Peer'], portNameList=['2/1'], action='stop')
-            protocolObj.startStopProtocolsNgpf(['bgpIpv4Peer'], hostIp='1.1.1.2', action='start')
-        """
-        for endpointName in endpointNameList:
-            if portNameList:
-                for eachPortName in portNameList:
-                    obj = self.getProtocolListByPortNgpf(portName=eachPortName)
-                    # obj:
-                    #  {'topology': '/api/v1/sessions/1/ixnetwork/topology/2',
-                    #    'deviceGroup': [['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1',
-                    #                     '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1',
-                    #                     '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1',
-                    #                     '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1' 
-                     #                ]]}
-                    objHandle = self.getProtocolObjFromProtocolList(obj['deviceGroup'], endpointName)
-                    if objHandle:
-                        if action == 'start':
-                            self.startProtocol(objHandle[0])
-                        else:
-                            self.stopProtocol(objHandle[0])
-                    else:
-                        raise IxNetRestApiException('No NGPF endpoint protocol {0} found for portName {1}'.format(endpointName, eachPortName))
-
-            elif hostIp:
-                protocolList = self.getProtocolListByHostIpNgpf(hostIp)
-                objHandle = self.getProtocolObjFromHostIp(protocolList, protocol=endpointName)
-                # Same IP address could be configured across multiple Device Groups.
-                # This will start|stop all the endpoint protocols in all the Device Group where the host IP is configured.
-                for eachObjHandle in objHandle:
-                    if action == 'start':
-                        self.startProtocol(eachObjHandle)
-                    else:
-                        self.stopProtocol(eachObjHandle)
-
-            else:
-                topologyList = self.getAllTopologyList()
-                deviceNameList = []
-                for topology in topologyList:
-                    response = self.ixnObj.get(topology + '/deviceGroup')
-                    for deviceObj in response.json():
-                        deviceNameList.append(deviceObj['name'])
-
-                for devicName in deviceNameList:
-                    objHandle = self.getEndpointObjByDeviceGroupName(devicName, endpointName)[0]
-                    if objHandle:
-                        obj_url = self.ixnObj.httpHeader+objHandle
-                        response = self.ixnObj.get(obj_url)
-                        objHandle = objHandle+'/'+str(response.json()[0]['id'])
-                        if action == 'start':
-                            self.startProtocol(objHandle)
-                        else:
-                            self.stopProtocol(objHandle)
 
     def startProtocol(self, protocolObj):
         """
@@ -2516,6 +2465,9 @@ class Protocol(object):
             multivalue = queryResponse.json()['result'][0]['topology']
         if ':' in ipAddress:
             multivalue = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv6'][0]['address']
+
+        # TODO:
+        # Loop through all topology and search for the ipAddress
 
         response = self.ixnObj.get(self.ixnObj.httpHeader+multivalue)
         valueList = response.json()['values']
@@ -5120,7 +5072,12 @@ class Protocol(object):
         if 'ipv6Address' in kwargs:
             multivalue = ipv6Response.json()['address']
             self.ixnObj.logInfo('Configuring IPv6 address. Attribute for multivalueId = jsonResponse["address"]')
-            self.configMultivalue(multivalue, 'counter', data=kwargs['ipv6Address'])
+            if 'ipv6AddressMultivalueType' in kwargs:
+                multivalueType = kwargs['ipv6AddressMultivalueType']
+            else:
+                # Default to counter
+                multivalueType = 'counter'
+            self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv6Address'])
 
             # Config IPv6 port step
             # disabled|0.0.0.1
@@ -5137,7 +5094,12 @@ class Protocol(object):
         if 'gateway' in kwargs:
             multivalue = ipv6Response.json()['gatewayIp']
             self.ixnObj.logInfo('Configure IPv6 gateway. Attribute for multivalueId = jsonResponse["gatewayIp"]')
-            self.configMultivalue(multivalue, 'counter', data=kwargs['gateway'])
+            if 'gatewayMultivalueType' in kwargs:
+                multivalueType = kwargs['gatewayMultivalueType']
+            else:
+                # Default to counter
+                multivalueType = 'counter'
+            self.configMultivalue(multivalue, multivalueType, data=kwargs['gateway'])
 
         # Config Gateway port step
         if 'gatewayPortStep' in kwargs:

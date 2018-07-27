@@ -1283,10 +1283,18 @@ class Protocol(object):
 
         Parameters
            multivalueUrl: <str>: The multivalue: /api/v1/sessions/{1}/ixnetwork/multivalue/1
-           multivalueType: <str>: counter|singleValue|valueList
+           multivalueType: <str>: counter|singleValue|valueList|repeatableRandom|repeatableRandomRange|custom
            data: <dict>: singleValue: data={'value': '1.1.1.1'})
                              valueList:   data needs to be in a [list]:  data={'values': [list]}
                              counter:     data={'start': value, 'direction': increment|decrement, 'step': value}
+
+        data examples
+           if multivalueType == 'counter':
+               data = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
+
+           if multivalueType == 'singleValue': data={'value': value}
+
+           if multivalueType == 'valueList': data={'values': ['item1', 'item2']}
 
         Syntax
             PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/singleValue
@@ -1294,21 +1302,6 @@ class Protocol(object):
             PATCH: /api/v1/sessions/{id}/ixnetwork/multivalue/{id}/valueList
         """
         self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/'+multivalueType, data=data)
-
-        '''
-        if multivalueType == 'counter':
-            # Examples: macAddress = {'start': '00:01:01:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'}
-            #          data=macAddress)
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/counter', data=data)
-
-        if multivalueType == 'singleValue':
-            # data={'value': value}
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/singleValue', data=data)
-
-        if multivalueType == 'valueList':
-            # data={'values': ['item1', 'item2']}
-            self.ixnObj.patch(self.ixnObj.httpHeader+multivalueUrl+'/valueList', data=data)
-        '''
 
     def getMultivalueValues(self, multivalueObj, silentMode=False):
         """
@@ -3094,7 +3087,6 @@ class Protocol(object):
         for topology in topologyList:
             response = self.ixnObj.get(topology, silentMode=True)
             topologyObj = response.json()['links'][0]['href']
-
             response = self.ixnObj.get(topology+'/deviceGroup', silentMode=True)
             deviceGroupList = ['%s/%s/%s' % (topology, 'deviceGroup', str(i["id"])) for i in response.json()]
 
@@ -3107,44 +3099,51 @@ class Protocol(object):
                 deviceGroupObj = '/api' + deviceGroup.split('/api')[1]
                 response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=True)
                 ethernetList = ['%s/%s/%s' % (deviceGroup, 'ethernet', str(i["id"])) for i in response.json()]
-                print('ethernetList:', ethernetList)
                 for ethernet in ethernetList:
-                    response = self.ixnObj.get(ethernet+'/ipv4', silentMode=True)
-                    ipv4List = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
-                    if ipv4List:
-                        for ipv4Obj in ipv4List:
-                            response = self.ixnObj.get(ipv4Obj)
-                            multivalue = response.json()['address']
-                            ipv4HostList = self.getMultivalueValues(multivalue)
-                            print('', hostIp, ipv4HostList)
-                            if hostIp in ipv4HostList:
-                                if 'topology' not in topologyDict:
-                                    topologyDict = {'topology': topologyObj, 'deviceGroup': []}
-                                deviceGroupObjects.append(deviceGroupObj)
-                                deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
-                                deviceGroupObjects.append('/api'+ipv4List[0].split('/api')[1])
-                                isHostIpFound = True
+                    isHostIpFound = False
+                    ipList = []
 
-                    response = self.ixnObj.get(ethernet+'/ipv6', silentMode=True)
-                    ipv6List = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
-                    if ipv6List:
-                        for ipv6Obj in ipv6List:
-                            response = self.ixnObj.get(ipv6Obj)
-                            multivalue = response.json()['address']
-                            ipv6HostList = self.getMultivalueValues(multivalue)
-                            if hostIp in ipv6HostList:
-                                if 'topology' not in topologyDict:
-                                    topologyDict = {'topology': topologyObj, 'deviceGroup': []}
-                                if deviceGroupObj not in deviceGroupObjects:
+                    # IPv4
+                    if '.' in hostIp:
+                        response = self.ixnObj.get(ethernet+'/ipv4', silentMode=True)
+                        ipList = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
+                        if ipList:
+                            #for ipv4Obj in ipv4List:
+                            for ipv4Obj in ipList:
+                                response = self.ixnObj.get(ipv4Obj)
+                                multivalue = response.json()['address']
+                                ipv4HostList = self.getMultivalueValues(multivalue)
+                                if hostIp in ipv4HostList:
+                                    if 'topology' not in topologyDict:
+                                        topologyDict = {'topology': topologyObj, 'deviceGroup': []}
+
                                     deviceGroupObjects.append(deviceGroupObj)
-                                deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
-                                deviceGroupObjects.append('/api'+ipv6List[0].split('/api')[1])
-                                isHostIpFound = True
+                                    deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
+                                    deviceGroupObjects.append('/api'+ipList[0].split('/api')[1])
+                                    isHostIpFound = True
+
+                    # IPv6
+                    if ':' in hostIp:
+                        response = self.ixnObj.get(ethernet+'/ipv6', silentMode=True)
+                        ipList = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
+                        if ipList:
+                            for ipv6Obj in ipList:
+                                response = self.ixnObj.get(ipv6Obj)
+                                multivalue = response.json()['address']
+                                ipv6HostList = self.getMultivalueValues(multivalue)
+                                if hostIp in ipv6HostList:
+                                    if 'topology' not in topologyDict:
+                                        topologyDict = {'topology': topologyObj, 'deviceGroup': []}
+
+                                    deviceGroupObjects.append(deviceGroupObj)
+                                    deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
+                                    deviceGroupObjects.append('/api'+ipList[0].split('/api')[1])
+                                    isHostIpFound = True
 
                     if isHostIpFound == False:
                         continue
 
-                    for layer3Ip in ipv4List+ipv6List:
+                    for layer3Ip in ipList:
                         url = layer3Ip+'?links=true'
                         response = self.ixnObj.get(url, silentMode=True)
                         for protocol in response.json()['links']:
@@ -3164,11 +3163,10 @@ class Protocol(object):
 
                 if isHostIpFound:
                     topologyDict['deviceGroup'].insert(len(topologyDict['deviceGroup']), deviceGroupObjects)
-                    container.append(topologyDict)
-                    break
+                    deviceGroupObjects = []
 
             if isHostIpFound:
-                break
+                container.append(topologyDict)
 
         return container
 

@@ -352,3 +352,72 @@ class QuickTest(object):
         else:
             self.ixnObj.logInfo('\ngetQuickTestPdf failed. Result path = %s' % response.json()['result'])
 
+    def runQuickTest(self, quickTestName, timeout=90):
+        """
+        Description
+            Run the Quick test
+
+        Parameter
+            quickTestName: <str>: name of the quick test to run
+            timeout: <int>: duration for quick test to run. Default=90 seconds
+
+        Example
+            runQuickTest("Macro_17_57_14_294", timeout=180)
+
+        Return
+
+        Note: operation run will keep checking the status of execution for the specified timeout
+        """
+        eventSchedulerHandle = self.getQuickTestHandleByName(quickTestName)
+
+        url = self.ixnObj.sessionUrl + '/quickTest/eventScheduler/operations/run'
+        data = {"arg1": eventSchedulerHandle}
+        response = self.ixnObj.post(url, data=data)
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], timeout=timeout)
+
+    def deleteQuickTest(self, quickTestName):
+        """
+        Description
+            Delete the  Quick test.
+
+        Parameter
+            quickTestName: <str>: name of the quick test to delete
+
+        Example
+            deleteQuickTest("Macro_17_57_14_294")
+
+        Return
+        """
+        eventSchedulerHandle = self.getQuickTestHandleByName(quickTestName)
+
+        #delete the quick test
+        url = self.ixnObj.httpHeader + eventSchedulerHandle
+        self.ixnObj.delete(url)
+
+    def configQuickTest(self, quickTestName, numOfTrials=1):
+        """
+        Description
+            Configure a quick test
+
+        Parameter
+            quickTestName: <str>: name of the quick test to configure
+            numOfTrials: <int>: number of iterations to run the quick test, default is 1
+
+        Example
+            configQuickTest("Macro_17_57_14_294")
+            configQuickTest("Macro_17_57_14_294", numOfTrials=2)
+
+        Return
+            event scheduler handle on success or exception on failure
+        """
+        url = self.ixnObj.sessionUrl + '/quickTest/eventScheduler'
+        response = self.ixnObj.post(url, data={"forceApplyQTConfig": "true", "mode": "existingMode", "name": quickTestName})
+
+        eventSchedulerHandle = response.json()["links"][0]["href"]
+        url = self.ixnObj.httpHeader + eventSchedulerHandle + '/eventScheduler'
+        self.ixnObj.post(url, data={"enabled": "true", "itemId": quickTestName, "itemName": quickTestName})
+
+        url = self.ixnObj.httpHeader + eventSchedulerHandle + '/testConfig'
+        self.ixnObj.patch(url, data={"numTrials": numOfTrials})
+
+        return eventSchedulerHandle

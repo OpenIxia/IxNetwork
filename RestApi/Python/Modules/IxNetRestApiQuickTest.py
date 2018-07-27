@@ -394,16 +394,18 @@ class QuickTest(object):
         url = self.ixnObj.httpHeader + eventSchedulerHandle
         self.ixnObj.delete(url)
 
-    def configQuickTest(self, quickTestName):
+    def configQuickTest(self, quickTestName, numOfTrials=1):
         """
         Description
             Configure a quick test
 
         Parameter
             quickTestName: <str>: name of the quick test to configure
+            numOfTrials: <int>: number of iterations to run the quick test, default is 1
 
         Example
             configQuickTest("Macro_17_57_14_294")
+            configQuickTest("Macro_17_57_14_294", numOfTrials=2)
 
         Return
             event scheduler handle on success or exception on failure
@@ -416,6 +418,6 @@ class QuickTest(object):
         self.ixnObj.post(url, data={"enabled": "true", "itemId": quickTestName, "itemName": quickTestName})
 
         url = self.ixnObj.httpHeader + eventSchedulerHandle + '/testConfig'
-        self.ixnObj.patch(url, data={"numTrials": 1})
+        self.ixnObj.patch(url, data={"numTrials": numOfTrials})
 
         return eventSchedulerHandle

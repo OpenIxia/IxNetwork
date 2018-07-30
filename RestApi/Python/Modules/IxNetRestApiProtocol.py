@@ -298,6 +298,11 @@ class Protocol(object):
             else:
                 # Default to counter
                 multivalueType = 'counter'
+
+            if 'macAddressMultivalueType' in kwargs and kwargs['macAddressMultivalueType'] == 'random':
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
+                return
+
             self.configMultivalue(multivalue, multivalueType, data=kwargs['macAddress'])
 
             # Config Mac Address Port Step
@@ -537,6 +542,11 @@ class Protocol(object):
             else:
                 # Default to counter
                 multivalueType = 'counter'
+
+            if 'ipv4AddressMultivalueType' in kwargs and kwargs['ipv4AddressMultivalueType'] == 'random':
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
+                return
+
             self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv4Address'])
 
         # Config IPv4 port step
@@ -2443,29 +2453,37 @@ class Protocol(object):
             Get the index ID of the IP address.
 
         Parameter
-            ipAddress: <str>: The IP address to search for its index .
+            ipAddress: <str>: The IPv4|IPv6 address to search for its index.
+
+        Return
+            None or the IP address index number (based one)
         """
-        queryData = {'from': '/',
-                    'nodes': [{'node': 'topology',    'properties': [], 'where': []},
-                              {'node': 'deviceGroup', 'properties': [], 'where': []},
-                              {'node': 'ethernet',  'properties': [], 'where': []},
-                              {'node': 'ipv4',  'properties': ['address'], 'where': []},
-                              {'node': 'ipv6',  'properties': ['address'], 'where': []},
-                              ]}
+        topologyList = self.ixnObj.get(self.ixnObj.sessionUrl+'/topology')
+        for topology in topologyList.json():
+            topologyObj = topology['links'][0]['href']
+            deviceGroupList = self.ixnObj.get(self.ixnObj.httpHeader+topologyObj+'/deviceGroup')
+            for deviceGroup in deviceGroupList.json():
+                deviceGroupObj = deviceGroup['links'][0]['href']
+                ethernetList = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet')
+                for ethernet in ethernetList.json():
+                    ethernetObj = ethernet['links'][0]['href']
+                    if '.' in ipAddress:
+                        ipList = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/ipv4')
+                    if ':' in ipAddress:
+                        ipList = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/ipv6')   
 
-        queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
-        if '.' in ipAddress:
-            multivalue = queryResponse.json()['result'][0]['topology']
-        if ':' in ipAddress:
-            multivalue = queryResponse.json()['result'][0]['topology'][0]['deviceGroup'][0]['ethernet'][0]['ipv6'][0]['address']
-
-        # TODO:
-        # Loop through all topology and search for the ipAddress
-
-        response = self.ixnObj.get(self.ixnObj.httpHeader+multivalue)
-        valueList = response.json()['values']
-        index = response.json()['values'].index(ipAddress)
-        return index
+                    for ip in ipList.json():
+                        ipObj = ip['links'][0]['href']
+                        response = self.ixnObj.get(self.ixnObj.httpHeader+ipObj)
+                        ipMultivalue = response.json()['address']
+                        response = self.ixnObj.get(self.ixnObj.httpHeader+ipMultivalue)
+                        ipValueList = response.json()['values']
+                        for index,ip in enumerate(ipValueList):
+                            if ipAddress in ipValueList:
+                                index = ipValueList.index(ipAddress)
+                                print(index, ipAddress)
+                                # Return index number using based one. Not based zero.
+                                return index+1
 
     def getIpv4ObjByPortName(self, portName=None):
         """
@@ -3089,7 +3107,6 @@ class Protocol(object):
             topologyObj = response.json()['links'][0]['href']
             response = self.ixnObj.get(topology+'/deviceGroup', silentMode=True)
             deviceGroupList = ['%s/%s/%s' % (topology, 'deviceGroup', str(i["id"])) for i in response.json()]
-
             topologyDict = {}
             topology = []
             deviceGroupObjects = []
@@ -5075,6 +5092,11 @@ class Protocol(object):
             else:
                 # Default to counter
                 multivalueType = 'counter'
+
+            if 'ipv6AddressMultivalueType' in kwargs and kwargs['ipv6AddressMultivalueType'] == 'random':
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
+                return
+
             self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv6Address'])
 
             # Config IPv6 port step

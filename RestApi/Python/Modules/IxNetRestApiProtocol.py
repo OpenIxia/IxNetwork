@@ -2458,32 +2458,32 @@ class Protocol(object):
         Return
             None or the IP address index number (based one)
         """
-        topologyList = self.ixnObj.get(self.ixnObj.sessionUrl+'/topology')
+        topologyList = self.ixnObj.get(self.ixnObj.sessionUrl + '/topology')
         for topology in topologyList.json():
             topologyObj = topology['links'][0]['href']
-            deviceGroupList = self.ixnObj.get(self.ixnObj.httpHeader+topologyObj+'/deviceGroup')
+            deviceGroupList = self.ixnObj.get(self.ixnObj.httpHeader + topologyObj + '/deviceGroup')
             for deviceGroup in deviceGroupList.json():
                 deviceGroupObj = deviceGroup['links'][0]['href']
-                ethernetList = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet')
+                ethernetList = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj + '/ethernet')
                 for ethernet in ethernetList.json():
                     ethernetObj = ethernet['links'][0]['href']
                     if '.' in ipAddress:
-                        ipList = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/ipv4')
+                        ipList = self.ixnObj.get(self.ixnObj.httpHeader + ethernetObj + '/ipv4')
                     if ':' in ipAddress:
-                        ipList = self.ixnObj.get(self.ixnObj.httpHeader+ethernetObj+'/ipv6')   
+                        ipList = self.ixnObj.get(self.ixnObj.httpHeader + ethernetObj + '/ipv6')
 
                     for ip in ipList.json():
                         ipObj = ip['links'][0]['href']
-                        response = self.ixnObj.get(self.ixnObj.httpHeader+ipObj)
+                        response = self.ixnObj.get(self.ixnObj.httpHeader + ipObj)
                         ipMultivalue = response.json()['address']
-                        response = self.ixnObj.get(self.ixnObj.httpHeader+ipMultivalue)
+                        response = self.ixnObj.get(self.ixnObj.httpHeader + ipMultivalue + '?includes=values')
                         ipValueList = response.json()['values']
-                        for index,ip in enumerate(ipValueList):
+                        for index, ip in enumerate(ipValueList):
                             if ipAddress in ipValueList:
                                 index = ipValueList.index(ipAddress)
                                 print(index, ipAddress)
                                 # Return index number using based one. Not based zero.
-                                return index+1
+                                return index + 1
 
     def getIpv4ObjByPortName(self, portName=None):
         """

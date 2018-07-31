@@ -3110,79 +3110,68 @@ class Protocol(object):
             topologyDict = {}
             topology = []
             deviceGroupObjects = []
-            isHostIpFound = False
 
             for deviceGroup in deviceGroupList:
                 deviceGroupObj = '/api' + deviceGroup.split('/api')[1]
                 response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=True)
                 ethernetList = ['%s/%s/%s' % (deviceGroup, 'ethernet', str(i["id"])) for i in response.json()]
+                isHostIpFound = False
                 for ethernet in ethernetList:
-                    isHostIpFound = False
                     ipList = []
 
                     # IPv4
                     if '.' in hostIp:
                         response = self.ixnObj.get(ethernet+'/ipv4', silentMode=True)
                         ipList = ['%s/%s/%s' % (ethernet, 'ipv4', str(i["id"])) for i in response.json()]
-                        if ipList:
-                            #for ipv4Obj in ipv4List:
-                            for ipv4Obj in ipList:
-                                response = self.ixnObj.get(ipv4Obj)
-                                multivalue = response.json()['address']
-                                ipv4HostList = self.getMultivalueValues(multivalue)
-                                if hostIp in ipv4HostList:
-                                    if 'topology' not in topologyDict:
-                                        topologyDict = {'topology': topologyObj, 'deviceGroup': []}
 
-                                    deviceGroupObjects.append(deviceGroupObj)
-                                    deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
-                                    deviceGroupObjects.append('/api'+ipList[0].split('/api')[1])
-                                    isHostIpFound = True
-
-                    # IPv6
                     if ':' in hostIp:
                         response = self.ixnObj.get(ethernet+'/ipv6', silentMode=True)
                         ipList = ['%s/%s/%s' % (ethernet, 'ipv6', str(i["id"])) for i in response.json()]
-                        if ipList:
-                            for ipv6Obj in ipList:
-                                response = self.ixnObj.get(ipv6Obj)
-                                multivalue = response.json()['address']
-                                ipv6HostList = self.getMultivalueValues(multivalue)
-                                if hostIp in ipv6HostList:
-                                    if 'topology' not in topologyDict:
-                                        topologyDict = {'topology': topologyObj, 'deviceGroup': []}
 
-                                    deviceGroupObjects.append(deviceGroupObj)
-                                    deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
-                                    deviceGroupObjects.append('/api'+ipList[0].split('/api')[1])
-                                    isHostIpFound = True
+                    if ipList:
+                        for ipObj in ipList:
+                            response = self.ixnObj.get(ipObj)
+                            multivalue = response.json()['address']
+                            ipHostList = self.getMultivalueValues(multivalue)
 
-                    if isHostIpFound == False:
-                        continue
+                            if hostIp in ipHostList:
+                                if 'topology' not in topologyDict:
+                                    topologyDict = {'topology': topologyObj, 'deviceGroup': []}
 
-                    for layer3Ip in ipList:
-                        url = layer3Ip+'?links=true'
-                        response = self.ixnObj.get(url, silentMode=True)
-                        for protocol in response.json()['links']:
-                            currentProtocol = protocol['href']                            
-                            if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+$', currentProtocol))):
-                                continue
-                            if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+/port$', currentProtocol))):
-                                continue
+                                deviceGroupObjects.append(deviceGroupObj)
+                                deviceGroupObjects.append('/api'+ethernet.split('/api')[1])
+                                deviceGroupObjects.append('/api'+ipList[0].split('/api')[1])
+                                isHostIpFound = True
 
-                            url = self.ixnObj.httpHeader+currentProtocol
+                        if isHostIpFound == False:
+                            continue
+
+                        for layer3Ip in ipList:
+                            url = layer3Ip+'?links=true'
                             response = self.ixnObj.get(url, silentMode=True)
-                            if response.json() == []:
-                                # The currentProtocol is not configured.
-                                continue
-                            else:
-                                deviceGroupObjects.append(response.json()[0]['links'][0]['href'])
+                            for protocol in response.json()['links']:
+                                currentProtocol = protocol['href']                            
+                                if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+$', currentProtocol))):
+                                    continue
+                                if (bool(re.match('^/api/.*(ipv4|ipv6)/[0-9]+/port$', currentProtocol))):
+                                    continue
 
+                                url = self.ixnObj.httpHeader+currentProtocol
+                                response = self.ixnObj.get(url, silentMode=True)
+                                if response.json() == []:
+                                    # The currentProtocol is not configured.
+                                    continue
+                                else:
+                                    deviceGroupObjects.append(response.json()[0]['links'][0]['href'])
+
+                # Done with the current Device Group. Reset deviceGroupObjects for the next DG.
                 if isHostIpFound:
                     topologyDict['deviceGroup'].insert(len(topologyDict['deviceGroup']), deviceGroupObjects)
                     deviceGroupObjects = []
 
-            if isHostIpFound:
+            # 'deviceGroup' exists if the ipHost is found.
+            # If exists, append it to the current Topology.
+            if 'deviceGroup' in topologyDict:
                 container.append(topologyDict)
 
         return container
@@ -3333,6 +3322,7 @@ class Protocol(object):
         """
         self.ixnObj.logInfo('\n{0}...'.format('\ngetProtocolObjFromProtocolList'), timestamp=False)
         objectHandle = []
+        protocolObjectHandleList = []
         for protocols in protocolList:
             if protocol in ['deviceGroup', 'ethernet', 'ipv4', 'ipv6']:
                 for endpointObj in protocols:
@@ -3352,13 +3342,18 @@ class Protocol(object):
                     index = [index for index, item in enumerate(protocols) if protocol in item]
                     protocolObjectHandle = protocols[index[0]]
                     self.ixnObj.logInfo(str([protocolObjectHandle]), timestamp=False)
-                    return [protocolObjectHandle]
+                    #return [protocolObjectHandle]
+                    protocolObjectHandleList.append(protocolObjectHandle)
 
+        return protocolObjectHandleList
+
+        '''
         if objectHandle:
             self.ixnObj.logInfo(str(objectHandle), timestamp=False)
             return objectHandle
         else:
             return None
+        '''
 
     def getProtocolObjFromHostIp(self, topologyList, protocol):
         """

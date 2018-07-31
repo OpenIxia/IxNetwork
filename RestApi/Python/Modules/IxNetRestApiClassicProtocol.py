@@ -192,6 +192,7 @@ class ClassicProtocol(object):
 
         Return
             A list or one or more congfigured protocols eg: "['ospf','bgp']"
+            return [] if no protocol is configured
         """
         time.sleep(5)
         configuredProtocolList = []
@@ -522,6 +523,7 @@ class ClassicProtocol(object):
 
         Return
             RouterInstanceList
+            Returns [] if no router instance exists
         """
         if protocol == 'bgp':
             nextNode = '/neighborRange'
@@ -564,7 +566,6 @@ class ClassicProtocol(object):
         Examples
             verifyProtocolSessionsUp(protcolViewName='ospf Aggregated Statistics')
             verifyProtocolSessionsUp(protcolViewName='ospf Aggregated Statistics',timeout=90)
-
         """
         totalSessionsDetectedUp = 0
         totalSessionsDetectedDown = 0

@@ -8,6 +8,7 @@
 #    A class object for IxNetwork Classic Framework.
 
 from IxNetRestApi import IxNetRestApiException
+import requests, json, os, re, sys, time, datetime, ast
 
 class ClassicProtocol(object):
     def __init__(self, ixnObj=None):
@@ -26,18 +27,18 @@ class ClassicProtocol(object):
     def getPortsByProtocol(self, protocolName):
         """
         Description
-            Based on the specified protocol, return all ports associated withe the protocol.
+            Based on the specified protocol, return all ports associated with the protocol.
 
-        Parameter
+        Parameters
            protocolName options:
               bfd, bgp, cfm, eigrp, elmi, igmp, isis, lacp, ldp, linkOam, lisp, mld,
               mplsOam, mplsTp, openFlow, ospf, ospfV3, pimsm, ping, rip, ripng, rsvp,
               static, stp
 
-         Returns: [chassisIp, cardNumber, portNumber]
+        Returns: [chassisIp, cardNumber, portNumber]
                   Example: [['192.168.70.11', '1', '1'], ['192.168.70.11', '1', '2']]
 
-         Returns [] if no port is configured with the specified protocolName
+        Returns [] if no port is configured with the specified protocolName
         """
         portList = []
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
@@ -64,9 +65,9 @@ class ClassicProtocol(object):
     def getProtocolListByPort(self, port):
         """
         Description
-            Get all enabled protocolss by the specified port.
+            Get all enabled protocols by the specified port.
 
-        Parameter
+        Parameters
             port: [chassisIp, cardNumber, portNumber] -> ['192.168.70.11', '2', '8']
         """
         self.ixnObj.logInfo('\ngetProtocolListByPort...')
@@ -102,96 +103,128 @@ class ClassicProtocol(object):
 
         return enabledProtocolList
 
-    def sendArpOnPort(self, vport):
+    def sendArpOnPort(self, portName):
         """
         Description
-            send Arp request on a vport interface.
+            Send Arp request on a specified port
 
-        Return
-            True on success Or False on failure
+        Parameters
+            portName: <str>: Name of the port. eg: '1/1/11'
+
+        Syntax
+            POST: http://10.154.162.94:11009/api/v1/sessions/1/ixnetwork/vport/operations/sendarp
+            DATA: {"arg1": "/api/v1/sessions/1/ixnetwork/vport/1"}
+
+        Examples
+            sendArpOnPort(portName='1/1/11')
         """
-        url = self.sessionUrl+'/vport/operations/sendarp'
-        response = self.post(url, data={'arg1': vport})
-        if self.waitForComplete(response, url+'/'+response.json()['id']) == False:
-            return False
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
 
-        return True
+        url = self.ixnObj.sessionUrl + '/vport/operations/sendarp'
+        response = self.ixnObj.post(url, data={'arg1': vport})
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
 
-    def getDiscoveredNeighborOnPort(self, vport):
+    def getDiscoverdNeighborOnPort(self, portName):
         """
         Description
-            Get Arp discovered neighbor on a vport interface.
+            Get Arp discovered neighbor on a specified port
+
+        Parameters
+            portName: <str>: Name of the port. eg: '1/1/11'
+
+        Syntax
+            GET: http://10.154.162.94:11009/api/v1/sessions/1/ixnetwork/vport/1/discoveredNeighbor/1
+
+        Examples
+            getDiscoverdNeighborOnPort(portName='1/1/11')
 
         Return
-            discoverd mac address on success or False on failure
+            Discovered mac address
         """
-        url = self.httpHeader+vport+'/discoveredNeighbor'
-        response = self.get(url)
-        if response == False: return False
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
 
-        url = self.httpHeader+response.json()[0]['links'][0]['href']
-        response = self.get(url)
-        if response == False: return False
+        url = vport + '/discoveredNeighbor'
+        response = self.ixnObj.get(url)
 
-        self.logInfo('Discovered Neighbor: %s' % response.json()['neighborMac'])
+        url = self.ixnObj.httpHeader + response.json()[0]['links'][0]['href']
+        response = self.ixnObj.get(url)
+
+        self.ixnObj.logInfo('Discovered Neighbor: %s' % response.json()['neighborMac'])
         return response.json()['neighborMac']
 
-    def startProtocolOnPort(self, protocol, port):
+
+    def startStopProtocolOnPort(self, protocol, portName, action='start'):
         """
         Description
-            Start a protocol on a speficied port
+            Start and stop a protocol on a specified port
+
+        Parameters
+            protocol: <str>: Protocol to start
+            portName: <str>: Name of the port, eg: '1/1/11'
+            action: <str>: start or stop a protocol, default is start
 
         Syntax
             POST: /api/v1/sessions/{id}/ixnetwork/vport/protocols/<protocol>
             DATA: {'args': 'api/v1/sessions/1/ixnetwork/vport/1'}
 
-        Return
-            True on success Or False on failure
+        Examples
+            startStopProtocolOnPort(protocol='ospf', portName='1/1/11')
+            startStopProtocolOnPort(protocol='ospf', portName='1/1/11', action='stop')
+
         """
-        url = self.sessionUrl+'/vport/protocols/'+protocol+'/operations/start'
-        port = port+'/protocols/'+protocol
-        response = self.post(url, data={'arg1': port})
-        if self.waitForComplete(response, url+'/'+response.json()['id']) == False:
-            return False
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
 
-        return True
+        url = self.ixnObj.sessionUrl + '/vport/protocols/' + protocol + '/operations/' + action
+        vport = vport + '/protocols/' + protocol
+        response = self.ixnObj.post(url, data={'arg1': vport})
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'])
 
-    def getConfiguredProtocolList(self):
+    def getConfiguredProtocols(self):
         """
         Description
             Get the list of protocols configured on vports.
 
         Return
-            protocl list on success Or False on failure
-            protocol list in format: "['ospf','bgp']"
+            A list or one or more congfigured protocols eg: "['ospf','bgp']"
         """
+        time.sleep(5)
         configuredProtocolList = []
-        node = '/router'
         protocolList = ['bfd', 'bgp', 'eigrp', 'isis', 'ldp', 'lisp',
                         'mplsOam', 'mplsTp', 'ospf', 'ospfV3', 'pimsm',
                         'rip', 'ripng']
-        response = self.get(self.sessionUrl + '/vport')
+        response = self.ixnObj.get(self.ixnObj.sessionUrl + '/vport')
         if response == False:
-            self.logError('No ports connected to chassis')
-            return False
+            raise IxNetRestApiException('No ports connected to chassis')
+
         vportList = ['%s' % vport['links'][0]['href'] for vport in response.json()]
         for eachVport in vportList:
             for eachProtocol in protocolList:
                 node = '/router'
-                if re.search('bgp', eachProtocol):
+                if re.search('bgp', eachProtocol, re.I):
                     node = '/neighborRange'
-                protocolResponse = self.get(self.httpHeader + eachVport + '/protocols/' + eachProtocol)
-                response = self.get(self.httpHeader + eachVport + '/protocols/' + eachProtocol + node)
+                protocolResponse = self.ixnObj.get(self.ixnObj.httpHeader + eachVport + '/protocols/' + eachProtocol)
+                response = self.ixnObj.get(self.ixnObj.httpHeader + eachVport + '/protocols/' + eachProtocol + node)
                 if response.json() != []:
                     if response.json()[0]['enabled'] == True and protocolResponse.json()['runningState'] == 'started':
                         configuredProtocolList.append(eachProtocol)
         configuredProtocolList = list(set(configuredProtocolList))
         return configuredProtocolList
 
-    def enableProtocolOnPort(self, protocol, port, enable=True):
+    def enableProtocolOnPort(self, protocol, portName, enable=True):
         """
-         Description
-            Enable protocol on a speficied port
+        Description
+           Enable protocol on a speficied port
+
+        Parameters
+            protocol: <str>: Protocol to start
+            portName: <str>: Name of the port eg: '1/1/11'
+            enable: <bool> enable or disable specified protocol. default is True
 
         Syntax
             PATCH: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/router/{id}
@@ -201,216 +234,228 @@ class ClassicProtocol(object):
             PATCH: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/actor/{id}
             PATCH: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/neighborPair/{id}
 
-        Params
-            protocol
-            port - vport in format
-
-        Return
-            True on success Or False on failure
+        Examples
+            enableProtocolOnPort(protocol='ospf', portName='1/1/11')
+            enableProtocolOnPort(protocol='ospf', portName='1/1/11', enable=False)
         """
-        count = 0
-        RouterInstanceList = self.getRouterInstanceOnProtocol(protocol=protocol, port=port)
-        self.logInfo('RouterInstanceList %s' % RouterInstanceList)
-        if RouterInstanceList == False:
-            self.logError('No Router instance exists in protocol %s' % protocol)
-            return False
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
+
+        RouterInstanceList = self.getRouterInstanceByPortAndProtocol(protocol=protocol, vport=vport)
+        if RouterInstanceList == []:
+            raise IxNetRestApiException('No Router instance exists in protocol {0}'.format(protocol))
 
         for eachRouterInstance in RouterInstanceList:
-            url = self.httpHeader+eachRouterInstance
-            if self.patch(url, data={"enabled": enable}) == False:
-                count += 1
+            url = self.ixnObj.httpHeader + eachRouterInstance
+            self.ixnObj.patch(url, data={"enabled": enable})
 
-        if count != 0:
-            return False
-
-        return True
-
-    def getProtocolSessionsStats(self, port, protocol):
+    def getProtocolSessionsStats(self, portName, protocol):
         """
         Description
-            Get protocol session status for a specified protocol on a port
+            Get a protocol session status for a specified protocol on a port
 
-        Parameter
-            protocol: <str>: The protocol name.
-            port:
+        Parameters
+            portName: <str>: Name of the Port to get the protocol session stats eg: "1/1/11"
+            protocol: <str>: Name of the protocol. eg: <ospf/ospfV3/bgp/isis/ripng/bfd/rip/ldp/mplsoam/pim>
+
+        Examples
+            getProtocolSessionsStats(portName='1/1/11', protocol='ospf')
 
         Return
-              protocol stats in dictionary format eg: {'ospf': {'Configured': 2, 'Up': 1}} or False on failure
+            Protocol stats in dictionary format eg: {'ospf': {'Configured': 2, 'Up': 1}}
         """
         protocolStats = {}
-        vport = self.getVportFromPhysicalPort(port=port)
-        if vport == False:
-            return False
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
+
         node = '/router'
-        if re.search('bgp',protocol):
+        if re.search('bgp', protocol, re.I):
             node = '/neighborRange'
-        response = self.get(self.httpHeader+vport+'/protocols/'+protocol+node)
-        if response != False:
-            if response.json()[0]['enabled'] == True:
-                if re.search('ospf',protocol):
+        protocolResponse = self.ixnObj.get(vport + '/protocols/' + protocol)
+        response = self.ixnObj.get(vport + '/protocols/' + protocol + node)
+
+        if response.json() != []:
+            if response.json()[0]['enabled'] == True and protocolResponse.json()['runningState'] == 'started':
+                if re.search('ospf', protocol, re.I):
                     protocolViewName = 'OSPF Aggregated Statistics'
-                elif re.search('ospfV3',protocol):
+                elif re.search('ospfV3', protocol, re.I):
                     protocolViewName = 'OSPFv3 Aggregated Statistics'
-                elif re.search('bgp',protocol):
+                elif re.search('bgp', protocol, re.I):
                     protocolViewName = 'BGP Aggregated Statistics'
-                elif re.search('isis',protocol):
+                elif re.search('isis', protocol, re.I):
                     protocolViewName = 'ISIS Aggregated Statistics'
-                elif re.search('ripng',protocol):
+                elif re.search('ripng', protocol, re.I):
                     protocolViewName = 'RIPng Aggregated Statistics'
-                elif re.search('bfd',protocol):
+                elif re.search('bfd', protocol, re.I):
                     protocolViewName = 'BFD Aggregated Statistics'
-                elif re.search('rip',protocol):
+                elif re.search('rip', protocol, re.I):
                     protocolViewName = 'RIP Aggregated Statistics'
-                elif re.search('ldp',protocol):
+                elif re.search('ldp', protocol, re.I):
                     protocolViewName = 'LDP Aggregated Statistics'
-                elif re.search('mplsoam',protocol):
+                elif re.search('mplsoam', protocol, re.I):
                     protocolViewName = 'MPLSOAM Aggregated Statistics'
-                elif re.search('pim',protocol):
+                elif re.search('pim', protocol, re.I):
                     protocolViewName = 'PIMSM Aggregated Statistics'
                 else:
-                    self.logError('No viewName defined')
-                    return False
+                    raise IxNetRestApiException('No viewName defined')
+            else:
+                raise IxNetRestApiException('No {0} protocol running or enabled on port {1}'.format(protocol, portName))
         else:
-            self.logError('No {0} protocol running or configured or enabled on port {1}'.format(protocol,port))
-            return False
+            raise IxNetRestApiException('No {0} protocol configured on port {1}'.format(protocol, portName))
 
-        stats = self.getStats(viewName=protocolViewName, displayStats=False)
-        if stats == False or stats == None:
-            return False
-        totalPorts = len(stats.keys()) ;# Length stats.keys() represents total ports.
-        self.logInfo('ProtocolViewName: {0}'.format(protocolViewName))
+        stats = self.statObj.getStats(viewName=protocolViewName, displayStats=False)
+
+        #totalPorts = len(stats.keys());  # Length stats.keys() represents total ports.
+        self.ixnObj.logInfo('ProtocolViewName: {0}'.format(protocolViewName))
         for session in stats.keys():
-            #sessionsUp = int(stats[session]['Sessions Up'])
-            if re.search('OSPF',protocolViewName):
+            if re.search('OSPF', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['Full Nbrs.'])
                 totalSessions = int(stats[session]['Sess. Configured'])
-            elif re.search('BGP',protocolViewName):
+            elif re.search('BGP', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['Sess. Up'])
                 totalSessions = int(stats[session]['Sess. Configured'])
-            elif re.search('ISIS',protocolViewName):
+            elif re.search('ISIS', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['L2 Sess. Up'])
                 totalSessions = int(stats[session]['L2 Sess. Configured'])
-            elif re.search('RIPng',protocolViewName) or re.search('BFD',protocolViewName):
+            elif re.search('RIPng', protocolViewName, re.I) or re.search('BFD', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['Routers Running'])
                 totalSessions = int(stats[session]['Routers Configured'])
-            elif re.search('RIP',protocolViewName):
+            elif re.search('RIP', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['Request Packet Tx'])
                 totalSessions = int(stats[session]['Routers Configured'])
-            elif re.search('LACP',protocolViewName):
+            elif re.search('LACP', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['LAG Member Ports UP'])
                 totalSessions = int(stats[session]['Total LAG Member Ports'])
-            elif re.search('LDP',protocolViewName):
+            elif re.search('LDP', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['Targeted Sess. Up'])
                 totalSessions = int(stats[session]['Targeted Sess. Configured'])
-            elif re.search('MPLS',protocolViewName):
+            elif re.search('MPLS', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['BFD Up-Sessions'])
                 totalSessions = int(stats[session]['BFD Session Count'])
-            elif re.search('PIM',protocolViewName):
+            elif re.search('PIM', protocolViewName, re.I):
                 sessionsUp = int(stats[session]['Rtrs. Running'])
                 totalSessions = int(stats[session]['Rtrs. Configured'])
-                #totalSessionsNotStarted = int(stats[session]['Sessions Not Started'])
+                # totalSessionsNotStarted = int(stats[session]['Sessions Not Started'])
             else:
-                return False
-            if stats[session]['Port Name'] == port:
-                self.logInfo('\n\tPortName: {0}\n\t   TotalSessionsUp: {1}\n\t   TotalSessionsConfigured: {2}'.format(stats[session]['Port Name'], sessionsUp, totalSessions), timestamp=False)
-                protocolStats[protocol] = {'Configured':totalSessions, 'Up':sessionsUp}
+                raise IxNetRestApiException('No protocol viewName found')
+
+            if stats[session]['Port Name'] == portName:
+                self.ixnObj.logInfo('\n\tPortName: {0}\n\t   TotalSessionsUp: {1}\n\t   TotalSessionsConfigured: {2}'.format(
+                    stats[session]['Port Name'], sessionsUp, totalSessions), timestamp=False)
+                protocolStats[protocol] = {'Configured': totalSessions, 'Up': sessionsUp}
         return protocolStats
 
-    def enableRouteRangeOnProtocol(self, port, protocol, routeRange, enable=True):
+    def enableRouteRangeOnProtocol(self, portName, protocol, routeRange, enable=True):
         """
         Description
             Enable a route range for a protocol on a speficied port
+
+        Parameters
+            portName: <str>: Name of the port eg: "1/1/11"
+            protocol: <str>: protocol to enable route range. eg: <OSPF|OSPFV3|BGP|ISIS|EIGRP|RIP|RIPng>
+            routeRange: <str>: route range <IPv4|IPv6> address
+            enable: <bool>: enable or disable route range, default is True (enable)
+
         Syntax
             PATCH: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/router/{id}/routeRange/{id}
             PATCH: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/neighborRange/{id}/routeRange/{id}
 
-        Params
-            protocol - <OSPF|OSPFV3|BGP|ISIS|EIGRP|RIP|RIPng>
-            port - vport in format
-            routeRange - IPv4|IPv6 address
-
-        Return
-            True on success Or False on failure
+        Examples:
+            enableRouteRangeOnProtocol(protName='1/1/11', protocol='ospf', routeRange='10.10.10.1')
+            enableRouteRangeOnProtocol(protName='1/1/11', protocol='ospfv3', routeRange='10::1', enable=True)
         """
-        RouterInstanceList = self.getRouterInstanceOnProtocol(protocol=protocol, port=port)
-        self.logInfo('Router list %s' % RouterInstanceList)
-        node = '/routeRange'
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
+
+        RouterInstanceList = self.getRouterInstanceByPortAndProtocol(protocol=protocol, vport=vport)
+        if RouterInstanceList == []:
+            raise IxNetRestApiException('No Router instance exists in protocol {0}'.format(protocol))
+
         args = 'firstRoute'
         if protocol == 'ospf':
             args = 'networkNumber'
         if protocol == 'bgp':
             args = 'networkAddress'
-        if RouterInstanceList == False:
-            self.logError('No Router instance exists in protocol %s' % protocol)
-            return False
 
         for eachRouterInstance in RouterInstanceList:
-            url = self.httpHeader + eachRouterInstance + '/routeRange'
-            response = self.get(url)
+            url = self.ixnObj.httpHeader + eachRouterInstance + '/routeRange'
+            response = self.ixnObj.get(url)
             RouteRangeInstanceList = ["%s" % (str(i["links"][0]["href"])) for i in response.json()]
-            self.logInfo('Route Range list %s' % RouteRangeInstanceList)
+            self.ixnObj.logInfo('Route Range list %s' % RouteRangeInstanceList)
+
             for eachRouteRange in RouteRangeInstanceList:
-                url = self.httpHeader + eachRouteRange
-                response = self.get(url)
+                url = self.ixnObj.httpHeader + eachRouteRange
+                response = self.ixnObj.get(url)
                 RouteRangeNetwork = response.json()[args]
                 if RouteRangeNetwork == routeRange:
-                    if self.patch(url, data={"enabled": enable}) == False:
-                        return False
+                    self.ixnObj.patch(url, data={"enabled": enable})
+                    return
+            raise IxNetRestApiException(
+                'Route range: {0} does not exist in protocol: {1} port: {2}'.format(routeRange, protocol, portName))
 
-                    return True
-            self.logError('Route range {0} does not exists in protocol {1}'.format(routeRange, protocol))
-            return False
-
-    def removeRouteRangeOnProtocol(self, port, protocol, routeRange):
+    def removeRouteRangeOnProtocol(self, portName, protocol, routeRange):
         """
         Description
             Remove a route range for a protocol on a speficied port
+
+        Parameters
+            portName: <str>: Name of the port eg: "1/1/11"
+            protocol: <str>: protocol to remove route range. eg: <OSPF|OSPFV3|BGP|ISIS|EIGRP|RIP|RIPng>
+            routeRange: <str>: route range <IPv4|IPv6> address
 
         Syntax
             DELETE: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/router/{id}/routeRange/{id}
             DELETE: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/neighborRange/{id}/routeRange/{id}
 
-        Params
-            protocol - <OSPF|OSPFV3|BGP|ISIS|EIGRP|RIP|RIPng>
-            port - vport in format
-            routeRange - IPv4|IPv6 address
-
-        Return
-            True on success Or False on failure
+        Examples:
+            removeRouteRangeOnProtocol(protName='1/1/11', protocol='ospf', routeRange='10.10.10.1')
+            removeRouteRangeOnProtocol(protName='1/1/11', protocol='ospfv3', routeRange='10::1')
         """
-        RouterInstanceList = self.getRouterInstanceOnProtocol(protocol=protocol, port=port)
-        self.logInfo('Router list %s' % RouterInstanceList)
-        node = '/routeRange'
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
+
+        RouterInstanceList = self.getRouterInstanceByPortAndProtocol(protocol=protocol, vport=vport)
+        if RouterInstanceList == []:
+            raise IxNetRestApiException('No Router instance exists in protocol {0}'.format(protocol))
+
+        self.ixnObj.logInfo('Router list %s' % RouterInstanceList)
         args = 'firstRoute'
         if protocol == 'ospf':
             args = 'networkNumber'
         if protocol == 'bgp':
             args = 'networkAddress'
-        if RouterInstanceList == False:
-            self.logError('No Router instance exists in protocol %s' % protocol)
-            return False
 
         for eachRouterInstance in RouterInstanceList:
-            url = self.httpHeader+eachRouterInstance+'/routeRange'
-            response = self.get(url)
+            url = self.ixnObj.httpHeader + eachRouterInstance + '/routeRange'
+            response = self.ixnObj.get(url)
             RouteRangeInstanceList = ["%s" % (str(i["links"][0]["href"])) for i in response.json()]
-            self.logInfo('Route Range list %s' % RouteRangeInstanceList)
+            self.ixnObj.logInfo('Route Range list %s' % RouteRangeInstanceList)
             for eachRouteRange in RouteRangeInstanceList:
-                url = self.httpHeader+eachRouteRange
-                response = self.get(url)
+                url = self.ixnObj.httpHeader + eachRouteRange
+                response = self.ixnObj.get(url)
                 RouteRangeNetwork = response.json()[args]
                 if RouteRangeNetwork == routeRange:
-                    if self.delete(url) == False:
-                        return False
+                    self.ixnObj.delete(url)
+                    return
 
-                    return True
-            self.logError('Route range {0} does not exists in protocol {1}'.format(routeRange,protocol))
-            return False
+            raise IxNetRestApiException(
+                'Route range: {0} does not exist in protocol: {1} port: {2}'.format(routeRange, protocol, portName))
 
-    def createRouteRangeOnProtocol(self, port, protocol, routeRange):
+    def createRouteRangeOnProtocol(self, portName, protocol, routeRange):
         """
         Description
             Create a route range for a protocol on a speficied port
+
+        Parameters
+            portName: <str>: Name of the port eg: "1/1/11"
+            protocol: <str>: protocol to create route range. eg: <OSPF|OSPFV3|BGP|ISIS|EIGRP|RIP|RIPng>
+            routeRange: <dict>: route range to configure <IPv4|IPv6> address
+            eg: {'enabled': 'True', 'mask': 24, 'numberOfRoutes': 5, 'networkNumber': '8.7.7.1', 'metric': 10, 'origin': 'externalType1'}
+                {'enabled': 'True', 'maskWidth': 64, 'numberOfRoute': 10, 'firstRoute': '7::1', 'metric': 10, 'nextHop': '7::2'}
 
         Syntax
             POST: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/ospf/router/{id}/routeRange/{id}
@@ -434,32 +479,35 @@ class ClassicProtocol(object):
             POST: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/bgp/neighborRange/{id}/routeRange/{id}
             DATA: {'enabled': 'True', 'fromPrefix': 64, 'thruPrefix': 64, 'numRoutes': 10, 'networkAddress': '7::1'}
 
-        Params
-            protocol - <OSPF|OSPFV3|BGP|EIGRP|RIP|RIPng>
-            port - vport in format
-            routeRange
+        Examples
+            createRouteRangeOnProtocol(portName='1/1/11', protocol='ospf', routeRange={'enabled': 'True', 'mask': 24,
+                                                                         'numberOfRoutes': 5, 'networkNumber': '8.7.7.1',
+                                                                         'metric': 10, 'origin': 'externalType1'}
+            createRouteRangeOnProtocol(portName='1/1/11', protocol='ospf', routeRange={'networkNumber': '8.7.7.1'}
 
-        Return
-            True on success Or False on failure
         """
-        RouterInstanceList = self.getRouterInstanceOnProtocol(protocol=protocol, port=port)
-        self.logInfo('Router list %s' % RouterInstanceList)
-        if RouterInstanceList == False:
-            self.logError('No Router instance exists in protocol %s' % protocol)
-            return False
+        vport = self.portMgmtObj.getVportObjectByName(portName)
+        if vport == None:
+            raise IxNetRestApiException('PortName {0} not connected to chassis'.format(portName))
 
-        routeRange = ast.literal_eval(routeRange)
+        RouterInstanceList = self.getRouterInstanceByPortAndProtocol(protocol=protocol, vport=vport)
+        if RouterInstanceList == []:
+            raise IxNetRestApiException('No Router instance exists in protocol {0}'.format(protocol))
+
+        self.ixnObj.logInfo('Router list %s' % RouterInstanceList)
+        #routeRange = ast.literal_eval(routeRange)
         for eachRouterInstance in RouterInstanceList:
-            url = self.httpHeader + eachRouterInstance + '/routeRange'
-            if self.post(url, data=routeRange) == False:
-                return False
+            url = self.ixnObj.httpHeader + eachRouterInstance + '/routeRange'
+            self.ixnObj.post(url, data=routeRange)
 
-            return True
-
-    def getRouterInstanceOnProtocol(self, protocol, port):
+    def getRouterInstanceByPortAndProtocol(self, protocol, vport):
         """
         Description
-            Get router instance for the specified protocol on a speficied port
+            Get router instance for the specified protocol on a speficied vport
+
+        Parameters
+            protocol: <str>: protocol to get a router instance
+            vport: <str>: vport instance eg: "/api/v1/sessions/1/ixnetwork/vport/1"
 
         Syntax
             GET: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/router
@@ -469,12 +517,11 @@ class ClassicProtocol(object):
             GET: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/actor
             GET: /api/v1/sessions/{id}/ixnetwork/vport/{id}/protocols/<protocol>/neighborPair
 
-        Params
-            protocol
-            port - vport in format
+        Examples
+            getRouterInstanceByPortAndProtocol(protocol='ospf', vport='/api/v1/sessions/1/ixnetwork/vport/1')
 
         Return
-            RouterInstanceList on success or False on failure
+            RouterInstanceList
         """
         if protocol == 'bgp':
             nextNode = '/neighborRange'
@@ -488,27 +535,20 @@ class ClassicProtocol(object):
             nextNode = '/link'
         else:
             nextNode = '/router'
-        url = self.httpHeader+port+'/protocols/'+protocol+nextNode
-        response = self.get(url)
-        if response == False:
-            self.logError('No such Protocols exists: %s' % protocol)
-            return False
-
+        url = vport+'/protocols/'+protocol+nextNode
+        response = self.ixnObj.get(url)
         RouterInstanceList = ["%s" % (str(i["links"][0]["href"])) for i in response.json()]
-        if RouterInstanceList != []:
-            return RouterInstanceList
-
-        return False
+        self.ixnObj.logInfo('Router Instance list %s' % RouterInstanceList)
+        return RouterInstanceList
 
     def verifyProtocolSessionsUp(self, protocolViewName='BGP Peer Per Port', timeout=60):
         """
         Description
-            Verify all specified protocols sessions for UP.
+            Verify the specified protocol sessions are UP or not.
 
-        Parameter
+        Parameters
             protocolViewName: <str>: The protocol view name. Get this name from API browser or in IxNetwork GUI statistic tabs.
-
-            timeout: <int>: The timeout value to declare as failed. Default = 60 seconds.
+            timeout: <int>: Duration to wait for the protocol sessions to up. Default = 60 seconds.
 
         protocolViewName options:
             'BFD Aggregated Statistics'
@@ -521,66 +561,108 @@ class ClassicProtocol(object):
             'PIMSM Aggregated Statistics'
             'MPLSOAM Aggregated Statistics'
 
-        Return
-            True on success Or False on failure
+        Examples
+            verifyProtocolSessionsUp(protcolViewName='ospf Aggregated Statistics')
+            verifyProtocolSessionsUp(protcolViewName='ospf Aggregated Statistics',timeout=90)
+
         """
         totalSessionsDetectedUp = 0
         totalSessionsDetectedDown = 0
         totalPortsUpFlag = 0
-        self.logInfo('Protocol view name %s' % protocolViewName)
+        self.ixnObj.logInfo('Protocol view name %s' % protocolViewName)
         time.sleep(10)
         for counter in range(1, timeout + 1):
-            stats = self.getStats(viewName=protocolViewName, displayStats=False)
-            totalPorts = len(stats.keys());  # Length stats.keys() represents total ports.
-            self.logInfo('ProtocolName: {0}'.format(protocolViewName))
+            stats = self.statObj.getStats(viewName=protocolViewName, displayStats=False)
+            totalPorts = len(stats.keys())  # Length stats.keys() represents total ports.
+            self.ixnObj.logInfo('ProtocolName: {0}'.format(protocolViewName))
             for session in stats.keys():
-                # sessionsUp = int(stats[session]['Sessions Up'])
-                if re.search('OSPF', protocolViewName):
+                if re.search('OSPF', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['Full Nbrs.'])
                     totalSessions = int(stats[session]['Sess. Configured'])
-                elif re.search('BGP', protocolViewName):
+                elif re.search('BGP', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['Sess. Up'])
                     totalSessions = int(stats[session]['Sess. Configured'])
-                elif re.search('ISIS', protocolViewName):
+                elif re.search('ISIS', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['L2 Sess. Up'])
                     totalSessions = int(stats[session]['L2 Sess. Configured'])
-                elif re.search('RIPng', protocolViewName) or re.search('BFD', protocolViewName):
+                elif re.search('RIPng', protocolViewName, re.I) or re.search('BFD', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['Routers Running'])
                     totalSessions = int(stats[session]['Routers Configured'])
-                elif re.search('RIP', protocolViewName):
+                elif re.search('RIP', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['Request Packet Tx'])
                     totalSessions = int(stats[session]['Routers Configured'])
-                elif re.search('LACP', protocolViewName):
+                elif re.search('LACP', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['LAG Member Ports UP'])
                     totalSessions = int(stats[session]['Total LAG Member Ports'])
-                elif re.search('LDP', protocolViewName):
+                elif re.search('LDP', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['Targeted Sess. Up'])
                     totalSessions = int(stats[session]['Targeted Sess. Configured'])
-                elif re.search('MPLS', protocolViewName):
+                elif re.search('MPLS', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['BFD Up-Sessions'])
                     totalSessions = int(stats[session]['BFD Session Count'])
-                elif re.search('PIM', protocolViewName):
+                elif re.search('PIM', protocolViewName, re.I):
                     sessionsUp = int(stats[session]['Rtrs. Running'])
                     totalSessions = int(stats[session]['Rtrs. Configured'])
                 # totalSessionsNotStarted = int(stats[session]['Sessions Not Started'])
                 totalExpectedSessionsUp = totalSessions
 
                 if totalExpectedSessionsUp != 0:
-                    self.logInfo(
+                    self.ixnObj.logInfo(
                         '\n\tPortName: {0}\n\t   TotalSessionsUp: {1}\n\t   ExpectedTotalSessionsup: {2}'.format(
                             stats[session]['Port Name'], sessionsUp, totalExpectedSessionsUp), timestamp=False)
                     if counter < timeout and sessionsUp != totalExpectedSessionsUp:
-                        self.logInfo('\t   Protocol Session is still down', timestamp=False)
+                        self.ixnObj.logInfo('\t   Protocol Session is still down', timestamp=False)
 
                     if counter < timeout and sessionsUp == totalExpectedSessionsUp:
                         totalPortsUpFlag += 1
                         if totalPortsUpFlag == totalPorts:
-                            self.logInfo('All protocol sessions are up!')
-                            return True
+                            self.ixnObj.logInfo('All protocol sessions are up!')
+                            return
 
             if counter == timeout and sessionsUp != totalExpectedSessionsUp:
-                self.logError('\nProtocol Sessions failed to come up')
-                return False
-            self.logInfo('\n\tWait {0}/{1} seconds\n'.format(counter, timeout), timestamp=False)
+                raise IxNetRestApiException('Protocol Sessions failed to come up')
+
+            self.ixnObj.logInfo('\n\tWait {0}/{1} seconds\n'.format(counter, timeout), timestamp=False)
             time.sleep(1)
 
+    def verifyAllConfiguredProtocolSessions(self, duration):
+        """
+        Description
+            verify all configured protocol sessions are UP or not
+
+        Parameters
+            duration: <int>: duration to wait for the protocol sessions to UP
+
+        Examples
+            verifyAllConfiguredProtocolSessions(duration=120)
+            verifyAllConfiguredProtocolSessions(120)
+        """
+        response = self.getConfiguredProtocols()
+        if response == []:
+            raise IxNetRestApiException('No protocols Running or Configured or Enabled')
+
+        for eachProtocol in response:
+            if re.search('ospf', eachProtocol,re.I):
+                viewName = 'OSPF Aggregated Statistics'
+            elif re.search('ospfV3', eachProtocol,re.I):
+                viewName = 'OSPFv3 Aggregated Statistics'
+            elif re.search('bgp', eachProtocol,re.I):
+                viewName = 'BGP Aggregated Statistics'
+            elif re.search('isis', eachProtocol,re.I):
+                viewName = 'ISIS Aggregated Statistics'
+            elif re.search('ripng', eachProtocol,re.I):
+                viewName = 'RIPng Aggregated Statistics'
+            elif re.search('bfd', eachProtocol,re.I):
+                viewName = 'BFD Aggregated Statistics'
+            elif re.search('rip', eachProtocol,re.I):
+                viewName = 'RIP Aggregated Statistics'
+            elif re.search('ldp', eachProtocol,re.I):
+                viewName = 'LDP Aggregated Statistics'
+            elif re.search('mplsoam', eachProtocol,re.I):
+                viewName = 'MPLSOAM Aggregated Statistics'
+            elif re.search('pim', eachProtocol,re.I):
+                viewName = 'PIMSM Aggregated Statistics'
+            else:
+                raise IxNetRestApiException('No viewName defined')
+
+            self.verifyProtocolSessionsUp(protocolViewName=viewName, timeout=duration)

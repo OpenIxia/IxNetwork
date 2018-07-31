@@ -293,17 +293,17 @@ class Protocol(object):
         if 'macAddress' in kwargs:
             multivalue = ethObjResponse.json()['mac']
             self.ixnObj.logInfo('Configure MAC address. Attribute for multivalueId = jsonResponse["mac"]')
+
+            # Default to counter
+            multivalueType = 'counter'
+
             if 'macAddressMultivalueType' in kwargs:
                 multivalueType = kwargs['macAddressMultivalueType']
-            else:
-                # Default to counter
-                multivalueType = 'counter'
 
-            if 'macAddressMultivalueType' in kwargs and kwargs['macAddressMultivalueType'] == 'random':
+            if multivalue == 'random':
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
-                return
-
-            self.configMultivalue(multivalue, multivalueType, data=kwargs['macAddress'])
+            else:
+                self.configMultivalue(multivalue, multivalueType, data=kwargs['macAddress'])
 
             # Config Mac Address Port Step
             if 'macAddressPortStep' in kwargs:
@@ -537,17 +537,17 @@ class Protocol(object):
         if 'ipv4Address' in kwargs:
             multivalue = ipv4Response.json()['address']
             self.ixnObj.logInfo('Configuring IPv4 address. Attribute for multivalueId = jsonResponse["address"]')
+
+            # Default to counter
+            multivalueType = 'counter'
+
             if 'ipv4AddressMultivalueType' in kwargs:
                 multivalueType = kwargs['ipv4AddressMultivalueType']
-            else:
-                # Default to counter
-                multivalueType = 'counter'
 
-            if 'ipv4AddressMultivalueType' in kwargs and kwargs['ipv4AddressMultivalueType'] == 'random':
+            if multivalueType == 'random':
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
-                return
-
-            self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv4Address'])
+            else:
+                self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv4Address'])
 
         # Config IPv4 port step
         # disabled|0.0.0.1
@@ -5078,17 +5078,17 @@ class Protocol(object):
         if 'ipv6Address' in kwargs:
             multivalue = ipv6Response.json()['address']
             self.ixnObj.logInfo('Configuring IPv6 address. Attribute for multivalueId = jsonResponse["address"]')
+
+            # Default to counter
+            multivalueType = 'counter'
+
             if 'ipv6AddressMultivalueType' in kwargs:
                 multivalueType = kwargs['ipv6AddressMultivalueType']
-            else:
-                # Default to counter
-                multivalueType = 'counter'
 
-            if 'ipv6AddressMultivalueType' in kwargs and kwargs['ipv6AddressMultivalueType'] == 'random':
+            if multivalueType == 'random':
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
-                return
-
-            self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv6Address'])
+            else:
+                self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv6Address'])
 
             # Config IPv6 port step
             # disabled|0.0.0.1

@@ -2949,7 +2949,7 @@ class Protocol(object):
             protocolObj = Protocol(mainObj)
             protocolList = protocolObj.getProtocolListByPortNgpf(port=['192.168.70.120', '1', '2'])
 
-            Subsequently, you could call getObjectHandleFromProtocolList to get any protocol object handle:
+            Subsequently, you could call getProtocolObjFromProtocolList to get any protocol object handle:
             obj = protocolObj.getProtocolObjFromProtocolList(protocolList['deviceGroup'], 'bgpIpv4Peer')
         
         Returns
@@ -3076,7 +3076,7 @@ class Protocol(object):
             protocolObj = Protocol(mainObj)
             objectList = protocolObj.getProtocolListByHostIpNgpf('1.1.1.1')
 
-            Subsequently, you could call getObjectHandleFromProtocolList to get any protocol object handle:
+            Subsequently, you could call getProtocolObjFromProtocolList to get any protocol object handle:
             obj = protocolObj.getProtocolObjFromProtocolList(protocolList['deviceGroup'], 'bgpIpv4Peer')
         
         Returns
@@ -3311,7 +3311,7 @@ class Protocol(object):
         Example usage:
             protocolObj = Protocol(mainObj)
             protocolList = protocolObj.getProtocolListByPortNgpf(port=['192.168.70.120', '1', '2'])
-            obj = protocolObj.getObjectHandleFromProtocolList(protocolList['deviceGroup'], 'bgpIpv4Peer')
+            obj = protocolObj.getProtocolObjFromProtocolList(protocolList['deviceGroup'], 'bgpIpv4Peer')
 
             If you expect multiple Device Groups in your Topology, you could filter by the Device Group name:
             obj = protocolObj.getProtocolObjFromProtocolList(protocolList['deviceGroup'], 'ethernet', deviceGroupName='DG2')
@@ -3321,11 +3321,16 @@ class Protocol(object):
             ['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/2/ethernet/1/ipv4/1/bgpIpv4Peer']
         """
         self.ixnObj.logInfo('\n{0}...'.format('\ngetProtocolObjFromProtocolList'), timestamp=False)
-        objectHandle = []
         protocolObjectHandleList = []
+
         for protocols in protocolList:
             if protocol in ['deviceGroup', 'ethernet', 'ipv4', 'ipv6']:
                 for endpointObj in protocols:
+                    # Include the deviceGroup object handle also
+                    if bool(re.match(r'(/api/v1/sessions/[0-9]+/ixnetwork/topology/[0-9]+/deviceGroup/[0-9]+)$', endpointObj)):
+                        protocolObjectHandleList.append(endpointObj)
+
+                    # Search for the protocol after the deviceGroup endpoint.
                     match = re.search(r'(/api/v1/sessions/[0-9]+/ixnetwork/topology/[0-9]+/deviceGroup/[0-9]+).*/%s/[0-9]+$' % protocol, endpointObj)
                     if match:
                         # A topology could have multiple Device Groups. Filter by the Device Group name.
@@ -3336,24 +3341,15 @@ class Protocol(object):
                                 self.ixnObj.logInfo(str([endpointObj]), timestamp=False)
                                 return [endpointObj]
                         else:
-                            objectHandle.append(endpointObj)
+                            protocolObjectHandleList.append(endpointObj)
             else:
                 if any(protocol in x for x in protocols):
                     index = [index for index, item in enumerate(protocols) if protocol in item]
                     protocolObjectHandle = protocols[index[0]]
-                    self.ixnObj.logInfo(str([protocolObjectHandle]), timestamp=False)
-                    #return [protocolObjectHandle]
+                    self.ixnObj.logInfo('Appending protocol: %s' % str([protocolObjectHandle]), timestamp=False)
                     protocolObjectHandleList.append(protocolObjectHandle)
 
         return protocolObjectHandleList
-
-        '''
-        if objectHandle:
-            self.ixnObj.logInfo(str(objectHandle), timestamp=False)
-            return objectHandle
-        else:
-            return None
-        '''
 
     def getProtocolObjFromHostIp(self, topologyList, protocol):
         """

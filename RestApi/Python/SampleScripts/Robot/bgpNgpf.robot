@@ -131,10 +131,9 @@ Configuring BGP in NGPF
     Log To Console  Configuring Traffic Item
     ${trafficItemStatus} =  trafficObj.Config Traffic Item  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}  
     ...  configElements=${configElements}
-    trafficObj.Regenerate Traffic Items  
 
     Log To Console  Starting traffic
-    trafficObj.Start Traffic  
+    trafficObj.Start Traffic   applyTraffic=True  regenerateTraffic=True 
 
     # Get the Traffic Item and ConfigElement objects incase you need to modify something.
     ${trafficItemObj} =  Get From List  ${trafficItemStatus}  0

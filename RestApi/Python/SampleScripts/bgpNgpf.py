@@ -229,7 +229,6 @@ try:
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,
-                           'duration': 10,
                            'frameRateType': 'percentLineRate',
                            'frameSize': 128,
                            'portDistribution': 'applyRateToAll',

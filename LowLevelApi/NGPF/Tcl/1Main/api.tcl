@@ -252,7 +252,8 @@ proc GetPortsAssignedToVports {} {
     return [list $portList $vportList]
 }
 
-proc AssignPorts {ixChassisIp {portList None}} {
+
+proc AssignPorts {ixChassisIp {portList None} {rawTraffic False}} {
     # This Proc assigns physical ports to vpors.
     #
     # With the ixChassis IP, this proc discover all the ports or
@@ -283,7 +284,23 @@ proc AssignPorts {ixChassisIp {portList None}} {
 	puts "\nError: AssignPorts: Port assigning to vport failed or ports not booting up."
 	return 1
     }
-    return 0
+
+    set vportList [ixNet getList [ixNet getRoot] vport]
+
+    if {$rawTraffic == "rawTraffic"} {
+	set protocolList {}
+	# Raw traffic vport format: /vport:1/protocols.  
+	# Not like this ::ixNet::OBJ-/vport:1/protocols
+	foreach vport $vportList {
+	    regexp ".*(/vport.*)" $vport - protocolVport
+	    lappend protocolList $protocolVport/protocols
+	}
+	return $protocolList
+    }
+
+    if {$rawTraffic != "rawTraffic"} {
+	return $vportList
+    }
 }
 
 proc ClearPortOwnership {{portList None}} {
@@ -3872,17 +3889,19 @@ proc RebootCardId { cardId } {
 }
 
 proc CreateTrafficItem {args} {
+    # raw, ipv4, ipv6, ethernetVlan
+
     set paramList {}
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
+	puts "currentArg: $currentArg"
 	switch -exact -- $currentArg {
 	    -name {
 		set name [lindex $args [expr $argIndex + 1]]
 		append paramList " -name $name"
 		incr argIndex 2
 	    }
-	    # ipv4, ipv6, ethernetVlan
 	    -trafficType {
 		set trafficType [lindex $args [expr $argIndex + 1]]
 		append paramList " -trafficType $trafficType"
@@ -3930,8 +3949,9 @@ proc CreateTrafficItem {args} {
     ixNet commit
 
     # Must set trafficType after creating a new Traffic Item or else it will default to raw.
-    ixNet setAttribute $trafficItemObj -trafficType ipv4
+    ixNet setAttribute $trafficItemObj -trafficType $trafficType
     ixNet commit
+
     set trafficItemObj [lindex [ixNet remapIds $trafficItemObj] 0]
     if {[info exists trackBy]} {
 	puts "Configuring tracking: $trackBy"
@@ -4023,5 +4043,38 @@ proc ConfigTrafficTransmissionControl {args} {
 	puts "Error: ConfigTrafficTransmissionControl: $errMsg"
 	return 1
     }
+    ixNet commit
+}
+
+proc addTrafficItemPacketStack {configElementObj protocolStackNameToAdd stackNumber action} {
+    # Example:
+    #    addTrafficItemPacketStack $configElementObj udp 3 append
+    # 
+    # Parameters
+    #    configElementObj: The configElementObj object handle
+    #    protocolStackNameToAdd: mpls, ipv4, etc.
+    #    stackNumber: The stack number to insert before or append after.
+    #    action: append or insert.
+    #            append goes after $stackNumber, insert goes before $stackNumber
+    
+    set index [lsearch -regexp [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $protocolStackNameToAdd]
+    set stack [lindex [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $index]
+    
+    puts "\tAdding stack: $stack"
+    set addToStackLevel [lindex [ixNet getList $configElementObj stack] $stackNumber]
+    ixNet exec append $addToStackLevel $stack
+    ixNet commit
+}
+
+proc configPacketHeaderField {stackObj args} {
+    # Example:
+    #ixNet setMultiAttribute $configElementObj/stack:\"mpls-2\"/field:\"mpls.label.value-1\" \
+    #	-valueType increment \
+    #	-startValue 1001 \
+    #	-stepValue 1 \
+    #	-countValue 1
+
+    puts "\nconfigPacketHeaderField: $stackObj\n\t$args"
+    eval ixNet setMultiAttribute $stackObj $args
     ixNet commit
 }

@@ -300,7 +300,7 @@ class Protocol(object):
             if 'macAddressMultivalueType' in kwargs:
                 multivalueType = kwargs['macAddressMultivalueType']
 
-            if multivalue == 'random':
+            if multivalueType == 'random':
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
             else:
                 self.configMultivalue(multivalue, multivalueType, data=kwargs['macAddress'])
@@ -563,12 +563,16 @@ class Protocol(object):
         if 'gateway' in kwargs:
             multivalue = ipv4Response.json()['gatewayIp']
             self.ixnObj.logInfo('Configure IPv4 gateway. Attribute for multivalueId = jsonResponse["gatewayIp"]')
+            # Default to counter
+            multivalueType = 'counter'
+
             if 'gatewayMultivalueType' in kwargs:
-                gatewayMultivalueType = kwargs['gatewayMultivalueType']
+                multivalueType = kwargs['gatewayMultivalueType']
+
+            if multivalueType == 'random':
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
             else:
-                # Default to counter
-                gatewayMultivalueType = 'counter'
-            self.configMultivalue(multivalue, gatewayMultivalueType, data=kwargs['gateway'])
+                self.configMultivalue(multivalue, multivalueType, data=kwargs['gateway'])
 
         # Config Gateway port step
         if 'gatewayPortStep' in kwargs:
@@ -2082,6 +2086,7 @@ class Protocol(object):
             deviceGroupObj: <str>: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
             ipType: <str>: ipv4|ipv6
             arpTimeout:  <int>: Timeout value. Default=60 seconds.
+            silentMode: <bool>: True to show less display on the terminal. False for debugging purposes.
 
         Requires
             self.verifyNgpfProtocolStarted()
@@ -2096,7 +2101,9 @@ class Protocol(object):
 
             ipProtocolList = ['%s/%s/%s' % (ethernetObj, ipType, str(i["id"])) for i in response.json()]
             if ipProtocolList == []:
-                raise IxNetRestApiException('Layer3 is not configured in {0}'.format(ethernetObj))
+                self.ixnObj.logWarning('{0} is not configured in {1}'.format(ipType, ethernetObj))
+                return unresolvedArpList
+                # raise IxNetRestApiException('Layer3 is not configured in {0}'.format(ethernetObj))
 
             for ipProtocol in ipProtocolList:
                 # match.group(1): /topology/1/deviceGroup/1/deviceGroup/1/ethernet/1/ipv4/1
@@ -2105,10 +2112,7 @@ class Protocol(object):
 
                 # result == 0 means passed. 1 means failed.
                 result = self.verifyNgpfProtocolStarted(ipProtocol, ignoreFailure=True)
-                if result == 1:
-                    raise IxNetRestApiException('Protocol session failed to start. ARP could not be resolved:\n\t{0}'.format(ipPorotocol))
 
-                self.ixnObj.logInfo('Verifying ARP now...')
                 for counter in range(1,arpTimeout+1):
                     sessionStatus = self.getSessionStatus(ipProtocol)
                     if counter < arpTimeout and 'down' in sessionStatus:
@@ -2150,11 +2154,11 @@ class Protocol(object):
         else:
             return unresolvedArpList
 
-    def verifyArp(self, ipType='ipv4', silentMode=True):
+    def verifyArp(self, ipType='ipv4', deviceGroupName=None , silentMode=True):
         """
         Description
             Verify for ARP resolvement on every enabled Device Group including inner Device Groups.
-
+            If device group name is specified , verify ARP on specified device group
             How it works:
                Each device group has a list of $sessionStatus: up, down or notStarted.
                If the deviceGroup has sessionStatus as "up", then ARP will be verified.
@@ -2169,7 +2173,8 @@ class Protocol(object):
            self.verifyNgpfProtocolStarted()
 
         Parameter
-            ipType:  ipv4 or ipv6
+            ipType: <str>: ipv4 or ipv6
+            deviceGroupName: <str>: Name of the device group to send arp request
             silentMode: <bool>: True to show less display on the terminal. False for debugging purposes.
         """
         self.ixnObj.logInfo('Verify ARP: %s' % ipType)
@@ -2185,6 +2190,12 @@ class Protocol(object):
                 deviceGroupObj = deviceGroup['href']
 
                 response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=silentMode)
+                deviceName = response.json()['name']
+                if deviceGroupName:
+                    if deviceName == deviceGroupName:
+                        pass
+                    else:
+                        continue
                 # Verify if the Device Group is enabled. If not, don't go further.
                 enabledMultivalue = response.json()['enabled']
                 response = self.getMultivalueValues(enabledMultivalue, silentMode=silentMode)
@@ -2196,7 +2207,7 @@ class Protocol(object):
                     response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=silentMode)
                     deviceGroupStatus = response.json()['status']
                     if deviceGroupStatus == 'notStarted':
-                        raise IxNetRestApiException('\nDevice Group is not started.')
+                        raise IxNetRestApiException('\nDevice Group is not started: {0}.'.format(deviceGroupObj))
 
                     if counter < timeout and deviceGroupStatus == 'starting':
                         self.ixnObj.logInfo('\tWait %d/%d' % (counter, timeout), timestamp=False)
@@ -2205,7 +2216,7 @@ class Protocol(object):
                     if counter < timeout and deviceGroupStatus in ['started', 'mixed']:
                         break
                     if counter == timeout and deviceGroupStatus not in ['started', 'mixed']:
-                        raise IxNetRestApiException('\nDevice Group failed to come up')
+                        raise IxNetRestApiException('\nDevice Group failed to come up: {0}.'.format(deviceGroupObj))
 
                 if deviceGroupStatus in ['started', 'mixed']:
                     startFlag = 1
@@ -5105,12 +5116,16 @@ class Protocol(object):
         if 'gateway' in kwargs:
             multivalue = ipv6Response.json()['gatewayIp']
             self.ixnObj.logInfo('Configure IPv6 gateway. Attribute for multivalueId = jsonResponse["gatewayIp"]')
+            # Default to counter
+            multivalueType = 'counter'
+
             if 'gatewayMultivalueType' in kwargs:
-                multivalueType = kwargs['gatewayMultivalueType']
+                multivalueType = kwargs['ipv6AddressMultivalueType']
+
+            if multivalueType == 'random':
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
             else:
-                # Default to counter
-                multivalueType = 'counter'
-            self.configMultivalue(multivalue, multivalueType, data=kwargs['gateway'])
+                self.configMultivalue(multivalue, multivalueType, data=kwargs['gateway'])
 
         # Config Gateway port step
         if 'gatewayPortStep' in kwargs:
@@ -5213,22 +5228,26 @@ class Protocol(object):
     def verifyDhcpClientBind(self, deviceGroupName=None, protocol=None, **kwargs):
         """
         Description
-            Check DHCP Client Bound/Idle/Not started and return count of Idle,Bound,notStarted,Bound Devices dictionary.
-            Using getEndpointObjByDeviceGroupName() to get dhcpv4client or dhcpv6client handle.
+            Check DHCP Client Bound/Idle and DHCP Client Bound Count.
 
         Parameters
-            deviceGroupName: <str>: The DeviceGroupName param is optional
-                             Example: deviceGroupName = 'dhcp'
-            protocol: <str>: Optional. It is the NGPF endpoint object name.
-                      Example: protocol = 'dhcpv4client'
+            deviceGroupName: <str>: Name of deviceGroup, if value None check for all deviceGroups
+                             Example: deviceGroupName = 'Device Group 4'
+            protocol: <str>: ipv4,ipv6. If value None check for ipv4 and ipv6
+                      Example: protocol = 'ipv4'
             kwargs:
                   portName: <str>: The virtual port name.
                             Example: portName = '1/2/9'
+
         Examples:
-            protocolObj.verifyDhcpClientBind(device=None, protocol=None, **kwargs)
+            protocolObj.verifyDhcpClientBind(deviceGroupName="DHCPv6 Client")
+			protocolObj.verifyDhcpClientBind(protocol="ipv4")
+			protocolObj.verifyDhcpClientBind(portName="1/2/9")
 
         Returns:
-              Dictionary {'IDLE': [], 'notStarted': [], 'Bound': [], 'boundCount': 0}
+              Dictionary {'Idle': {'Device Group 4': {'Client2': [1, 2, 3, 4]}, 'DHCPv6 Client': {'Client1': [3]}},
+                          'Bound': {'DHCPv6 Client': {'Client1': [1, 2, 4]}},   'boundCount': 3}
+
         """
         portName = kwargs.get('portName',None)
         if protocol == None:
@@ -5238,14 +5257,12 @@ class Protocol(object):
 
         boundCount = 0
         idleBoundDict = {}
-        idletempdict = {}
-        notStartedtempdict = {}
-        boundidletempdict = {}
-        tempList = []
+        ibList = []
+
         for protocol in protocols:
             self.ixnObj.logInfo('Verifying DHCP IDLE/BOUND/NOTSTARTED for {0} protocol'.format(protocol))
-            #Verify DHCP Bound for ipv4 and ipv6 protocols
             deviceList = []
+
             if portName:
                 #Get all deviceGroups configured with Port
                 ProtocolList = self.getProtocolListByPortNgpf(portName=portName)
@@ -5263,18 +5280,13 @@ class Protocol(object):
                         deviceList.append(deviceGroupObj['name'])
             else:
                 deviceList.append(deviceGroupName)
+                ethObjList = self.getEndpointObjByDeviceGroupName(deviceGroupName, 'ethernet')
+                if ethObjList == []:
+                    raise IxNetRestApiException("Device Group not configured")
 
             for eachDevice in deviceList:
                 dhcpClientObjList = []
-                if (protocol == 'ipv6'):
-                    #Get ethernet end point objects for dhcpv6
-                    ethObjList = self.getEndpointObjByDeviceGroupName(eachDevice, 'dhcpv6client')
-                else:
-                    # Get ethernet end point objects for dhcpv4
-                    ethObjList = self.getEndpointObjByDeviceGroupName(eachDevice, 'dhcpv4client')
-
-                if ethObjList == None:
-                    raise IxNetRestApiException("Device Group not configured")
+                ethObjList = self.getEndpointObjByDeviceGroupName(eachDevice, 'ethernet')
 
                 for ethObj in ethObjList:
                     ethObj = '/api'+ ethObj.split('/api')[1]
@@ -5287,43 +5299,31 @@ class Protocol(object):
                         dhcpClientObjList.append(dhcpClient['links'][0]['href'])
 
                 for dhcpClientObj in dhcpClientObjList:
+                    idleDhcpDict = {}
+                    boundDhcpDict = {}
                     #dhcpClientObj = '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/2/ethernet/1/dhcpv4client/1'
                     response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=name')
-                    dhcpObjName = response.json()['name']
+                    dhcpObjName = str(response.json()['name'])
                     response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=count')
                     dhcpClientObjDeviceCount = response.json()['count']
                     response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=discoveredAddresses')
                     discoveredAddressList =  response.json()['discoveredAddresses']
-                    response = self.ixnObj.get(self.ixnObj.httpHeader + dhcpClientObj + '?includes=sessionStatus')
-                    sessionStatusList =  response.json()['sessionStatus']
 
-                    idleList = []
-                    notStartedList = []
-                    boundList = []
-                    for count in range(dhcpClientObjDeviceCount):
-                        if('[Unresolved]' in discoveredAddressList[count] and sessionStatusList[count] == 'down'):
-                            idleList.append((count+1))
-                        elif('[Unresolved]' in discoveredAddressList[count] and sessionStatusList[count] == 'notStarted'):
-                            notStartedList.append(str(count+1))
-                        else:
-                            boundList.append(str(count+1))
-                            boundCount += 1
+                    idleList = [count+1 for count in range(dhcpClientObjDeviceCount) if('[Unresolved]' in discoveredAddressList[count])]
+                    boundList = [count+1 for count in range(dhcpClientObjDeviceCount) if('[Unresolved]' not in discoveredAddressList[count])]
 
-                    tempList.append(["IDLE",dhcpObjName,idleList])
-                    tempList.append(["Notstarted",dhcpObjName,notStartedList])
-                    tempList.append(["Bound",dhcpObjName,boundList])
+                    if idleList:
+                        idleDhcpDict[dhcpObjName] = idleList
+                        ibList.append(["Idle", eachDevice, idleDhcpDict])
+                    if boundList:
+                        boundDhcpDict[dhcpObjName] = boundList
+                        ibList.append(["Bound", eachDevice, boundDhcpDict])
 
-        for ele in tempList:
-            if ele[0] == 'IDLE':
-                idletempdict[ele[1]] = ele[2]
-            elif ele[0] == 'Notstarted':
-                notStartedtempdict[ele[1]] = ele[2]
-            elif ele[0] == 'Bound':
-                boundidletempdict[ele[1]] = ele[2]
+                    boundCount += len(boundList)
 
-        idleBoundDict['IDLE'] = idletempdict
-        idleBoundDict['Notstarted'] = notStartedtempdict
-        idleBoundDict['Bound'] = boundidletempdict
+        idleBoundDict['Idle'] = {str(ele[1]):ele[2] for ele in filter(lambda x:x[0]=='Idle',ibList)}
+        idleBoundDict['Bound'] = {str(ele[1]):ele[2] for ele in filter(lambda x:x[0]=='Bound',ibList)}
         idleBoundDict['boundCount'] = boundCount
+
         return idleBoundDict
 

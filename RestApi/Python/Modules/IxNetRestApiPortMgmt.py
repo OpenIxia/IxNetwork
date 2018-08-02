@@ -717,3 +717,23 @@ class PortMgmt(object):
             response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
             portType = response.json()['type']
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data={'media': mediaType})
+
+
+    def setTxMode(self, vportList='all', txMode='interleaved', timeout=70):
+        """
+        Description
+           set TxMode of the vports
+
+        Parameter
+           vportList: <list>: vports to set the transmitMode on.  Default = all
+           txMode:    <str>: transmit mode setting -  can be either 'interleaved' or 'sequential'
+           timeout:   <int>: the timeout value to declare as failed. Default=70 seconds.
+        """
+        if vportList == 'all':
+            response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+            vportList = ['%s' % vport['links'][0]['href'] for vport in response.json()]
+
+        # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+        print('\n---- setTxMode vportList:  ', vportList)
+        for eachVport in vportList:
+            self.ixnObj.patch(self.ixnObj.httpHeader+eachVport, data={'txMode':txMode})

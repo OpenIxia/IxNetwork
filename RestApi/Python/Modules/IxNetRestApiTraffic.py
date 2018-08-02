@@ -330,14 +330,18 @@ class Traffic(object):
            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
         transmissionControlData = {}
-        for item in ['transmissionType', 'bursePacketCount', 'frameCount', 'duration']:
+        for item in ['burstPacketCount', 'duration', 'frameCount',\
+            'interBurstGap', 'interStreamGap', 'iterationCount', 'minGapBytes', 'repeatBurst',\
+            'startDelay','enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits','startDelayUnits', 'type']:
             if item in configElements.keys() :
                 # These attributes are int type
-                if item in ['bursePacketCount', 'frameCount', 'duration']: 
+                if item in ['burstPacketCount', 'duration', 'frameCount',\
+                'interBurstGap', 'interStreamGap', 'iterationCount', 'minGapBytes', 'repeatBurst',\
+                'startDelay']: 
                     transmissionControlData.update({item: int(configElements[item])})
 
-                if item == 'transmissionType':
-                    transmissionControlData.update({'type': str(configElements[item])})
+                if item in ['enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits','startDelayUnits', 'type']:
+                    transmissionControlData.update({item: str(configElements[item])})
 
         if transmissionControlData != {}:
             self.ixnObj.patch(configElementObj+'/transmissionControl', data=transmissionControlData)
@@ -350,7 +354,7 @@ class Traffic(object):
 
                 if item == 'frameRate': 
                     frameRateData.update({'rate': float(configElements[item])})
-
+                    
         if frameRateData != {}:
             self.ixnObj.patch(configElementObj+'/frameRate', data=frameRateData)
 

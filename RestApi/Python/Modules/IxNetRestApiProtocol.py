@@ -3300,16 +3300,16 @@ class Protocol(object):
            This is an internal API used after calling self.getProtocolListByPortNgpf().
            self.getProtocolListByPortNgpf() returns a dict containing a key called deviceGroup
            that contains all the device group protocols in a list.
-        
-           Use this API to get the protocol object handle by passing in the deviceGroup list and 
+
+           Use this API to get the protocol object handle by passing in the deviceGroup list and
            specify the NGPF protocol endpoint name.
 
         Parameters
-           protocolList: <list>: 
+           protocolList: <list>:
            protocol: <str>: The NGPF endpoint protocol name. View below:
            deviceGroupName: <str>: If there are multiple Device Groups within the Topology, filter
                             the Device Group by its name.
-        
+
          NGPF endpoint protocol names:
             'ancp', 'bfdv4Interface', 'bgpIpv4Peer', 'bgpIpv6Peer', 'dhcpv4relayAgent', 'dhcpv6relayAgent',
             'dhcpv4server', 'dhcpv6server', 'geneve', 'greoipv4', 'greoipv6', 'igmpHost', 'igmpQuerier',
@@ -3337,9 +3337,21 @@ class Protocol(object):
         for protocols in protocolList:
             if protocol in ['deviceGroup', 'ethernet', 'ipv4', 'ipv6']:
                 for endpointObj in protocols:
-                    # Include the deviceGroup object handle also
-                    if bool(re.match(r'(/api/v1/sessions/[0-9]+/ixnetwork/topology/[0-9]+/deviceGroup/[0-9]+)$', endpointObj)):
-                        protocolObjectHandleList.append(endpointObj)
+                    if protocol == 'deviceGroup':
+                        # Include the deviceGroup object handle also
+                        match = re.search(
+                            r'(/api/v1/sessions/[0-9]+/ixnetwork/topology/[0-9]+/deviceGroup/[0-9]+)$', endpointObj)
+
+                        if match:
+                            # A topology could have multiple Device Groups. Filter by the Device Group name.
+                            if deviceGroupName:
+                                deviceGroupObj = match.group(1)
+                                response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj, silentMode=True)
+                                if deviceGroupName == response.json()['name']:
+                                    self.ixnObj.logInfo(str([endpointObj]), timestamp=False)
+                                    return [endpointObj]
+                            else:
+                                protocolObjectHandleList.append(endpointObj)
 
                     # Search for the protocol after the deviceGroup endpoint.
                     match = re.search(r'(/api/v1/sessions/[0-9]+/ixnetwork/topology/[0-9]+/deviceGroup/[0-9]+).*/%s/[0-9]+$' % protocol, endpointObj)
@@ -3347,7 +3359,7 @@ class Protocol(object):
                         # A topology could have multiple Device Groups. Filter by the Device Group name.
                         if deviceGroupName:
                             deviceGroupObj = match.group(1)
-                            response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj, silentMode=True)
+                            response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj, silentMode=True)
                             if deviceGroupName == response.json()['name']:
                                 self.ixnObj.logInfo(str([endpointObj]), timestamp=False)
                                 return [endpointObj]

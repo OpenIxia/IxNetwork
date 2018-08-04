@@ -329,55 +329,46 @@ class Traffic(object):
            portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
+        transmissionControlData = {}
+        frameRateData = {}
+        frameRateDistribution = {}
+        for item in configElements.keys() :
+            # These attributes are int type
+            if item in ['burstPacketCount', 'duration', 'frameCount', 'interBurstGap', 'interStreamGap',
+                        'iterationCount', 'minGapBytes', 'repeatBurst', 'startDelay']: 
+                transmissionControlData.update({item: int(configElements[item])})
+
+            if item in ['enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits',
+                        'startDelayUnits', 'type']:
+                transmissionControlData.update({item: str(configElements[item])})
+
+            if item == 'frameRateType': 
+                frameRateData.update({'type': str(configElements[item])})
+
+            if item == 'frameRate': 
+                frameRateData.update({'rate': float(configElements[item])})
+
+            if item == 'portDistribution': 
+                frameRateDistribution.update({'portDistribution': configElements[item]})
+                
+            if item == 'streamDistribution': 
+                frameRateDistribution.update({'streamDistribution': configElements[item]})
+
         # Note: transmissionType is not an attribute in configElement. It is created to be more descriptive than 'type'.
         if 'transmissionType' in configElements:
             self.ixnObj.patch(configElementObj+'/transmissionControl', data={'type': configElements['transmissionType']})
 
-        transmissionControlData = {}
-        for item in ['burstPacketCount', 'duration', 'frameCount', 'interBurstGap', 'interStreamGap', 'iterationCount',
-                     'minGapBytes', 'repeatBurst', 'startDelay','enableInterBurstGap', 'enableInterStreamGap',
-                     'interBurstGapUnits','startDelayUnits', 'type']:
-
-            if item in configElements.keys() :
-                # These attributes are int type
-                if item in ['burstPacketCount', 'duration', 'frameCount', 'interBurstGap', 'interStreamGap',
-                            'iterationCount', 'minGapBytes', 'repeatBurst', 'startDelay']: 
-                    transmissionControlData.update({item: int(configElements[item])})
-                    
-                if item in ['enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits',
-                            'startDelayUnits', 'type']:
-                    transmissionControlData.update({item: str(configElements[item])})
-
         if transmissionControlData != {}:
             self.ixnObj.patch(configElementObj+'/transmissionControl', data=transmissionControlData)
 
-        frameRateData = {}
-        for item in ['frameRateType', 'frameRate']:
-            if item in configElements.keys() :
-                if item == 'frameRateType': 
-                    frameRateData.update({'type': str(configElements[item])})
-
-                if item == 'frameRate': 
-                    frameRateData.update({'rate': float(configElements[item])})
-                    
         if frameRateData != {}:
             self.ixnObj.patch(configElementObj+'/frameRate', data=frameRateData)
 
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
 
-        frameRateDistribution = {}
-        for item in ['portDistribution', 'streamDistribution']:
-            if item in configElements.keys() :
-                if item == 'portDistribution': 
-                    frameRateDistribution.update({'portDistribution': configElements[item]})
-
-                if item == 'streamDistribution': 
-                    frameRateDistribution.update({'streamDistribution': configElements[item]})
-
         if frameRateDistribution != {}:
-            self.ixnObj.patch(configElementObj+'/frameRateDistribution', data=frameRateDistribution)
-        
+            self.ixnObj.patch(configElementObj+'/frameRateDistribution', data=frameRateDistribution)        
 
     def getConfigElementObj(self, trafficItemObj=None, trafficItemName=None, endpointSetName=None):
         """

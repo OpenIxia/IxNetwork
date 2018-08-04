@@ -329,18 +329,23 @@ class Traffic(object):
            portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
+        # Note: transmissionType is not an attribute in configElement. It is created to be more descriptive than 'type'.
+        if 'transmissionType' in configElements:
+            self.ixnObj.patch(configElementObj+'/transmissionControl', data={'type': configElements['transmissionType']})
+
         transmissionControlData = {}
-        for item in ['burstPacketCount', 'duration', 'frameCount',\
-            'interBurstGap', 'interStreamGap', 'iterationCount', 'minGapBytes', 'repeatBurst',\
-            'startDelay','enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits','startDelayUnits', 'type']:
+        for item in ['burstPacketCount', 'duration', 'frameCount', 'interBurstGap', 'interStreamGap', 'iterationCount',
+                     'minGapBytes', 'repeatBurst', 'startDelay','enableInterBurstGap', 'enableInterStreamGap',
+                     'interBurstGapUnits','startDelayUnits', 'type']:
+
             if item in configElements.keys() :
                 # These attributes are int type
-                if item in ['burstPacketCount', 'duration', 'frameCount',\
-                'interBurstGap', 'interStreamGap', 'iterationCount', 'minGapBytes', 'repeatBurst',\
-                'startDelay']: 
+                if item in ['burstPacketCount', 'duration', 'frameCount', 'interBurstGap', 'interStreamGap',
+                            'iterationCount', 'minGapBytes', 'repeatBurst', 'startDelay']: 
                     transmissionControlData.update({item: int(configElements[item])})
-
-                if item in ['enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits','startDelayUnits', 'type']:
+                    
+                if item in ['enableInterBurstGap', 'enableInterStreamGap','interBurstGapUnits',
+                            'startDelayUnits', 'type']:
                     transmissionControlData.update({item: str(configElements[item])})
 
         if transmissionControlData != {}:
@@ -867,6 +872,40 @@ class Traffic(object):
 
         self.ixnObj.logInfo('configPacketHeaderFieldId:  fieldIdObj: %s' % stackIdObj+'/field/'+str(fieldId), timestamp=False)
         response = self.ixnObj.patch(self.ixnObj.httpHeader+stackIdObj+'/field/'+str(fieldId), data=data)
+
+    def getPacketHeaderAttributesAndValues(self, streamObj, packetHeaderName, fieldName):
+        """
+        Parameters
+           streamObj: <str>: configElementObj|highLevelStreamObj
+                      Ex: /traffic/trafficItem/{1}/configElement/{id} 
+                       or /traffic/trafficItem/{1}/highLevelStream/{id}
+
+           packetHeaderName: <str>: Example: ethernet, mpls, ipv4, etc. 
+
+           fieldName: <str>: <str>: Example: If packetHeaderName is ethernet, field names could be
+                                    destinationAddress, sourceAddress, etherType and pfcQueue.
+                                    You will have to know these field names. To view them, make your configurations
+                                    and then go on the API browser and go to:
+                                    /traffic/trafficItem/{1}/configElement/{id}/stack/{id}/field
+
+        Example:
+            data= trafficObj.getPacketHeaderAttributesAndValues('/traffic/trafficItem/1/configElement/1',
+                                                                'ethernet', 'sourceAddress')
+            data['singleValue'] = For single value.
+            data['startValue'] = If it is configured to increment.
+
+        Returns
+            All the attributes and values in JSON format.
+        """
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+streamObj+'/stack')
+        for eachStack in response.json():
+            stackHref = eachStack['links'][0]['href']
+            response = self.ixnObj.get(self.ixnObj.httpHeader+stackHref)
+            if packetHeaderName == response.json()['stackTypeId']:
+                response = self.ixnObj.get(self.ixnObj.httpHeader+stackHref+'/field')
+                for eachField in response.json():
+                    if fieldName == eachField['name']:
+                        return eachField
 
     def configEgressCustomTracking(self, trafficItemObj, offsetBits, widthBits):
         """

@@ -39,8 +39,8 @@ class Connect:
             Starting IxNetwork 8.50, https will be enforced even for Windows connection.
             If you still want to use http, you need to add -restInsecure to the IxNetwork.exe appliaction under "target".
 
-        Examples  
-            Right click on "IxNetwork API server", select properties and under target 
+        Examples
+            Right click on "IxNetwork API server", select properties and under target
             ixnetwork.exe -restInsecure -restPort 11009 -restOnAllInterfaces -tclPort 8009
 
         Parameters
@@ -64,7 +64,7 @@ class Connect:
            includeDebugTraceback: (bool): True: Include tracebacks in raised exceptions.
            sessionId: (str): The session ID on the Linux API server or Windows Connection Mgr to connect to.
            apiKey: (str): The Linux API server user account API-Key to use for the sessionId connection.
-           generateLogFile: True|False|<log file name>.  If you want to generate a log file, provide 
+           generateLogFile: True|False|<log file name>.  If you want to generate a log file, provide
                                 the log file name.
                                 True = Then the log file default name is ixNetRestApi_debugLog.txt
                                 False = Disable generating a log file.
@@ -84,7 +84,7 @@ class Connect:
                self.sessionUrl: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
                self.apiSessionId: /api/v1/sessions/{id}/ixnetwork
                self.jsonHeader: The default header: {"content-type": "application/json"}
-               self.apiKey: For Linux API server only. Automatically provided by the server when login 
+               self.apiKey: For Linux API server only. Automatically provided by the server when login
                             successfully authenticated.
                             You could also provide an API-Key to connect to an existing session.
                             Get the API-Key from the Linux API server user account.
@@ -94,7 +94,7 @@ class Connect:
                1> POST: https://{apiServerIp}/api/v1/auth/session
                   DATA: {"username": "admin", "password": "admin"}
                   HEADERS: {'content-type': 'application/json'}
-        
+
                2> POST: https://{apiServerIp:{port}/api/v1/sessions
                   DATA: {"applicationType": "ixnrest"}
                   HEADERS: {'content-type': 'application/json', 'x-api-key': 'd9f4da46f3c142f48dddfa464788hgee'}
@@ -290,7 +290,7 @@ class Connect:
         Description
            A HTTP POST function to create and start operations.
 
-        Parameters   
+        Parameters
            restApi: (str): The REST API URL.
            data: (dict): The data payload for the URL.
            headers: (str): The special header to use for the URL.
@@ -323,7 +323,7 @@ class Connect:
             if str(response.status_code).startswith('2') == False:
                 if ignoreError == False:
                     if 'errors' in response.json():
-                        errMsg = 'POST Exception error: {0}\n'.format(response.json()['errors'][0]['detail'])
+                        errMsg = 'POST Exception error: {0}\n'.format(response.json()['errors'])
                         self.logError(errMsg)
                         raise IxNetRestApiException(errMsg)
 
@@ -361,7 +361,7 @@ class Connect:
                 if ignoreError == False:
                     if not str(response.status_code).startswith('2'):
                         if response.json() and  'errors' in response.json():
-                            errMsg = 'PATCH Exception error: {0}\n'.format(response.json()['errors'][0]['detail'])
+                            errMsg = 'PATCH Exception error: {0}\n'.format(response.json()['errors'])
                             self.logError(errMsg)
                             raise IxNetRestApiException('PATCH error: {0}\n'.format(errMsg))
 
@@ -451,7 +451,7 @@ class Connect:
         """
         Description
            For Robot Framework support only.
-        
+
         Return
            The instance object.
         """
@@ -460,7 +460,7 @@ class Connect:
     def createWindowsSession(self, ixNetRestServerIp, ixNetRestServerPort='11009'):
         """
         Description
-           Connect to a Windows IxNetwork API Server to create a session URL. This is 
+           Connect to a Windows IxNetwork API Server to create a session URL. This is
            for both Windows and Windows server with IxNetwork Connection Manager.
            This will set up the session URL to use throughout the test.
 
@@ -481,11 +481,29 @@ class Connect:
             self.logInfo('Please wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
             response = self.post(url)
             # Just get the session ID number
-            sessionIdNumber = response.json()['links'][0]['href'].split('/')[-1]
-            sessionIdUrl = url+'/'+sessionIdNumber
-            response = self.get(url)
-            if response.json()[0]['state'] != 'ACTIVE':
-                raise IxNetRestApiException('\nError: New Windows session state failed to become ACTVIE state')
+            if type(response.json()) == list:
+                sessionIdNumber = response.json()[0]['links'][0]['href'].split('/')[-1]
+            else:
+                sessionIdNumber = response.json()['links'][0]['href'].split('/')[-1]
+
+            counterStop = 10
+            for counter in range(1, counterStop+1):
+                response = self.get(url+'/'+sessionIdNumber)
+                if type(response.json()) == list:
+                    currentState = response.json()[0]['state']
+                else:
+                    currentState = response.json()['state']
+
+                self.logInfo('\n\tNew Windows session current state: {0}'.format(currentState), timestamp=False)
+                if currentState != 'ACTIVE' and counter < counterStop:
+                    self.logInfo('\tWaiting {0}/{1} seconds'.format(counter, counterStop), timestamp=False)
+                    time.sleep(1)
+
+                if currentState != 'ACTIVE' and counter == counterStop:
+                    raise IxNetRestApiException('\nNew Windows session state failed to become ACTVIE state')
+
+                if currentState == 'ACTIVE' and counter < counterStop:
+                    break
 
             # Windows connection mgr takes additional time after becoming ACTIVE.
             self.logInfo('\tWait for Windows session to become ready')
@@ -522,7 +540,7 @@ class Connect:
         """
         Description
            An internal function to print info to stdout
-        
+
         Parameters
            msg: (str): The message to print.
         """
@@ -546,7 +564,7 @@ class Connect:
         """
         Description
            An internal function to print warnings to stdout.
-        
+
         Parameter
            msg: (str): The message to print.
         """
@@ -570,7 +588,7 @@ class Connect:
         """
         Description
            An internal function to print error to stdout.
-        
+
         Parameter
            msg: (str): The message to print.
         """
@@ -643,9 +661,9 @@ class Connect:
 
         if response.json() == []:
             raise IxNetRestApiException('waitForComplete: response is empty.')
-            
+
         if response.json() == '' or response.json()['state'] == 'SUCCESS':
-            return response 
+            return response
 
         if 'errors' in response.json():
             raise IxNetRestApiException(response.json()["errors"][0])
@@ -705,7 +723,7 @@ class Connect:
            username: (str): Login username. Default = admin.
            password: (str): Login password. Default = admin.
            verifySslCert: (str): Defalt: None.  The SSL Certificate for secure access verification.
- 
+
        Syntax
             POST: /api/v1/auth/session
         """
@@ -744,13 +762,13 @@ class Connect:
 
             if ':' not in self.httpHeader:
                 self.httpHeader + '/' + linuxServerIpPort
-            
+
             self.sessionUrl = self.sessionId+'/ixnetwork'
 
             # /api/v1/sessions/4/ixnetwork
             match = re.match('.*(/api.*)', self.sessionId)
             self.apiSessionId = match.group(1) + '/ixnetwork'
-            
+
             # 3: Start the new session
             response = self.post(self.sessionId+'/operations/start')
             if self.linuxServerWaitForSuccess(response.json()['url'], timeout=60) == 1:
@@ -955,7 +973,7 @@ class Connect:
             drilling down the Topology by its name and the specific the BGP attributes to modify at the
             BGPIpv4Peer node: flap, downtimeInSec, uptimeInSec.
             The from '/' is the entry point to the API tree.
-            Notice all the node. This represents the API tree from the / entry point and starting at 
+            Notice all the node. This represents the API tree from the / entry point and starting at
             Topology level to the BGP host level.
 
         Notes
@@ -1023,7 +1041,7 @@ class Connect:
         Parameters
            multivalueObj: (str): The multivalue object: /api/v1/sessions/{1}/ixnetwork/multivalue/208
            silentMode: (bool): True=Display the GET and status code. False=Don't display.
-        
+
         Requirements
            self.waitForComplete()
         """
@@ -1043,9 +1061,9 @@ class Connect:
         """
         Description
            Based on the object handle, get any property attribute and return the value.
-        
+
         Parameter
-           obj: <str:obj>: An object handle: 
+           obj: <str:obj>: An object handle:
                 For example: If you want the ethernet MTU, then pass in the ethernet object handle:
                             /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}
                             and set attribute='mtu'
@@ -1056,7 +1074,7 @@ class Connect:
               - All the attributes are listed on the right pane.
         """
         response = self.get(self.httpHeader + obj)
-        
+
         # value: Could be /api/v1/sessions/{id}/ixnetwork/multivalue/{id} or the actual value
         value = response.json()[attribute]
         if type(value) == str and 'multivalue' in value:
@@ -1074,8 +1092,8 @@ class Connect:
            and to troubleshoot.
         """
         for attr in ('stdin', 'stdout', 'stderr'):
-            setattr(sys, attr, getattr(sys, '__%s__' %attr))        
-            
+            setattr(sys, attr, getattr(sys, '__%s__' %attr))
+
     @staticmethod
     def prettyprintAllOperations(sessionUrl):
         """

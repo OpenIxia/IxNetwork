@@ -585,6 +585,18 @@ proc VerifyAllProtocolSessionsNgpf {} {
     return 0
 }
 
+proc GetTrafficItemNames {} {
+    # Return a list of the configured Traffic Item names
+
+    set trafficItemNames {}
+    set trafficItemObjList [ixNet getList [ixNet getRoot]/traffic trafficItem]
+    foreach trafficItemObj $trafficItemObjList {
+	set trafficItemName [ixNet getAttribute $trafficItemObj -name]
+	lappend trafficItemNames $trafficItemName
+    }
+    return $trafficItemNames
+}
+
 proc GetTrafficItemObjects {{trafficItemName None}} {
     # Get the Traffic Item objects: trafficItemObj, configElementObj and endpointSetObj
     #    - trafficItemObj: Configures bi-directional traffic, tracking, one-to-one meshing.

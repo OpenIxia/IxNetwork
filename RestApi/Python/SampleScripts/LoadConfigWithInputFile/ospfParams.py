@@ -26,14 +26,22 @@ params = {
 		    "ethernet": [
 			{
 			    "name": "Ethernet-1",
-			    "macAddress": {"start": "00:01:01:00:00:01", "direction": "increment", "step": "00:00:00:00:00:01"},
+			    "macAddress": {"start": "00:01:01:00:00:01",
+                                           "direction": "increment",
+                                           "step": "00:00:00:00:00:01"},
                             "macAddressPortStep": "disabled",
-			    "vlanId": {"start": 101, "direction": "increment", "step": 0},
+			    "vlanId": {"start": 101,
+                                       "direction": "increment",
+                                       "step": 0},
 			    "ipv4": [
 				{
 				    "name": "ipv4-2",
-				    "address": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1"},
-				    "gateway": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1"},
+				    "address": {"start": "1.1.1.1",
+                                                "direction": "increment",
+                                                "step": "0.0.0.1"},
+				    "gateway": {"start": "1.1.1.2",
+                                                "direction": "increment",
+                                                "step": "0.0.0.1"},
 				    "prefix": 24,
                                     "ipv4AddressPortStep": "disabled",
                                     "gatewayPortStep": "disabled",
@@ -57,7 +65,9 @@ params = {
 			    "name": "bgpRouteRange1",
 			    "multiplier": 100,
 			    "prefix": 32,
-			    "routeRange": {"start": "100.0.0.1", "direction": "increment", "step": "0.0.0.1"}
+			    "routeRange": {"start": "100.0.0.1",
+                                           "direction": "increment",
+                                           "step": "0.0.0.1"}
 			}
 		    ]
 		}
@@ -73,14 +83,22 @@ params = {
 		    "ethernet": [
 			{
 			    "name": "Ethernet-2",
-			    "macAddress": {"start": "00:01:01:00:00:02", "direction": "increment", "step": "00:00:00:00:00:01"},
+			    "macAddress": {"start": "00:01:01:00:00:02",
+                                           "direction": "increment",
+                                           "step": "00:00:00:00:00:01"},
                             "macAddressPortStep": "disabled",
-			    "vlanId": {"start": 101, "direction": "increment", "step": 0},
+			    "vlanId": {"start": 101,
+                                       "direction": "increment",
+                                       "step": 0},
 			    "ipv4": [
 				{
 				    "name": "ipv4-2",
-				    "address": {"start": "1.1.1.2", "direction": "increment", "step": "0.0.0.1"},
-				    "gateway": {"start": "1.1.1.1", "direction": "increment", "step": "0.0.0.1"},
+				    "address": {"start": "1.1.1.2",
+                                                "direction": "increment",
+                                                "step": "0.0.0.1"},
+				    "gateway": {"start": "1.1.1.1",
+                                                "direction": "increment",
+                                                "step": "0.0.0.1"},
 				    "prefix": 24,
                                     "ipv4AddressPortStep": "disabled",
                                     "gatewayPortStep": "disabled",
@@ -104,7 +122,9 @@ params = {
 			    "name": "bgpRouteRange2",
 			    "multiplier": 100,
 			    "prefix": 32,
-			    "routeRange": {"start": "200.0.0.1", "direction": "increment", "step": "0.0.0.1"}
+			    "routeRange": {"start": "200.0.0.1",
+                                           "direction": "increment",
+                                           "step": "0.0.0.1"}
 			}
 		    ]
 		}	
@@ -117,7 +137,12 @@ params = {
 	    "trafficType": "ipv4",
 	    "bidirectional": True,
 	    "trackBy": ["flowGroup0", "vlanVlanId0"],
-	    "endpoints": [{"name": "FlowGroup-1", "sources": ["/topology/1"], "destinations": ["/topology/2"]}],
+	    "endpoints": [
+                {"name": "FlowGroup-1",
+                 "sources": ["/topology/1"],
+                 "destinations": ["/topology/2"]
+             }
+            ],
 	    "configElements": [
 		{
 		    "transmissionType": "fixedFrameCount",

@@ -253,7 +253,7 @@ proc GetPortsAssignedToVports {} {
 }
 
 
-proc AssignPorts {ixChassisIp {portList None} {rawTraffic False}} {
+proc AssignPorts {ixChassisIp {portList None}} {
     # This Proc assigns physical ports to vpors.
     #
     # With the ixChassis IP, this proc discover all the ports or
@@ -284,23 +284,23 @@ proc AssignPorts {ixChassisIp {portList None} {rawTraffic False}} {
 	puts "\nError: AssignPorts: Port assigning to vport failed or ports not booting up."
 	return 1
     }
+    
+    return 0
+}
+
+proc getRawTrafficVports {} {
+    # Ordinary vports looks like this: ::ixNet::OBJ-/vport:1
+    # For raw traffic items, vports needs to be like this: ::ixNet::OBJ-/vport:1/protocols
 
     set vportList [ixNet getList [ixNet getRoot] vport]
-
-    if {$rawTraffic == "rawTraffic"} {
-	set protocolList {}
-	# Raw traffic vport format: /vport:1/protocols.  
-	# Not like this ::ixNet::OBJ-/vport:1/protocols
-	foreach vport $vportList {
-	    regexp ".*(/vport.*)" $vport - protocolVport
-	    lappend protocolList $protocolVport/protocols
-	}
-	return $protocolList
+    set protocolList {}
+    # Raw traffic vport format: /vport:1/protocols.  
+    # Not like this ::ixNet::OBJ-/vport:1/protocols
+    foreach vport $vportList {
+	regexp ".*(/vport.*)" $vport - protocolVport
+	lappend protocolList $protocolVport/protocols
     }
-
-    if {$rawTraffic != "rawTraffic"} {
-	return $vportList
-    }
+    return $protocolList
 }
 
 proc ClearPortOwnership {{portList None}} {
@@ -510,7 +510,6 @@ proc VerifyAllProtocolSessionsNgpf {} {
 			  ovsdbserver \
 			  pcc \
 			  pce \
-			  pcepBackupPCEs \
 			  pimV4Interface \
 			  ptp \
 			  rsvpteIf \
@@ -529,7 +528,6 @@ proc VerifyAllProtocolSessionsNgpf {} {
                 foreach ethernet [ixNet getList $deviceGroup ethernet] {
                     foreach ipv4 [ixNet getList $ethernet ipv4] {   
                         foreach currentProtocol [ixNet getList $ipv4 $protocol] {
-
                             for {set timer $startCounter} {$timer <= $timeEnd} {incr timer} {
 				# up up
                                 set currentStatus [ixNet getAttribute $currentProtocol -sessionStatus]
@@ -776,6 +774,32 @@ proc ConfigFramePayload {args} {
 }
 
 proc ConfigPortSpeed {args} {
+    # Parameters:
+    #    -port "$ixChassisIp 1 2"
+    #    -portList [list "$ixChassisIp 1 2" "$ixChassisIp 1 3"]
+    #
+    #    -cardType: ethernet, ethernetvm, hubndredGigLan, novusHundredGigLan, novusTenGigLan
+    #		    fc, fortyGigLan, OAM, pos, tenFourtyHundredGigLan, tenGigLan, tenGigWan
+    #    -speed
+    #        For -cardType ethernet
+    #           -autoNegotiate: True|False
+    #           -speed: auto, speed1000, speed100fd, speed100hd, speed10fd, speed10hd
+    #
+    #        For -cardType ethernetvm
+    #            -speed speed100, speed1000, speed10g, speed2000, speed20g, speed25g, speed3000, speed30g, 
+    #                   speed4000, speed5000, speed50g, speed6000, speed7000, speed9000
+    #
+    #        For -cardType hundredGigLan
+    #            -speed speed100g, speed40g   
+    #
+    #        For -cardType novusHundredGigLan
+    #           -enableAutoNegotiation: True|False
+    #           -speed: speed100g, speed10g, speed25g, speed40g, speed50g
+    #
+    #        For -cardType novusTenGigLan
+    #           -autoNegotiate: True|False
+    #           -speed: speed1000, speed100fd, speed10g, speed2.5g, speed5g
+    # 
     # Look below under -speed for parameter inputs.
     # Note: Some port speed doesn't have autonegotation.
 
@@ -788,25 +812,17 @@ proc ConfigPortSpeed {args} {
 		set port [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
 	    }
+	    -portList {
+		set portList [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -cardType {
+		# ethernet, ethernetvm, hubndredGigLan, novusHundredGigLan, novusTenGigLan
+		# fc, fortyGigLan, OAM, pos, tenFourtyHundredGigLan, tenGigLan, tenGigWan
+		set cardType [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
 	    -speed {
-		# For ethernet
-		#    -autoNegotiate: True|False
-		#    -speed: auto, speed1000, speed100fd, speed100hd, speed10fd, speed10hd
-		#
-		# For ethernetvm
-		#    -speed: speed100, speed1000, speed10g, speed2000, speed20g, speed25g, speed3000, speed30g, speed4000
-		#            speed5000, speed50g, speed6000, speed7000, speed9000
-		#
-		# For hundredGigLan
-		#    -speed: speed100g, speed40g   
-		#
-		# For novusHundredGigLan
-		#    -enableAutoNegotiation: True|False
-		#    -speed: speed100g, speed10g, speed25g, speed40g, speed50g
-		#
-		# For novusTenGigLan
-		#    -autoNegotiate: True|False
-		#    -speed: speed1000, speed100fd, speed10g, speed2.5g, speed5g
 		set speed [lindex $args [expr $argIndex + 1]]
 		append params " -speed $speed"
 		incr argIndex 2
@@ -814,7 +830,7 @@ proc ConfigPortSpeed {args} {
 	    -autonegotiate {
 		# True|False
 		set autonegotiate [lindex $args [expr $argIndex + 1]]
-		append params " -autonegotiate $autonegotiate
+		append params " -autonegotiate $autonegotiate"
 		incr argIndex 2
 	    }
 	    default {
@@ -823,10 +839,24 @@ proc ConfigPortSpeed {args} {
 	}
     }
 
-    puts "\nConfigPortSpeed: $params"
-    if {[catch {eval ixNet setMultiAttribute $vportObj/l1Config $params} errMsg]} {
-	puts "Error: ConfigPortSpeed: $params"
-	return 1
+    set vportList {}
+    if {[info exists portList]} {
+	set vportList [GetVportMappingToPhyPort [list $portList]]
+    }
+
+    if {[info exists port]} {
+	set vportList [GetVportMappingToPhyPort [list $port]]
+    }
+
+    puts "\nConfigPortSpeed: vports: $vportList"
+    foreach vportObj $vportList {
+	puts "\nConfigPortSpeed: $vportObj $params"
+	set result [eval ixNet setAttribute $vportObj/l1Config/$cardType $params]
+	puts "\tresult: $result"
+	if {$result != "::ixNet::OK"} {
+	    puts "\nError ConfigPortSpeed"
+	    return 1
+	}
     }
     ixNet commit
     return 0
@@ -907,6 +937,16 @@ proc StartTraffic { {includeApplyTraffic apply} } {
 	return 1
     }
     
+    return 0
+}
+
+proc StopTraffic { {includeApplyTraffic apply} } {
+    set traffic [ixNet getRoot]traffic
+    puts "StopTraffic ..."
+    catch {ixNet exec stop $traffic} errMsg
+    if {$errMsg != "::ixNet::OK"} {
+	return 1
+    }
     return 0
 }
 
@@ -1090,116 +1130,6 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 		for {set index 0} {$index <[llength $cellList]} {incr index} {
 		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index]
 		    puts "\t[join [lindex $columnList $index] _]: [lindex $cellList $index]"
-		}
-	    }
-	}
-    }  
-    ixNet setAttribute $view -enabled false
-    ixNet commit
-
-    return $getStats
-}
-
-proc GetStats_backup {{viewName "Traffic Item Statistics"}} {
-    # This will get the stats based on the $viewName stat that you want to retrieve.
-    # Stats will be returned in a keyed list.
-    #
-    # viewName options (Not case sensitive):
-    #    NOTE: Not all statistics are listed here.
-    #          You could get the statistic viewName directly from the IxNetwork GUI in the statistics.
-    #
-    #    'Port Statistics'
-    #    'Tx-Rx Frame Rate Statistics'
-    #    'Port CPU Statistics'
-    #    'Global Protocol Statistics'
-    #    'Protocols Summary'
-    #    'Port Summary'
-    #    'OSPFv2-RTR Drill Down'
-    #    'OSPFv2-RTR Per Port'
-    #    'IPv4 Drill Down'
-    #    'L2-L3 Test Summary Statistics'
-    #    'Flow Statistics'
-    #    'Traffic Item Statistics'
-    #    'IGMP Host Drill Down'
-    #    'IGMP Host Per Port'
-    #    'IPv6 Drill Down'
-    #    'MLD Host Drill Down'
-    #    'MLD Host Per Port'
-    #    'PIMv6 IF Drill Down'
-    #    'PIMv6 IF Per Port'
-
-    set root [ixNet getRoot]
-    set viewList [ixNet getList $root/statistics view]    
-    set statViewIndex [lsearch -nocase -regexp $viewList $viewName]
-    set view [lindex $viewList $statViewIndex]
-    puts "\nview: $view"
-    # Flow Statistics
-    set caption [ixNet getAttribute $view -caption]
-
-    ixNet setAttribute $view -enabled true
-    ixNet commit
-
-    set columnList [ixNet getAttribute ${view}/page -columnCaptions]
-    #puts "\n$columnList\n"
-    
-    set startTime 1
-    set stopTime 30
-    while {$startTime < $stopTime} {
-	set totalPages [ixNet getAttribute $view/page -totalPages]
-	if {[regexp -nocase "null" $totalPages]} {
-	            puts "\nGetStatView: Getting total pages for $view is not ready. $startTime/$stopTime"
-	            after 2000
-	} else {
-	            break
-	}
-    }
-    #puts "\ntotal Pages: $totalPages"
-
-    # Iterrate through each page 
-    set row 0
-    for {set currentPage 1} {$currentPage <= $totalPages} {incr currentPage} {
-	puts "\nGetStatView: Getting statistics on page: $currentPage/$totalPages. Please wait ..."
-
-	catch {ixNet setAttribute $view/page -currentPage $currentPage} errMsg
-	if {$errMsg != "::ixNet::OK"} {
-	            puts "\nGetStatView: Failed to get statistic for current page.\n"
-	            return 1
-	}
-	ixNet commit
-	
-	# Wait for statistics to populate on current page
-	set whileLoopStopCounter 0
-	while {[ixNet getAttribute $view/page -isReady] != "true"} {
-	    if {$whileLoopStopCounter == "5"} {
-		puts "\nGetStatView: Could not get stats"
-		return 1
-	    }
-	    if {$whileLoopStopCounter < 5} {
-		puts "\nGetStatView: Not ready yet.  Waiting $whileLoopStopCounter/5 seconds ..."
-		after 1000
-	    }
-	            incr whileLoopStopCounter
-	}
-	
-	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
-	set totalFlowStatistics [llength $pageList]
-
-	# totalPageList == The total amount of flow statistics
-	for {set pageListIndex 0} {$pageListIndex <= $totalFlowStatistics} {incr pageListIndex} {
-	    set rowList [lindex $pageList $pageListIndex] ;# second list of 1 ingress and x egress rows
-
-	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
-		# Increment the row number
-		incr row
-
-		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
-		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
-		#puts "\n--- cellList $pageListIndex: $cellList ---\n"
-		puts "  $row:"
-		for {set index 0} {$index <[llength $cellList]} {incr index} {
-		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index] 
-		    puts "\t[lindex $columnList $index]: [lindex $cellList $index]"
 		}
 	    }
 	}
@@ -1700,8 +1630,13 @@ proc GetVportMappingToPhyPort { portList} {
 	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
 	set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
 	set port "$chassis $card $portNum"
+	puts "GetVportMapping: $portList    $port"
+	#if {$portList == $port} {
+	#    append vportPhyPortList "$vport "
+	#}
+
 	if {[lsearch -regexp $portList $port] != -1} {
-	    append vportPhyPortList "$vport "
+	        append vportPhyPortList "$vport "
 	}
     }
     return $vportPhyPortList

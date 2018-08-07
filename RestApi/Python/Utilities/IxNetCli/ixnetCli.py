@@ -38,8 +38,9 @@ Author: Hubert Gee
  USAGE
     - Enter: python
     - Enter: from ixnetCli import *
-    - For help, enter: showcommands()
-    - Enter either: connecttowindows() or connecttolinux()
+    - If you need help, enter: showcommands()
+
+    - First thing you do is enter either: connecttowindows() or connecttolinux()
 
     - 3 options to build a configurations:
          1> configbgp('file.py')
@@ -56,11 +57,11 @@ UTILITIES
 """
 
 from __future__ import absolute_import, print_function, division
-import sys, inspect, traceback, platform
+import os, sys, inspect, traceback, platform
 import importlib
 from collections import OrderedDict
 
-sys.path.insert(0, '../../Modules')
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('Utilities/IxNetCli', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -420,13 +421,14 @@ try:
         #getstats(includeCrc=includeCrc)
 
     def runixncfgconfig(ixncfgConfigFile=None, chassisIp=None, portList=None, includeCrc=False):
-        """Loads a saved ixncfg config file, reassign ports, start protocols, verify protocols, start traffic and get stats.
+        """Loads a saved ixncfg config file, reassign ports, start protocols, verify protocols,
+        start traffic and get stats.
 
         :param ixncfgConfigFile: (str) The IxNetwork saved configuration in ixncfg format.
         :param chassisIp: (str) The chassis IP address.
         :param portList: (list) A list of list containing [[ixChassisIp, 1, 1], [ixChassisIp, 1, 2]]
                          Defaults to using ports configured in the saved config file.
-        :param includeCrc: (bool) True|False: To include CRC error stats."""
+        :param includeCrc: (bool): To include CRC error stats."""
         if middleware.connected == False:
             print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
             return
@@ -595,9 +597,9 @@ try:
         :param trafficItemName: (str) The Traffic Item name to enable."""
         middleware.trafficObj.enableTrafficItemByName(trafficItemName)
 
-    def starttraffic():
+    def starttraffic(applyTraffic=True, regenerateTraffic=True):
         """Start traffic."""
-        middleware.trafficObj.startTraffic()
+        middleware.trafficObj.startTraffic(applyTraffic=applyTraffic, regenerateTraffic=regenerateTraffic)
 
     def stoptraffic():
         """Stop traffic."""
@@ -824,98 +826,116 @@ try:
                                                   middleware.preference.licenseMode,
                                                   middleware.preference.licenseTier)
         middleware.ixn.newBlankConfig()
-        middleware.portMgmtObj.assignPorts(middleware.preference.portList, createVports=True)
+
+        if 'trafficType' in middleware.params and middleware.params['trafficType'] == 'raw':
+            vportList = middleware.portMgmtObj.assignPorts(middleware.preference.portList, createVports=True, rawTraffic=True)
+        else:
+            middleware.portMgmtObj.assignPorts(middleware.preference.portList)
 
         topologyObjects = {}
-        for topologyGroup in middleware.params['topology']:
-            topologyObj = middleware.protocolObj.createTopologyNgpf(portList=topologyGroup['ports'],
-                                                          topologyName=topologyGroup['name'])
+        if 'topology' in middleware.params:
+            for topologyGroup in middleware.params['topology']:
+                topologyObj = middleware.protocolObj.createTopologyNgpf(portList=topologyGroup['ports'],
+                                                              topologyName=topologyGroup['name'])
 
-            for deviceGroup in topologyGroup['deviceGroup']:
-                deviceGroupObj = middleware.protocolObj.createDeviceGroupNgpf(topologyObj,
-                                                                              multiplier=deviceGroup['multiplier'],
-                                                                              deviceGroupName=deviceGroup['name'])
+                for deviceGroup in topologyGroup['deviceGroup']:
+                    deviceGroupObj = middleware.protocolObj.createDeviceGroupNgpf(topologyObj,
+                                                                                  multiplier=deviceGroup['multiplier'],
+                                                                                  deviceGroupName=deviceGroup['name'])
 
 
-                for ethernet in deviceGroup['ethernet']:
-                    ethernetObj = middleware.protocolObj.configEthernetNgpf(
-                        deviceGroupObj,
-                        name = ethernet['name'],
-                        macAddress = {'start': ethernet['macAddress']['start'],
-                                      'direction': ethernet['macAddress']['direction'],
-                                      'step': ethernet['macAddress']['step']
-                                  },
-                        macAddressPortStep = ethernet['macAddress']['portStep'],
-                        vlanId = {'start': ethernet['vlanId']['start'],
-                                  'direction': ethernet['vlanId']['direction'],
-                                  'step': ethernet['vlanId']['step']
-                            })
+                    for ethernet in deviceGroup['ethernet']:
+                        ethernetObj = middleware.protocolObj.configEthernetNgpf(
+                            deviceGroupObj,
+                            name = ethernet['name'],
+                            macAddress = {'start': ethernet['macAddress']['start'],
+                                          'direction': ethernet['macAddress']['direction'],
+                                          'step': ethernet['macAddress']['step']
+                                      },
+                            macAddressPortStep = ethernet['macAddress']['portStep'],
+                            vlanId = {'start': ethernet['vlanId']['start'],
+                                      'direction': ethernet['vlanId']['direction'],
+                                      'step': ethernet['vlanId']['step']
+                                })
 
-                    if 'ipv4'in ethernet:
-                        for ipv4 in ethernet['ipv4']:
-                            ipv4Obj = middleware.protocolObj.configIpv4Ngpf(ethernetObj,
-                                                                            ipv4Address = {'start': ipv4['address']['start'],
-                                                                                           'direction': ipv4['address']['direction'],
-                                                                                           'step': ipv4['address']['step']},
-                                                                            ipv4AddressPortStep = ipv4['address']['portStep'],
-                                                                            gateway = {'start': ipv4['gateway']['start'],
-                                                                                       'direction': ipv4['gateway']['direction'],
-                                                                                       'step': ipv4['gateway']['step']},
-                                                                            gatewayPortStep = ipv4['gateway']['portStep'],
-                                                                            prefix = ipv4['prefix'])
+                        if 'ipv4'in ethernet:
+                            for ipv4 in ethernet['ipv4']:
+                                ipv4Obj = middleware.protocolObj.configIpv4Ngpf(ethernetObj,
+                                                                                ipv4Address = {'start': ipv4['address']['start'],
+                                                                                               'direction': ipv4['address']['direction'],
+                                                                                               'step': ipv4['address']['step']},
+                                                                                ipv4AddressPortStep = ipv4['address']['portStep'],
+                                                                                gateway = {'start': ipv4['gateway']['start'],
+                                                                                           'direction': ipv4['gateway']['direction'],
+                                                                                           'step': ipv4['gateway']['step']},
+                                                                                gatewayPortStep = ipv4['gateway']['portStep'],
+                                                                                prefix = ipv4['prefix'])
 
-                            if 'bgp' in ipv4:
-                                for bgp in ipv4['bgp']:
-                                    bgpObj = middleware.protocolObj.configBgp(ipv4Obj,
-                                                                              name = bgp['name'],
-                                                                              enableBgp = True,
-                                                                              dutIp = {'start': bgp['dutIp']['start'],
-                                                                                       'direction': bgp['dutIp']['direction'],
-                                                                                       'step': bgp['dutIp']['step']
-                                                                                   },
-                                                                              localAs2Bytes = bgp['localAs2Bytes'],
-                                                                              type = bgp['type'])
-                            if 'ospf' in ipv4:
-                                for ospf in ipv4['ospf']:
-                                    ospfObj = middleware.protocolObj.configOspf(ipv4Obj,
-                                                                                name = ospf['name'],
-                                                                                areaId = ospf['areaId'],
-                                                                                neighborIp =ospf['neighborIp'],
-                                                                                helloInterval = ospf['helloInterval'],
-                                                                                areaIdIp = ospf['areaIp'],
-                                                                                networkType = ospf['networkType'],
-                                                                                deadInterval = ospf['deadInterval'])
+                                if 'bgp' in ipv4:
+                                    for bgp in ipv4['bgp']:
+                                        bgpObj = middleware.protocolObj.configBgp(ipv4Obj,
+                                                                                  name = bgp['name'],
+                                                                                  enableBgp = True,
+                                                                                  dutIp = {'start': bgp['dutIp']['start'],
+                                                                                           'direction': bgp['dutIp']['direction'],
+                                                                                           'step': bgp['dutIp']['step']
+                                                                                       },
+                                                                                  localAs2Bytes = bgp['localAs2Bytes'],
+                                                                                  type = bgp['type'])
+                                if 'ospf' in ipv4:
+                                    for ospf in ipv4['ospf']:
+                                        ospfObj = middleware.protocolObj.configOspf(ipv4Obj,
+                                                                                    name = ospf['name'],
+                                                                                    areaId = ospf['areaId'],
+                                                                                    neighborIp =ospf['neighborIp'],
+                                                                                    helloInterval = ospf['helloInterval'],
+                                                                                    areaIdIp = ospf['areaIp'],
+                                                                                    networkType = ospf['networkType'],
+                                                                                    deadInterval = ospf['deadInterval'])
 
-                if 'networkGroup' in deviceGroup:
-                    for networkGroup in deviceGroup['networkGroup']:
-                        networkGroupObj = middleware.protocolObj.configNetworkGroup(
-                            create = deviceGroupObj,
-                            name = networkGroup['name'],
-                            multiplier = networkGroup['multiplier'],
-                            networkAddress = {'start': networkGroup['routeRange']['start'],
-                                              'step': networkGroup['routeRange']['step'],
-                                              'direction': networkGroup['routeRange']['direction']
-                                          },
-                            prefixLength = networkGroup['prefix'])
+                    if 'networkGroup' in deviceGroup:
+                        for networkGroup in deviceGroup['networkGroup']:
+                            networkGroupObj = middleware.protocolObj.configNetworkGroup(
+                                create = deviceGroupObj,
+                                name = networkGroup['name'],
+                                multiplier = networkGroup['multiplier'],
+                                networkAddress = {'start': networkGroup['routeRange']['start'],
+                                                  'step': networkGroup['routeRange']['step'],
+                                                  'direction': networkGroup['routeRange']['direction']
+                                              },
+                                prefixLength = networkGroup['prefix'])
 
-        middleware.protocolObj.startAllProtocols()
-        middleware.protocolObj.verifyProtocolSessionsNgpf()
+            middleware.protocolObj.startAllProtocols()
+            middleware.protocolObj.verifyAllProtocolSessionsNgpf()
 
         isAnyTrafficItemConfigured = 0
         endpointList = []
 
-        for trafficItem in middleware.params['trafficItem']:
+        rawTrafficVportIndex = 0 ;# Only used for raw traffic item
+        for trafficItem in middleware.params['trafficItems']:
             isAnyTrafficItemConfigured = 1
             endpoints = {}
             endpoints['sources'] = []
             endpoints['destinations'] = []
+
             for endpoint in trafficItem['endpoints']:
                 if 'name' in endpoint:
                     endpoints['name'] = endpoint['name']
+
                 for sources in endpoint['sources']:
-                    endpoints['sources'].append(middleware.sessionHeader + sources)
+                    if 'trafficType' in middleware.params and middleware.params['trafficType'] == 'raw':
+                        endpoints['sources'].append(vportList[rawTrafficVportIndex])
+                        rawTrafficVportIndex += 1
+                    else:
+                        endpoints['sources'].append(middleware.sessionHeader + sources)
+
                 for destinations in endpoint['destinations']:
-                    endpoints['destinations'].append(middleware.sessionHeader + destinations)
+                    if 'trafficType' in middleware.params and middleware.params['trafficType'] == 'raw':
+                        endpoints['destinations'].append(vportList[rawTrafficVportIndex])
+                        rawTrafficVportIndex += 1
+                    else:
+                        endpoints['destinations'].append(middleware.sessionHeader + destinations)
+
             endpointList.append(endpoints)
 
             trafficStatus = middleware.trafficObj.configTrafficItem(
@@ -926,13 +946,59 @@ try:
                     'biDirectional': trafficItem['bidirectional'],
                     'trackBy':       trafficItem['trackBy']
                 },
-                endpoints = trafficItem['endpoints'],
+                endpoints = endpointList,
                 configElements = trafficItem['configElements']
             )
+
+            configElementObj = trafficStatus[2][0]
             
+            # Configure packet headers for RAW Traffic Item
+            for configElement in trafficItem['configElements']:
+                if 'packetHeaders' not in configElement:
+                    continue
+                
+                stackNumber = 1
+                for packetHeader in configElement['packetHeaders']:
+                    if packetHeader == 'mac':
+                        stackObj = middleware.trafficObj.getPacketHeaderStackIdObj(configElementObj, stackId=1)
+                        if 'dest' in configElement['packetHeaders']['mac']:
+                            middleware.trafficObj.configPacketHeaderField(stackObj,
+                                                                          fieldName='Destination MAC Address',
+                                                                          data=configElement['packetHeaders']['mac']['dest'])
+
+                        if 'src' in configElement['packetHeaders']['mac']:
+                            middleware.trafficObj.configPacketHeaderField(stackObj,
+                                                                          fieldName='Source MAC Address',
+                                                                          data=configElement['packetHeaders']['mac']['src'])
+                            
+                    if packetHeader == 'mpls':
+                        for mplsHeader in configElement['packetHeaders']['mpls']:
+                            stackObj = middleware.trafficObj.addTrafficItemPacketStack(configElementObj,
+                                                                                       protocolStackNameToAdd='MPLS',
+                                                                                       stackNumber=stackNumber, action='append')
+                            stackNumber += 1
+                            middleware.trafficObj.configPacketHeaderField(stackObj,
+                                                                          fieldName='Label Value',
+                                                                          data=mplsHeader)
+
+                    if packetHeader == 'ipv4':
+                        stackObj = middleware.trafficObj.addTrafficItemPacketStack(configElementObj,
+                                                                                   protocolStackNameToAdd='IPv4',
+                                                                                   stackNumber=stackNumber, action='append')
+                        stackNumber += 1
+                        middleware.trafficObj.configPacketHeaderField(stackObj,
+                                                                      fieldName='Source Address',
+                                                                      data=configElement['packetHeaders']['ipv4']['src'])
+
+                        middleware.trafficObj.configPacketHeaderField(stackObj,
+                                                                      fieldName='Destination Address',
+                                                                      data=configElement['packetHeaders']['ipv4']['dest'])
+ 
+
         if isAnyTrafficItemConfigured == 0:
             raise IxNetRestApiException('No Traffic Item was enabled for configuring')
 
+        
     def config(paramFile=None, chassisIp=None, portList=None):
         """Read a parameter file and onfigure NGPF and Traffic Item from scratch.
 

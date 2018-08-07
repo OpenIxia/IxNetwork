@@ -785,6 +785,22 @@ proc ConfigFramePayload {args} {
     return 0
 }
 
+proc GetCardType {port} {
+    foreach vport [ixNet getList [ixNet getRoot] vport] {
+	set assignedPort [ixNet getAttribute $vport -assignedTo]
+	set chassisIp [lindex [split $assignedPort :] 0]
+	set cardId [lindex [split $assignedPort :] 1]
+	set portId [lindex [split $assignedPort :] 2]
+	set currentPort [list $chassisIp $cardId $portId]
+	if {$port == $currentPort} {
+	    set cardType [ixNet getAttribute $vport/l1Config -currentType]
+	    puts "\nCardType for chassis=$chassisIp cardId=$cardId portId=$portId : $cardType"
+	    return $cardType
+	}
+    }
+    return 0
+}
+
 proc ConfigPortSpeed {args} {
     # Parameters:
     #    -port "$ixChassisIp 1 2"

@@ -27,9 +27,9 @@
 #        - Get stats
 #
 
-import sys, traceback
+import os, sys, traceback
 
-sys.path.insert(0, '../../Modules')
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts/LoadConfigWithInputFile', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -204,12 +204,6 @@ try:
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsNgpf()
 
-    # For all traffic parameter options, go to the API configTrafficItem.
-    # mode = create or modify
-    #endpointList = []
-    #match = re.match('http.*(/api.*ixnetwork)', mainObj.sessionUrl)
-    #sessionHeader = match.group(1)
-
     for trafficItem in param['trafficItem']:
         '''
         endpoints = {}
@@ -280,13 +274,15 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     if param['enableDebugTracing']:
         if not bool(re.search('ConnectionError', traceback.format_exc())):
             print('\n%s' % traceback.format_exc())
-    print('\nException Error! %s\n' % errMsg)
+
     if 'mainObj' in locals() and osPlatform == 'linux':
         if param['deleteSessionAfterTest']:
             mainObj.linuxServerStopAndDeleteSession()
+
     if 'mainObj' in locals() and osPlatform in ['windows', 'windowsConnectionMgr']:
         if param['releasePortsWhenDone'] and param['forceTakePortOwnership']:
             portObj.releasePorts(portList)
+
         if osPlatform == 'windowsConnectionMgr':
             if param['deleteSessionAfterTest']:
                 mainObj.deleteSession()

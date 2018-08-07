@@ -8,6 +8,7 @@
 #
 #    Verify port state
 #    Start all protocols
+#    Modify trafic item by the traffic item name.
 #    Start traffic
 #    Get stats
 #
@@ -38,13 +39,15 @@ if {$osPlatform == "linux"} {
     set apiServerIp 192.168.70.108
 }
 
-set ixChassisIp 192.168.70.11
-set ixNetworkVersion 8.40
+set ixChassisIp 192.168.70.120
+set ixNetworkVersion 8.50
+
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
 set licenseMode subscription 
 set licenseTier tier3
-set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
-set configFile bgpNgpf_8.40.ixncfg
+
+set portList [list "$ixChassisIp 1 1" "$ixChassisIp 1 2"]
+set configFile bgp_ngpf_8.30.ixncfg
 
 if {$osPlatform == "linux"} {
     package req IxTclNetworkLinuxApiServer 
@@ -96,10 +99,14 @@ if {[VerifyAllProtocolSessionsNgpf]} {
     exit
 }
 
+# NOTE!! You must change the Traffic Item name to use your Traffic Item name.
 set trafficItemObjectList [GetTrafficItemObjects "Topo1 to Topo2"]
+
+# Get the traffic item object handles to modify.
 set trafficItemObj [lindex $trafficItemObjectList 0]
 set configElementObj [lindex $trafficItemObjectList 1]
 
+# Example to show various framesize configurations
 #ConfigFrameSize -configElementObj $configElementObj -type fixed -frameSize 256
 #ConfigFrameSize -configElementObj $configElementObj -type increment -randomMin 127 -randomMax 1514
 ConfigFrameSize -configElementObj $configElementObj -type increment -incrementFrom 68 -incrementTo 512 -incrementStep 1
@@ -107,8 +114,9 @@ ConfigFrameSize -configElementObj $configElementObj -type increment -incrementFr
 ConfigFrameRate -configElementObj $configElementObj -type percentLineRate -rate 25
 ConfigFramePayload -configElementObj $configElementObj -type custom -customRepeat True -customPattern ff
 
-ConfigTrafficTransmissionControl -configElementObj ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -type fixedFrameCount -frameCount 80000
-#ConfigTrafficTransmissionControl -configElementObj ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -type continuous
+# Example to show how to configure fixedFrameCount and continuous traffic
+ConfigTrafficTransmissionControl -configElementObj $configElementObj -type fixedFrameCount -frameCount 80000
+#ConfigTrafficTransmissionControl -configElementObj $configElementObj -type continuous
 
 RegenerateAllTrafficItems
 

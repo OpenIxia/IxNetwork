@@ -504,6 +504,7 @@ class Protocol(object):
             else:
                 # To create a new IPv4 object
                 ipv4Url = self.ixnObj.httpHeader+obj+'/ipv4'
+
                 self.ixnObj.logInfo('Creating new IPv4 in NGPF')
                 response = self.ixnObj.post(ipv4Url)
                 ipv4Obj = response.json()['links'][0]['href']
@@ -599,6 +600,59 @@ class Protocol(object):
 
         return ipv4Obj
 
+    def configIpv4Loopback(self, deviceGroupObj, **kwargs):
+        """
+        Description
+            Configure an IPv4 loopback.
+
+        Parameters
+            deviceGroupObj: <str>: /api/v1/sessions/1/ixnetwork/topology{id}/deviceGroup/{id}
+            kwargs: <dict>
+
+        Example:
+            protocolObj.configIpv4Loopback(deviceGroupObj,
+                                           name='ipv4Loopback-1',
+                                           multiplier=10,
+                                           ipv4Address={'start': '1.1.1.1',
+                                                        'direction': 'increment',
+                                                        'step': '0.0.0.1'},
+                                           prefix=32,
+                                          )
+
+        """
+        createNewIpv4Obj = True
+        response = self.ixnObj.post(self.ixnObj.httpHeader+deviceGroupObj+'/ipv4Loopback')
+        ipv4LoopbackObj = response.json()['links'][0]['href']
+        response = self.ixnObj.get(self.ixnObj.httpHeader+ipv4LoopbackObj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4LoopbackObj, data={'name': kwargs['name']})
+
+        if 'ipv4Address' in kwargs:
+            multivalue = response.json()['address']
+            self.ixnObj.logInfo('Configuring IPv4 address. Attribute for multivalueId = jsonResponse["address"]')
+
+            # Default to counter
+            multivalueType = 'counter'
+
+            if 'ipv4AddressMultivalueType' in kwargs:
+                multivalueType = kwargs['ipv4AddressMultivalueType']
+
+            if multivalueType == 'random':
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue, data={'pattern': 'random'})
+            else:
+                self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv4Address'])
+
+        if 'multiplier' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4LoopbackObj, data={'multiplier': kwargs['multiplier']})
+
+        if 'prefix' in kwargs:
+            multivalue = response.json()['prefix']
+            self.configMultivalue(multivalue, 'singleValue', data={'value': kwargs['prefix']})
+
+        if createNewIpv4Obj == True:
+            self.configuredProtocols.append(ipv4LoopbackObj)
+        
     def configDhcpClientV4(self, obj, **kwargs):
         """
         Description
@@ -1764,7 +1818,7 @@ class Protocol(object):
                 if eachStatus != 'up':
                     totalDownSessions += 1
             self.ixnObj.logInfo('\tTotal sessions Down: %d' % totalDownSessions, timestamp=False)
-            self.ixnObj.logInfo('\tCurrentStatus: %s' % currentStatus)
+            #self.ixnObj.logInfo('\tCurrentStatus: %s' % currentStatus, timestamp=False)
 
             if timer < timeout and [element for element in sessionDownList if element in currentStatus] == []:
                 self.ixnObj.logInfo('Protocol sessions are all up')

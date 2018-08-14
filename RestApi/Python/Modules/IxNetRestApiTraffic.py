@@ -868,8 +868,8 @@ class Traffic(object):
         """
         Parameters
            streamObj: <str>: configElementObj|highLevelStreamObj
-                      Ex: /traffic/trafficItem/{1}/configElement/{id} 
-                       or /traffic/trafficItem/{1}/highLevelStream/{id}
+                      Ex: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{1}/configElement/{id} 
+                       or /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{1}/highLevelStream/{id}
 
            packetHeaderName: <str>: Example: ethernet, mpls, ipv4, etc. 
 
@@ -877,10 +877,12 @@ class Traffic(object):
                                     destinationAddress, sourceAddress, etherType and pfcQueue.
                                     You will have to know these field names. To view them, make your configurations
                                     and then go on the API browser and go to:
-                                    /traffic/trafficItem/{1}/configElement/{id}/stack/{id}/field
+
+                            /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{1}/configElement/{id}/stack/{id}/field
 
         Example:
-            data= trafficObj.getPacketHeaderAttributesAndValues('/traffic/trafficItem/1/configElement/1',
+            streamObj = '/api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}/configElement/{id}'
+            data= trafficObj.getPacketHeaderAttributesAndValues(streamObj,
                                                                 'ethernet', 'sourceAddress')
             data['singleValue'] = For single value.
             data['startValue'] = If it is configured to increment.
@@ -888,7 +890,7 @@ class Traffic(object):
         Returns
             All the attributes and values in JSON format.
         """
-        response = self.ixnObj.get(self.ixnObj.sessionUrl+streamObj+'/stack')
+        response = self.ixnObj.get(self.ixnObj.httpHeader+streamObj+'/stack')
         for eachStack in response.json():
             stackHref = eachStack['links'][0]['href']
             response = self.ixnObj.get(self.ixnObj.httpHeader+stackHref)

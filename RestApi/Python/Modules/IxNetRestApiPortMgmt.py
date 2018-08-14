@@ -698,7 +698,7 @@ class PortMgmt(object):
 
         Parameters
            portList: <'all'|list of ports>: 
-                     <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
+                     <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
                      Or if portList ='all', will modify all assigned ports to the specified mediaType.
 
            mediaType: <str>: copper, fiber or SGMII
@@ -711,13 +711,32 @@ class PortMgmt(object):
 
         # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
         vportList = self.getVportFromPortList(portList)
-        print('\n---- modifyPortMediaType vportList:', vportList)
-
         for vport in vportList:
             response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
             portType = response.json()['type']
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data={'media': mediaType})
 
+    def configLoopbackPort(self, portList='all', enabled=True):
+        """
+        Description
+           Configure port to loopback.
+
+        Parameters
+           portList: <'all'|list of ports>: 
+                     <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
+                     Or if portList ='all', will modify all assigned ports to the specified mediaType.
+
+           enabled: <bool>: True=Enable port to loopback mode.
+        """
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        if portList == 'all':
+            portList = self.getPhysicalPortsFromCreatedVports()
+
+        vportList = self.getVportFromPortList(portList)
+        for vport in vportList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/l1Config', silentMode=False)
+            currentPortType = response.json()['currentType']
+            self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+currentPortType, data={'loopback': enabled})
 
     def setTxMode(self, vportList='all', txMode='interleaved', timeout=70):
         """

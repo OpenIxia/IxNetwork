@@ -871,10 +871,10 @@ class Traffic(object):
                       Ex: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{1}/configElement/{id} 
                        or /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{1}/highLevelStream/{id}
 
-           packetHeaderName: <str>: Example: ethernet, mpls, ipv4, etc. 
+           packetHeaderName: <str>: Display Name of the stack.  Example: Ethernet II, VLAN, IPv4, TCP, etc. 
 
-           fieldName: <str>: <str>: Example: If packetHeaderName is ethernet, field names could be
-                                    destinationAddress, sourceAddress, etherType and pfcQueue.
+           fieldName: <str>: Display Name of the field.  Example: If packetHeaderName is Ethernet II, field names could be
+                                    Destination MAC Address, Source MAC Address, Ethernet-Type and PFC Queue.
                                     You will have to know these field names. To view them, make your configurations
                                     and then go on the API browser and go to:
 
@@ -883,7 +883,7 @@ class Traffic(object):
         Example:
             streamObj = '/api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}/configElement/{id}'
             data= trafficObj.getPacketHeaderAttributesAndValues(streamObj,
-                                                                'ethernet', 'sourceAddress')
+                                                                'Ethernet II', 'Source MAC Address')
             data['singleValue'] = For single value.
             data['startValue'] = If it is configured to increment.
 
@@ -894,10 +894,12 @@ class Traffic(object):
         for eachStack in response.json():
             stackHref = eachStack['links'][0]['href']
             response = self.ixnObj.get(self.ixnObj.httpHeader+stackHref)
-            if packetHeaderName == response.json()['stackTypeId']:
+            #  need to do strip() to response.json()['displayName'] because some displayName has trailing spaces. 
+            #  for example:  "IPv4 " 
+            if packetHeaderName == response.json()['displayName'].strip():
                 response = self.ixnObj.get(self.ixnObj.httpHeader+stackHref+'/field')
                 for eachField in response.json():
-                    if fieldName == eachField['name']:
+                    if fieldName == eachField['displayName']:
                         return eachField
 
     def configEgressCustomTracking(self, trafficItemObj, offsetBits, widthBits):

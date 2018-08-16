@@ -1,4 +1,3 @@
-
 # PLEASE READ DISCLAIMER
 #
 #    This class demonstrates sample IxNetwork REST API usage for
@@ -27,7 +26,7 @@ class Connect:
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None,
-                 apiKey=None, generateLogFile=True, robotFrameworkStdout=False):
+                 apiKey=None, generateLogFile=True, robotFrameworkStdout=False, proxies=None, trustEnv=True):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -143,6 +142,8 @@ class Connect:
         self.generateLogFile = generateLogFile
         self.robotFrameworkStdout = robotFrameworkStdout
         self.connectToLinuxChassisIp = connectToLinuxChassisIp
+        self.proxies = proxies
+        self.trustEnv = trustEnv
 
         if generateLogFile:
             if generateLogFile == True:
@@ -256,12 +257,20 @@ class Connect:
         if silentMode is False:
             self.logInfo('\n\tGET: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
 
+        ses = requests.Session()
+        ses.headers=self.jsonHeader
+        ses.verify=self.verifySslCert
+        ses.trust_env=self.trustEnv
+
+        if stream:
+            ses.stream=True
+
+        if self.proxies != None:
+           ses.proxies=self.proxies 
+
         try:
             # For binary file
-            if stream:
-                response = requests.get(restApi, stream=True, headers=self.jsonHeader, verify=self.verifySslCert)
-            if stream == False:
-                response = requests.get(restApi, headers=self.jsonHeader, verify=self.verifySslCert)
+            response = ses.get(restApi)
 
             if silentMode is False:
                 self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
@@ -295,9 +304,18 @@ class Connect:
            noDataJsonDumps: (bool): True: Use json dumps. False: Accept the data as-is.
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
         """
+        ses = requests.Session()
+        ses.verify=self.verifySslCert
+        ses.allow_redirects=True
+        ses.trust_env=self.trustEnv
+
         if headers != None:
-            originalJsonHeader = self.jsonHeader
-            self.jsonHeader = headers
+            ses.headers=headers
+        else:
+            ses.headers=self.jsonHeader
+
+        if self.proxies != None:
+           ses.proxies=self.proxies
 
         if noDataJsonDumps == True:
             data = data
@@ -305,14 +323,10 @@ class Connect:
             data = json.dumps(data)
 
         if silentMode == False:
-            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, ses.headers))
 
         try:
-            if self.connectToLinuxChassisIp and json.loads(data) == {}:
-                # Interacting with LinuxOS chassis doesn't like empty data payload. So excluding it here.
-                response = requests.post(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
-            else:
-                response = requests.post(restApi, data=data, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+            response = ses.post(restApi, data=data)
             # 200 or 201
             if silentMode == False:
                 self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
@@ -325,10 +339,6 @@ class Connect:
                         raise IxNetRestApiException(errMsg)
 
                     raise IxNetRestApiException('POST error: {0}\n'.format(response.text))
-
-            # Change it back to the original json header
-            if headers != None:
-                self.jsonHeader = originalJsonHeader
 
             return response
 
@@ -347,11 +357,20 @@ class Connect:
            data: (dict): The data payload for the URL.
            silentMode: (bool):  To display on stdout: URL, data and header info.
         """
+        ses = requests.Session()
+        ses.verify=self.verifySslCert
+        data = json.dumps(data)
+        ses.headers = self.jsonHeader
+        ses.trust_env=self.trustEnv
+
+        if self.proxies != None:
+           ses.proxies=self.proxies
+
         if silentMode == False:
             self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
-            response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
+            response = ses.patch(restApi, data=data)
             if silentMode == False:
                 self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
 
@@ -380,12 +399,20 @@ class Connect:
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
 
         """
+        ses = requests.Session()
+        ses.verify=self.verifySslCert
+        ses.headers = self.jsonHeader
+        ses.trust_env=self.trustEnv
+
+        if self.proxies != None:
+           ses.proxies=self.proxies
+
         if silentMode is False:
             self.logInfo('\n\tOPTIONS: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
 
         try:
             # For binary file
-            response = requests.get(restApi, headers=self.jsonHeader, verify=self.verifySslCert)
+            response = ses.get(restApi, data=data)
 
             if silentMode is False:
                 self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
@@ -416,13 +443,24 @@ class Connect:
            data: (dict): The data payload for the URL.
            headers: (str): The headers to use for the URL.
         """
-        if headers != None:
-            self.jsonHeader = headers
+        ses = requests.Session()
+        ses.verify=self.verifySslCert
+        ses.trust_env=self.trustEnv
+        ses.data = json.dumps(data)
 
-        self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+        if headers != None:
+            ses.headers = headers
+        else:
+            ses.headers = self.jsonHeader
+
+        if self.proxies != None:
+           ses.proxies=self.proxies
+
+
+        self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, ses.headers))
 
         try:
-            response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
+            response = ses.delete(restApi, data=data)
             self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
             if not str(response.status_code).startswith('2'):
                 self.showErrorMessage()
@@ -1128,5 +1166,3 @@ class Connect:
 
     def placeholder():
         pass
-
-

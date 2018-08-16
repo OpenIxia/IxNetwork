@@ -1,6 +1,6 @@
 import re, time
-from IxNetRestApi import IxNetRestApiException
-from IxNetRestApiFileMgmt import FileMgmt
+from .IxNetRestApi import IxNetRestApiException
+from .IxNetRestApiFileMgmt import FileMgmt
 
 class Statistics(object):
     def __init__(self, ixnObj=None):
@@ -292,11 +292,3 @@ class Statistics(object):
                 viewObj = view
                 return viewObj
         return None
-
-    def clearStats(self):
-        """
-        Description
-            Clear all stats and wait for API server to finish.
-        """
-        url = self.ixnObj.sessionUrl + '/operations/clearStats'
-        response = self.ixnObj.post(url, data={'arg1': ['waitForPortStatsRefresh']})

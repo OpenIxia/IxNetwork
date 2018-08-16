@@ -27,9 +27,9 @@
 #
 
 import re, time
-from IxNetRestApi import IxNetRestApiException
-from IxNetRestApiPortMgmt import PortMgmt
-from IxNetRestApiStatistics import Statistics
+from .IxNetRestApi import IxNetRestApiException
+from .IxNetRestApiPortMgmt import PortMgmt
+from .IxNetRestApiStatistics import Statistics
 
 # 8.40 updates:
 #    sessionStatus uses ?includes=sessionStatus and then response.json()['sessionStatus']

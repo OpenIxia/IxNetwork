@@ -1,7 +1,7 @@
 import sys
-from IxNetRestApiFileMgmt import FileMgmt
-from IxNetRestApiPortMgmt import PortMgmt
-from IxNetRestApi import IxNetRestApiException
+from .IxNetRestApiFileMgmt import FileMgmt
+from .IxNetRestApiPortMgmt import PortMgmt
+from .IxNetRestApi import IxNetRestApiException
 
 class PacketCapture(object):
     """

@@ -7,7 +7,7 @@
 # Description
 #    A class object for IxNetwork Classic Framework.
 
-from IxNetRestApi import IxNetRestApiException
+from .IxNetRestApi import IxNetRestApiException
 
 class ClassicProtocol(object):
     def __init__(self, ixnObj=None):

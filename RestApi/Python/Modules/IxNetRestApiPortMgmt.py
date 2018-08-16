@@ -1,5 +1,5 @@
 import time
-from IxNetRestApi import IxNetRestApiException
+from .IxNetRestApi import IxNetRestApiException
 
 class PortMgmt(object):
     def __init__(self, ixnObj=None):

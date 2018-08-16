@@ -1,5 +1,5 @@
 import re, time
-from IxNetRestApi import IxNetRestApiException
+from .IxNetRestApi import IxNetRestApiException
 
 class Traffic(object):
     def __init__(self, ixnObj=None):

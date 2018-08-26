@@ -6,7 +6,7 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests
-#    - Python 2.7 minimum
+#    - Python 2.7 and 3+
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -58,10 +58,10 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.120'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+                [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
@@ -175,8 +175,9 @@ try:
                                               )
     
     protocolObj.startAllProtocols()
-    protocolObj.verifyProtocolSessionsUp(protocolViewName='DHCPv4 Client Per Port')
-    protocolObj.verifyProtocolSessionsUp(protocolViewName='DHCPv4 Server Per Port')
+    protocolObj.verifyProtocolSessionsUp()
+    #protocolObj.verifyProtocolSessionsUp(protocolViewName='DHCPv4 Client Per Port')
+    #protocolObj.verifyProtocolSessionsUp(protocolViewName='DHCPv4 Server Per Port')
 
     # For all parameter options, go to the API configTrafficItem.
     # mode = create or modify

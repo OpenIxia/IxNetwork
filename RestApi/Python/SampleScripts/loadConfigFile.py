@@ -6,7 +6,10 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests
-#    - Python 2.7 minimum
+#
+# SUPPORTS
+#    - Python 2.7 and 3+
+#    - IxNetwork API servers: Windows, WindowsConnectionMgr and Linux
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -63,10 +66,10 @@ try:
 
     configFile = 'bgp_ngpf_8.30.ixncfg'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.120'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+                [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.108',
@@ -119,8 +122,7 @@ try:
     mainObj.configMultivalue(bgpAttributeMultivalue['downtimeInSec'], multivalueType='singleValue', data={'value': '30'})
 
     protocolObj.startAllProtocols()
-    protocolObj.verifyArp(ipType='ipv4')
-    protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
+    protocolObj.verifyProtocolSessionsUp()
 
     trafficObj = Traffic(mainObj)
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)

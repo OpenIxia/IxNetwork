@@ -6,7 +6,10 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests
-#    - Python 2.7 minimum
+#
+# SUPPORTS
+#    - Python 2.7 and 3+
+#    - IxNetwork API servers: Windows, WindowsConnectionMgr and Linux
 #
 # DESCRIPTION
 #    This sample script demonstrates:
@@ -51,7 +54,7 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
     # Set configLicense to False if:
     #    - You are using a Linux based XGS chassis and the licenses are activated in the chassis.
@@ -63,25 +66,27 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.120'
     # [chassisIp, cardNumber, slotNumber]
-    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
+    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='192.168.70.121',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=osPlatform
+                          serverOs=osPlatform,
+                          generateLogFile='ixiaDebug.log'
                           )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=True
+                          deleteSessionAfterTest=True,
+                          generateLogFile='ixiaDebug.log'
                           )
 
     #---------- Preference Settings End --------------
@@ -202,7 +207,7 @@ try:
                                                   prefixLength = 32)
 
     protocolObj.startAllProtocols()
-    protocolObj.verifyAllProtocolSessionsNgpf()
+    protocolObj.verifyProtocolSessionsUp()
 
     # For all parameter options, go to the API configTrafficItem.
     # mode = create or modify

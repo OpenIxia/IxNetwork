@@ -6,7 +6,10 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests
-#    - Python 2.7 minimum
+#
+# SUPPORTS
+#    - Python 2.7 and 3+
+#    - IxNetwork API servers: Windows, WindowsConnectionMgr and Linux
 #
 # DESCRIPTION
 #    A sample script to:
@@ -52,10 +55,10 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.120'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+                [ixChassisIp, '1', '2']]
 
     # For Novus cards only:
     #     Novus cards support multiple media types. When assigning port, it will default to fiber.
@@ -120,7 +123,7 @@ try:
 
     protocolObj = Protocol(mainObj)
     protocolObj.startAllProtocols()
-    protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
+    protocolObj.verifyProtocolSessionsUp()
 
     trafficObj = Traffic(mainObj)
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)

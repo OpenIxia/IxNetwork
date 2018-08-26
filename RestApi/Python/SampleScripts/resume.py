@@ -1,6 +1,6 @@
-import sys, traceback, time
+import os, sys, traceback, time
 
-sys.path.insert(0, '../Modules/Main')
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiTraffic import Traffic
@@ -23,7 +23,7 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
     # If the licenses are activated in the Linux based XGS chassis or if the licenses are configured 
     # in the Windows IxNetwork GUI API server in preferences, then you won't need to config license.
@@ -38,13 +38,15 @@ try:
                 [ixChassisIp, '2', '1']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='192.168.70.121',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=osPlatform
+                          serverOs=osPlatform,
+                          apiKey='9277fc8fe92047f6a126f54481ba07fc',
+                          sessionId=1
                           )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
@@ -53,7 +55,26 @@ try:
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest
                           )
+    
+    trafficObj = Traffic(mainObj)
+    statObj = Statistics(mainObj)
+    protocolObj = Protocol(mainObj)
 
+    #protocolObj.verifyProtocolSessionsUp('BGP Peer Per Port')
+
+    #statObj.takeSnapshot(viewName='Flow Statistics', isLinux=True, localLinuxPath='/home/hgee')
+    statObj.takeSnapshot(viewName='Flow Statistics', windowsPath='c:\\Results', localLinuxPath='/home/hgee')
+
+    '''
+    #trafficObj.startTraffic(regenerateTraffic=False, applyTraffic=True)
+    stats = statObj.getStats(viewName='Flow Statistics')
+    #stats = statObj.getStats(viewName='Protocols Summary')
+    #print(type(stats))
+
+    for key,value in stats.items():
+        print('\n{0: {1}\n'.format(key, value))
+        #print(key)
+    '''
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))

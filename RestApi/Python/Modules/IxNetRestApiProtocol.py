@@ -1401,55 +1401,94 @@ class Protocol(object):
         self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'], silentMode=silentMode)
         return response.json()['result']
 
-    def verifyProtocolSessionsUp(self, protocolViewName='BGP Peer Per Port', timeout=60):
+    def verifyProtocolSessionsUp(self, protocolViewName='Protocols Summary', timeout=60):
         """
         Description
-            Verify all specified protocols sessions for UP.
+            Defaults to Protocol Summary to verify all configured protocol sessions
+            Otherwise, specify the protocol session to verify.
 
         Parameter
-            protocolViewName: <str>: The protocol view name. Get this name from API browser or in IxNetwork GUI statistic tabs.
+            protocolViewName: <str>: The protocol view name. 
+                              Get this name from API browser or in IxNetwork GUI statistic tabs.
+                              Defaults to 'Protocols Summary'
         
             timeout: <int>: The timeout value to declare as failed. Default = 60 seconds.
 
         protocolViewName options:
+            'BGP Peer Per Port'
             'DHCPV4 Client Per Port'
             'DHCPV4 Server Per Port'
             'ISIS-L3 RTR Per Port'
-            'BGP Peer Per Port'
             'OSPFv2-RTR Per Port'
+            'Protocols Summary'
         """
         totalSessionsDetectedUp = 0
         totalSessionsDetectedDown = 0
         totalPortsUpFlag = 0
 
         for counter in range(1,timeout+1):
-            stats = self.statObj.getStats(viewName=protocolViewName, displayStats=False)
-            totalPorts = len(stats.keys()) ;# Length stats.keys() represents total ports.
-            self.ixnObj.logInfo('ProtocolName: {0}'.format(protocolViewName))
+            stats = self.statObj.getStats(viewName=protocolViewName, displayStats=False, silentMode=True)
+            self.ixnObj.logInfo('\n%-16s %-14s %-16s %-23s %-22s' % ('Name', 'SessionsUp', 'SessionsDown',
+                                                                     'ExpectedSessionsUp', 'SessionsNotStarted' ),
+                                timestamp=False)
+            self.ixnObj.logInfo('-'*91, timestamp=False)
+            totalPorts = len(stats.keys()) ;# Length stats.keys() represents total ports or total protocols.
+
+            sessionDownFlag = 0
+            sessionNotStartedFlag = 0
+            sessionFailedFlag = 0
+
             for session in stats.keys():
+                if 'Protocol Type' in stats[session]:
+                    label = stats[session]['Protocol Type']
+
+                if 'Port' in stats[session]:
+                    label = stats[session]['Port']
+
+                sessionsDown = int(stats[session]['Sessions Down'])
                 sessionsUp = int(stats[session]['Sessions Up'])
                 totalSessions = int(stats[session]['Sessions Total'])
-                totalSessionsNotStarted = int(stats[session]['Sessions Not Started'])
-                totalExpectedSessionsUp = totalSessions - totalSessionsNotStarted
+                sessionsNotStarted = int(stats[session]['Sessions Not Started'])
+                expectedSessionsUp = totalSessions - sessionsNotStarted
 
-                self.ixnObj.logInfo('\n\tPortName: {0}\n\t   TotalSessionsUp: {1}\n\t   ExpectedTotalSessionsup: {2}'.format(
-                    stats[session]['Port'], sessionsUp, totalExpectedSessionsUp), timestamp=False)
+                self.ixnObj.logInfo('%-16s %-14s %-16s %-23s %-22s' % (label, sessionsUp, sessionsDown,
+                                                                       expectedSessionsUp, sessionsNotStarted),
+                                    timestamp=False)
 
-                if counter < timeout and sessionsUp != totalExpectedSessionsUp:
-                    self.ixnObj.logInfo('\t   Session is still down', timestamp=False)
+                if counter < timeout:
+                    if sessionsNotStarted != 0:
+                        sessionNotStartedFlag = 1
 
-                if counter < timeout and sessionsUp == totalExpectedSessionsUp:
-                    totalPortsUpFlag += 1
-                    if totalPortsUpFlag == totalPorts:
-                        self.ixnObj.logInfo('All sessions are up!')
-                        return
+                    if sessionsDown != 0:
+                        sessionDownFlag = 1
 
-            if counter == timeout and sessionsUp != totalExpectedSessionsUp:
-                raise IxNetRestApiException('\nSessions failed to come up')
+                if counter == timeout:
+                    if sessionsNotStarted != 0:
+                        raise IxNetRestApiException('Sessions did not start up')
 
-            self.ixnObj.logInfo('\n\tWait {0}/{1} seconds'.format(counter, timeout), timestamp=False)
-            print()
-            time.sleep(1)
+                    if sessionsDown != 0:
+                        raise IxNetRestApiException('Sessions failed to come up')
+
+
+            if sessionNotStartedFlag == 1:
+                if counter < timeout:
+                    sessionNotStartedFlag = 0
+                    self.ixnObj.logInfo('Protocol sessions are not started yet. Waiting {0}/{1} seconds'.format(
+                        counter, timeout))
+                    time.sleep(1)
+                    continue
+
+                if counter == timeout:
+                    raise IxNetRestApiException('Sessions are not started')
+
+            if sessionDownFlag == 1:
+                print('\nWaiting {0}/{1} seconds'.format(counter, timeout))
+                time.sleep(1)
+                continue
+
+            if counter < timeout and sessionDownFlag == 0:
+                print('\nProtocol sessions are all up')
+                break
 
     def startAllOspfv2(self):
         """
@@ -2094,7 +2133,6 @@ class Protocol(object):
             # sessionStatus is a list of status for each 'session' (host)
             sessionStatus = self.getSessionStatus(protocolObj)
             self.ixnObj.logInfo('\nVerifyNgpfProtocolStarted: %s' % protocolObj, timestamp=False)
-            #self.ixnObj.logInfo('\tSessionStatus: %s' % sessionStatus, timestamp=False)
 
             if counter < timeout:
                 count = 0

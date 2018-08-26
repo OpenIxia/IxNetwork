@@ -54,7 +54,7 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
     # Set configLicense to False if:
     #    - You are using a Linux based XGS chassis and the licenses are activated in the chassis.

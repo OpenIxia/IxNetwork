@@ -630,7 +630,7 @@ class FileMgmt(object):
            diagZipFileName: <str>: The diagnostic filename to name with .zip extension.
         """
         url = self.ixnObj.sessionUrl+'/operations/collectlogs'
-        data = {'arg1': diagZipFilename}
+        data = {'arg1': self.ixnObj+headlessSessionId+'/'+diagZipFilename}
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=900)
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')

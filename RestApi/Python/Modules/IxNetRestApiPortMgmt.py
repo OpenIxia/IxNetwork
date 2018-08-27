@@ -36,16 +36,18 @@ class PortMgmt(object):
                 timeout = timeout - 1
             return 0
 
-    def connectIxChassis(self, chassisIp, timeout=30):
+    def connectIxChassis(self, chassisIp, timeout=30, **kwargs):
         """
         Description
            Connect to an Ixia chassis.
-           This needs to be done prior to assigning ports for testing.
 
         Parameter
            chassisIp: <str>|<list>: A string or a list of chassis IP addresses.
            timeout: <int>: Default=30 seconds. The amount of time to wait for the 
                            chassis to be in the ready state.
+
+           kwargs: Any chassis attributes and values. For example, if two chassis' are dasisy chained, include:
+                   chainTopology=None, masterChassis='10.10.10.1', sequenceId=1
 
         Syntax
            /api/v1/sessions/{id}/ixnetwork/availableHardware/chassis
@@ -58,6 +60,9 @@ class PortMgmt(object):
         url = self.ixnObj.sessionUrl+'/availableHardware/chassis'
         for chassisIpAddress in chassisIp:
             data = {'hostname': chassisIpAddress}
+            if kwargs:
+                data.update(kwargs)
+
             response = self.ixnObj.post(url, data=data)
             if type(response.json()) == list:
                 # 8.50 json response is a list.
@@ -83,6 +88,7 @@ class PortMgmt(object):
         # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1
         return chassisObjList
 
+    
     def disconnectIxChassis(self, chassisIp):
         """
         Description

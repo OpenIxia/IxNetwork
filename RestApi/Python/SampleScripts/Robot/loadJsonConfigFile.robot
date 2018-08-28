@@ -39,11 +39,11 @@ ${licenseServerIp} =  192.168.70.3
 ${licenseModel} =  subscription
 ${licenseTier} =  tier3  
 
-${ixChassisIp} =  192.168.70.11
+${ixChassisIp} =  192.168.70.120
 
 # Creating a list and nested list
 @{port_1_1} =  ${ixChassisIp}  1  1
-@{port_2_1} =  ${ixChassisIp}  2  1
+@{port_2_1} =  ${ixChassisIp}  1  2
 @{portList} =  ${port_1_1}  ${port_2_1}
 
 
@@ -83,14 +83,12 @@ Load a JSON config file
     protocolObj.Start All Protocols
 
     Log To Console  Verifying protocol sessions
-    protocolObj.Verify Arp  ipType=ipv4
-    protocolObj.Verify Protocol Sessions Up  protocolViewName=BGP Peer Per Port
-    trafficObj.Regenerate Traffic Items
+    protocolObj.Verify Protocol Sessions Up
 
     Log To Console  Starting traffic
-    trafficObj.Start Traffic  
+    trafficObj.Start Traffic  applyTraffic=True  regenerateTraffic=True 
 
-    sleep  10
+    #sleep  10
 
     Log To Console  Getting stats
     ${stats} =  statisticObj.Get Stats  viewName=Flow Statistics

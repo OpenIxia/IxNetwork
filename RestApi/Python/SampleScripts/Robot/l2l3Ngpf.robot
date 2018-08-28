@@ -35,11 +35,11 @@ ${licenseIsInChassis} =  False
 ${licenseModel} =  subscription
 ${licenseTier} =  tier3  
 
-${ixChassisIp} =  192.168.70.11
+${ixChassisIp} =  192.168.70.120
 
 # Creating a list and nested list for the way how the API needs them to be
 @{port_1_1} =  ${ixChassisIp}  1  1
-@{port_2_1} =  ${ixChassisIp}  2  1
+@{port_2_1} =  ${ixChassisIp}  1  2
 @{portList} =  ${port_1_1}  ${port_2_1}
 @{topology1Port} =  ${port_1_1}
 @{topology2Port} =  ${port_2_1}
@@ -112,7 +112,7 @@ Configuring basic L2L3 in NGPF
     protocolObj.Start All Protocols
 
     Log To Console  Verifying protocol sessions ...
-    protocolObj.Verify Protocol Sessions Ngpf
+    protocolObj.Verify Protocol Sessions Up
 
     @{sourceEndpointObjects}  Create List  ${topology1Obj}
     @{destEndpointObjects}  Create List  ${topology2Obj}

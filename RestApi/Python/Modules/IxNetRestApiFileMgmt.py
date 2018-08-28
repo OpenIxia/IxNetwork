@@ -621,23 +621,28 @@ class FileMgmt(object):
         self.ixnObj.logInfo('\nimportJsonConfigObj pretty print:', timestamp=False)
         self.ixnObj.logInfo('\n\n{0}'.format(json.dumps(data, indent=4, sort_keys=sortKeys)), timestamp=False)
 
-    def collectDiagnostics(self, diagZipFilename='ixiaDiagnostics.zip'):
+    def collectDiagnostics(self, diagZipFilename='ixiaDiagnostics.zip', localPath=None):
         """
         Description
            Collect diagnostics for debugging.
         
         Parameter
            diagZipFileName: <str>: The diagnostic filename to name with .zip extension.
+           localPath: <str>: The local destination where you want to put the collected diag file.
         """
+        if localPath is None:
+            localPath = '.'
+
         url = self.ixnObj.sessionUrl+'/operations/collectlogs'
-        data = {'arg1': self.ixnObj+headlessSessionId+'/'+diagZipFilename}
+        data = {'arg1': self.ixnObj.headlessSessionId+'/'+diagZipFilename}
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=900)
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
         absolutePath = response.json()['absolute']
 
         if self.ixnObj.serverOs in ['windows', 'windowsConnectionMgr']:
-            self.copyFileWindowsToLocalLinux(windowsPathAndFileName=absolutePath+'\\'+diagZipFilename, localPath='.')
+            absolutePath = absolutePath.replace('/', '\\')
+            self.copyFileWindowsToLocalLinux(windowsPathAndFileName=absolutePath+'\\'+diagZipFilename, localPath=localPath)
 
         if self.ixnObj.serverOs == 'linux':
-            self.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=absolutePath+'/'+diagZipFilename, localPath='.')
+            self.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=absolutePath+'/'+diagZipFilename, localPath=localPath)

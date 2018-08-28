@@ -84,7 +84,7 @@ class Statistics(object):
 
                 for view in views:
                     #print('\nview:', view)
-                    response = self.ixnObj.get('%s' % view, silentMode=silentMode)
+                    response = self.ixnObj.get('%s' % view, silentMode=True)
                     captionMatch = re.match(viewName, response.json()['caption'], re.I)
                     if captionMatch:
                         # viewObj: sessionUrl + /statistics/view/11'
@@ -109,7 +109,7 @@ class Statistics(object):
                         return None
 
         if silentMode is False:
-            self.ixnObj.logInfo('\nviewObj is: %s' % viewObject)
+            self.ixnObj.logInfo('\n[{0}] viewObj is: {1}'.format(viewName, viewObject))
 
         counterStop = 30
         for counter in range(0, counterStop+1):

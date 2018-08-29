@@ -17,12 +17,46 @@ class Statistics(object):
         self.ixnObj = mainObject
 
     def getStats(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False,
-                 displayStats=True, silentMode=False, ignoreError=False):
+                 displayStats=True, silentMode=True, ignoreError=False):
+        """
+        Description
+           Get stats for any viewName.
+           The method calls two different methods based on the IxNetwork version that you are using.
+           For IxNetwork version prior to 8.50, calls getStatsPage.
+           For IxNetwork version >= 8.50, calls getStatsData. This has new APIs that is more robust and they don't
+           work in versions prior to 8.50.
+
+        Parameters
+            csvFile = None or <filename.csv>.
+                      None will not create a CSV file.
+                      Provide a <filename>.csv to record all stats to a CSV file.
+                      Example: getStats(sessionUrl, csvFile='Flow_Statistics.csv')
+
+            csvEnableFileTimestamp = True or False. If True, timestamp will be appended to the filename.
+            displayStats: True or False. True=Display stats.
+            ignoreError: True or False.  Returns None if viewName is not found.
+            viewObject: The view object: http://{apiServerIp:port}/api/v1/sessions/2/ixnetwork/statistics/view/13
+                        A view object handle could be obtained by calling getViewObject().
+
+            viewName options (Not case sensitive):
+               NOTE: Not all statistics are listed here.
+                  You could get the statistic viewName directly from the IxNetwork GUI in the statistics.
+        """
+        buildNumber = float(self.ixnObj.getIxNetworkVersion()[:3])
+        if buildNumber >= 8.5:
+            return self.getStatsData(viewObject=viewObject, viewName=viewName, csvFile=csvFile, csvEnableFileTimestamp=csvEnableFileTimestamp,
+                                     displayStats=displayStats, silentMode=silentMode, ignoreError=ignoreError)
+        else:
+            return self.getStatsPage(viewObject=viewObject, viewName=viewName, csvFile=csvFile, csvEnableFileTimestamp=csvEnableFileTimestamp,
+                                     displayStats=displayStats, silentMode=silentMode, ignoreError=ignoreError)
+            
+    def getStatsPage(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False,
+                     displayStats=True, silentMode=True, ignoreError=False):
         """
         Description
             Get stats by the statistic name or get stats by providing a view object handle.
-            This API get stats in /api/v1/sessions/{id}/ixnetwork/statistics/view/{id}/data looking for
-            attributes columnCaptions, pageValues and totalPages.
+            This method uses deprecated APIs effective IxNetwork version 8.50: /statistics/statView/<id>/page
+            Starting 8.50, the new API to use is: /statistics/statView/<id>/data, which is in getStatsData()
 
         Parameters
             csvFile = None or <filename.csv>.
@@ -36,6 +70,162 @@ class Statistics(object):
 
             ignoreError: True or False.  Returns None if viewName is not found.
 
+            viewObject: The view object: http://{apiServerIp:port}/api/v1/sessions/2/ixnetwork/statistics/view/13
+                        A view object handle could be obtained by calling getViewObject().
+
+            viewName options (Not case sensitive):
+               NOTE: Not all statistics are listed here.
+                  You could get the statistic viewName directly from the IxNetwork GUI in the statistics.
+
+            'Port Statistics'
+            'Tx-Rx Frame Rate Statistics'
+            'Port CPU Statistics'
+            'Global Protocol Statistics'
+            'Protocols Summary'
+            'Port Summary'
+            'BGP Peer Per Port'
+            'OSPFv2-RTR Drill Down'
+            'OSPFv2-RTR Per Port'
+            'IPv4 Drill Down'
+            'L2-L3 Test Summary Statistics'
+            'Flow Statistics'
+            'Traffic Item Statistics'
+            'IGMP Host Drill Down'
+            'IGMP Host Per Port'
+            'IPv6 Drill Down'
+            'MLD Host Drill Down'
+            'MLD Host Per Port'
+            'PIMv6 IF Drill Down'
+            'PIMv6 IF Per Port'
+            'Flow View'
+
+         Note: Not all of the viewNames are listed here. You have to get the exact names from
+               the IxNetwork GUI in statistics based on your protocol(s).
+
+         Return a dictionary of all the stats: statDict[rowNumber][columnName] == statValue
+           Get stats on row 2 for 'Tx Frames' = statDict[2]['Tx Frames']
+        """
+        if viewObject == None:
+            breakFlag = 0
+            counterStop = 30
+            for counter in range(1, counterStop+1):
+                viewList = self.ixnObj.get('%s/%s/%s' % (self.ixnObj.sessionUrl, 'statistics', 'view'), silentMode=silentMode)
+                views = ['%s/%s/%s/%s' % (self.ixnObj.sessionUrl, 'statistics', 'view', str(i['id'])) for i in viewList.json()]
+                if silentMode is False:
+                    self.ixnObj.logInfo('\ngetStats: Searching for viewObj for viewName: %s' % viewName)
+
+                for view in views:
+                    # GetAttribute
+                    response = self.ixnObj.get('%s' % view, silentMode=silentMode)
+                    captionMatch = re.match(viewName, response.json()['caption'], re.I)
+                    if captionMatch:
+                        # viewObj: sessionUrl + /statistics/view/11'
+                        viewObject = view
+                        breakFlag = 1
+                        break
+
+                if breakFlag == 1:
+                    break
+
+                if counter < counterStop:
+                    self.ixnObj.logInfo('\nGetting statview [{0}] is not ready. Waiting {1}/{2} seconds.'.format(
+                        viewName, counter, counterStop), timestamp=False)
+                    time.sleep(1)
+                    continue
+                    
+                if counter == counterStop:
+                    if viewObject == None and ignoreError == False:
+                        raise IxNetRestApiException("viewObj wasn't found for viewName: {0}".format(viewName))
+
+                    if viewObject == None and ignoreError == True:
+                        return None
+
+        if silentMode is False:
+            self.ixnObj.logInfo('\n[{0}] viewObj is: {1}'.format(viewName, viewObject))
+
+        for counter in range(0,31):
+            response = self.ixnObj.get(viewObject+'/page', silentMode=silentMode)
+            totalPages = response.json()['totalPages']
+            if totalPages == 'null':
+                self.ixnObj.logInfo('\nGetting total pages is not ready yet. Waiting %d/30 seconds' % counter)
+                time.sleep(1)
+
+            if totalPages != 'null':
+                break
+
+            if counter == 30:
+                raise IxNetRestApiException('getStatsPage failed: Getting total pages')
+
+        if csvFile != None:
+            import csv
+            csvFileName = csvFile.replace(' ', '_')
+            if csvEnableFileTimestamp:
+                import datetime
+                timestamp = datetime.datetime.now().strftime('%H%M%S')
+                if '.' in csvFileName:
+                    csvFileNameTemp = csvFileName.split('.')[0]
+                    csvFileNameExtension = csvFileName.split('.')[1]
+                    csvFileName = csvFileNameTemp+'_'+timestamp+'.'+csvFileNameExtension
+                else:
+                    csvFileName = csvFileName+'_'+timestamp
+
+            csvFile = open(csvFileName, 'w')
+            csvWriteObj = csv.writer(csvFile)
+
+        # Get the stat column names
+        columnList = response.json()['columnCaptions']
+        if csvFile != None:
+            csvWriteObj.writerow(columnList)
+
+        flowNumber = 1
+        statDict = {}
+        # Get the stat values
+        for pageNumber in range(1,totalPages+1):
+            self.ixnObj.patch(viewObject+'/page', data={'currentPage': pageNumber}, silentMode=silentMode)
+
+            response = self.ixnObj.get(viewObject+'/page', silentMode=silentMode)
+            statValueList = response.json()['pageValues']
+
+            for statValue in statValueList:
+                if csvFile != None:
+                    csvWriteObj.writerow(statValue[0])
+
+                if displayStats:
+                    self.ixnObj.logInfo('\nRow: %d' % flowNumber, timestamp=False)
+
+                statDict[flowNumber] = {}
+                index = 0
+                for statValue in statValue[0]:
+                    statName = columnList[index]
+                    statDict[flowNumber].update({statName: statValue})
+                    if displayStats:
+                        self.ixnObj.logInfo('\t%s: %s' % (statName, statValue), timestamp=False)
+                    index += 1
+                flowNumber += 1
+
+        if csvFile != None:
+            csvFile.close()
+        return statDict
+
+    def getStatsData(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False,
+                     displayStats=True, silentMode=False, ignoreError=False):
+        """
+        Description
+            For IxNetwork version >= 8.50.   
+            Get stats by the statistic name or get stats by providing a view object handle.
+            This method get stats using /api/v1/sessions/{id}/ixnetwork/statistics/view/{id}/data to get
+            attributes columnCaptions, pageValues and totalPages. This method uses new API starting in 
+            version 8.50.
+
+        Parameters
+            csvFile = None or <filename.csv>.
+                      None will not create a CSV file.
+                      Provide a <filename>.csv to record all stats to a CSV file.
+                      Example: getStats(sessionUrl, csvFile='Flow_Statistics.csv')
+
+            csvEnableFileTimestamp = True or False. If True, timestamp will be appended to the filename.
+            displayStats: True or False. True=Display stats.
+            ignoreError: True or False.  Returns None if viewName is not found.
             viewObject: The view object: http://{apiServerIp:port}/api/v1/sessions/2/ixnetwork/statistics/view/13
                         A view object handle could be obtained by calling getViewObject().
 
@@ -195,39 +385,6 @@ class Statistics(object):
         if csvFile != None:
             csvFile.close()
         return statDict
-
-        # Flow Statistics dictionary output example
-        '''
-        Flow: 50
-            Tx Port: Ethernet - 002
-            Rx Port: Ethernet - 001
-            Traffic Item: OSPF T1 to T2
-            Source/Dest Value Pair: 2.0.21.1-1.0.21.1
-            Flow Group: OSPF T1 to T2-FlowGroup-1 - Flow Group 0002
-            Tx Frames: 35873
-            Rx Frames: 35873
-            Packet Loss Duration (ms):  11.106
-            Frames Delta: 0
-            Loss %: 0
-            Tx Frame Rate: 3643.5
-            Rx Frame Rate: 3643.5
-            Tx L1 Rate (bps): 4313904
-            Rx L1 Rate (bps): 4313904
-            Rx Bytes: 4591744
-            Tx Rate (Bps): 466368
-            Rx Rate (Bps): 466368
-            Tx Rate (bps): 3730944
-            Rx Rate (bps): 3730944
-            Tx Rate (Kbps): 3730.944
-            Rx Rate (Kbps): 3730.944
-            Tx Rate (Mbps): 3.731
-            Rx Rate (Mbps): 3.731
-            Store-Forward Avg Latency (ns): 0
-            Store-Forward Min Latency (ns): 0
-            Store-Forward Max Latency (ns): 0
-            First TimeStamp: 00:00:00.722
-            Last TimeStamp: 00:00:10.568
-        '''
 
     def removeAllTclViews(self):
         """

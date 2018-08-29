@@ -395,16 +395,6 @@ class Statistics(object):
         response = self.ixnObj.post(removeAllTclViewsUrl)
         self.ixnObj.waitForComplete(response, removeAllTclViewsUrl+'/'+response.json()['id'])
 
-    def clearStats(self):
-        """
-        Description
-           Clears all stats
-
-        Syntax
-           POST = https://{apiServerIp:port}/api/v1/sessions/<id>/ixnetwork/operations/clearstats
-        """
-        self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/clearstats')
-
     def takeSnapshot(self, viewName='Flow Statistics', windowsPath=None, isLinux=False, localLinuxPath=None,
                      renameDestinationFile=None, includeTimestamp=False, mode='overwrite'):
         """

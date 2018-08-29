@@ -1401,11 +1401,91 @@ class Protocol(object):
         self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/multivalue/getValues'+response.json()['id'], silentMode=silentMode)
         return response.json()['result']
 
-    def verifyProtocolSessionsUp(self, protocolViewName='Protocols Summary', timeout=60):
+    def verifyProtocolSessionsUp(self, protocolViewName='BGP Peer Per Port', timeout=60):
         """
         Description
-            Defaults to Protocol Summary to verify all configured protocol sessions
-            Otherwise, specify the protocol session to verify.
+            This method either verify a specified protocol sessions for UP or automatically verify for all
+            the configured protocols for sessions UP.  
+
+            This method calls verifyProtocolSessionsNgpf() if you're using IxNetwork version prior to 8.50.
+            For IxNetwork versions >8.50, it calls verifyProtocolSessionsUp2() which is more robust 
+            because 8.50 introduced new APIs.
+        
+        Parameters
+            protocolViewName: <string>: The protocol to verify. You could get the exact view name in the 
+                                        IxNetwork API browser.
+
+        Some protocolViewName options:
+            'ISIS-L3 RTR Per Port'
+            'BGP Peer Per Port'
+            'OSPFv2-RTR Per Port'
+        """
+        buildNumber = float(self.ixnObj.getIxNetworkVersion()[:3])
+        if buildNumber >= 8.5:
+            self.verifyProtocolSessionsUp2()
+        else:
+            self.verifyAllProtocolSessionsNgpf()
+
+    def verifyProtocolSessionsUp1(self, protocolViewName='BGP Peer Per Port', timeout=60):
+        """
+        Description
+            Verify a specified protocol sessions for UP.
+            This method is mainly for IxNetwork version prior to 8.50.  8.50+ could still use this method,
+            but using verifyProtocolSessionsUp2 is more robust because 8.50 introduced new APIs.
+
+        Parameter
+            protocolViewName: The protocol view name.
+
+        Some protocolViewName options:
+            'ISIS-L3 RTR Per Port'
+            'BGP Peer Per Port'
+            'OSPFv2-RTR Per Port'
+        """
+        totalSessionsDetectedUp = 0
+        totalSessionsDetectedDown = 0
+        totalPortsUpFlag = 0
+
+        for counter in range(1,timeout+1):
+            stats = self.ixnObj.getStatsPage(viewName=protocolViewName, displayStats=False)
+            totalPorts = len(stats.keys()) ;# Length stats.keys() represents total ports.
+            self.ixnObj.logInfo('\nProtocolName: {0}'.format(protocolViewName))
+
+            for session in stats.keys():
+                sessionsUp = int(stats[session]['Sessions Up'])
+                totalSessions = int(stats[session]['Sessions Total'])
+                totalSessionsNotStarted = int(stats[session]['Sessions Not Started'])
+                totalExpectedSessionsUp = totalSessions - totalSessionsNotStarted
+
+                self.ixnObj.logInfo('\n\tPortName: {0}\n\t   TotalSessionsUp: {1}\n\t   ExpectedTotalSessionsup: {2}'.format(
+                    stats[session]['Port'], sessionsUp, totalExpectedSessionsUp))
+
+                if counter < timeout and sessionsUp != totalExpectedSessionsUp:
+                    self.ixnObj.logInfo('\t   Session is still down')
+
+                if counter < timeout and sessionsUp == totalExpectedSessionsUp:
+                    totalPortsUpFlag += 1
+                    if totalPortsUpFlag == totalPorts:
+                        self.ixnObj.logInfo('\n\tAll sessions are up!')
+                        return
+
+            if counter == timeout and sessionsUp != totalExpectedSessionsUp:
+                raise IxNetRestApiException('\nSessions failed to come up')
+
+            self.ixnObj.logInfo('\n\tWait {0}/{1} seconds'.format(counter, timeout))
+            print()
+            time.sleep(1)
+
+    def verifyProtocolSessionsUp2(self, protocolViewName='Protocols Summary', timeout=60):
+        """
+        Description
+            For IxNetwork version >= 8.50.
+            Defaults to Protocols Summary to verify all configured protocol sessions. There is no need
+            to specify specific protocols to verify.  However, you still have the option to specific
+            protocol session to verify.
+
+            Note: This get stats by using /statistics/statview/<id>/data. Prior to 8.50, 
+                  get stats uses /statistics/statview/<id>/page, which is deprecated started 8.50.
+                  /statistics/statview/<id>/data is more robust.
 
         Parameter
             protocolViewName: <str>: The protocol view name. 
@@ -1427,7 +1507,7 @@ class Protocol(object):
         totalPortsUpFlag = 0
 
         for counter in range(1,timeout+1):
-            stats = self.statObj.getStats(viewName=protocolViewName, displayStats=False, silentMode=True)
+            stats = self.statObj.getStatsData(viewName=protocolViewName, displayStats=False, silentMode=True)
             self.ixnObj.logInfo('\n%-16s %-14s %-16s %-23s %-22s' % ('Name', 'SessionsUp', 'SessionsDown',
                                                                      'ExpectedSessionsUp', 'SessionsNotStarted' ),
                                 timestamp=False)
@@ -1468,7 +1548,6 @@ class Protocol(object):
 
                     if sessionsDown != 0:
                         raise IxNetRestApiException('Sessions failed to come up')
-
 
             if sessionNotStartedFlag == 1:
                 if counter < timeout:

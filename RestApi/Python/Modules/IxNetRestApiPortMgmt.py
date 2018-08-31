@@ -759,10 +759,8 @@ class PortMgmt(object):
             vportList = ['%s' % vport['links'][0]['href'] for vport in response.json()]
 
         # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
-        print('\n---- setTxMode vportList:  ', vportList)
         for eachVport in vportList:
             self.ixnObj.patch(self.ixnObj.httpHeader+eachVport, data={'txMode':txMode})
-
 
     def configUdsRxFilters(self, portList='all', filterPalette=None, udsNum='1', udsArgs=None):
         """
@@ -775,20 +773,19 @@ class PortMgmt(object):
                      Or if portList ='all', will modify all assigned ports to the specified mediaType.
 
            filterPalette: Filter Palette kwargs.
-
-           udsNum: <string>:  uds number 
-         
+           udsNum: <string>:  uds number          
            udsArgs: uds kwargs.
-
 
         USAGE EXAMPLE:
            portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']], 
-                                          filterPalette={'pattern1':'01', 'pattern1Mask':'FC', 'pattern1Offset':'15', 'pattern1OffsetType':'fromStartOfFrame', 
+                                          filterPalette={'pattern1':'01', 'pattern1Mask':'FC',
+                                                         'pattern1Offset':'15', 'pattern1OffsetType':'fromStartOfFrame', 
                                           udsNum=1
                                           udsArgs={'isEnabled':'true', 'patternSelector':'pattern1'})
 
            portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']], 
-                                          filterPalette={'pattern2':'03', 'pattern2Mask':'FC', 'pattern2Offset':'19', 'pattern2OffsetType':'fromStartOfFrame', 
+                                          filterPalette={'pattern2':'03', 'pattern2Mask':'FC',
+                                                         'pattern2Offset':'19', 'pattern2OffsetType':'fromStartOfFrame', 
                                           udsNum=2
                                           udsArgs={'isEnabled':'true', 'patternSelector':'pattern2'})
 

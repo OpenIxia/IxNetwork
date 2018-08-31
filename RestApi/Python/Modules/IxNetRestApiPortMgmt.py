@@ -762,3 +762,49 @@ class PortMgmt(object):
         print('\n---- setTxMode vportList:  ', vportList)
         for eachVport in vportList:
             self.ixnObj.patch(self.ixnObj.httpHeader+eachVport, data={'txMode':txMode})
+
+
+    def configUdsRxFilters(self, portList='all', filterPalette=None, udsNum='1', udsArgs=None):
+        """
+        Description
+           Configure rxFilters and User Defined Stats on a port
+
+        Parameters
+           portList: <'all'|list of ports>: 
+                     <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
+                     Or if portList ='all', will modify all assigned ports to the specified mediaType.
+
+           filterPalette: Filter Palette kwargs.
+
+           udsNum: <string>:  uds number 
+         
+           udsArgs: uds kwargs.
+
+
+        USAGE EXAMPLE:
+           portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']], 
+                                          filterPalette={'pattern1':'01', 'pattern1Mask':'FC', 'pattern1Offset':'15', 'pattern1OffsetType':'fromStartOfFrame', 
+                                          udsNum=1
+                                          udsArgs={'isEnabled':'true', 'patternSelector':'pattern1'})
+
+           portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']], 
+                                          filterPalette={'pattern2':'03', 'pattern2Mask':'FC', 'pattern2Offset':'19', 'pattern2OffsetType':'fromStartOfFrame', 
+                                          udsNum=2
+                                          udsArgs={'isEnabled':'true', 'patternSelector':'pattern2'})
+
+        """
+        self.ixnObj.logInfo('configUdsRxFilters: filterPalette={0}'.format(filterPalette))
+        self.ixnObj.logInfo('\t\t uds={0} udsArgs={1}'.format(udsNum, udsArgs))
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        if portList == 'all':
+            #vportList = self.getAllVportList()
+            portList = self.getPhysicalPortsFromCreatedVports()
+
+        # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+        vportList = self.getVportFromPortList(portList)
+        for vport in vportList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
+            portType = response.json()['type']
+            self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/rxFilters/filterPalette', data=filterPalette)
+            self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/rxFilters/uds/'+udsNum, data=udsArgs)
+

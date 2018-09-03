@@ -896,14 +896,16 @@ class Protocol(object):
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+ospfObj, data={'name': kwargs['name']})
 
-        # All of these BGP attributes configures multivalue singleValue. So just loop them to do the same thing.
-        ospfAttributes = ['areaId', 'neighborIp', 'helloInterval', 'areadIdIp', 'networkType', 'deadInterval']
-
-        for ospfAttribute in ospfAttributes:
-            if ospfAttribute in kwargs:
-                multiValue = ospfObjResponse.json()[ospfAttribute]
-                self.ixnObj.logInfo('Configuring OSPF attribute: %s' % ospfAttribute)
-                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[ospfAttribute]})
+        for key,value in ospfObjResponse.json().items():
+            if key != 'links':
+                if bool(re.search('multivalue', str(value))) == True:
+                    if key in kwargs:
+                        multiValue = ospfObjResponse.json()[key]
+                        self.ixnObj.logInfo('Configuring OSPF multivalue attribute: %s' % key)
+                        self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[key]})
+                else:
+                    if key in kwargs:
+                        self.ixnObj.patch(self.ixnObj.httpHeader+ospfObj, data={key: kwargs[key]})
 
         self.configuredProtocols.append(ospfObj)
         return ospfObj
@@ -990,7 +992,7 @@ class Protocol(object):
             x = self.getProtocolListByHostIpNgpf(hostIp)
             bgpObj = self.getProtocolObjFromHostIp(x, protocol='bgpIpv4Peer')
 
-        bgpObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+bgpObj)
+        bgpObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+bgpObj + '?links=true')
 
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+bgpObj, data={'name': kwargs['name']})
@@ -1005,17 +1007,17 @@ class Protocol(object):
             self.ixnObj.logInfo('Configure BGP DUT IP. Attribut for multivalue = dutIp')
             self.configMultivalue(multiValue, 'counter', data=kwargs['dutIp'])
 
-        # All of these BGP attributes configures multivalue singleValue. So just loop them to do the same thing.
-        # Note: Don't include flap.  Call flapBgp instead because the uptime and downtime needs to be configured.
-        bgpAttributes = ['localAs2Bytes', 'localAs4Bytes', 'enable4ByteAs', 'enableGracefulRestart', 'restartTime', 'type',
-                         'staleTime', 'holdTimer', 'enableBgpIdSameasRouterId']
+        for key,value in bgpObjResponse.json().items():
+            if key != 'links' and key not in ['dutIp']:
+                if bool(re.search('multivalue', str(value))) == True:
+                    if key in kwargs:
+                        multiValue = bgpObjResponse.json()[key]
+                        self.ixnObj.logInfo('Configuring BGP multivalue attribute: %s' % key)
+                        self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[key]})
+                else:
+                    if key in kwargs:
+                        self.ixnObj.patch(self.ixnObj.httpHeader+bgpObj, data={key: kwargs[key]})
 
-        for bgpAttribute in bgpAttributes:
-            if bgpAttribute in kwargs:
-                multiValue = bgpObjResponse.json()[bgpAttribute]
-                self.ixnObj.logInfo('Configuring BGP multivalue attribute: %s' % bgpAttribute)
-                self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[bgpAttribute]})
-            
         self.configuredProtocols.append(bgpObj)
         return bgpObj
 

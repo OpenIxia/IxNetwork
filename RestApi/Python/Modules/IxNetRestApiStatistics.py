@@ -454,7 +454,9 @@ class Statistics(object):
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
         if isLinux:
             snapshotFile = location + '/' + viewName + '.csv'
-            self.fileMgmtObj.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=snapshotFile, localPath=localLinuxPath)
+            self.fileMgmtObj.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=snapshotFile, localPath=localLinuxPath,
+                                                        renameDestinationFile=renameDestinationFile,
+                                                        includeTimestamp=includeTimestamp)
 
         if windowsPath and localLinuxPath:
             # Get the snapshot. Use the csvFilename that was specified and the location

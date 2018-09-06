@@ -598,8 +598,7 @@ class FileMgmt(object):
             jsonData = json.load(inFile)
         return jsonData
 
-    @staticmethod
-    def jsonWriteToFile(dataObj, jsonFile, sortKeys=False):
+    def jsonWriteToFile(self, dataObj, jsonFile, sortKeys=False):
         """
         Description
            Write data to a json file.

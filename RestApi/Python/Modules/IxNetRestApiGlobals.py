@@ -11,13 +11,14 @@ class Globals(object):
         self.ixnObj = ixnObj
         self.protocolObj = Protocol(ixnObj)
 
-    def dhcpV4ClientStartStopRate(self, setting='startRate', **kwargs):
+    def dhcpV4ClientStartStopRate(self, endpoint='startRate', **kwargs):
         """
         Description
            Configure startRate|stopRate settings for DHCP V4 Client.
 
         Parameters
-           setting: <str>: startRate|stopRate
+           endpoint: <str|object endpoint>: startRate|stopRate
+
            **kwargs: Any attribute for the /globals/topology/dhcpv4client/startRate|stopRate endpoint.
                      enabled = bool
                      interval = int
@@ -34,7 +35,7 @@ class Globals(object):
                                                )
 
         """
-        restApi = '/globals/topology/dhcpv4client/{0}?links=true'.format(setting)
+        restApi = '/globals/topology/dhcpv4client/{0}?links=true'.format(endpoint)
 
         response = self.ixnObj.get(self.ixnObj.sessionUrl + restApi)
         for key,value in response.json().items():

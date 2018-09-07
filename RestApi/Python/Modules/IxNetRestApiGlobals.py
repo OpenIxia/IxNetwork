@@ -11,10 +11,10 @@ class Globals(object):
         self.ixnObj = ixnObj
         self.protocolObj = Protocol(ixnObj)
 
-    def dhcpV4StartStopRate(self, setting='startRate', **kwargs):
+    def dhcpV4ClientStartStopRate(self, setting='startRate', **kwargs):
         """
         Description
-           To startRate|stopRate for DHCP V4 Client.
+           Configure startRate|stopRate settings for DHCP V4 Client.
 
         Parameters
            setting: <str>: startRate|stopRate
@@ -26,19 +26,18 @@ class Globals(object):
                      rowNames = list
                      scalePortMode = str: port|deviceGroup
         Usage:
-           globalObj.dhcpV4StartStopRate(rate=500,
-                                         maxOutstanding=600,
-                                         enabled=True,
-                                         interval=3000,
-                                         scaleMode='port'
-                                         )
+           globalObj.dhcpV4ClientStartStopRate(rate=500,
+                                               maxOutstanding=600,
+                                               enabled=True,
+                                               interval=3000,
+                                               scaleMode='port'
+                                               )
 
         """
         restApi = '/globals/topology/dhcpv4client/{0}?links=true'.format(setting)
 
         response = self.ixnObj.get(self.ixnObj.sessionUrl + restApi)
         for key,value in response.json().items():
-            #print(key, value, type(value))
             if key != 'links':
                 if bool(re.search('multivalue', str(value))) == True:
                     if key in kwargs:

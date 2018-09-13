@@ -25,8 +25,6 @@ proc SendCommand { id command {timeout 120}} {
 
 spawn csh
 expect {
-    ">>>" {
-    }
     "$" {
 	puts "Connected"
     }
@@ -35,6 +33,5 @@ expect {
     }
 }
 
-# Execute a Python ReST API script
-SendCommand $spawn_id "$pythonPath ../..//RestApi/Python/SampleScripts/bgpNgpf.py"
+SendCommand $spawn_id "$pythonPath ../../RestApi/Python/SampleScripts/bierRawTrafficOnly.py"
 

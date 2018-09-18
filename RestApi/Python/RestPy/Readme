@@ -65,17 +65,6 @@ How to efficiently use ixnetwork_restpy:
       API tree and the WebUI doc.
 
 
-# How to create a list of ports in one vport object.
-# This is how to add multiple ports in a Topology Group.
-    vport = ixNetwork.Vport
-    vport.add(Name='Port1').add(Name='Port2')
-
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport)
-
-    #Other ways to add ports to a Topology Group is by using the find() to filter the vport name or the physical port.
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=[ixNetwork.Vport.find(AssignedTo='192.168.70.120:1:1')])
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=ixNetwork.Vport.find(Name=('Port1'))
-
 
 
 

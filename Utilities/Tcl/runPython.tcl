@@ -34,4 +34,4 @@ expect {
 }
 
 SendCommand $spawn_id "$pythonPath ../../RestApi/Python/SampleScripts/bierRawTrafficOnly.py"
-
+#SendCommand $spawn_id "$pythonPath ../../RestApi/Python/SampleScripts/bgpNgpf.py"

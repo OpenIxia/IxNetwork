@@ -42,7 +42,7 @@ Installation:
         - The tool is under https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/ixnetwork_restpy
 
         - Note: You need to include this path in your system's environment PYTHONPATH:
-	        /your_path/IxNetwork/RestApi/Python/RestPy
+	        /your_path/IxNetwork/RestApi/Python/RestPy/ixnetwork_restpy
 
 Sample scripts and helper class functions:
     Sample scripts:
@@ -64,17 +64,6 @@ How to efficiently use ixnetwork_restpy:
     - Look at the sample scripts and see how the object oriented dot notation correlates to the IxNetwork
       API tree and the WebUI doc.
 
-
-# How to create a list of ports in one vport object.
-# This is how to add multiple ports in a Topology Group.
-    vport = ixNetwork.Vport
-    vport.add(Name='Port1').add(Name='Port2')
-
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport)
-
-    #Other ways to add ports to a Topology Group is by using the find() to filter the vport name or the physical port.
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=[ixNetwork.Vport.find(AssignedTo='192.168.70.120:1:1')])
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=ixNetwork.Vport.find(Name=('Port1'))
 
 
 

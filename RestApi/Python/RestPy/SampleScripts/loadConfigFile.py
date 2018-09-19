@@ -32,7 +32,7 @@ Script development API doc:
 """
 
 from __future__ import absolute_import, print_function
-import json, sys
+import json, sys, os
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
@@ -106,11 +106,10 @@ try:
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 
-    #print('\nConnecting to chassis: {0}'.format(ixChassisIpList))
-    #portObj.connectToChassis(ixChassisIpList)
-
     print('\nConfiguring license server')
-    # Must set the license server IP before loading the config file so ports could boot successfully.
+    # In case the saved config already has the chassis and ports configured and to be able to configure
+    # the license server, must release the ports first. Otherwise, you cannot configure the license server
+    # and ports won't boot successfully.
     if forceTakePortOwnership == True:
         # To configure the license server IP, must release the ports first.
         portObj.releasePorts(portList)
@@ -123,17 +122,16 @@ try:
     print('\nAssigning ports/Rebooting ports')
     portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
 
+    # Example: How to modify a loaded config using JSON's exported config XPATH
+    data = json.dumps([{"xpath": "/topology[1]", "name": 'Topo-BGP-1'}])
+    ixNetwork.ResourceManager.ImportConfig(Arg2=data, Arg3=False)
+
     ixNetwork.StartAllProtocols(Arg1='sync')
     statObj.verifyAllProtocolSessions()
 
     # Get the Traffic Item name for getting Traffic Item statistics.
-    trafficItem = ixNetwork.Traffic.TrafficItem.find(Name=trafficItemName)
-    #trafficItemName = trafficItem.Name
-
-    # Example: How to modify a loaded config using JSON's exported config XPATH
-    #data = json.dumps([{"xpath": "/traffic/trafficItem[1]", "name": 'Traffic_Name_2'}])
-    data = [{"xpath": "/traffic/trafficItem[1]", "name": 'Traffic_Name_2'}]
-    ixNetwork.ResourceManager.ImportConfig(Arg2=data, Arg3=False)
+    trafficItem = ixNetwork.Traffic.TrafficItem.find()[0]
+    trafficItemName = trafficItem.Name
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()

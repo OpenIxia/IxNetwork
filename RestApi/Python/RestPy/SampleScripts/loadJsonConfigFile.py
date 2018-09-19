@@ -32,7 +32,7 @@ Script development API doc:
 """
 
 from __future__ import absolute_import, print_function
-import json, sys
+import json, sys, os
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
@@ -60,7 +60,6 @@ if osPlatform == 'windows':
 
 # Change API server values to use your setup
 if osPlatform == 'linux':
-    print('\n---- it is linux ----')
     apiServerIp = '192.168.70.121'
     apiServerPort = 443
     username = 'admin'
@@ -85,7 +84,7 @@ jsonConfigFile = 'bgp.json'
 
 try:
     #testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform)
-    testPlatform = TestPlatform(apiServerIp, platform=osPlatform)
+    testPlatform = TestPlatform(apiServerIp, apiServerPort, platform=osPlatform)
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'
@@ -94,17 +93,10 @@ try:
         testPlatform.Authenticate(username, password)
 
     if isWindowsConnectionMgr or osPlatform == 'linux':
-        print('\n--- adding new session --')
         session = testPlatform.Sessions.add()
-        sys.exit()
-        session = testPlatform.Sessions.find()
-
-        print('\n--- session:', session)
-        #print('\n--- session find:', session.find())
 
     if osPlatform == 'windows':
         session = testPlatform.Sessions.find(Id=1)
-
 
     # ixNetwork is the root object to the IxNetwork API hierarchical tree.
     ixNetwork = session.Ixnetwork
@@ -114,7 +106,9 @@ try:
     portObj = Ports(ixNetwork)
 
     print('\nConfiguring license server')
-    # Must set the license server IP before loading the config file so ports could boot successfully.
+    # In case the saved config already has the chassis and ports configured and to be able to configure
+    # the license server, must release the ports first. Otherwise, you cannot configure the license server
+    # and ports won't boot successfully.
     if forceTakePortOwnership == True:
         # To configure the license server IP, must release the ports first.
         portObj.releasePorts(portList)
@@ -126,9 +120,10 @@ try:
 
     # Assigning ports after loading a saved config is optional because you could use the ports that
     # are saved in the config file. Optionally, reassign ports to use other chassis/ports on different testbeds.
-    portObj.assignPorts(portList, getVportList=True)
+    portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
 
     # Example: How to modify a loaded json config using XPATH
+    # Arg3:  True=To create a new config. False=To modify an existing config.
     data = json.dumps([{"xpath": "/traffic/trafficItem[1]", "name": 'Modified Traffic'}])
     ixNetwork.ResourceManager.ImportConfig(Arg2=data, Arg3=False)
 

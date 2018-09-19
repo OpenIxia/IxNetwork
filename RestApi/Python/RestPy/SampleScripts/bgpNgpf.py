@@ -29,8 +29,10 @@ Requirements:
          - Statistics.py and PortMgmt.py
 
 Script development API doc:
-   - The doc is located in your Python installation site-packages/ixnetwork_restpy/index.html
-   - On a web browser, enter: file:///<full_path_to_ixnetwork_restpy>/index.html
+   - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
+   - On a web browser:
+         - If installed in Windows: enter: file://c:/<path_to_ixnetwork_restpy>/docs/index.html
+         - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
 """
 
 from __future__ import absolute_import, print_function

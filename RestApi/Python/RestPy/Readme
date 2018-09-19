@@ -2,7 +2,7 @@
 What is ixnetwork_restpy:
      - This is a client side script development tool that comes with the entire IxNetwork API tree in Python Classes.
      - Making this completely object oriented because there is a Python class for each node in IxNetwork API hierarchical tree.
-     - At each node, say BGP, you could view its attributes during script development so
+     - At each node, say for example BGP, you could view its attributes during script development so
        you know how to create your configurations without having to view doc or the API browser.
 
 Benefits:
@@ -20,7 +20,7 @@ Prerequisite:
 	
 Where is the IxNetwork API Browser located:
      - In Windows GUI, make a simple configuration, go to Files, Tools, IxNetwork API Browser.
-         - The left side pane is the root level entry points to all the APIs in a hierarchical view of
+         - The left pane is the root level entry points to all the APIs in a hierarchical view of
 	   your configuration.
 
      - For Linux, the IxNetwork API Browser is the default view.

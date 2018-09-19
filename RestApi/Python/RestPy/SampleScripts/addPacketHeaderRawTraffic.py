@@ -33,12 +33,13 @@ Script development API doc:
 """
 
 from __future__ import absolute_import, print_function
-import sys, re
+import sys, os, re
 
 # The main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
-# Modules containing helper functions
+# Modules containing helper functions from Github
+# These  modules are one level above.
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from StatisticsMgmt import Statistics
 from PortMgmt import Ports
@@ -103,28 +104,20 @@ try:
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 
-    '''
     if osPlatform == 'windows':
         ixNetwork.NewConfig()    
 
     print('\nConfiguring license server')
-    '''
-    if forceTakePortOwnership == True:
-        # To configure the license server IP, must release the ports first.
-        portObj.releasePorts(portList)
-        ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-        ixNetwork.Globals.Licensing.Mode = licenseMode
-    '''
-
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
-    portObj.assignPorts(portList, forceTakePortOwnership)
-    '''
 
-    # Get vport for RAW Traffic Item source/dest endpoints
-    vportList = [vport.href+'/protocols' for vport in ixNetwork.Vport.find()]
-    vport1 = vportList[0]
-    vport2 = vportList[1]
+    # Create vport for RAW Traffic Item source/dest endpoints
+    vport1 = ixNetwork.Vport.add(Name='Port1')
+    vport2 = ixNetwork.Vport.add(Name='Port2')
+
+    # getVportList=True because you already created vports from above.
+    # If you did not create vports, then assignPorts will create them and name them with default names.
+    portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
 
     print('\nCreate Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='RAW MPLS',
@@ -133,7 +126,7 @@ try:
                                                 )
     
     print('\tAdd flow group')
-    trafficItem.EndpointSet.add(Sources=[vport1], Destinations=[vport2])
+    trafficItem.EndpointSet.add(Sources=vport1.Protocols, Destinations=vport2.Protocols)
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
     #       Therefore, ConfigElement is a list.
@@ -147,109 +140,70 @@ try:
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     # Show a list of current configured packet headers in the first Traffic Item and first EndpointSet.
-    packetHeaderStacks = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find()
+    ethernetStackObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
 
     # Uncomment this to show a list of all the available protocol templates (packet headers)
     #for protocolHeader in ixNetwork.Traffic.ProtocolTemplate():
     #    print('\n', protocolHeader.DisplayName)
 
-    # Look for the Ethernet packet header stack ID.
-    # Note: The packetHeader stack number needs to be one based. Hence index+1.
-    for index,stack in enumerate(packetHeaderStacks):
-        if stack.DisplayName == 'Ethernet II':
-            ethernetStackObj = stack
-            break
-
+    # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
+    #       the IxVM port from your virtual host (ESX-i host or KVM)
     print('\nConfiguring Ethernet packet header')
-    for field in ethernetStackObj.Field.find():
-        if field.DisplayName == 'Destination MAC Address':
-            field.ValueType = 'increment'
-            field.StartValue = "00:0c:29:84:37:16"
-            field.StepValue = "00:00:00:00:00:00"
-            field.CountValue = 1
+    ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
+    ethernetDstField.ValueType = 'increment'
+    ethernetDstField.StartValue = "00:0c:29:ce:41:32"
+    ethernetDstField.StepValue = "00:00:00:00:00:00"
+    ethernetDstField.CountValue = 1
 
-        if field.DisplayName == 'Source MAC Address':
-            field.ValueType = 'increment'
-            field.StartValue = "00:01:01:01:00:01"
-            field.StepValue = "00:00:00:00:00:01"
-            field.CountValue = 1
+    ethernetSrcField = ethernetStackObj.Field.find(DisplayName='Source MAC Address')
+    ethernetSrcField.ValueType = 'increment'
+    ethernetSrcField.StartValue = "00:01:01:01:00:01"
+    ethernetSrcField.StepValue = "00:00:00:00:00:01"
+    ethernetSrcField.CountValue = 1
 
-    print('\n--- Configuring MPLS 1 ----\n')
-    # Add MPLS packet header after the Ethernet packet header stack
-    # 1> Get the protocol index that you want to append or insert.
-    for index,protocolHeader in enumerate(ixNetwork.Traffic.ProtocolTemplate.find()):
-        if bool(re.match('mpls', protocolHeader.DisplayName, re.I)):
-            mplsProtocolTemplateIndex = index
-            break
+    # 1> Get the MPLS protocol template from the ProtocolTemplate list.
+    mplsProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName='^MPLS$')
 
-    print('\n--- Configuring MPLS 2 ----\n')
-    # 2> Yank out the MPLS protocol template from the ProtocolTemplate list.
-    mplsProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find()[mplsProtocolTemplateIndex]
-
-    print('\n--- Configuring MPLS 3 ----\n')
-    print('\n--- ethStackObj:', ethernetStackObj)
-    print('\n---- dir:', dir(ethernetStackObj))
-    print('\n---- mplsProtocolTemplate:', mplsProtocolTemplate)
-    # 3> Append the MPLS protocol header after the Ethernet header.
+    # 2> Append the MPLS protocol object created above after the Ethernet header stack.
     ethernetStackObj.Append(Arg2=mplsProtocolTemplate)
     
-    print('\n--- Configuring MPLS 4 ----\n')
-    # 4> Get the new MPLS packet header stack
+    # 3> Get the new MPLS packet header stack to use it for appending an IPv4 stack after it.
     # Look for the MPLS packet header object and stack ID.
-    # Note: The packetHeader stack number needs to be one based. Hence index+1.
-    for index,stack in enumerate(ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find()):
-        if stack.DisplayName == 'MPLS':
-            mplsStackObj = stack
-            break
+    mplsStackObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='^MPLS$')
 
-    print('\n--- Configuring MPLS 5 ----\n')
+    # 4> In order to modify the MPLS fields, get the mpls field object
+    mplsFieldObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='^MPLS$').Field.find()
+
     # 5> Configure the mpls packet header
-    for field in mplsStackObj.Field.find():
-        if field.DisplayName == 'Label Value':
-            field.ValueType = 'increment'
-            field.StartValue = "16"
-            field.StepValue = "1"
-            field.CountValue = 2
+    mplsFieldObj.ValueType = 'increment'
+    mplsFieldObj.StartValue = "16"
+    mplsFieldObj.StepValue = "1"
+    mplsFieldObj.CountValue = 2
 
-    print('\n--- Configuring MPLS 6 ----\n')
     # Add IPv4 packet header after the MPLS packet header stack
-    # 1> Get the protocol index that you want to append or insert.
-    for index,protocolHeader in enumerate(ixNetwork.Traffic.ProtocolTemplate.find()):
-        if bool(re.match('ipv4', protocolHeader.DisplayName, re.I)):
-            ipv4ProtocolTemplateIndex = index
-            break
+    # 1> Get the protocol template for IPv4
+    ipv4ProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName='IPv4')
 
-    print('\n--- Configuring MPLS 7 ----\n')
-    # 2> Yank out the IPv4 protocol template from the ProtocolTemplate list.
-    ipv4ProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find()[ipv4ProtocolTemplateIndex]
-
-    print('\n--- Configuring MPLS 8 ----\n')
-    # 3> Append the protocol header after the Ethernet header.
+    # 2> Append the IPv4 protocol header after the MPLS header.
     mplsStackObj.Append(Arg2=ipv4ProtocolTemplate)
-    
-    print('\n--- Configuring MPLS 9 ----\n')
-    # 4> Get the new mpls packet header stack
-    # Look for the MPLS packet header object and stack ID.
-    # Note: The packetHeader stack number needs to be one based. Hence index+1.
-    for index, stack in enumerate(ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find()):
-        if bool(re.match('IPv4', stack.DisplayName, re.I)):
-            ipv4StackObj = stack
-            break
 
-    print('\n--- Configuring MPLS 10 ----\n')
-    # 5> Configure the mpls packet header
-    for field in ipv4StackObj.Field.find():
-        if field.DisplayName == 'Source Address':
-            field.ValueType = 'increment'
-            field.StartValue = "1.1.1.1"
-            field.StepValue = "0.0.0.1"
-            field.CountValue = 1
+    # 3> Get the new IPv4 packet header stack to use it for appending any protocol after IP layer such as 
+    #    UDP/TCP.
+    # Look for the IPv4 packet header object.
+    ipv4StackObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='IPv4')
 
-        if field.DisplayName == 'Destination Address':
-            field.ValueType = 'increment'
-            field.StartValue = "1.1.1.2"
-            field.StepValue = "0.0.0.1"
-            field.CountValue = 1
+    # 4> Configure the mpls packet header
+    ipv4SrcFieldObj = ipv4StackObj.Field.find(DisplayName='Source Address')
+    ipv4SrcFieldObj.ValueType = 'increment'
+    ipv4SrcFieldObj.StartValue = "1.1.1.1"
+    ipv4SrcFieldObj.StepValue = "0.0.0.1"
+    ipv4SrcFieldObj.CountValue = 1
+
+    ipv4DstFieldObj = ipv4StackObj.Field.find(DisplayName='Destination Address')
+    ipv4DstFieldObj.ValueType = 'increment'
+    ipv4DstFieldObj.StartValue = "1.1.1.2"
+    ipv4DstFieldObj.StepValue = "0.0.0.1"
+    ipv4DstFieldObj.CountValue = 1
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
@@ -258,7 +212,7 @@ try:
     # Get the Traffic Item name for getting Traffic Item statistics.
     trafficItemName = trafficItem.Name
 
-    # Get and show the Traffic Item column caption names and stat values
+    # Get the Traffic Item column caption names and stat values
     columnCaptions= statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
     trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItemName)
     txFramesIndex = columnCaptions.index('Tx Frames')

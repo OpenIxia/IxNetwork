@@ -33,7 +33,7 @@ Script development API doc:
 """
 
 from __future__ import absolute_import, print_function
-import sys
+import sys, os
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
@@ -53,7 +53,7 @@ else:
 # Are you using IxNetwork Connection Manager in a Windows server 2012/2016?
 isWindowsConnectionMgr = False
 
-if osPlatform == 'windows':
+if osPlatform == 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
@@ -221,17 +221,13 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
-    # Get the Traffic Item name for getting Traffic Item statistics.
-    trafficItemName = trafficItem.Name
-
     # Get and show the Traffic Item column caption names and stat values
     columnCaptions= statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
-    trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItemName)
+    trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItem.Name)
     txFramesIndex = columnCaptions.index('Tx Frames')
     rxFramesIndex = columnCaptions.index('Rx Frames')
     print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}'.format(trafficItemStats[txFramesIndex],
-                                                                         trafficItemStats[rxFramesIndex]))
-    
+                                                                         trafficItemStats[rxFramesIndex]))    
     # Get and show the Flow Statistics column caption names and stat values
     columnCaptions =   statObj.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)
     flowStats = statObj.getFlowStatistics()

@@ -71,7 +71,7 @@ licenseServerIp = ['192.168.70.3']
 licenseMode = 'subscription'
 
 # For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
-deleteSessionWhenDone = True
+deleteSessionWhenDone = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -105,21 +105,18 @@ try:
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 
-    print('\nConfiguring license server')
-    # In case the saved config already has the chassis and ports configured and to be able to configure
-    # the license server, must release the ports first. Otherwise, you cannot configure the license server
-    # and ports won't boot successfully.
-    if forceTakePortOwnership == True:
-        # To configure the license server IP, must release the ports first.
-        portObj.releasePorts(portList)
-        ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-        ixNetwork.Globals.Licensing.Mode = licenseMode
+    if osPlatform == 'windows':
+        ixNetwork.NewConfig()
+
+    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
+    ixNetwork.Globals.Licensing.Mode = licenseMode
 
     print('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
     # Assigning ports after loading a saved config is optional because you could use the ports that
     # are saved in the config file. Optionally, reassign ports to use other chassis/ports on different testbeds.
+    # getVportList=True because vports are already configured in the config file.
     portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
 
     # Example: How to modify a loaded json config using XPATH

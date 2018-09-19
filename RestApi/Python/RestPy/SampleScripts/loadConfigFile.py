@@ -78,7 +78,7 @@ forceTakePortOwnership = True
 ixChassisIpList = ['192.168.70.120']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
-configFile = 'bgp_ngpf_8.30.ixncfg'
+configFile = '/home/hgee/Dropbox/MyIxiaWork/Temp/bgp_ngpf_8.50.ixncfg'
 
 # The traffic item name to get stats from for this sample script
 trafficItemName = 'Topo-BGP'
@@ -106,20 +106,19 @@ try:
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 
-    print('\nConfiguring license server')
-    # In case the saved config already has the chassis and ports configured and to be able to configure
-    # the license server, must release the ports first. Otherwise, you cannot configure the license server
-    # and ports won't boot successfully.
-    if forceTakePortOwnership == True:
-        # To configure the license server IP, must release the ports first.
-        portObj.releasePorts(portList)
-        ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-        ixNetwork.Globals.Licensing.Mode = licenseMode
+    if osPlatform == 'windows':
+        ixNetwork.NewConfig()
+
+    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
+    ixNetwork.Globals.Licensing.Mode = licenseMode
 
     print('\nLoading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     print('\nAssigning ports/Rebooting ports')
+    # Assigning ports after loading a saved config is optional because you could use the ports that
+    # are saved in the config file. Optionally, reassign ports to use other chassis/ports on different testbeds.
+    # getVportList=True because vports are already configured in the config file.
     portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
 
     # Example: How to modify a loaded config using JSON's exported config XPATH

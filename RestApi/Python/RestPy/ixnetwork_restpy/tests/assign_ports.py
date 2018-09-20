@@ -1,4 +1,6 @@
-"""This sample demonstrates the best practice for connecting abstract ports to test ports.
+"""Demonstrates the best practice for connecting vport(s) to hardware test ports.
+
+AssignPorts is currently the optimal method for connecting hardware test ports to vport(s).
 
 The AssignPorts method on the test platform does the following:
 	- adds chassis to /availableHardware using Arg1
@@ -7,10 +9,6 @@ The AssignPorts method on the test platform does the following:
 	- waits until port statistic view for all test ports are ready
 	- returns a list of abstract test ports that have not been connected to test ports
 """
-
-import sys
-import os
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
 
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 

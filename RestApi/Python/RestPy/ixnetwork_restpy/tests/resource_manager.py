@@ -1,12 +1,8 @@
-"""This sample demonstrates the best practice for using resource manager to import and export the configuration as json
+"""Demonstrates some best practices for using resource manager to import and export the configuration as json
 
 """
 
-import sys
-import os
 import json
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
-
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
 # connect to a test platform, create a session and get the root IxNetwork object

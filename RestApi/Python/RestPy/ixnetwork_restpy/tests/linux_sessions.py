@@ -1,8 +1,7 @@
-import sys
-import os
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
+""" Demonstrates IxNetwork API server session configuration options on a linux platform
+"""
+
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.errors import IxNetworkError
 
 
 # setup the connection information for a windows gui test platform that has a default session of 1

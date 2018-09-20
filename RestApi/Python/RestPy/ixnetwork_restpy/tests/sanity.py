@@ -12,7 +12,6 @@
 import sys
 import os
 import json
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.errors import IxNetworkError
 from ixnetwork_restpy.files import Files

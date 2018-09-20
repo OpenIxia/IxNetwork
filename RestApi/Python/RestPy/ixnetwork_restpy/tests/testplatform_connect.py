@@ -1,8 +1,8 @@
-"""Demonstrates different methods of connecting to IxNetwork test platforms
+"""Demonstrates different methods of configuration the TestPlatform object 
+in order to connect to different IxNetwork test platforms.
+
 """
-import sys
-import os
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
+
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
 

@@ -2,11 +2,6 @@
 
 """
 
-import sys
-import os
-import json
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
-
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
 # connect to a test platform, create a session and get the root IxNetwork object

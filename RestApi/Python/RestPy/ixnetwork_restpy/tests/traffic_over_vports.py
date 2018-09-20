@@ -1,11 +1,6 @@
-"""This sample demonstrates creating a raw traffic item over vport endpoints.
+"""Demonstrates creating a raw traffic item over vport endpoints.
 
 """
-
-import sys
-import os
-import json
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
 
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 

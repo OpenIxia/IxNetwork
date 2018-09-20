@@ -1,11 +1,6 @@
-"""This sample demonstrates creating a traffic item that uses ipv4 endpoints.
+"""Demonstrates creating a traffic item that uses ipv4 endpoints.
 
 """
-
-import sys
-import os
-import json
-sys.path[0] = os.path.abspath(sys.path[0] + '\\..\\..\\')
 
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 

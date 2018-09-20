@@ -36,7 +36,7 @@ Script development API doc:
 """
 
 from __future__ import absolute_import, print_function
-import sys
+import sys, os
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform

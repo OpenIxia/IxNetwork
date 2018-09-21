@@ -220,7 +220,7 @@ class ConfigElement(Base):
 			PreambleFrameSizeMode (str(auto|custom)): The preamble size to synchronize sender and receiver of the configured encapsulation set.
 
 		Returns:
-			self: This instance with found configElement data from the server available through an iterator or index
+			self: This instance with matching configElement data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

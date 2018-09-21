@@ -150,7 +150,7 @@ class StatRequest(Base):
 			Values (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): The values of the statistics data.
 
 		Returns:
-			self: This instance with found statRequest data from the server available through an iterator or index
+			self: This instance with matching statRequest data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

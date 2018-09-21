@@ -102,7 +102,7 @@ class AdvancedFilter(Base):
 			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Gets the id of the filter, which is used to add the filter to a view.
 
 		Returns:
-			self: This instance with found advancedFilter data from the server available through an iterator or index
+			self: This instance with matching advancedFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

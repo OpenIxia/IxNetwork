@@ -33,7 +33,7 @@ class AvailablePortFilter(Base):
 			Name (str): The name of the port filter.
 
 		Returns:
-			self: This instance with found availablePortFilter data from the server available through an iterator or index
+			self: This instance with matching availablePortFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

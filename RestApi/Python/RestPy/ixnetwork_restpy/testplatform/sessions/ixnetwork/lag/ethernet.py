@@ -301,7 +301,7 @@ class Ethernet(Base):
 			VlanCount (number): Number of active VLANs
 
 		Returns:
-			self: This instance with found ethernet data from the server available through an iterator or index
+			self: This instance with matching ethernet data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

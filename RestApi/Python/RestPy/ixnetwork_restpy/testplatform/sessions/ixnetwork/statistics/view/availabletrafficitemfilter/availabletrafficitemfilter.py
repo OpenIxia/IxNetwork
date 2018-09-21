@@ -43,7 +43,7 @@ class AvailableTrafficItemFilter(Base):
 			Name (str): Displays the name of the traffic item filter.
 
 		Returns:
-			self: This instance with found availableTrafficItemFilter data from the server available through an iterator or index
+			self: This instance with matching availableTrafficItemFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

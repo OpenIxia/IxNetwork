@@ -160,7 +160,7 @@ class Groups(Base):
 			NumberOfBuckets (number): Specify the number of Buckets.
 
 		Returns:
-			self: This instance with found groups data from the server available through an iterator or index
+			self: This instance with matching groups data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

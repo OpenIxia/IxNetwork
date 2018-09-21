@@ -167,7 +167,7 @@ class Ospfv3PseudoRouter(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found ospfv3PseudoRouter data from the server available through an iterator or index
+			self: This instance with matching ospfv3PseudoRouter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

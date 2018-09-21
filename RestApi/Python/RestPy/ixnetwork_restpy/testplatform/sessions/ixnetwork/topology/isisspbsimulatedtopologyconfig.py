@@ -119,7 +119,7 @@ class IsisSpbSimulatedTopologyConfig(Base):
 			SpbNodeTopologyCount (number): Node Topology Count(multiplier)
 
 		Returns:
-			self: This instance with found isisSpbSimulatedTopologyConfig data from the server available through an iterator or index
+			self: This instance with matching isisSpbSimulatedTopologyConfig data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

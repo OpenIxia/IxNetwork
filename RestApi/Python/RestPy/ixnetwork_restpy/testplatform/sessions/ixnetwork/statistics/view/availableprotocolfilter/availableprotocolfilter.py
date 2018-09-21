@@ -33,7 +33,7 @@ class AvailableProtocolFilter(Base):
 			Name (str): The unique identifier of the object.
 
 		Returns:
-			self: This instance with found availableProtocolFilter data from the server available through an iterator or index
+			self: This instance with matching availableProtocolFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

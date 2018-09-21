@@ -60,7 +60,7 @@ class Layer23TrafficPortFilter(Base):
 			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
 
 		Returns:
-			self: This instance with found layer23TrafficPortFilter data from the server available through an iterator or index
+			self: This instance with matching layer23TrafficPortFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

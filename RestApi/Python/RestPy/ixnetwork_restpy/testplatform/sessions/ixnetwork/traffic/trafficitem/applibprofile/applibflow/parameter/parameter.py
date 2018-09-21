@@ -140,7 +140,7 @@ class Parameter(Base):
 			SupportedOptions (list(str[choice|range|value])): Runtime supported options for a specific parameter
 
 		Returns:
-			self: This instance with found parameter data from the server available through an iterator or index
+			self: This instance with matching parameter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

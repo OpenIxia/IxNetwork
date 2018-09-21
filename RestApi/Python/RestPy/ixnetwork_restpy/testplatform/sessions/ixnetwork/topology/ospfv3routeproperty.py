@@ -176,7 +176,7 @@ class Ospfv3RouteProperty(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found ospfv3RouteProperty data from the server available through an iterator or index
+			self: This instance with matching ospfv3RouteProperty data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

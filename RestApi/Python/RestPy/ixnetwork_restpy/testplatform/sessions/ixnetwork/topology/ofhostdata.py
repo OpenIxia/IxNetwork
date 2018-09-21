@@ -117,7 +117,7 @@ class OfHostData(Base):
 			NumberOfHostsPerPort (number): Number of Host Groups for each Host Port. Configure Number of Hosts Per Host Group using the Count field in Encapsulations Tab
 
 		Returns:
-			self: This instance with found ofHostData data from the server available through an iterator or index
+			self: This instance with matching ofHostData data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

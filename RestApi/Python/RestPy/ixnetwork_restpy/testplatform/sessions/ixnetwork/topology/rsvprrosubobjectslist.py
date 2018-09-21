@@ -147,7 +147,7 @@ class RsvpRROSubObjectsList(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found rsvpRROSubObjectsList data from the server available through an iterator or index
+			self: This instance with matching rsvpRROSubObjectsList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition
@@ -335,7 +335,7 @@ class RsvpRroSubObjectsList(Base):
 			P2mpIdAsNum (list(str)): P2MP ID displayed in Integer format
 
 		Returns:
-			self: This instance with found rsvpRroSubObjectsList data from the server available through an iterator or index
+			self: This instance with matching rsvpRroSubObjectsList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

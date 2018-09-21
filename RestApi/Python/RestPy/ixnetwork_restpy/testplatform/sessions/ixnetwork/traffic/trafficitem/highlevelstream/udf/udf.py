@@ -169,7 +169,7 @@ class Udf(Base):
 			Type (str(counter|ipv4|nestedCounter|random|rangeList|valueList)): The counter types of this UDF.
 
 		Returns:
-			self: This instance with found udf data from the server available through an iterator or index
+			self: This instance with matching udf data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

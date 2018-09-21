@@ -487,7 +487,7 @@ class EvpnIPv4PrefixRange(Base):
 			NoOfExtendedCommunity (number): Number of Extended Communities
 
 		Returns:
-			self: This instance with found evpnIPv4PrefixRange data from the server available through an iterator or index
+			self: This instance with matching evpnIPv4PrefixRange data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

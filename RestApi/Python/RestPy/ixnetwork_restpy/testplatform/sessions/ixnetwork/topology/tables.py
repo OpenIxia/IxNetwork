@@ -130,7 +130,7 @@ class Tables(Base):
 			NumberOfFlowSet (number): Specify the number of Flow Set for this controller configuration.
 
 		Returns:
-			self: This instance with found tables data from the server available through an iterator or index
+			self: This instance with matching tables data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

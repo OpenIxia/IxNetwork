@@ -1808,7 +1808,7 @@ class BgpIpv6Peer(Base):
 			UseStaticPolicy (bool): If enabled then SRTE policy will be advertised
 
 		Returns:
-			self: This instance with found bgpIpv6Peer data from the server available through an iterator or index
+			self: This instance with matching bgpIpv6Peer data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

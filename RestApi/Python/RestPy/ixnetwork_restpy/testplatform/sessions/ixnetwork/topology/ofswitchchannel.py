@@ -246,7 +246,7 @@ class OFSwitchChannel(Base):
 			SwitchName (str): Parent Switch Name
 
 		Returns:
-			self: This instance with found OFSwitchChannel data from the server available through an iterator or index
+			self: This instance with matching OFSwitchChannel data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

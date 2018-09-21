@@ -369,7 +369,7 @@ class Ipv4PrefixPools(Base):
 			NumberOfAddresses (number): Number of host/network addresses in the simulated IPv4 host/network range
 
 		Returns:
-			self: This instance with found ipv4PrefixPools data from the server available through an iterator or index
+			self: This instance with matching ipv4PrefixPools data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -122,7 +122,7 @@ class DrillDown(Base):
 			TargetRowIndex (number): Sets the attribute targetRowIndex to the drill down object. This is the row (from the view) that will be used to perform the drill-down.
 
 		Returns:
-			self: This instance with found drillDown data from the server available through an iterator or index
+			self: This instance with matching drillDown data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

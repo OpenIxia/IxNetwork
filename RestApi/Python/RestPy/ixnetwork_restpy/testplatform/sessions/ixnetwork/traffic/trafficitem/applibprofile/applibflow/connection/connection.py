@@ -67,7 +67,7 @@ class Connection(Base):
 			IsTCP (bool): (Read only) Application library flow connection type - true is the type is TCP, false if it's UDP.
 
 		Returns:
-			self: This instance with found connection data from the server available through an iterator or index
+			self: This instance with matching connection data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

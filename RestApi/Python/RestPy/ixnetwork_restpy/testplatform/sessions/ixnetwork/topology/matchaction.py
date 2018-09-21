@@ -164,7 +164,7 @@ class MatchAction(Base):
 			Name (str): Name of packet field
 
 		Returns:
-			self: This instance with found matchAction data from the server available through an iterator or index
+			self: This instance with matching matchAction data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

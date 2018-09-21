@@ -240,7 +240,7 @@ class Chassis(Base):
 			State (str(down|down|polling|polling|polling|ready)): The following states can be read from the port: polling, ready, and down.
 
 		Returns:
-			self: This instance with found chassis data from the server available through an iterator or index
+			self: This instance with matching chassis data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

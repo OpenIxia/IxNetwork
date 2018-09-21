@@ -153,7 +153,7 @@ class LdpFECProperty(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found ldpFECProperty data from the server available through an iterator or index
+			self: This instance with matching ldpFECProperty data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

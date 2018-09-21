@@ -181,7 +181,7 @@ class Field(Base):
 			SizeType (str(bit|byte)): Size type of the tlv value, any change will result in the value being reset
 
 		Returns:
-			self: This instance with found field data from the server available through an iterator or index
+			self: This instance with matching field data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

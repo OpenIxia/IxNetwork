@@ -77,7 +77,7 @@ class CellTable(Base):
 			Values (list(list[str])): A list of rows of learned information values
 
 		Returns:
-			self: This instance with found cellTable data from the server available through an iterator or index
+			self: This instance with matching cellTable data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

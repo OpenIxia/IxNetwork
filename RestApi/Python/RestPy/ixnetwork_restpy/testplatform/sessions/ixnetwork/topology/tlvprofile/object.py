@@ -92,7 +92,7 @@ class Object(Base):
 			Name (str): The name of the object
 
 		Returns:
-			self: This instance with found object data from the server available through an iterator or index
+			self: This instance with matching object data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

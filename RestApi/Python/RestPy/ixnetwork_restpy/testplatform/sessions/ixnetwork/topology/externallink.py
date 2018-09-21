@@ -88,7 +88,7 @@ class ExternalLink(Base):
 			ToNodeIndex (number): Index of the target node as defined in toNetworkTopology
 
 		Returns:
-			self: This instance with found externalLink data from the server available through an iterator or index
+			self: This instance with matching externalLink data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

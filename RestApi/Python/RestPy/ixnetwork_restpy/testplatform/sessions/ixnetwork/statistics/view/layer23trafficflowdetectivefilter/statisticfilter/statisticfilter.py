@@ -88,7 +88,7 @@ class StatisticFilter(Base):
 			Value (str): Value of statistic to be matched based on operator.
 
 		Returns:
-			self: This instance with found statisticFilter data from the server available through an iterator or index
+			self: This instance with matching statisticFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

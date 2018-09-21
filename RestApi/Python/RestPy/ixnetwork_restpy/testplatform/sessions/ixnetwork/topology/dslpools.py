@@ -338,7 +338,7 @@ class DslPools(Base):
 			PortUpSent (list(number)): Number of Topology Discovery Port Up messages sent
 
 		Returns:
-			self: This instance with found dslPools data from the server available through an iterator or index
+			self: This instance with matching dslPools data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

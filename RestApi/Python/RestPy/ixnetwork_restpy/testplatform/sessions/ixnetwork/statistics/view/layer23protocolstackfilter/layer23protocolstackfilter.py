@@ -116,7 +116,7 @@ class Layer23ProtocolStackFilter(Base):
 			SortingStatistic (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=statistic)): The reference statistic by which the data will be sorted in created SV.
 
 		Returns:
-			self: This instance with found layer23ProtocolStackFilter data from the server available through an iterator or index
+			self: This instance with matching layer23ProtocolStackFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

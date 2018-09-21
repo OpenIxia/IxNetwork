@@ -43,7 +43,7 @@ class Field(Base):
 			FieldValue (str): Refers to the value displayed in the field.
 
 		Returns:
-			self: This instance with found field data from the server available through an iterator or index
+			self: This instance with matching field data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

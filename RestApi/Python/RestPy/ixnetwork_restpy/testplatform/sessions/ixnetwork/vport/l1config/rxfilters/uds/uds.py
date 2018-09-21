@@ -127,7 +127,7 @@ class Uds(Base):
 			SourceAddressSelector (str(addr1|addr2|anyAddr|notAddr1|notAddr2)): Source address selector.
 
 		Returns:
-			self: This instance with found uds data from the server available through an iterator or index
+			self: This instance with matching uds data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

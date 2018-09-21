@@ -445,7 +445,7 @@ class IsisTrillRouter(Base):
 			TrillMCastMacGroupCount (number): MAC Group Count(multiplier)
 
 		Returns:
-			self: This instance with found isisTrillRouter data from the server available through an iterator or index
+			self: This instance with matching isisTrillRouter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

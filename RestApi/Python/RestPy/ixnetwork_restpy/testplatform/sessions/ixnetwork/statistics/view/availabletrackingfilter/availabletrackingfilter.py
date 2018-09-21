@@ -63,7 +63,7 @@ class AvailableTrackingFilter(Base):
 			ValueType (str): Value of tracking to be matched based on operator.
 
 		Returns:
-			self: This instance with found availableTrackingFilter data from the server available through an iterator or index
+			self: This instance with matching availableTrackingFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

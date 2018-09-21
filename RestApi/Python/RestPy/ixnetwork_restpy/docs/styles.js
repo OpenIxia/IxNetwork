@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\nhtml, body {\n  height: 100%;\n  width: 100%;\n  padding: 0;\n  margin: 0; }\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\nhtml, body {\n  height: 100%;\n  width: 100%;\n  padding: 0;\n  margin: 0; }\n.fixed-table .column {\n  height: 100%;\n  vertical-align: top; }\n.fixed-table .scrolling-outer-container {\n  display: inline-block;\n  width: 100%;\n  height: 100%;\n  position: relative; }\n.fixed-table .scrolling-inner-container {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  overflow-y: auto; }\n.fixed-table .slim {\n  width: 30%; }\n.fixed-table .slimmer {\n  width: 20%; }\n.fixed-table .border-right {\n  border-right: 1px solid lightgray; }\n.fixed-table .padding-left {\n  padding-left: 20px; }\n"
 
 /***/ }),
 

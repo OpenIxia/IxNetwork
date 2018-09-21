@@ -59,7 +59,7 @@ class ValueList(Base):
 			Width (str(16|24|32|8)): Specifies the width of the UDF.
 
 		Returns:
-			self: This instance with found valueList data from the server available through an iterator or index
+			self: This instance with matching valueList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

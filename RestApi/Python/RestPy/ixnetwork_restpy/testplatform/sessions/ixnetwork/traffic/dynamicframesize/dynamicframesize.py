@@ -95,7 +95,7 @@ class DynamicFrameSize(Base):
 			Type (str(fixed|random)): Sets the frame size to either fixed or random lengths in bytes.
 
 		Returns:
-			self: This instance with found dynamicFrameSize data from the server available through an iterator or index
+			self: This instance with matching dynamicFrameSize data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

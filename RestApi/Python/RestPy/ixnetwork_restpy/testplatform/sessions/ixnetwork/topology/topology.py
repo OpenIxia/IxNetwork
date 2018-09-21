@@ -166,7 +166,7 @@ class Topology(Base):
 			Vports (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): Virtual port information.
 
 		Returns:
-			self: This instance with found topology data from the server available through an iterator or index
+			self: This instance with matching topology data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

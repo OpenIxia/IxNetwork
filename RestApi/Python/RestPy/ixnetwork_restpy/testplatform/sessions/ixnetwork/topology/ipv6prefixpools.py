@@ -383,7 +383,7 @@ class Ipv6PrefixPools(Base):
 			NumberOfAddresses (number): Number of host/network addresses in the simulated IPv6 host/network range
 
 		Returns:
-			self: This instance with found ipv6PrefixPools data from the server available through an iterator or index
+			self: This instance with matching ipv6PrefixPools data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

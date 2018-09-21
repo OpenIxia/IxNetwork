@@ -67,7 +67,7 @@ class Stack(Base):
 			TemplateName (str): Indiates the protocol template name that is added to a packet in a stack.
 
 		Returns:
-			self: This instance with found stack data from the server available through an iterator or index
+			self: This instance with matching stack data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

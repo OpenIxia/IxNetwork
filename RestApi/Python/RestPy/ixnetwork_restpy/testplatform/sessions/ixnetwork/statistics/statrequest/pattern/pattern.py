@@ -70,7 +70,7 @@ class Pattern(Base):
 			RowCount (number): Displays the a particular row number in the view.
 
 		Returns:
-			self: This instance with found pattern data from the server available through an iterator or index
+			self: This instance with matching pattern data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

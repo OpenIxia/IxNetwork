@@ -1146,7 +1146,7 @@ class IsisL3Router(Base):
 			Status (str(configured|error|mixed|notStarted|started|starting|stopping)): Running status of associated network element. Once in Started state, protocol sessions will begin to negotiate.
 
 		Returns:
-			self: This instance with found isisL3Router data from the server available through an iterator or index
+			self: This instance with matching isisL3Router data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -293,7 +293,7 @@ class PceDetailedSrSyncLspUpdateParams(Base):
 			NumberOfMetricSubObjects (number): Value that indicates the number of Metric Objects to be configured.
 
 		Returns:
-			self: This instance with found pceDetailedSrSyncLspUpdateParams data from the server available through an iterator or index
+			self: This instance with matching pceDetailedSrSyncLspUpdateParams data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

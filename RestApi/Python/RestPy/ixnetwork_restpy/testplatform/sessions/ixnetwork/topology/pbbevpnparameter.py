@@ -79,7 +79,7 @@ class PbbEVpnParameter(Base):
 			UsePbbEVpnParameters (bool): Flag to determine whether optional PBB EVPN parameters are provided.
 
 		Returns:
-			self: This instance with found pbbEVpnParameter data from the server available through an iterator or index
+			self: This instance with matching pbbEVpnParameter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

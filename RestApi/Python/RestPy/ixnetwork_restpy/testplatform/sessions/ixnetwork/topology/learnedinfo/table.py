@@ -77,7 +77,7 @@ class Table(Base):
 			Values (list(list[str])): A list of rows of learned information values
 
 		Returns:
-			self: This instance with found table data from the server available through an iterator or index
+			self: This instance with matching table data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

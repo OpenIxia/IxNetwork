@@ -136,7 +136,7 @@ class EgressTracking(Base):
 			Offset (str): Specifies the Offset for Egress Tracking.
 
 		Returns:
-			self: This instance with found egressTracking data from the server available through an iterator or index
+			self: This instance with matching egressTracking data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

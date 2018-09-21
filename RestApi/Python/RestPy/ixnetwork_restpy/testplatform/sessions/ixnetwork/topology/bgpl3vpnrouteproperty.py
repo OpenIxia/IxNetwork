@@ -835,7 +835,7 @@ class BgpL3VpnRouteProperty(Base):
 			UseAsIpv4UmhRoutes (bool): Use As IPv4 UMH Routes
 
 		Returns:
-			self: This instance with found bgpL3VpnRouteProperty data from the server available through an iterator or index
+			self: This instance with matching bgpL3VpnRouteProperty data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

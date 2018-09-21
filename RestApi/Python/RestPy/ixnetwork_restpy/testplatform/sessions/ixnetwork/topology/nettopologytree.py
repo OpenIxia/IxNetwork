@@ -130,7 +130,7 @@ class NetTopologyTree(Base):
 			UseTreeDepth (bool): Use Tree Depth
 
 		Returns:
-			self: This instance with found netTopologyTree data from the server available through an iterator or index
+			self: This instance with matching netTopologyTree data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

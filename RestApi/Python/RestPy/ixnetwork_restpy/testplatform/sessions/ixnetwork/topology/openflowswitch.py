@@ -842,7 +842,7 @@ class OpenFlowSwitch(Base):
 			SwitchLocalIp (list(str)): The local IP address of the interface. This field is auto-populated and cannot be changed.
 
 		Returns:
-			self: This instance with found openFlowSwitch data from the server available through an iterator or index
+			self: This instance with matching openFlowSwitch data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

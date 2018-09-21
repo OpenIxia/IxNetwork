@@ -173,7 +173,7 @@ class OspfPseudoRouterType2ExtRoutes(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found ospfPseudoRouterType2ExtRoutes data from the server available through an iterator or index
+			self: This instance with matching ospfPseudoRouterType2ExtRoutes data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

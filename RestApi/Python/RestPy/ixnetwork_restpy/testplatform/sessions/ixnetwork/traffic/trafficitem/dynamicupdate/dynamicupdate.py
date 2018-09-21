@@ -79,7 +79,7 @@ class DynamicUpdate(Base):
 			EnabledSessionAwareTrafficFields (list(str)): If true, enables the Kill Bit support.
 
 		Returns:
-			self: This instance with found dynamicUpdate data from the server available through an iterator or index
+			self: This instance with matching dynamicUpdate data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

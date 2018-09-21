@@ -56,7 +56,7 @@ class TransmissionDistribution(Base):
 			DistributionsDisplayNames (list(str)): Returns user friendly list of distribution fields
 
 		Returns:
-			self: This instance with found transmissionDistribution data from the server available through an iterator or index
+			self: This instance with matching transmissionDistribution data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

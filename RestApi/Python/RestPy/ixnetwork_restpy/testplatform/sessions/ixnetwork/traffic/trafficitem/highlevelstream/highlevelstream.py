@@ -365,7 +365,7 @@ class HighLevelStream(Base):
 			TxPortName (str): The name of the virtual port that is the transmitting port.
 
 		Returns:
-			self: This instance with found highLevelStream data from the server available through an iterator or index
+			self: This instance with matching highLevelStream data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

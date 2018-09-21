@@ -56,7 +56,7 @@ class Choice(Base):
 			Value (str): Parameter choice selected value.
 
 		Returns:
-			self: This instance with found choice data from the server available through an iterator or index
+			self: This instance with matching choice data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

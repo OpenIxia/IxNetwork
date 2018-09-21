@@ -104,7 +104,7 @@ class Card(Base):
 			Description (str): Description of the card.
 
 		Returns:
-			self: This instance with found card data from the server available through an iterator or index
+			self: This instance with matching card data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

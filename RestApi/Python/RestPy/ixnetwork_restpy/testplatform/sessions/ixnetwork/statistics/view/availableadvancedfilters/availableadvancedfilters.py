@@ -43,7 +43,7 @@ class AvailableAdvancedFilters(Base):
 			Name (str): Allows you to get the filter name from the id.
 
 		Returns:
-			self: This instance with found availableAdvancedFilters data from the server available through an iterator or index
+			self: This instance with matching availableAdvancedFilters data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

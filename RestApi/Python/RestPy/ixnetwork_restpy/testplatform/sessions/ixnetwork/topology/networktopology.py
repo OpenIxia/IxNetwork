@@ -340,7 +340,7 @@ class NetworkTopology(Base):
 			NodesPerNetwork (number): Number of nodes in the Network Topology, including the root node defined in the parent Device Group
 
 		Returns:
-			self: This instance with found networkTopology data from the server available through an iterator or index
+			self: This instance with matching networkTopology data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

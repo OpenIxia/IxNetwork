@@ -148,7 +148,7 @@ class IsisFabricPathRouter(Base):
 			RowNames (list(str)): Name of rows
 
 		Returns:
-			self: This instance with found isisFabricPathRouter data from the server available through an iterator or index
+			self: This instance with matching isisFabricPathRouter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

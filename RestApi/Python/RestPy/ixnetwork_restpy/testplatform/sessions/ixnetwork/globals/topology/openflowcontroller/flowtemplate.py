@@ -108,7 +108,7 @@ class FlowTemplate(Base):
 			SavedInVersion (str): The cpf version of the session
 
 		Returns:
-			self: This instance with found flowTemplate data from the server available through an iterator or index
+			self: This instance with matching flowTemplate data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

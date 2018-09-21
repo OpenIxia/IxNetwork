@@ -33,7 +33,7 @@ class Row(Base):
 			Value (str): A learned information value
 
 		Returns:
-			self: This instance with found row data from the server available through an iterator or index
+			self: This instance with matching row data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

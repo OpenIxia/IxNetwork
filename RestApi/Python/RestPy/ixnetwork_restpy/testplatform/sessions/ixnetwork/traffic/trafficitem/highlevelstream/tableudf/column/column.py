@@ -102,7 +102,7 @@ class Column(Base):
 			Values (list(str)): The value of the table UDF column.
 
 		Returns:
-			self: This instance with found column data from the server available through an iterator or index
+			self: This instance with matching column data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

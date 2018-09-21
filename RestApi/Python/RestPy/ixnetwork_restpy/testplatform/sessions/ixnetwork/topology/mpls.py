@@ -590,7 +590,7 @@ class Mpls(Base):
 			UpperLayer (str(nhEthernet|nhIp)): Value to Determine who is upper Layer.
 
 		Returns:
-			self: This instance with found mpls data from the server available through an iterator or index
+			self: This instance with matching mpls data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

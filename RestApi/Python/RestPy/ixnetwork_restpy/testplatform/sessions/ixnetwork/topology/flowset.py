@@ -181,7 +181,7 @@ class FlowSet(Base):
 			NumberOfFlows (number): The number of flows to be configured for the controller table.
 
 		Returns:
-			self: This instance with found flowSet data from the server available through an iterator or index
+			self: This instance with matching flowSet data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

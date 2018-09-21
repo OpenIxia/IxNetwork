@@ -210,7 +210,7 @@ class PceUpdateSrEroSubObjectList(Base):
 		By default the find method takes no parameters and will retrieve all pceUpdateSrEroSubObjectList data from the server.
 
 		Returns:
-			self: This instance with found pceUpdateSrEroSubObjectList data from the server available through an iterator or index
+			self: This instance with matching pceUpdateSrEroSubObjectList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

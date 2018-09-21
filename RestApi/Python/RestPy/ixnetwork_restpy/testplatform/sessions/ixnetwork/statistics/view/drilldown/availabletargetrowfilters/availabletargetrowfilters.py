@@ -21,7 +21,7 @@ class AvailableTargetRowFilters(Base):
 		By default the find method takes no parameters and will retrieve all availableTargetRowFilters data from the server.
 
 		Returns:
-			self: This instance with found availableTargetRowFilters data from the server available through an iterator or index
+			self: This instance with matching availableTargetRowFilters data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

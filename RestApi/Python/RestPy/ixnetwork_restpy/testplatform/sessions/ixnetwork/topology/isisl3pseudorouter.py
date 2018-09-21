@@ -664,7 +664,7 @@ class IsisL3PseudoRouter(Base):
 			SrlbDescriptorCount (number): Count of the SRLB descriptor entries, each being a tuple having format {Start SID/Label, SID Count}
 
 		Returns:
-			self: This instance with found isisL3PseudoRouter data from the server available through an iterator or index
+			self: This instance with matching isisL3PseudoRouter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

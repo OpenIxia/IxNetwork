@@ -33,7 +33,7 @@ class Instance(Base):
 			SourceValues (list(str)): The source values of the error instance
 
 		Returns:
-			self: This instance with found instance data from the server available through an iterator or index
+			self: This instance with matching instance data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

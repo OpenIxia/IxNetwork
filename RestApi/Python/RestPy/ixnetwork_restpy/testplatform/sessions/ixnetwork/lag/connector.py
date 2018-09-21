@@ -80,7 +80,7 @@ class Connector(Base):
 			PropagateMultiplier (bool): The Connector will propagate the multiplicity of destination back to the source and its parent NetworkElementSet
 
 		Returns:
-			self: This instance with found connector data from the server available through an iterator or index
+			self: This instance with matching connector data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

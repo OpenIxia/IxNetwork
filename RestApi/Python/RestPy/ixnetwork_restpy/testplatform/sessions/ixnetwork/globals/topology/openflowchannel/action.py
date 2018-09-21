@@ -140,7 +140,7 @@ class Action(Base):
 			Name (str): Name of the TLV field.
 
 		Returns:
-			self: This instance with found action data from the server available through an iterator or index
+			self: This instance with matching action data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

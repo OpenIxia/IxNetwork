@@ -193,7 +193,7 @@ class IsisL3Router(Base):
 			RowNames (list(str)): Name of rows
 
 		Returns:
-			self: This instance with found isisL3Router data from the server available through an iterator or index
+			self: This instance with matching isisL3Router data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

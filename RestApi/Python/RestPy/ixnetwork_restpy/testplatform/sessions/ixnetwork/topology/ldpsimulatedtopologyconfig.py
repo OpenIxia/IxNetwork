@@ -65,7 +65,7 @@ class LdpSimulatedTopologyConfig(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found ldpSimulatedTopologyConfig data from the server available through an iterator or index
+			self: This instance with matching ldpSimulatedTopologyConfig data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

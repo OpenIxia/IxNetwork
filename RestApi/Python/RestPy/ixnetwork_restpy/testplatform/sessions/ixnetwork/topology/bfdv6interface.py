@@ -364,7 +364,7 @@ class Bfdv6Interface(Base):
 			Vni (list(number)): Corresponding VXLAN Protocol VNI.
 
 		Returns:
-			self: This instance with found bfdv6Interface data from the server available through an iterator or index
+			self: This instance with matching bfdv6Interface data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

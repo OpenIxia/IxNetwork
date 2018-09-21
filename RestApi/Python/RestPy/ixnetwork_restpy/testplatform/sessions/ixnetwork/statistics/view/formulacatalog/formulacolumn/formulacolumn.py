@@ -74,7 +74,7 @@ class FormulaColumn(Base):
 			Formula (str): The formula that is filtered.
 
 		Returns:
-			self: This instance with found formulaColumn data from the server available through an iterator or index
+			self: This instance with matching formulaColumn data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

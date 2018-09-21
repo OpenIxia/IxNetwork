@@ -88,7 +88,7 @@ class LiveFlowsFilter(Base):
 			SortingCondition (str(bestPerformers|worstPerformers)): Sets the display of the view according to best or worst performers.
 
 		Returns:
-			self: This instance with found liveFlowsFilter data from the server available through an iterator or index
+			self: This instance with matching liveFlowsFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

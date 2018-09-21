@@ -115,7 +115,7 @@ class MdLevels(Base):
 			NumberOfMdLevels (number): Number of MD Levels
 
 		Returns:
-			self: This instance with found mdLevels data from the server available through an iterator or index
+			self: This instance with matching mdLevels data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

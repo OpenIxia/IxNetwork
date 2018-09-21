@@ -136,7 +136,7 @@ class AdvancedCVFilters(Base):
 			SortingStats (str): Specifies the list of statistics by which the view is sorted.
 
 		Returns:
-			self: This instance with found advancedCVFilters data from the server available through an iterator or index
+			self: This instance with matching advancedCVFilters data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

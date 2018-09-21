@@ -29,6 +29,20 @@ class Globals(Base):
 		return AppErrors(self)
 
 	@property
+	def Interfaces(self):
+		"""An instance of the Interfaces class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.globals.interfaces.interfaces.Interfaces)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.globals.interfaces.interfaces import Interfaces
+		return Interfaces(self)._select()
+
+	@property
 	def Ixnet(self):
 		"""An instance of the Ixnet class.
 
@@ -83,6 +97,20 @@ class Globals(Base):
 		"""
 		from ixnetwork_restpy.testplatform.sessions.ixnetwork.globals.scriptgen.scriptgen import Scriptgen
 		return Scriptgen(self)._select()
+
+	@property
+	def TestInspector(self):
+		"""An instance of the TestInspector class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.globals.testinspector.testinspector.TestInspector)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.globals.testinspector.testinspector import TestInspector
+		return TestInspector(self)._select()
 
 	@property
 	def Topology(self):

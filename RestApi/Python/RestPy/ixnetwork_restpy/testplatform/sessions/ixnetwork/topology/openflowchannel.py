@@ -402,7 +402,7 @@ class OpenFlowChannel(Base):
 			TablesPerChannel (number): Number of Tables per Channel
 
 		Returns:
-			self: This instance with found openFlowChannel data from the server available through an iterator or index
+			self: This instance with matching openFlowChannel data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -537,7 +537,7 @@ class IsisL3PseudoInterface(Base):
 			SrlgCount (number): This field value shows how many SRLG Value columns would be there in the GUI.
 
 		Returns:
-			self: This instance with found isisL3PseudoInterface data from the server available through an iterator or index
+			self: This instance with matching isisL3PseudoInterface data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

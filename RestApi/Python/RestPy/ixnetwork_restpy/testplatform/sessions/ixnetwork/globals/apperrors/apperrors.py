@@ -67,7 +67,7 @@ class AppErrors(Base):
 			WarningCount (number): Total number of warnings
 
 		Returns:
-			self: This instance with found appErrors data from the server available through an iterator or index
+			self: This instance with matching appErrors data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

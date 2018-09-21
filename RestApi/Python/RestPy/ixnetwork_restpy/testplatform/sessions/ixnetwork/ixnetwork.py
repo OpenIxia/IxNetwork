@@ -43,6 +43,20 @@ class Ixnetwork(Base):
 		return Globals(self)._select()
 
 	@property
+	def Impairment(self):
+		"""An instance of the Impairment class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.impairment.impairment.Impairment)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.impairment.impairment import Impairment
+		return Impairment(self)._select()
+
+	@property
 	def Lag(self):
 		"""An instance of the Lag class.
 
@@ -193,10 +207,27 @@ class Ixnetwork(Base):
 		"""
 		return self._execute('ClearAppLibraryStats', payload=locals(), response_object=None)
 
+	def ClearCardOwnershipById(self, Arg1):
+		"""Executes the clearCardOwnershipById operation on the server.
+
+		Clear ownership on all ports from the given IxVM card.
+
+		Args:
+			Arg1 (str): The card ID.
+
+		Returns:
+			number: Returns the card ID.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('ClearCardOwnershipById', payload=locals(), response_object=None)
+
 	def ClearCPDPStats(self):
 		"""Executes the clearCPDPStats operation on the server.
 
-		Clear control plane and data plane statistics.
+		Clear control pland and data plane statistics.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -408,6 +439,37 @@ class Ixnetwork(Base):
 		self._check_arg_type(Arg1, Files)
 		return self._execute('CollectLogs', payload=locals(), response_object=None)
 
+	def ConnectCardById(self, Arg1):
+		"""Executes the connectCardById operation on the server.
+
+		Establish connection to the IxVM card.
+
+		Args:
+			Arg1 (str): Card ID to which connection is required.
+
+		Returns:
+			number: Returns the connected card ID or error, if any.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('ConnectCardById', payload=locals(), response_object=None)
+
+	def ConnectToChassis(self, Arg1):
+		"""Executes the connectToChassis operation on the server.
+
+		Connect to a virtual chassis.
+
+		Args:
+			Arg1 (str): The hostname or IP address of the chassis.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('ConnectToChassis', payload=locals(), response_object=None)
+
 	def CopyFile(self, Arg1, Arg2):
 		"""Executes the copyFile operation on the server.
 
@@ -424,6 +486,23 @@ class Ixnetwork(Base):
 		self._check_arg_type(Arg1, Files)
 		self._check_arg_type(Arg2, Files)
 		return self._execute('CopyFile', payload=locals(), response_object=None)
+
+	def DisconnectCardById(self, Arg1):
+		"""Executes the disconnectCardById operation on the server.
+
+		Close connection to the IxVM card.
+
+		Args:
+			Arg1 (str): The card ID.
+
+		Returns:
+			number: Returns the card ID.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('DisconnectCardById', payload=locals(), response_object=None)
 
 	def GenerateReport(self):
 		"""Executes the generateReport operation on the server.
@@ -574,6 +653,20 @@ class Ixnetwork(Base):
 		self._check_arg_type(Arg1, Files)
 		return self._execute('GetCsvColumnNames', payload=locals(), response_object=None)
 
+	def GetCurrentIxiaFileFormatTypeVersion(self):
+		"""Executes the getCurrentIxiaFileFormatTypeVersion operation on the server.
+
+		This command sets the current Ixia file format type version.
+
+		Returns:
+			number: Returns current Ixia file format type version.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('GetCurrentIxiaFileFormatTypeVersion', payload=locals(), response_object=None)
+
 	def GetDefaultSnapshotSettings(self):
 		"""Executes the GetDefaultSnapshotSettings operation on the server.
 
@@ -622,6 +715,37 @@ class Ixnetwork(Base):
 		"""
 		return self._execute('GetIntersectionPortsForProtocols', payload=locals(), response_object=None)
 
+	def GetIxVmCardByIp(self, Arg1):
+		"""Executes the getIxVmCardByIp operation on the server.
+
+		Obtain IxVM card ID by providing management IP address.
+
+		Args:
+			Arg1 (str): Management IP address of the card.
+
+		Returns:
+			number: Returns the card ID which has corresponding IP address on the management interface.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('GetIxVmCardByIp', payload=locals(), response_object=None)
+
+	def GetMemoryUsageInfo(self):
+		"""Executes the getMemoryUsageInfo operation on the server.
+
+		Retrieve memory usage information
+
+		Returns:
+			str: String containing memory usage: virtual, private, peak virtual bytes and bytes in all heaps
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('GetMemoryUsageInfo', payload=locals(), response_object=None)
+
 	def GetNetworkGroupSize(self):
 		"""Executes the getNetworkGroupSize operation on the server.
 
@@ -650,6 +774,20 @@ class Ixnetwork(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._execute('GetPortsForProtocol', payload=locals(), response_object=None)
+
+	def GetRbMemoryUsageInfo(self):
+		"""Executes the getRbMemoryUsageInfo operation on the server.
+
+		Fetch the memory usage information by RB protocols.
+
+		Returns:
+			str: Returns memory usage information by RB protocols.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('GetRbMemoryUsageInfo', payload=locals(), response_object=None)
 
 	def GetRecommendedSettings(self, Arg1, Arg2):
 		"""Executes the getRecommendedSettings operation on the server.
@@ -723,6 +861,81 @@ class Ixnetwork(Base):
 		"""
 		return self._execute('GetUnionPortsForProtocols', payload=locals(), response_object=None)
 
+	def HwRebootCardByIDs(self, Arg1):
+		"""Executes the hwRebootCardByIDs operation on the server.
+
+		Perform hard reboot on virtual cards.
+
+		Args:
+			Arg1 (list(number)): An array of card IDs.
+
+		Returns:
+			bool: Returns whether or not the command is successful.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('HwRebootCardByIDs', payload=locals(), response_object=None)
+
+	def IgmpJoin(self, Arg1):
+		"""Executes the igmpJoin operation on the server.
+
+		Executing this command sends IGMP join message.
+
+		Args:
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpJoin.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('IgmpJoin', payload=locals(), response_object=None)
+
+	def IgmpJoin(self, Arg1, Arg2):
+		"""Executes the igmpJoin operation on the server.
+
+		Executing this command sends IGMP join message.
+
+		Args:
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpJoin.
+			Arg2 (number): This is an integer value as an argument to igmpJoin.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('IgmpJoin', payload=locals(), response_object=None)
+
+	def IgmpLeave(self, Arg1):
+		"""Executes the igmpLeave operation on the server.
+
+		Executing this command sends IGMP leave message.
+
+		Args:
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpLeave.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('IgmpLeave', payload=locals(), response_object=None)
+
+	def IgmpLeave(self, Arg1, Arg2):
+		"""Executes the igmpLeave operation on the server.
+
+		Executing this command sends IGMP leave message.
+
+		Args:
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpLeave.
+			Arg2 (number): This is an integer value as an argument to igmpLeave.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('IgmpLeave', payload=locals(), response_object=None)
+
 	def Import(self, File):
 		"""Executes the import operation on the server.
 
@@ -751,6 +964,23 @@ class Ixnetwork(Base):
 		"""
 		self._check_arg_type(Arg1, Files)
 		return self._execute('LoadConfig', payload=locals(), response_object=None)
+
+	def LoadTopology(self, Arg1):
+		"""Executes the loadTopology operation on the server.
+
+		Load a chassis topology from file.
+
+		Args:
+			Arg1 (str): Path to the CSV configuration file.
+
+		Returns:
+			str: Returns an array of objects containing information about each port from the loaded chassis topology.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('LoadTopology', payload=locals(), response_object=None)
 
 	def MergeCapture(self, Arg1, Arg2, Arg3, Arg4):
 		"""Executes the mergeCapture operation on the server.
@@ -796,6 +1026,47 @@ class Ixnetwork(Base):
 		"""
 		return self._execute('NewConfig', payload=locals(), response_object=None)
 
+	def RebootVirtualChassis(self):
+		"""Executes the rebootVirtualChassis operation on the server.
+
+		Perform hard reboot on the connected virtual chassis.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('RebootVirtualChassis', payload=locals(), response_object=None)
+
+	def RebuildChassisTopology(self, Arg1, Arg2, Arg3):
+		"""Executes the rebuildChassisTopology operation on the server.
+
+		Rebuild the chassis topology using automatically discovered appliances.
+
+		Args:
+			Arg1 (str): IxNetwork version that should be used to filter appliances.
+			Arg2 (bool): Flag that enables reconfiguration on the same slots for the previous cards.
+			Arg3 (bool): Promiscuous mode.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('RebuildChassisTopology', payload=locals(), response_object=None)
+
+	def RediscoverAppliances(self):
+		"""Executes the rediscoverAppliances operation on the server.
+
+		Return a list of discovered machines after performing rediscovery on all systems.
+
+		Returns:
+			str: Returns a list of discovered machines in XML format.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('RediscoverAppliances', payload=locals(), response_object=None)
+
 	def Refresh(self, Arg1):
 		"""Executes the refresh operation on the server.
 
@@ -809,6 +1080,20 @@ class Ixnetwork(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._execute('Refresh', payload=locals(), response_object=None)
+
+	def RefreshChassisTopology(self):
+		"""Executes the refreshChassisTopology operation on the server.
+
+		Obtain updated configuration of the chassis topology.
+
+		Returns:
+			str: Returns an array of objects containing information about each port from the new chassis topology.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('RefreshChassisTopology', payload=locals(), response_object=None)
 
 	def RemoveAllTclViews(self):
 		"""Executes the removeAllTclViews operation on the server.
@@ -994,6 +1279,39 @@ class Ixnetwork(Base):
 		"""
 		return self._execute('Select', payload=locals(), response_object=None)
 
+	def SendArpAll(self):
+		"""Executes the sendArpAll operation on the server.
+
+		Send ARP for all interfaces.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('SendArpAll', payload=locals(), response_object=None)
+
+	def SendNsAll(self):
+		"""Executes the sendNsAll operation on the server.
+
+		Send neighbor solicitation to all interfaces.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('SendNsAll', payload=locals(), response_object=None)
+
+	def SendRsAll(self):
+		"""Executes the sendRsAll operation on the server.
+
+		Send router solicitation to all interfaces.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('SendRsAll', payload=locals(), response_object=None)
+
 	def SetGuardRailVersion(self, Arg1):
 		"""Executes the setGuardRailVersion operation on the server.
 
@@ -1095,6 +1413,31 @@ class Ixnetwork(Base):
 		"""
 		return self._execute('StartCapture', payload=locals(), response_object=None)
 
+	def StartTestConfiguration(self):
+		"""Executes the startTestConfiguration operation on the server.
+
+		Starts the first Quick Test found in the current configuration.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('StartTestConfiguration', payload=locals(), response_object=None)
+
+	def StartTestConfiguration(self, TestName):
+		"""Executes the startTestConfiguration operation on the server.
+
+		Starts the specified Quick Test.
+
+		Args:
+			TestName (str): The name of the test.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._execute('StartTestConfiguration', payload=locals(), response_object=None)
+
 	def StopAllProtocols(self):
 		"""Executes the stopAllProtocols operation on the server.
 
@@ -1174,8 +1517,10 @@ class Ixnetwork(Base):
 	def WaitForLicenseBroadcast(self, Arg1):
 		"""Executes the waitForLicenseBroadcast operation on the server.
 
+		Wait for the license broadcast to be complete.
+
 		Args:
-			Arg1 (number): 
+			Arg1 (number): Seconds to wait.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

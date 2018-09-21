@@ -60,7 +60,7 @@ class Layer23TrafficItemFilter(Base):
 			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
-			self: This instance with found layer23TrafficItemFilter data from the server available through an iterator or index
+			self: This instance with matching layer23TrafficItemFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

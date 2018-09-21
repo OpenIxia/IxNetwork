@@ -36,7 +36,7 @@ class StackLink(Base):
 			LinkedTo (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=stackLink)): Indicates which stack item this is linked to.
 
 		Returns:
-			self: This instance with found stackLink data from the server available through an iterator or index
+			self: This instance with matching stackLink data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

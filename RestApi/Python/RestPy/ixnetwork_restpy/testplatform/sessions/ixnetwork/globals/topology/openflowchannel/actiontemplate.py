@@ -108,7 +108,7 @@ class ActionTemplate(Base):
 			SavedInVersion (str): The cpf version of the session
 
 		Returns:
-			self: This instance with found actionTemplate data from the server available through an iterator or index
+			self: This instance with matching actionTemplate data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

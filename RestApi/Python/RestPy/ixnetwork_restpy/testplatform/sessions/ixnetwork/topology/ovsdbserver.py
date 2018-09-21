@@ -291,7 +291,7 @@ class Ovsdbserver(Base):
 			Vxlan (str(None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): 
 
 		Returns:
-			self: This instance with found ovsdbserver data from the server available through an iterator or index
+			self: This instance with matching ovsdbserver data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

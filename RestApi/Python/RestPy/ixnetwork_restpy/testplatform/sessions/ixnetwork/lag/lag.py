@@ -118,7 +118,7 @@ class Lag(Base):
 			Vports (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): Virtual port information.
 
 		Returns:
-			self: This instance with found lag data from the server available through an iterator or index
+			self: This instance with matching lag data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

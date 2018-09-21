@@ -63,7 +63,7 @@ class RepeatableContainer(Base):
 			Name (str): Name of the tlv
 
 		Returns:
-			self: This instance with found repeatableContainer data from the server available through an iterator or index
+			self: This instance with matching repeatableContainer data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

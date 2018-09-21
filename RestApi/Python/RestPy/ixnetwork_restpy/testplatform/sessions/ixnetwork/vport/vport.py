@@ -30,6 +30,48 @@ class Vport(Base):
 		return Capture(self)._select()
 
 	@property
+	def DiscoveredNeighbor(self):
+		"""An instance of the DiscoveredNeighbor class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.discoveredneighbor.discoveredneighbor.DiscoveredNeighbor)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.discoveredneighbor.discoveredneighbor import DiscoveredNeighbor
+		return DiscoveredNeighbor(self)
+
+	@property
+	def Interface(self):
+		"""An instance of the Interface class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.interface.interface.Interface)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.interface.interface import Interface
+		return Interface(self)
+
+	@property
+	def InterfaceDiscoveredAddress(self):
+		"""An instance of the InterfaceDiscoveredAddress class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.interfacediscoveredaddress.interfacediscoveredaddress.InterfaceDiscoveredAddress)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.interfacediscoveredaddress.interfacediscoveredaddress import InterfaceDiscoveredAddress
+		return InterfaceDiscoveredAddress(self)._select()
+
+	@property
 	def L1Config(self):
 		"""An instance of the L1Config class.
 
@@ -55,7 +97,21 @@ class Vport(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		from ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.protocols.protocols import Protocols
-		return Protocols(self)._select()
+		return Protocols(self)
+
+	@property
+	def RateControlParameters(self):
+		"""An instance of the RateControlParameters class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.ratecontrolparameters.ratecontrolparameters.RateControlParameters)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.vport.ratecontrolparameters.ratecontrolparameters import RateControlParameters
+		return RateControlParameters(self)._select()
 
 	@property
 	def ActualSpeed(self):
@@ -370,7 +426,7 @@ class Vport(Base):
 			ValidTxModes (list(str[interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse])): 
 
 		Returns:
-			self: This instance with found vport data from the server available through an iterator or index
+			self: This instance with matching vport data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition
@@ -407,6 +463,57 @@ class Vport(Base):
 		"""
 		Arg1 = self
 		return self._execute('AddQuickFlowGroups', payload=locals(), response_object=None)
+
+	def ClearNeighborSolicitation(self):
+		"""Executes the clearNeighborSolicitation operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('ClearNeighborSolicitation', payload=locals(), response_object=None)
+
+	def ClearNeighborSolicitation(self):
+		"""Executes the clearNeighborSolicitation operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('ClearNeighborSolicitation', payload=locals(), response_object=None)
+
+	def ClearNeighborTable(self):
+		"""Executes the clearNeighborTable operation on the server.
+
+		This exec clears the learned neighbor table for the specified vport.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('ClearNeighborTable', payload=locals(), response_object=None)
 
 	def ClearPortTransmitDuration(self):
 		"""Executes the clearPortTransmitDuration operation on the server.
@@ -486,6 +593,72 @@ class Vport(Base):
 		Arg1 = self
 		return self._execute('EnableOAM', payload=locals(), response_object=None)
 
+	def IgmpJoin(self, Arg2):
+		"""Executes the igmpJoin operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (str): NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('IgmpJoin', payload=locals(), response_object=None)
+
+	def IgmpJoin(self, Arg2, Arg3):
+		"""Executes the igmpJoin operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (str): NOT DEFINED
+			Arg3 (number): NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('IgmpJoin', payload=locals(), response_object=None)
+
+	def IgmpLeave(self, Arg2):
+		"""Executes the igmpLeave operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (str): NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('IgmpLeave', payload=locals(), response_object=None)
+
+	def IgmpLeave(self, Arg2, Arg3):
+		"""Executes the igmpLeave operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (str): NOT DEFINED
+			Arg3 (number): NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('IgmpLeave', payload=locals(), response_object=None)
+
 	def Import(self, Arg2):
 		"""Executes the import operation on the server.
 
@@ -533,6 +706,24 @@ class Vport(Base):
 		"""
 		Arg1 = self.href
 		return self._execute('PullPort', payload=locals(), response_object=None)
+
+	def RefreshUnresolvedNeighbors(self):
+		"""Executes the refreshUnresolvedNeighbors operation on the server.
+
+		Refresh unresolved neighbours.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('RefreshUnresolvedNeighbors', payload=locals(), response_object=None)
 
 	def ReleasePort(self):
 		"""Executes the releasePort operation on the server.
@@ -593,6 +784,162 @@ class Vport(Base):
 		"""
 		Arg1 = self.href
 		return self._execute('RestartPppNegotiation', payload=locals(), response_object=None)
+
+	def SendArp(self):
+		"""Executes the sendArp operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendArp', payload=locals(), response_object=None)
+
+	def SendArp(self, Arg2):
+		"""Executes the sendArp operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): NOT DEFINED
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendArp', payload=locals(), response_object=None)
+
+	def SendArpAll(self):
+		"""Executes the sendArpAll operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendArpAll', payload=locals(), response_object=None)
+
+	def SendNs(self):
+		"""Executes the sendNs operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendNs', payload=locals(), response_object=None)
+
+	def SendNs(self, Arg2):
+		"""Executes the sendNs operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): NOT DEFINED
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendNs', payload=locals(), response_object=None)
+
+	def SendNsAll(self):
+		"""Executes the sendNsAll operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendNsAll', payload=locals(), response_object=None)
+
+	def SendRs(self):
+		"""Executes the sendRs operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendRs', payload=locals(), response_object=None)
+
+	def SendRs(self, Arg2):
+		"""Executes the sendRs operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally set Arg1 to the current href for this instance
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): NOT DEFINED
+
+		Returns:
+			bool: NOT DEFINED
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendRs', payload=locals(), response_object=None)
+
+	def SendRsAll(self):
+		"""Executes the sendRsAll operation on the server.
+
+		NOT DEFINED
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRsAll', payload=locals(), response_object=None)
 
 	def SetFactoryDefaults(self):
 		"""Executes the setFactoryDefaults operation on the server.

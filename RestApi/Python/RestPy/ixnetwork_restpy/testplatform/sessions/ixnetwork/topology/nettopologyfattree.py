@@ -102,7 +102,7 @@ class NetTopologyFatTree(Base):
 			LinkMultiplier (number): number of links between two nodes
 
 		Returns:
-			self: This instance with found netTopologyFatTree data from the server available through an iterator or index
+			self: This instance with matching netTopologyFatTree data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

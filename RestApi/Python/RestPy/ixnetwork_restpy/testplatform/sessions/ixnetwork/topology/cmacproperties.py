@@ -613,7 +613,7 @@ class CMacProperties(Base):
 			NoOfExtendedCommunity (number): Number of Extended Communities
 
 		Returns:
-			self: This instance with found cMacProperties data from the server available through an iterator or index
+			self: This instance with matching cMacProperties data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

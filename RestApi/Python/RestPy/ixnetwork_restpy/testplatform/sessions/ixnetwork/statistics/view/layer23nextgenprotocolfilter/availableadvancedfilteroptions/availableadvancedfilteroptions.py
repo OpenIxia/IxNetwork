@@ -43,7 +43,7 @@ class AvailableAdvancedFilterOptions(Base):
 			Stat (str): Returns the statistic name for a filter option.
 
 		Returns:
-			self: This instance with found availableAdvancedFilterOptions data from the server available through an iterator or index
+			self: This instance with matching availableAdvancedFilterOptions data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

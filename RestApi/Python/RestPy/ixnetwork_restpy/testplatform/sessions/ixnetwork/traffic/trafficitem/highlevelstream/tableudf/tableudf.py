@@ -50,7 +50,7 @@ class TableUdf(Base):
 			Enabled (bool): If enabled, enables the UDF table for this flow group if it is supported.
 
 		Returns:
-			self: This instance with found tableUdf data from the server available through an iterator or index
+			self: This instance with matching tableUdf data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

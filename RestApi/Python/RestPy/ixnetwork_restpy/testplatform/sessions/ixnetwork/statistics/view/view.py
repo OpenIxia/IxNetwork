@@ -590,7 +590,7 @@ class View(Base):
 			Visible (bool): If true, displays the custom created tcl SVs in the SV tree under TCL Views node.
 
 		Returns:
-			self: This instance with found view data from the server available through an iterator or index
+			self: This instance with matching view data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -88,7 +88,7 @@ class NetTopologyLinear(Base):
 			Nodes (number): number of nodes
 
 		Returns:
-			self: This instance with found netTopologyLinear data from the server available through an iterator or index
+			self: This instance with matching netTopologyLinear data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

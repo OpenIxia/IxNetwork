@@ -93,7 +93,7 @@ class Tag(Base):
 			Name (str): specifies the name of the tag the entity will be part of
 
 		Returns:
-			self: This instance with found tag data from the server available through an iterator or index
+			self: This instance with matching tag data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

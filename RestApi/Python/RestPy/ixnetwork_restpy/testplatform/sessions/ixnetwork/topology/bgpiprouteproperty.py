@@ -928,7 +928,7 @@ class BgpIPRouteProperty(Base):
 			NoOfTlvs (number): Number of TLVs
 
 		Returns:
-			self: This instance with found bgpIPRouteProperty data from the server available through an iterator or index
+			self: This instance with matching bgpIPRouteProperty data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

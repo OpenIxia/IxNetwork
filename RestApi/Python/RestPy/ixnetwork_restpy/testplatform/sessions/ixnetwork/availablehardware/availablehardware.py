@@ -29,6 +29,20 @@ class AvailableHardware(Base):
 		return Chassis(self)
 
 	@property
+	def VirtualChassis(self):
+		"""An instance of the VirtualChassis class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.availablehardware.virtualchassis.virtualchassis.VirtualChassis)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.availablehardware.virtualchassis.virtualchassis import VirtualChassis
+		return VirtualChassis(self)._select()
+
+	@property
 	def IsLocked(self):
 		"""If true, locks the Hardware Manager.
 

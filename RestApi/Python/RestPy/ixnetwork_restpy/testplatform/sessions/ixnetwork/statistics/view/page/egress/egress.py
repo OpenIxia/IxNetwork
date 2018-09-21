@@ -83,7 +83,7 @@ class Egress(Base):
 			TotalPages (number): The total number of egress pages.
 
 		Returns:
-			self: This instance with found egress data from the server available through an iterator or index
+			self: This instance with matching egress data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

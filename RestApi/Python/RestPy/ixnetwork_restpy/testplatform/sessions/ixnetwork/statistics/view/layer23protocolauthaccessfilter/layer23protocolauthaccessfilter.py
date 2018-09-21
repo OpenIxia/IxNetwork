@@ -74,7 +74,7 @@ class Layer23ProtocolAuthAccessFilter(Base):
 			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): Protocols that have been filtered.
 
 		Returns:
-			self: This instance with found layer23ProtocolAuthAccessFilter data from the server available through an iterator or index
+			self: This instance with matching layer23ProtocolAuthAccessFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

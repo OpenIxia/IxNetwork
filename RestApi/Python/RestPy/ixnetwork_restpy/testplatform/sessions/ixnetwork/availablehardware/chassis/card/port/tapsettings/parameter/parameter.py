@@ -106,7 +106,7 @@ class Parameter(Base):
 			Name (str): Parameter Name.
 
 		Returns:
-			self: This instance with found parameter data from the server available through an iterator or index
+			self: This instance with matching parameter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -46,7 +46,7 @@ class Hex(Base):
 			Value (str): Parameter hex value.
 
 		Returns:
-			self: This instance with found hex data from the server available through an iterator or index
+			self: This instance with matching hex data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -85,6 +85,20 @@ class Traffic(Base):
 		return Statistics(self)._select()
 
 	@property
+	def TrafficGroup(self):
+		"""An instance of the TrafficGroup class.
+
+		Returns:
+			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.traffic.trafficgroup.trafficgroup.TrafficGroup)
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		from ixnetwork_restpy.testplatform.sessions.ixnetwork.traffic.trafficgroup.trafficgroup import TrafficGroup
+		return TrafficGroup(self)
+
+	@property
 	def TrafficItem(self):
 		"""An instance of the TrafficItem class.
 

@@ -916,7 +916,7 @@ class BgpV6L3VpnRouteProperty(Base):
 			UseAsIpv6UmhRoutes (bool): Use As IPv6 UMH Routes
 
 		Returns:
-			self: This instance with found bgpV6L3VpnRouteProperty data from the server available through an iterator or index
+			self: This instance with matching bgpV6L3VpnRouteProperty data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

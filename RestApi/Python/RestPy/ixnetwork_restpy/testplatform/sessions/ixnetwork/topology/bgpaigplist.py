@@ -74,7 +74,7 @@ class BgpAigpList(Base):
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 
 		Returns:
-			self: This instance with found bgpAigpList data from the server available through an iterator or index
+			self: This instance with matching bgpAigpList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -46,7 +46,7 @@ class String(Base):
 			Value (str): Parameter string value.
 
 		Returns:
-			self: This instance with found string data from the server available through an iterator or index
+			self: This instance with matching string data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -116,7 +116,7 @@ class NetTopologyHubNSpoke(Base):
 			NumberOfSecondLevelSpokes (number): Number of Second Level Spokes
 
 		Returns:
-			self: This instance with found netTopologyHubNSpoke data from the server available through an iterator or index
+			self: This instance with matching netTopologyHubNSpoke data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

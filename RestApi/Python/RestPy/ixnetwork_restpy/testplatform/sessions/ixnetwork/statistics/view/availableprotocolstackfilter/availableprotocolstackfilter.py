@@ -33,7 +33,7 @@ class AvailableProtocolStackFilter(Base):
 			Name (str): The name of the protocol stack ranges.
 
 		Returns:
-			self: This instance with found availableProtocolStackFilter data from the server available through an iterator or index
+			self: This instance with matching availableProtocolStackFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

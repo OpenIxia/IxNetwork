@@ -150,7 +150,7 @@ class AppLibProfile(Base):
 			TrafficState (str(Configured|Interim|Running|Unconfigured)): (Read only) A read-only field which indicates the current state of the traffic item.
 
 		Returns:
-			self: This instance with found appLibProfile data from the server available through an iterator or index
+			self: This instance with matching appLibProfile data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

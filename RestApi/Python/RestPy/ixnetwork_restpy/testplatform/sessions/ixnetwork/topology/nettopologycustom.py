@@ -98,7 +98,7 @@ class NetTopologyCustom(Base):
 			NumberOfNodes (number): Number Of Nodes
 
 		Returns:
-			self: This instance with found netTopologyCustom data from the server available through an iterator or index
+			self: This instance with matching netTopologyCustom data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

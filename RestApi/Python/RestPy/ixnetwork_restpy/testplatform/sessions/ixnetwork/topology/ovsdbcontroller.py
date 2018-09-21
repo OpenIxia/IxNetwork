@@ -587,7 +587,7 @@ class Ovsdbcontroller(Base):
 			VxlanReplicator (str(None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): 
 
 		Returns:
-			self: This instance with found ovsdbcontroller data from the server available through an iterator or index
+			self: This instance with matching ovsdbcontroller data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

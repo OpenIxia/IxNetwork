@@ -69,7 +69,7 @@ class Range(Base):
 			To (number): End range value.
 
 		Returns:
-			self: This instance with found range data from the server available through an iterator or index
+			self: This instance with matching range data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

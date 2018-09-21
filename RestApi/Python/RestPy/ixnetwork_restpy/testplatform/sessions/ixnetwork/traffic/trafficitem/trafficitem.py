@@ -576,7 +576,7 @@ class TrafficItem(Base):
 			Warnings (list(str)): Displays the warnings.
 
 		Returns:
-			self: This instance with found trafficItem data from the server available through an iterator or index
+			self: This instance with matching trafficItem data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

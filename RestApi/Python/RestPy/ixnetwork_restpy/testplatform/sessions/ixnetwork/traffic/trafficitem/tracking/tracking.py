@@ -159,7 +159,7 @@ class Tracking(Base):
 			Values (list(str)): Specifies the Values when the Flows of a Traffic Item are tracked by Custom Override.
 
 		Returns:
-			self: This instance with found tracking data from the server available through an iterator or index
+			self: This instance with matching tracking data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

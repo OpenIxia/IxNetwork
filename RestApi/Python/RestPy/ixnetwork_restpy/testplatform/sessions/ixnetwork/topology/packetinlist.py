@@ -120,7 +120,7 @@ class PacketInList(Base):
 			SwitchName (str): Parent Switch Name
 
 		Returns:
-			self: This instance with found packetInList data from the server available through an iterator or index
+			self: This instance with matching packetInList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

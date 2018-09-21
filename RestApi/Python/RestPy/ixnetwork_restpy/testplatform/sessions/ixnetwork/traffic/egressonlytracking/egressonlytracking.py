@@ -116,7 +116,7 @@ class EgressOnlyTracking(Base):
 			SignatureValue (str): Signature value to be placed inside the packet.
 
 		Returns:
-			self: This instance with found egressOnlyTracking data from the server available through an iterator or index
+			self: This instance with matching egressOnlyTracking data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

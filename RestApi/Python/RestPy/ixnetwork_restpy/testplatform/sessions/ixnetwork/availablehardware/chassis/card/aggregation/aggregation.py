@@ -76,7 +76,7 @@ class Aggregation(Base):
 			ResourcePorts (list(str[None|/api/v1/sessions/1/ixnetwork/availableHardware?deepchild=port])): All ports from Resource Group.
 
 		Returns:
-			self: This instance with found aggregation data from the server available through an iterator or index
+			self: This instance with matching aggregation data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

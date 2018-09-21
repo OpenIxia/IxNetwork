@@ -134,7 +134,7 @@ class AppLibFlow(Base):
 			Percentage (number): The amount of traffic generated for this flows.
 
 		Returns:
-			self: This instance with found appLibFlow data from the server available through an iterator or index
+			self: This instance with matching appLibFlow data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

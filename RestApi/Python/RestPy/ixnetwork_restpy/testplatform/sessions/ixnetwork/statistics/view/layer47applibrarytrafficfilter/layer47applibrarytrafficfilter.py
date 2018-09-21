@@ -122,7 +122,7 @@ class Layer47AppLibraryTrafficFilter(Base):
 			TopxValue (number): The number of rows to be shown when TopXEnabled is set to true.
 
 		Returns:
-			self: This instance with found layer47AppLibraryTrafficFilter data from the server available through an iterator or index
+			self: This instance with matching layer47AppLibraryTrafficFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

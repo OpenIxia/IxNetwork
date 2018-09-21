@@ -214,7 +214,7 @@ class EndpointSet(Base):
 			TrafficGroups (list(str[None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*])): Indicates the traffic groups selected in the source/destination endpoint set.
 
 		Returns:
-			self: This instance with found endpointSet data from the server available through an iterator or index
+			self: This instance with matching endpointSet data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

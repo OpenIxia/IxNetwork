@@ -74,7 +74,7 @@ class DeadFlowsFilter(Base):
 			SortingCondition (str(ascending|descending)): Sets the display order of the view.
 
 		Returns:
-			self: This instance with found deadFlowsFilter data from the server available through an iterator or index
+			self: This instance with matching deadFlowsFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

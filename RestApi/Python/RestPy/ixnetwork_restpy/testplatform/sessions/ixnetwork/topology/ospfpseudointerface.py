@@ -362,7 +362,7 @@ class OspfPseudoInterface(Base):
 			SrlgCount (number): This field value shows how many SRLG Value columns would be there in the GUI.
 
 		Returns:
-			self: This instance with found ospfPseudoInterface data from the server available through an iterator or index
+			self: This instance with matching ospfPseudoInterface data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

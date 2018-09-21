@@ -88,7 +88,7 @@ class TrackingFilter(Base):
 			Value (list(str)): Value of the object
 
 		Returns:
-			self: This instance with found trackingFilter data from the server available through an iterator or index
+			self: This instance with matching trackingFilter data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -318,7 +318,7 @@ class SwitchTablesList(Base):
 			ParentSwitch (str): Parent Switch Name
 
 		Returns:
-			self: This instance with found switchTablesList data from the server available through an iterator or index
+			self: This instance with matching switchTablesList data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

@@ -49,7 +49,7 @@ class TlvEditor(Base):
 		By default the find method takes no parameters and will retrieve all tlvEditor data from the server.
 
 		Returns:
-			self: This instance with found tlvEditor data from the server available through an iterator or index
+			self: This instance with matching tlvEditor data retrieved from the server available through an iterator or index
 
 		Raises:
 			ServerError: The server has encountered an uncategorized error condition

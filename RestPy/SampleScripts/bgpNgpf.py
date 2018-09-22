@@ -107,8 +107,6 @@ try:
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 
-    sys.exit()
-
     if osPlatform == 'windows':
         ixNetwork.NewConfig()
 

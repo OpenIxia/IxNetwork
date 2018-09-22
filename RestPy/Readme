@@ -1,0 +1,74 @@
+
+What is ixnetwork_restpy:
+     - This is a client side script development tool that comes with the entire IxNetwork API tree in Python Classes.
+     - Making this completely object oriented because there is a Python class for each node in IxNetwork API hierarchical tree.
+     - At each node, say for example BGP, you could view its attributes during script development so
+       you know how to create your configurations without having to view doc or the API browser.
+
+Benefits:
+     - This tool eliminates the need to create a function for each REST API.
+     - All the Python classes you need are already generated.
+     - This means you don't have to be creating and managing more API libraries containing high level wrappers.
+
+Supports Python 2.7 and 3+
+
+Requirement:
+     - IxNetwork 8.50
+     
+Prerequisite:
+     - Familiar with the IxNetwork API Browser first.
+	
+Where is the IxNetwork API Browser located:
+     - In Windows GUI, make a simple configuration, go to Files, Tools, IxNetwork API Browser.
+         - The left pane is the root level entry points to all the APIs in a hierarchical view of
+	   your configuration.
+
+     - For Linux, the IxNetwork API Browser is the default view.
+
+     Notes:
+         - There are two views: Widgets view and Table view.
+         - The Widgets view is a graphical view like the IxNetwork GUI.
+              - Allows viewing and modifying Topologies, Traffic Items and Statistics.
+	      - Can start/stop protocols and traffic.
+
+Installation: 
+    You could either do a pip install or get it from Github:
+
+    Pip install:
+        - pip install -U --no-cache-dir ixnetwork_restpy
+    
+    Github:
+        - Clone from: https://github.com/OpenIxia/IxNetwork
+        - The tool is under https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/ixnetwork_restpy
+
+        - Note: You need to include this path in your system's environment PYTHONPATH:
+	        /your_path/IxNetwork/RestApi/Python/RestPy/ixnetwork_restpy
+
+Sample scripts and helper class functions:
+    Sample scripts:
+       https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/SampleScripts
+
+    Helper functions for the sample scripts:
+       https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/Modules
+
+How to efficiently use ixnetwork_restpy:
+    - Use the WebUI doc that comes with the PIP installation.
+          - Located in your python site-packages/ixnetwork_restpy/docs/index.html
+          - This doc shows and follows the IxNetwork API hierarchical tree model.
+          - It is the same way you view the IxNetwork API Browser in Windows or Linux API server.
+	  - To access the WebUI doc, on a web browser enter: 
+               Linux:   file:///<path_to_your_python_installation>/site-packages/ixnetwork_restpy/docs/index.html
+               Windows: file://c:/<path_to_your_python_installation>/site-packages/ixnetwork_restpy/docs/index.html
+
+    - Use the IxNetwork API Browser as your guide to understand the API tree.
+    - Look at the sample scripts and see how the object oriented dot notation correlates to the IxNetwork
+      API tree and the WebUI doc.
+
+
+
+
+
+
+    
+
+    

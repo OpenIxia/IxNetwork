@@ -1371,8 +1371,6 @@ class Protocol(object):
         Syntax
             PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}/protocolRouterRange/{id}
         """
-        print('\n---- 2:', prefixPoolsObj)
-        print('\n--- prefixPoolRouteRange:', self.ixnObj.httpHeader + prefixPoolsObj + '/{0}/1'.format(protocolRouteRange))
         response = self.ixnObj.get(self.ixnObj.httpHeader + prefixPoolsObj + '/{0}/1'.format(protocolRouteRange))
         for attribute, value in data.items():
             multivalue = response.json()[attribute]

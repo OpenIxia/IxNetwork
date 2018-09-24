@@ -60,22 +60,6 @@ try:
     statObj = Statistics(mainObj)
     protocolObj = Protocol(mainObj)
 
-    #protocolObj.verifyProtocolSessionsUp('BGP Peer Per Port')
-
-    #statObj.takeSnapshot(viewName='Flow Statistics', isLinux=True, localLinuxPath='/home/hgee')
-    statObj.takeSnapshot(viewName='Flow Statistics', windowsPath='c:\\Results', localLinuxPath='/home/hgee')
-
-    '''
-    #trafficObj.startTraffic(regenerateTraffic=False, applyTraffic=True)
-    stats = statObj.getStats(viewName='Flow Statistics')
-    #stats = statObj.getStats(viewName='Protocols Summary')
-    #print(type(stats))
-
-    for key,value in stats.items():
-        print('\n{0: {1}\n'.format(key, value))
-        #print(key)
-    '''
-
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))
     print(errMsg)

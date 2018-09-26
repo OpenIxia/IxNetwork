@@ -583,8 +583,10 @@ class Traffic(object):
     def getTrafficItemPktHeaderStackObj(self, configElementObj=None, trafficItemName=None, packetHeaderName=None):
         """
         Description
-           Get the Traffic Item packet header stack object.
-           You could either pass in a configElement object or the Traffic Item name.
+           Get the Traffic Item packet header stack object based on the displayName.
+           To get the displayName, you could call this function: self.showTrafficItemPacketStack(configElementObj)
+
+           For this function, you could either pass in a configElement object or the Traffic Item name.
            
         Parameters
            configElementObj: <str>: Optional: The configElement object.
@@ -593,14 +595,11 @@ class Traffic(object):
            trafficItemName: <str>: Optional: The Traffic Item name.
 
            packetHeaderName: <str>: Mandatory: The packet header name.
-                             Example: ethernet, mpls, ipv4, ...
+                             Example: ethernet II, mpls, ipv4, ...
 
         Return
            The stack object
         """
-        #if configElementObj != None:
-        #    response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
-
         if configElementObj == None:
             # Expect user to pass in the Traffic Item name if user did not pass in a configElement object.
             queryData = {'from': '/traffic',
@@ -616,16 +615,14 @@ class Traffic(object):
             configElementObj = trafficItemObj+'/configElement/1'
         
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
-
-        print('\n--- packetHeaderName:', packetHeaderName)
-
         for eachStack in response.json():
-            self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, eachStack['stackTypeId']), timestamp=False)
-            if bool(re.match(packetHeaderName, eachStack['stackTypeId'], re.I)):
+            self.ixnObj.logInfo('Packet header name: {0}'.format(eachStack['displayName']), timestamp=False)
+            if bool(re.match('^{0}$'.format(packetHeaderName), eachStack['displayName'], re.I)):
+                self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, eachStack['displayName']), timestamp=False)
                 stackObj = eachStack['links'][0]['href']
                 break
         else:
-            raise IxNetRestApiException('\nError: No such stack name found: %s' % stackName)
+            raise IxNetRestApiException('\nError: No such stack name found. Verify stack name existence and spelling: %s' % packetHeaderName)
 
         return stackObj
 

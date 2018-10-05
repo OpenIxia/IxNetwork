@@ -54,12 +54,10 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
-    licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.120'
+    ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
@@ -71,32 +69,29 @@ try:
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=osPlatform)
+                          serverOs=osPlatform,
+                          generateLogFile='ixiaDebug.log'
+                      )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest)
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          generateLogFile='ixiaDebug.log'
+                      )
 
     #---------- Preference Settings End --------------
 
+    # Only need to blank the config for Windows because osPlatforms such as Linux and
+    # Windows Connection Mgr supports multiple sessions and a new session always come up as a blank config.
+    if osPlatform == 'windows':
+        mainObj.newBlankConfig()
+
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
+
     portObj = PortMgmt(mainObj)
-    portObj.connectIxChassis(ixChassisIp)
-
-    if portObj.arePortsAvailable(portList, raiseException=False) != 0:
-        if forceTakePortOwnership == True:
-            portObj.releasePorts(portList)
-        else:
-            raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
-
-    mainObj.newBlankConfig()
-
-    if configLicense == True:
-        portObj.releaseAllPorts()
-        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
-
-    portObj.assignPorts(portList)
+    portObj.assignPorts(portList, forceTakePortOwnership)
 
     protocolObj = Protocol(mainObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]], topologyName='Topo1')

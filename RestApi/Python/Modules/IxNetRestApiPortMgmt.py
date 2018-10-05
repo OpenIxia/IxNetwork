@@ -336,7 +336,8 @@ class PortMgmt(object):
             if 'Port Released' in connectionStatus:
                 raise IxNetRestApiException(connectionStatus)
 
-    def assignPorts(self, portList, createVports=False, rawTraffic=False, configPortName=True, timeout=120):
+    def assignPorts(self, portList, forceTakePortOwnership=True, createVports=False,
+                    rawTraffic=False, configPortName=True, timeout=120):
         """
         Description
             Assuming that you already connected to an ixia chassis and ports are available for usage.
@@ -344,6 +345,7 @@ class PortMgmt(object):
 
         Parameters
             portList: <list>: A list of ports in a list: [ [ixChassisIp, '1','1'], [ixChassisIp, '1','2'] ]
+            forceTakePortOwnership: <bool>: True = Forcefully take ownership of portList.
 
             createVports: <bool>: Optional:
                           If True: Create vports to the amount of portList.
@@ -396,7 +398,8 @@ class PortMgmt(object):
                 if len(vportList) != len(portList):
                     raise IxNetRestApiException('assignPorts: The amount of configured virtual ports:{0} is not equal to the amount of  portList:{1}'.format(len(vportList), len(portList)))
 
-        data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": 'true'}
+        #data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": 'true'}
+        data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": forceTakePortOwnership}
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         url = self.ixnObj.sessionUrl+'/operations/assignports'
         response = self.ixnObj.post(url, data=data)

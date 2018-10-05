@@ -61,12 +61,10 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
-    licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.120'
+    ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
@@ -78,34 +76,30 @@ try:
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=osPlatform)
+                          serverOs=osPlatform,
+                          generateLogFile='ixiaDebug.log'
+                      )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest)
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          generateLogFile='ixiaDebug.log'
+                      )
 
     #---------- Preference Settings End --------------
 
-    portObj = PortMgmt(mainObj)
-    portObj.connectIxChassis(ixChassisIp)
+    # Only need to blank the config for Windows because osPlatforms such as Linux and
+    # Windows Connection Mgr supports multiple sessions and a new session always come up as a blank config.
+    if osPlatform == 'windows':
+        mainObj.newBlankConfig()
 
-    if portObj.arePortsAvailable(portList, raiseException=False) != 0:
-        if forceTakePortOwnership == True:
-            portObj.releasePorts(portList)
-            portObj.clearPortOwnership(portList)
-        else:
-            raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
-
-    mainObj.newBlankConfig()
-
-    if configLicense == True:
-        portObj.releaseAllPorts()
-        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
 
     # Set createVports = True if building config from scratch.
-    vportList = portObj.assignPorts(portList, createVports=True, rawTraffic=True, timeout=120)
+    portObj = PortMgmt(mainObj)
+    vportList = portObj.assignPorts(portList, forceTakePortOwnership, createVports=True, rawTraffic=True, timeout=120)
     portObj.verifyPortState()
 
     # For all parameter options, please go to the API configTrafficItem
@@ -150,7 +144,7 @@ try:
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Destination MAC Address',
                                        data={'valueType': 'increment',
-                                             'startValue': '00:0c:29:ce:41:32',
+                                             'startValue': '00:0c:29:76:b4:39',
                                              'stepValue': '00:00:00:00:00:01',
                                              'countValue': 1})
     trafficObj.configPacketHeaderField(stackObj,

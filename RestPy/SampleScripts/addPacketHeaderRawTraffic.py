@@ -37,7 +37,6 @@ Script development API doc:
 from __future__ import absolute_import, print_function
 import sys, os, re
 
-# Adding some relevant paths if you are not installing RestPy by Pip.
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
@@ -65,7 +64,7 @@ if osPlatform == 'windows':
 
 # Change API server values to use your setup
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.121'
+    apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -82,7 +81,7 @@ deleteSessionWhenDone = True
 forceTakePortOwnership = True
 
 # A list of chassis to use
-ixChassisIpList = ['192.168.70.120']
+ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 try:
@@ -126,11 +125,12 @@ try:
     print('\nCreate Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='RAW MPLS',
                                                     BiDirectional=False,
-                                                    TrafficType='raw'
+                                                    TrafficType='raw',
+                                                    TrafficItemType='l2L3'
                                                 )
-    
+
     print('\tAdd flow group')
-    trafficItem.EndpointSet.add(Sources=vport1.Protocols, Destinations=vport2.Protocols)
+    trafficItem.EndpointSet.add(Sources=vport1.Protocols.find(), Destinations=vport2.Protocols.find())
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
     #       Therefore, ConfigElement is a list.
@@ -155,7 +155,7 @@ try:
     print('\nConfiguring Ethernet packet header')
     ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
     ethernetDstField.ValueType = 'increment'
-    ethernetDstField.StartValue = "00:0c:29:ce:41:32"
+    ethernetDstField.StartValue = "00:0c:29:76:b4:39"
     ethernetDstField.StepValue = "00:00:00:00:00:00"
     ethernetDstField.CountValue = 1
 

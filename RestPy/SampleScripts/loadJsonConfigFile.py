@@ -65,7 +65,7 @@ if osPlatform == 'windows':
 
 # Change API server values to use your setup
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.121'
+    apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -82,7 +82,7 @@ deleteSessionWhenDone = False
 forceTakePortOwnership = True
 
 # A list of chassis to use
-ixChassisIpList = ['192.168.70.120']
+ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 jsonConfigFile = 'bgp.json'

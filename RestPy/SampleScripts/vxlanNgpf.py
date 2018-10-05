@@ -12,7 +12,7 @@ vxlanNgpf.py:
    - Configure a Traffic Item
    - Start all protocols
    - Verify all protocols
-   - Start traffic 
+   - Start traffic
    - Get Traffic Item
    - Get Flow Statistics stats
 
@@ -25,7 +25,7 @@ Requirements
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
    - https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-         - Statistics.py and PortMgmt.py 
+         - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -55,12 +55,12 @@ else:
 # Are you using IxNetwork Connection Manager in a Windows server 2012/2016?
 isWindowsConnectionMgr = False
 
-if osPlatform == 'windows'
+if osPlatform == 'windows':
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.121'
+    apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -77,7 +77,7 @@ deleteSessionWhenDone = True
 forceTakePortOwnership = True
 
 # A list of chassis to use
-ixChassisIpList = ['192.168.70.120']
+ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 try:
@@ -95,7 +95,7 @@ try:
     if osPlatform == 'windows':
         # Windows support only one session. Id is always equal 1.
         session = testPlatform.Sessions.find(Id=1)
-    
+
     # ixNetwork is the root object to the IxNetwork API hierarchical tree.
     ixNetwork = session.Ixnetwork
 
@@ -133,7 +133,7 @@ try:
     ipv4.Address.Increment(start_value='100.1.1.1', step_value='0.0.0.1')
     ipv4.GatewayIp.Increment(start_value='100.1.3.1', step_value='0.0.0.1')
     ipv4.Prefix.Single(16)
-    
+
     print('\tConfiguring VxLAN')
     vxlan1 = ipv4.Vxlan.add(Name='VxLAN-1')
     vxlan1.Vni.Increment(start_value=1008, step_value=2)
@@ -204,11 +204,11 @@ try:
                                                     BiDirectional=False,
                                                     TrafficType='ipv4'
                                                 )
-    
+
     print('\tAdd flow group')
     trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
 
-    # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
+    # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
     #       Therefore, ConfigElement is a list.
     print('\tConfiguring config elements')
     trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
@@ -229,7 +229,7 @@ try:
     txFramesIndex = columnCaptions.index('Tx Frames')
     rxFramesIndex = columnCaptions.index('Rx Frames')
     print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}'.format(trafficItemStats[txFramesIndex],
-                                                                         trafficItemStats[rxFramesIndex]))    
+                                                                         trafficItemStats[rxFramesIndex]))
     # Get and show the Flow Statistics column caption names and stat values
     columnCaptions =   statObj.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)
     flowStats = statObj.getFlowStatistics()

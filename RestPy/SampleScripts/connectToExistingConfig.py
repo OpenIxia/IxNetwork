@@ -56,7 +56,7 @@ if osPlatform == 'windows':
     apiServerPort = 11009
 
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.121'
+    apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'password'
@@ -83,6 +83,10 @@ try:
     # Instantiate the helper class objects
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
+
+    ipv4 = ixNetwork.Topology.find(Name='Topo1').DeviceGroup.find(Name='DG1').Ethernet.find(Name='Eth1').Ipv4.find(Name='Ipv4')
+    print(ipv4)
+    #ipv4.SendArp(2)
 
 except Exception as errMsg:
     print('\nrestPy.Exception:', errMsg)

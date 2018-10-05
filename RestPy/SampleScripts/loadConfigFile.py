@@ -36,7 +36,6 @@ Script development API doc:
 from __future__ import absolute_import, print_function
 import json, sys, os
 
-# Adding some relevant paths if you are not installing RestPy by Pip.
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
@@ -63,7 +62,7 @@ if osPlatform == 'windows':
     apiServerPort = 11009
 
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.121'
+    apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -80,7 +79,7 @@ deleteSessionWhenDone = True
 forceTakePortOwnership = True
 
 # A list of chassis to use
-ixChassisIpList = ['192.168.70.120']
+ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 configFile = '/home/hgee/Dropbox/MyIxiaWork/Temp/bgp_ngpf_8.50.ixncfg'

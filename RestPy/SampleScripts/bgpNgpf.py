@@ -66,7 +66,7 @@ if osPlatform == 'windows':
 
 # Change API server values to use your setup
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.121'
+    apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -82,7 +82,7 @@ deleteSessionWhenDone = True
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-portList = [['192.168.70.120', 1, 1], ['192.168.70.120', 1, 2]]
+portList = [['192.168.70.128', 1, 1], ['192.168.70.128', 1, 2]]
 
 try:
     testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=osPlatform)

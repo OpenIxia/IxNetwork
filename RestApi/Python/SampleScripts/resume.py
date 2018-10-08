@@ -1,3 +1,15 @@
+"""
+Description
+    The sample shows how to connect to an existing configuration.
+
+    For  Windows Connection Mgr
+         Starting with version 8.50, Windows supports https.
+         To connect to an existing session, you must include the following three parameters:
+             serverIpPort=<the ssl port>
+             sessionId=<the session ID>
+             httpsSecured=True
+"""
+
 import os, sys, traceback, time
 
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
@@ -56,23 +68,21 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest
                           )
     
-    # Starting with version 8.50, Windows supports https.
-    # You are able to set your Windows API server to http, but if it's set to https,
-    # you need to set the serverIpPort and httpsSecured to True|False.
-    # Windows Connection Manager default serverIpPort for http (notSecured) = 8008.
     if osPlatform in ['windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
-                          serverIpPort='443',
+                          serverIpPort='11009',
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           sessionId=8021,
-                          httpsSecured=True
+                          httpsSecured=False
                           )
     
     trafficObj = Traffic(mainObj)
     statObj = Statistics(mainObj)
     protocolObj = Protocol(mainObj)
-
+    portObj = PortMgmt(mainObj)
+    
+    
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))
     print(errMsg)

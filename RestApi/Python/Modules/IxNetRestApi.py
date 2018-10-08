@@ -65,7 +65,11 @@ class Connect:
            deleteSessionAfterTest: (bool): True: Delete the session.
                                            False: Don't delete the session.
            verifySslCert: (str): Optional: Include your SSL certificate for added security.
-           httpsSecured: (bool): Set to true if your Windows IxNetwork Rest API server is https.
+           httpsSecured: (bool): This parameter is only used by Connection Mgr when user wants to connect to
+                                 an existing session.
+                                 True = IxNetwork ReST API server is using HTTPS.
+                                 This parameter must also include sessionId and serverIpPort=<the ssl port number>
+
            serverOs: (str): Defaults to windows. windows|windowsConnectionMgr|linux.
            includeDebugTraceback: (bool): True: Include tracebacks in raised exceptions.
            sessionId: (str): The session ID on the Linux API server or Windows Connection Mgr to connect to.
@@ -142,6 +146,9 @@ class Connect:
 
         self.httpScheme = 'http' ;# This will change to https in createWindowsSession and connectToLinuxApiServer
         if httpsSecured:
+            # For Windows Connection Mgr only.
+            # When creating a new session, there is no way to know by doing a POST for a new session to
+            # understand if it's for http or https.  You must enter https for the POST to create a new session.
             self.httpScheme = 'https'
 
         self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
@@ -194,6 +201,16 @@ class Connect:
             
             if sessionId:
                 url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+                try:
+                    response = requests.request('GET', url, verify=self.verifySslCert, allow_redirects=False)
+                    if '3' in str(response.status_code):
+                        self.httpScheme = 'https'
+                        # Here, needs to set to use https.
+                        url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+                except requests.exceptions.RequestException as errMsg:
+                    errMsg = 'Connecting to existing config failed on a GET: {0}'.format(errMsg)
+                    raise IxNetRestApiException(errMsg)
+
                 self.logInfo('Connecting to existing session: {}'.format(url))
                 self.sessionUrl = url + '/ixnetwork'
                 self.sessionId = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp,
@@ -511,24 +528,25 @@ class Connect:
         if self.serverOs == 'windowsConnectionMgr':
             try:
                 self.logInfo('Please wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
+                self.logInfo('\t{}'.format(url), timestamp=False)
                 response = requests.request('POST', url, data={}, verify=self.verifySslCert, allow_redirects=True)
 
             except requests.exceptions.RequestException as errMsg:
                 errMsg = 'Creating new session failed: {0}'.format(errMsg)
                 raise IxNetRestApiException(errMsg)
 
-            if type(response.json()) == list:
-                sessionIdNumber = response.json()[0]['id']
-            else:
-                sessionIdNumber = response.json()['id']
-
+            sessionIdNumber = response.json()['links'][0]['href'].split('/')[-1]
             response = requests.request('GET', url+'/'+str(sessionIdNumber), verify=self.verifySslCert, allow_redirects=False)
             if str(response.status_code).startswith('3'):
+                # >= 8.50
                 self.httpScheme = 'https'
                 # https://192.168.70.3:443/api/v1/sessions/8020
                 self.sessionId = response.headers['location']
                 match = re.match('https://.*:([0-9]+)/api.*', self.sessionId)
                 ixNetRestServerPort = match.group(1)
+            else:
+                # < 8.50
+                self.sessionId = url + '/'+str(sessionIdNumber)
 
             self.sessionUrl = '{httpScheme}://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(
                 httpScheme=self.httpScheme,
@@ -554,12 +572,9 @@ class Connect:
 
                 if currentState == 'ACTIVE' and counter < counterStop:
                     break
-                    
-            buildNumber = float(self.getIxNetworkVersion()[:3])
-            if buildNumber < 8.5:
-                # Windows connection mgr takes additional time after becoming ACTIVE.
-                self.logInfo('\tWait for Windows session to become ready')
-                time.sleep(20)
+
+            # < 8.50 requires more waiting time. And there is no way to verify the version number at this point.
+            time.sleep(20)
 
         if self.serverOs == 'windows':
             # windows sessionId is always 1 because it only supports one session.
@@ -584,7 +599,6 @@ class Connect:
 
             # http://192.168.70.127:11009/api/v1/sessions/1
             self.sessionId = self.sessionUrl.split('/ixnetwork')[0]
-
 
         # http://192.168.70.127:11009
         self.httpHeader = self.sessionUrl.split('/api')[0]

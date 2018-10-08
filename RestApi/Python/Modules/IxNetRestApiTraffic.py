@@ -77,18 +77,26 @@ class Traffic(object):
 
         ConfigElement Parameters
             transmissionType:
-               - continuous|fixedFrameCount
+               - continuous|fixedFrameCount|fixedDuration
                - custom (for burstPacketCount)
+
             frameCount: (For continuous and fixedFrameCount traffic)
             burstPacketCount: (For bursty traffic)
+            frameSizeType: fixed|random
             frameSize: The packet size.
+            
             frameRate: The rate to transmit packets
             frameRateType: bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate
+            duration: Set fixedDuration
             portDistribution: applyRateToAll|splitRateEvenly.  Default=applyRateToAll
             streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
             trackBy: <list>: Some options: flowGroup0, vlanVlanId0, ethernetIiDestinationaddress0, ethernetIiSourceaddress0,
                              sourcePort0, sourceDestPortPair0, ipv4DestIp0, ipv4SourceIp0, ipv4Precedence0,
                              ethernetIiPfcQueue0, frameSize0
+
+        If frameSizeType == random
+             incrementFrom: Frame size increment from.
+             incrementTo: Frame size increment to.
 
         For bursty packet count,
               transmissionType = 'custom',
@@ -324,7 +332,9 @@ class Traffic(object):
                                               'portDistribution': 'applyRateToAll',
                                               'streamDistribution': 'splitRateEvenly'
                                             }
-           transmissionType:   fixedFrameCount|continuous
+           transmissionType:   fixedFrameCount|continuous|fixedDuration
+           incrementFrom:      For frameSizeType = random.  Frame size from size. 
+           incrementTo:        For frameSizeType = random. Frame size to size. 
            frameRateType:      percentLineRate|framesPerSecond
            portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
@@ -367,6 +377,11 @@ class Traffic(object):
         if 'frameSize' in configElements:
             self.ixnObj.patch(configElementObj+'/frameSize', data={'fixedSize': int(configElements['frameSize'])})
 
+        if 'frameSizeType' in configElements:
+            self.ixnObj.patch(configElementObj+'/frameSize', data={'type': configElements['frameSizeType']})
+            if configElements['frameSizeType'] == 'random':
+                self.ixnObj.patch(configElementObj+'/frameSize', data={'incrementFrom': configElements['incrementFrom'],
+                                                                       'incrementTo': configElements['incrementTo']})
         if frameRateDistribution != {}:
             self.ixnObj.patch(configElementObj+'/frameRateDistribution', data=frameRateDistribution)        
 
@@ -1379,7 +1394,7 @@ class Traffic(object):
                                 {'node': 'endpointSet',   'properties': ['name', 'sources', 'destinations'], 'where': []},
                                 {'node': 'configElement', 'properties': ['name', 'endpointSetId', ], 'where': []},
                                 {'node': 'frameSize',     'properties': ['type', 'fixedSize'], 'where': []},
-                                {'node': 'framePayload',     'properties': ['type', 'customRepeat'], 'where': []},
+                                {'node': 'framePayload',  'properties': ['type', 'customRepeat'], 'where': []},
                                 {'node': 'frameRate',     'properties': ['type', 'rate'], 'where': []},
                                 {'node': 'frameRateDistribution', 'properties': ['streamDistribution', 'portDistribution'], 'where': []},
                                 {'node': 'transmissionControl', 'properties': ['type', 'frameCount', 'burstPacketCount'], 'where': []},
@@ -1387,29 +1402,43 @@ class Traffic(object):
                             ]
                     }
 
-        queryResponse = self.ixnObj.query(data=queryData)
-        self.ixnObj.logInfo('\n', end='')
+        queryResponse = self.ixnObj.query(data=queryData, silentMode=True)
+        self.ixnObj.logInfo('\n', end='', timestamp=False)
         for ti in queryResponse.json()['result'][0]['trafficItem']:
-            self.ixnObj.logInfo('TrafficItem: {0}\n\tName: {1}  Enabled: {2}  State: {3}'.format(ti['id'], ti['name'], ti['enabled'], ti['state']), timestamp=False)
-            self.ixnObj.logInfo('\tTrafficType: {0}  BiDirectional: {1}'.format(ti['trafficType'], ti['biDirectional']), timestamp=False)
+            self.ixnObj.logInfo('TrafficItem: {0}\n\tName: {1}  Enabled: {2}  State: {3}'.format(
+                ti['id'], ti['name'], ti['enabled'], ti['state']), timestamp=False)
+            self.ixnObj.logInfo('\tTrafficType: {0}  BiDirectional: {1}'.format(ti['trafficType'],
+                                                                                ti['biDirectional']),
+                                timestamp=False)
+
             for tracking in ti['tracking']:
                 self.ixnObj.logInfo('\tTrackings: {0}'.format(tracking['trackBy']), timestamp=False)
 
             for endpointSet, cElement in zip(ti['endpointSet'], ti['configElement']):
-                self.ixnObj.logInfo('\tEndpointSetId: {0}  EndpointSetName: {1}'.format(endpointSet['id'], endpointSet['name']), timestamp=False)
+                self.ixnObj.logInfo('\tEndpointSetId: {0}  EndpointSetName: {1}'.format(endpointSet['id'],
+                                                                                        endpointSet['name']), timestamp=False)
                 srcList = []
                 for src in endpointSet['sources']:
                     srcList.append(src.split('/ixnetwork')[1])
+
                 dstList = []
                 for dest in endpointSet['destinations']:
                     dstList.append(dest.split('/ixnetwork')[1])
+
                 self.ixnObj.logInfo('\t    Sources: {0}'.format(srcList), timestamp=False)
                 self.ixnObj.logInfo('\t    Destinations: {0}'.format(dstList), timestamp=False)
-                self.ixnObj.logInfo('\t    FrameType: {0}  FrameSize: {1}'.format(cElement['frameSize']['type'], cElement['frameSize']['fixedSize']), timestamp=False)
-                self.ixnObj.logInfo('\t    TranmissionType: {0}  FrameCount: {1}  BurstPacketCount: {2}'.format(cElement['transmissionControl']['type'],
-                                                                                                cElement['transmissionControl']['frameCount'],
-                                                                                                cElement['transmissionControl']['burstPacketCount']), timestamp=False)
-                self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(cElement['frameRate']['type'], cElement['frameRate']['rate']), timestamp=False)
+                self.ixnObj.logInfo('\t    FrameType: {0}  FrameSize: {1}'.format(cElement['frameSize']['type'],
+                                                                                  cElement['frameSize']['fixedSize']),
+                                    timestamp=False)
+                self.ixnObj.logInfo('\t    TranmissionType: {0}  FrameCount: {1}  BurstPacketCount: {2}'.format(
+                    cElement['transmissionControl']['type'],
+                    cElement['transmissionControl']['frameCount'],
+                    cElement['transmissionControl']['burstPacketCount']),
+                                    timestamp=False)
+
+                self.ixnObj.logInfo('\t    FrameRateType: {0}  FrameRate: {1}'.format(
+                    cElement['frameRate']['type'], cElement['frameRate']['rate']), timestamp=False)
+
             self.ixnObj.logInfo('\n', end='', timestamp=False)
 
     def setFrameSize(self, trafficItemName, **kwargs):

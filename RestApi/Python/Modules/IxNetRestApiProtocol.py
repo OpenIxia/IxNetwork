@@ -4507,30 +4507,36 @@ class Protocol(object):
                                          IPv4, IPv6, protocol sessions.
         """
         queryData = {'from': '/',
-                    'nodes': [{'node': 'topology',      'properties': ['name', 'status', 'vports'], 'where': []},
-                                {'node': 'deviceGroup', 'properties': ['name', 'status'], 'where': []},
-                                {'node': 'networkGroup','properties': ['name', 'multiplier'], 'where': []},
-                                {'node': 'ethernet',    'properties': ['name', 'status', 'sessionStatus', 'enableVlans', 'mac'], 'where': []},
-                                {'node': 'vlan',        'properties': ['name', 'vlanId', 'priority'], 'where': []},
-                                {'node': 'ipv4',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
-                                {'node': 'ipv6',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
-                                {'node': 'bgpIpv4Peer', 'properties': ['name', 'status', 'sessionStatus', 'dutIp', 'type', 'localIpv4Ver2', 'localAs2Bytes',
-                                                                        'holdTimer', 'flap', 'uptimeInSec', 'downtimeInSec'], 'where': []},
-                                {'node': 'bgpIpv6Peer', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'ospfv2',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'ospfv3',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'igmpHost',    'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'igmpQuerier', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'vxlan',       'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                            ]
-                    }
-
+                     'nodes': [{'node': 'topology',    'properties': ['name', 'status', 'vports', 'ports'], 'where': []},
+                               {'node': 'deviceGroup', 'properties': ['name', 'status'], 'where': []},
+                               {'node': 'networkGroup','properties': ['name', 'multiplier'], 'where': []},
+                               {'node': 'ethernet',    'properties': ['name', 'status', 'sessionStatus', 'enableVlans', 'mac'], 'where': []},
+                               {'node': 'vlan',        'properties': ['name', 'vlanId', 'priority'], 'where': []},
+                               {'node': 'ipv4',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
+                               {'node': 'ipv6',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
+                               {'node': 'bgpIpv4Peer', 'properties': ['name', 'status', 'sessionStatus', 'dutIp', 'type', 'localIpv4Ver2', 'localAs2Bytes',
+                                                                      'holdTimer', 'flap', 'uptimeInSec', 'downtimeInSec'], 'where': []},
+                               {'node': 'bgpIpv6Peer', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'ospfv2',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'ospfv3',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'igmpHost',    'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'igmpQuerier', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'vxlan',       'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                           ]
+                 }
+        
         queryResponse = self.ixnObj.query(data=queryData, silentMode=True)
         self.ixnObj.logInfo('', timestamp=False)
         for topology in queryResponse.json()['result'][0]['topology']:
             self.ixnObj.logInfo('TopologyGroup: {0}   Name: {1}'.format(topology['id'], topology['name']), timestamp=False)
             self.ixnObj.logInfo('    Status: {0}'.format(topology['status']), timestamp=False)
-            vportObjList = topology['vports']
+
+            buildNumber = float(self.ixnObj.getIxNetworkVersion()[:3])
+            if buildNumber >= 8.5:
+                vportObjList = topology['ports']
+            else:
+                vportObjList = topology['vports']
+
             for vportObj in vportObjList:
                 vportResponse = self.ixnObj.get(self.ixnObj.httpHeader+vportObj, silentMode=True)
                 self.ixnObj.logInfo('    VportId: {0} Name: {1}  AssignedTo: {2}  State: {3}'.format(vportResponse.json()['id'],

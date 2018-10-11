@@ -573,29 +573,23 @@ class Connect:
                 if currentState == 'ACTIVE' and counter < counterStop:
                     break
 
-            # < 8.50 requires more waiting time. And there is no way to verify the version number at this point.
-            time.sleep(20)
+            # Version < 8.50 requires more waiting time. And we cannot verify the version number at this point.
+            time.sleep(25)
 
         if self.serverOs == 'windows':
             # windows sessionId is always 1 because it only supports one session.
-            sessionIdNumber = 1        
-            self.apiSessionId = url + '/' + str(sessionIdNumber)
+            self.sessionUrl = url + '/1/ixnetwork'
 
             try:
-                # Verify the API server IP and port connection.
-                self.logInfo('\nVerifying API server connection: {}'.format(self.apiSessionId))
-                response = requests.request('GET', self.apiSessionId, allow_redirects=False, verify=self.verifySslCert)
-                if '3' in str(response.status_code):
-                    self.httpScheme = 'https'
+                self.logInfo('\nVerifying API server connection: {}'.format(self.sessionUrl))
+                response = requests.request('GET', self.sessionUrl, allow_redirects=False, verify=self.verifySslCert)
+                if '3' in str(response.status_code) and response.headers['location'].startswith('https'):
+                    # Overwrite the sessionUrl with the redirected https URL
+                    self.sessionUrl = response.headers['location']
 
             except requests.exceptions.RequestException as errMsg:
                 errMsg = 'Connection failed: {0}'.format(errMsg)
                 raise IxNetRestApiException(errMsg)
-
-            self.sessionUrl = '{httpScheme}://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(httpScheme=self.httpScheme,
-                                                                                                        apiServer=ixNetRestServerIp,
-                                                                                                        port=ixNetRestServerPort,
-                                                                                                        id=sessionIdNumber)
 
             # http://192.168.70.127:11009/api/v1/sessions/1
             self.sessionId = self.sessionUrl.split('/ixnetwork')[0]

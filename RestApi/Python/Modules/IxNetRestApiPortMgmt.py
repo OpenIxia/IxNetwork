@@ -415,7 +415,7 @@ class PortMgmt(object):
             raise IxNetRestApiException('assignPort Error: {}'.format(response.json()['message']))
 
         elif response.json()['state'] == 'IN_PROGRESS':
-            raise IxNeRestApiException('assignPort Error: Port failed to boot up after 120 seconds')
+            raise IxNetRestApiException('assignPort Error: Port failed to boot up after 120 seconds')
 
         else:
             response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')

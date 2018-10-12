@@ -299,9 +299,9 @@ class Connect:
         try:
             # For binary file
             if stream:
-                response = requests.get(restApi, stream=True, headers=self.jsonHeader, verify=self.verifySslCert)
+                response = requests.get(restApi, stream=True, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
             if stream == False:
-                response = requests.get(restApi, headers=self.jsonHeader, verify=self.verifySslCert)
+                response = requests.get(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
             if silentMode is False:
                 for redirectStatus in response.history:
@@ -397,7 +397,8 @@ class Connect:
             self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
-            response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
+            response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+                                      verify=self.verifySslCert)
             if silentMode == False:
                 for redirectStatus in response.history:
                     if '307' in str(response.history):
@@ -433,7 +434,7 @@ class Connect:
 
         try:
             # For binary file
-            response = requests.get(restApi, headers=self.jsonHeader, verify=self.verifySslCert)
+            response = requests.get(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
             if silentMode is False:
                 for redirectStatus in response.history:
@@ -472,7 +473,8 @@ class Connect:
         self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
-            response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, verify=self.verifySslCert)
+            response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+                                       verify=self.verifySslCert)
             for redirectStatus in response.history:
                 if '307' in str(response.history):
                     self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
@@ -583,7 +585,7 @@ class Connect:
             try:
                 self.logInfo('\nVerifying API server connection: {}'.format(self.sessionUrl))
                 response = requests.request('GET', self.sessionUrl, allow_redirects=False, verify=self.verifySslCert)
-                if '3' in str(response.status_code) and response.headers['location'].startswith('https'):
+                if '307' in str(response.status_code) and response.headers['location'].startswith('https'):
                     # Overwrite the sessionUrl with the redirected https URL
                     self.sessionUrl = response.headers['location']
 

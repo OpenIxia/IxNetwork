@@ -10,7 +10,7 @@ Description
 Disclaimer
 ----------
     This application is not meant to support all IxNetwork features.  It's meant for lightweight 
-    configurations designed for manufacturing and chip makers.
+    configurations.
 
     However, you could create a very complicated configuration in the GUI, save the
     configuration into a file, and have this app load the saved config, startProtocols, verify all

@@ -1322,6 +1322,9 @@ class Protocol(object):
             data={'value': kwargs['prefixLength']}
             self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
 
+        if 'numberOfAddresses' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4PrefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
+
         return ipv4PrefixObj
 
     def configPrefixPoolsIsisL3RouteProperty(self, prefixPoolsObj, **data):

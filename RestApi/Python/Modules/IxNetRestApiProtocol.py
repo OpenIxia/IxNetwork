@@ -1331,7 +1331,6 @@ class Protocol(object):
 
         if 'numberOfAddresses' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+ipv4PrefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
-            
         return networkGroupObj, ipv4PrefixObj
 
     def configPrefixPoolsIsisL3RouteProperty(self, prefixPoolsObj, **data):

@@ -1,11 +1,11 @@
-#!/opt/Python-2.7.6/bin/python2.7
+#!/usr/local/python2.7.14/bin/python2.7
 
 import Tkinter
 import sys
 import time
 
-ixChassisIp = '10.219.117.102'
-ixNetworkTclServer = '10.219.16.219'
+ixChassisIp = '192.168.70.120'
+ixNetworkTclServer = '192.168.70.3'
 user_name = 'hgee'
 port_list = '1/1 1/2'
 port1 = '1/1/1'

@@ -36,32 +36,41 @@ Author: Hubert Gee
         - Get stats
 
  USAGE
-    - Enter: python
+    - Enter: python shell
     - Enter: from ixnetCli import *
-    - If you need help, enter: showcommands()
 
-    - First thing you do is enter either: connecttowindows() or connecttolinux()
+    - Step 1 of 3:
+         setpreferences(<preference file>)
 
-    - 3 options to build a configurations:
-         1> configbgp('file.py')
-         2> runjsonconfig('file.json')
-         3> runixncfgconfig('file.ixncfg')
+    - Step 2 of 3:
+         enter either: connecttowindows() or connecttolinux()
+
+    - Step 3 of 3:
+         Build a configuration with one of the options:
+            1> config('file.py')
+            2> loadsavedconfig('ConfigFiles/<saved config file>')
 
     - starttraffic()
     - getstats()
 
+    - If you need help, enter: showcommands()
+
 UTILITIES
+    - showconfigfiles()
+    - showpreferencefiles()
     - showtopologies()
     - showtrafficitems()
-
+    - showallsessions()
 """
 
 from __future__ import absolute_import, print_function, division
-import os, sys, inspect, traceback, platform
+import os, sys, inspect, traceback, platform, subprocess
 import importlib
 from collections import OrderedDict
 
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('Utilities/IxNetCli', 'Modules'))))
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__))+'/Preferences'))
+sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__))+'/ConfigFiles'))
 from IxNetRestApi import *
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiFileMgmt import FileMgmt
@@ -70,11 +79,8 @@ from IxNetRestApiProtocol import Protocol
 from IxNetRestApiStatistics import Statistics
 
 class middleware:
-    # Internal variables.  Don't touch below variables.
-    #if os.path.exists('preference.py'):
-    #    preference = 'preference.py' ;# The preference module object if user calls setpreference()
-
     preference = None
+    setpreferences = False
     resume = False
     connectedTo = None
     sessionId = None
@@ -91,14 +97,22 @@ class middleware:
     statsObj = None
 
 try:
-    # The preference.py file has to be in the same directory as ixnetCli.py
-    # Users are allowed to create preference file and overwrite the preference.py file.
-    middleware.preference = importlib.import_module('preference')
-
-except:
-    pass
-
-try:
+    def showquickhelp():
+        print()
+        print("\nStep 1> Enter: setpreferences('<preference file>')")
+        print('        To see all preference files, enter: showpreferencefiles()')
+        print()
+        print('Step 2> Enter: connecttowindows()  or  connecttolinux()')
+        print('        To connect to an existing session ID, enter: connecttolinux(resume=True, sessionId=<id>)')
+        print()
+        print('Step 3> Make your configuration:')
+        print("        Enter: config('l2l3Params.py')") 
+        print("        Enter: loadsavedconfig('ConfigFiles/<saved config file>')")
+        print("        To see all config files, enter: showconfigfiles()")
+        print()
+        print("See all options, enter: showcommands()")
+        print()
+        
     def showcommands(command=None, showall=None):
         """Show all the API commands.
 
@@ -110,7 +124,7 @@ try:
             print('\tHelp on command usage: {0}'.format(command))
 
         for name,obj in inspect.getmembers(sys.modules[__name__]):
-            if name in ['completer', 'getInput', 'configIxNetworkFromScratch']: continue
+            if name in ['completer', 'runixncfgconfig', 'runjsonconfig', 'getInput', 'configIxNetworkFromScratch']: continue
             #if inspect.isfunction(obj) and eval(name+'.__doc__') is not None:
             if inspect.isfunction(obj):
                 parameters = inspect.getargspec(eval(name))
@@ -125,7 +139,7 @@ try:
                         print('\n\t{0}({1})'.format(name, parameters))
                     if command == None:
                         print('\t{0} ({1})'.format(name, parameters))
-                #print('\t{0}({1})'.format(name, parameters))
+
                 if showall is not None:
                     print('\t{0}'.format(eval(name+'.__doc__')))
                     print()
@@ -133,47 +147,67 @@ try:
 
         if command == None:
             print('\n\n  Example:')
-            print('\tThe first thing you need to do is create a preference file.')
-            print('\tMake a copy of the provided preference.py template file and give it a meaningful name.')
+            print('\tThe first thing you need to do is create a preference file in the /Preferences directory.')
+            print('\tMake a copy of the provided template.py and give it a meaningful name.')
+            print('\t   Ex: joe.py')
 
-            print('\n\t1> Enter: setpreference("Your preference file")')
-            print('\n\t2> For Windows chassis connection, enter: connecttowindows("192.168.70.127")')
-            print('\t   For Linux chassis connection, enter:   connecttolinux("192.168.70.144", "5443")')
+            print('\n\t1> Enter: setpreferences("Your preference file")')
+            print('\n\t2> For Windows chassis connection, enter: connecttowindows()')
+            print('\t   For Linux chassis connection, enter:   connecttolinux()')
+            print('\t       To connect to an existing Linx session ID: connecttolinux(resume=True, sessionId=<id>)')
+            print()    
+            print('\t3> To load a saved config file and use the chassisIp/ports saved in the config file:')
+            print('\t      Enter: loadsavedconfig("ConfigFiles/<config file>")')
             print()
-            print('\t3> To load a saved config file:')
-            print('\t      Option 1> Enter: runjsonconfig("json_config_file.json")')
-            print('\t      Option 2> Enter: runixncfgconfig("ixncfg_file.ixncfg")')
+            print('\t   To load a saved config file and optionally assign chassis and ports:')
+            print('\t      Enter: loadsavedconfig("ConfigFiles/<config file>", chassisIp=<ip>, ')
+            print('\t                             portList=[[ixChassisIp, "1", "1"], [ixChassisIp, "2", "1"]])')
             print()
-            print('\t   To load a saved config file and use different chassis and ports:')
-            print('\t      JSON config file>   Enter: runjsonconfig("json_config_file.json", chassisIp=<ip>, ')
-            print('\t                                 portList=[[ixChassisIp, "1", "1"], [ixChassisIp, "2", "1"]])')
-            print()
-            print('\t     ixncfg config file>  Enter: runixncfgconfig("ixncfg_file.ixncfg", ixChassisIp="1.1.1.1")')
-            print()
-            print('\t   To create a config from scratch:')
-            print('\t      Enter: config("l2l3Params.py")')
-            print('\t      Enter: config("bgpParams.py")')
-            print('\t      Enter: config("mplsParams.py")')
+            print('\t   To create a configuration from scratch:')
+            print('\t      Enter: config("ConfigFiles/<params file>")')
             print()
 
-    def setpreference(preferenceFile):
-        if os.path.exists(preferenceFile) == False:
-            print('\nError! No such preference file found: %s\n' % preferenceFile)
-            return
+    def setpreferences(preferenceFile):
+        """Set user preferences.
 
-        match = re.match('(.*/)?(preference.*).py', preferenceFile)
+        :param preferenceFile: A user defined preference file.
+        """
+        match = re.match('(.*/)?(.*).py', preferenceFile)
         if match:
-            if match.group(1):
-                sys.path.append(match.group(1))
-            middleware.preference = importlib.import_module(match.group(2))
+            print('\nSetting preference file: %s\n' % match.group(2))
+            try:
+                middleware.preference = importlib.import_module(match.group(2))
+            except:
+                print('Error: No such prefernce file found: {}\n'.format(preferenceFile))
 
-    def showpreference():
+        middleware.setpreferences = True
+
+    def showpreferences():
         """Show user defined preferences"""
         print()
         for property,value in middleware.preference.__dict__.items():
             if property.startswith('_') and not callable(property): continue
             print('\t{0}: {1}'.format(property, value))
         print()
+
+    def showpreferencefiles():
+        """Show all preference files in the /Preferences directory"""
+        process = subprocess.check_output(['ls', os.path.dirname(os.path.abspath(__file__))+'/Preferences'])
+        print()
+        for eachFile in process.decode('utf-8').split('\n'):
+            if '__' not in eachFile and '~' not in eachFile:
+                print('   {}'.format(eachFile))
+
+    def showconfigfiles():
+        """Show all preference files in the /Preferences directory"""
+        process = subprocess.check_output(['ls', os.path.dirname(os.path.abspath(__file__))+'/ConfigFiles'])
+        print()
+        for eachFile in process.decode('utf-8').split('\n'):
+            if '__' not in eachFile and '~' not in eachFile:
+                print('   {}'.format(eachFile))
+
+    def showallsessions():
+        allSessionId = middleware.ixn.getAllSessionId()
 
     def showsession():
         """Show the current session ID.  If session is connected to 
@@ -189,7 +223,7 @@ try:
         Example: windows|windowsConnectionMgr|linux"""
         print('\n{0}'.format(middleware.preference.apiServerType))
 
-    def deletelinuxsession():
+    def deletesession():
         """Delete the current session ID on the Linux API server.
         This command is only for connecting to the Linux API server."""
         if middleware.linuxServerSessionId != None:
@@ -213,6 +247,9 @@ try:
         :param password: (str) The login password.
         :param deleteSessionAfterTest: (bool) True|False: To Delete the session when test is done.
         """
+        if middleware.setpreferences == False:
+            print("\nError: You must enter setpreferences('<preference file>.py') prior to connecting\n")
+            return
 
         middleware.preference.apiServerType = 'linux'
 
@@ -343,6 +380,13 @@ try:
         middleware.params = json.load(open(jsonConfigFile), object_pairs_hook=OrderedDict)
         #middleware.params = json.load(open(jsonConfigFile))
 
+    def loadsavedconfig(configFile=None, chassisIp=None, portList=None, includeCrc=False):
+        """A highlevel wrapper to run either a saved json config or an .ixncfg config."""
+        if '.json' in configFile:
+            runjsonconfig(configFile, chassisIp, portList, includeCrc)
+
+        if '.ixncfg' in configFile:
+            runixncfgconfig(configFile, chassisIp, portList, includeCrc)
 
     def runjsonconfig(jsonConfigFile=None, chassisIp=None, portList=None, includeCrc=False):
         """Loads an exported JSON config file, reassigns ports, verify protocols, start traffic and get stats.
@@ -480,17 +524,16 @@ try:
         # Configuring license requires releasing all ports even for ports that is not used for this test.
         middleware.portMgmtObj.releaseAllPorts()
         middleware.ixn.configLicenseServerDetails([middleware.preference.licenseServerIp],
-                                                  middleware.preference.licenseMode,
-                                                  middleware.preference.licenseTier)
+                                                  middleware.preference.licenseMode)
+             
         middleware.ixn.loadIxncfgConfig = True
         middleware.fileMgmtObj.loadConfigFile(ixncfgConfigFile)
         if portList != None:
             middleware.portMgmtObj.assignPorts(portList)
         middleware.portMgmtObj.verifyPortState()
         middleware.protocolObj.startAllProtocols()
-        middleware.protocolObj.verifyAllProtocolSessionsNgpf(timeout=120)
-        middleware.trafficObj.regenerateTrafficItems()
-        middleware.trafficObj.startTraffic()
+        middleware.protocolObj.verifyProtocolSessionsUp()
+        #middleware.trafficObj.startTraffic()
         #getstats(includeCrc=includeCrc)
 
     def showlinuxsession():
@@ -710,21 +753,6 @@ try:
         configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
         middleware.trafficObj.configTrafficItem(mode='modify', obj=configElementObj, configElements={'frameRate': frameRate})
 
-    def setframecount(trafficItemName, frameCount):
-        """Modify the frame count.
-
-        :param trafficItemName: (str) The Traffic Item name.
-        :param frameCount: (int) The total packets to send."""
-        queryData = {'from': '/traffic',
-            'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]},
-                        {'node': 'configElement', 'properties': [], 'where': []}]}
-        queryResponse = middleware.ixn.query(data=queryData)
-        if queryResponse.json()['result'][0]['trafficItem'] == []:
-            print('\nNo such Traffic Item name found: %s' % trafficItemName)
-            return
-        configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
-        middleware.trafficObj.configTrafficItem(mode='modify', obj=configElementObj, configElements={'frameCount': frameCount})
-
     def settrafficcontinuous(trafficItemName):
         """Modify the transmission type to transmit continuously.
 
@@ -739,7 +767,7 @@ try:
         configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
         middleware.trafficObj.configTrafficItem(mode='modify', obj=configElementObj, configElements={'transmissionType': 'continuous'})
 
-    def setfixedframes(trafficItemName):
+    def setfixedframes(trafficItemName, frameCount):
         """Modify the transmission type to transmit a fixed frame count.
 
         :param trafficItemName: (str) The Traffic Item name."""
@@ -752,6 +780,7 @@ try:
             return
         configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
         middleware.trafficObj.configTrafficItem(mode='modify', obj=configElementObj, configElements={'transmissionType': 'fixedFrameCount'})
+        middleware.trafficObj.configTrafficItem(mode='modify', obj=configElementObj, configElements={'frameCount': frameCount})
 
     def configcustompayload(trafficItemName=None, customRepeat=True, customPattern=None):
         """Configure custom frame payload.
@@ -824,8 +853,10 @@ try:
         middleware.portMgmtObj.releaseAllPorts()
         middleware.ixn.configLicenseServerDetails([middleware.preference.licenseServerIp],
                                                   middleware.preference.licenseMode,
-                                                  middleware.preference.licenseTier)
-        middleware.ixn.newBlankConfig()
+                                              )
+
+        if middleware.preference.apiServerType == 'windows' or middleware.resume == True:
+            middleware.ixn.newBlankConfig()
 
         if 'trafficType' in middleware.params and middleware.params['trafficType'] == 'raw':
             vportList = middleware.portMgmtObj.assignPorts(middleware.preference.portList, createVports=True, rawTraffic=True)
@@ -852,7 +883,7 @@ try:
                                           'direction': ethernet['macAddress']['direction'],
                                           'step': ethernet['macAddress']['step']
                                       },
-                            macAddressPortStep = ethernet['macAddress']['portStep'],
+                            macAddressPortStep = ethernet['macAddressPortStep'],
                             vlanId = {'start': ethernet['vlanId']['start'],
                                       'direction': ethernet['vlanId']['direction'],
                                       'step': ethernet['vlanId']['step']
@@ -864,11 +895,11 @@ try:
                                                                                 ipv4Address = {'start': ipv4['address']['start'],
                                                                                                'direction': ipv4['address']['direction'],
                                                                                                'step': ipv4['address']['step']},
-                                                                                ipv4AddressPortStep = ipv4['address']['portStep'],
+                                                                                ipv4AddressPortStep = ipv4['ipv4AddressPortStep'],
                                                                                 gateway = {'start': ipv4['gateway']['start'],
                                                                                            'direction': ipv4['gateway']['direction'],
                                                                                            'step': ipv4['gateway']['step']},
-                                                                                gatewayPortStep = ipv4['gateway']['portStep'],
+                                                                                gatewayPortStep = ipv4['gatewayPortStep'],
                                                                                 prefix = ipv4['prefix'])
 
                                 if 'bgp' in ipv4:
@@ -906,7 +937,7 @@ try:
                                 prefixLength = networkGroup['prefix'])
 
             middleware.protocolObj.startAllProtocols()
-            middleware.protocolObj.verifyAllProtocolSessionsNgpf()
+            middleware.protocolObj.verifyProtocolSessionsUp()
 
         isAnyTrafficItemConfigured = 0
         endpointList = []
@@ -997,7 +1028,6 @@ try:
 
         if isAnyTrafficItemConfigured == 0:
             raise IxNetRestApiException('No Traffic Item was enabled for configuring')
-
         
     def config(paramFile=None, chassisIp=None, portList=None):
         """Read a parameter file and onfigure NGPF and Traffic Item from scratch.
@@ -1006,15 +1036,16 @@ try:
         :chassisIp: (str) The chassis IP address.
         :portList:  (list) [ixChassisIp, cardNumber, portNumber]
         """
-
         if paramFile == None:
             raise IxNetRestApiException('\nError: You must provide a paramFile\n')
 
-        if os.path.exists(paramFile) is False:
-            raise IxNetRestApiException("Param file doesn't exists: %s" % paramFile)
+        try:
+            middleware.params = __import__(paramFile.split('.')[0]).params
+        except:
+            print('\nError: No config file found: {}'.format(paramFile))
+            return
 
-        middleware.params = __import__(paramFile.split('.')[0]).params
-
+        # Allow users to overwrite param file chassisIp and portList from cli 
         if chassisIp == None:
             chassisIp = middleware.params['ixChassisIp']
             middleware.preference.chassisIp = chassisIp
@@ -1200,6 +1231,9 @@ try:
             return options[state]
         except IndexError:
             return None
+
+    showquickhelp()
+
 
     """
     if __name__ == "__main__":

@@ -1,3 +1,15 @@
+"""
+Description
+    The sample shows how to connect to an existing configuration.
+
+    For  Windows Connection Mgr
+         Starting with version 8.50, Windows supports https.
+         To connect to an existing session, you must include the following three parameters:
+             serverIpPort=<the ssl port>
+             sessionId=<the session ID>
+             httpsSecured=True
+"""
+
 import os, sys, traceback, time
 
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
@@ -32,50 +44,45 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+                [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.121',
+        mainObj = Connect(apiServerIp='192.168.70.9',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=osPlatform,
-                          apiKey='9277fc8fe92047f6a126f54481ba07fc',
-                          sessionId=1
+                          apiKey='173c9e239c714c8ea73d549c0e62cc82',
+                          sessionId=5
                           )
 
-    if osPlatform in ['windows', 'windowsConnectionMgr']:
+    if osPlatform in ['windows']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest
                           )
     
+    if osPlatform in ['windowsConnectionMgr']:
+        mainObj = Connect(apiServerIp='192.168.70.3',
+                          serverIpPort='11009',
+                          serverOs=osPlatform,
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          sessionId=8021,
+                          httpsSecured=False
+                          )
+    
     trafficObj = Traffic(mainObj)
     statObj = Statistics(mainObj)
     protocolObj = Protocol(mainObj)
-
-    #protocolObj.verifyProtocolSessionsUp('BGP Peer Per Port')
-
-    #statObj.takeSnapshot(viewName='Flow Statistics', isLinux=True, localLinuxPath='/home/hgee')
-    statObj.takeSnapshot(viewName='Flow Statistics', windowsPath='c:\\Results', localLinuxPath='/home/hgee')
-
-    '''
-    #trafficObj.startTraffic(regenerateTraffic=False, applyTraffic=True)
-    stats = statObj.getStats(viewName='Flow Statistics')
-    #stats = statObj.getStats(viewName='Protocols Summary')
-    #print(type(stats))
-
-    for key,value in stats.items():
-        print('\n{0: {1}\n'.format(key, value))
-        #print(key)
-    '''
-
+    portObj = PortMgmt(mainObj)
+    
+    
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))
     print(errMsg)

@@ -43,12 +43,16 @@ class FileMgmt(object):
         with open(configFile, mode='rb') as file:
             configContents = file.read()
 
+        # Stream the data from memory instead of one big blob of binary data
+        import io
+        configContents = io.BytesIO(configContents)
+
         fileName = configFile.split('/')[-1]
 
         # 2> Upload it to the server and give it any name you want for the filename
         uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
         self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
-        response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=True)
+        response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
 
         # 3> Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
         payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.headlessSessionId, fileName)}
@@ -356,6 +360,7 @@ class FileMgmt(object):
         else:
             self.ixnObj.logInfo('importJsonConfigObj: No error in JSON import')
 
+
     def importJsonConfigFile(self, jsonFileName, option='modify'):
         """
         Description
@@ -380,6 +385,10 @@ class FileMgmt(object):
         with open(jsonFileName, mode='r') as file:
             configContents = file.read()
 
+        # Stream the data from buffer instead of one big blob of text data
+        import io
+        configContents = io.StringIO(configContents)
+
         fileName = jsonFileName.split('/')[-1]
 
         # 2> Upload it to the server and give it any name you want for the filename
@@ -389,8 +398,9 @@ class FileMgmt(object):
             octetStreamHeader = self.ixnObj.jsonHeader
 
         uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
-        self.ixnObj.logInfo('Uploading file to server:', uploadFile)
-        response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=True)
+        self.ixnObj.logInfo('Uploading file to server: %s' % uploadFile)
+        response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True,
+                                    headers=octetStreamHeader, silentMode=False)
 
         # 3> Tell IxNetwork to import the JSON config file
         data = {"arg1": "{0}/ixnetwork/resourceManager".format(self.ixnObj.headlessSessionId),
@@ -598,8 +608,7 @@ class FileMgmt(object):
             jsonData = json.load(inFile)
         return jsonData
 
-    @staticmethod
-    def jsonWriteToFile(dataObj, jsonFile, sortKeys=False):
+    def jsonWriteToFile(self, dataObj, jsonFile, sortKeys=False):
         """
         Description
            Write data to a json file.

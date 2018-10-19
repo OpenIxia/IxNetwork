@@ -1,0 +1,13 @@
+
+
+These are the current parameter files:
+---------------------------------------
+   bgpConfig.json        bgp_ngpf_8.30.ixncfg   l2l3Params_template.py  ospfParams_template.py
+   bgpJsonOriginal.json  bgpParams_template.py  mplsParams_template.py
+
+
+If you need to test bgp, make a copy of bgpParams_template.py to bgpParams.py and
+change all the IP addresses, chassisIp and portList to your devices.
+
+So in the future when you do a git pull to get updates, your param files won't get overwritten.
+ 

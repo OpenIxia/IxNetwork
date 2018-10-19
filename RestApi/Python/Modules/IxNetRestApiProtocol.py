@@ -1255,9 +1255,11 @@ class Protocol(object):
         Description
             Create or modify a Network Group for network advertisement.
 
-        Parameters
-            deviceGroupObj: <str>: Optional: Device Group obj. For creating a new Network Group.
-                            /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+            Pass in the Device Group obj for creating a new Network Group.
+                /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+        
+            Pass in the Network Group obj to modify.
+               /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
 
         Syntax
             POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup
@@ -1271,7 +1273,9 @@ class Protocol(object):
                                   networkAddress = {'start': '160.1.0.0', 'step': '0.0.0.1', 'direction': 'increment'},
                                   prefixLength = 24)
 
-            To modify a Network Group:
+               
+               To modify a Network Group:
+               NetworkGroup obj sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
                configNetworkGroup(modify=networkGroupObj,
                                   name='networkGroup-ospf',
                                   multiplier = 500,
@@ -1281,6 +1285,9 @@ class Protocol(object):
         Return
             /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}
         """
+        # In case it is modify, we still need to return self.prefixPoolObj 
+        self.prefixPoolObj = None
+
         if 'create' not in kwargs and 'modify' not in kwargs:
             raise IxNetRestApiException('configNetworkGroup requires either a create or modify parameter.')
 
@@ -1324,8 +1331,8 @@ class Protocol(object):
 
         if 'numberOfAddresses' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+ipv4PrefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
-
-        return ipv4PrefixObj
+            
+        return networkGroupObj, ipv4PrefixObj
 
     def configPrefixPoolsIsisL3RouteProperty(self, prefixPoolsObj, **data):
         """
@@ -1347,6 +1354,30 @@ class Protocol(object):
         for attribute, value in data.items():
             multivalue = response.json()[attribute]
             self.ixnObj.logInfo('Configuring PrefixPools ISIS L3 Route Property multivalue attribute: %s' % attribute)
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
+
+    def configPrefixPoolsRouteProperty(self, prefixPoolsObj, protocolRouteRange, **data):
+        """
+        Description
+            Configure Network Group Prefix Pools for all Route properties.
+            Supports both IPv4PrefixPools and IPv6PrefiPools.
+            For protocolRouteRange attributes, use the IxNetwork API browser.
+
+        Parameters
+            prefixPoolsObj: <str>: Example:
+                  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}
+
+           protocolRouteRange: <str>: Get choices from IxNetwork API Browser.  Current choices:
+                     bgpIPRouteProperty, isisL3RouteProperty, etc.
+
+            data: The protocol properties.  Make your configuration and get from IxNetwork API Browser.
+        Syntax
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}/protocolRouterRange/{id}
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader + prefixPoolsObj + '/{0}/1'.format(protocolRouteRange))
+        for attribute, value in data.items():
+            multivalue = response.json()[attribute]
+            self.ixnObj.logInfo('Configuring PrefixPools {0} Route Property multivalue attribute: {1}'.format(protocolRouteRange, attribute))
             self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
 
     def configMultivalue(self, multivalueUrl, multivalueType, data):
@@ -4479,30 +4510,36 @@ class Protocol(object):
                                          IPv4, IPv6, protocol sessions.
         """
         queryData = {'from': '/',
-                    'nodes': [{'node': 'topology',      'properties': ['name', 'status', 'vports'], 'where': []},
-                                {'node': 'deviceGroup', 'properties': ['name', 'status'], 'where': []},
-                                {'node': 'networkGroup','properties': ['name', 'multiplier'], 'where': []},
-                                {'node': 'ethernet',    'properties': ['name', 'status', 'sessionStatus', 'enableVlans', 'mac'], 'where': []},
-                                {'node': 'vlan',        'properties': ['name', 'vlanId', 'priority'], 'where': []},
-                                {'node': 'ipv4',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
-                                {'node': 'ipv6',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
-                                {'node': 'bgpIpv4Peer', 'properties': ['name', 'status', 'sessionStatus', 'dutIp', 'type', 'localIpv4Ver2', 'localAs2Bytes',
-                                                                        'holdTimer', 'flap', 'uptimeInSec', 'downtimeInSec'], 'where': []},
-                                {'node': 'bgpIpv6Peer', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'ospfv2',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'ospfv3',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'igmpHost',    'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'igmpQuerier', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                                {'node': 'vxlan',       'properties': ['name', 'status', 'sessionStatus'], 'where': []},
-                            ]
-                    }
-
+                     'nodes': [{'node': 'topology',    'properties': ['name', 'status', 'vports', 'ports'], 'where': []},
+                               {'node': 'deviceGroup', 'properties': ['name', 'status'], 'where': []},
+                               {'node': 'networkGroup','properties': ['name', 'multiplier'], 'where': []},
+                               {'node': 'ethernet',    'properties': ['name', 'status', 'sessionStatus', 'enableVlans', 'mac'], 'where': []},
+                               {'node': 'vlan',        'properties': ['name', 'vlanId', 'priority'], 'where': []},
+                               {'node': 'ipv4',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
+                               {'node': 'ipv6',        'properties': ['name', 'status', 'sessionStatus', 'address', 'gatewayIp', 'prefix'], 'where': []},
+                               {'node': 'bgpIpv4Peer', 'properties': ['name', 'status', 'sessionStatus', 'dutIp', 'type', 'localIpv4Ver2', 'localAs2Bytes',
+                                                                      'holdTimer', 'flap', 'uptimeInSec', 'downtimeInSec'], 'where': []},
+                               {'node': 'bgpIpv6Peer', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'ospfv2',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'ospfv3',      'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'igmpHost',    'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'igmpQuerier', 'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                               {'node': 'vxlan',       'properties': ['name', 'status', 'sessionStatus'], 'where': []},
+                           ]
+                 }
+        
         queryResponse = self.ixnObj.query(data=queryData, silentMode=True)
         self.ixnObj.logInfo('', timestamp=False)
         for topology in queryResponse.json()['result'][0]['topology']:
             self.ixnObj.logInfo('TopologyGroup: {0}   Name: {1}'.format(topology['id'], topology['name']), timestamp=False)
             self.ixnObj.logInfo('    Status: {0}'.format(topology['status']), timestamp=False)
-            vportObjList = topology['vports']
+
+            buildNumber = float(self.ixnObj.getIxNetworkVersion()[:3])
+            if buildNumber >= 8.5:
+                vportObjList = topology['ports']
+            else:
+                vportObjList = topology['vports']
+
             for vportObj in vportObjList:
                 vportResponse = self.ixnObj.get(self.ixnObj.httpHeader+vportObj, silentMode=True)
                 self.ixnObj.logInfo('    VportId: {0} Name: {1}  AssignedTo: {2}  State: {3}'.format(vportResponse.json()['id'],

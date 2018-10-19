@@ -56,12 +56,10 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
-    licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.120'
+    ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
@@ -73,39 +71,27 @@ try:
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=osPlatform
+                          serverOs=osPlatform,
+                          generateLogFile='ixiaDebug.log'
                           )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          generateLogFile='ixiaDebug.log'
                           )
 
     #---------- Preference Settings End --------------
 
+    if osPlatform == 'windows':
+        mainObj.newBlankConfig()
+
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
+
     portObj = PortMgmt(mainObj)
-    portObj.connectIxChassis(ixChassisIp)
-
-    if portObj.arePortsAvailable(portList, raiseException=False) != 0:
-        if forceTakePortOwnership == True:
-            portObj.releasePorts(portList)
-            portObj.clearPortOwnership(portList)
-        else:
-            raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
-
-    mainObj.newBlankConfig()
-
-    # If the license is activated on the chassis's license server, this variable should be True.
-    # Otherwise, if the license is in a remote server or remote chassis, this variable should be False.
-    # Configuring license requires releasing all ports even for ports that is not used for this test.
-    if licenseIsInChassis == False:
-        portObj.releaseAllPorts()
-        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
-
-    # Set createVports = True if building config from scratch.
-    portObj.assignPorts(portList, createVports=True)
+    portObj.assignPorts(portList, forceTakePortOwnership, createVports=True)
 
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],

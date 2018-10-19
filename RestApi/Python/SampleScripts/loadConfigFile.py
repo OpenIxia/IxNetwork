@@ -59,14 +59,12 @@ try:
     enableDebugTracing = False
     deleteSessionAfterTest = True
 
-    configLicense = True
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
-    licenseTier = 'tier3'
 
     configFile = 'bgp_ngpf_8.30.ixncfg'
 
-    ixChassisIp = '192.168.70.120'
+    ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
@@ -78,16 +76,19 @@ try:
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs='linux')
+                          serverOs=osPlatform,
+                          generateLogFile='ixiaDebug.log'
+                      )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest)
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          generateLogFile='ixiaDebug.log'
+                      )
 
     #---------- Preference Settings End --------------
-
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -96,16 +97,16 @@ try:
             portObj.releasePorts(portList)
             portObj.clearPortOwnership(portList)
         else:
-            raise IxNetRestApiException('Ports are owned by another user and forceTakePortOwnership is set to False')
+            raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    if configLicense == True:
-        portObj.releaseAllPorts()
-        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
-
+    portObj.releasePorts(portList)
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
+        
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.loadConfigFile(configFile)
 
-    portObj.assignPorts(portList)
+    portObj = PortMgmt(mainObj)
+    portObj.assignPorts(portList, forceTakePortOwnership)
     portObj.verifyPortState()
     
     protocolObj = Protocol(mainObj)
@@ -114,10 +115,12 @@ try:
     #    Step 1 of 2:  Get the BGP host object.
     #                  Filter the BGP host by it's Topology Group name.
     #                  State all the BGP attributes to modify in a list.
-    bgpAttributeMultivalue = protocolObj.getBgpObject(topologyName='Topo1', bgpAttributeList=['flap', 'uptimeInSec', 'downtimeInSec'])
+    bgpAttributeMultivalue = protocolObj.getBgpObject(topologyName='Topo1',
+                                                      bgpAttributeList=['flap', 'uptimeInSec', 'downtimeInSec'])
 
     # Step 2 of 2: MODIFY THE BGP OBJECT ATTRIBUTES
-    mainObj.configMultivalue(bgpAttributeMultivalue['flap'],          multivalueType='valueList',   data={'values': ['true', 'true']})
+    mainObj.configMultivalue(bgpAttributeMultivalue['flap'], multivalueType='valueList',
+                             data={'values': ['true', 'true']})
     mainObj.configMultivalue(bgpAttributeMultivalue['uptimeInSec'],   multivalueType='singleValue', data={'value': '60'})
     mainObj.configMultivalue(bgpAttributeMultivalue['downtimeInSec'], multivalueType='singleValue', data={'value': '30'})
 

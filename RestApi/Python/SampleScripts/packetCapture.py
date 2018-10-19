@@ -6,7 +6,10 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests
-#    - Python 2.7 minimum
+#
+# SUPPORTS
+#    - Python 2.7 and 3+
+#    - IxNetwork API servers: Windows, WindowsConnectionMgr and Linux
 #
 # DESCRIPTION
 #     Capturing packets. Make sure traffic is configured for continuous mode.

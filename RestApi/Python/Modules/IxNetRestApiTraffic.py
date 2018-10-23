@@ -1378,7 +1378,7 @@ class Traffic(object):
         if blocking == False:
             self.ixnObj.logInfo('stopTraffic: %s' % self.ixnObj.sessionUrl+'/traffic/operations/stop')
             url = self.ixnObj.sessionUrl+'/traffic/operations/stop'            
-            response = self.ixnObj.post(url, data={'arg1': self.ixnObj.apiSessionId + '/traffic'})
+            response = self.ixnObj.post(url, data={'arg1': '{0}/ixnetwork/traffic'.format(self.ixnObj.headlessSessionId)})
             self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], timeout=120)
 
         self.checkTrafficState(expectedState=['stopped'])

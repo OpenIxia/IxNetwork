@@ -336,7 +336,6 @@ class FileMgmt(object):
         """
         if option is 'modify':
             arg3 = False
-            self.jsonPrettyprint(dataObj)
 
         if option is 'newConfig':
             arg3 = True

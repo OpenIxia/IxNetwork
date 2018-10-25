@@ -1,4 +1,4 @@
-import sys, re, os, json
+import sys, re, os, json, platform, io
 from IxNetRestApi import IxNetRestApiException
 
 class FileMgmt(object):
@@ -44,7 +44,6 @@ class FileMgmt(object):
             configContents = file.read()
 
         # Stream the data from memory instead of one big blob of binary data
-        import io
         configContents = io.BytesIO(configContents)
 
         fileName = configFile.split('/')[-1]
@@ -385,8 +384,15 @@ class FileMgmt(object):
             configContents = file.read()
 
         # Stream the data from buffer instead of one big blob of text data
-        import io
-        configContents = io.StringIO(configContents)
+        # for python3
+        if platform.python_version().startswith('3'):
+            import io
+            configContents = io.StringIO(configContents)
+
+        # for python2
+        if platform.python_version().startswith('2'):
+            import StringIO
+            configContents = StringIO.StringIO(configContents)
 
         fileName = jsonFileName.split('/')[-1]
 

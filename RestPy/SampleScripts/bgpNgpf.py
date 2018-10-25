@@ -36,13 +36,13 @@ Script development API doc:
 
 Usage:
    # Defaults to Windows
-   - Enter: python bgpNgpf.py
+   - Enter: python <script>
 
    # Connect to Windows Connection Manager
-   - Enter: python bgpNgpf.py windowsConnectionMgr
+   - Enter: python <script> windowsConnectionMgr
 
    # Connect to Linux API server
-   - Enter: python bgpNgpf.py linux
+   - Enter: python <script> linux
 """
 
 from __future__ import absolute_import, print_function
@@ -50,7 +50,7 @@ import sys, os
 
 # Adding some paths if you are not installing RestPy by Pip.
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
+#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform

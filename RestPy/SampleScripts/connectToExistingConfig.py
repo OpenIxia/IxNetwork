@@ -52,17 +52,19 @@ else:
 isWindowsConnectionMgr = False
 
 if osPlatform == 'windows':
+    platform = 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
 if osPlatform == 'linux':
+    platform = 'linux'
     apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
     password = 'password'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform)
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'

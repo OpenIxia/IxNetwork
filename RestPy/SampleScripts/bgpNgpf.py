@@ -33,12 +33,22 @@ Script development API doc:
    - On a web browser:
          - If installed in Windows: enter: file://c:/<path_to_ixnetwork_restpy>/docs/index.html
          - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
+
+Usage:
+   # Defaults to Windows
+   - Enter: python bgpNgpf.py
+
+   # Connect to Windows Connection Manager
+   - Enter: python bgpNgpf.py windowsConnectionMgr
+
+   # Connect to Linux API server
+   - Enter: python bgpNgpf.py linux
 """
 
 from __future__ import absolute_import, print_function
 import sys, os
 
-# Adding some relevant paths if you are not installing RestPy by Pip.
+# Adding some paths if you are not installing RestPy by Pip.
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
@@ -49,24 +59,23 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from StatisticsMgmt import Statistics
 from PortMgmt import Ports
 
-if len(sys.argv) > 1:
-    # Command line input: windows or linux
-    osPlatform = sys.argv[1]
-else:
-    # Defaulting to windows
-    osPlatform = 'windows'
+# Defaulting to windows
+osPlatform = 'windows'
 
-# Are you using IxNetwork Connection Manager in a Windows server 2012/2016?
-isWindowsConnectionMgr = False
+if len(sys.argv) > 1:
+    # Command line input: windows, windowsConnectionMgr or linux
+    osPlatform = sys.argv[1]
 
 # Change API server values to use your setup
-if osPlatform == 'windows':
+if osPlatform in ['windows', 'windowsConnectionMgr']:
+    platform = 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
 # Change API server values to use your setup
 if osPlatform == 'linux':
-    apiServerIp = '192.168.70.9'
+    platform = 'linux'
+    apiServerIp = '192.168.70.12'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -85,7 +94,7 @@ forceTakePortOwnership = True
 portList = [['192.168.70.128', 1, 1], ['192.168.70.128', 1, 2]]
 
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=osPlatform)
+    testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=platform)
 
     # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'
@@ -93,7 +102,7 @@ try:
     if osPlatform == 'linux':
         testPlatform.Authenticate(username, password)
 
-    if isWindowsConnectionMgr or osPlatform == 'linux':
+    if osPlatform in ['linux', 'windowsConnectionMgr']:
         session = testPlatform.Sessions.add()
 
     if osPlatform == 'windows':
@@ -222,13 +231,13 @@ try:
 
     if deleteSessionWhenDone:
         # For Linux and WindowsConnectionMgr only
-        if osPlatform == 'linux' or isWindowsConnectionMgr:
+        if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()
 
 except Exception as errMsg:
     print('\nrestPy.Exception:', errMsg)
     if deleteSessionWhenDone and 'session' in locals():
-        if osPlatform == 'linux' or isWindowsConnectionMgr:
+        if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()
 
 

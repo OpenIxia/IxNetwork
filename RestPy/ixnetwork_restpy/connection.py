@@ -142,8 +142,18 @@ class Connection(object):
         self._print_response(response)
         
         if str(response.status_code).startswith('3'):
-            self._scheme = 'https'
             url = response.headers['location']
+            if url.find('://') != -1:
+                self._scheme = url[:url.find('://')]
+                self._hostname = url[url.find('://')+3:url.find('/', url.find('://')+3)]
+                if self._scheme == 'https':
+                    self._rest_port = 443
+                host_pieces = self._hostname.split(':')
+                if len(host_pieces) > 1:
+                    self._hostname = host_pieces[0]
+                    self._rest_port = host_pieces[1]
+            else:
+                url = '%s://%s:%s%s' % (self._scheme, self._hostname, self._rest_port, url)
             self._print_request(method, url, data)
             response = requests.request(method, url, data=data, headers=headers, verify=self._verify_cert, allow_redirects=False)
             self._print_response(response)

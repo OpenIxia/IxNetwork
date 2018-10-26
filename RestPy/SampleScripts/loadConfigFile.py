@@ -31,6 +31,17 @@ Script development API doc:
    - On a web browser:
          - If installed in Windows: enter: file://c:/<path_to_ixnetwork_restpy>/docs/index.html
          - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
+
+Usage:
+   # Defaults to Windows
+   - Enter: python <script>
+
+   # Connect to Windows Connection Manager
+   - Enter: python <script> windowsConnectionMgr
+
+   # Connect to Linux API server
+   - Enter: python <script> linux
+
 """
 
 from __future__ import absolute_import, print_function
@@ -58,10 +69,12 @@ else:
 isWindowsConnectionMgr = False
 
 if osPlatform == 'windows':
+    platform = 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
 if osPlatform == 'linux':
+    platform = 'linux'
     apiServerIp = '192.168.70.9'
     apiServerPort = 443
     username = 'admin'
@@ -83,12 +96,13 @@ ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 configFile = '/home/hgee/Dropbox/MyIxiaWork/Temp/bgp_ngpf_8.50.ixncfg'
+configFile = 'bgp_ngpf_8.30.ixncfg'
 
 # The traffic item name to get stats from for this sample script
 trafficItemName = 'Topo-BGP'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform)
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'
@@ -96,7 +110,7 @@ try:
     if osPlatform == 'linux':
         testPlatform.Authenticate(username, password)
 
-    if isWindowsConnectionMgr or osPlatform == 'linux':
+    if osPlatform in ['linux', 'windowsConnectionMgr']:
         session = testPlatform.Sessions.add()
 
     if osPlatform == 'windows':
@@ -158,13 +172,13 @@ try:
 
     if deleteSessionWhenDone:
         # For Linux and WindowsConnectionMgr only
-        if osPlatform == 'linux' or isWindowsConnectionMgr:
+        if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()
 
 except Exception as errMsg:
     print('\nrestPy.Exception:', errMsg)
     if deleteSessionWhenDone and 'session' in locals():
-        if osPlatform == 'linux' or isWindowsConnectionMgr:
+        if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()
 
 

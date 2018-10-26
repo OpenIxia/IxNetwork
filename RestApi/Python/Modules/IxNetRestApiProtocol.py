@@ -1333,6 +1333,42 @@ class Protocol(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+ipv4PrefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
         return networkGroupObj, ipv4PrefixObj
 
+    def configBgpRouteRangeProperty(self, prefixPoolsObj, protocolRouteRange, data, asPath):
+        """
+        Description
+            Configure Network Group Prefix Pools for all Route properties.
+            Supports both IPv4PrefixPools and IPv6PrefiPools.
+            For protocolRouteRange attributes, use the IxNetwork API browser.
+
+        Parameters
+            prefixPoolsObj: <str>: Example:
+                  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}
+
+            protocolRouteRange: <str>: Get choices from IxNetwork API Browser.  Current choices:
+                     bgpIPRouteProperty, isisL3RouteProperty, etc.
+
+            data: The protocol properties.  Make your configuration and get from IxNetwork API Browser.
+
+            asPath: AS path protocol properties. Make your configuration and get from IxNetwork API Browser
+
+        Syntax
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}/protocolRouterRange/{id}
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader + prefixPoolsObj + '/{0}/1'.format(protocolRouteRange))
+        routeRangeObj = response.json()['links'][0]['href']
+        for attribute, value in data.items():
+            multivalue = response.json()[attribute]
+            self.ixnObj.logInfo('Configuring PrefixPools {0} Route Property multivalue attribute: {1}'.format(protocolRouteRange, attribute))
+            self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
+
+        if asPath != {}:
+            response = self.ixnObj.get(self.ixnObj.httpHeader + routeRangeObj + '/{0}/1'.format('bgpAsPathSegmentList'))
+            for attribute, value in asPath.items():
+                multivalue = response.json()[attribute]
+                self.ixnObj.logInfo('Configuring AsPath {0} Segment Property multivalue attribute: {1}'.format('bgpAsPathSegmentList', attribute))
+                self.ixnObj.patch(self.ixnObj.httpHeader + multivalue + "/singleValue", data={'value': asPath[attribute]})
+
+
     def configPrefixPoolsIsisL3RouteProperty(self, prefixPoolsObj, **data):
         """
         Description

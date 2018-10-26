@@ -1,4 +1,4 @@
-import sys, re, os, json
+import sys, re, os, json, platform, io
 from IxNetRestApi import IxNetRestApiException
 
 class FileMgmt(object):
@@ -44,7 +44,6 @@ class FileMgmt(object):
             configContents = file.read()
 
         # Stream the data from memory instead of one big blob of binary data
-        import io
         configContents = io.BytesIO(configContents)
 
         fileName = configFile.split('/')[-1]
@@ -336,7 +335,6 @@ class FileMgmt(object):
         """
         if option is 'modify':
             arg3 = False
-            self.jsonPrettyprint(dataObj)
 
         if option is 'newConfig':
             arg3 = True
@@ -386,8 +384,15 @@ class FileMgmt(object):
             configContents = file.read()
 
         # Stream the data from buffer instead of one big blob of text data
-        import io
-        configContents = io.StringIO(configContents)
+        # for python3
+        if platform.python_version().startswith('3'):
+            import io
+            configContents = io.StringIO(configContents)
+
+        # for python2
+        if platform.python_version().startswith('2'):
+            import StringIO
+            configContents = StringIO.StringIO(configContents)
 
         fileName = jsonFileName.split('/')[-1]
 
@@ -539,59 +544,6 @@ class FileMgmt(object):
             match = re.match("/availableHardware/.*'([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)']/card\[([0-9]+)]/port\[([0-9]+)", connectedTo)
             portList.append([match.group(1), match.group(2), match.group(3)])
         return portList
-
-    def jsonAssignPorts(self, jsonObject, portList, timeout=90):
-        """
-        Description
-            Reassign ports.  Will remove the existing JSON config datas: availableHardware, cardId, portId.
-            Then recreate JSON datas for availableHardware based on the portList input.
-
-        Parameters
-            jsonObject: (json object): The JSON config object.
-            portList: (list) 
-               Example:
-                        portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
-            timeout: (int): The timeout value to declare as failed.
-        """
-        # Since it is reassigning ports, remove existing chassis's and add what users want.
-        jsonObject.pop("availableHardware")
-        jsonObject.update({"availableHardware": {
-                            "xpath": "/availableHardware",
-                            "chassis": []
-                        }})
-
-        ixChassisId = 1
-        chassisIpList = []
-        vportId = 1
-        for ports in portList:
-            ixChassisIp = ports[0]
-            cardId = ports[1]
-            portId = ports[2]
-            if ixChassisIp not in chassisIpList:
-                jsonObject["availableHardware"]["chassis"].insert(0, {"xpath": "/availableHardware/chassis[{0}]".format(ixChassisId),
-                                                                        "hostname": ixChassisIp,
-                                                                        "card": []
-                                                                    })
-
-            cardList = []
-            if cardId not in cardList:
-                # If card doesn't exist in list, create a new card.
-                jsonObject["availableHardware"]["chassis"][0]["card"].insert(0, {"xpath": "/availableHardware/chassis[@alias = '{0}']/card[{1}]".format(ixChassisIp, cardId)})
-                jsonObject["availableHardware"]["chassis"][0]["card"][0].update({"port": []})
-                cardList.append(cardId)
-
-            self.ixnObj.logInfo('\njsonAssignPorts: %s %s %s' % (ixChassisIp, cardId, portId))
-            jsonObject["availableHardware"]["chassis"][0]["card"][0]["port"].insert(0, {"xpath": "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId)})
-
-            jsonObject["vport"][vportId-1].update({"connectedTo": "/availableHardware/chassis[@alias = '{0}']/card[{1}]/port[{2}]".format(ixChassisIp, cardId, portId),
-                                            "xpath": "/vport[{0}]".format(vportId)
-                                          })
-            vportId += 1
-            ixChassisId += 1
-
-        self.ixnObj.logInfo('Importing port mapping to IxNetwork')
-        self.ixnObj.logInfo('Ports rebooting ...')
-        self.importJsonConfigObj(dataObj=jsonObject, option='modify', timeout=timeout)
 
     def jsonReadConfig(self, jsonFile):
         """

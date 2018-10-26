@@ -5,7 +5,7 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
 
 # setup the connection information for a windows gui test platform that has a default session of 1
-test_platform=TestPlatform('10.36.78.53', platform='linux')
+test_platform=TestPlatform('10.36.74.17', platform='linux')
 test_platform.Trace = 'request_response'
 
 # authenticate with username and password

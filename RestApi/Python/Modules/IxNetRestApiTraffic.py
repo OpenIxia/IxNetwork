@@ -1208,7 +1208,8 @@ class Traffic(object):
     def getAllTrafficItemObjects(self, getEnabledTrafficItemsOnly=False):
         """
         Description
-            Get all the Traffic Item objects.
+            Get all the Traffic Item objects. 
+            Due to the 100 items limit on REST call, using skip and take to break down the large list.
         
         Parameter
             getEnabledTrafficItemOnly: <bool>
@@ -1216,14 +1217,19 @@ class Traffic(object):
             A list of Traffic Items
         """
         trafficItemObjList = []
-        response = self.ixnObj.get(self.ixnObj.sessionUrl + '/traffic/trafficItem')
-        for eachTrafficItem in response.json():
-            if getEnabledTrafficItemsOnly == True:
-                if eachTrafficItem['enabled'] == True:
-                    trafficItemObjList.append(eachTrafficItem['links'][0]['href'])
-            else:
-                trafficItemObjList.append(eachTrafficItem['links'][0]['href'])
+        numOfTrafficItem = 0
+        response = self.ixnObj.get(self.ixnObj.sessionUrl + '/traffic/trafficItem'  + "?skip=" + str(numOfTrafficItem) + "&take=100")
 
+        while numOfTrafficItem < response.json()['count']:
+            for eachTrafficItem in response.json()['data']:
+                if getEnabledTrafficItemsOnly == True:
+                    if eachTrafficItem['enabled'] == True:
+                        trafficItemObjList.append(eachTrafficItem['links'][0]['href'])
+                else:
+                    trafficItemObjList.append(eachTrafficItem['links'][0]['href'])
+            numOfTrafficItem += 100
+            response = self.ixnObj.get(self.ixnObj.sessionUrl + '/traffic/trafficItem'  + "?skip=" + str(numOfTrafficItem) + "&take=100")
+        
         return trafficItemObjList
 
     def getAllTrafficItemNames(self):

@@ -1,3 +1,4 @@
+#!/usr/local/ActiveStateTcl8.6/bin/tclsh8.6
 #!/usr/bin/tclsh
 
 # Description
@@ -17,6 +18,7 @@
 #   
 package req rest
 package req json
+source tclRestLib.tcl
 
 # Uncomment this if using HTTPS
 #package req tls
@@ -24,9 +26,12 @@ package req json
 
 set apiServer 192.168.70.3
 set apiServerPort 11009
+set jsonFileName "ospf_ngpf_8.40.json"
+
 set ixChassisIp 192.168.70.128
 set port1 "$ixChassisIp 1 1"
 set port2 "$ixChassisIp 1 2"
+
 set portList [list $port1 $port2]
 
 proc get {url} {
@@ -38,10 +43,15 @@ proc get {url} {
     #set currentState [dict get $response state]
 }
 
-proc post {url jsonData} {
+proc post {url {jsonData {}} } {
     puts "POST: $url"
     puts "DATA: $jsonData"
     set header [list Content-type application/json]
+    #set header [list Content-type application/json Accept application/json]
+
+    # Starting a Windows Connection Mgr session requires Content-length 1024.  Getting 411 status code.
+    #set header [list Content-type application/json Content-length 1024]
+
     set config [list method post format json headers $header result json]
     set response [::rest::simple $url {} $config $jsonData]
     return $response
@@ -56,7 +66,7 @@ proc patch {url jsonData} {
     return $response
 }
 
-set httpHeader "https://$apiServer:$apiServerPort"
+set httpHeader "http://$apiServer:$apiServerPort"
 
 # POST
 set url $httpHeader/api/v1/sessions/1/ixnetwork/topology
@@ -72,7 +82,8 @@ puts "\nGET response: $response"
 set url $httpHeader/api/v1/sessions/1/ixnetwork/topology/1
 set result [patch $url {{"name": "OSPF_Topology"}}]
 
-
-
-
-
+# Samples
+set sessionUrl $httpHeader/api/v1/sessions/8020/ixnetwork
+importJsonConfigFile -jsonFileName $jsonFileName -option "newConfig" -sessionUrl $sessionUrl
+assignPorts -portList $portList -sessionUrl $sessionUrl
+startAllProtocols -sessionUrl $sessionUrl

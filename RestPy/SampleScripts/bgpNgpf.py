@@ -50,7 +50,7 @@ import sys, os
 
 # Adding some paths if you are not installing RestPy by Pip.
 sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
+sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform

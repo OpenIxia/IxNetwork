@@ -75,7 +75,7 @@ if osPlatform == 'windows':
 
 if osPlatform == 'linux':
     platform = 'windows'
-    apiServerIp = '192.168.70.9'
+    apiServerIp = '192.168.70.12'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -96,7 +96,7 @@ ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'
@@ -104,14 +104,7 @@ try:
     if osPlatform == 'linux':
         testPlatform.Authenticate(username, password)
 
-    if osPlatform in ['linux', 'windowsConnectionMgr']:
-        session = testPlatform.Sessions.add()
-
-    if osPlatform == 'windows':
-        # Windows support only one session. Id is always equal 1.
-        session = testPlatform.Sessions.find(Id=1)
-
-    # ixNetwork is the root object to the IxNetwork API hierarchical tree.
+    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
     # Instantiate the helper class objects

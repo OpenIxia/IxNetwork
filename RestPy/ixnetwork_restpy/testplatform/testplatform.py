@@ -44,18 +44,8 @@ class TestPlatform(Base):
 
     def __init__(self, ip_address, rest_port=443, platform='windows', log_file_name=None):
         super(TestPlatform, self).__init__(None)
-        self._connection = Connection(ip_address, rest_port, platform)
+        self._connection = Connection(ip_address, rest_port, platform, log_file_name)
         self._set_default_href()
-
-        # setup logging to both console and file if requested
-        handlers = [logging.StreamHandler(sys.stdout)]
-        if log_file_name is not None:
-            handlers.append(logging.FileHandler(log_file_name, mode='w'))
-        formatter = logging.Formatter(fmt='%(asctime)s [%(name)s] [%(levelname)s] %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-        logging.Formatter.converter = time.gmtime
-        for handler in handlers:
-            handler.setFormatter(formatter)
-            logging.getLogger('').addHandler(handler)
          
     def _set_default_href(self, href='/api/v1'):
         self._set_properties({'href': href}, clear=True)
@@ -113,12 +103,3 @@ class TestPlatform(Base):
         """
         from ixnetwork_restpy.testplatform.sessions.sessions import Sessions
         return Sessions(self)
-
-        # sessions = self._read(Sessions(self), None)
-        # if Id is not None:
-        #     for session in sessions:
-        #         if session.Id == Id:
-        #             return session
-        #     raise NotFoundError('No session exists for id %s' % Id) 
-        # else:
-        #     return sessions

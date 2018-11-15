@@ -70,7 +70,7 @@ try:
                 [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='192.168.70.12',
                           serverIpPort='443',
                           username='admin',
                           password='admin',

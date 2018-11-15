@@ -64,7 +64,7 @@ try:
     portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.130',
+        mainObj = Connect(apiServerIp='192.168.70.12',
                           serverIpPort='443',
                           username='admin',
                           password='admin',

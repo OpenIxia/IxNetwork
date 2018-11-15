@@ -227,12 +227,21 @@ class Traffic(object):
             for endPoint in endpoints:
                 endpointSrcDst = {}
                 # {'name':'Flow-Group-1', 'sources': [topologyObj1], 'destinations': [topologyObj2]}
-                #eachEndPoint = endPoint[0]
                 if 'name' in endPoint:
                     endpointSrcDst['name'] = endPoint['name']
-                endpointSrcDst['sources'] = endPoint['sources']
-                endpointSrcDst['destinations'] = endPoint['destinations']
-                self.ixnObj.logInfo('Config Traffic Item Endpoints', timestamp=False)
+
+                if 'sources' in endPoint:
+                    endpointSrcDst['sources'] = endPoint['sources']
+                
+                if 'destinations' in endPoint:
+                    endpointSrcDst['destinations'] = endPoint['destinations']
+
+                if 'multicastDestinations' in endPoint:
+                    endpointSrcDst['multicastDestinations'] = endPoint['multicastDestinations']
+
+                if 'multicastReceivers' in endPoint:
+                    endpointSrcDst['multicastReceivers'] = endPoint['multicastReceivers']
+
                 response = self.ixnObj.post(self.ixnObj.httpHeader+trafficItemObj+'/endpointSet', data=endpointSrcDst)
 
                 if 'highLevelStreamElements' in endPoint:
@@ -1118,24 +1127,25 @@ class Traffic(object):
             currentTrafficState = response.json()['state']
             if currentTrafficState == 'unapplied':
                 self.ixnObj.logWarning('\nCheckTrafficState: Traffic is UNAPPLIED')
-                self.ixnObj.applyTraffic()
+                self.applyTraffic()
 
             self.ixnObj.logInfo('\ncheckTrafficState: {trafficState}: Expecting: {expectedStates}.'.format(trafficState=currentTrafficState,
                                                                                                            expectedStates=expectedState),
                                 timestamp=False)
             self.ixnObj.logInfo('\tWaited {counter}/{timeout} seconds'.format(counter=counter, timeout=timeout), timestamp=False)
             
-            if counter < timeout and currentTrafficState not in expectedState:
+            if counter <= timeout and currentTrafficState not in expectedState:
                 time.sleep(1)
                 continue
 
-            if counter < timeout and currentTrafficState in expectedState:
+            if counter <= timeout and currentTrafficState in expectedState:
                 time.sleep(8)
                 self.ixnObj.logInfo('checkTrafficState: Done\n')
                 return 0
         
         if ignoreException == False:
-            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s): %s' % expectedState)
+            raise IxNetRestApiException('checkTrafficState: Traffic state did not reach the expected state(s): {0}. It is at: {1}'.format(
+                expectedState, currentTrafficState))
         else:
             return 1
 

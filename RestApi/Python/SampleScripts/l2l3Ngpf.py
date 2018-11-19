@@ -51,7 +51,7 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     enableDebugTracing = True
-    deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
+    deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
@@ -62,7 +62,7 @@ try:
                 [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='192.168.70.12',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
@@ -170,7 +170,7 @@ try:
                                                            }],
                                                  configElements = [{'transmissionType': 'fixedFrameCount',
                                                                     'frameCount': 50000,
-                                                                    'frameRate': 88,
+                                                                    'frameRate': 10,
                                                                     'frameRateType': 'percentLineRate',
                                                                     'frameSize': 128}])
     

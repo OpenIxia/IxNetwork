@@ -49,11 +49,12 @@ from __future__ import absolute_import, print_function
 import sys, os
 
 # Adding some paths if you are not installing RestPy by Pip.
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
+#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
+sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
 # Import the main client module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+
 
 # Import modules containing helper functions
 from StatisticsMgmt import Statistics
@@ -94,7 +95,7 @@ forceTakePortOwnership = True
 portList = [['192.168.70.128', 1, 1], ['192.168.70.128', 1, 2]]
 
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=platform)
+    testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=platform, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'
@@ -102,17 +103,10 @@ try:
     if osPlatform == 'linux':
         testPlatform.Authenticate(username, password)
 
-    if osPlatform in ['linux', 'windowsConnectionMgr']:
-        session = testPlatform.Sessions.add()
-
-    if osPlatform == 'windows':
-        # Windows support only one session. Id is always equal 1.
-        session = testPlatform.Sessions.find(Id=1)
-
-    # ixNetwork is the root object to the IxNetwork API hierarchical tree.
+    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    # Instantiate the helper class objects
+    # Instantiate some helper class objects
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 

@@ -78,7 +78,7 @@ if osPlatform == 'windows':
 # Change API server values to use your setup
 if osPlatform == 'linux':
     platform = 'linux'
-    apiServerIp = '192.168.70.9'
+    apiServerIp = '192.168.70.12'
     apiServerPort = 443
     username = 'admin'
     password = 'admin'
@@ -101,8 +101,7 @@ portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 jsonConfigFile = 'bgp.json'
 
 try:
-    #testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform)
-    testPlatform = TestPlatform(apiServerIp, apiServerPort, platform=platform)
+    testPlatform = TestPlatform(apiServerIp, apiServerPort, platform=platform, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'

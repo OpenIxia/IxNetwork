@@ -11,11 +11,15 @@
 #
 
 from __future__ import absolute_import, print_function, division
-import os, re, sys, requests, json, time, subprocess, traceback, time, datetime
+import os, re, sys, requests, json, time, subprocess, traceback, time, datetime, platform
 
 class IxNetRestApiException(Exception):
     def __init__(self, msg=None):
-        super().__init__(msg)
+        if platform.python_version().startswith('3'):
+            super().__init__(msg)
+
+        if platform.python_version().startswith('2'):
+            super(IxNetRestApiException, self). __init__(msg)
 
         if Connect.robotStdout is not None:
             Connect.robotStdout.log_to_console(msg)
@@ -88,11 +92,15 @@ class Connect:
 
         Notes
             Class attributes
+               self._session: The requests initial Session().
                self.serverOs: windows|windowsConnectionMgr|linux
+
                self.httpHeader: http://{apiServerIp}:{port}
                self.sessionId : http://{apiServerIp}:{port}/api/v1/sessions/{id}
                self.sessionUrl: http://{apiServerIp}:{port}/api/v1/sessions/{id}/ixnetwork
-               self.apiSessionId: /api/v1/sessions/{id}/ixnetwork
+               self.headlessSessionId: /api/v1/sessions/{id}
+               self.apiSessionId:      /api/v1/sessions/{id}/ixnetwork
+
                self.jsonHeader: The default header: {"content-type": "application/json"}
                self.apiKey: For Linux API server only. Automatically provided by the server when login
                             successfully authenticated.
@@ -143,6 +151,8 @@ class Connect:
         # Disable non http connections.
         from requests.packages.urllib3.exceptions import InsecureRequestWarning
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+        self._session = requests.Session()
 
         self.httpScheme = 'http' ;# This will change to https in createWindowsSession and connectToLinuxApiServer
         if httpsSecured:
@@ -202,11 +212,12 @@ class Connect:
             if sessionId:
                 url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
                 try:
-                    response = requests.request('GET', url, verify=self.verifySslCert, allow_redirects=False)
+                    response = self._session.request('GET', url, verify=self.verifySslCert, allow_redirects=False)
                     if '3' in str(response.status_code):
                         self.httpScheme = 'https'
                         # Here, needs to set to use https.
                         url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+
                 except requests.exceptions.RequestException as errMsg:
                     errMsg = 'Connecting to existing config failed on a GET: {0}'.format(errMsg)
                     raise IxNetRestApiException(errMsg)
@@ -299,9 +310,10 @@ class Connect:
         try:
             # For binary file
             if stream:
-                response = requests.get(restApi, stream=True, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+                response = self._session.request('GET', restApi, stream=True, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+
             if stream == False:
-                response = requests.get(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+                response = self._session.request('GET', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
             if silentMode is False:
                 for redirectStatus in response.history:
@@ -352,9 +364,9 @@ class Connect:
         try:
             if self.connectToLinuxChassisIp and json.loads(data) == {}:
                 # Interacting with LinuxOS chassis doesn't like empty data payload. So excluding it here.
-                response = requests.post(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+                response = self._session.request('POST', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
             else:
-                response = requests.post(restApi, data=data, headers=self.jsonHeader, allow_redirects=True,
+                response = self._session.request('POST', restApi, data=data, headers=self.jsonHeader, allow_redirects=True,
                                          verify=self.verifySslCert)
 
             # 200 or 201
@@ -397,8 +409,9 @@ class Connect:
             self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
-            response = requests.patch(restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+            response = self._session.request('PATCH', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
                                       verify=self.verifySslCert)
+
             if silentMode == False:
                 for redirectStatus in response.history:
                     if '307' in str(response.history):
@@ -434,7 +447,7 @@ class Connect:
 
         try:
             # For binary file
-            response = requests.get(restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+            response = self._session.request('OPTIONS', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
             if silentMode is False:
                 for redirectStatus in response.history:
@@ -473,8 +486,9 @@ class Connect:
         self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
 
         try:
-            response = requests.delete(restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+            response = self._session.request('DELETE', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
                                        verify=self.verifySslCert)
+
             for redirectStatus in response.history:
                 if '307' in str(response.history):
                     self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
@@ -531,14 +545,15 @@ class Connect:
             try:
                 self.logInfo('Please wait while IxNetwork Connection Mgr starts up an IxNetwork session...')
                 self.logInfo('\t{}'.format(url), timestamp=False)
-                response = requests.request('POST', url, data={}, verify=self.verifySslCert, allow_redirects=True)
+                response = self._session.request('POST', url, data={}, verify=self.verifySslCert, allow_redirects=True)
 
             except requests.exceptions.RequestException as errMsg:
                 errMsg = 'Creating new session failed: {0}'.format(errMsg)
                 raise IxNetRestApiException(errMsg)
 
             sessionIdNumber = response.json()['links'][0]['href'].split('/')[-1]
-            response = requests.request('GET', url+'/'+str(sessionIdNumber), verify=self.verifySslCert, allow_redirects=False)
+            response = self._session.request('GET', url+'/'+str(sessionIdNumber), verify=self.verifySslCert, allow_redirects=False)
+
             if str(response.status_code).startswith('3'):
                 # >= 8.50
                 self.httpScheme = 'https'
@@ -584,7 +599,7 @@ class Connect:
 
             try:
                 self.logInfo('\nVerifying API server connection: {}'.format(self.sessionUrl))
-                response = requests.request('GET', self.sessionUrl, allow_redirects=False, verify=self.verifySslCert)
+                response = self._session.request('GET', self.sessionUrl, allow_redirects=False, verify=self.verifySslCert)
                 if '307' in str(response.status_code) and response.headers['location'].startswith('https'):
                     # Overwrite the sessionUrl with the redirected https URL
                     self.sessionUrl = response.headers['location']
@@ -1214,7 +1229,7 @@ class Connect:
         Syntax:
             /api/v1/sessions/{1}/ixnetwork/operations
         """
-        response = requests.get(sessionUrl+'/operations')
+        response = self._session.request('GET', sessionUrl+'/operations')
         for item in response.json():
             if 'operation' in item.keys():
                 print('\n', item['operation'])

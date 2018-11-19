@@ -25,7 +25,7 @@ class FileMgmt(object):
     def loadConfigFile(self, configFile):
         """
         Description
-            Load a saved config file from a Linux machine.
+            Load a saved config file.
 
         Parameter
             configFile: (str): The full path including the saved config filename.
@@ -36,27 +36,24 @@ class FileMgmt(object):
         if self.ixnObj.serverOs == 'linux':
             octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
         else:
-            octetStreamHeader = self.ixnObj.jsonHeader
+            octetStreamHeader = {'content-type': 'application/octet-stream'}
+
+        fileName = configFile.split('/')[-1]
+        loadConfigUrl = self.ixnObj.sessionUrl+'/operations/loadconfig'
 
         # 1> Read the config file
         self.ixnObj.logInfo('\nReading saved config file')
         with open(configFile, mode='rb') as file:
             configContents = file.read()
+            configContents = io.BytesIO(configContents)
 
-        # Stream the data from memory instead of one big blob of binary data
-        configContents = io.BytesIO(configContents)
-
-        fileName = configFile.split('/')[-1]
-
-        # 2> Upload it to the server and give it any name you want for the filename
-        uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
-        self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
-        response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
+            # 2> Upload it to the server and give it any name you want for the filename
+            uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
+            self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
+            response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
 
         # 3> Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
         payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.headlessSessionId, fileName)}
-
-        loadConfigUrl = self.ixnObj.sessionUrl+'/operations/loadconfig'
 
         # 4> Tell the server to load the config file
         response = self.ixnObj.post(loadConfigUrl, data=payload, headers=octetStreamHeader)
@@ -378,39 +375,27 @@ class FileMgmt(object):
         if option is 'newConfig':
             arg3 = True
 
-        # 1> Read the config file
-        self.ixnObj.logInfo('Reading saved config file')
-        with open(jsonFileName, mode='r') as file:
-            configContents = file.read()
-
-        # Stream the data from buffer instead of one big blob of text data
-        # for python3
-        if platform.python_version().startswith('3'):
-            import io
-            configContents = io.StringIO(configContents)
-
-        # for python2
-        if platform.python_version().startswith('2'):
-            import StringIO
-            configContents = StringIO.StringIO(configContents)
-
         fileName = jsonFileName.split('/')[-1]
-
-        # 2> Upload it to the server and give it any name you want for the filename
-        if self.ixnObj.serverOs == 'linux':
-            octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
-        else:
-            octetStreamHeader = self.ixnObj.jsonHeader
-
         uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
-        self.ixnObj.logInfo('Uploading file to server: %s' % uploadFile)
-        response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True,
-                                    headers=octetStreamHeader, silentMode=False)
 
-        # 3> Tell IxNetwork to import the JSON config file
+        if self.ixnObj.serverOs == 'linux':
+            headers = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
+        else:
+            headers = {'content-type': 'application/octet-stream'}
+
+        # 1> Upload the config file to the server and give it any name you want for the filename
+        self.ixnObj.logInfo('Uploading file to server: %s' % uploadFile)
+        with open(jsonFileName, mode='rb') as file:
+            configContents = file.read()
+            configContents = io.BytesIO(configContents)
+            response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True,
+                                        headers=headers, silentMode=False)
+
+        # 2> Tell IxNetwork to import the JSON config file
         data = {"arg1": "{0}/ixnetwork/resourceManager".format(self.ixnObj.headlessSessionId),
                 "arg2": "{0}/ixnetwork/files/{1}".format(self.ixnObj.headlessSessionId, fileName),
                 "arg3": arg3}
+
         url = self.ixnObj.sessionUrl+'/resourceManager/operations/importconfigfile'
         response = self.ixnObj.post(url, data=data)
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], silentMode=False, timeout=300)

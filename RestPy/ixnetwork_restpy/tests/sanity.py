@@ -21,7 +21,7 @@ sessions = None
 try:
     # test_platform = TestPlatform('10.36.78.53', platform='linux')
     test_platform = TestPlatform('127.0.0.1', rest_port=11009, platform='windows')
-    test_platform.Trace = 'none'
+    test_platform.Trace = 'request_response'
     test_platform.Authenticate('admin', 'admin')
     print(test_platform)
 
@@ -46,7 +46,8 @@ try:
     print(ixnetwork.Traffic)
     print(ixnetwork.Statistics)
     print(ixnetwork.ResourceManager)
-
+    ixnetwork.NewConfig()
+    
     assert(len(ixnetwork.Vport.find()) == 0)
     assert(len(ixnetwork.Topology.find()) == 0)
     assert(len(ixnetwork.AvailableHardware.Chassis.find()) == 0)
@@ -71,7 +72,7 @@ try:
 
     # create a raw traffic item
     traffic_item = ixnetwork.Traffic.TrafficItem.add(Name='Raw Traffic Item Test', TrafficType='raw', TrafficItemType='l2L3')
-    protocols = vports.Protocols
+    protocols = vports.Protocols.find()
     assert (len(protocols) == 2)
     protocols.refresh()
     assert (len(protocols) == 2)

@@ -80,19 +80,22 @@ class PacketCapture(object):
         """
         Start packet capturing
         """
-        self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/startcapture')
+        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/startcapture')
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/startcapture/'+response.json()['id'])
 
     def packetCaptureStop(self):
         """
         Stop packet capturing
         """
-        self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/stopcapture')
+        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/stopcapture')
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/stopcapture/'+response.json()['id'])
 
     def packetCaptureClearTabs(self):
         """
         Remove all captured tabs on Windows IxNetwork GUI
         """
-        self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/closeAllTabs')
+        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/closeAllTabs')
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/closeAllTabs/'+response.json()['id'])
 
     def packetCaptureGetCurrentPackets(self, getUpToPacketNumber=20, capturePacketsToFile=True):
         """
@@ -113,9 +116,11 @@ class PacketCapture(object):
             if self.enableDataPlane:
                 packetCaptureFilenameData = 'packetCaptureForData_'+str(timestamp)
                 subprocess.call(['touch', packetCaptureFilenameData])
+
             if self.enableControlPlane:
                 packetCaptureFilenameControl = 'packetCaptureForControl_'+str(timestamp)
                 subprocess.call(['touch', packetCaptureFilenameControl])
+
             if self.enableDataPlane == False and self.enableControlPlane == False:
                 raise IxNetRestApiException('\nPacketCapture Error: You must enable one of the options: enableDataPlane|enableControlPlane')
         
@@ -123,40 +128,50 @@ class PacketCapture(object):
         response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture')
         totalDataCapturedPackets = response.json()['dataPacketCounter']
         totalControlCapturedPackets = response.json()['controlPacketCounter']
+
         if type(totalDataCapturedPackets) != int:
             totalDataCapturedPackets = 0
         else:
             if getUpToPacketNumber != None:
                 totalDataCapturedPackets = getUpToPacketNumber
+
         if type(totalControlCapturedPackets) != int:
             totalControlCapturedPackets = 0
         else:
             if getUpToPacketNumber != None:
                 totalControlCapturedPackets = getUpToPacketNumber
-        
+
         for eachTypeOfCaptures, totalCapturedPackets in zip(('data', 'control'), (totalDataCapturedPackets, totalControlCapturedPackets)):
-            self.ixnObj.logInfo('Getting captured packets for: %s totalCapturedPackets:%s' % (eachTypeOfCaptures, totalCapturedPackets))
+            self.ixnObj.logInfo('Getting captured packets for capture type: {0}'.format(eachTypeOfCaptures))
 
             if capturePacketsToFile and int(totalCapturedPackets) != 0:
                 timestamp = int(time.time())
                 if self.enableDataPlane:
                     packetCaptureFilenameData = 'packetCaptureForData_'+str(timestamp)
                     subprocess.call(['touch', packetCaptureFilenameData])
+
                 if self.enableControlPlane:
                     packetCaptureFilenameControl = 'packetCaptureForControl_'+str(timestamp)
                     subprocess.call(['touch', packetCaptureFilenameControl])
 
             for packetIndex in range(1, int(totalCapturedPackets)):
+                self.ixnObj.logInfo('Getting captured packet index number: {}/{}'.format(packetIndex, getUpToPacketNumber))
+
                 if self.enableDataPlane and eachTypeOfCaptures == 'data':
                     data = {'arg1': vport+'/capture/currentPacket', 'arg2': packetIndex}
                     response = self.ixnObj.post(self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromdatacapture',
-                                                data=data, silentMode=True)
+                                                data=data, silentMode=False)
+                    self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromdatacapture/'+response.json()['id'])
+
                 if self.enableControlPlane and eachTypeOfCaptures == 'control':
                     data = {'arg1': vport+'/capture/currentPacket', 'arg2': packetIndex}
                     response = self.ixnObj.post(self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromcontrolcapture',
-                                                data=data, silentMode=True)
+                                                data=data, silentMode=False)
 
-                response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture/currentPacket/stack', silentMode=True)
+                    self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromcontrolcapture/'+response.json()['id'])
+
+                response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture/currentPacket/stack', silentMode=False)
+
                 for eachStack in response.json():
                     displayName = eachStack['displayName']
                     stackIdObject = eachStack['links'][0]['href']
@@ -165,20 +180,23 @@ class PacketCapture(object):
                         if eachTypeOfCaptures == 'data':
                             with open(packetCaptureFilenameData, 'a') as packetCaptureFile:
                                 packetCaptureFile.write('\nStack: %s\n' % displayName)
+
                         if eachTypeOfCaptures == 'control':
                             with open(packetCaptureFilenameControl, 'a') as packetCaptureFile:
                                 packetCaptureFile.write('\nStack: %s\n' % displayName)
 
-                    response = self.ixnObj.get(self.ixnObj.httpHeader+stackIdObject+'/field', silentMode=True)
+                    response = self.ixnObj.get(self.ixnObj.httpHeader+stackIdObject+'/field', silentMode=False)
                     for eachField in response.json():
                         fieldId = eachField['id']
                         fieldName = eachField['displayName']
                         fieldValue = eachField['fieldValue']
                         self.ixnObj.logInfo('\t{0}: {1}: {2}'.format(fieldId, fieldName, fieldValue))
+
                         if capturePacketsToFile:
                             if eachTypeOfCaptures == 'data':
                                 with open(packetCaptureFilenameData, 'a') as packetCaptureFile:
                                     packetCaptureFile.write('\t{0}: {1}: {2}\n'.format(fieldId, fieldName, fieldValue))
+
                             if eachTypeOfCaptures == 'control':
                                 with open(packetCaptureFilenameControl, 'a') as packetCaptureFile:
                                     packetCaptureFile.write('\t{0}: {1}: {2}\n'.format(fieldId, fieldName, fieldValue))
@@ -190,25 +208,62 @@ class PacketCapture(object):
         Parameters
             port: Format:[IxiaIpAddress, slotNumber, cardNumber]
                   Example: [ixChassisIp, '2', '1']
+
             typeOfCapture: data|control
-            saveToTempLocation: Where to temporary save the .cap file on the ReST API server: C:\\Temp
+
+            saveToTempLocation: Where to temporary save the .cap file on the ReST API server: 
+                                For Windows, provide any path with double backslashes: C:\\Temp
                                 The folder will be created if it doesn't exists.
-            localLinuxLocation: Where to save the .cap file on the Linux machine.
+
+                                For Linux, ignore. This API will automatically create a temp folder.
+
+            localLinuxLocation: Where to save the .cap file on the local Linux machine.
+
             appendToSavedCapturedFile: Add a text string to the captured file.
 
         Example:
             captureObj.getCapFile([ixChassisIp, '2', '1'], 'control', 'c:\\Temp', '/home/hgee/test')
         """
+
+        # For Linux API server
+        if '\\' not in saveToTempLocation:
+            # For Linux API server, need to give a name for a temporary folder
+            saveToTempLocation = 'packetCaptureFolder'
+
+            # Get the vport name
+            vport = self.portMgmtObj.getVports([port])[0]
+            response = self.ixnObj.get(self.ixnObj.httpHeader + vport)
+            vportName = response.json()['name']
+
+            vportName.replace('/', '\\/')
+            vportName.replace(' ', '_')
+            self.ixnObj.logInfo('vportName: {}'.format(vportName))
+
         if appendToSavedCapturedFile != None:
             data = {'arg1': saveToTempLocation, 'arg2': appendToSavedCapturedFile}
         else:
             data = {'arg1': saveToTempLocation}
-        self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/savecapture', data=data)
+
+        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/savecapture', data=data)
+        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/savecapture/'+response.json()['id'], timeout=300)
 
         if typeOfCapture == 'control':
-            capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_SW.cap'
+            if '\\' not in saveToTempLocation:
+                # For Linux
+                #capFileToGet = saveToTempLocation+'/'+port[1]+'-'+port[2]+'_SW.cap'
+                capFileToGet = '/home/ixia_apps/web/platform/apps-resources/ixnetworkweb/configs/captures/{0}/{1}_SW.cap'.format(
+                    saveToTempLocation, vportName)
+            else:
+                # For Windows
+                capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_SW.cap'
+
         if typeOfCapture == 'data':
-            capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_HW.cap'
+            if '\\' not in saveToTempLocation:
+                #capFileToGet = saveToTempLocation+'/'+port[1]+'-'+port[2]+'_HW.cap'
+                capFileToGet = '/home/ixia_apps/web/platform/apps-resources/ixnetworkweb/configs/captures/{0}/{1}_HW.cap'.format(
+                    saveToTempLocation, vportName)
+            else:
+                capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_HW.cap'
 
         fileMgmtObj = FileMgmt(self.ixnObj)
 

@@ -24,8 +24,8 @@ import ssl
 import datetime
 import time
 import json
-import requests
 import logging
+from requests import Session
 from io import BufferedReader
 from ixnetwork_restpy.errors import *
 from ixnetwork_restpy.files import Files
@@ -44,12 +44,14 @@ class Connection(object):
     TRACE_REQUEST = 'request'
     TRACE_REQUEST_RESPONSE = 'request_response'
 
-    def __init__(self, hostname, rest_port=443, platform='windows'):
+    def __init__(self, hostname, rest_port=443, platform='windows', log_file_name=None):
         """ Set the connection parameters to a rest server
 
         Args:
             hostname (str): hostname or ip address
             rest_port (int, optional, default=443): the rest port of the server
+            platform (str): 
+            log_file_name (str):
         """
         if sys.version < '2.7.9':
             import requests.packages.urllib3
@@ -63,10 +65,21 @@ class Connection(object):
         self._hostname = hostname
         self._rest_port = rest_port
         self._verify_cert = False
-        self._trace = Connection.TRACE_NONE
         self._scheme = 'https'
         if platform == 'windows':
             self._scheme = 'http'
+        self._session = Session()
+
+        # setup logging to both console and file if requested
+        self._trace = Connection.TRACE_NONE
+        handlers = [logging.StreamHandler(sys.stdout)]
+        if log_file_name is not None:
+            handlers.append(logging.FileHandler(log_file_name, mode='w'))
+        formatter = logging.Formatter(fmt='%(asctime)s [%(name)s] [%(levelname)s] %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+        formatter.converter = time.gmtime
+        for handler in handlers:
+            handler.setFormatter(formatter)
+            logging.getLogger(__name__).addHandler(handler)
 
     @property
     def trace(self):
@@ -78,9 +91,9 @@ class Connection(object):
             raise ValueError('the value %s is an incorrect Trace level' % value)
         self._trace = value
         if self._trace == Connection.TRACE_NONE:
-            logging.getLogger().setLevel(logging.WARNING)
+            logging.getLogger(__name__).setLevel(logging.WARNING)
         if self._trace in [Connection.TRACE_REQUEST, Connection.TRACE_REQUEST_RESPONSE]:
-            logging.getLogger().setLevel(logging.DEBUG)
+            logging.getLogger(__name__).setLevel(logging.DEBUG)
 
     @property
     def x_api_key(self):
@@ -132,13 +145,20 @@ class Connection(object):
                 data = json.dumps(payload)
             elif isinstance(payload, Files):                          
                 headers['Content-Type'] = 'application/octet-stream'
-                data = open(payload.file_path, 'rb')
+                if os.path.isfile(payload.file_path):
+                    with open(payload.file_path, 'rb') as fid:
+                        data = fid.read()
+                else:
+                    response = self._session.request('GET', url.replace('filename=', 'filter='), headers=headers, verify=self._verify_cert, allow_redirects=False)
+                    if response.status_code == 200:
+                        return
+                    data = ''
             elif isinstance(payload, basestring):
                 headers['Content-Type'] = 'application/json'
                 data = payload
 
-        self._print_request(method, url, data)
-        response = requests.request(method, url, data=data, headers=headers, verify=self._verify_cert, allow_redirects=False)
+        self._print_request(method, url, None if isinstance(payload, Files) else data)
+        response = self._session.request(method, url, data=data, headers=headers, verify=self._verify_cert, allow_redirects=False)
         self._print_response(response)
         
         if str(response.status_code).startswith('3'):
@@ -155,11 +175,8 @@ class Connection(object):
             else:
                 url = '%s://%s:%s%s' % (self._scheme, self._hostname, self._rest_port, url)
             self._print_request(method, url, data)
-            response = requests.request(method, url, data=data, headers=headers, verify=self._verify_cert, allow_redirects=False)
+            response = self._session.request(method, url, data=data, headers=headers, verify=self._verify_cert, allow_redirects=False)
             self._print_response(response)
-
-        if isinstance(payload, Files):
-            data.close()
 
         if response.status_code == 202:
             while True:
@@ -173,20 +190,21 @@ class Connection(object):
                     if state_url.startswith(self._scheme) == False:
                         state_url = '%s/%s' % (connection, state_url.strip('/'))
                     self._print_request('GET', state_url)
-                    response = requests.request('GET', state_url, headers=headers, verify=self._verify_cert)
+                    response = self._session.request('GET', state_url, headers=headers, verify=self._verify_cert)
+                    self._print_response(response)
                 elif state == 'SUCCESS':
                     if 'result' in async_status.keys():
                         return async_status['result']
                     else:
                         return None
-                elif 'API CONTENTION' in async_status['message']:
+                elif async_status['message'] is not None and 'API CONTENTION' in async_status['message']:
                     raise ResourceInUseError(response)
                 else:
                     raise ServerError(response) 
         
         while(response.status_code == 409):
             time.sleep(6)
-            response = requests.request(method, url, data=data, headers=headers, verify=self._verify_cert)
+            response = self._session.request(method, url, data=data, headers=headers, verify=self._verify_cert)
 
         if response.status_code == 204:
             return None

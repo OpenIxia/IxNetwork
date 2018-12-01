@@ -218,7 +218,8 @@ class FileMgmt(object):
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/copyfile',
                              data={"arg1": windowsPathAndFileName, "arg2": destinationPath})
 
-    def copyFileLinuxToLocalLinux(self, linuxApiServerPathAndFileName, localPath, renameDestinationFile=None, includeTimestamp=False):
+    def copyFileLinuxToLocalLinux(self, linuxApiServerPathAndFileName, localPath, renameDestinationFile=None,
+                                  includeTimestamp=False, linuxApiServerPathExtension=None):
         """
         Description
             Copy files from Linux API Server to local Linux filesystem.
@@ -229,6 +230,10 @@ class FileMgmt(object):
 
         Parameters
             linuxApiServerPathAndFileName: (str): The full path and filename to retrieve.
+            linuxApiServerPathExtension: (str): In a situation such as packet capture for Linux API server only, the 
+                                                captured file is saved at 'captures/<temp folder>/file.
+                                                Value example: 'captures/packetCaptureFolder/port2_HW.cap'
+                                                
             localPath: (str): The Linux destination path to put the file to.
             renameDestinationFile: (str): You could rename the destination file.
             includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
@@ -241,29 +246,39 @@ class FileMgmt(object):
         import datetime
 
         self.ixnObj.logInfo('\ncopyFileLinuxToLocalLinux: From: %s to %s\n' % (linuxApiServerPathAndFileName, localPath))
+
         fileName = linuxApiServerPathAndFileName.split('/')[-1]
         fileName = fileName.replace(' ', '_')
-        # 
+         
         destinationPath = self.ixnObj.sessionUrl.split(self.ixnObj.httpHeader)[1]
-        destinationPath = destinationPath + '/files/'+fileName
+        destinationPath = destinationPath + '/files/' + fileName
         currentTimestamp = datetime.datetime.now().strftime('%H%M%S')
 
-        # Step 1 of 2:
+        # Step 1 of 3:
         url = self.ixnObj.sessionUrl+'/operations/copyfile'
-        response = self.ixnObj.post(url,
-                             data={"arg1": linuxApiServerPathAndFileName, "arg2": destinationPath})
+        response = self.ixnObj.post(url, data={"arg1": linuxApiServerPathAndFileName, "arg2": destinationPath})
 
-        # curl http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork/files/AggregateResults.csv -O -H "Content-Type: application/octet-stream" -output /home/hgee/AggregateResults.csv
+        # Step 2 of 3:
+        if linuxApiServerPathExtension:
+            # Situations like packet capturing puts the captured file in 'captures/<temp folder>/'
+            fileName = linuxApiServerPathExtension
 
-        # Step 2 of 2:
-        requestStatus = self.ixnObj.get(self.ixnObj.sessionUrl+'/files?filename=%s' % (fileName), stream=True, ignoreError=True)
-        if requestStatus.status_code == 200:
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files?filename=%s' % (fileName), stream=True, ignoreError=True)
+
+        if response.status_code == 200:
             if renameDestinationFile is not None:
                 fileName = renameDestinationFile
 
-            contents = requestStatus.raw.read()
+            if linuxApiServerPathExtension:
+                # This extension means that it has an extended path: captures/<temp folder>/fileToGet
+                fileName = linuxApiServerPathExtension.split('/')[-1]
+
+            contents = response.raw.read()
 
             if includeTimestamp:
+                if linuxApiServerPathAndFileNameAsIs:
+                    fileName = fileName.split('/')[-1]
+
                 tempFileName = fileName.split('.')
                 if len(tempFileName) > 1:
                     extension = fileName.split('.')[-1]
@@ -275,13 +290,12 @@ class FileMgmt(object):
             else:
                 localPath = localPath+'/'+fileName
 
+            # Step 3 of 3:
+            self.ixnObj.logInfo('\ncopyFileLinuxToLocalLinux: %s' % localPath)
             with open(localPath, 'wb') as downloadedFileContents:
                 downloadedFileContents.write(contents)
 
-            #response = self.ixnObj.get(self.ixnObj.sessionUrl+'/files')
-
             self.ixnObj.logInfo('\nA copy of your saved file/report is in:\n\t%s' % (linuxApiServerPathAndFileName))
-            self.ixnObj.logInfo('\ncopyFileLinuxToLocalLinux: %s' % localPath)
         else:
             self.ixnObj.logInfo('\ncopyFileLinuxToLocalLinux Error: Failed to download file from Linux API Server.')
 

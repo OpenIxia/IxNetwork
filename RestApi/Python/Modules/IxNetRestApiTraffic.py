@@ -1094,7 +1094,7 @@ class Traffic(object):
     def disablePacketLossDuration(self):
         self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic/statistics/packetLossDuration', data={'enabled': 'false'})
 
-    def checkTrafficState(self, expectedState=['stopped'], timeout=45, ignoreException=False):
+    def checkTrafficState(self, expectedState=['stopped'], timeout=60, ignoreException=False):
         """
         Description
             Check the traffic state for the expected state.

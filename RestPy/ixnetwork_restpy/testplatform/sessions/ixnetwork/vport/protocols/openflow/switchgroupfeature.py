@@ -1,0 +1,298 @@
+
+# Copyright 1997 - 2018 by IXIA Keysight
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+    
+from ixnetwork_restpy.base import Base
+from ixnetwork_restpy.files import Files
+
+
+class SwitchGroupFeature(Base):
+	"""The SwitchGroupFeature class encapsulates a system managed switchGroupFeature node in the ixnetwork hierarchy.
+
+	An instance of the class can be obtained by accessing the SwitchGroupFeature property from a parent instance.
+	The internal properties list will be empty when the property is accessed and is populated from the server by using the find method.
+	"""
+
+	_SDM_NAME = 'switchGroupFeature'
+
+	def __init__(self, parent):
+		super(SwitchGroupFeature, self).__init__(parent)
+
+	@property
+	def ApplyGroup(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('applyGroup')
+	@ApplyGroup.setter
+	def ApplyGroup(self, value):
+		self._set_attribute('applyGroup', value)
+
+	@property
+	def CopyTtlIn(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('copyTtlIn')
+	@CopyTtlIn.setter
+	def CopyTtlIn(self, value):
+		self._set_attribute('copyTtlIn', value)
+
+	@property
+	def CopyTtlOut(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('copyTtlOut')
+	@CopyTtlOut.setter
+	def CopyTtlOut(self, value):
+		self._set_attribute('copyTtlOut', value)
+
+	@property
+	def DecrementMplsTtl(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('decrementMplsTtl')
+	@DecrementMplsTtl.setter
+	def DecrementMplsTtl(self, value):
+		self._set_attribute('decrementMplsTtl', value)
+
+	@property
+	def DecrementNetworkTtl(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('decrementNetworkTtl')
+	@DecrementNetworkTtl.setter
+	def DecrementNetworkTtl(self, value):
+		self._set_attribute('decrementNetworkTtl', value)
+
+	@property
+	def GroupType(self):
+		"""
+
+		Returns:
+			str(allGroup|selectGroup|indirectGroup|fastFailoverGroup)
+		"""
+		return self._get_attribute('groupType')
+
+	@property
+	def MaxNoOfGroups(self):
+		"""
+
+		Returns:
+			number
+		"""
+		return self._get_attribute('maxNoOfGroups')
+	@MaxNoOfGroups.setter
+	def MaxNoOfGroups(self, value):
+		self._set_attribute('maxNoOfGroups', value)
+
+	@property
+	def Output(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('output')
+	@Output.setter
+	def Output(self, value):
+		self._set_attribute('output', value)
+
+	@property
+	def PopMpls(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('popMpls')
+	@PopMpls.setter
+	def PopMpls(self, value):
+		self._set_attribute('popMpls', value)
+
+	@property
+	def PopPbb(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('popPbb')
+	@PopPbb.setter
+	def PopPbb(self, value):
+		self._set_attribute('popPbb', value)
+
+	@property
+	def PopVlan(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('popVlan')
+	@PopVlan.setter
+	def PopVlan(self, value):
+		self._set_attribute('popVlan', value)
+
+	@property
+	def PushMpls(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('pushMpls')
+	@PushMpls.setter
+	def PushMpls(self, value):
+		self._set_attribute('pushMpls', value)
+
+	@property
+	def PushPbb(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('pushPbb')
+	@PushPbb.setter
+	def PushPbb(self, value):
+		self._set_attribute('pushPbb', value)
+
+	@property
+	def PushVlan(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('pushVlan')
+	@PushVlan.setter
+	def PushVlan(self, value):
+		self._set_attribute('pushVlan', value)
+
+	@property
+	def SetField(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('setField')
+	@SetField.setter
+	def SetField(self, value):
+		self._set_attribute('setField', value)
+
+	@property
+	def SetMplsTtl(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('setMplsTtl')
+	@SetMplsTtl.setter
+	def SetMplsTtl(self, value):
+		self._set_attribute('setMplsTtl', value)
+
+	@property
+	def SetNetworkTtl(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('setNetworkTtl')
+	@SetNetworkTtl.setter
+	def SetNetworkTtl(self, value):
+		self._set_attribute('setNetworkTtl', value)
+
+	@property
+	def SetQueue(self):
+		"""
+
+		Returns:
+			bool
+		"""
+		return self._get_attribute('setQueue')
+	@SetQueue.setter
+	def SetQueue(self, value):
+		self._set_attribute('setQueue', value)
+
+	def find(self, ApplyGroup=None, CopyTtlIn=None, CopyTtlOut=None, DecrementMplsTtl=None, DecrementNetworkTtl=None, GroupType=None, MaxNoOfGroups=None, Output=None, PopMpls=None, PopPbb=None, PopVlan=None, PushMpls=None, PushPbb=None, PushVlan=None, SetField=None, SetMplsTtl=None, SetNetworkTtl=None, SetQueue=None):
+		"""Finds and retrieves switchGroupFeature data from the server.
+
+		All named parameters support regex and can be used to selectively retrieve switchGroupFeature data from the server.
+		By default the find method takes no parameters and will retrieve all switchGroupFeature data from the server.
+
+		Args:
+			ApplyGroup (bool): 
+			CopyTtlIn (bool): 
+			CopyTtlOut (bool): 
+			DecrementMplsTtl (bool): 
+			DecrementNetworkTtl (bool): 
+			GroupType (str(allGroup|selectGroup|indirectGroup|fastFailoverGroup)): 
+			MaxNoOfGroups (number): 
+			Output (bool): 
+			PopMpls (bool): 
+			PopPbb (bool): 
+			PopVlan (bool): 
+			PushMpls (bool): 
+			PushPbb (bool): 
+			PushVlan (bool): 
+			SetField (bool): 
+			SetMplsTtl (bool): 
+			SetNetworkTtl (bool): 
+			SetQueue (bool): 
+
+		Returns:
+			self: This instance with matching switchGroupFeature data retrieved from the server available through an iterator or index
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._select(locals())
+
+	def read(self, href):
+		"""Retrieves a single instance of switchGroupFeature data from the server.
+
+		Args:
+			href (str): An href to the instance to be retrieved
+
+		Returns:
+			self: This instance with the switchGroupFeature data from the server available through an iterator or index
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._read(href)

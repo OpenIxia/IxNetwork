@@ -24,8 +24,9 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-         - Statistics.py and PortMgmt.py
+   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
+                       - Statistics.py and PortMgmt.py
+
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -45,36 +46,40 @@ Usage:
 
 """
 
-from __future__ import absolute_import, print_function
 import sys, os
 
-# Import the main client module
+# Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
-# Import modules containing helper functions
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
+# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# your system knows where the RestPy modules are located.
+#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 
+# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
+# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
+# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
+sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
+
+# Import modules containing helper functions
 from StatisticsMgmt import Statistics
 from PortMgmt import Ports
 
+# Defaulting to windows
+osPlatform = 'windows'
+
 if len(sys.argv) > 1:
-    # Command line input: windows or linux
+    # Command line input: windows, windowsConnectionMgr or linux
     osPlatform = sys.argv[1]
-else:
-    # Defaulting to windows
-    osPlatform = 'windows'
 
-# Are you using IxNetwork Connection Manager in a Windows server 2012/2016?
-isWindowsConnectionMgr = False
-
-if osPlatform == 'windows':
+# Change API server values to use your setup
+if osPlatform in ['windows', 'windowsConnectionMgr']:
     platform = 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
+# Change API server values to use your setup
 if osPlatform == 'linux':
-    platform = 'windows'
+    platform = 'linux'
     apiServerIp = '192.168.70.12'
     apiServerPort = 443
     username = 'admin'
@@ -114,7 +119,6 @@ try:
     if osPlatform == 'windows':
         ixNetwork.NewConfig()
 
-    print('\nConfiguring license server')
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
 
@@ -208,10 +212,7 @@ try:
     statObj.verifyAllProtocolSessions()
 
     print('\nCreate Traffic Item')
-    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='VxLAN traffic',
-                                                    BiDirectional=False,
-                                                    TrafficType='ipv4'
-                                                )
+    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='VxLAN traffic', BiDirectional=False, TrafficType='ipv4')
 
     print('\tAdd flow group')
     trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
@@ -219,26 +220,39 @@ try:
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
     #       Therefore, ConfigElement is a list.
     print('\tConfiguring config elements')
-    trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
-    trafficItem.ConfigElement.find()[0].FrameRate.Type = 'framesPerSecond'
-    trafficItem.ConfigElement.find()[0].TransmissionControl.FrameCount = 10000
-    trafficItem.ConfigElement.find()[0].TransmissionControl.Type = 'fixedFrameCount'
-    trafficItem.ConfigElement.find()[0].FrameRateDistribution.PortDistribution = 'splitRateEvenly'
-    trafficItem.ConfigElement.find()[0].FrameSize.FixedSize = 128
+    configElement = trafficItem.ConfigElement.find()[0]
+    configElement.FrameRate.Rate = 28
+    configElement.FrameRate.Type = 'framesPerSecond'
+    configElement.TransmissionControl.FrameCount = 10000
+    configElement.TransmissionControl.Type = 'fixedFrameCount'
+    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
+    configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
+    # Get the Traffic Item name for getting Traffic Item statistics.
+    trafficItemName = trafficItem.Name
+
     # Get and show the Traffic Item column caption names and stat values
-    columnCaptions= statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
-    trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItem.Name)
-    txFramesIndex = columnCaptions.index('Tx Frames')
-    rxFramesIndex = columnCaptions.index('Rx Frames')
-    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}'.format(trafficItemStats[txFramesIndex],
-                                                                         trafficItemStats[rxFramesIndex]))
-    # Get and show the Flow Statistics column caption names and stat values
+    columnNames      = statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
+    trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItemName)
+
+    # The columnNames variable contains all the stat counter names.
+    # Get the index position of the stat counter that you want.
+    # The index is aligned with trafficItemStats that contains the statistic values.
+    txFramesIndex = columnNames.index('Tx Frames')
+    rxFramesIndex = columnNames.index('Rx Frames')
+
+    # Get the statistic values with the indexes.
+    txFrames = trafficItemStats[txFramesIndex]
+    rxFrames = trafficItemStats[rxFramesIndex]
+
+    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}\n'.format(txFrames, rxFrames))
+
+    # This example is for getting Flow Statistics.
     columnCaptions =   statObj.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)
     flowStats = statObj.getFlowStatistics()
     print('\n', columnCaptions)

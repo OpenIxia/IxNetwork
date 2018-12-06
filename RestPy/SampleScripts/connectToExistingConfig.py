@@ -17,8 +17,8 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-         - Statistics.py and PortMgmt.py 
+   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
+                       - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -27,41 +27,43 @@ Script development API doc:
          - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
 """
 
-from __future__ import absolute_import, print_function
 import os, sys
-
-# Adding some relevant paths if you are not installing RestPy by Pip.
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-
-# Import the main client module
+# Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+
+# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# your system knows where the RestPy modules are located.
+#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
+
+# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
+# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
+# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
+sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
 # Import modules containing helper functions
 from StatisticsMgmt import Statistics
 from PortMgmt import Ports
 
+# Defaulting to windows
+osPlatform = 'windows'
+
 if len(sys.argv) > 1:
-    # Command line input: windows or linux
+    # Command line input: windows, windowsConnectionMgr or linux
     osPlatform = sys.argv[1]
-else:
-    # Default to windows
-    osPlatform = 'windows'
 
-# Are you using IxNetwork Connection Manager in a Windows server 2012/2016?
-isWindowsConnectionMgr = False
-
-if osPlatform == 'windows':
+# Change API server values to use your setup
+if osPlatform in ['windows', 'windowsConnectionMgr']:
     platform = 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
 
+# Change API server values to use your setup
 if osPlatform == 'linux':
     platform = 'linux'
-    apiServerIp = '192.168.70.9'
+    apiServerIp = '192.168.70.12'
     apiServerPort = 443
     username = 'admin'
-    password = 'password'
+    password = 'admin'
 
 try:
     testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
@@ -86,9 +88,6 @@ try:
     statObj = Statistics(ixNetwork)
     portObj = Ports(ixNetwork)
 
-    ipv4 = ixNetwork.Topology.find(Name='Topo1').DeviceGroup.find(Name='DG1').Ethernet.find(Name='Eth1').Ipv4.find(Name='Ipv4')
-    print(ipv4)
-    #ipv4.SendArp(2)
 
 except Exception as errMsg:
     print('\nrestPy.Exception:', errMsg)

@@ -639,10 +639,12 @@ class Traffic(object):
             configElementObj = trafficItemObj+'/configElement/1'
         
         response = self.ixnObj.get(self.ixnObj.httpHeader+configElementObj+'/stack')
+
         for eachStack in response.json():
-            self.ixnObj.logInfo('Packet header name: {0}'.format(eachStack['displayName']), timestamp=False)
-            if bool(re.match('^{0}$'.format(packetHeaderName), eachStack['displayName'], re.I)):
-                self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, eachStack['displayName']), timestamp=False)
+            currentStackDisplayName = eachStack['displayName'].strip()
+            self.ixnObj.logInfo('Packet header name: {0}'.format(currentStackDisplayName), timestamp=False)
+            if bool(re.match('^{0}$'.format(packetHeaderName), currentStackDisplayName, re.I)):
+                self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, currentStackDisplayName), timestamp=False)
                 stackObj = eachStack['links'][0]['href']
                 break
         else:

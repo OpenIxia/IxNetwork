@@ -300,3 +300,38 @@ class Dhcpv6client(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('skipReleaseOnStop')
+
+	def get_device_ids(self, PortNames=None, Dhcp6EchoIAInfo=None, Dhcp6InfoReqMaxRc=None, Dhcp6InfoReqMaxRt=None, Dhcp6InfoReqTimeout=None, Dhcp6NsGw=None, Dhcp6RebMaxRt=None, Dhcp6RebTimeout=None, Dhcp6RelMaxRc=None, Dhcp6RelTimeout=None, Dhcp6RenMaxRt=None, Dhcp6RenTimeout=None, Dhcp6ReqMaxRc=None, Dhcp6ReqMaxRt=None, Dhcp6ReqTimeout=None, Dhcp6SolMaxRc=None, Dhcp6SolMaxRt=None, Dhcp6SolTimeout=None, RenewOnLinkUp=None, SkipReleaseOnStop=None):
+		"""Base class infrastructure that gets a list of dhcpv6client device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Dhcp6EchoIAInfo (str): optional regex of dhcp6EchoIAInfo
+			Dhcp6InfoReqMaxRc (str): optional regex of dhcp6InfoReqMaxRc
+			Dhcp6InfoReqMaxRt (str): optional regex of dhcp6InfoReqMaxRt
+			Dhcp6InfoReqTimeout (str): optional regex of dhcp6InfoReqTimeout
+			Dhcp6NsGw (str): optional regex of dhcp6NsGw
+			Dhcp6RebMaxRt (str): optional regex of dhcp6RebMaxRt
+			Dhcp6RebTimeout (str): optional regex of dhcp6RebTimeout
+			Dhcp6RelMaxRc (str): optional regex of dhcp6RelMaxRc
+			Dhcp6RelTimeout (str): optional regex of dhcp6RelTimeout
+			Dhcp6RenMaxRt (str): optional regex of dhcp6RenMaxRt
+			Dhcp6RenTimeout (str): optional regex of dhcp6RenTimeout
+			Dhcp6ReqMaxRc (str): optional regex of dhcp6ReqMaxRc
+			Dhcp6ReqMaxRt (str): optional regex of dhcp6ReqMaxRt
+			Dhcp6ReqTimeout (str): optional regex of dhcp6ReqTimeout
+			Dhcp6SolMaxRc (str): optional regex of dhcp6SolMaxRc
+			Dhcp6SolMaxRt (str): optional regex of dhcp6SolMaxRt
+			Dhcp6SolTimeout (str): optional regex of dhcp6SolTimeout
+			RenewOnLinkUp (str): optional regex of renewOnLinkUp
+			SkipReleaseOnStop (str): optional regex of skipReleaseOnStop
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

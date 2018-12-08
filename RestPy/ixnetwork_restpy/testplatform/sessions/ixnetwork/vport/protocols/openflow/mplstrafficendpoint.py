@@ -38,7 +38,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def ArpViaInterface(self):
-		"""If selected, ARP request is conveyed through an Interface.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def EnableVlan(self):
-		"""Select this check box to make VLAN available.
+		"""
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def GatewayMac(self):
-		"""The Gateway MAC address of the destination traffic endpoint. The default value is 00 00 00 00 00 00.
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def IpAddress(self):
-		"""Specify the IP address of the Source Traffic Endpoint. The default value is 0.
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def IpMask(self):
-		"""Specify the Mask value. The default value is 24.
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv4Dscp(self):
-		"""The priority specified for the IP address. The default value is 0.
+		"""
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv4Ecn(self):
-		"""The ECN value specified for the IP address.
+		"""
 
 		Returns:
 			str
@@ -122,7 +122,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv6Address(self):
-		"""Specify the IPv6 address of the Source Traffic Endpoint. The default value is 0.0.0.0.0.0.0.0
+		"""
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv6AddressMask(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv6Dscp(self):
-		"""The priority specified for the IP address. The default value is 0.
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv6Ecn(self):
-		"""The ECN value specified for the IP address.
+		"""
 
 		Returns:
 			str
@@ -170,7 +170,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""The IPv6 Flow Label value.
+		"""
 
 		Returns:
 			str
@@ -182,7 +182,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MacAddress(self):
-		"""The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+		"""
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsInnerMacSource(self):
-		"""The MPLS Inner Source MAC value.
+		"""
 
 		Returns:
 			str
@@ -206,7 +206,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsInnerVlanId(self):
-		"""The MPLS Inner VLAN identifier.
+		"""
 
 		Returns:
 			str
@@ -218,7 +218,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsInnerVlanPriority(self):
-		"""The MPLS Inner VLAN Priority value.
+		"""
 
 		Returns:
 			str
@@ -230,7 +230,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsLabel(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -242,7 +242,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsLabelStackSize(self):
-		"""The size of the MPLS label stack.
+		"""
 
 		Returns:
 			number
@@ -254,7 +254,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsPayloadType(self):
-		"""Specify the MPLS Payload Type.
+		"""
 
 		Returns:
 			str(ethernet|ipv4|ipv6)
@@ -266,7 +266,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def MplsTrafficClass(self):
-		"""The MPLS Traffic Class value.
+		"""
 
 		Returns:
 			str
@@ -278,7 +278,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def Name(self):
-		"""The name of the Traffic Source Endpoint.
+		"""
 
 		Returns:
 			str
@@ -290,7 +290,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def ProtocolInterface(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -302,7 +302,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def RangeSize(self):
-		"""Specify the size of the Range.
+		"""
 
 		Returns:
 			number
@@ -314,7 +314,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def VlanCount(self):
-		"""Specify the VLAN count. The default value is 1.
+		"""
 
 		Returns:
 			number
@@ -326,7 +326,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def VlanId(self):
-		"""Specify the VLAN ID (Outer and Inner).
+		"""
 
 		Returns:
 			str
@@ -338,7 +338,7 @@ class MplsTrafficEndPoint(Base):
 
 	@property
 	def VlanPriority(self):
-		"""Specify the VLAN Priority (Outer and Inner).
+		"""
 
 		Returns:
 			str
@@ -352,32 +352,32 @@ class MplsTrafficEndPoint(Base):
 		"""Adds a new mplsTrafficEndPoint node on the server and retrieves it in this instance.
 
 		Args:
-			ArpViaInterface (bool): If selected, ARP request is conveyed through an Interface.
-			EnableVlan (bool): Select this check box to make VLAN available.
-			GatewayMac (str): The Gateway MAC address of the destination traffic endpoint. The default value is 00 00 00 00 00 00.
-			IpAddress (str): Specify the IP address of the Source Traffic Endpoint. The default value is 0.
-			IpMask (number): Specify the Mask value. The default value is 24.
-			Ipv4Dscp (str): The priority specified for the IP address. The default value is 0.
-			Ipv4Ecn (str): The ECN value specified for the IP address.
-			Ipv6Address (str): Specify the IPv6 address of the Source Traffic Endpoint. The default value is 0.0.0.0.0.0.0.0
-			Ipv6AddressMask (number): NOT DEFINED
-			Ipv6Dscp (str): The priority specified for the IP address. The default value is 0.
-			Ipv6Ecn (str): The ECN value specified for the IP address.
-			Ipv6FlowLabel (str): The IPv6 Flow Label value.
-			MacAddress (str): The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
-			MplsInnerMacSource (str): The MPLS Inner Source MAC value.
-			MplsInnerVlanId (str): The MPLS Inner VLAN identifier.
-			MplsInnerVlanPriority (str): The MPLS Inner VLAN Priority value.
-			MplsLabel (str): NOT DEFINED
-			MplsLabelStackSize (number): The size of the MPLS label stack.
-			MplsPayloadType (str(ethernet|ipv4|ipv6)): Specify the MPLS Payload Type.
-			MplsTrafficClass (str): The MPLS Traffic Class value.
-			Name (str): The name of the Traffic Source Endpoint.
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): NOT DEFINED
-			RangeSize (number): Specify the size of the Range.
-			VlanCount (number): Specify the VLAN count. The default value is 1.
-			VlanId (str): Specify the VLAN ID (Outer and Inner).
-			VlanPriority (str): Specify the VLAN Priority (Outer and Inner).
+			ArpViaInterface (bool): 
+			EnableVlan (bool): 
+			GatewayMac (str): 
+			IpAddress (str): 
+			IpMask (number): 
+			Ipv4Dscp (str): 
+			Ipv4Ecn (str): 
+			Ipv6Address (str): 
+			Ipv6AddressMask (number): 
+			Ipv6Dscp (str): 
+			Ipv6Ecn (str): 
+			Ipv6FlowLabel (str): 
+			MacAddress (str): 
+			MplsInnerMacSource (str): 
+			MplsInnerVlanId (str): 
+			MplsInnerVlanPriority (str): 
+			MplsLabel (str): 
+			MplsLabelStackSize (number): 
+			MplsPayloadType (str(ethernet|ipv4|ipv6)): 
+			MplsTrafficClass (str): 
+			Name (str): 
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			RangeSize (number): 
+			VlanCount (number): 
+			VlanId (str): 
+			VlanPriority (str): 
 
 		Returns:
 			self: This instance with all currently retrieved mplsTrafficEndPoint data using find and the newly added mplsTrafficEndPoint data available through an iterator or index
@@ -403,32 +403,32 @@ class MplsTrafficEndPoint(Base):
 		By default the find method takes no parameters and will retrieve all mplsTrafficEndPoint data from the server.
 
 		Args:
-			ArpViaInterface (bool): If selected, ARP request is conveyed through an Interface.
-			EnableVlan (bool): Select this check box to make VLAN available.
-			GatewayMac (str): The Gateway MAC address of the destination traffic endpoint. The default value is 00 00 00 00 00 00.
-			IpAddress (str): Specify the IP address of the Source Traffic Endpoint. The default value is 0.
-			IpMask (number): Specify the Mask value. The default value is 24.
-			Ipv4Dscp (str): The priority specified for the IP address. The default value is 0.
-			Ipv4Ecn (str): The ECN value specified for the IP address.
-			Ipv6Address (str): Specify the IPv6 address of the Source Traffic Endpoint. The default value is 0.0.0.0.0.0.0.0
-			Ipv6AddressMask (number): NOT DEFINED
-			Ipv6Dscp (str): The priority specified for the IP address. The default value is 0.
-			Ipv6Ecn (str): The ECN value specified for the IP address.
-			Ipv6FlowLabel (str): The IPv6 Flow Label value.
-			MacAddress (str): The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
-			MplsInnerMacSource (str): The MPLS Inner Source MAC value.
-			MplsInnerVlanId (str): The MPLS Inner VLAN identifier.
-			MplsInnerVlanPriority (str): The MPLS Inner VLAN Priority value.
-			MplsLabel (str): NOT DEFINED
-			MplsLabelStackSize (number): The size of the MPLS label stack.
-			MplsPayloadType (str(ethernet|ipv4|ipv6)): Specify the MPLS Payload Type.
-			MplsTrafficClass (str): The MPLS Traffic Class value.
-			Name (str): The name of the Traffic Source Endpoint.
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): NOT DEFINED
-			RangeSize (number): Specify the size of the Range.
-			VlanCount (number): Specify the VLAN count. The default value is 1.
-			VlanId (str): Specify the VLAN ID (Outer and Inner).
-			VlanPriority (str): Specify the VLAN Priority (Outer and Inner).
+			ArpViaInterface (bool): 
+			EnableVlan (bool): 
+			GatewayMac (str): 
+			IpAddress (str): 
+			IpMask (number): 
+			Ipv4Dscp (str): 
+			Ipv4Ecn (str): 
+			Ipv6Address (str): 
+			Ipv6AddressMask (number): 
+			Ipv6Dscp (str): 
+			Ipv6Ecn (str): 
+			Ipv6FlowLabel (str): 
+			MacAddress (str): 
+			MplsInnerMacSource (str): 
+			MplsInnerVlanId (str): 
+			MplsInnerVlanPriority (str): 
+			MplsLabel (str): 
+			MplsLabelStackSize (number): 
+			MplsPayloadType (str(ethernet|ipv4|ipv6)): 
+			MplsTrafficClass (str): 
+			Name (str): 
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			RangeSize (number): 
+			VlanCount (number): 
+			VlanId (str): 
+			VlanPriority (str): 
 
 		Returns:
 			self: This instance with matching mplsTrafficEndPoint data retrieved from the server available through an iterator or index

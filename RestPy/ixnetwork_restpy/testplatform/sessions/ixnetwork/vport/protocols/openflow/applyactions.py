@@ -37,7 +37,7 @@ class ApplyActions(Base):
 
 	@property
 	def CopyTtlIn(self):
-		"""If selected, table supports Copy TTL In Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class ApplyActions(Base):
 
 	@property
 	def CopyTtlOut(self):
-		"""If selected, table supports Copy TTL Out Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class ApplyActions(Base):
 
 	@property
 	def DecrementMplsTtl(self):
-		"""If selected, table supports Decrement MPLS TTL Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class ApplyActions(Base):
 
 	@property
 	def DecrementNetworkTtl(self):
-		"""If selected, table supports Decrement Network TTL Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class ApplyActions(Base):
 
 	@property
 	def Experimenter(self):
-		"""If selected, table supports Experimenter Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class ApplyActions(Base):
 
 	@property
 	def Group(self):
-		"""If selected, table supports Group Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class ApplyActions(Base):
 
 	@property
 	def Output(self):
-		"""If selected, table supports Output Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class ApplyActions(Base):
 
 	@property
 	def PopMpls(self):
-		"""If selected, table supports Pop MPLS Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class ApplyActions(Base):
 
 	@property
 	def PopPbb(self):
-		"""If selected, table supports Pop PBB Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class ApplyActions(Base):
 
 	@property
 	def PopVlan(self):
-		"""If selected, table supports Pop VLAN Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class ApplyActions(Base):
 
 	@property
 	def PushMpls(self):
-		"""If selected, table supports Push MPLS Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class ApplyActions(Base):
 
 	@property
 	def PushPbb(self):
-		"""If selected, table supports Push PBB Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class ApplyActions(Base):
 
 	@property
 	def PushVlan(self):
-		"""If selected, table supports Push VLAN Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class ApplyActions(Base):
 
 	@property
 	def SetField(self):
-		"""If selected, table supports Set Field Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class ApplyActions(Base):
 
 	@property
 	def SetMplsTtl(self):
-		"""If selected, table supports Set MPLS TTL Apply Actions.
+		"""
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class ApplyActions(Base):
 
 	@property
 	def SetNetworkTtl(self):
-		"""If selected, table supports Set Network TTL Write Actions.
+		"""
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class ApplyActions(Base):
 
 	@property
 	def SetQueue(self):
-		"""If selected, table supports Set Queue Write Actions.
+		"""
 
 		Returns:
 			bool

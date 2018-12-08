@@ -276,7 +276,7 @@ class Switch(Base):
 
 	@property
 	def BarrierReplyDelay(self):
-		"""Indicates the delay between successive barrier notifications.
+		"""
 
 		Returns:
 			number
@@ -288,7 +288,7 @@ class Switch(Base):
 
 	@property
 	def BarrierReplyDelayType(self):
-		"""Select the delay type supported for barrier reply messages
+		"""
 
 		Returns:
 			str(fixed|random)
@@ -300,7 +300,7 @@ class Switch(Base):
 
 	@property
 	def BarrierReplyMaxDelay(self):
-		"""Indicates the delay between successive barrier notifications.
+		"""
 
 		Returns:
 			number
@@ -312,7 +312,7 @@ class Switch(Base):
 
 	@property
 	def CalculateControllerFlowTxRate(self):
-		"""If true, the Flow Rate of the controller is calculated.
+		"""
 
 		Returns:
 			bool
@@ -324,7 +324,7 @@ class Switch(Base):
 
 	@property
 	def CalculatePacketInReplyDelay(self):
-		"""If true, calculates delay between Packet-In sent from Switch and reply received from Controller.
+		"""
 
 		Returns:
 			bool
@@ -336,7 +336,7 @@ class Switch(Base):
 
 	@property
 	def DatapathDescription(self):
-		"""Indicates a description of datapath.
+		"""
 
 		Returns:
 			str
@@ -348,7 +348,7 @@ class Switch(Base):
 
 	@property
 	def DatapathId(self):
-		"""Indicates the Datapath ID of the OpenFlow switch.
+		"""
 
 		Returns:
 			str
@@ -360,7 +360,7 @@ class Switch(Base):
 
 	@property
 	def DatapathIdInHex(self):
-		"""Indicates the Datapath ID in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -372,7 +372,7 @@ class Switch(Base):
 
 	@property
 	def Description(self):
-		"""A description for the object.
+		"""
 
 		Returns:
 			str
@@ -384,7 +384,7 @@ class Switch(Base):
 
 	@property
 	def Enable(self):
-		"""If true, the object is enabled.
+		"""
 
 		Returns:
 			bool
@@ -396,7 +396,7 @@ class Switch(Base):
 
 	@property
 	def EnableCalculatePacketOutRxRate(self):
-		"""If enabled packet_out rx rate and packet_in tx rate will be caculated for the switch and shown in Aggregated Switch Statistics and Switch Learned Info. This field can be enabled only if Calculate PacketIn Reply Delay is disabled for the switch.
+		"""
 
 		Returns:
 			bool
@@ -408,7 +408,7 @@ class Switch(Base):
 
 	@property
 	def EnableHelloElement(self):
-		"""If true, enables Hello element for version negotiation.
+		"""
 
 		Returns:
 			bool
@@ -420,7 +420,7 @@ class Switch(Base):
 
 	@property
 	def HardwareDescription(self):
-		"""Indicates the hardware description of the switch.
+		"""
 
 		Returns:
 			str
@@ -432,7 +432,7 @@ class Switch(Base):
 
 	@property
 	def InterPacketInBurstGap(self):
-		"""Indicates the duration, in milliseconds, to wait between successive Packet-In bursts.
+		"""
 
 		Returns:
 			number
@@ -444,7 +444,7 @@ class Switch(Base):
 
 	@property
 	def LocalIp(self):
-		"""Indicates the local IP address of the interface. This field is auto-populated and cannot be changed.
+		"""
 
 		Returns:
 			str
@@ -453,7 +453,7 @@ class Switch(Base):
 
 	@property
 	def ManufacturerDescription(self):
-		"""Indicates the description of the switch manufacturer.
+		"""
 
 		Returns:
 			str
@@ -465,7 +465,7 @@ class Switch(Base):
 
 	@property
 	def MaxPacketInBytes(self):
-		"""Specifies the max amount of data to be sent in the Packet-In message.
+		"""
 
 		Returns:
 			number
@@ -477,7 +477,7 @@ class Switch(Base):
 
 	@property
 	def MaximumColorValue(self):
-		"""Specify the maximum color value supported.The minimum value is 0 and the maximum value is 160. The default value is 50.
+		"""
 
 		Returns:
 			number
@@ -489,7 +489,7 @@ class Switch(Base):
 
 	@property
 	def MaximumNoOfBandsPerMeter(self):
-		"""Specify the maximum number of bands supported per meter. The minimum value is 0 and the maximum value is 160. The default value is 50.
+		"""
 
 		Returns:
 			number
@@ -501,7 +501,7 @@ class Switch(Base):
 
 	@property
 	def MaximumNoOfBucketsPerGroup(self):
-		"""Specify the maximum number of Buckets supported per group.The minimum value is 1 and the maximum value is 4092.The default value is 4092.
+		"""
 
 		Returns:
 			number
@@ -513,7 +513,7 @@ class Switch(Base):
 
 	@property
 	def MaximumNoOfMeters(self):
-		"""Specify the maximum number of meters supported. The default value is 1000.
+		"""
 
 		Returns:
 			number
@@ -525,7 +525,7 @@ class Switch(Base):
 
 	@property
 	def NumberOfBuffers(self):
-		"""Indicates the maximum number of packets that can be stored in the buffered at a time.
+		"""
 
 		Returns:
 			number
@@ -537,7 +537,7 @@ class Switch(Base):
 
 	@property
 	def PacketInReplyTimeout(self):
-		"""Indicates the duration for which the Switch should wait for Packet-in-reply before freeing the buffer.
+		"""
 
 		Returns:
 			number
@@ -549,7 +549,7 @@ class Switch(Base):
 
 	@property
 	def PacketInTxBurstSize(self):
-		"""Indicates the number of packets in messages sent in a single burst.
+		"""
 
 		Returns:
 			number
@@ -561,7 +561,7 @@ class Switch(Base):
 
 	@property
 	def SerialNumber(self):
-		"""Indicates the Serial Number of the switch.
+		"""
 
 		Returns:
 			str
@@ -573,7 +573,7 @@ class Switch(Base):
 
 	@property
 	def SoftwareDescription(self):
-		"""Indicates the description of the software installed on the switch.
+		"""
 
 		Returns:
 			str
@@ -585,7 +585,7 @@ class Switch(Base):
 
 	@property
 	def StoreFlows(self):
-		"""If true, the switch will store the flows advertised by the controller in its tables.
+		"""
 
 		Returns:
 			bool
@@ -597,7 +597,7 @@ class Switch(Base):
 
 	@property
 	def SupportPacketForwarding(self):
-		"""If true, indicates that Packet Forwarding is supported on the OpenFlow switch.
+		"""
 
 		Returns:
 			bool
@@ -609,7 +609,7 @@ class Switch(Base):
 
 	@property
 	def TableMissAction(self):
-		"""Specify what the Switch should do when there is no match for the packets.
+		"""
 
 		Returns:
 			str(drop|sendToController)
@@ -623,34 +623,34 @@ class Switch(Base):
 		"""Adds a new switch node on the server and retrieves it in this instance.
 
 		Args:
-			BarrierReplyDelay (number): Indicates the delay between successive barrier notifications.
-			BarrierReplyDelayType (str(fixed|random)): Select the delay type supported for barrier reply messages
-			BarrierReplyMaxDelay (number): Indicates the delay between successive barrier notifications.
-			CalculateControllerFlowTxRate (bool): If true, the Flow Rate of the controller is calculated.
-			CalculatePacketInReplyDelay (bool): If true, calculates delay between Packet-In sent from Switch and reply received from Controller.
-			DatapathDescription (str): Indicates a description of datapath.
-			DatapathId (str): Indicates the Datapath ID of the OpenFlow switch.
-			DatapathIdInHex (str): Indicates the Datapath ID in hexadecimal format.
-			Description (str): A description for the object.
-			Enable (bool): If true, the object is enabled.
-			EnableCalculatePacketOutRxRate (bool): If enabled packet_out rx rate and packet_in tx rate will be caculated for the switch and shown in Aggregated Switch Statistics and Switch Learned Info. This field can be enabled only if Calculate PacketIn Reply Delay is disabled for the switch.
-			EnableHelloElement (bool): If true, enables Hello element for version negotiation.
-			HardwareDescription (str): Indicates the hardware description of the switch.
-			InterPacketInBurstGap (number): Indicates the duration, in milliseconds, to wait between successive Packet-In bursts.
-			ManufacturerDescription (str): Indicates the description of the switch manufacturer.
-			MaxPacketInBytes (number): Specifies the max amount of data to be sent in the Packet-In message.
-			MaximumColorValue (number): Specify the maximum color value supported.The minimum value is 0 and the maximum value is 160. The default value is 50.
-			MaximumNoOfBandsPerMeter (number): Specify the maximum number of bands supported per meter. The minimum value is 0 and the maximum value is 160. The default value is 50.
-			MaximumNoOfBucketsPerGroup (number): Specify the maximum number of Buckets supported per group.The minimum value is 1 and the maximum value is 4092.The default value is 4092.
-			MaximumNoOfMeters (number): Specify the maximum number of meters supported. The default value is 1000.
-			NumberOfBuffers (number): Indicates the maximum number of packets that can be stored in the buffered at a time.
-			PacketInReplyTimeout (number): Indicates the duration for which the Switch should wait for Packet-in-reply before freeing the buffer.
-			PacketInTxBurstSize (number): Indicates the number of packets in messages sent in a single burst.
-			SerialNumber (str): Indicates the Serial Number of the switch.
-			SoftwareDescription (str): Indicates the description of the software installed on the switch.
-			StoreFlows (bool): If true, the switch will store the flows advertised by the controller in its tables.
-			SupportPacketForwarding (bool): If true, indicates that Packet Forwarding is supported on the OpenFlow switch.
-			TableMissAction (str(drop|sendToController)): Specify what the Switch should do when there is no match for the packets.
+			BarrierReplyDelay (number): 
+			BarrierReplyDelayType (str(fixed|random)): 
+			BarrierReplyMaxDelay (number): 
+			CalculateControllerFlowTxRate (bool): 
+			CalculatePacketInReplyDelay (bool): 
+			DatapathDescription (str): 
+			DatapathId (str): 
+			DatapathIdInHex (str): 
+			Description (str): 
+			Enable (bool): 
+			EnableCalculatePacketOutRxRate (bool): 
+			EnableHelloElement (bool): 
+			HardwareDescription (str): 
+			InterPacketInBurstGap (number): 
+			ManufacturerDescription (str): 
+			MaxPacketInBytes (number): 
+			MaximumColorValue (number): 
+			MaximumNoOfBandsPerMeter (number): 
+			MaximumNoOfBucketsPerGroup (number): 
+			MaximumNoOfMeters (number): 
+			NumberOfBuffers (number): 
+			PacketInReplyTimeout (number): 
+			PacketInTxBurstSize (number): 
+			SerialNumber (str): 
+			SoftwareDescription (str): 
+			StoreFlows (bool): 
+			SupportPacketForwarding (bool): 
+			TableMissAction (str(drop|sendToController)): 
 
 		Returns:
 			self: This instance with all currently retrieved switch data using find and the newly added switch data available through an iterator or index
@@ -676,35 +676,35 @@ class Switch(Base):
 		By default the find method takes no parameters and will retrieve all switch data from the server.
 
 		Args:
-			BarrierReplyDelay (number): Indicates the delay between successive barrier notifications.
-			BarrierReplyDelayType (str(fixed|random)): Select the delay type supported for barrier reply messages
-			BarrierReplyMaxDelay (number): Indicates the delay between successive barrier notifications.
-			CalculateControllerFlowTxRate (bool): If true, the Flow Rate of the controller is calculated.
-			CalculatePacketInReplyDelay (bool): If true, calculates delay between Packet-In sent from Switch and reply received from Controller.
-			DatapathDescription (str): Indicates a description of datapath.
-			DatapathId (str): Indicates the Datapath ID of the OpenFlow switch.
-			DatapathIdInHex (str): Indicates the Datapath ID in hexadecimal format.
-			Description (str): A description for the object.
-			Enable (bool): If true, the object is enabled.
-			EnableCalculatePacketOutRxRate (bool): If enabled packet_out rx rate and packet_in tx rate will be caculated for the switch and shown in Aggregated Switch Statistics and Switch Learned Info. This field can be enabled only if Calculate PacketIn Reply Delay is disabled for the switch.
-			EnableHelloElement (bool): If true, enables Hello element for version negotiation.
-			HardwareDescription (str): Indicates the hardware description of the switch.
-			InterPacketInBurstGap (number): Indicates the duration, in milliseconds, to wait between successive Packet-In bursts.
-			LocalIp (str): Indicates the local IP address of the interface. This field is auto-populated and cannot be changed.
-			ManufacturerDescription (str): Indicates the description of the switch manufacturer.
-			MaxPacketInBytes (number): Specifies the max amount of data to be sent in the Packet-In message.
-			MaximumColorValue (number): Specify the maximum color value supported.The minimum value is 0 and the maximum value is 160. The default value is 50.
-			MaximumNoOfBandsPerMeter (number): Specify the maximum number of bands supported per meter. The minimum value is 0 and the maximum value is 160. The default value is 50.
-			MaximumNoOfBucketsPerGroup (number): Specify the maximum number of Buckets supported per group.The minimum value is 1 and the maximum value is 4092.The default value is 4092.
-			MaximumNoOfMeters (number): Specify the maximum number of meters supported. The default value is 1000.
-			NumberOfBuffers (number): Indicates the maximum number of packets that can be stored in the buffered at a time.
-			PacketInReplyTimeout (number): Indicates the duration for which the Switch should wait for Packet-in-reply before freeing the buffer.
-			PacketInTxBurstSize (number): Indicates the number of packets in messages sent in a single burst.
-			SerialNumber (str): Indicates the Serial Number of the switch.
-			SoftwareDescription (str): Indicates the description of the software installed on the switch.
-			StoreFlows (bool): If true, the switch will store the flows advertised by the controller in its tables.
-			SupportPacketForwarding (bool): If true, indicates that Packet Forwarding is supported on the OpenFlow switch.
-			TableMissAction (str(drop|sendToController)): Specify what the Switch should do when there is no match for the packets.
+			BarrierReplyDelay (number): 
+			BarrierReplyDelayType (str(fixed|random)): 
+			BarrierReplyMaxDelay (number): 
+			CalculateControllerFlowTxRate (bool): 
+			CalculatePacketInReplyDelay (bool): 
+			DatapathDescription (str): 
+			DatapathId (str): 
+			DatapathIdInHex (str): 
+			Description (str): 
+			Enable (bool): 
+			EnableCalculatePacketOutRxRate (bool): 
+			EnableHelloElement (bool): 
+			HardwareDescription (str): 
+			InterPacketInBurstGap (number): 
+			LocalIp (str): 
+			ManufacturerDescription (str): 
+			MaxPacketInBytes (number): 
+			MaximumColorValue (number): 
+			MaximumNoOfBandsPerMeter (number): 
+			MaximumNoOfBucketsPerGroup (number): 
+			MaximumNoOfMeters (number): 
+			NumberOfBuffers (number): 
+			PacketInReplyTimeout (number): 
+			PacketInTxBurstSize (number): 
+			SerialNumber (str): 
+			SoftwareDescription (str): 
+			StoreFlows (bool): 
+			SupportPacketForwarding (bool): 
+			TableMissAction (str(drop|sendToController)): 
 
 		Returns:
 			self: This instance with matching switch data retrieved from the server available through an iterator or index

@@ -777,15 +777,6 @@ class BgpV6L3VpnRouteProperty(Base):
 		return self._get_attribute('partialFlap')
 
 	@property
-	def Srv6SidFlags(self):
-		"""SRv6 SID Flags field Value for all route in this Route Range
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('srv6SidFlags')
-
-	@property
 	def Srv6SidFuncAllocType(self):
 		"""SRv6 Func Allocation Type
 
@@ -958,6 +949,91 @@ class BgpV6L3VpnRouteProperty(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, OverridePeerAsSetMode=None, Active=None, AdvSrv6SidInIgp=None, AdvertiseNexthopAsV4=None, AggregatorAs=None, AggregatorId=None, AggregatorIdMode=None, AsNumSuffixRange=None, AsPathPerRoute=None, AsRandomSeed=None, AsSegDist=None, AsSetMode=None, Delay=None, DistinguisherAsNumber=None, DistinguisherAssignedNumber=None, DistinguisherIpAddress=None, DistinguisherType=None, Downtime=None, EnableAggregatorId=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableCluster=None, EnableCommunity=None, EnableExtendedCommunity=None, EnableFlapping=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EnableRandomAsPath=None, EnableSrv6Sid=None, EnableWeight=None, FlapFromRouteIndex=None, FlapToRouteIndex=None, IncludeRdInNextHopLength=None, IncludeSourceAsExtComm=None, IncludeVrfRouteImportExtComm=None, Ipv4NextHop=None, Ipv6NextHop=None, LabelEnd=None, LabelMode=None, LabelSpaceId=None, LabelStart=None, LabelStep=None, LocalPreference=None, MaxASNumPerSegment=None, MaxNoOfASPathSegmentsPerRouteRange=None, MinASNumPerSegment=None, MinNoOfASPathSegmentsPerRouteRange=None, MultiExitDiscriminator=None, NextHopIPType=None, NextHopIncrementMode=None, NextHopType=None, Origin=None, OriginatorId=None, PackingFrom=None, PackingTo=None, PartialFlap=None, Srv6SidFuncAllocType=None, Srv6SidLoc=None, Srv6SidLocLen=None, Srv6SidLocMetric=None, Srv6SidReserved=None, Srv6SidStep=None, Uptime=None, UseAsUmhRoutes=None, UseTraditionalNlri=None, Weight=None):
+		"""Base class infrastructure that gets a list of bgpV6L3VpnRouteProperty device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			OverridePeerAsSetMode (str): optional regex of OverridePeerAsSetMode
+			Active (str): optional regex of active
+			AdvSrv6SidInIgp (str): optional regex of advSrv6SidInIgp
+			AdvertiseNexthopAsV4 (str): optional regex of advertiseNexthopAsV4
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AggregatorIdMode (str): optional regex of aggregatorIdMode
+			AsNumSuffixRange (str): optional regex of asNumSuffixRange
+			AsPathPerRoute (str): optional regex of asPathPerRoute
+			AsRandomSeed (str): optional regex of asRandomSeed
+			AsSegDist (str): optional regex of asSegDist
+			AsSetMode (str): optional regex of asSetMode
+			Delay (str): optional regex of delay
+			DistinguisherAsNumber (str): optional regex of distinguisherAsNumber
+			DistinguisherAssignedNumber (str): optional regex of distinguisherAssignedNumber
+			DistinguisherIpAddress (str): optional regex of distinguisherIpAddress
+			DistinguisherType (str): optional regex of distinguisherType
+			Downtime (str): optional regex of downtime
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableFlapping (str): optional regex of enableFlapping
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EnableRandomAsPath (str): optional regex of enableRandomAsPath
+			EnableSrv6Sid (str): optional regex of enableSrv6Sid
+			EnableWeight (str): optional regex of enableWeight
+			FlapFromRouteIndex (str): optional regex of flapFromRouteIndex
+			FlapToRouteIndex (str): optional regex of flapToRouteIndex
+			IncludeRdInNextHopLength (str): optional regex of includeRdInNextHopLength
+			IncludeSourceAsExtComm (str): optional regex of includeSourceAsExtComm
+			IncludeVrfRouteImportExtComm (str): optional regex of includeVrfRouteImportExtComm
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LabelEnd (str): optional regex of labelEnd
+			LabelMode (str): optional regex of labelMode
+			LabelSpaceId (str): optional regex of labelSpaceId
+			LabelStart (str): optional regex of labelStart
+			LabelStep (str): optional regex of labelStep
+			LocalPreference (str): optional regex of localPreference
+			MaxASNumPerSegment (str): optional regex of maxASNumPerSegment
+			MaxNoOfASPathSegmentsPerRouteRange (str): optional regex of maxNoOfASPathSegmentsPerRouteRange
+			MinASNumPerSegment (str): optional regex of minASNumPerSegment
+			MinNoOfASPathSegmentsPerRouteRange (str): optional regex of minNoOfASPathSegmentsPerRouteRange
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			NextHopIPType (str): optional regex of nextHopIPType
+			NextHopIncrementMode (str): optional regex of nextHopIncrementMode
+			NextHopType (str): optional regex of nextHopType
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			PackingFrom (str): optional regex of packingFrom
+			PackingTo (str): optional regex of packingTo
+			PartialFlap (str): optional regex of partialFlap
+			Srv6SidFuncAllocType (str): optional regex of srv6SidFuncAllocType
+			Srv6SidLoc (str): optional regex of srv6SidLoc
+			Srv6SidLocLen (str): optional regex of srv6SidLocLen
+			Srv6SidLocMetric (str): optional regex of srv6SidLocMetric
+			Srv6SidReserved (str): optional regex of srv6SidReserved
+			Srv6SidStep (str): optional regex of srv6SidStep
+			Uptime (str): optional regex of uptime
+			UseAsUmhRoutes (str): optional regex of useAsUmhRoutes
+			UseTraditionalNlri (str): optional regex of useTraditionalNlri
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def AgeOutRoutes(self, Percentage):
 		"""Executes the ageOutRoutes operation on the server.

@@ -94,7 +94,7 @@ class L2Site(Base):
 
 	@property
 	def DistinguishAssignedIncrement(self):
-		"""Distinguishes increment of the assigned value
+		"""
 
 		Returns:
 			number
@@ -106,7 +106,7 @@ class L2Site(Base):
 
 	@property
 	def DistinguishIpIncrement(self):
-		"""Distinguishes the increment of the IP address
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class L2Site(Base):
 
 	@property
 	def DistinguishNumberIncrementAs(self):
-		"""Signifies the distinguished increment as number
+		"""
 
 		Returns:
 			number
@@ -130,7 +130,7 @@ class L2Site(Base):
 
 	@property
 	def EnableBfdVccv(self):
-		"""If true, enables BFD VCCV
+		"""
 
 		Returns:
 			bool
@@ -142,7 +142,7 @@ class L2Site(Base):
 
 	@property
 	def EnableCluster(self):
-		"""Enables and controls the use of L2 VPN VPLS.
+		"""
 
 		Returns:
 			bool
@@ -154,7 +154,7 @@ class L2Site(Base):
 
 	@property
 	def EnableControlWord(self):
-		"""Enables the use of a control word, as part of the extended community information.
+		"""
 
 		Returns:
 			bool
@@ -166,7 +166,7 @@ class L2Site(Base):
 
 	@property
 	def EnableL2SiteAsTrafficEndpoint(self):
-		"""If true, enables L2 site as traffic endpoint
+		"""
 
 		Returns:
 			bool
@@ -178,7 +178,7 @@ class L2Site(Base):
 
 	@property
 	def EnableSequenceDelivery(self):
-		"""Enables the use of sequenced delivery of frames, as part of the extended community information.
+		"""
 
 		Returns:
 			bool
@@ -190,7 +190,7 @@ class L2Site(Base):
 
 	@property
 	def EnableVccvPing(self):
-		"""If true, enables the VCCV ping
+		"""
 
 		Returns:
 			bool
@@ -202,7 +202,7 @@ class L2Site(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables use of the L2 VPN site.
+		"""
 
 		Returns:
 			bool
@@ -214,7 +214,7 @@ class L2Site(Base):
 
 	@property
 	def IsLearnedInfoRefreshed(self):
-		"""If true, learned information is refreshed.
+		"""
 
 		Returns:
 			bool
@@ -223,7 +223,7 @@ class L2Site(Base):
 
 	@property
 	def Mtu(self):
-		"""The Maximum Transmission Unit (MTU) allowed on this link, in bytes. The valid range is 0 to 16777215. (default = 1,500 bytes)
+		"""
 
 		Returns:
 			number
@@ -235,7 +235,7 @@ class L2Site(Base):
 
 	@property
 	def NoOfL2Site(self):
-		"""Signifies the number of L2 sites
+		"""
 
 		Returns:
 			number
@@ -247,7 +247,7 @@ class L2Site(Base):
 
 	@property
 	def RouteDistinguisherAs(self):
-		"""Available for use only if the route distinguish type is set to AS. The route distinguisher autonomous system (AS) number.
+		"""
 
 		Returns:
 			number
@@ -259,7 +259,7 @@ class L2Site(Base):
 
 	@property
 	def RouteDistinguisherAssignedNum(self):
-		"""The assigned number for use with the distinguisher IP address or AS number, to create the route distinguisher.The default is 0.
+		"""
 
 		Returns:
 			number
@@ -271,7 +271,7 @@ class L2Site(Base):
 
 	@property
 	def RouteDistinguisherIp(self):
-		"""Available for use only if the route Distinguish Type is set to IP. The route distinguisher IP address. A 4-byte IPv4 address.The default is 0.0.0.0.
+		"""
 
 		Returns:
 			str
@@ -283,7 +283,7 @@ class L2Site(Base):
 
 	@property
 	def RouteDistinguisherType(self):
-		"""Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
+		"""
 
 		Returns:
 			str(twoOctetAs|ip|fourOctetAs)
@@ -295,7 +295,7 @@ class L2Site(Base):
 
 	@property
 	def RouteTargetAs(self):
-		"""Autonomous system (AS) number. A 2-byte AS number, used to create the route target extended community attribute associated with this L2 site.
+		"""
 
 		Returns:
 			number
@@ -307,7 +307,7 @@ class L2Site(Base):
 
 	@property
 	def RouteTargetAssignedNum(self):
-		"""Autonomous system (AS) and assigned number. A 2-byte AS number and a 4-byte assigned number, used to create the route target extended community attribute associated with this L2 site.
+		"""
 
 		Returns:
 			number
@@ -319,7 +319,7 @@ class L2Site(Base):
 
 	@property
 	def RouteTargetIp(self):
-		"""IP address and assigned number. A 4-byte IPv4 address and a 2-byte assigned number, used to create the route target extended community attribute associated with this L2 site.
+		"""
 
 		Returns:
 			str
@@ -331,7 +331,7 @@ class L2Site(Base):
 
 	@property
 	def RouteTargetType(self):
-		"""The Admin part type is to the type of route target attribute
+		"""
 
 		Returns:
 			str(as|ip)
@@ -343,7 +343,7 @@ class L2Site(Base):
 
 	@property
 	def SiteId(self):
-		"""The identifier for the L2 (CE) site. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -355,7 +355,7 @@ class L2Site(Base):
 
 	@property
 	def SiteIdIncrement(self):
-		"""Increments the site identifier
+		"""
 
 		Returns:
 			number
@@ -367,7 +367,7 @@ class L2Site(Base):
 
 	@property
 	def TargetAssignedNumberIncrement(self):
-		"""Signifies increment of the target assigned number
+		"""
 
 		Returns:
 			number
@@ -379,7 +379,7 @@ class L2Site(Base):
 
 	@property
 	def TargetIncrementAs(self):
-		"""Signifies increment as target
+		"""
 
 		Returns:
 			number
@@ -391,7 +391,7 @@ class L2Site(Base):
 
 	@property
 	def TargetIpIncrement(self):
-		"""Signifies the increment of IP as target
+		"""
 
 		Returns:
 			str
@@ -403,7 +403,7 @@ class L2Site(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -417,32 +417,32 @@ class L2Site(Base):
 		"""Adds a new l2Site node on the server and retrieves it in this instance.
 
 		Args:
-			DistinguishAssignedIncrement (number): Distinguishes increment of the assigned value
-			DistinguishIpIncrement (str): Distinguishes the increment of the IP address
-			DistinguishNumberIncrementAs (number): Signifies the distinguished increment as number
-			EnableBfdVccv (bool): If true, enables BFD VCCV
-			EnableCluster (bool): Enables and controls the use of L2 VPN VPLS.
-			EnableControlWord (bool): Enables the use of a control word, as part of the extended community information.
-			EnableL2SiteAsTrafficEndpoint (bool): If true, enables L2 site as traffic endpoint
-			EnableSequenceDelivery (bool): Enables the use of sequenced delivery of frames, as part of the extended community information.
-			EnableVccvPing (bool): If true, enables the VCCV ping
-			Enabled (bool): Enables or disables use of the L2 VPN site.
-			Mtu (number): The Maximum Transmission Unit (MTU) allowed on this link, in bytes. The valid range is 0 to 16777215. (default = 1,500 bytes)
-			NoOfL2Site (number): Signifies the number of L2 sites
-			RouteDistinguisherAs (number): Available for use only if the route distinguish type is set to AS. The route distinguisher autonomous system (AS) number.
-			RouteDistinguisherAssignedNum (number): The assigned number for use with the distinguisher IP address or AS number, to create the route distinguisher.The default is 0.
-			RouteDistinguisherIp (str): Available for use only if the route Distinguish Type is set to IP. The route distinguisher IP address. A 4-byte IPv4 address.The default is 0.0.0.0.
-			RouteDistinguisherType (str(twoOctetAs|ip|fourOctetAs)): Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
-			RouteTargetAs (number): Autonomous system (AS) number. A 2-byte AS number, used to create the route target extended community attribute associated with this L2 site.
-			RouteTargetAssignedNum (number): Autonomous system (AS) and assigned number. A 2-byte AS number and a 4-byte assigned number, used to create the route target extended community attribute associated with this L2 site.
-			RouteTargetIp (str): IP address and assigned number. A 4-byte IPv4 address and a 2-byte assigned number, used to create the route target extended community attribute associated with this L2 site.
-			RouteTargetType (str(as|ip)): The Admin part type is to the type of route target attribute
-			SiteId (number): The identifier for the L2 (CE) site. The default is 0.
-			SiteIdIncrement (number): Increments the site identifier
-			TargetAssignedNumberIncrement (number): Signifies increment of the target assigned number
-			TargetIncrementAs (number): Signifies increment as target
-			TargetIpIncrement (str): Signifies the increment of IP as target
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
+			DistinguishAssignedIncrement (number): 
+			DistinguishIpIncrement (str): 
+			DistinguishNumberIncrementAs (number): 
+			EnableBfdVccv (bool): 
+			EnableCluster (bool): 
+			EnableControlWord (bool): 
+			EnableL2SiteAsTrafficEndpoint (bool): 
+			EnableSequenceDelivery (bool): 
+			EnableVccvPing (bool): 
+			Enabled (bool): 
+			Mtu (number): 
+			NoOfL2Site (number): 
+			RouteDistinguisherAs (number): 
+			RouteDistinguisherAssignedNum (number): 
+			RouteDistinguisherIp (str): 
+			RouteDistinguisherType (str(twoOctetAs|ip|fourOctetAs)): 
+			RouteTargetAs (number): 
+			RouteTargetAssignedNum (number): 
+			RouteTargetIp (str): 
+			RouteTargetType (str(as|ip)): 
+			SiteId (number): 
+			SiteIdIncrement (number): 
+			TargetAssignedNumberIncrement (number): 
+			TargetIncrementAs (number): 
+			TargetIpIncrement (str): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with all currently retrieved l2Site data using find and the newly added l2Site data available through an iterator or index
@@ -468,33 +468,33 @@ class L2Site(Base):
 		By default the find method takes no parameters and will retrieve all l2Site data from the server.
 
 		Args:
-			DistinguishAssignedIncrement (number): Distinguishes increment of the assigned value
-			DistinguishIpIncrement (str): Distinguishes the increment of the IP address
-			DistinguishNumberIncrementAs (number): Signifies the distinguished increment as number
-			EnableBfdVccv (bool): If true, enables BFD VCCV
-			EnableCluster (bool): Enables and controls the use of L2 VPN VPLS.
-			EnableControlWord (bool): Enables the use of a control word, as part of the extended community information.
-			EnableL2SiteAsTrafficEndpoint (bool): If true, enables L2 site as traffic endpoint
-			EnableSequenceDelivery (bool): Enables the use of sequenced delivery of frames, as part of the extended community information.
-			EnableVccvPing (bool): If true, enables the VCCV ping
-			Enabled (bool): Enables or disables use of the L2 VPN site.
-			IsLearnedInfoRefreshed (bool): If true, learned information is refreshed.
-			Mtu (number): The Maximum Transmission Unit (MTU) allowed on this link, in bytes. The valid range is 0 to 16777215. (default = 1,500 bytes)
-			NoOfL2Site (number): Signifies the number of L2 sites
-			RouteDistinguisherAs (number): Available for use only if the route distinguish type is set to AS. The route distinguisher autonomous system (AS) number.
-			RouteDistinguisherAssignedNum (number): The assigned number for use with the distinguisher IP address or AS number, to create the route distinguisher.The default is 0.
-			RouteDistinguisherIp (str): Available for use only if the route Distinguish Type is set to IP. The route distinguisher IP address. A 4-byte IPv4 address.The default is 0.0.0.0.
-			RouteDistinguisherType (str(twoOctetAs|ip|fourOctetAs)): Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
-			RouteTargetAs (number): Autonomous system (AS) number. A 2-byte AS number, used to create the route target extended community attribute associated with this L2 site.
-			RouteTargetAssignedNum (number): Autonomous system (AS) and assigned number. A 2-byte AS number and a 4-byte assigned number, used to create the route target extended community attribute associated with this L2 site.
-			RouteTargetIp (str): IP address and assigned number. A 4-byte IPv4 address and a 2-byte assigned number, used to create the route target extended community attribute associated with this L2 site.
-			RouteTargetType (str(as|ip)): The Admin part type is to the type of route target attribute
-			SiteId (number): The identifier for the L2 (CE) site. The default is 0.
-			SiteIdIncrement (number): Increments the site identifier
-			TargetAssignedNumberIncrement (number): Signifies increment of the target assigned number
-			TargetIncrementAs (number): Signifies increment as target
-			TargetIpIncrement (str): Signifies the increment of IP as target
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
+			DistinguishAssignedIncrement (number): 
+			DistinguishIpIncrement (str): 
+			DistinguishNumberIncrementAs (number): 
+			EnableBfdVccv (bool): 
+			EnableCluster (bool): 
+			EnableControlWord (bool): 
+			EnableL2SiteAsTrafficEndpoint (bool): 
+			EnableSequenceDelivery (bool): 
+			EnableVccvPing (bool): 
+			Enabled (bool): 
+			IsLearnedInfoRefreshed (bool): 
+			Mtu (number): 
+			NoOfL2Site (number): 
+			RouteDistinguisherAs (number): 
+			RouteDistinguisherAssignedNum (number): 
+			RouteDistinguisherIp (str): 
+			RouteDistinguisherType (str(twoOctetAs|ip|fourOctetAs)): 
+			RouteTargetAs (number): 
+			RouteTargetAssignedNum (number): 
+			RouteTargetIp (str): 
+			RouteTargetType (str(as|ip)): 
+			SiteId (number): 
+			SiteIdIncrement (number): 
+			TargetAssignedNumberIncrement (number): 
+			TargetIncrementAs (number): 
+			TargetIpIncrement (str): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with matching l2Site data retrieved from the server available through an iterator or index
@@ -522,13 +522,11 @@ class L2Site(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
-		This function argument allows to refreshe the BGP learned information from the DUT.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=l2Site)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

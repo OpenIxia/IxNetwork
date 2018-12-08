@@ -37,7 +37,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def BurstSize(self):
-		"""Specifies the Burst Size
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""The Data Path identifier of the OpenFlow Controller.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""The Data Path identifier of the OpenFlow Controller in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def Experimenter(self):
-		"""Specifies the Experimenter Value
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""Indicates the local IP of the Controller.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def MeterId(self):
-		"""Specifies Meter Id
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def PrecedenceLevel(self):
-		"""Specifies the Precedence Level Value
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def Rate(self):
-		"""Specifies the rate
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""The Remote IP address of the selected interface.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class MeterConfigStatsBandLearnedInformation(Base):
 
 	@property
 	def Type(self):
-		"""Specifies the Band Type
+		"""
 
 		Returns:
 			str
@@ -132,16 +132,16 @@ class MeterConfigStatsBandLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all meterConfigStatsBandLearnedInformation data from the server.
 
 		Args:
-			BurstSize (number): Specifies the Burst Size
-			DataPathId (number): The Data Path identifier of the OpenFlow Controller.
-			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow Controller in hexadecimal format.
-			Experimenter (str): Specifies the Experimenter Value
-			LocalIp (str): Indicates the local IP of the Controller.
-			MeterId (number): Specifies Meter Id
-			PrecedenceLevel (str): Specifies the Precedence Level Value
-			Rate (number): Specifies the rate
-			RemoteIp (str): The Remote IP address of the selected interface.
-			Type (str): Specifies the Band Type
+			BurstSize (number): 
+			DataPathId (number): 
+			DataPathIdAsHex (str): 
+			Experimenter (str): 
+			LocalIp (str): 
+			MeterId (number): 
+			PrecedenceLevel (str): 
+			Rate (number): 
+			RemoteIp (str): 
+			Type (str): 
 
 		Returns:
 			self: This instance with matching meterConfigStatsBandLearnedInformation data retrieved from the server available through an iterator or index

@@ -51,7 +51,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Action(self):
-		"""It gives details about the action (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def EidPrefix(self):
-		"""It gives details about the eid prefix (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def EidPrefixAfi(self):
-		"""It gives details about the eid prefix Afi (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def EidPrefixLength(self):
-		"""It gives details about the eid prefix Length (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def EtrIp(self):
-		"""It gives details about the etrlp (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def ExpiresAfter(self):
-		"""It gives details about the expiration details (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def InstanceId(self):
-		"""It gives details about the instance id (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv4ErrorMapRegisterRx(self):
-		"""It gives details about the ipv4 Error Map register at receivers end (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv4MapNotifyTx(self):
-		"""It gives details about the ipv4 Map notify at transmitters end (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -132,7 +132,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv4MapRegisterRx(self):
-		"""It gives details about the ipv4 Map register at receivers end (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -141,7 +141,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv4MapRequestDropped(self):
-		"""It gives details about the ipv4 Map Request dropped (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv6ErrorMapRegisterRx(self):
-		"""It gives details about the ipv6 Error Map register at receivers end (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -159,7 +159,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv6MapNotifyTx(self):
-		"""It gives details about the ipv6 Map notify at transmitters end (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -168,7 +168,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv6MapRegisterRx(self):
-		"""It gives details about the ipv6 Map register at receivers end (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -177,7 +177,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Ipv6MapRequestDropped(self):
-		"""It gives details about the ipv6 Map Request dropped (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -186,7 +186,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def Key(self):
-		"""It gives details about the key (Read-only)
+		"""
 
 		Returns:
 			str
@@ -195,7 +195,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def MapVersionNumber(self):
-		"""It gives details map version number
+		"""
 
 		Returns:
 			number
@@ -204,7 +204,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def ProxyMapReply(self):
-		"""It gives details about the proxy map reply(Read-Only)
+		"""
 
 		Returns:
 			bool
@@ -213,7 +213,7 @@ class MapServerCacheInfo(Base):
 
 	@property
 	def WantMapNotify(self):
-		"""It gives details about the Map notify
+		"""
 
 		Returns:
 			bool
@@ -227,25 +227,25 @@ class MapServerCacheInfo(Base):
 		By default the find method takes no parameters and will retrieve all mapServerCacheInfo data from the server.
 
 		Args:
-			Action (str): It gives details about the action (Read-Only)
-			EidPrefix (str): It gives details about the eid prefix (Read-Only)
-			EidPrefixAfi (str): It gives details about the eid prefix Afi (Read-Only)
-			EidPrefixLength (number): It gives details about the eid prefix Length (Read-Only)
-			EtrIp (str): It gives details about the etrlp (Read-Only)
-			ExpiresAfter (str): It gives details about the expiration details (Read-Only)
-			InstanceId (number): It gives details about the instance id (Read-Only)
-			Ipv4ErrorMapRegisterRx (number): It gives details about the ipv4 Error Map register at receivers end (Read-Only)
-			Ipv4MapNotifyTx (number): It gives details about the ipv4 Map notify at transmitters end (Read-Only)
-			Ipv4MapRegisterRx (number): It gives details about the ipv4 Map register at receivers end (Read-Only)
-			Ipv4MapRequestDropped (number): It gives details about the ipv4 Map Request dropped (Read-Only)
-			Ipv6ErrorMapRegisterRx (number): It gives details about the ipv6 Error Map register at receivers end (Read-Only)
-			Ipv6MapNotifyTx (number): It gives details about the ipv6 Map notify at transmitters end (Read-Only)
-			Ipv6MapRegisterRx (number): It gives details about the ipv6 Map register at receivers end (Read-Only)
-			Ipv6MapRequestDropped (number): It gives details about the ipv6 Map Request dropped (Read-Only)
-			Key (str): It gives details about the key (Read-only)
-			MapVersionNumber (number): It gives details map version number
-			ProxyMapReply (bool): It gives details about the proxy map reply(Read-Only)
-			WantMapNotify (bool): It gives details about the Map notify
+			Action (str): 
+			EidPrefix (str): 
+			EidPrefixAfi (str): 
+			EidPrefixLength (number): 
+			EtrIp (str): 
+			ExpiresAfter (str): 
+			InstanceId (number): 
+			Ipv4ErrorMapRegisterRx (number): 
+			Ipv4MapNotifyTx (number): 
+			Ipv4MapRegisterRx (number): 
+			Ipv4MapRequestDropped (number): 
+			Ipv6ErrorMapRegisterRx (number): 
+			Ipv6MapNotifyTx (number): 
+			Ipv6MapRegisterRx (number): 
+			Ipv6MapRequestDropped (number): 
+			Key (str): 
+			MapVersionNumber (number): 
+			ProxyMapReply (bool): 
+			WantMapNotify (bool): 
 
 		Returns:
 			self: This instance with matching mapServerCacheInfo data retrieved from the server available through an iterator or index

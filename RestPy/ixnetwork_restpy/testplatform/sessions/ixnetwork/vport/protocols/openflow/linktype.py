@@ -37,7 +37,7 @@ class LinkType(Base):
 
 	@property
 	def OfppfCopper(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class LinkType(Base):
 
 	@property
 	def OfppfFiber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool

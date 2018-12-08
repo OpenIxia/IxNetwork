@@ -121,7 +121,7 @@ class Udf(Base):
 
 	@property
 	def ByteOffset(self):
-		"""The offset from the start of the frame in bytes. Default is 0.
+		"""
 
 		Returns:
 			number
@@ -133,7 +133,7 @@ class Udf(Base):
 
 	@property
 	def Chained(self):
-		"""Sets the UDF chain.
+		"""
 
 		Returns:
 			bool
@@ -142,7 +142,7 @@ class Udf(Base):
 
 	@property
 	def ChainedFromUdf(self):
-		"""Allows to set what UDF the current UDF should chain from. If enabled, the UDF stays in its initial value until the UDF it is chained from reaches its terminating value.
+		"""
 
 		Returns:
 			str(none|udf1|udf2|udf3|udf4|udf5)
@@ -154,7 +154,7 @@ class Udf(Base):
 
 	@property
 	def Enabled(self):
-		"""If enabled, enables this User Defined Field.
+		"""
 
 		Returns:
 			bool
@@ -166,7 +166,7 @@ class Udf(Base):
 
 	@property
 	def Type(self):
-		"""The counter types of this UDF.
+		"""
 
 		Returns:
 			str(counter|ipv4|nestedCounter|random|rangeList|valueList)
@@ -183,11 +183,11 @@ class Udf(Base):
 		By default the find method takes no parameters and will retrieve all udf data from the server.
 
 		Args:
-			ByteOffset (number): The offset from the start of the frame in bytes. Default is 0.
-			Chained (bool): Sets the UDF chain.
-			ChainedFromUdf (str(none|udf1|udf2|udf3|udf4|udf5)): Allows to set what UDF the current UDF should chain from. If enabled, the UDF stays in its initial value until the UDF it is chained from reaches its terminating value.
-			Enabled (bool): If enabled, enables this User Defined Field.
-			Type (str(counter|ipv4|nestedCounter|random|rangeList|valueList)): The counter types of this UDF.
+			ByteOffset (number): 
+			Chained (bool): 
+			ChainedFromUdf (str(none|udf1|udf2|udf3|udf4|udf5)): 
+			Enabled (bool): 
+			Type (str(counter|ipv4|nestedCounter|random|rangeList|valueList)): 
 
 		Returns:
 			self: This instance with matching udf data retrieved from the server available through an iterator or index

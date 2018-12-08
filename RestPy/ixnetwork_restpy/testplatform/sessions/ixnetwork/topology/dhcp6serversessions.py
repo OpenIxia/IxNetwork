@@ -316,3 +316,47 @@ class Dhcp6ServerSessions(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('useCustomTimes')
+
+	def get_device_ids(self, PortNames=None, AddressDuidMask=None, AddressDuidPattern=None, AddressesPerIA=None, CustomRebindTime=None, CustomRenewTime=None, DefaultLeaseTime=None, EnableAddressMatchDuid=None, EnablePrefixMatchDuid=None, IaType=None, Ignore=None, IgnoreMask=None, IgnorePattern=None, IpAddress=None, IpAddressIncrement=None, IpAddressPD=None, IpPrefix=None, IpPrefixIncrement=None, LeaseTimeIncrement=None, Nak=None, NakMask=None, NakPattern=None, PoolPrefixSize=None, PoolSize=None, PrefixDuidIncrement=None, PrefixDuidStart=None, PrefixLength=None, PrefixesPerIA=None, UseCustomTimes=None):
+		"""Base class infrastructure that gets a list of dhcp6ServerSessions device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AddressDuidMask (str): optional regex of addressDuidMask
+			AddressDuidPattern (str): optional regex of addressDuidPattern
+			AddressesPerIA (str): optional regex of addressesPerIA
+			CustomRebindTime (str): optional regex of customRebindTime
+			CustomRenewTime (str): optional regex of customRenewTime
+			DefaultLeaseTime (str): optional regex of defaultLeaseTime
+			EnableAddressMatchDuid (str): optional regex of enableAddressMatchDuid
+			EnablePrefixMatchDuid (str): optional regex of enablePrefixMatchDuid
+			IaType (str): optional regex of iaType
+			Ignore (str): optional regex of ignore
+			IgnoreMask (str): optional regex of ignoreMask
+			IgnorePattern (str): optional regex of ignorePattern
+			IpAddress (str): optional regex of ipAddress
+			IpAddressIncrement (str): optional regex of ipAddressIncrement
+			IpAddressPD (str): optional regex of ipAddressPD
+			IpPrefix (str): optional regex of ipPrefix
+			IpPrefixIncrement (str): optional regex of ipPrefixIncrement
+			LeaseTimeIncrement (str): optional regex of leaseTimeIncrement
+			Nak (str): optional regex of nak
+			NakMask (str): optional regex of nakMask
+			NakPattern (str): optional regex of nakPattern
+			PoolPrefixSize (str): optional regex of poolPrefixSize
+			PoolSize (str): optional regex of poolSize
+			PrefixDuidIncrement (str): optional regex of prefixDuidIncrement
+			PrefixDuidStart (str): optional regex of prefixDuidStart
+			PrefixLength (str): optional regex of prefixLength
+			PrefixesPerIA (str): optional regex of prefixesPerIA
+			UseCustomTimes (str): optional regex of useCustomTimes
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

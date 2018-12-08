@@ -79,7 +79,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def AdvertisedFeatures(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def DoNotSendPacketIn(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -103,7 +103,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def DropAllPackets(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -115,7 +115,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def DropForwardedPackets(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -127,7 +127,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def EnableAdvertiseFeature(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -139,7 +139,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def EnableEthernetAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -151,7 +151,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def EnablePortConfig(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -163,7 +163,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def EnablePortModPortFeatures(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -175,7 +175,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def EnablePortNumber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -187,7 +187,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def EthernetAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def PortAdministrativelyDown(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -211,7 +211,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def PortConfig(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -223,7 +223,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def PortConfigMask(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class PortModificationTriggerAttributes(Base):
 
 	@property
 	def PortNumber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number

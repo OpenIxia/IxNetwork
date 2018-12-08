@@ -743,6 +743,76 @@ class CfmMp(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AutoLbIteration=None, AutoLbTimeoutInSec=None, AutoLbTimerInSec=None, AutoLtIteration=None, AutoLtTimeoutInSec=None, AutoLtTimerInSec=None, CVlanId=None, CVlanPriority=None, CcmPriority=None, ChassisId=None, ChassisIdLength=None, ChassisIdSubType=None, DataTlvLength=None, DataTlvValue=None, EnableAutoLb=None, EnableAutoLt=None, EnableDataTlv=None, EnableInterfaceStatusTlv=None, EnableOrganizationSpecificTlv=None, EnablePortStatusTlv=None, EnableSenderIdTlv=None, EnableVlan=None, IncludeTLVinCCM=None, IncludeTLVinLBM=None, IncludeTLVinLBR=None, IncludeTLVinLTM=None, IncludeTLVinLTR=None, LbAllRemoteMeps=None, LbDestinationMacAddress=None, LbmPriority=None, LtAllRemoteMeps=None, LtDestinationMacAddress=None, LtmPriority=None, MacAddress=None, ManagementAddress=None, ManagementAddressDomain=None, ManagementAddressDomainLength=None, ManagementAddressLength=None, MdMegLevel=None, MdMegLevelIndex=None, MdNameFormat=None, MepId=None, MipId=None, OrganizationSpecificTlvLength=None, OverrideVlanPriority=None, Rdi=None, SVlanId=None, SVlanPriority=None, SVlanTpid=None, ShortMaName=None, ShortMaNameFormat=None, Type=None, VlanStacking=None):
+		"""Base class infrastructure that gets a list of cfmMp device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AutoLbIteration (str): optional regex of autoLbIteration
+			AutoLbTimeoutInSec (str): optional regex of autoLbTimeoutInSec
+			AutoLbTimerInSec (str): optional regex of autoLbTimerInSec
+			AutoLtIteration (str): optional regex of autoLtIteration
+			AutoLtTimeoutInSec (str): optional regex of autoLtTimeoutInSec
+			AutoLtTimerInSec (str): optional regex of autoLtTimerInSec
+			CVlanId (str): optional regex of cVlanId
+			CVlanPriority (str): optional regex of cVlanPriority
+			CcmPriority (str): optional regex of ccmPriority
+			ChassisId (str): optional regex of chassisId
+			ChassisIdLength (str): optional regex of chassisIdLength
+			ChassisIdSubType (str): optional regex of chassisIdSubType
+			DataTlvLength (str): optional regex of dataTlvLength
+			DataTlvValue (str): optional regex of dataTlvValue
+			EnableAutoLb (str): optional regex of enableAutoLb
+			EnableAutoLt (str): optional regex of enableAutoLt
+			EnableDataTlv (str): optional regex of enableDataTlv
+			EnableInterfaceStatusTlv (str): optional regex of enableInterfaceStatusTlv
+			EnableOrganizationSpecificTlv (str): optional regex of enableOrganizationSpecificTlv
+			EnablePortStatusTlv (str): optional regex of enablePortStatusTlv
+			EnableSenderIdTlv (str): optional regex of enableSenderIdTlv
+			EnableVlan (str): optional regex of enableVlan
+			IncludeTLVinCCM (str): optional regex of includeTLVinCCM
+			IncludeTLVinLBM (str): optional regex of includeTLVinLBM
+			IncludeTLVinLBR (str): optional regex of includeTLVinLBR
+			IncludeTLVinLTM (str): optional regex of includeTLVinLTM
+			IncludeTLVinLTR (str): optional regex of includeTLVinLTR
+			LbAllRemoteMeps (str): optional regex of lbAllRemoteMeps
+			LbDestinationMacAddress (str): optional regex of lbDestinationMacAddress
+			LbmPriority (str): optional regex of lbmPriority
+			LtAllRemoteMeps (str): optional regex of ltAllRemoteMeps
+			LtDestinationMacAddress (str): optional regex of ltDestinationMacAddress
+			LtmPriority (str): optional regex of ltmPriority
+			MacAddress (str): optional regex of macAddress
+			ManagementAddress (str): optional regex of managementAddress
+			ManagementAddressDomain (str): optional regex of managementAddressDomain
+			ManagementAddressDomainLength (str): optional regex of managementAddressDomainLength
+			ManagementAddressLength (str): optional regex of managementAddressLength
+			MdMegLevel (str): optional regex of mdMegLevel
+			MdMegLevelIndex (str): optional regex of mdMegLevelIndex
+			MdNameFormat (str): optional regex of mdNameFormat
+			MepId (str): optional regex of mepId
+			MipId (str): optional regex of mipId
+			OrganizationSpecificTlvLength (str): optional regex of organizationSpecificTlvLength
+			OverrideVlanPriority (str): optional regex of overrideVlanPriority
+			Rdi (str): optional regex of rdi
+			SVlanId (str): optional regex of sVlanId
+			SVlanPriority (str): optional regex of sVlanPriority
+			SVlanTpid (str): optional regex of sVlanTpid
+			ShortMaName (str): optional regex of shortMaName
+			ShortMaNameFormat (str): optional regex of shortMaNameFormat
+			Type (str): optional regex of type
+			VlanStacking (str): optional regex of vlanStacking
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

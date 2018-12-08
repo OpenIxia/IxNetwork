@@ -37,7 +37,7 @@ class L1Rates(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables layer 1 rates
+		"""
 
 		Returns:
 			bool

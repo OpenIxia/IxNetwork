@@ -38,7 +38,7 @@ class SpbOutsideLinks(Base):
 
 	@property
 	def ConnectionCol(self):
-		"""Signifies the connection between the columns.
+		"""
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class SpbOutsideLinks(Base):
 
 	@property
 	def ConnectionRow(self):
-		"""Signifies the connection between the rows.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class SpbOutsideLinks(Base):
 
 	@property
 	def LinkedRid(self):
-		"""Signifies the link between R identifier.
+		"""
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class SpbOutsideLinks(Base):
 		"""Adds a new spbOutsideLinks node on the server and retrieves it in this instance.
 
 		Args:
-			ConnectionCol (number): Signifies the connection between the columns.
-			ConnectionRow (number): Signifies the connection between the rows.
-			LinkedRid (str): Signifies the link between R identifier.
+			ConnectionCol (number): 
+			ConnectionRow (number): 
+			LinkedRid (str): 
 
 		Returns:
 			self: This instance with all currently retrieved spbOutsideLinks data using find and the newly added spbOutsideLinks data available through an iterator or index
@@ -104,9 +104,9 @@ class SpbOutsideLinks(Base):
 		By default the find method takes no parameters and will retrieve all spbOutsideLinks data from the server.
 
 		Args:
-			ConnectionCol (number): Signifies the connection between the columns.
-			ConnectionRow (number): Signifies the connection between the rows.
-			LinkedRid (str): Signifies the link between R identifier.
+			ConnectionCol (number): 
+			ConnectionRow (number): 
+			LinkedRid (str): 
 
 		Returns:
 			self: This instance with matching spbOutsideLinks data retrieved from the server available through an iterator or index

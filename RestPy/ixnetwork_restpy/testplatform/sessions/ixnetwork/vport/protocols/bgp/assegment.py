@@ -37,7 +37,7 @@ class AsSegment(Base):
 
 	@property
 	def AsSegments(self):
-		"""Used to construct AS list related items.
+		"""
 
 		Returns:
 			list(dict(arg1:bool,arg2:str[asSet|asSequence|asConfedSet|unknown|asConfedSequence],arg3:list[number]))

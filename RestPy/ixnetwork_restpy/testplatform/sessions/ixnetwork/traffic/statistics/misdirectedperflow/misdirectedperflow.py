@@ -37,7 +37,7 @@ class MisdirectedPerFlow(Base):
 
 	@property
 	def Enabled(self):
-		"""If true then misdirected per flow statistics will be enabled
+		"""
 
 		Returns:
 			bool

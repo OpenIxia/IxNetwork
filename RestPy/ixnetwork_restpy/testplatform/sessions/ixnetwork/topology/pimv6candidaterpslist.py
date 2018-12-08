@@ -209,6 +209,36 @@ class PimV6CandidateRPsList(Base):
 		"""
 		return self._get_attribute('triggeredCrpMessageCount')
 
+	def get_device_ids(self, PortNames=None, Active=None, AdvertisementHoldTime=None, BackOffInterval=None, CrpAddress=None, CrpAddressCount=None, GroupAddress=None, GroupCount=None, GroupMaskLen=None, MeshingType=None, PeriodicAdvertisementInterval=None, Priority=None, PriorityChangeInterval=None, PriorityType=None, TriggeredCrpMessageCount=None):
+		"""Base class infrastructure that gets a list of pimV6CandidateRPsList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdvertisementHoldTime (str): optional regex of advertisementHoldTime
+			BackOffInterval (str): optional regex of backOffInterval
+			CrpAddress (str): optional regex of crpAddress
+			CrpAddressCount (str): optional regex of crpAddressCount
+			GroupAddress (str): optional regex of groupAddress
+			GroupCount (str): optional regex of groupCount
+			GroupMaskLen (str): optional regex of groupMaskLen
+			MeshingType (str): optional regex of meshingType
+			PeriodicAdvertisementInterval (str): optional regex of periodicAdvertisementInterval
+			Priority (str): optional regex of priority
+			PriorityChangeInterval (str): optional regex of priorityChangeInterval
+			PriorityType (str): optional regex of priorityType
+			TriggeredCrpMessageCount (str): optional regex of triggeredCrpMessageCount
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

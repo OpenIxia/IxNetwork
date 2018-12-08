@@ -37,7 +37,7 @@ class Dcc(Base):
 
 	@property
 	def Crc(self):
-		"""Choose the type of Cyclic Redundancy Check to be used.
+		"""
 
 		Returns:
 			str(crc16|crc32)
@@ -49,7 +49,7 @@ class Dcc(Base):
 
 	@property
 	def OverheadByte(self):
-		"""Choose the type of Overhead bytes to be used for transmitting the DCC packet streams.
+		"""
 
 		Returns:
 			str(loh|soh)
@@ -61,7 +61,7 @@ class Dcc(Base):
 
 	@property
 	def TimeFill(self):
-		"""Choose the type of bytes used to fill the gaps between DCC frames.
+		"""
 
 		Returns:
 			str(flag7E|markIdle)

@@ -136,3 +136,27 @@ class PcRequestMatchCriteria(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('srcIpv6Address')
+
+	def get_device_ids(self, PortNames=None, Active=None, DestIpv4Address=None, DestIpv6Address=None, IpVersion=None, IroType=None, MatchEndPoints=None, SrcIpv4Address=None, SrcIpv6Address=None):
+		"""Base class infrastructure that gets a list of pcRequestMatchCriteria device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DestIpv4Address (str): optional regex of destIpv4Address
+			DestIpv6Address (str): optional regex of destIpv6Address
+			IpVersion (str): optional regex of ipVersion
+			IroType (str): optional regex of iroType
+			MatchEndPoints (str): optional regex of matchEndPoints
+			SrcIpv4Address (str): optional regex of srcIpv4Address
+			SrcIpv6Address (str): optional regex of srcIpv6Address
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

@@ -51,20 +51,6 @@ class IsisL3(Base):
 		return Connector(self)
 
 	@property
-	def IsisSRv6AdjSIDList(self):
-		"""An instance of the IsisSRv6AdjSIDList class.
-
-		Returns:
-			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.isissrv6adjsidlist.IsisSRv6AdjSIDList)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		from ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.isissrv6adjsidlist import IsisSRv6AdjSIDList
-		return IsisSRv6AdjSIDList(self)._select()
-
-	@property
 	def IsisTrafficEngineering(self):
 		"""An instance of the IsisTrafficEngineering class.
 
@@ -123,27 +109,6 @@ class IsisL3(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('adjSID')
-
-	@property
-	def AdjSidCount(self):
-		"""Adj SID Count
-
-		Returns:
-			number
-		"""
-		return self._get_attribute('adjSidCount')
-	@AdjSidCount.setter
-	def AdjSidCount(self, value):
-		self._set_attribute('adjSidCount', value)
-
-	@property
-	def AdvertiseLinkMsd(self):
-		"""Advertise Link MSD
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('advertiseLinkMsd')
 
 	@property
 	def AuthType(self):
@@ -311,15 +276,6 @@ class IsisL3(Base):
 		return self._get_attribute('enableLinkProtection')
 
 	@property
-	def EnableMT(self):
-		"""Enable MT
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('enableMT')
-
-	@property
 	def EnableSRLG(self):
 		"""This enables the SRLG on the ISIS link between two mentioned interfaces.
 
@@ -374,49 +330,22 @@ class IsisL3(Base):
 		return self._get_attribute('fFlag')
 
 	@property
-	def IncludeMaxSlMsd(self):
-		"""If set, then Include Maximum Segment Left MSD in SRv6 capability
+	def Funcflags(self):
+		"""This is the function flags
 
 		Returns:
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
-		return self._get_attribute('includeMaxSlMsd')
+		return self._get_attribute('funcflags')
 
 	@property
-	def IncludeMaximumEndDMsd(self):
-		"""If set, then include Maximum End D MSD in SRv6 capability
+	def Function(self):
+		"""This specifies endpoint function codes
 
 		Returns:
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
-		return self._get_attribute('includeMaximumEndDMsd')
-
-	@property
-	def IncludeMaximumEndPopMsd(self):
-		"""If set, then include Max-End-Pop-MSD n SRv6 capability
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('includeMaximumEndPopMsd')
-
-	@property
-	def IncludeMaximumTEncapMsd(self):
-		"""If set, then include Maximum T.Encap MSD in SRv6 capability
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('includeMaximumTEncapMsd')
-
-	@property
-	def IncludeMaximumTInsertMsd(self):
-		"""If set, then include Maximum T.Insert MSDin SRv6 capability
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('includeMaximumTInsertMsd')
+		return self._get_attribute('function')
 
 	@property
 	def InterfaceMetric(self):
@@ -435,6 +364,15 @@ class IsisL3(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('ipv6MTMetric')
+
+	@property
+	def Ipv6SidValue(self):
+		"""IPv6 Adj SID
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('ipv6SidValue')
 
 	@property
 	def LFlag(self):
@@ -516,51 +454,6 @@ class IsisL3(Base):
 			list(str)
 		"""
 		return self._get_attribute('localSystemID')
-
-	@property
-	def MaxEndDMsd(self):
-		"""This field specifies the maximum number of SIDs in an SRH when applying End.DX6 and End.DT6 functions. If this field is zero, then the router cannot apply End.DX6 or End.DT6 functions if the extension header right underneath the outer IPv6 header is an SRH.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxEndDMsd')
-
-	@property
-	def MaxEndPopMsd(self):
-		"""This field specifies the maximum number of SIDs in the top MSD in an MSD stack that the router can apply PSP or USP flavors to. If the value of this field is zero, then the router cannot apply PSP or USP flavors.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxEndPopMsd')
-
-	@property
-	def MaxSlMsd(self):
-		"""This field specifies the maximum value of the Segments Left (SL) MSD field in the SRH of a received packet before applying the function associated with a SID.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxSlMsd')
-
-	@property
-	def MaxTEncap(self):
-		"""This field specifies the maximum number of SIDs that can be included as part of the T.Encap behavior. If this field is zero and the E flag is set, then the router can apply T.Encap by encapsulating the incoming packet in another IPv6 header without SRH the same way IPinIP encapsulation is performed. If the E flag is clear, then this field SHOULD be transmitted as zero and MUST be ignored on receipt.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxTEncap')
-
-	@property
-	def MaxTInsertMsd(self):
-		"""This field specifies the maximum number of SIDs that can be inserted as part of the T.insert behavior. If the value of this field is zero, then the router cannot apply any variation of the T.insert behavior.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxTInsertMsd')
 
 	@property
 	def Multiplier(self):
@@ -680,6 +573,15 @@ class IsisL3(Base):
 		self._set_attribute('srlgCount', value)
 
 	@property
+	def Srv6SidFlags(self):
+		"""This specifies the value of the SRv6 SID Flags
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('srv6SidFlags')
+
+	@property
 	def StackedLayers(self):
 		"""List of secondary (many to one) child layer protocols
 
@@ -745,11 +647,10 @@ class IsisL3(Base):
 		"""
 		return self._get_attribute('weight')
 
-	def add(self, AdjSidCount=None, ConnectedVia=None, Multiplier=None, Name=None, SrlgCount=None, StackedLayers=None):
+	def add(self, ConnectedVia=None, Multiplier=None, Name=None, SrlgCount=None, StackedLayers=None):
 		"""Adds a new isisL3 node on the server and retrieves it in this instance.
 
 		Args:
-			AdjSidCount (number): Adj SID Count
 			ConnectedVia (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of layers this layer used to connect to the wire
 			Multiplier (number): Number of layer instances per parent instance (multiplier)
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
@@ -773,14 +674,13 @@ class IsisL3(Base):
 		"""
 		self._delete()
 
-	def find(self, AdjSidCount=None, ConnectedVia=None, Count=None, DescriptiveName=None, Errors=None, LocalSystemID=None, Multiplier=None, Name=None, SessionInfo=None, SessionStatus=None, SrlgCount=None, StackedLayers=None, StateCounts=None, Status=None):
+	def find(self, ConnectedVia=None, Count=None, DescriptiveName=None, Errors=None, LocalSystemID=None, Multiplier=None, Name=None, SessionInfo=None, SessionStatus=None, SrlgCount=None, StackedLayers=None, StateCounts=None, Status=None):
 		"""Finds and retrieves isisL3 data from the server.
 
 		All named parameters support regex and can be used to selectively retrieve isisL3 data from the server.
 		By default the find method takes no parameters and will retrieve all isisL3 data from the server.
 
 		Args:
-			AdjSidCount (number): Adj SID Count
 			ConnectedVia (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of layers this layer used to connect to the wire
 			Count (number): Number of elements inside associated multiplier-scaled container object, e.g. number of devices inside a Device Group
 			DescriptiveName (str): Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
@@ -817,6 +717,69 @@ class IsisL3(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, AdjSID=None, AuthType=None, AutoAdjustArea=None, AutoAdjustMTU=None, AutoAdjustSupportedProtocols=None, BFlag=None, CircuitTranmitPasswordOrMD5Key=None, ConfiguredHoldTime=None, DedicatedOnePlusOne=None, DedicatedOneToOne=None, Enable3WayHandshake=None, EnableAdjSID=None, EnableBfdRegistration=None, EnableConfiguredHoldTime=None, EnableIPv6SID=None, EnableLinkProtection=None, EnableSRLG=None, Enhanced=None, ExtendedLocalCircuitId=None, ExtraTraffic=None, FFlag=None, Funcflags=None, Function=None, InterfaceMetric=None, Ipv6MTMetric=None, Ipv6SidValue=None, LFlag=None, Level1DeadInterval=None, Level1HelloInterval=None, Level1Priority=None, Level2DeadInterval=None, Level2HelloInterval=None, Level2Priority=None, LevelType=None, NetworkType=None, OverrideFFlag=None, PFlag=None, Reserved0x40=None, Reserved0x80=None, SFlag=None, Shared=None, Srv6SidFlags=None, SuppressHello=None, Unprotected=None, VFlag=None, Weight=None):
+		"""Base class infrastructure that gets a list of isisL3 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdjSID (str): optional regex of adjSID
+			AuthType (str): optional regex of authType
+			AutoAdjustArea (str): optional regex of autoAdjustArea
+			AutoAdjustMTU (str): optional regex of autoAdjustMTU
+			AutoAdjustSupportedProtocols (str): optional regex of autoAdjustSupportedProtocols
+			BFlag (str): optional regex of bFlag
+			CircuitTranmitPasswordOrMD5Key (str): optional regex of circuitTranmitPasswordOrMD5Key
+			ConfiguredHoldTime (str): optional regex of configuredHoldTime
+			DedicatedOnePlusOne (str): optional regex of dedicatedOnePlusOne
+			DedicatedOneToOne (str): optional regex of dedicatedOneToOne
+			Enable3WayHandshake (str): optional regex of enable3WayHandshake
+			EnableAdjSID (str): optional regex of enableAdjSID
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			EnableConfiguredHoldTime (str): optional regex of enableConfiguredHoldTime
+			EnableIPv6SID (str): optional regex of enableIPv6SID
+			EnableLinkProtection (str): optional regex of enableLinkProtection
+			EnableSRLG (str): optional regex of enableSRLG
+			Enhanced (str): optional regex of enhanced
+			ExtendedLocalCircuitId (str): optional regex of extendedLocalCircuitId
+			ExtraTraffic (str): optional regex of extraTraffic
+			FFlag (str): optional regex of fFlag
+			Funcflags (str): optional regex of funcflags
+			Function (str): optional regex of function
+			InterfaceMetric (str): optional regex of interfaceMetric
+			Ipv6MTMetric (str): optional regex of ipv6MTMetric
+			Ipv6SidValue (str): optional regex of ipv6SidValue
+			LFlag (str): optional regex of lFlag
+			Level1DeadInterval (str): optional regex of level1DeadInterval
+			Level1HelloInterval (str): optional regex of level1HelloInterval
+			Level1Priority (str): optional regex of level1Priority
+			Level2DeadInterval (str): optional regex of level2DeadInterval
+			Level2HelloInterval (str): optional regex of level2HelloInterval
+			Level2Priority (str): optional regex of level2Priority
+			LevelType (str): optional regex of levelType
+			NetworkType (str): optional regex of networkType
+			OverrideFFlag (str): optional regex of overrideFFlag
+			PFlag (str): optional regex of pFlag
+			Reserved0x40 (str): optional regex of reserved0x40
+			Reserved0x80 (str): optional regex of reserved0x80
+			SFlag (str): optional regex of sFlag
+			Shared (str): optional regex of shared
+			Srv6SidFlags (str): optional regex of srv6SidFlags
+			SuppressHello (str): optional regex of suppressHello
+			Unprotected (str): optional regex of unprotected
+			VFlag (str): optional regex of vFlag
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def ClearAllLearnedInfo(self):
 		"""Executes the clearAllLearnedInfo operation on the server.

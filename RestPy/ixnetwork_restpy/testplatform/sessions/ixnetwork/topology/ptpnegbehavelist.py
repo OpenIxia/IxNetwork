@@ -154,3 +154,29 @@ class PtpNegBehaveList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('ptpValueDisPattern1')
+
+	def get_device_ids(self, PortNames=None, MvActive=None, MvDelay=None, MvFieldValue=None, MvFieldValue1=None, MvMsgAction=None, MvPtpMsgField=None, MvPtpMsgField1=None, PtpMsgType=None, PtpValueDisPattern=None, PtpValueDisPattern1=None):
+		"""Base class infrastructure that gets a list of ptpNegBehaveList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			MvActive (str): optional regex of mvActive
+			MvDelay (str): optional regex of mvDelay
+			MvFieldValue (str): optional regex of mvFieldValue
+			MvFieldValue1 (str): optional regex of mvFieldValue1
+			MvMsgAction (str): optional regex of mvMsgAction
+			MvPtpMsgField (str): optional regex of mvPtpMsgField
+			MvPtpMsgField1 (str): optional regex of mvPtpMsgField1
+			PtpMsgType (str): optional regex of ptpMsgType
+			PtpValueDisPattern (str): optional regex of ptpValueDisPattern
+			PtpValueDisPattern1 (str): optional regex of ptpValueDisPattern1
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

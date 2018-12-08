@@ -37,7 +37,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def Age(self):
-		"""The time since last refreshed.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def HostName(self):
-		"""The host name as retrieved from the related packets.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def Ipv6Prefix(self):
-		"""Mask width of IPv6 Prefix.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def LearnedVia(self):
-		"""Learned via L1 Adjacency/L2 Adjacency.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def LspId(self):
-		"""The LSP number.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def Metric(self):
-		"""The route metric.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class Ipv6Prefixes(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""Sequence number of the LSP containing the route.
+		"""
 
 		Returns:
 			number
@@ -105,13 +105,13 @@ class Ipv6Prefixes(Base):
 		By default the find method takes no parameters and will retrieve all ipv6Prefixes data from the server.
 
 		Args:
-			Age (number): The time since last refreshed.
-			HostName (str): The host name as retrieved from the related packets.
-			Ipv6Prefix (str): Mask width of IPv6 Prefix.
-			LearnedVia (str): Learned via L1 Adjacency/L2 Adjacency.
-			LspId (str): The LSP number.
-			Metric (number): The route metric.
-			SequenceNumber (number): Sequence number of the LSP containing the route.
+			Age (number): 
+			HostName (str): 
+			Ipv6Prefix (str): 
+			LearnedVia (str): 
+			LspId (str): 
+			Metric (number): 
+			SequenceNumber (number): 
 
 		Returns:
 			self: This instance with matching ipv6Prefixes data retrieved from the server available through an iterator or index

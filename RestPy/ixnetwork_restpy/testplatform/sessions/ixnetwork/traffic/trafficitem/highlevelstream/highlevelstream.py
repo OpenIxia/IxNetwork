@@ -50,20 +50,6 @@ class HighLevelStream(Base):
 		return FramePayload(self)._select()
 
 	@property
-	def FramePreemption(self):
-		"""An instance of the FramePreemption class.
-
-		Returns:
-			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.traffic.trafficitem.highlevelstream.framepreemption.framepreemption.FramePreemption)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		from ixnetwork_restpy.testplatform.sessions.ixnetwork.traffic.trafficitem.highlevelstream.framepreemption.framepreemption import FramePreemption
-		return FramePreemption(self)._select()
-
-	@property
 	def FrameRate(self):
 		"""An instance of the FrameRate class.
 
@@ -163,7 +149,7 @@ class HighLevelStream(Base):
 
 	@property
 	def AppliedFrameSize(self):
-		"""(Read only) Indicates the applied frame size of the high level stream.
+		"""
 
 		Returns:
 			str
@@ -172,7 +158,7 @@ class HighLevelStream(Base):
 
 	@property
 	def AppliedPacketCount(self):
-		"""(Read only) Indicates the aplied packet count of the high level stream.
+		"""
 
 		Returns:
 			number
@@ -181,7 +167,7 @@ class HighLevelStream(Base):
 
 	@property
 	def Crc(self):
-		"""The Cyclic Redundancy Check frame of the configured high level stream.
+		"""
 
 		Returns:
 			str(badCrc|goodCrc)
@@ -193,7 +179,7 @@ class HighLevelStream(Base):
 
 	@property
 	def CurrentPacketCount(self):
-		"""(Read only) Denotes the number of packets.
+		"""
 
 		Returns:
 			number
@@ -202,7 +188,7 @@ class HighLevelStream(Base):
 
 	@property
 	def DestinationMacMode(self):
-		"""The mode in which the Destination MAC Address is configured, either manual or ARP.
+		"""
 
 		Returns:
 			str(arp|manual)
@@ -214,7 +200,7 @@ class HighLevelStream(Base):
 
 	@property
 	def Distributions(self):
-		"""Denotes the distribution of the high level stream.
+		"""
 
 		Returns:
 			list(dict(arg1:str,arg2:str))
@@ -235,7 +221,7 @@ class HighLevelStream(Base):
 
 	@property
 	def EncapsulationName(self):
-		"""Name of the configured encapsulation type.
+		"""
 
 		Returns:
 			str
@@ -244,7 +230,7 @@ class HighLevelStream(Base):
 
 	@property
 	def EndpointSetId(self):
-		"""The ID of the configured endpoint set.
+		"""
 
 		Returns:
 			number
@@ -253,7 +239,7 @@ class HighLevelStream(Base):
 
 	@property
 	def Name(self):
-		"""An alphanumeric string that returns the name of the field.
+		"""
 
 		Returns:
 			str
@@ -265,7 +251,7 @@ class HighLevelStream(Base):
 
 	@property
 	def OverSubscribed(self):
-		"""If true, the rate is oversubscribed.
+		"""
 
 		Returns:
 			bool
@@ -274,7 +260,7 @@ class HighLevelStream(Base):
 
 	@property
 	def Pause(self):
-		"""If true then pause is enabled.
+		"""
 
 		Returns:
 			bool
@@ -286,7 +272,7 @@ class HighLevelStream(Base):
 
 	@property
 	def PreambleCustomSize(self):
-		"""Customizes the preamble size of the frame.
+		"""
 
 		Returns:
 			number
@@ -298,7 +284,7 @@ class HighLevelStream(Base):
 
 	@property
 	def PreambleFrameSizeMode(self):
-		"""The starting size of the frame.
+		"""
 
 		Returns:
 			str(auto|custom)
@@ -310,7 +296,7 @@ class HighLevelStream(Base):
 
 	@property
 	def RxPortIds(self):
-		"""A list of virtual ports that are the receiving ports
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/lag|/api/v1/sessions/1/ixnetwork/vport])
@@ -322,7 +308,7 @@ class HighLevelStream(Base):
 
 	@property
 	def RxPortNames(self):
-		"""A list of names from the receiving virtual ports.
+		"""
 
 		Returns:
 			list(str)
@@ -331,7 +317,7 @@ class HighLevelStream(Base):
 
 	@property
 	def State(self):
-		"""(Read only) Denotes the current state of the stream.
+		"""
 
 		Returns:
 			str
@@ -340,7 +326,7 @@ class HighLevelStream(Base):
 
 	@property
 	def Suspend(self):
-		"""Suspends all traffic on this high level stream.
+		"""
 
 		Returns:
 			bool
@@ -352,7 +338,7 @@ class HighLevelStream(Base):
 
 	@property
 	def TxPortId(self):
-		"""The virtual port that is the transmitting port.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/lag|/api/v1/sessions/1/ixnetwork/vport)
@@ -364,7 +350,7 @@ class HighLevelStream(Base):
 
 	@property
 	def TxPortName(self):
-		"""The name of the virtual port that is the transmitting port.
+		"""
 
 		Returns:
 			str
@@ -378,26 +364,26 @@ class HighLevelStream(Base):
 		By default the find method takes no parameters and will retrieve all highLevelStream data from the server.
 
 		Args:
-			AppliedFrameSize (str): (Read only) Indicates the applied frame size of the high level stream.
-			AppliedPacketCount (number): (Read only) Indicates the aplied packet count of the high level stream.
-			Crc (str(badCrc|goodCrc)): The Cyclic Redundancy Check frame of the configured high level stream.
-			CurrentPacketCount (number): (Read only) Denotes the number of packets.
-			DestinationMacMode (str(arp|manual)): The mode in which the Destination MAC Address is configured, either manual or ARP.
-			Distributions (list(dict(arg1:str,arg2:str))): Denotes the distribution of the high level stream.
+			AppliedFrameSize (str): 
+			AppliedPacketCount (number): 
+			Crc (str(badCrc|goodCrc)): 
+			CurrentPacketCount (number): 
+			DestinationMacMode (str(arp|manual)): 
+			Distributions (list(dict(arg1:str,arg2:str))): 
 			Enabled (bool): 
-			EncapsulationName (str): Name of the configured encapsulation type.
-			EndpointSetId (number): The ID of the configured endpoint set.
-			Name (str): An alphanumeric string that returns the name of the field.
-			OverSubscribed (bool): If true, the rate is oversubscribed.
-			Pause (bool): If true then pause is enabled.
-			PreambleCustomSize (number): Customizes the preamble size of the frame.
-			PreambleFrameSizeMode (str(auto|custom)): The starting size of the frame.
-			RxPortIds (list(str[None|/api/v1/sessions/1/ixnetwork/lag|/api/v1/sessions/1/ixnetwork/vport])): A list of virtual ports that are the receiving ports
-			RxPortNames (list(str)): A list of names from the receiving virtual ports.
-			State (str): (Read only) Denotes the current state of the stream.
-			Suspend (bool): Suspends all traffic on this high level stream.
-			TxPortId (str(None|/api/v1/sessions/1/ixnetwork/lag|/api/v1/sessions/1/ixnetwork/vport)): The virtual port that is the transmitting port.
-			TxPortName (str): The name of the virtual port that is the transmitting port.
+			EncapsulationName (str): 
+			EndpointSetId (number): 
+			Name (str): 
+			OverSubscribed (bool): 
+			Pause (bool): 
+			PreambleCustomSize (number): 
+			PreambleFrameSizeMode (str(auto|custom)): 
+			RxPortIds (list(str[None|/api/v1/sessions/1/ixnetwork/lag|/api/v1/sessions/1/ixnetwork/vport])): 
+			RxPortNames (list(str)): 
+			State (str): 
+			Suspend (bool): 
+			TxPortId (str(None|/api/v1/sessions/1/ixnetwork/lag|/api/v1/sessions/1/ixnetwork/vport)): 
+			TxPortName (str): 
 
 		Returns:
 			self: This instance with matching highLevelStream data retrieved from the server available through an iterator or index

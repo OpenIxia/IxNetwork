@@ -223,3 +223,27 @@ class FlowSet(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, Cookie=None, CookieMask=None, FlowFlags=None, FlowMatchType=None, HardTimeout=None, IdleTimeout=None, Priority=None):
+		"""Base class infrastructure that gets a list of flowSet device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Cookie (str): optional regex of cookie
+			CookieMask (str): optional regex of cookieMask
+			FlowFlags (str): optional regex of flowFlags
+			FlowMatchType (str): optional regex of flowMatchType
+			HardTimeout (str): optional regex of hardTimeout
+			IdleTimeout (str): optional regex of idleTimeout
+			Priority (str): optional regex of priority
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

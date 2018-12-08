@@ -51,7 +51,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""The Data Path identifier of the OpenFlow Controller.
+		"""
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""The Data Path identifier of the OpenFlow Controller in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""The error code of the received error.
+		"""
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""The type of the error received.
+		"""
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def Flags(self):
-		"""Select the meter configuration flags from the list.
+		"""
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def LastErrorCode(self):
-		"""The Last error code of the received error.
+		"""
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def LastErrorType(self):
-		"""The type of the Last error received.
+		"""
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""The latency measurement for the OpenFlow channel in microseconds.
+		"""
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""Indicates the local IP of the Controller.
+		"""
 
 		Returns:
 			str
@@ -132,7 +132,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def MeterId(self):
-		"""Specifies Meter ID
+		"""
 
 		Returns:
 			number
@@ -141,7 +141,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
+		"""
 
 		Returns:
 			str
@@ -150,7 +150,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def NumberOfBands(self):
-		"""Specify the number of Bands for this controller configuration. The default value is 1.
+		"""
 
 		Returns:
 			number
@@ -159,7 +159,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""The Remote IP address of the selected interface.
+		"""
 
 		Returns:
 			str
@@ -168,7 +168,7 @@ class MeterConfigStatsLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""The state of reply for the Open Flow channel.
+		"""
 
 		Returns:
 			str
@@ -182,20 +182,20 @@ class MeterConfigStatsLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all meterConfigStatsLearnedInformation data from the server.
 
 		Args:
-			DataPathId (number): The Data Path identifier of the OpenFlow Controller.
-			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow Controller in hexadecimal format.
-			ErrorCode (str): The error code of the received error.
-			ErrorType (str): The type of the error received.
-			Flags (str): Select the meter configuration flags from the list.
-			LastErrorCode (str): The Last error code of the received error.
-			LastErrorType (str): The type of the Last error received.
-			Latency (number): The latency measurement for the OpenFlow channel in microseconds.
-			LocalIp (str): Indicates the local IP of the Controller.
-			MeterId (number): Specifies Meter ID
-			NegotiatedVersion (str): Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
-			NumberOfBands (number): Specify the number of Bands for this controller configuration. The default value is 1.
-			RemoteIp (str): The Remote IP address of the selected interface.
-			ReplyState (str): The state of reply for the Open Flow channel.
+			DataPathId (number): 
+			DataPathIdAsHex (str): 
+			ErrorCode (str): 
+			ErrorType (str): 
+			Flags (str): 
+			LastErrorCode (str): 
+			LastErrorType (str): 
+			Latency (number): 
+			LocalIp (str): 
+			MeterId (number): 
+			NegotiatedVersion (str): 
+			NumberOfBands (number): 
+			RemoteIp (str): 
+			ReplyState (str): 
 
 		Returns:
 			self: This instance with matching meterConfigStatsLearnedInformation data retrieved from the server available through an iterator or index

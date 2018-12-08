@@ -100,3 +100,23 @@ class RsRate(Base):
 	@ScaleMode.setter
 	def ScaleMode(self, value):
 		self._set_attribute('scaleMode', value)
+
+	def get_device_ids(self, PortNames=None, Enabled=None, Interval=None, MaxOutstanding=None, Rate=None):
+		"""Base class infrastructure that gets a list of rsRate device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Enabled (str): optional regex of enabled
+			Interval (str): optional regex of interval
+			MaxOutstanding (str): optional regex of maxOutstanding
+			Rate (str): optional regex of rate
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

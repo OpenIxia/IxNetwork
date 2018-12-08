@@ -51,7 +51,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def Action(self):
-		"""It gives details about the action (Read-only)
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def ExpiresAfter(self):
-		"""It gives details about the expiration (Read-only)
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def InstanceId(self):
-		"""It gives details about the instance id (Read-only)
+		"""
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def MapReplyRx(self):
-		"""It gives details about the Map reply at the receivers end (Read-only)
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def MapRequestTx(self):
-		"""It gives details about the Map request at the transmitters end (Read-only)
+		"""
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def MapVersionNumber(self):
-		"""It gives details about map version number(Read-Only)
+		"""
 
 		Returns:
 			number
@@ -105,7 +105,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def NegativeMapReplyRx(self):
-		"""It gives details about the Map reply at the receivers end in negation (Read-only)
+		"""
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def RemoteEidMappingStatus(self):
-		"""It gives details about the remote Eid mapping status (Read-only)
+		"""
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def RemoteEidPrefix(self):
-		"""It gives details about the remote Eid Prefix (Read-only)
+		"""
 
 		Returns:
 			str
@@ -132,7 +132,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def RemoteEidPrefixAfi(self):
-		"""It gives details about the remote Eid Prefix Afi(Read-only)
+		"""
 
 		Returns:
 			str
@@ -141,7 +141,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def RemoteEidPrefixLength(self):
-		"""It gives details about the remote Eid Prefix Length(Read-only)
+		"""
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def ResponderIp(self):
-		"""It gives details about the responder Ip (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def RlocProbeReplyRx(self):
-		"""It gives details about the rloc Probe Reply at receivers end(Read-only)
+		"""
 
 		Returns:
 			number
@@ -168,7 +168,7 @@ class EidToRlocMapCacheInfo(Base):
 
 	@property
 	def RlocProbeRequestTx(self):
-		"""It gives details about the rloc Probe Reply at transmitters end(Read-only)
+		"""
 
 		Returns:
 			number
@@ -182,20 +182,20 @@ class EidToRlocMapCacheInfo(Base):
 		By default the find method takes no parameters and will retrieve all eidToRlocMapCacheInfo data from the server.
 
 		Args:
-			Action (str): It gives details about the action (Read-only)
-			ExpiresAfter (str): It gives details about the expiration (Read-only)
-			InstanceId (number): It gives details about the instance id (Read-only)
-			MapReplyRx (number): It gives details about the Map reply at the receivers end (Read-only)
-			MapRequestTx (number): It gives details about the Map request at the transmitters end (Read-only)
-			MapVersionNumber (number): It gives details about map version number(Read-Only)
-			NegativeMapReplyRx (number): It gives details about the Map reply at the receivers end in negation (Read-only)
-			RemoteEidMappingStatus (str): It gives details about the remote Eid mapping status (Read-only)
-			RemoteEidPrefix (str): It gives details about the remote Eid Prefix (Read-only)
-			RemoteEidPrefixAfi (str): It gives details about the remote Eid Prefix Afi(Read-only)
-			RemoteEidPrefixLength (number): It gives details about the remote Eid Prefix Length(Read-only)
-			ResponderIp (str): It gives details about the responder Ip (Read-Only)
-			RlocProbeReplyRx (number): It gives details about the rloc Probe Reply at receivers end(Read-only)
-			RlocProbeRequestTx (number): It gives details about the rloc Probe Reply at transmitters end(Read-only)
+			Action (str): 
+			ExpiresAfter (str): 
+			InstanceId (number): 
+			MapReplyRx (number): 
+			MapRequestTx (number): 
+			MapVersionNumber (number): 
+			NegativeMapReplyRx (number): 
+			RemoteEidMappingStatus (str): 
+			RemoteEidPrefix (str): 
+			RemoteEidPrefixAfi (str): 
+			RemoteEidPrefixLength (number): 
+			ResponderIp (str): 
+			RlocProbeReplyRx (number): 
+			RlocProbeRequestTx (number): 
 
 		Returns:
 			self: This instance with matching eidToRlocMapCacheInfo data retrieved from the server available through an iterator or index

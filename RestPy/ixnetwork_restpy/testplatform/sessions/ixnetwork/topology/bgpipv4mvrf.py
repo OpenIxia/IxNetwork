@@ -717,6 +717,60 @@ class BgpIpv4MVrf(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, BFRId=None, BFRIpv4Prefix=None, BFRIpv6Prefix=None, BFRPrefixType=None, BIERSubDomainId=None, BslMismatchHandlingOption=None, LeafInfoRequiredBit=None, LeafInfoRequiredPerFlow=None, Active=None, AutoConstructBitString=None, BierBitStringLength=None, BitString=None, Dscp=None, Entropy=None, IncludeBierPTAinLeafAD=None, IncludePmsiTunnelAttribute=None, MulticastDistinguisherAs4Number=None, MulticastDistinguisherAsNumber=None, MulticastDistinguisherAssignedNumber=None, MulticastDistinguisherIpAddress=None, MulticastDistinguisherType=None, MulticastTunnelType=None, NextProtocol=None, Oam=None, RootAddress=None, Rsv=None, RsvpP2mpId=None, RsvpP2mpIdAsNumber=None, RsvpTunnelId=None, SiCount=None, SrLabelStart=None, SrLabelStep=None, SupportLeafADRoutesSending=None, TrafficBfrId=None, UpOrDownStreamAssignedLabel=None, UseSameBfrIdInTraffic=None, UseUpOrDownStreamAssigneLabel=None, Version=None):
+		"""Base class infrastructure that gets a list of bgpIpv4MVrf device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BFRId (str): optional regex of BFRId
+			BFRIpv4Prefix (str): optional regex of BFRIpv4Prefix
+			BFRIpv6Prefix (str): optional regex of BFRIpv6Prefix
+			BFRPrefixType (str): optional regex of BFRPrefixType
+			BIERSubDomainId (str): optional regex of BIERSubDomainId
+			BslMismatchHandlingOption (str): optional regex of BslMismatchHandlingOption
+			LeafInfoRequiredBit (str): optional regex of LeafInfoRequiredBit
+			LeafInfoRequiredPerFlow (str): optional regex of LeafInfoRequiredPerFlow
+			Active (str): optional regex of active
+			AutoConstructBitString (str): optional regex of autoConstructBitString
+			BierBitStringLength (str): optional regex of bierBitStringLength
+			BitString (str): optional regex of bitString
+			Dscp (str): optional regex of dscp
+			Entropy (str): optional regex of entropy
+			IncludeBierPTAinLeafAD (str): optional regex of includeBierPTAinLeafAD
+			IncludePmsiTunnelAttribute (str): optional regex of includePmsiTunnelAttribute
+			MulticastDistinguisherAs4Number (str): optional regex of multicastDistinguisherAs4Number
+			MulticastDistinguisherAsNumber (str): optional regex of multicastDistinguisherAsNumber
+			MulticastDistinguisherAssignedNumber (str): optional regex of multicastDistinguisherAssignedNumber
+			MulticastDistinguisherIpAddress (str): optional regex of multicastDistinguisherIpAddress
+			MulticastDistinguisherType (str): optional regex of multicastDistinguisherType
+			MulticastTunnelType (str): optional regex of multicastTunnelType
+			NextProtocol (str): optional regex of nextProtocol
+			Oam (str): optional regex of oam
+			RootAddress (str): optional regex of rootAddress
+			Rsv (str): optional regex of rsv
+			RsvpP2mpId (str): optional regex of rsvpP2mpId
+			RsvpP2mpIdAsNumber (str): optional regex of rsvpP2mpIdAsNumber
+			RsvpTunnelId (str): optional regex of rsvpTunnelId
+			SiCount (str): optional regex of siCount
+			SrLabelStart (str): optional regex of srLabelStart
+			SrLabelStep (str): optional regex of srLabelStep
+			SupportLeafADRoutesSending (str): optional regex of supportLeafADRoutesSending
+			TrafficBfrId (str): optional regex of trafficBfrId
+			UpOrDownStreamAssignedLabel (str): optional regex of upOrDownStreamAssignedLabel
+			UseSameBfrIdInTraffic (str): optional regex of useSameBfrIdInTraffic
+			UseUpOrDownStreamAssigneLabel (str): optional regex of useUpOrDownStreamAssigneLabel
+			Version (str): optional regex of version
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

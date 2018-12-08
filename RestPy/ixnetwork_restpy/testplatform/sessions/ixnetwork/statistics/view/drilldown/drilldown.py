@@ -52,7 +52,7 @@ class DrillDown(Base):
 
 	@property
 	def AvailableDrillDownOptions(self):
-		"""Gets the available drill down options for the selected row.
+		"""
 
 		Returns:
 			list(str)
@@ -61,7 +61,7 @@ class DrillDown(Base):
 
 	@property
 	def TargetDrillDownOption(self):
-		"""Sets the drill down option attribute to the drilldown object. It is one of the items in the list returned at 2.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class DrillDown(Base):
 
 	@property
 	def TargetRow(self):
-		"""Gets the target row, set previously, at step 1.
+		"""
 
 		Returns:
 			list(str)
@@ -82,7 +82,7 @@ class DrillDown(Base):
 
 	@property
 	def TargetRowFilter(self):
-		"""Sets the row (from the view) that will be used to perform the drill-down. This is done by using one of the filters provided by availableTargetRowFilters
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTargetRowFilters)
@@ -94,7 +94,7 @@ class DrillDown(Base):
 
 	@property
 	def TargetRowIndex(self):
-		"""Sets the attribute targetRowIndex to the drill down object. This is the row (from the view) that will be used to perform the drill-down.
+		"""
 
 		Returns:
 			number
@@ -108,9 +108,9 @@ class DrillDown(Base):
 		"""Adds a new drillDown node on the server and retrieves it in this instance.
 
 		Args:
-			TargetDrillDownOption (str): Sets the drill down option attribute to the drilldown object. It is one of the items in the list returned at 2.
-			TargetRowFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTargetRowFilters)): Sets the row (from the view) that will be used to perform the drill-down. This is done by using one of the filters provided by availableTargetRowFilters
-			TargetRowIndex (number): Sets the attribute targetRowIndex to the drill down object. This is the row (from the view) that will be used to perform the drill-down.
+			TargetDrillDownOption (str): 
+			TargetRowFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTargetRowFilters)): 
+			TargetRowIndex (number): 
 
 		Returns:
 			self: This instance with all currently retrieved drillDown data using find and the newly added drillDown data available through an iterator or index
@@ -136,11 +136,11 @@ class DrillDown(Base):
 		By default the find method takes no parameters and will retrieve all drillDown data from the server.
 
 		Args:
-			AvailableDrillDownOptions (list(str)): Gets the available drill down options for the selected row.
-			TargetDrillDownOption (str): Sets the drill down option attribute to the drilldown object. It is one of the items in the list returned at 2.
-			TargetRow (list(str)): Gets the target row, set previously, at step 1.
-			TargetRowFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTargetRowFilters)): Sets the row (from the view) that will be used to perform the drill-down. This is done by using one of the filters provided by availableTargetRowFilters
-			TargetRowIndex (number): Sets the attribute targetRowIndex to the drill down object. This is the row (from the view) that will be used to perform the drill-down.
+			AvailableDrillDownOptions (list(str)): 
+			TargetDrillDownOption (str): 
+			TargetRow (list(str)): 
+			TargetRowFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTargetRowFilters)): 
+			TargetRowIndex (number): 
 
 		Returns:
 			self: This instance with matching drillDown data retrieved from the server available through an iterator or index
@@ -167,8 +167,6 @@ class DrillDown(Base):
 
 	def DoDrillDown(self):
 		"""Executes the doDrillDown operation on the server.
-
-		Perform a drill down.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=drillDown)): The method internally sets Arg1 to the current href for this instance

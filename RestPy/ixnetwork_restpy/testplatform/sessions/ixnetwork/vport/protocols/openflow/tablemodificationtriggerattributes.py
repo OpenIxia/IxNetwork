@@ -37,7 +37,7 @@ class TableModificationTriggerAttributes(Base):
 
 	@property
 	def AllTables(self):
-		"""To apply the change to all tables.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class TableModificationTriggerAttributes(Base):
 
 	@property
 	def Config(self):
-		"""2.Type the value of the Config.
+		"""
 
 		Returns:
 			number

@@ -270,3 +270,38 @@ class BgpSRTEPoliciesTunnelEncapsulationListV4(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('useAsMPLSLabel')
+
+	def get_device_ids(self, PortNames=None, IPv6SID=None, SID4Octet=None, Active=None, AddressFamily=None, As4Number=None, BindingSIDType=None, ColorCOBits=None, ColorReservedBits=None, ColorValue=None, EnBindingTLV=None, EnColorTLV=None, EnPrefTLV=None, EnRemoteEndPointTLV=None, NumberOfActiveSegmentList=None, PrefValue=None, RemoteEndpointIPv4=None, RemoteEndpointIPv6=None, TunnelType=None, UseAsMPLSLabel=None):
+		"""Base class infrastructure that gets a list of bgpSRTEPoliciesTunnelEncapsulationListV4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			IPv6SID (str): optional regex of IPv6SID
+			SID4Octet (str): optional regex of SID4Octet
+			Active (str): optional regex of active
+			AddressFamily (str): optional regex of addressFamily
+			As4Number (str): optional regex of as4Number
+			BindingSIDType (str): optional regex of bindingSIDType
+			ColorCOBits (str): optional regex of colorCOBits
+			ColorReservedBits (str): optional regex of colorReservedBits
+			ColorValue (str): optional regex of colorValue
+			EnBindingTLV (str): optional regex of enBindingTLV
+			EnColorTLV (str): optional regex of enColorTLV
+			EnPrefTLV (str): optional regex of enPrefTLV
+			EnRemoteEndPointTLV (str): optional regex of enRemoteEndPointTLV
+			NumberOfActiveSegmentList (str): optional regex of numberOfActiveSegmentList
+			PrefValue (str): optional regex of prefValue
+			RemoteEndpointIPv4 (str): optional regex of remoteEndpointIPv4
+			RemoteEndpointIPv6 (str): optional regex of remoteEndpointIPv6
+			TunnelType (str): optional regex of tunnelType
+			UseAsMPLSLabel (str): optional regex of useAsMPLSLabel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

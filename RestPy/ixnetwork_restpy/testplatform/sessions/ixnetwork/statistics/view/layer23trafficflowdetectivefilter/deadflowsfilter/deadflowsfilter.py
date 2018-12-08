@@ -38,7 +38,7 @@ class DeadFlowsFilter(Base):
 
 	@property
 	def NumberOfResults(self):
-		"""Number of traffic flows to be displayed.
+		"""
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class DeadFlowsFilter(Base):
 
 	@property
 	def SortingCondition(self):
-		"""Sets the display order of the view.
+		"""
 
 		Returns:
 			str(ascending|descending)
@@ -64,8 +64,8 @@ class DeadFlowsFilter(Base):
 		"""Adds a new deadFlowsFilter node on the server and retrieves it in this instance.
 
 		Args:
-			NumberOfResults (number): Number of traffic flows to be displayed.
-			SortingCondition (str(ascending|descending)): Sets the display order of the view.
+			NumberOfResults (number): 
+			SortingCondition (str(ascending|descending)): 
 
 		Returns:
 			self: This instance with all currently retrieved deadFlowsFilter data using find and the newly added deadFlowsFilter data available through an iterator or index
@@ -91,8 +91,8 @@ class DeadFlowsFilter(Base):
 		By default the find method takes no parameters and will retrieve all deadFlowsFilter data from the server.
 
 		Args:
-			NumberOfResults (number): Number of traffic flows to be displayed.
-			SortingCondition (str(ascending|descending)): Sets the display order of the view.
+			NumberOfResults (number): 
+			SortingCondition (str(ascending|descending)): 
 
 		Returns:
 			self: This instance with matching deadFlowsFilter data retrieved from the server available through an iterator or index

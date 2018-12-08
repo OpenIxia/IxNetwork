@@ -51,7 +51,7 @@ class SwitchGroupBucketLearnedInfo(Base):
 
 	@property
 	def ByteCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class SwitchGroupBucketLearnedInfo(Base):
 
 	@property
 	def PacketCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -69,7 +69,7 @@ class SwitchGroupBucketLearnedInfo(Base):
 
 	@property
 	def WatchGroup(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class SwitchGroupBucketLearnedInfo(Base):
 
 	@property
 	def WatchPort(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class SwitchGroupBucketLearnedInfo(Base):
 
 	@property
 	def Weight(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -101,11 +101,11 @@ class SwitchGroupBucketLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchGroupBucketLearnedInfo data from the server.
 
 		Args:
-			ByteCount (number): NOT DEFINED
-			PacketCount (number): NOT DEFINED
-			WatchGroup (number): NOT DEFINED
-			WatchPort (number): NOT DEFINED
-			Weight (number): NOT DEFINED
+			ByteCount (number): 
+			PacketCount (number): 
+			WatchGroup (number): 
+			WatchPort (number): 
+			Weight (number): 
 
 		Returns:
 			self: This instance with matching switchGroupBucketLearnedInfo data retrieved from the server available through an iterator or index

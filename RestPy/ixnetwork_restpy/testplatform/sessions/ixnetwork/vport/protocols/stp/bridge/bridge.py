@@ -108,7 +108,7 @@ class Bridge(Base):
 
 	@property
 	def AutoPickBridgeMac(self):
-		"""If enabled, the MAC address for one of the STP interfaces will be automatically assigned as the MAC address for this bridge.
+		"""
 
 		Returns:
 			bool
@@ -120,7 +120,7 @@ class Bridge(Base):
 
 	@property
 	def BridgeMac(self):
-		"""The 6-byte MAC address assigned to this bridge. Part of the bridge identifier (bridge ID).
+		"""
 
 		Returns:
 			str
@@ -132,7 +132,7 @@ class Bridge(Base):
 
 	@property
 	def BridgePriority(self):
-		"""The Bridge Priority for this bridge.The valid range is 0 to 61,440, in multiples of 4,096. (default = 32,768)
+		"""
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -144,7 +144,7 @@ class Bridge(Base):
 
 	@property
 	def BridgeSystemId(self):
-		"""The System ID for the bridge. The valid range is 0 to 4,095. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -156,7 +156,7 @@ class Bridge(Base):
 
 	@property
 	def BridgeType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(bridges|providerBridges)
@@ -168,7 +168,7 @@ class Bridge(Base):
 
 	@property
 	def CistRegRootCost(self):
-		"""(For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) root path cost. The valid range is 0 to 4294967295. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -180,7 +180,7 @@ class Bridge(Base):
 
 	@property
 	def CistRegRootMac(self):
-		"""(For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) 6-byte root MAC address. (default = 00:00:00:00:00:00)
+		"""
 
 		Returns:
 			str
@@ -192,7 +192,7 @@ class Bridge(Base):
 
 	@property
 	def CistRegRootPriority(self):
-		"""(For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) priority of the root. The valid range is 0 to 61,440, in increments of 4,096. (default = 32,768)
+		"""
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -204,7 +204,7 @@ class Bridge(Base):
 
 	@property
 	def CistRemainingHop(self):
-		"""(For use with MSTP only) The number of additional bridge-to-bridge hops that will be allowed for the MSTP BPDUs. The root sets the maximum hop count, and each subsequent bridge decrements this value by 1. The valid range is 1 to 255. (default = 20)
+		"""
 
 		Returns:
 			number
@@ -216,7 +216,7 @@ class Bridge(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the bridge's simulation. (default = disabled)
+		"""
 
 		Returns:
 			bool
@@ -228,7 +228,7 @@ class Bridge(Base):
 
 	@property
 	def ExternalRootCost(self):
-		"""Common and Internal Spanning Tree (CIST) external root path cost. A 4-byte unsigned integer. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -240,7 +240,7 @@ class Bridge(Base):
 
 	@property
 	def ExternalRootMac(self):
-		"""Common and Internal Spanning Tree (CIST) external root MAC address. A 6-byte MAC address.The default is 00 00 00 00 00 00.
+		"""
 
 		Returns:
 			str
@@ -252,7 +252,7 @@ class Bridge(Base):
 
 	@property
 	def ExternalRootPriority(self):
-		"""(For use with MSTP only) The priority value of the root bridge for the CIST/MSTP region (external). Part of the CIST External Root Identifier. The valid range is 0 to 61,440, in increments of 4096. (default = 32,768)
+		"""
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -264,7 +264,7 @@ class Bridge(Base):
 
 	@property
 	def ForwardDelay(self):
-		"""The delay used for a port's change to the Forwarding state. (in milliseconds) The valid range is 500 msec to 255 sec. (default = 15,000 msec (15 sec)
+		"""
 
 		Returns:
 			number
@@ -276,7 +276,7 @@ class Bridge(Base):
 
 	@property
 	def HelloInterval(self):
-		"""The length of time between transmission of Hello messages from the root bridge (in milliseconds). The valid range is 500 msec to 255 sec. (default = 2,000 msec (2 sec)
+		"""
 
 		Returns:
 			number
@@ -288,7 +288,7 @@ class Bridge(Base):
 
 	@property
 	def IsRefreshComplete(self):
-		"""If true, this causes the STP bridge to update.
+		"""
 
 		Returns:
 			bool
@@ -297,7 +297,7 @@ class Bridge(Base):
 
 	@property
 	def MaxAge(self):
-		"""The maximum Configuration message aging time. (in milliseconds) The valid range is 500 msec to 255 sec. (default = 20,000 msec (20 sec)
+		"""
 
 		Returns:
 			number
@@ -309,7 +309,7 @@ class Bridge(Base):
 
 	@property
 	def MessageAge(self):
-		"""The message age time parameter in the BPDU (in milliseconds). (It should be less than the Max. Age.) The valid range is 500 msec to 255 sec. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -321,7 +321,7 @@ class Bridge(Base):
 
 	@property
 	def Mode(self):
-		"""The version of the STP protocol that is being used on the Bridge.
+		"""
 
 		Returns:
 			str(stp|rstp|mstp|pvst|rpvst|pvstp)
@@ -333,7 +333,7 @@ class Bridge(Base):
 
 	@property
 	def MstcName(self):
-		"""(For use with MSTP only) The name of the Multiple Spanning Tree Configuration being used. Format = MSTC ID-n (editable by user).
+		"""
 
 		Returns:
 			str
@@ -345,7 +345,7 @@ class Bridge(Base):
 
 	@property
 	def MstcRevisionNumber(self):
-		"""(For use with MSTP only) The Revision Number of the Multiple Spanning Tree Configuration being used. A 2-byte unsigned integer. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -357,7 +357,7 @@ class Bridge(Base):
 
 	@property
 	def PortPriority(self):
-		"""The port priority. The valid range is to 240, in multiples of 16. (default = 0)
+		"""
 
 		Returns:
 			str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)
@@ -369,7 +369,7 @@ class Bridge(Base):
 
 	@property
 	def PvstpMode(self):
-		"""The version of the pvSTP protocol that is being used on the Bridge.
+		"""
 
 		Returns:
 			str(stp|rstp)
@@ -381,7 +381,7 @@ class Bridge(Base):
 
 	@property
 	def RootCost(self):
-		"""(For STP and RSTP) The administrative cost for the shortest path from this bridge to the Root Bridge. The valid range is 0 to 4294967295. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -393,7 +393,7 @@ class Bridge(Base):
 
 	@property
 	def RootMac(self):
-		"""(For STP and RSTP) The 6-byte MAC Address for the Root Bridge. (default = 00:00:00:00:00:00)
+		"""
 
 		Returns:
 			str
@@ -405,7 +405,7 @@ class Bridge(Base):
 
 	@property
 	def RootPriority(self):
-		"""(For STP and RSTP) The Bridge Priority for the root bridge. The valid range is 0 to 61,440, in increments of 4096. (default = 32,768)
+		"""
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -417,7 +417,7 @@ class Bridge(Base):
 
 	@property
 	def RootSystemId(self):
-		"""(For STP and RSTP) The System ID for the root bridge. The valid range is 0 to 4,095. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -429,7 +429,7 @@ class Bridge(Base):
 
 	@property
 	def UpdateRequired(self):
-		"""Indicates that an updated is required.
+		"""
 
 		Returns:
 			number
@@ -441,7 +441,7 @@ class Bridge(Base):
 
 	@property
 	def VlanPortPriority(self):
-		"""(For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) VLAN port priority. The valid range is 0 to 63. (default = 32)
+		"""
 
 		Returns:
 			number
@@ -453,7 +453,7 @@ class Bridge(Base):
 
 	@property
 	def VlanRootMac(self):
-		"""Common and Internal Spanning Tree (CIST) Regional (external) MAC address. Part of the CIST External Root Identifier. A 6-byte MAC address.
+		"""
 
 		Returns:
 			str
@@ -465,7 +465,7 @@ class Bridge(Base):
 
 	@property
 	def VlanRootPathCost(self):
-		"""Common and Internal Spanning Tree (CIST) regional (external) root path cost.
+		"""
 
 		Returns:
 			number
@@ -477,7 +477,7 @@ class Bridge(Base):
 
 	@property
 	def VlanRootPriority(self):
-		"""The priority value of the root bridge for the Common Spanning Tree (CST).
+		"""
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -491,37 +491,37 @@ class Bridge(Base):
 		"""Adds a new bridge node on the server and retrieves it in this instance.
 
 		Args:
-			AutoPickBridgeMac (bool): If enabled, the MAC address for one of the STP interfaces will be automatically assigned as the MAC address for this bridge.
-			BridgeMac (str): The 6-byte MAC address assigned to this bridge. Part of the bridge identifier (bridge ID).
-			BridgePriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The Bridge Priority for this bridge.The valid range is 0 to 61,440, in multiples of 4,096. (default = 32,768)
-			BridgeSystemId (number): The System ID for the bridge. The valid range is 0 to 4,095. (default = 0)
-			BridgeType (str(bridges|providerBridges)): NOT DEFINED
-			CistRegRootCost (number): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) root path cost. The valid range is 0 to 4294967295. (default = 0)
-			CistRegRootMac (str): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) 6-byte root MAC address. (default = 00:00:00:00:00:00)
-			CistRegRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) priority of the root. The valid range is 0 to 61,440, in increments of 4,096. (default = 32,768)
-			CistRemainingHop (number): (For use with MSTP only) The number of additional bridge-to-bridge hops that will be allowed for the MSTP BPDUs. The root sets the maximum hop count, and each subsequent bridge decrements this value by 1. The valid range is 1 to 255. (default = 20)
-			Enabled (bool): Enables or disables the bridge's simulation. (default = disabled)
-			ExternalRootCost (number): Common and Internal Spanning Tree (CIST) external root path cost. A 4-byte unsigned integer. The default is 0.
-			ExternalRootMac (str): Common and Internal Spanning Tree (CIST) external root MAC address. A 6-byte MAC address.The default is 00 00 00 00 00 00.
-			ExternalRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): (For use with MSTP only) The priority value of the root bridge for the CIST/MSTP region (external). Part of the CIST External Root Identifier. The valid range is 0 to 61,440, in increments of 4096. (default = 32,768)
-			ForwardDelay (number): The delay used for a port's change to the Forwarding state. (in milliseconds) The valid range is 500 msec to 255 sec. (default = 15,000 msec (15 sec)
-			HelloInterval (number): The length of time between transmission of Hello messages from the root bridge (in milliseconds). The valid range is 500 msec to 255 sec. (default = 2,000 msec (2 sec)
-			MaxAge (number): The maximum Configuration message aging time. (in milliseconds) The valid range is 500 msec to 255 sec. (default = 20,000 msec (20 sec)
-			MessageAge (number): The message age time parameter in the BPDU (in milliseconds). (It should be less than the Max. Age.) The valid range is 500 msec to 255 sec. (default = 0)
-			Mode (str(stp|rstp|mstp|pvst|rpvst|pvstp)): The version of the STP protocol that is being used on the Bridge.
-			MstcName (str): (For use with MSTP only) The name of the Multiple Spanning Tree Configuration being used. Format = MSTC ID-n (editable by user).
-			MstcRevisionNumber (number): (For use with MSTP only) The Revision Number of the Multiple Spanning Tree Configuration being used. A 2-byte unsigned integer. (default = 0)
-			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): The port priority. The valid range is to 240, in multiples of 16. (default = 0)
-			PvstpMode (str(stp|rstp)): The version of the pvSTP protocol that is being used on the Bridge.
-			RootCost (number): (For STP and RSTP) The administrative cost for the shortest path from this bridge to the Root Bridge. The valid range is 0 to 4294967295. (default = 0)
-			RootMac (str): (For STP and RSTP) The 6-byte MAC Address for the Root Bridge. (default = 00:00:00:00:00:00)
-			RootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): (For STP and RSTP) The Bridge Priority for the root bridge. The valid range is 0 to 61,440, in increments of 4096. (default = 32,768)
-			RootSystemId (number): (For STP and RSTP) The System ID for the root bridge. The valid range is 0 to 4,095. (default = 0)
-			UpdateRequired (number): Indicates that an updated is required.
-			VlanPortPriority (number): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) VLAN port priority. The valid range is 0 to 63. (default = 32)
-			VlanRootMac (str): Common and Internal Spanning Tree (CIST) Regional (external) MAC address. Part of the CIST External Root Identifier. A 6-byte MAC address.
-			VlanRootPathCost (number): Common and Internal Spanning Tree (CIST) regional (external) root path cost.
-			VlanRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The priority value of the root bridge for the Common Spanning Tree (CST).
+			AutoPickBridgeMac (bool): 
+			BridgeMac (str): 
+			BridgePriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			BridgeSystemId (number): 
+			BridgeType (str(bridges|providerBridges)): 
+			CistRegRootCost (number): 
+			CistRegRootMac (str): 
+			CistRegRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			CistRemainingHop (number): 
+			Enabled (bool): 
+			ExternalRootCost (number): 
+			ExternalRootMac (str): 
+			ExternalRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			ForwardDelay (number): 
+			HelloInterval (number): 
+			MaxAge (number): 
+			MessageAge (number): 
+			Mode (str(stp|rstp|mstp|pvst|rpvst|pvstp)): 
+			MstcName (str): 
+			MstcRevisionNumber (number): 
+			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): 
+			PvstpMode (str(stp|rstp)): 
+			RootCost (number): 
+			RootMac (str): 
+			RootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			RootSystemId (number): 
+			UpdateRequired (number): 
+			VlanPortPriority (number): 
+			VlanRootMac (str): 
+			VlanRootPathCost (number): 
+			VlanRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
 
 		Returns:
 			self: This instance with all currently retrieved bridge data using find and the newly added bridge data available through an iterator or index
@@ -547,38 +547,38 @@ class Bridge(Base):
 		By default the find method takes no parameters and will retrieve all bridge data from the server.
 
 		Args:
-			AutoPickBridgeMac (bool): If enabled, the MAC address for one of the STP interfaces will be automatically assigned as the MAC address for this bridge.
-			BridgeMac (str): The 6-byte MAC address assigned to this bridge. Part of the bridge identifier (bridge ID).
-			BridgePriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The Bridge Priority for this bridge.The valid range is 0 to 61,440, in multiples of 4,096. (default = 32,768)
-			BridgeSystemId (number): The System ID for the bridge. The valid range is 0 to 4,095. (default = 0)
-			BridgeType (str(bridges|providerBridges)): NOT DEFINED
-			CistRegRootCost (number): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) root path cost. The valid range is 0 to 4294967295. (default = 0)
-			CistRegRootMac (str): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) 6-byte root MAC address. (default = 00:00:00:00:00:00)
-			CistRegRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) priority of the root. The valid range is 0 to 61,440, in increments of 4,096. (default = 32,768)
-			CistRemainingHop (number): (For use with MSTP only) The number of additional bridge-to-bridge hops that will be allowed for the MSTP BPDUs. The root sets the maximum hop count, and each subsequent bridge decrements this value by 1. The valid range is 1 to 255. (default = 20)
-			Enabled (bool): Enables or disables the bridge's simulation. (default = disabled)
-			ExternalRootCost (number): Common and Internal Spanning Tree (CIST) external root path cost. A 4-byte unsigned integer. The default is 0.
-			ExternalRootMac (str): Common and Internal Spanning Tree (CIST) external root MAC address. A 6-byte MAC address.The default is 00 00 00 00 00 00.
-			ExternalRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): (For use with MSTP only) The priority value of the root bridge for the CIST/MSTP region (external). Part of the CIST External Root Identifier. The valid range is 0 to 61,440, in increments of 4096. (default = 32,768)
-			ForwardDelay (number): The delay used for a port's change to the Forwarding state. (in milliseconds) The valid range is 500 msec to 255 sec. (default = 15,000 msec (15 sec)
-			HelloInterval (number): The length of time between transmission of Hello messages from the root bridge (in milliseconds). The valid range is 500 msec to 255 sec. (default = 2,000 msec (2 sec)
-			IsRefreshComplete (bool): If true, this causes the STP bridge to update.
-			MaxAge (number): The maximum Configuration message aging time. (in milliseconds) The valid range is 500 msec to 255 sec. (default = 20,000 msec (20 sec)
-			MessageAge (number): The message age time parameter in the BPDU (in milliseconds). (It should be less than the Max. Age.) The valid range is 500 msec to 255 sec. (default = 0)
-			Mode (str(stp|rstp|mstp|pvst|rpvst|pvstp)): The version of the STP protocol that is being used on the Bridge.
-			MstcName (str): (For use with MSTP only) The name of the Multiple Spanning Tree Configuration being used. Format = MSTC ID-n (editable by user).
-			MstcRevisionNumber (number): (For use with MSTP only) The Revision Number of the Multiple Spanning Tree Configuration being used. A 2-byte unsigned integer. (default = 0)
-			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): The port priority. The valid range is to 240, in multiples of 16. (default = 0)
-			PvstpMode (str(stp|rstp)): The version of the pvSTP protocol that is being used on the Bridge.
-			RootCost (number): (For STP and RSTP) The administrative cost for the shortest path from this bridge to the Root Bridge. The valid range is 0 to 4294967295. (default = 0)
-			RootMac (str): (For STP and RSTP) The 6-byte MAC Address for the Root Bridge. (default = 00:00:00:00:00:00)
-			RootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): (For STP and RSTP) The Bridge Priority for the root bridge. The valid range is 0 to 61,440, in increments of 4096. (default = 32,768)
-			RootSystemId (number): (For STP and RSTP) The System ID for the root bridge. The valid range is 0 to 4,095. (default = 0)
-			UpdateRequired (number): Indicates that an updated is required.
-			VlanPortPriority (number): (For use with PVST+ and RPVST+ only) The Common Spanning Tree (CST) VLAN port priority. The valid range is 0 to 63. (default = 32)
-			VlanRootMac (str): Common and Internal Spanning Tree (CIST) Regional (external) MAC address. Part of the CIST External Root Identifier. A 6-byte MAC address.
-			VlanRootPathCost (number): Common and Internal Spanning Tree (CIST) regional (external) root path cost.
-			VlanRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The priority value of the root bridge for the Common Spanning Tree (CST).
+			AutoPickBridgeMac (bool): 
+			BridgeMac (str): 
+			BridgePriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			BridgeSystemId (number): 
+			BridgeType (str(bridges|providerBridges)): 
+			CistRegRootCost (number): 
+			CistRegRootMac (str): 
+			CistRegRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			CistRemainingHop (number): 
+			Enabled (bool): 
+			ExternalRootCost (number): 
+			ExternalRootMac (str): 
+			ExternalRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			ForwardDelay (number): 
+			HelloInterval (number): 
+			IsRefreshComplete (bool): 
+			MaxAge (number): 
+			MessageAge (number): 
+			Mode (str(stp|rstp|mstp|pvst|rpvst|pvstp)): 
+			MstcName (str): 
+			MstcRevisionNumber (number): 
+			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): 
+			PvstpMode (str(stp|rstp)): 
+			RootCost (number): 
+			RootMac (str): 
+			RootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			RootSystemId (number): 
+			UpdateRequired (number): 
+			VlanPortPriority (number): 
+			VlanRootMac (str): 
+			VlanRootPathCost (number): 
+			VlanRootPriority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
 
 		Returns:
 			self: This instance with matching bridge data retrieved from the server available through an iterator or index
@@ -606,13 +606,11 @@ class Bridge(Base):
 	def BridgeTopologyChange(self):
 		"""Executes the bridgeTopologyChange operation on the server.
 
-		This commands checks to see if there has been a topology change in the specified STP bridge.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bridge)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -624,13 +622,11 @@ class Bridge(Base):
 	def CistTopologyChange(self):
 		"""Executes the cistTopologyChange operation on the server.
 
-		This command checks to see if a topology change has occurred on the specified STP bridge CIST.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bridge)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -642,13 +638,11 @@ class Bridge(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
-		This exec refreshes the STP learned information from the DUT.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bridge)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -660,13 +654,11 @@ class Bridge(Base):
 	def UpdateParameters(self):
 		"""Executes the updateParameters operation on the server.
 
-		Updates the current STP parameters for the STP bridge.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bridge)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

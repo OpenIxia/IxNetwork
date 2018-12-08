@@ -37,7 +37,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def Count(self):
-		"""If Enable VLAN is enabled, this it the number of MAC address/VLAN combinations that will be created. If Enabled VLAN is not enabled, this is the number of MAC addresses that will be created.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def EnableRepeatMac(self):
-		"""If enabled, and the count is greater than 1, the same address value will be repeated for all MAC addresses.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def EnableSameVlan(self):
-		"""If enabled, all MAC addresses in the range will be associated with the same VLAN ID. If enabled, all MAC addresses in the range will be associated with different VLAN IDs, where the VLAN IDs will be automatically incremented.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def EnableVlan(self):
-		"""Enables the MAC/VLAN range.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the Layer 2 MAC/VLAN address range.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def FirstVlanId(self):
-		"""The VLAN ID for the first VLAN in the MAC/VLAN range.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def IncrementVlanMode(self):
-		"""If true, each additional VLAN in the range is incremented to create unique VLAN IDs.
+		"""
 
 		Returns:
 			str(noIncrement|parallelIncrement|innerFirst|outerFirst)
@@ -121,7 +121,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def IncremetVlanMode(self):
-		"""If true, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1.
+		"""
 
 		Returns:
 			str(noIncrement|parallelIncrement|innerFirst|outerFirst)
@@ -133,7 +133,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def SkipVlanIdZero(self):
-		"""Skip the value of vlad id, if the vlan id value is equal to zero.
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def StartMac(self):
-		"""The first MAC address in the MAC range.
+		"""
 
 		Returns:
 			str
@@ -157,7 +157,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def Tpid(self):
-		"""Tag Protocol Identifier / TPID (hex). The EtherType that identifies the protocol header that follows the VLAN header (tag).
+		"""
 
 		Returns:
 			str
@@ -169,7 +169,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def VlanCount(self):
-		"""The number of VLANs created.
+		"""
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def VlanId(self):
-		"""The identifier for the first VLAN in the range.
+		"""
 
 		Returns:
 			str
@@ -193,7 +193,7 @@ class L2MacVlanRange(Base):
 
 	@property
 	def VlanPriority(self):
-		"""The User Priority for this VLAN. A value from 0 through 7. The use and interpretation of this field is defined in ISO/IEC 15802-3.
+		"""
 
 		Returns:
 			str

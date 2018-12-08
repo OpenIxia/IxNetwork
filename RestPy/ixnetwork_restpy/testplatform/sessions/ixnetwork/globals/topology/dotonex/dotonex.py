@@ -298,3 +298,44 @@ class DotOneX(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('waitBeforeRun')
+
+	def get_device_ids(self, PortNames=None, AltName=None, AuthOnNoResponse=None, AuthWaitPeriod=None, City=None, Company=None, Country=None, Department=None, DisableLogoff=None, DutTestMode=None, FragmentSize=None, GetCACertOnly=None, KeySize=None, KeyUsage=None, MacAuthPrefix=None, MaxOutstandingRequests=None, MaxSetupRate=None, MaxStart=None, MaxTeardownRate=None, OnlyMulticast=None, ServerURL=None, StartPeriod=None, State=None, SuccessiveStart=None, UseVlanIdentify=None, WaitBeforeRun=None):
+		"""Base class infrastructure that gets a list of dotOneX device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AltName (str): optional regex of altName
+			AuthOnNoResponse (str): optional regex of authOnNoResponse
+			AuthWaitPeriod (str): optional regex of authWaitPeriod
+			City (str): optional regex of city
+			Company (str): optional regex of company
+			Country (str): optional regex of country
+			Department (str): optional regex of department
+			DisableLogoff (str): optional regex of disableLogoff
+			DutTestMode (str): optional regex of dutTestMode
+			FragmentSize (str): optional regex of fragmentSize
+			GetCACertOnly (str): optional regex of getCACertOnly
+			KeySize (str): optional regex of keySize
+			KeyUsage (str): optional regex of keyUsage
+			MacAuthPrefix (str): optional regex of macAuthPrefix
+			MaxOutstandingRequests (str): optional regex of maxOutstandingRequests
+			MaxSetupRate (str): optional regex of maxSetupRate
+			MaxStart (str): optional regex of maxStart
+			MaxTeardownRate (str): optional regex of maxTeardownRate
+			OnlyMulticast (str): optional regex of onlyMulticast
+			ServerURL (str): optional regex of serverURL
+			StartPeriod (str): optional regex of startPeriod
+			State (str): optional regex of state
+			SuccessiveStart (str): optional regex of successiveStart
+			UseVlanIdentify (str): optional regex of useVlanIdentify
+			WaitBeforeRun (str): optional regex of waitBeforeRun
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

@@ -66,7 +66,7 @@ class Layer23TrafficFlowFilter(Base):
 
 	@property
 	def AggregatedAcrossPorts(self):
-		"""If true, displays aggregated stat value across ports selected by portFilterIds. Default = false
+		"""
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Layer23TrafficFlowFilter(Base):
 
 	@property
 	def EgressLatencyBinDisplayOption(self):
-		"""Emulates Latency Bin SV or Egress Tracking SV.
+		"""
 
 		Returns:
 			str(none|showEgressFlatView|showEgressRows|showLatencyBinStats)
@@ -90,7 +90,7 @@ class Layer23TrafficFlowFilter(Base):
 
 	@property
 	def PortFilterIds(self):
-		"""Selected port filters from the availablePortFilter list.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])
@@ -102,7 +102,7 @@ class Layer23TrafficFlowFilter(Base):
 
 	@property
 	def TrafficItemFilterId(self):
-		"""Selected traffic item filter from the availableTrafficItemFilter list.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)
@@ -114,7 +114,7 @@ class Layer23TrafficFlowFilter(Base):
 
 	@property
 	def TrafficItemFilterIds(self):
-		"""Selected traffic item filters from the availableTrafficItemFilter list.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])
@@ -128,11 +128,11 @@ class Layer23TrafficFlowFilter(Base):
 		"""Adds a new layer23TrafficFlowFilter node on the server and retrieves it in this instance.
 
 		Args:
-			AggregatedAcrossPorts (bool): If true, displays aggregated stat value across ports selected by portFilterIds. Default = false
-			EgressLatencyBinDisplayOption (str(none|showEgressFlatView|showEgressRows|showLatencyBinStats)): Emulates Latency Bin SV or Egress Tracking SV.
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
-			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): Selected traffic item filter from the availableTrafficItemFilter list.
-			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
+			AggregatedAcrossPorts (bool): 
+			EgressLatencyBinDisplayOption (str(none|showEgressFlatView|showEgressRows|showLatencyBinStats)): 
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
+			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): 
+			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): 
 
 		Returns:
 			self: This instance with all currently retrieved layer23TrafficFlowFilter data using find and the newly added layer23TrafficFlowFilter data available through an iterator or index
@@ -158,11 +158,11 @@ class Layer23TrafficFlowFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer23TrafficFlowFilter data from the server.
 
 		Args:
-			AggregatedAcrossPorts (bool): If true, displays aggregated stat value across ports selected by portFilterIds. Default = false
-			EgressLatencyBinDisplayOption (str(none|showEgressFlatView|showEgressRows|showLatencyBinStats)): Emulates Latency Bin SV or Egress Tracking SV.
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
-			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): Selected traffic item filter from the availableTrafficItemFilter list.
-			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
+			AggregatedAcrossPorts (bool): 
+			EgressLatencyBinDisplayOption (str(none|showEgressFlatView|showEgressRows|showLatencyBinStats)): 
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
+			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): 
+			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): 
 
 		Returns:
 			self: This instance with matching layer23TrafficFlowFilter data retrieved from the server available through an iterator or index

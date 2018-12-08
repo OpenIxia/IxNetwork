@@ -297,6 +297,26 @@ class Ntpclock(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, MaximumFrequencyTolerance=None, Mimimumsurvivorcount=None, Precision=None):
+		"""Base class infrastructure that gets a list of ntpclock device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			MaximumFrequencyTolerance (str): optional regex of maximumFrequencyTolerance
+			Mimimumsurvivorcount (str): optional regex of mimimumsurvivorcount
+			Precision (str): optional regex of precision
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

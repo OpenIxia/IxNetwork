@@ -324,6 +324,47 @@ class LinkLsaRoutes(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, DCBit=None, EBit=None, LABit=None, LinkLocalAddress=None, LinkStateId=None, LinkStateIdStep=None, MCBit=None, Metric=None, NBit=None, NUBit=None, NetworkAddress=None, PBit=None, Prefix=None, RBit=None, RangeSize=None, ReservedBit6=None, ReservedBit7=None, RouterPriority=None, UnusedBit4=None, UnusedBit5=None, UnusedBit6=None, UnusedBit7=None, V6Bit=None, XBit=None):
+		"""Base class infrastructure that gets a list of linkLsaRoutes device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DCBit (str): optional regex of dCBit
+			EBit (str): optional regex of eBit
+			LABit (str): optional regex of lABit
+			LinkLocalAddress (str): optional regex of linkLocalAddress
+			LinkStateId (str): optional regex of linkStateId
+			LinkStateIdStep (str): optional regex of linkStateIdStep
+			MCBit (str): optional regex of mCBit
+			Metric (str): optional regex of metric
+			NBit (str): optional regex of nBit
+			NUBit (str): optional regex of nUBit
+			NetworkAddress (str): optional regex of networkAddress
+			PBit (str): optional regex of pBit
+			Prefix (str): optional regex of prefix
+			RBit (str): optional regex of rBit
+			RangeSize (str): optional regex of rangeSize
+			ReservedBit6 (str): optional regex of reservedBit6
+			ReservedBit7 (str): optional regex of reservedBit7
+			RouterPriority (str): optional regex of routerPriority
+			UnusedBit4 (str): optional regex of unusedBit4
+			UnusedBit5 (str): optional regex of unusedBit5
+			UnusedBit6 (str): optional regex of unusedBit6
+			UnusedBit7 (str): optional regex of unusedBit7
+			V6Bit (str): optional regex of v6Bit
+			XBit (str): optional regex of xBit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Advertise(self):
 		"""Executes the advertise operation on the server.
 

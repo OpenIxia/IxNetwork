@@ -51,7 +51,7 @@ class Bfd(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the use of this emulated BFD router in the emulated BFD network. (default = disabled)
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Bfd(Base):
 
 	@property
 	def IntervalValue(self):
-		"""Interval Value
+		"""
 
 		Returns:
 			number
@@ -75,7 +75,7 @@ class Bfd(Base):
 
 	@property
 	def PacketsPerInterval(self):
-		"""Number of BFD control packets per interval.
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class Bfd(Base):
 
 	@property
 	def RunningState(self):
-		"""The current running state of the BFD protocol.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -96,8 +96,6 @@ class Bfd(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the BFD protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bfd)): The method internally sets Arg1 to the current href for this instance
@@ -111,8 +109,6 @@ class Bfd(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the BFD protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bfd)): The method internally sets Arg1 to the current href for this instance

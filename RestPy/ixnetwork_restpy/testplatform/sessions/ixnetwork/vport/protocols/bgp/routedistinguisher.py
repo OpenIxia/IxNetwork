@@ -37,7 +37,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def AsNumber(self):
-		"""If the type was set to as or asNumber2, this is the AS number in the Administrator subfield of the Value field of the MVPN Route Distinguisher (RD). It is the Global part of the RD. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def AsNumberStep(self):
-		"""The increment step for for the AS.
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def AssignedNumber(self):
-		"""The Assigned Number sub-field of the Value field of the MVPN Route Distinguisher. It is a number from a numbering space, which the enterprise administers, for a given IP address or ASN space. It is the Local part of the RD. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def AssignedNumberStep(self):
-		"""The increment step for for the assigned number.
+		"""
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def IpAddress(self):
-		"""If the type was set to ip, this is the 4-byte IP address in the Administrator subfield of the Value field of the MVPN Route Distinguisher (RD). It is the Global part of the RD. (default = 0.0.0.0)
+		"""
 
 		Returns:
 			str
@@ -97,7 +97,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def IpAddressStep(self):
-		"""The increment step for for the IP address.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class RouteDistinguisher(Base):
 
 	@property
 	def Type(self):
-		"""Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
+		"""
 
 		Returns:
 			str(as|ip|asNumber2)

@@ -52,7 +52,7 @@ class CustomTopologyNodeTopologyRange(Base):
 
 	@property
 	def NicknameCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class CustomTopologyNodeTopologyRange(Base):
 
 	@property
 	def NodeNicknameIncrement(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class CustomTopologyNodeTopologyRange(Base):
 
 	@property
 	def NumberOftreesToCompute(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class CustomTopologyNodeTopologyRange(Base):
 
 	@property
 	def StartNickname(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -102,10 +102,10 @@ class CustomTopologyNodeTopologyRange(Base):
 		"""Adds a new customTopologyNodeTopologyRange node on the server and retrieves it in this instance.
 
 		Args:
-			NicknameCount (number): NOT DEFINED
-			NodeNicknameIncrement (number): NOT DEFINED
-			NumberOftreesToCompute (number): NOT DEFINED
-			StartNickname (number): NOT DEFINED
+			NicknameCount (number): 
+			NodeNicknameIncrement (number): 
+			NumberOftreesToCompute (number): 
+			StartNickname (number): 
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyNodeTopologyRange data using find and the newly added customTopologyNodeTopologyRange data available through an iterator or index
@@ -131,10 +131,10 @@ class CustomTopologyNodeTopologyRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyNodeTopologyRange data from the server.
 
 		Args:
-			NicknameCount (number): NOT DEFINED
-			NodeNicknameIncrement (number): NOT DEFINED
-			NumberOftreesToCompute (number): NOT DEFINED
-			StartNickname (number): NOT DEFINED
+			NicknameCount (number): 
+			NodeNicknameIncrement (number): 
+			NumberOftreesToCompute (number): 
+			StartNickname (number): 
 
 		Returns:
 			self: This instance with matching customTopologyNodeTopologyRange data retrieved from the server available through an iterator or index

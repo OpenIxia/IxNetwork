@@ -18,6 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import sys
+import re
 from inspect import isclass
 from ixnetwork_restpy.connection import Connection
 from ixnetwork_restpy.errors import NotFoundError
@@ -351,3 +353,58 @@ class Base(object):
                     self._set_properties(response[self._SDM_NAME])
         self._index = len(self._object_properties) - 1
         return self
+
+    def _get_ngpf_device_ids(self, locals_dict=dict()):
+        """Get NGPF device ids
+        
+        NGPF has a /topology/deviceGroup -count attribute that is used to set the devices per port
+        Any NGPF class that has an operation that requires a list of session indices will have a GetDeviceIds method generated for it that calls into this method
+        All parameters will be optional and defaulted to None
+        The first parameter will always be a PortNames parameter defaulted to None
+        This method will evaluate all non None criteria for matches
+
+        e.g. System is configured with the following:
+            20 vports using the default generated names
+            2 topology with 10 vports assigned to each
+            User wants to send arp on topology 1 only on ports 1 and 8
+                ivp4_obj.SendArp(ipv4_obj.GetDeviceIds(PortName='^(Ethernet - 001|Ethernet - 008)$'))
+
+        1. Find the starting topology reference by walking the href back to topology
+        2. Find the starting index range based on the PortName
+            2.a all other matches will be constrained by this starting index range
+
+
+        Returns:
+            list: a list of numeric sessionindices
+        """
+        # setup the device id map
+        topology_url = self.href[0:self.href.index('deviceGroup') - 1]
+        from ixnetwork_restpy.select import Select
+        topology_results = Select(self._connection, topology_url, 
+            from_properties=['vports'], 
+            children=[{'child': 'deviceGroup', 'properties': ['count'], 'filters': []}], 
+            inlines=[{'child': 'vport', 'properties': ['name']}]).go()
+        number_of_ports = len(topology_results[0]['vports'])
+        total_devices = topology_results[0]['deviceGroup'][0]['count'] 
+        devices_per_port = int(total_devices / number_of_ports)
+        if sys.version_info >= (3, 0):
+            device_ids = list(range(1, total_devices + 1))
+        else:
+            device_ids = range(1, total_devices + 1)
+
+        for key, regex_pattern in locals_dict.items():
+            if regex_pattern in [None, self]:
+                continue
+            regex = re.compile(regex_pattern)
+            if key == 'PortNames':
+                for i in range(len(topology_results[0]['vports'])):
+                    if regex.search(topology_results[0]['vports'][i]['name']) is None:
+                        device_ids[i * devices_per_port:i * devices_per_port + devices_per_port] = [0] * devices_per_port
+            else:
+                multivalue = getattr(self, key)
+                values = multivalue.Values
+                for i in range(len(values)):
+                    if regex.search(values[i]) is None:
+                        device_ids[i] = 0
+        
+        return [x for x in device_ids if x != 0]

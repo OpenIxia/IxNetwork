@@ -37,7 +37,7 @@ class Prefix(Base):
 
 	@property
 	def Prefix(self):
-		"""Controls the prefix attributes that are filtered on.
+		"""
 
 		Returns:
 			list(dict(arg1:str,arg2:bool,arg3:number,arg4:number))

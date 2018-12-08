@@ -37,7 +37,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def ConfigFlags(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def MissSendLength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class SwitchConfigLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -141,17 +141,17 @@ class SwitchConfigLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all switchConfigLearnedInformation data from the server.
 
 		Args:
-			ConfigFlags (str): NOT DEFINED
-			DataPathId (str): NOT DEFINED
-			DataPathIdAsHex (str): NOT DEFINED
-			ErrorCode (str): NOT DEFINED
-			ErrorType (str): NOT DEFINED
-			Latency (number): NOT DEFINED
-			LocalIp (str): NOT DEFINED
-			MissSendLength (number): NOT DEFINED
-			NegotiatedVersion (str): NOT DEFINED
-			RemoteIp (str): NOT DEFINED
-			ReplyState (str): NOT DEFINED
+			ConfigFlags (str): 
+			DataPathId (str): 
+			DataPathIdAsHex (str): 
+			ErrorCode (str): 
+			ErrorType (str): 
+			Latency (number): 
+			LocalIp (str): 
+			MissSendLength (number): 
+			NegotiatedVersion (str): 
+			RemoteIp (str): 
+			ReplyState (str): 
 
 		Returns:
 			self: This instance with matching switchConfigLearnedInformation data retrieved from the server available through an iterator or index

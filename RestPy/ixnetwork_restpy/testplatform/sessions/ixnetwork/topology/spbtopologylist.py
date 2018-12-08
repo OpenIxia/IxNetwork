@@ -216,3 +216,33 @@ class SpbTopologyList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('vbit')
+
+	def get_device_ids(self, PortNames=None, Active=None, AuxMcidConfName=None, AuxMcidSignature=None, BridgePriority=None, CistExternalRootCost=None, CistRootId=None, LinkMetric=None, McidConfName=None, McidSignature=None, NumberOfPorts=None, PortIdentifier=None, SpSourceId=None, TopologyId=None, Vbit=None):
+		"""Base class infrastructure that gets a list of spbTopologyList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AuxMcidConfName (str): optional regex of auxMcidConfName
+			AuxMcidSignature (str): optional regex of auxMcidSignature
+			BridgePriority (str): optional regex of bridgePriority
+			CistExternalRootCost (str): optional regex of cistExternalRootCost
+			CistRootId (str): optional regex of cistRootId
+			LinkMetric (str): optional regex of linkMetric
+			McidConfName (str): optional regex of mcidConfName
+			McidSignature (str): optional regex of mcidSignature
+			NumberOfPorts (str): optional regex of numberOfPorts
+			PortIdentifier (str): optional regex of portIdentifier
+			SpSourceId (str): optional regex of spSourceId
+			TopologyId (str): optional regex of topologyId
+			Vbit (str): optional regex of vbit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

@@ -37,7 +37,7 @@ class DataIntegrity(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables and fetches data integrity statistics
+		"""
 
 		Returns:
 			bool

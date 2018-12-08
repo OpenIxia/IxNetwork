@@ -149,3 +149,24 @@ class IsisSRTunnelList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('usingHeadEndNodePrefix')
+
+	def get_device_ids(self, PortNames=None, Active=None, SourceIpv4=None, SourceIpv6=None, TunnelDescription=None, UsingHeadEndNodePrefix=None):
+		"""Base class infrastructure that gets a list of isisSRTunnelList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			SourceIpv4 (str): optional regex of sourceIpv4
+			SourceIpv6 (str): optional regex of sourceIpv6
+			TunnelDescription (str): optional regex of tunnelDescription
+			UsingHeadEndNodePrefix (str): optional regex of usingHeadEndNodePrefix
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

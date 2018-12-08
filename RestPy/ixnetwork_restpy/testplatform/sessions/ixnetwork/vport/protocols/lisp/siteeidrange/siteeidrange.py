@@ -38,7 +38,7 @@ class SiteEidRange(Base):
 
 	@property
 	def Address(self):
-		"""It gives details about the Ip address
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class SiteEidRange(Base):
 
 	@property
 	def Count(self):
-		"""It details about the count
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class SiteEidRange(Base):
 
 	@property
 	def Enabled(self):
-		"""It true, it enables the protocol
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class SiteEidRange(Base):
 
 	@property
 	def Family(self):
-		"""It describes which family it belongs to
+		"""
 
 		Returns:
 			str(ipv4|ipv6)
@@ -86,7 +86,7 @@ class SiteEidRange(Base):
 
 	@property
 	def IncludeOrExclude(self):
-		"""It decides whether to include or exclude
+		"""
 
 		Returns:
 			str(include|exclude)
@@ -98,7 +98,7 @@ class SiteEidRange(Base):
 
 	@property
 	def InstanceId(self):
-		"""It gives the instance id
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class SiteEidRange(Base):
 
 	@property
 	def PrefixLength(self):
-		"""It gives details about the prefix length
+		"""
 
 		Returns:
 			number
@@ -124,13 +124,13 @@ class SiteEidRange(Base):
 		"""Adds a new siteEidRange node on the server and retrieves it in this instance.
 
 		Args:
-			Address (str): It gives details about the Ip address
-			Count (number): It details about the count
-			Enabled (bool): It true, it enables the protocol
-			Family (str(ipv4|ipv6)): It describes which family it belongs to
-			IncludeOrExclude (str(include|exclude)): It decides whether to include or exclude
-			InstanceId (number): It gives the instance id
-			PrefixLength (number): It gives details about the prefix length
+			Address (str): 
+			Count (number): 
+			Enabled (bool): 
+			Family (str(ipv4|ipv6)): 
+			IncludeOrExclude (str(include|exclude)): 
+			InstanceId (number): 
+			PrefixLength (number): 
 
 		Returns:
 			self: This instance with all currently retrieved siteEidRange data using find and the newly added siteEidRange data available through an iterator or index
@@ -156,13 +156,13 @@ class SiteEidRange(Base):
 		By default the find method takes no parameters and will retrieve all siteEidRange data from the server.
 
 		Args:
-			Address (str): It gives details about the Ip address
-			Count (number): It details about the count
-			Enabled (bool): It true, it enables the protocol
-			Family (str(ipv4|ipv6)): It describes which family it belongs to
-			IncludeOrExclude (str(include|exclude)): It decides whether to include or exclude
-			InstanceId (number): It gives the instance id
-			PrefixLength (number): It gives details about the prefix length
+			Address (str): 
+			Count (number): 
+			Enabled (bool): 
+			Family (str(ipv4|ipv6)): 
+			IncludeOrExclude (str(include|exclude)): 
+			InstanceId (number): 
+			PrefixLength (number): 
 
 		Returns:
 			self: This instance with matching siteEidRange data retrieved from the server available through an iterator or index

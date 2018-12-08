@@ -37,7 +37,7 @@ class OneTimeJoinLeaveLatency(Base):
 
 	@property
 	def Enabled(self):
-		"""If true enables one time join leave latency.
+		"""
 
 		Returns:
 			bool

@@ -684,6 +684,57 @@ class Ldpvplsbgpad(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AsNumberVplsId=None, AssignedNumberVplsId=None, AutoPeerID=None, BfdPwCV=None, BfdUdpCV=None, CBitEnabled=None, DescEnabled=None, Description=None, DownInterval=None, DownStart=None, EnableCCCVNegotiation=None, EnablePWStatus=None, GroupId=None, InterfaceType=None, IpAddressVplsId=None, Ipv6PeerId=None, LSPPingCV=None, Label=None, Mtu=None, PWACHCC=None, PWStatusCode=None, PeerId=None, ProvisioningModelType=None, PwStatusSendNotification=None, RepeatCount=None, RouterAlertCC=None, SourceAIIType=None, SourceAIIasIP=None, SourceAIIasNumber=None, TargetAIIType=None, TargetAIIasIP=None, TargetAIIasNumber=None, TypeVplsId=None, UpInterval=None):
+		"""Base class infrastructure that gets a list of ldpvplsbgpad device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AsNumberVplsId (str): optional regex of asNumberVplsId
+			AssignedNumberVplsId (str): optional regex of assignedNumberVplsId
+			AutoPeerID (str): optional regex of autoPeerID
+			BfdPwCV (str): optional regex of bfdPwCV
+			BfdUdpCV (str): optional regex of bfdUdpCV
+			CBitEnabled (str): optional regex of cBitEnabled
+			DescEnabled (str): optional regex of descEnabled
+			Description (str): optional regex of description
+			DownInterval (str): optional regex of downInterval
+			DownStart (str): optional regex of downStart
+			EnableCCCVNegotiation (str): optional regex of enableCCCVNegotiation
+			EnablePWStatus (str): optional regex of enablePWStatus
+			GroupId (str): optional regex of groupId
+			InterfaceType (str): optional regex of interfaceType
+			IpAddressVplsId (str): optional regex of ipAddressVplsId
+			Ipv6PeerId (str): optional regex of ipv6PeerId
+			LSPPingCV (str): optional regex of lSPPingCV
+			Label (str): optional regex of label
+			Mtu (str): optional regex of mtu
+			PWACHCC (str): optional regex of pWACHCC
+			PWStatusCode (str): optional regex of pWStatusCode
+			PeerId (str): optional regex of peerId
+			ProvisioningModelType (str): optional regex of provisioningModelType
+			PwStatusSendNotification (str): optional regex of pwStatusSendNotification
+			RepeatCount (str): optional regex of repeatCount
+			RouterAlertCC (str): optional regex of routerAlertCC
+			SourceAIIType (str): optional regex of sourceAIIType
+			SourceAIIasIP (str): optional regex of sourceAIIasIP
+			SourceAIIasNumber (str): optional regex of sourceAIIasNumber
+			TargetAIIType (str): optional regex of targetAIIType
+			TargetAIIasIP (str): optional regex of targetAIIasIP
+			TargetAIIasNumber (str): optional regex of targetAIIasNumber
+			TypeVplsId (str): optional regex of typeVplsId
+			UpInterval (str): optional regex of upInterval
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def PurgeVCRanges(self):
 		"""Executes the purgeVCRanges operation on the server.
 

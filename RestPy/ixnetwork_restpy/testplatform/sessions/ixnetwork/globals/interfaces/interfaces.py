@@ -37,7 +37,7 @@ class Interfaces(Base):
 
 	@property
 	def ArpOnLinkup(self):
-		"""If true, automatically enables ARP and PING when the interfaces is associated with a port.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Interfaces(Base):
 
 	@property
 	def NsOnLinkup(self):
-		"""If true, automatically enables NS when the interfaces is associated with a port.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Interfaces(Base):
 
 	@property
 	def SendSingleArpPerGateway(self):
-		"""If true, only a single ARP is sent via each defined gateway address.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Interfaces(Base):
 
 	@property
 	def SendSingleNsPerGateway(self):
-		"""If true, only a single NS is sent via each defined gateway address.
+		"""
 
 		Returns:
 			bool

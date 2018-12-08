@@ -288,6 +288,39 @@ class RsvpP2mpEgressLsps(Base):
 	def TypeP2mpId(self, value):
 		self._set_attribute('typeP2mpId', value)
 
+	def get_device_ids(self, PortNames=None, Active=None, DestinationIpv4GroupAddress=None, EnableFixedLabelForReservations=None, EndPointIpv6=None, IncludeConnectedIpOnTop=None, IncludeLeafIpAtBottom=None, LabelValue=None, P2mpIdAsNumber=None, P2mpIdIp=None, ReflectRro=None, RefreshInterval=None, ReservationStyle=None, SendAsRro=None, SendAsSrro=None, SendReservationConfirmation=None, SubLspsDown=None, TimeoutMultiplier=None):
+		"""Base class infrastructure that gets a list of rsvpP2mpEgressLsps device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DestinationIpv4GroupAddress (str): optional regex of destinationIpv4GroupAddress
+			EnableFixedLabelForReservations (str): optional regex of enableFixedLabelForReservations
+			EndPointIpv6 (str): optional regex of endPointIpv6
+			IncludeConnectedIpOnTop (str): optional regex of includeConnectedIpOnTop
+			IncludeLeafIpAtBottom (str): optional regex of includeLeafIpAtBottom
+			LabelValue (str): optional regex of labelValue
+			P2mpIdAsNumber (str): optional regex of p2mpIdAsNumber
+			P2mpIdIp (str): optional regex of p2mpIdIp
+			ReflectRro (str): optional regex of reflectRro
+			RefreshInterval (str): optional regex of refreshInterval
+			ReservationStyle (str): optional regex of reservationStyle
+			SendAsRro (str): optional regex of sendAsRro
+			SendAsSrro (str): optional regex of sendAsSrro
+			SendReservationConfirmation (str): optional regex of sendReservationConfirmation
+			SubLspsDown (str): optional regex of subLspsDown
+			TimeoutMultiplier (str): optional regex of timeoutMultiplier
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def GraftSubLsp(self):
 		"""Executes the graftSubLsp operation on the server.
 

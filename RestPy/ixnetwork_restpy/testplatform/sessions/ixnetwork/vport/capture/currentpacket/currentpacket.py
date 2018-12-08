@@ -51,7 +51,7 @@ class CurrentPacket(Base):
 
 	@property
 	def PacketHex(self):
-		"""Gets the packet hex of the current packet
+		"""
 
 		Returns:
 			str
@@ -61,11 +61,9 @@ class CurrentPacket(Base):
 	def GetPacketFromControlCapture(self, Arg2):
 		"""Executes the getPacketFromControlCapture operation on the server.
 
-		The command retrieves a packet from the control capture started on a port.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=currentPacket)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (number): The packet index.
+			Arg2 (number): 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -77,11 +75,9 @@ class CurrentPacket(Base):
 	def GetPacketFromDataCapture(self, Arg2):
 		"""Executes the getPacketFromDataCapture operation on the server.
 
-		The command retrieves a packet from the data capture started on a port.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=currentPacket)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (number): The packet index.
+			Arg2 (number): 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

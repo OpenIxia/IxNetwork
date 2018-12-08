@@ -201,6 +201,24 @@ class SimRouter(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, RouterId=None, SystemId=None):
+		"""Base class infrastructure that gets a list of simRouter device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			RouterId (str): optional regex of routerId
+			SystemId (str): optional regex of systemId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

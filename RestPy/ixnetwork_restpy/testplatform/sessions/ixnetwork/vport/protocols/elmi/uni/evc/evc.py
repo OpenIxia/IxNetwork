@@ -66,7 +66,7 @@ class Evc(Base):
 
 	@property
 	def DefaultEvc(self):
-		"""If enabled, default EVC bit is set to 1. It indicates that all CE-VLAN IDs that are not specified in this or other CE-VLAN ID/EVC Map IEs are mapped to this EVC. At most one EVC can be identified as a Default EVC on the UNI. The 'Default EVC' bit has significance only if CE-VLAN ID/EVC Map Type is equal to 'Bundling' (see UNI Status information element octet 3). It must be set to 0 when it is not significant. Default is 0.
+		"""
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Evc(Base):
 
 	@property
 	def Enabled(self):
-		"""If enabled, the EVC is in effect.
+		"""
 
 		Returns:
 			bool
@@ -90,7 +90,7 @@ class Evc(Base):
 
 	@property
 	def EvcIdentifier(self):
-		"""It signifies the content of EVC ID. The length is determined by EVC ID Length. Default is 0.
+		"""
 
 		Returns:
 			str
@@ -102,7 +102,7 @@ class Evc(Base):
 
 	@property
 	def EvcIdentifierLength(self):
-		"""It signifies one octet and indicates the length of EVC ID content. Default is 1. Min is 1 and Max is 100.
+		"""
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class Evc(Base):
 
 	@property
 	def EvcStatus(self):
-		"""Default is New and Active.
+		"""
 
 		Returns:
 			str(notActive|newAndNotActive|active|newAndActive|partiallyActive|newAndPartiallyActive)
@@ -126,7 +126,7 @@ class Evc(Base):
 
 	@property
 	def EvcType(self):
-		"""It is a drop down of Point-to-Point which is 0 and Multipoint-to-Multipoint which is 1. Default is Point-to-Point.
+		"""
 
 		Returns:
 			str(pointToPoint|multipointToMultipoint)
@@ -138,7 +138,7 @@ class Evc(Base):
 
 	@property
 	def ReferenceId(self):
-		"""Default value is 1. Max two octet maximum value, Min 1.
+		"""
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class Evc(Base):
 
 	@property
 	def UntaggedPriorityTagged(self):
-		"""If enabled, Untagged/Priority Tagged bit is set to 1. It indicates that this EVC Map Entry identifies the CE VLAN ID for Untagged/Priority Service Frames. The 'Untagged/Priority Tagged' bit has significance only if CE-VLAN ID/EVC Map Type is not equal to 'All to one Bundling' (see UNI Status information element octet 3). It must be set to 0 when it is not significant. Default is 0.
+		"""
 
 		Returns:
 			bool
@@ -164,14 +164,14 @@ class Evc(Base):
 		"""Adds a new evc node on the server and retrieves it in this instance.
 
 		Args:
-			DefaultEvc (bool): If enabled, default EVC bit is set to 1. It indicates that all CE-VLAN IDs that are not specified in this or other CE-VLAN ID/EVC Map IEs are mapped to this EVC. At most one EVC can be identified as a Default EVC on the UNI. The 'Default EVC' bit has significance only if CE-VLAN ID/EVC Map Type is equal to 'Bundling' (see UNI Status information element octet 3). It must be set to 0 when it is not significant. Default is 0.
-			Enabled (bool): If enabled, the EVC is in effect.
-			EvcIdentifier (str): It signifies the content of EVC ID. The length is determined by EVC ID Length. Default is 0.
-			EvcIdentifierLength (number): It signifies one octet and indicates the length of EVC ID content. Default is 1. Min is 1 and Max is 100.
-			EvcStatus (str(notActive|newAndNotActive|active|newAndActive|partiallyActive|newAndPartiallyActive)): Default is New and Active.
-			EvcType (str(pointToPoint|multipointToMultipoint)): It is a drop down of Point-to-Point which is 0 and Multipoint-to-Multipoint which is 1. Default is Point-to-Point.
-			ReferenceId (number): Default value is 1. Max two octet maximum value, Min 1.
-			UntaggedPriorityTagged (bool): If enabled, Untagged/Priority Tagged bit is set to 1. It indicates that this EVC Map Entry identifies the CE VLAN ID for Untagged/Priority Service Frames. The 'Untagged/Priority Tagged' bit has significance only if CE-VLAN ID/EVC Map Type is not equal to 'All to one Bundling' (see UNI Status information element octet 3). It must be set to 0 when it is not significant. Default is 0.
+			DefaultEvc (bool): 
+			Enabled (bool): 
+			EvcIdentifier (str): 
+			EvcIdentifierLength (number): 
+			EvcStatus (str(notActive|newAndNotActive|active|newAndActive|partiallyActive|newAndPartiallyActive)): 
+			EvcType (str(pointToPoint|multipointToMultipoint)): 
+			ReferenceId (number): 
+			UntaggedPriorityTagged (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved evc data using find and the newly added evc data available through an iterator or index
@@ -197,14 +197,14 @@ class Evc(Base):
 		By default the find method takes no parameters and will retrieve all evc data from the server.
 
 		Args:
-			DefaultEvc (bool): If enabled, default EVC bit is set to 1. It indicates that all CE-VLAN IDs that are not specified in this or other CE-VLAN ID/EVC Map IEs are mapped to this EVC. At most one EVC can be identified as a Default EVC on the UNI. The 'Default EVC' bit has significance only if CE-VLAN ID/EVC Map Type is equal to 'Bundling' (see UNI Status information element octet 3). It must be set to 0 when it is not significant. Default is 0.
-			Enabled (bool): If enabled, the EVC is in effect.
-			EvcIdentifier (str): It signifies the content of EVC ID. The length is determined by EVC ID Length. Default is 0.
-			EvcIdentifierLength (number): It signifies one octet and indicates the length of EVC ID content. Default is 1. Min is 1 and Max is 100.
-			EvcStatus (str(notActive|newAndNotActive|active|newAndActive|partiallyActive|newAndPartiallyActive)): Default is New and Active.
-			EvcType (str(pointToPoint|multipointToMultipoint)): It is a drop down of Point-to-Point which is 0 and Multipoint-to-Multipoint which is 1. Default is Point-to-Point.
-			ReferenceId (number): Default value is 1. Max two octet maximum value, Min 1.
-			UntaggedPriorityTagged (bool): If enabled, Untagged/Priority Tagged bit is set to 1. It indicates that this EVC Map Entry identifies the CE VLAN ID for Untagged/Priority Service Frames. The 'Untagged/Priority Tagged' bit has significance only if CE-VLAN ID/EVC Map Type is not equal to 'All to one Bundling' (see UNI Status information element octet 3). It must be set to 0 when it is not significant. Default is 0.
+			DefaultEvc (bool): 
+			Enabled (bool): 
+			EvcIdentifier (str): 
+			EvcIdentifierLength (number): 
+			EvcStatus (str(notActive|newAndNotActive|active|newAndActive|partiallyActive|newAndPartiallyActive)): 
+			EvcType (str(pointToPoint|multipointToMultipoint)): 
+			ReferenceId (number): 
+			UntaggedPriorityTagged (bool): 
 
 		Returns:
 			self: This instance with matching evc data retrieved from the server available through an iterator or index

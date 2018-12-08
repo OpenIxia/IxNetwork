@@ -37,7 +37,7 @@ class WildcardsLearnedInfo(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class WildcardsLearnedInfo(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class WildcardsLearnedInfo(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class WildcardsLearnedInfo(Base):
 
 	@property
 	def NextTableIds(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class WildcardsLearnedInfo(Base):
 
 	@property
 	def Property(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class WildcardsLearnedInfo(Base):
 
 	@property
 	def SupportedField(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -96,12 +96,12 @@ class WildcardsLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all wildcardsLearnedInfo data from the server.
 
 		Args:
-			ExperimenterData (str): NOT DEFINED
-			ExperimenterDataLength (number): NOT DEFINED
-			ExperimenterId (number): NOT DEFINED
-			NextTableIds (str): NOT DEFINED
-			Property (str): NOT DEFINED
-			SupportedField (str): NOT DEFINED
+			ExperimenterData (str): 
+			ExperimenterDataLength (number): 
+			ExperimenterId (number): 
+			NextTableIds (str): 
+			Property (str): 
+			SupportedField (str): 
 
 		Returns:
 			self: This instance with matching wildcardsLearnedInfo data retrieved from the server available through an iterator or index

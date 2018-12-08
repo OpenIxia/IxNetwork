@@ -50,7 +50,7 @@ class EndpointSet(Base):
 
 	@property
 	def DestinationFilter(self):
-		"""The list of conditions used for filtering destinations endpoints.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class EndpointSet(Base):
 
 	@property
 	def Destinations(self):
-		"""Indicates the number of destination endpoints configured.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])
@@ -98,7 +98,7 @@ class EndpointSet(Base):
 
 	@property
 	def Name(self):
-		"""The name of the endpoint set.
+		"""
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class EndpointSet(Base):
 
 	@property
 	def NgpfFilters(self):
-		"""The list of next generation structures used to filter endpoints. The structure consists of a string tag and list of integer indexes.
+		"""
 
 		Returns:
 			list(dict(arg1:str,arg2:list[number]))
@@ -122,7 +122,7 @@ class EndpointSet(Base):
 
 	@property
 	def ScalableDestinations(self):
-		"""A list of scalable destination structures
+		"""
 
 		Returns:
 			list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))
@@ -134,7 +134,7 @@ class EndpointSet(Base):
 
 	@property
 	def ScalableSources(self):
-		"""A list of scalable source structures.
+		"""
 
 		Returns:
 			list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))
@@ -146,7 +146,7 @@ class EndpointSet(Base):
 
 	@property
 	def SourceFilter(self):
-		"""The list of conditions used for filtering source endpoints.
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class EndpointSet(Base):
 
 	@property
 	def Sources(self):
-		"""Indicates the number of source endpoints configured.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])
@@ -170,7 +170,7 @@ class EndpointSet(Base):
 
 	@property
 	def TrafficGroups(self):
-		"""Indicates the traffic groups selected in the source/destination endpoint set.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*])
@@ -185,17 +185,17 @@ class EndpointSet(Base):
 
 		Args:
 			AllowEmptyTopologySets (bool): Enable this to allow the setting of sources and destinations without throwing an error even if the combination produces an empty topology set.
-			DestinationFilter (str): The list of conditions used for filtering destinations endpoints.
-			Destinations (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): Indicates the number of destination endpoints configured.
+			DestinationFilter (str): 
+			Destinations (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
 			MulticastDestinations (list(dict(arg1:bool,arg2:str[igmp|mld|none],arg3:str,arg4:str,arg5:number))): A compact representation of many virtual multicast destinations. Each list item consists of 5 values where the first two, a bool value and enum value, can be defaulted to false and none. The next two values are a starting address and step address which can be either an ipv4, ipv6 or streamId and the last value is a count of addresses.
 			MulticastReceivers (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number))): A list of virtual multicast receivers. Each list item consists of a multicast receiver object reference, port index, host index and group or join/prune index depending on the type of object reference.
-			Name (str): The name of the endpoint set.
-			NgpfFilters (list(dict(arg1:str,arg2:list[number]))): The list of next generation structures used to filter endpoints. The structure consists of a string tag and list of integer indexes.
-			ScalableDestinations (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): A list of scalable destination structures
-			ScalableSources (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): A list of scalable source structures.
-			SourceFilter (str): The list of conditions used for filtering source endpoints.
-			Sources (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): Indicates the number of source endpoints configured.
-			TrafficGroups (list(str[None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*])): Indicates the traffic groups selected in the source/destination endpoint set.
+			Name (str): 
+			NgpfFilters (list(dict(arg1:str,arg2:list[number]))): 
+			ScalableDestinations (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): 
+			ScalableSources (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): 
+			SourceFilter (str): 
+			Sources (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
+			TrafficGroups (list(str[None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*])): 
 
 		Returns:
 			self: This instance with all currently retrieved endpointSet data using find and the newly added endpointSet data available through an iterator or index
@@ -222,17 +222,17 @@ class EndpointSet(Base):
 
 		Args:
 			AllowEmptyTopologySets (bool): Enable this to allow the setting of sources and destinations without throwing an error even if the combination produces an empty topology set.
-			DestinationFilter (str): The list of conditions used for filtering destinations endpoints.
-			Destinations (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): Indicates the number of destination endpoints configured.
+			DestinationFilter (str): 
+			Destinations (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
 			MulticastDestinations (list(dict(arg1:bool,arg2:str[igmp|mld|none],arg3:str,arg4:str,arg5:number))): A compact representation of many virtual multicast destinations. Each list item consists of 5 values where the first two, a bool value and enum value, can be defaulted to false and none. The next two values are a starting address and step address which can be either an ipv4, ipv6 or streamId and the last value is a count of addresses.
 			MulticastReceivers (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number))): A list of virtual multicast receivers. Each list item consists of a multicast receiver object reference, port index, host index and group or join/prune index depending on the type of object reference.
-			Name (str): The name of the endpoint set.
-			NgpfFilters (list(dict(arg1:str,arg2:list[number]))): The list of next generation structures used to filter endpoints. The structure consists of a string tag and list of integer indexes.
-			ScalableDestinations (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): A list of scalable destination structures
-			ScalableSources (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): A list of scalable source structures.
-			SourceFilter (str): The list of conditions used for filtering source endpoints.
-			Sources (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): Indicates the number of source endpoints configured.
-			TrafficGroups (list(str[None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*])): Indicates the traffic groups selected in the source/destination endpoint set.
+			Name (str): 
+			NgpfFilters (list(dict(arg1:str,arg2:list[number]))): 
+			ScalableDestinations (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): 
+			ScalableSources (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*],arg2:number,arg3:number,arg4:number,arg5:number))): 
+			SourceFilter (str): 
+			Sources (list(str[None|/api/v1/sessions/1/ixnetwork/lag?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
+			TrafficGroups (list(str[None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=*])): 
 
 		Returns:
 			self: This instance with matching endpointSet data retrieved from the server available through an iterator or index

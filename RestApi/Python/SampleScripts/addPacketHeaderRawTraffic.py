@@ -210,6 +210,11 @@ try:
                                              'startValue': '1.1.1.2',
                                              'stepValue': '0.0.0.1',
                                              'countValue': 1})
+
+    # Example for IP Priority = DSCP/Diff-Serv
+    trafficObj.configPacketHeaderField(stackObj,
+                                       fieldName='Class selector PHB',
+                                       data={'activeFieldChoice': True})
     
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='UDP',
                                                     stackNumber=6, action='append')

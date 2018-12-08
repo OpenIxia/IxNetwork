@@ -387,15 +387,6 @@ class Dhcpv6client(Base):
 		return TlvProfile(self)
 
 	@property
-	def ComputedIapdAddresses(self):
-		"""The computed IPv6 addresses.
-
-		Returns:
-			list(str)
-		"""
-		return self._get_attribute('computedIapdAddresses')
-
-	@property
 	def ConnectedVia(self):
 		"""List of layers this layer used to connect to the wire
 
@@ -765,14 +756,13 @@ class Dhcpv6client(Base):
 		"""
 		self._delete()
 
-	def find(self, ComputedIapdAddresses=None, ConnectedVia=None, Count=None, DescriptiveName=None, DiscoveredAddresses=None, DiscoveredGateways=None, DiscoveredPrefix=None, DiscoveredPrefixLength=None, EnableStateless=None, Errors=None, MaxNoPerClient=None, Multiplier=None, Name=None, NoOfAddresses=None, NoOfPrefixes=None, SessionInfo=None, SessionStatus=None, StackedLayers=None, StateCounts=None, Status=None):
+	def find(self, ConnectedVia=None, Count=None, DescriptiveName=None, DiscoveredAddresses=None, DiscoveredGateways=None, DiscoveredPrefix=None, DiscoveredPrefixLength=None, EnableStateless=None, Errors=None, MaxNoPerClient=None, Multiplier=None, Name=None, NoOfAddresses=None, NoOfPrefixes=None, SessionInfo=None, SessionStatus=None, StackedLayers=None, StateCounts=None, Status=None):
 		"""Finds and retrieves dhcpv6client data from the server.
 
 		All named parameters support regex and can be used to selectively retrieve dhcpv6client data from the server.
 		By default the find method takes no parameters and will retrieve all dhcpv6client data from the server.
 
 		Args:
-			ComputedIapdAddresses (list(str)): The computed IPv6 addresses.
 			ConnectedVia (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of layers this layer used to connect to the wire
 			Count (number): Number of elements inside associated multiplier-scaled container object, e.g. number of devices inside a Device Group
 			DescriptiveName (str): Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
@@ -815,6 +805,39 @@ class Dhcpv6client(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, CustomLinkLocalAddress=None, Dhcp6DuidEnterpriseId=None, Dhcp6DuidType=None, Dhcp6DuidVendorId=None, Dhcp6GatewayAddress=None, Dhcp6GatewayMac=None, Dhcp6IANACount=None, Dhcp6IAPDCount=None, Dhcp6IaId=None, Dhcp6IaIdInc=None, Dhcp6IaT1=None, Dhcp6IaT2=None, Dhcp6IaType=None, Dhcp6UsePDGlobalAddress=None, RenewTimer=None, UseCustomLinkLocalAddress=None, UseRapidCommit=None):
+		"""Base class infrastructure that gets a list of dhcpv6client device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			CustomLinkLocalAddress (str): optional regex of customLinkLocalAddress
+			Dhcp6DuidEnterpriseId (str): optional regex of dhcp6DuidEnterpriseId
+			Dhcp6DuidType (str): optional regex of dhcp6DuidType
+			Dhcp6DuidVendorId (str): optional regex of dhcp6DuidVendorId
+			Dhcp6GatewayAddress (str): optional regex of dhcp6GatewayAddress
+			Dhcp6GatewayMac (str): optional regex of dhcp6GatewayMac
+			Dhcp6IANACount (str): optional regex of dhcp6IANACount
+			Dhcp6IAPDCount (str): optional regex of dhcp6IAPDCount
+			Dhcp6IaId (str): optional regex of dhcp6IaId
+			Dhcp6IaIdInc (str): optional regex of dhcp6IaIdInc
+			Dhcp6IaT1 (str): optional regex of dhcp6IaT1
+			Dhcp6IaT2 (str): optional regex of dhcp6IaT2
+			Dhcp6IaType (str): optional regex of dhcp6IaType
+			Dhcp6UsePDGlobalAddress (str): optional regex of dhcp6UsePDGlobalAddress
+			RenewTimer (str): optional regex of renewTimer
+			UseCustomLinkLocalAddress (str): optional regex of useCustomLinkLocalAddress
+			UseRapidCommit (str): optional regex of useRapidCommit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def Rebind(self):
 		"""Executes the rebind operation on the server.

@@ -172,3 +172,31 @@ class IsisTrafficEngineering(Base):
 	@Name.setter
 	def Name(self, value):
 		self._set_attribute('name', value)
+
+	def get_device_ids(self, PortNames=None, AdministratorGroup=None, BandwidthPriority0=None, BandwidthPriority1=None, BandwidthPriority2=None, BandwidthPriority3=None, BandwidthPriority4=None, BandwidthPriority5=None, BandwidthPriority6=None, BandwidthPriority7=None, MaxBandwidth=None, MaxReservableBandwidth=None, MetricLevel=None):
+		"""Base class infrastructure that gets a list of isisTrafficEngineering device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AdministratorGroup (str): optional regex of administratorGroup
+			BandwidthPriority0 (str): optional regex of bandwidthPriority0
+			BandwidthPriority1 (str): optional regex of bandwidthPriority1
+			BandwidthPriority2 (str): optional regex of bandwidthPriority2
+			BandwidthPriority3 (str): optional regex of bandwidthPriority3
+			BandwidthPriority4 (str): optional regex of bandwidthPriority4
+			BandwidthPriority5 (str): optional regex of bandwidthPriority5
+			BandwidthPriority6 (str): optional regex of bandwidthPriority6
+			BandwidthPriority7 (str): optional regex of bandwidthPriority7
+			MaxBandwidth (str): optional regex of maxBandwidth
+			MaxReservableBandwidth (str): optional regex of maxReservableBandwidth
+			MetricLevel (str): optional regex of metricLevel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

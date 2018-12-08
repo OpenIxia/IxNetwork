@@ -37,7 +37,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def AsPath(self):
-		"""Indicates the local IP address of the BGP router.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def IpPrefix(self):
-		"""The route IP prefix.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def Label(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def Neighbor(self):
-		"""The descriptive identifier for the BGP neighbor.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def NextHop(self):
-		"""A 4-octet IP address which indicates the next hop.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def PrefixLength(self):
-		"""The length of the route IP prefix, in bytes.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class IpV6MulticastMplsVpn(Base):
 
 	@property
 	def RouteDistinguisher(self):
-		"""The route distinguisher for the route, for use with IPv6 MPLS VPN address types.
+		"""
 
 		Returns:
 			str
@@ -105,13 +105,13 @@ class IpV6MulticastMplsVpn(Base):
 		By default the find method takes no parameters and will retrieve all ipV6MulticastMplsVpn data from the server.
 
 		Args:
-			AsPath (str): Indicates the local IP address of the BGP router.
-			IpPrefix (str): The route IP prefix.
-			Label (number): NOT DEFINED
-			Neighbor (str): The descriptive identifier for the BGP neighbor.
-			NextHop (str): A 4-octet IP address which indicates the next hop.
-			PrefixLength (number): The length of the route IP prefix, in bytes.
-			RouteDistinguisher (str): The route distinguisher for the route, for use with IPv6 MPLS VPN address types.
+			AsPath (str): 
+			IpPrefix (str): 
+			Label (number): 
+			Neighbor (str): 
+			NextHop (str): 
+			PrefixLength (number): 
+			RouteDistinguisher (str): 
 
 		Returns:
 			self: This instance with matching ipV6MulticastMplsVpn data retrieved from the server available through an iterator or index

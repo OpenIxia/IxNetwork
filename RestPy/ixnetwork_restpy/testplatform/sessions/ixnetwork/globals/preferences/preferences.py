@@ -37,7 +37,7 @@ class Preferences(Base):
 
 	@property
 	def ConnectPortsOnLoadConfig(self):
-		"""If true the application will connect the virtual ports to any assigned hardware ports when the configuration is loaded
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Preferences(Base):
 
 	@property
 	def RebootPortsOnConnect(self):
-		"""If true the application will reboot any connected virtual ports when the configuration is loaded
+		"""
 
 		Returns:
 			bool
@@ -70,15 +70,3 @@ class Preferences(Base):
 	@RebootPortsOnConnect.setter
 	def RebootPortsOnConnect(self, value):
 		self._set_attribute('rebootPortsOnConnect', value)
-
-	@property
-	def RecentChassisList(self):
-		"""List of recently used chassis
-
-		Returns:
-			list(str)
-		"""
-		return self._get_attribute('recentChassisList')
-	@RecentChassisList.setter
-	def RecentChassisList(self, value):
-		self._set_attribute('recentChassisList', value)

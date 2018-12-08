@@ -37,7 +37,7 @@ class LearnedMdtInfo(Base):
 
 	@property
 	def Age(self):
-		"""The amount of time (in seconds) remaining before this TLV times out.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class LearnedMdtInfo(Base):
 
 	@property
 	def CeGroupAddress(self):
-		"""The CE group address contained in this data MDT TLV.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class LearnedMdtInfo(Base):
 
 	@property
 	def CeSourceAddress(self):
-		"""The CE source address contained in this data MDT TLV.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LearnedMdtInfo(Base):
 
 	@property
 	def MdtGroupAddress(self):
-		"""The MDT (PE) group address contained in this data MDT TLV.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class LearnedMdtInfo(Base):
 
 	@property
 	def MdtSourceAddress(self):
-		"""The MDT (PE) source address contained in this data MDT TLV.
+		"""
 
 		Returns:
 			str
@@ -87,11 +87,11 @@ class LearnedMdtInfo(Base):
 		By default the find method takes no parameters and will retrieve all learnedMdtInfo data from the server.
 
 		Args:
-			Age (number): The amount of time (in seconds) remaining before this TLV times out.
-			CeGroupAddress (str): The CE group address contained in this data MDT TLV.
-			CeSourceAddress (str): The CE source address contained in this data MDT TLV.
-			MdtGroupAddress (str): The MDT (PE) group address contained in this data MDT TLV.
-			MdtSourceAddress (str): The MDT (PE) source address contained in this data MDT TLV.
+			Age (number): 
+			CeGroupAddress (str): 
+			CeSourceAddress (str): 
+			MdtGroupAddress (str): 
+			MdtSourceAddress (str): 
 
 		Returns:
 			self: This instance with matching learnedMdtInfo data retrieved from the server available through an iterator or index

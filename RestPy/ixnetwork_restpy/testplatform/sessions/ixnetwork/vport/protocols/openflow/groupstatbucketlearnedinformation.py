@@ -37,7 +37,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def ByteCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def GroupId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def PacketCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class GroupStatBucketLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -105,13 +105,13 @@ class GroupStatBucketLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all groupStatBucketLearnedInformation data from the server.
 
 		Args:
-			ByteCount (str): NOT DEFINED
-			DataPathId (str): NOT DEFINED
-			DataPathIdAsHex (str): NOT DEFINED
-			GroupId (str): NOT DEFINED
-			LocalIp (str): NOT DEFINED
-			PacketCount (str): NOT DEFINED
-			RemoteIp (str): NOT DEFINED
+			ByteCount (str): 
+			DataPathId (str): 
+			DataPathIdAsHex (str): 
+			GroupId (str): 
+			LocalIp (str): 
+			PacketCount (str): 
+			RemoteIp (str): 
 
 		Returns:
 			self: This instance with matching groupStatBucketLearnedInformation data retrieved from the server available through an iterator or index

@@ -388,6 +388,37 @@ class IsisFabricPath(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AuthType=None, AutoAdjustArea=None, AutoAdjustMTU=None, AutoAdjustSupportedProtocols=None, CircuitTranmitPasswordOrMD5Key=None, ConfiguredHoldTime=None, Enable3WayHandshake=None, EnableConfiguredHoldTime=None, ExtendedLocalCircuitId=None, InterfaceMetric=None, Level1DeadInterval=None, Level1HelloInterval=None, LevelType=None, NetworkType=None):
+		"""Base class infrastructure that gets a list of isisFabricPath device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AuthType (str): optional regex of authType
+			AutoAdjustArea (str): optional regex of autoAdjustArea
+			AutoAdjustMTU (str): optional regex of autoAdjustMTU
+			AutoAdjustSupportedProtocols (str): optional regex of autoAdjustSupportedProtocols
+			CircuitTranmitPasswordOrMD5Key (str): optional regex of circuitTranmitPasswordOrMD5Key
+			ConfiguredHoldTime (str): optional regex of configuredHoldTime
+			Enable3WayHandshake (str): optional regex of enable3WayHandshake
+			EnableConfiguredHoldTime (str): optional regex of enableConfiguredHoldTime
+			ExtendedLocalCircuitId (str): optional regex of extendedLocalCircuitId
+			InterfaceMetric (str): optional regex of interfaceMetric
+			Level1DeadInterval (str): optional regex of level1DeadInterval
+			Level1HelloInterval (str): optional regex of level1HelloInterval
+			LevelType (str): optional regex of levelType
+			NetworkType (str): optional regex of networkType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self):
 		"""Executes the clearAllLearnedInfo operation on the server.
 

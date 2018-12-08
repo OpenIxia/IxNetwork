@@ -37,7 +37,7 @@ class AvailablePortFilter(Base):
 
 	@property
 	def Name(self):
-		"""The name of the port filter.
+		"""
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class AvailablePortFilter(Base):
 		By default the find method takes no parameters and will retrieve all availablePortFilter data from the server.
 
 		Args:
-			Name (str): The name of the port filter.
+			Name (str): 
 
 		Returns:
 			self: This instance with matching availablePortFilter data retrieved from the server available through an iterator or index

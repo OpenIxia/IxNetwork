@@ -37,7 +37,7 @@ class AvailableProtocolStackFilter(Base):
 
 	@property
 	def Name(self):
-		"""The name of the protocol stack ranges.
+		"""
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class AvailableProtocolStackFilter(Base):
 		By default the find method takes no parameters and will retrieve all availableProtocolStackFilter data from the server.
 
 		Args:
-			Name (str): The name of the protocol stack ranges.
+			Name (str): 
 
 		Returns:
 			self: This instance with matching availableProtocolStackFilter data retrieved from the server available through an iterator or index

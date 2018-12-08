@@ -37,7 +37,7 @@ class State(Base):
 
 	@property
 	def LinkDown(self):
-		"""Indicates that, no physical link is present.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class State(Base):
 
 	@property
 	def StpBlock(self):
-		"""Indicates that the port is not part of spanning tree.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class State(Base):
 
 	@property
 	def StpForward(self):
-		"""Indicates that the port is learning and relaying frames.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class State(Base):
 
 	@property
 	def StpLearn(self):
-		"""Indicates that the port is learning but not relaying frames.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class State(Base):
 
 	@property
 	def StpListen(self):
-		"""Indicates that the port is not learning or relaying frames.
+		"""
 
 		Returns:
 			bool

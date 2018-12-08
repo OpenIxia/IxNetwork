@@ -52,7 +52,7 @@ class StatRequest(Base):
 
 	@property
 	def Filter(self):
-		"""The Statistics filter
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)
@@ -64,7 +64,7 @@ class StatRequest(Base):
 
 	@property
 	def FilterItems(self):
-		"""A list of filter items.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])
@@ -76,7 +76,7 @@ class StatRequest(Base):
 
 	@property
 	def IsReady(self):
-		"""If true, the counter is ready to record statistics.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class StatRequest(Base):
 
 	@property
 	def MaxWaitTime(self):
-		"""Value indicates the maximum wait time.
+		"""
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class StatRequest(Base):
 
 	@property
 	def Source(self):
-		"""The source for the statistical data.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)
@@ -109,7 +109,7 @@ class StatRequest(Base):
 
 	@property
 	def Stats(self):
-		"""The statistics displayed.
+		"""
 
 		Returns:
 			list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*],arg2:str[average|averageRate|countDistinct|delta|divSum|first|intervalAverage|max|maxRate|min|minRate|none|positiveAverageRate|positiveMaxRate|positiveMinRate|positiveRate|rate|runStateAgg|runStateAggIgnoreRamp|standardDeviation|sum|vectorMax|vectorMin|weightedAverage]))
@@ -121,7 +121,7 @@ class StatRequest(Base):
 
 	@property
 	def Values(self):
-		"""The values of the statistics data.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])
@@ -132,11 +132,11 @@ class StatRequest(Base):
 		"""Adds a new statRequest node on the server and retrieves it in this instance.
 
 		Args:
-			Filter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): The Statistics filter
-			FilterItems (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): A list of filter items.
-			MaxWaitTime (number): Value indicates the maximum wait time.
-			Source (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): The source for the statistical data.
-			Stats (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*],arg2:str[average|averageRate|countDistinct|delta|divSum|first|intervalAverage|max|maxRate|min|minRate|none|positiveAverageRate|positiveMaxRate|positiveMinRate|positiveRate|rate|runStateAgg|runStateAggIgnoreRamp|standardDeviation|sum|vectorMax|vectorMin|weightedAverage]))): The statistics displayed.
+			Filter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): 
+			FilterItems (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
+			MaxWaitTime (number): 
+			Source (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): 
+			Stats (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*],arg2:str[average|averageRate|countDistinct|delta|divSum|first|intervalAverage|max|maxRate|min|minRate|none|positiveAverageRate|positiveMaxRate|positiveMinRate|positiveRate|rate|runStateAgg|runStateAggIgnoreRamp|standardDeviation|sum|vectorMax|vectorMin|weightedAverage]))): 
 
 		Returns:
 			self: This instance with all currently retrieved statRequest data using find and the newly added statRequest data available through an iterator or index
@@ -162,13 +162,13 @@ class StatRequest(Base):
 		By default the find method takes no parameters and will retrieve all statRequest data from the server.
 
 		Args:
-			Filter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): The Statistics filter
-			FilterItems (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): A list of filter items.
-			IsReady (bool): If true, the counter is ready to record statistics.
-			MaxWaitTime (number): Value indicates the maximum wait time.
-			Source (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): The source for the statistical data.
-			Stats (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*],arg2:str[average|averageRate|countDistinct|delta|divSum|first|intervalAverage|max|maxRate|min|minRate|none|positiveAverageRate|positiveMaxRate|positiveMinRate|positiveRate|rate|runStateAgg|runStateAggIgnoreRamp|standardDeviation|sum|vectorMax|vectorMin|weightedAverage]))): The statistics displayed.
-			Values (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): The values of the statistics data.
+			Filter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): 
+			FilterItems (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
+			IsReady (bool): 
+			MaxWaitTime (number): 
+			Source (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*)): 
+			Stats (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=*],arg2:str[average|averageRate|countDistinct|delta|divSum|first|intervalAverage|max|maxRate|min|minRate|none|positiveAverageRate|positiveMaxRate|positiveMinRate|positiveRate|rate|runStateAgg|runStateAggIgnoreRamp|standardDeviation|sum|vectorMax|vectorMin|weightedAverage]))): 
+			Values (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=*])): 
 
 		Returns:
 			self: This instance with matching statRequest data retrieved from the server available through an iterator or index
@@ -195,8 +195,6 @@ class StatRequest(Base):
 
 	def GetStats(self):
 		"""Executes the getStats operation on the server.
-
-		Retreives the requested statistical data.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=statRequest)): The method internally sets Arg1 to the current href for this instance

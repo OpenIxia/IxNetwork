@@ -37,7 +37,7 @@ class DataCollection(Base):
 
 	@property
 	def Enable(self):
-		"""If it is true, enables collection of data
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class DataCollection(Base):
 
 	@property
 	def LastRunId(self):
-		"""Specifies the identifier for last run.
+		"""
 
 		Returns:
 			number

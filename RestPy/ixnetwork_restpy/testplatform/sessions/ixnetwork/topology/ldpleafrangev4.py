@@ -202,6 +202,33 @@ class LdpLeafRangeV4(Base):
 		"""
 		return self._get_attribute('rootAddressStep')
 
+	def get_device_ids(self, PortNames=None, Active=None, ContinuousIncrementOVAcrossRoot=None, GroupAddressV4=None, GroupAddressV6=None, GroupCountPerLsp=None, LabelValueStart=None, LabelValueStep=None, LspCountPerRoot=None, RootAddress=None, RootAddressCount=None, RootAddressStep=None):
+		"""Base class infrastructure that gets a list of ldpLeafRangeV4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ContinuousIncrementOVAcrossRoot (str): optional regex of continuousIncrementOVAcrossRoot
+			GroupAddressV4 (str): optional regex of groupAddressV4
+			GroupAddressV6 (str): optional regex of groupAddressV6
+			GroupCountPerLsp (str): optional regex of groupCountPerLsp
+			LabelValueStart (str): optional regex of labelValueStart
+			LabelValueStep (str): optional regex of labelValueStep
+			LspCountPerRoot (str): optional regex of lspCountPerRoot
+			RootAddress (str): optional regex of rootAddress
+			RootAddressCount (str): optional regex of rootAddressCount
+			RootAddressStep (str): optional regex of rootAddressStep
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ActivateLeafRange(self):
 		"""Executes the activateLeafRange operation on the server.
 

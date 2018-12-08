@@ -132,6 +132,15 @@ class IsisL3RouteProperty(Base):
 		return self._get_attribute('active')
 
 	@property
+	def AdvIPv6Prefix(self):
+		"""Advertise IPv6 Prefix
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('advIPv6Prefix')
+
+	@property
 	def Algorithm(self):
 		"""Algorithm
 
@@ -159,6 +168,15 @@ class IsisL3RouteProperty(Base):
 		return self._get_attribute('count')
 
 	@property
+	def DBitInsideSRv6SidTLV(self):
+		"""When the SID is leaked from level-2 to level-1, the D bit MUST be set. Otherwise, this bit MUST be clear.
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('dBitInsideSRv6SidTLV')
+
+	@property
 	def DescriptiveName(self):
 		"""Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
 
@@ -177,6 +195,24 @@ class IsisL3RouteProperty(Base):
 		return self._get_attribute('eFlag')
 
 	@property
+	def Funcflags(self):
+		"""This is the function flags
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('funcflags')
+
+	@property
+	def Function(self):
+		"""This specifies endpoint function codes
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('function')
+
+	@property
 	def IncludeBSLObject(self):
 		"""If set, MPLS encapsulation sub-sub-Tlv will be advertised under Bier Info Sub-Tlv
 
@@ -184,6 +220,24 @@ class IsisL3RouteProperty(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('includeBSLObject')
+
+	@property
+	def Ipv6SID(self):
+		"""This refers to the IPv6 SID that is being used to reach the advertised IPv6 Prefix
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('ipv6SID')
+
+	@property
+	def Ipv6Srh(self):
+		"""Advertise IPv6 SID
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('ipv6Srh')
 
 	@property
 	def LFlag(self):
@@ -279,6 +333,15 @@ class IsisL3RouteProperty(Base):
 		return self._get_attribute('redistribution')
 
 	@property
+	def ReservedInsideFlagsOfSRv6SidTLV(self):
+		"""This is the reserved field (part of Flags field of SRv6 SID TLV)
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('reservedInsideFlagsOfSRv6SidTLV')
+
+	@property
 	def RouteOrigin(self):
 		"""Route Origin
 
@@ -348,6 +411,51 @@ class IsisL3RouteProperty(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, BAR=None, BFRId=None, BFRIdStep=None, BIERBitStringLength=None, IPA=None, Active=None, AdvIPv6Prefix=None, Algorithm=None, ConfigureSIDIndexLabel=None, DBitInsideSRv6SidTLV=None, EFlag=None, Funcflags=None, Function=None, IncludeBSLObject=None, Ipv6SID=None, Ipv6Srh=None, LFlag=None, LabelRangeSize=None, LabelStart=None, Metric=None, NFlag=None, PFlag=None, RFlag=None, Redistribution=None, ReservedInsideFlagsOfSRv6SidTLV=None, RouteOrigin=None, SIDIndexLabel=None, SubDomainId=None, VFlag=None):
+		"""Base class infrastructure that gets a list of isisL3RouteProperty device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BAR (str): optional regex of BAR
+			BFRId (str): optional regex of BFRId
+			BFRIdStep (str): optional regex of BFRIdStep
+			BIERBitStringLength (str): optional regex of BIERBitStringLength
+			IPA (str): optional regex of IPA
+			Active (str): optional regex of active
+			AdvIPv6Prefix (str): optional regex of advIPv6Prefix
+			Algorithm (str): optional regex of algorithm
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			DBitInsideSRv6SidTLV (str): optional regex of dBitInsideSRv6SidTLV
+			EFlag (str): optional regex of eFlag
+			Funcflags (str): optional regex of funcflags
+			Function (str): optional regex of function
+			IncludeBSLObject (str): optional regex of includeBSLObject
+			Ipv6SID (str): optional regex of ipv6SID
+			Ipv6Srh (str): optional regex of ipv6Srh
+			LFlag (str): optional regex of lFlag
+			LabelRangeSize (str): optional regex of labelRangeSize
+			LabelStart (str): optional regex of labelStart
+			Metric (str): optional regex of metric
+			NFlag (str): optional regex of nFlag
+			PFlag (str): optional regex of pFlag
+			RFlag (str): optional regex of rFlag
+			Redistribution (str): optional regex of redistribution
+			ReservedInsideFlagsOfSRv6SidTLV (str): optional regex of reservedInsideFlagsOfSRv6SidTLV
+			RouteOrigin (str): optional regex of routeOrigin
+			SIDIndexLabel (str): optional regex of sIDIndexLabel
+			SubDomainId (str): optional regex of subDomainId
+			VFlag (str): optional regex of vFlag
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def AgeOutRoutes(self, Percentage):
 		"""Executes the ageOutRoutes operation on the server.

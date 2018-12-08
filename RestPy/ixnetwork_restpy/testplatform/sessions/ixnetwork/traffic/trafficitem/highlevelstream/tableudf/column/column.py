@@ -38,7 +38,7 @@ class Column(Base):
 
 	@property
 	def Format(self):
-		"""The format of the Table UDF list (column).
+		"""
 
 		Returns:
 			str(ascii|binary|custom|decimal|hex|ipv4|ipv6|mac)
@@ -50,7 +50,7 @@ class Column(Base):
 
 	@property
 	def Offset(self):
-		"""The offset value, in bytes, of the Table UDF list (column).
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class Column(Base):
 
 	@property
 	def Size(self):
-		"""The size, in bytes, of the Table UDF list (column).
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class Column(Base):
 
 	@property
 	def Values(self):
-		"""The value of the table UDF column.
+		"""
 
 		Returns:
 			list(str)
@@ -88,10 +88,10 @@ class Column(Base):
 		"""Adds a new column node on the server and retrieves it in this instance.
 
 		Args:
-			Format (str(ascii|binary|custom|decimal|hex|ipv4|ipv6|mac)): The format of the Table UDF list (column).
-			Offset (number): The offset value, in bytes, of the Table UDF list (column).
-			Size (number): The size, in bytes, of the Table UDF list (column).
-			Values (list(str)): The value of the table UDF column.
+			Format (str(ascii|binary|custom|decimal|hex|ipv4|ipv6|mac)): 
+			Offset (number): 
+			Size (number): 
+			Values (list(str)): 
 
 		Returns:
 			self: This instance with all currently retrieved column data using find and the newly added column data available through an iterator or index
@@ -117,10 +117,10 @@ class Column(Base):
 		By default the find method takes no parameters and will retrieve all column data from the server.
 
 		Args:
-			Format (str(ascii|binary|custom|decimal|hex|ipv4|ipv6|mac)): The format of the Table UDF list (column).
-			Offset (number): The offset value, in bytes, of the Table UDF list (column).
-			Size (number): The size, in bytes, of the Table UDF list (column).
-			Values (list(str)): The value of the table UDF column.
+			Format (str(ascii|binary|custom|decimal|hex|ipv4|ipv6|mac)): 
+			Offset (number): 
+			Size (number): 
+			Values (list(str)): 
 
 		Returns:
 			self: This instance with matching column data retrieved from the server available through an iterator or index

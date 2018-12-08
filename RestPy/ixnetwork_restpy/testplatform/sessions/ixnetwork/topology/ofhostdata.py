@@ -160,6 +160,23 @@ class OfHostData(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, ParentSwitchPortName=None):
+		"""Base class infrastructure that gets a list of ofHostData device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ParentSwitchPortName (str): optional regex of parentSwitchPortName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def SendPacketWithTraverseLI(self, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7, Arg8, Arg9):
 		"""Executes the sendPacketWithTraverseLI operation on the server.
 

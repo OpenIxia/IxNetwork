@@ -109,3 +109,24 @@ class BgpCustomAfiSafiv4(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('safiValue')
+
+	def get_device_ids(self, PortNames=None, Active=None, AfiValue=None, DataValue=None, LengthOfData=None, SafiValue=None):
+		"""Base class infrastructure that gets a list of bgpCustomAfiSafiv4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AfiValue (str): optional regex of afiValue
+			DataValue (str): optional regex of dataValue
+			LengthOfData (str): optional regex of lengthOfData
+			SafiValue (str): optional regex of safiValue
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

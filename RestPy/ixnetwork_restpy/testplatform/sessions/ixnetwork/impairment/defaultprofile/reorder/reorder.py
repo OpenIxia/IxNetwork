@@ -37,7 +37,7 @@ class Reorder(Base):
 
 	@property
 	def ClusterSize(self):
-		"""Number of packets to reorder on each occurrence.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Reorder(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, periodically reorder received packets.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Reorder(Base):
 
 	@property
 	def PercentRate(self):
-		"""How often to reorder packets.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class Reorder(Base):
 
 	@property
 	def SkipCount(self):
-		"""How many packets to skip before sending the reordered packets.
+		"""
 
 		Returns:
 			number

@@ -318,6 +318,37 @@ class Ospfv3Router(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, BBit=None, DisableAutoGenerateLinkLsa=None, DisableAutoGenerateRouterLsa=None, DiscardLearnedLsa=None, EBit=None, EnableGracefulRestartHelperMode=None, EnableStrictLsaChecking=None, EnableSupportReasonSwReloadUpgrade=None, EnableSupportReasonSwRestart=None, EnableSupportReasonSwitchToRedundantControlProcessor=None, EnableSupportReasonUnknown=None, LsaRefreshTime=None, LsaRetransmitTime=None, MaxNumLsaPerSecond=None):
+		"""Base class infrastructure that gets a list of ospfv3Router device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BBit (str): optional regex of bBit
+			DisableAutoGenerateLinkLsa (str): optional regex of disableAutoGenerateLinkLsa
+			DisableAutoGenerateRouterLsa (str): optional regex of disableAutoGenerateRouterLsa
+			DiscardLearnedLsa (str): optional regex of discardLearnedLsa
+			EBit (str): optional regex of eBit
+			EnableGracefulRestartHelperMode (str): optional regex of enableGracefulRestartHelperMode
+			EnableStrictLsaChecking (str): optional regex of enableStrictLsaChecking
+			EnableSupportReasonSwReloadUpgrade (str): optional regex of enableSupportReasonSwReloadUpgrade
+			EnableSupportReasonSwRestart (str): optional regex of enableSupportReasonSwRestart
+			EnableSupportReasonSwitchToRedundantControlProcessor (str): optional regex of enableSupportReasonSwitchToRedundantControlProcessor
+			EnableSupportReasonUnknown (str): optional regex of enableSupportReasonUnknown
+			LsaRefreshTime (str): optional regex of lsaRefreshTime
+			LsaRetransmitTime (str): optional regex of lsaRetransmitTime
+			MaxNumLsaPerSecond (str): optional regex of maxNumLsaPerSecond
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Ospfv3StartRouter(self):
 		"""Executes the ospfv3StartRouter operation on the server.
 

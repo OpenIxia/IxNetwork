@@ -38,7 +38,7 @@ class RouteRange(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the use of this route range for the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class RouteRange(Base):
 
 	@property
 	def FirstRoute(self):
-		"""The first network address to be used in creating this route range. Note: Multicast and loopback addresses are not supported in this IPv4 route range implementation.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class RouteRange(Base):
 
 	@property
 	def MaskWidth(self):
-		"""The network mask to be applied to the networkIpAddress to yield the non-host part of the address. A value of 0 means there is no subnet address.
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class RouteRange(Base):
 
 	@property
 	def Metric(self):
-		"""The total metric cost for these routes. The valid range is from 1 to 16 (inclusive). A value of 16 means that the destination is not reachable, and that route will be removed from service.
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class RouteRange(Base):
 
 	@property
 	def NextHop(self):
-		"""The immediate next hop IP address on the way to the destination address.
+		"""
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class RouteRange(Base):
 
 	@property
 	def NoOfRoutes(self):
-		"""The number of networks to be generated for this route range, based on the network address plus the network mask.
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class RouteRange(Base):
 
 	@property
 	def RouteTag(self):
-		"""An arbitrary value associated with the routes in this range. It is used to provide a means for distinguishing internal versus external RIP routes.
+		"""
 
 		Returns:
 			number
@@ -124,13 +124,13 @@ class RouteRange(Base):
 		"""Adds a new routeRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): Enables the use of this route range for the simulated router.
-			FirstRoute (str): The first network address to be used in creating this route range. Note: Multicast and loopback addresses are not supported in this IPv4 route range implementation.
-			MaskWidth (number): The network mask to be applied to the networkIpAddress to yield the non-host part of the address. A value of 0 means there is no subnet address.
-			Metric (number): The total metric cost for these routes. The valid range is from 1 to 16 (inclusive). A value of 16 means that the destination is not reachable, and that route will be removed from service.
-			NextHop (str): The immediate next hop IP address on the way to the destination address.
-			NoOfRoutes (number): The number of networks to be generated for this route range, based on the network address plus the network mask.
-			RouteTag (number): An arbitrary value associated with the routes in this range. It is used to provide a means for distinguishing internal versus external RIP routes.
+			Enabled (bool): 
+			FirstRoute (str): 
+			MaskWidth (number): 
+			Metric (number): 
+			NextHop (str): 
+			NoOfRoutes (number): 
+			RouteTag (number): 
 
 		Returns:
 			self: This instance with all currently retrieved routeRange data using find and the newly added routeRange data available through an iterator or index
@@ -156,13 +156,13 @@ class RouteRange(Base):
 		By default the find method takes no parameters and will retrieve all routeRange data from the server.
 
 		Args:
-			Enabled (bool): Enables the use of this route range for the simulated router.
-			FirstRoute (str): The first network address to be used in creating this route range. Note: Multicast and loopback addresses are not supported in this IPv4 route range implementation.
-			MaskWidth (number): The network mask to be applied to the networkIpAddress to yield the non-host part of the address. A value of 0 means there is no subnet address.
-			Metric (number): The total metric cost for these routes. The valid range is from 1 to 16 (inclusive). A value of 16 means that the destination is not reachable, and that route will be removed from service.
-			NextHop (str): The immediate next hop IP address on the way to the destination address.
-			NoOfRoutes (number): The number of networks to be generated for this route range, based on the network address plus the network mask.
-			RouteTag (number): An arbitrary value associated with the routes in this range. It is used to provide a means for distinguishing internal versus external RIP routes.
+			Enabled (bool): 
+			FirstRoute (str): 
+			MaskWidth (number): 
+			Metric (number): 
+			NextHop (str): 
+			NoOfRoutes (number): 
+			RouteTag (number): 
 
 		Returns:
 			self: This instance with matching routeRange data retrieved from the server available through an iterator or index

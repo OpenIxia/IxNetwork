@@ -38,7 +38,7 @@ class FormulaColumn(Base):
 
 	@property
 	def Caption(self):
-		"""The name of the formula.
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class FormulaColumn(Base):
 
 	@property
 	def Formula(self):
-		"""The formula that is filtered.
+		"""
 
 		Returns:
 			str
@@ -64,8 +64,8 @@ class FormulaColumn(Base):
 		"""Adds a new formulaColumn node on the server and retrieves it in this instance.
 
 		Args:
-			Caption (str): The name of the formula.
-			Formula (str): The formula that is filtered.
+			Caption (str): 
+			Formula (str): 
 
 		Returns:
 			self: This instance with all currently retrieved formulaColumn data using find and the newly added formulaColumn data available through an iterator or index
@@ -91,8 +91,8 @@ class FormulaColumn(Base):
 		By default the find method takes no parameters and will retrieve all formulaColumn data from the server.
 
 		Args:
-			Caption (str): The name of the formula.
-			Formula (str): The formula that is filtered.
+			Caption (str): 
+			Formula (str): 
 
 		Returns:
 			self: This instance with matching formulaColumn data retrieved from the server available through an iterator or index

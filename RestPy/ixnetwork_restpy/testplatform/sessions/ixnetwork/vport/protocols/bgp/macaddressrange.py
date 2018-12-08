@@ -38,7 +38,7 @@ class MacAddressRange(Base):
 
 	@property
 	def EnableVlan(self):
-		"""If enabled, VLANs will be created and associated with the MAC addresses. The default is disabled.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class MacAddressRange(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the MAC address range.
+		"""
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class MacAddressRange(Base):
 
 	@property
 	def IncrementVlan(self):
-		"""If enabled, each additional VLAN in the range will be incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class MacAddressRange(Base):
 
 	@property
 	def IncrementVlanMode(self):
-		"""If enabled, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
+		"""
 
 		Returns:
 			str(noIncrement|parallelIncrement|innerFirst|outerFirst)
@@ -86,7 +86,7 @@ class MacAddressRange(Base):
 
 	@property
 	def IncremetVlanMode(self):
-		"""If enabled, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
+		"""
 
 		Returns:
 			str(noIncrement|parallelIncrement|innerFirst|outerFirst)
@@ -98,7 +98,7 @@ class MacAddressRange(Base):
 
 	@property
 	def MacCount(self):
-		"""The number of MAC addresses to be created for this range. A 4-byte unsigned integer. The default is 1.
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class MacAddressRange(Base):
 
 	@property
 	def MacCountPerL2Site(self):
-		"""Signifies the count of MAC values per L2 site
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class MacAddressRange(Base):
 
 	@property
 	def MacIncrement(self):
-		"""If enabled, each additional MAC Address in this range of addresses will be incremented by 00 00 00 00 00 01.
+		"""
 
 		Returns:
 			bool
@@ -134,7 +134,7 @@ class MacAddressRange(Base):
 
 	@property
 	def SkipVlanIdZero(self):
-		"""If enabled, the VLAN ID with zero value will be ignored.
+		"""
 
 		Returns:
 			bool
@@ -146,7 +146,7 @@ class MacAddressRange(Base):
 
 	@property
 	def StartMacAddress(self):
-		"""The first 6-byte MAC address in the range of MAC addresses. The default is 00 00 00 00 00 00.
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class MacAddressRange(Base):
 
 	@property
 	def TotalMacCount(self):
-		"""Signifies the total MAC count
+		"""
 
 		Returns:
 			number
@@ -167,7 +167,7 @@ class MacAddressRange(Base):
 
 	@property
 	def Tpid(self):
-		"""Tag Protocol Identifier / TPID (hex). The EtherType that identifies the protocol header that follows the VLAN header (tag).The dropdown list contains the available TPIDs. Choose one of: 0x8100 (the default), 0x88a8, 0x9100, 0x9200.
+		"""
 
 		Returns:
 			str
@@ -179,7 +179,7 @@ class MacAddressRange(Base):
 
 	@property
 	def VlanCount(self):
-		"""The number of VLANs created.
+		"""
 
 		Returns:
 			number
@@ -191,7 +191,7 @@ class MacAddressRange(Base):
 
 	@property
 	def VlanId(self):
-		"""The ID for the first VLAN in a range of VLANs. An 2-byte unsigned integer. The valid range is 0 to 4095. The default is 0.
+		"""
 
 		Returns:
 			str
@@ -203,7 +203,7 @@ class MacAddressRange(Base):
 
 	@property
 	def VlanPriority(self):
-		"""The User Priority for this VLAN. A value from 0 through 7. The use and interpretation of this field is defined in ISO/IEC 15802-3.
+		"""
 
 		Returns:
 			str
@@ -217,20 +217,20 @@ class MacAddressRange(Base):
 		"""Adds a new macAddressRange node on the server and retrieves it in this instance.
 
 		Args:
-			EnableVlan (bool): If enabled, VLANs will be created and associated with the MAC addresses. The default is disabled.
-			Enabled (bool): Enables the MAC address range.
-			IncrementVlan (bool): If enabled, each additional VLAN in the range will be incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
-			IncrementVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): If enabled, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
-			IncremetVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): If enabled, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
-			MacCount (number): The number of MAC addresses to be created for this range. A 4-byte unsigned integer. The default is 1.
-			MacCountPerL2Site (number): Signifies the count of MAC values per L2 site
-			MacIncrement (bool): If enabled, each additional MAC Address in this range of addresses will be incremented by 00 00 00 00 00 01.
-			SkipVlanIdZero (bool): If enabled, the VLAN ID with zero value will be ignored.
-			StartMacAddress (str): The first 6-byte MAC address in the range of MAC addresses. The default is 00 00 00 00 00 00.
-			Tpid (str): Tag Protocol Identifier / TPID (hex). The EtherType that identifies the protocol header that follows the VLAN header (tag).The dropdown list contains the available TPIDs. Choose one of: 0x8100 (the default), 0x88a8, 0x9100, 0x9200.
-			VlanCount (number): The number of VLANs created.
-			VlanId (str): The ID for the first VLAN in a range of VLANs. An 2-byte unsigned integer. The valid range is 0 to 4095. The default is 0.
-			VlanPriority (str): The User Priority for this VLAN. A value from 0 through 7. The use and interpretation of this field is defined in ISO/IEC 15802-3.
+			EnableVlan (bool): 
+			Enabled (bool): 
+			IncrementVlan (bool): 
+			IncrementVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): 
+			IncremetVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): 
+			MacCount (number): 
+			MacCountPerL2Site (number): 
+			MacIncrement (bool): 
+			SkipVlanIdZero (bool): 
+			StartMacAddress (str): 
+			Tpid (str): 
+			VlanCount (number): 
+			VlanId (str): 
+			VlanPriority (str): 
 
 		Returns:
 			self: This instance with all currently retrieved macAddressRange data using find and the newly added macAddressRange data available through an iterator or index
@@ -256,21 +256,21 @@ class MacAddressRange(Base):
 		By default the find method takes no parameters and will retrieve all macAddressRange data from the server.
 
 		Args:
-			EnableVlan (bool): If enabled, VLANs will be created and associated with the MAC addresses. The default is disabled.
-			Enabled (bool): Enables the MAC address range.
-			IncrementVlan (bool): If enabled, each additional VLAN in the range will be incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
-			IncrementVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): If enabled, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
-			IncremetVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): If enabled, each additional VLAN in the range is incremented to create unique VLAN IDs. The increment value is 1. The default is disabled.
-			MacCount (number): The number of MAC addresses to be created for this range. A 4-byte unsigned integer. The default is 1.
-			MacCountPerL2Site (number): Signifies the count of MAC values per L2 site
-			MacIncrement (bool): If enabled, each additional MAC Address in this range of addresses will be incremented by 00 00 00 00 00 01.
-			SkipVlanIdZero (bool): If enabled, the VLAN ID with zero value will be ignored.
-			StartMacAddress (str): The first 6-byte MAC address in the range of MAC addresses. The default is 00 00 00 00 00 00.
-			TotalMacCount (number): Signifies the total MAC count
-			Tpid (str): Tag Protocol Identifier / TPID (hex). The EtherType that identifies the protocol header that follows the VLAN header (tag).The dropdown list contains the available TPIDs. Choose one of: 0x8100 (the default), 0x88a8, 0x9100, 0x9200.
-			VlanCount (number): The number of VLANs created.
-			VlanId (str): The ID for the first VLAN in a range of VLANs. An 2-byte unsigned integer. The valid range is 0 to 4095. The default is 0.
-			VlanPriority (str): The User Priority for this VLAN. A value from 0 through 7. The use and interpretation of this field is defined in ISO/IEC 15802-3.
+			EnableVlan (bool): 
+			Enabled (bool): 
+			IncrementVlan (bool): 
+			IncrementVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): 
+			IncremetVlanMode (str(noIncrement|parallelIncrement|innerFirst|outerFirst)): 
+			MacCount (number): 
+			MacCountPerL2Site (number): 
+			MacIncrement (bool): 
+			SkipVlanIdZero (bool): 
+			StartMacAddress (str): 
+			TotalMacCount (number): 
+			Tpid (str): 
+			VlanCount (number): 
+			VlanId (str): 
+			VlanPriority (str): 
 
 		Returns:
 			self: This instance with matching macAddressRange data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class TrillPingOam(Base):
 
 	@property
 	def AlertFlag(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class TrillPingOam(Base):
 
 	@property
 	def DestinationNickname(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class TrillPingOam(Base):
 
 	@property
 	def EtherType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class TrillPingOam(Base):
 
 	@property
 	def HopCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class TrillPingOam(Base):
 
 	@property
 	def NativeFlag(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class TrillPingOam(Base):
 
 	@property
 	def NoOfPingRequests(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class TrillPingOam(Base):
 
 	@property
 	def SilentFlag(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class TrillPingOam(Base):
 
 	@property
 	def SourceNickname(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -133,7 +133,7 @@ class TrillPingOam(Base):
 
 	@property
 	def TimeOut(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number

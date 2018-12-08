@@ -37,7 +37,7 @@ class BitError(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, periodically introduce bit errors.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class BitError(Base):
 
 	@property
 	def LogRate(self):
-		"""If logRate is n, error one out of 10^n bits.
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class BitError(Base):
 
 	@property
 	def SkipEndOctets(self):
-		"""Number of octets to skip at the end of each packet when erroring bits.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class BitError(Base):
 
 	@property
 	def SkipStartOctets(self):
-		"""Number of octets to skip at the start of each packet when erroring bits.
+		"""
 
 		Returns:
 			number

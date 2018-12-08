@@ -37,7 +37,7 @@ class LearnedMdtState(Base):
 
 	@property
 	def Group(self):
-		"""List of learned MDT group addresses.
+		"""
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class LearnedMdtState(Base):
 		By default the find method takes no parameters and will retrieve all learnedMdtState data from the server.
 
 		Args:
-			Group (str): List of learned MDT group addresses.
+			Group (str): 
 
 		Returns:
 			self: This instance with matching learnedMdtState data retrieved from the server available through an iterator or index

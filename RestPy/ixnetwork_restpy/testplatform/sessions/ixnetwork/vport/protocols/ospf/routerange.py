@@ -38,7 +38,7 @@ class RouteRange(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the router range.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class RouteRange(Base):
 
 	@property
 	def Mask(self):
-		"""The number of bits in the network mask.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class RouteRange(Base):
 
 	@property
 	def Metric(self):
-		"""The user-assigned routing metric associated with the route range.
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class RouteRange(Base):
 
 	@property
 	def NetworkNumber(self):
-		"""The number of prefixes to be advertised.
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class RouteRange(Base):
 
 	@property
 	def NumberOfRoutes(self):
-		"""The number of routes/network addresses to be created, based on the first route plus the mask.
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class RouteRange(Base):
 
 	@property
 	def Origin(self):
-		"""The origin of the advertised route.
+		"""
 
 		Returns:
 			str(area|externalType1|externalType2|nssa|sameArea)
@@ -110,7 +110,7 @@ class RouteRange(Base):
 
 	@property
 	def Propagate(self):
-		"""Enables emulation of NSSA-LSA propagation.
+		"""
 
 		Returns:
 			bool
@@ -124,13 +124,13 @@ class RouteRange(Base):
 		"""Adds a new routeRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): Enables the router range.
-			Mask (number): The number of bits in the network mask.
-			Metric (number): The user-assigned routing metric associated with the route range.
-			NetworkNumber (str): The number of prefixes to be advertised.
-			NumberOfRoutes (number): The number of routes/network addresses to be created, based on the first route plus the mask.
-			Origin (str(area|externalType1|externalType2|nssa|sameArea)): The origin of the advertised route.
-			Propagate (bool): Enables emulation of NSSA-LSA propagation.
+			Enabled (bool): 
+			Mask (number): 
+			Metric (number): 
+			NetworkNumber (str): 
+			NumberOfRoutes (number): 
+			Origin (str(area|externalType1|externalType2|nssa|sameArea)): 
+			Propagate (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved routeRange data using find and the newly added routeRange data available through an iterator or index
@@ -156,13 +156,13 @@ class RouteRange(Base):
 		By default the find method takes no parameters and will retrieve all routeRange data from the server.
 
 		Args:
-			Enabled (bool): Enables the router range.
-			Mask (number): The number of bits in the network mask.
-			Metric (number): The user-assigned routing metric associated with the route range.
-			NetworkNumber (str): The number of prefixes to be advertised.
-			NumberOfRoutes (number): The number of routes/network addresses to be created, based on the first route plus the mask.
-			Origin (str(area|externalType1|externalType2|nssa|sameArea)): The origin of the advertised route.
-			Propagate (bool): Enables emulation of NSSA-LSA propagation.
+			Enabled (bool): 
+			Mask (number): 
+			Metric (number): 
+			NetworkNumber (str): 
+			NumberOfRoutes (number): 
+			Origin (str(area|externalType1|externalType2|nssa|sameArea)): 
+			Propagate (bool): 
 
 		Returns:
 			self: This instance with matching routeRange data retrieved from the server available through an iterator or index

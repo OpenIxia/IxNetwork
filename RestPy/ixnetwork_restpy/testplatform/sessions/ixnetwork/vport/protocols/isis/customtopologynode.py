@@ -52,7 +52,7 @@ class CustomTopologyNode(Base):
 
 	@property
 	def BridgePriority(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class CustomTopologyNode(Base):
 
 	@property
 	def EdgeBridge(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class CustomTopologyNode(Base):
 
 	@property
 	def Enabled(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -88,7 +88,7 @@ class CustomTopologyNode(Base):
 
 	@property
 	def Nickname(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class CustomTopologyNode(Base):
 
 	@property
 	def Priority(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class CustomTopologyNode(Base):
 
 	@property
 	def SpSrcId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -126,12 +126,12 @@ class CustomTopologyNode(Base):
 		"""Adds a new customTopologyNode node on the server and retrieves it in this instance.
 
 		Args:
-			BridgePriority (number): NOT DEFINED
-			EdgeBridge (bool): NOT DEFINED
-			Enabled (bool): NOT DEFINED
-			Nickname (number): NOT DEFINED
-			Priority (number): NOT DEFINED
-			SpSrcId (number): NOT DEFINED
+			BridgePriority (number): 
+			EdgeBridge (bool): 
+			Enabled (bool): 
+			Nickname (number): 
+			Priority (number): 
+			SpSrcId (number): 
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyNode data using find and the newly added customTopologyNode data available through an iterator or index
@@ -157,12 +157,12 @@ class CustomTopologyNode(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyNode data from the server.
 
 		Args:
-			BridgePriority (number): NOT DEFINED
-			EdgeBridge (bool): NOT DEFINED
-			Enabled (bool): NOT DEFINED
-			Nickname (number): NOT DEFINED
-			Priority (number): NOT DEFINED
-			SpSrcId (number): NOT DEFINED
+			BridgePriority (number): 
+			EdgeBridge (bool): 
+			Enabled (bool): 
+			Nickname (number): 
+			Priority (number): 
+			SpSrcId (number): 
 
 		Returns:
 			self: This instance with matching customTopologyNode data retrieved from the server available through an iterator or index

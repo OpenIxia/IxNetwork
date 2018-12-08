@@ -66,7 +66,7 @@ class Msti(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the use of this MSTP MSTI. (default = disabled)
+		"""
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Msti(Base):
 
 	@property
 	def InternalRootPathCost(self):
-		"""The MSTI Internal Root Path Cost. A 4-byte unsigned integer. (default is 0)
+		"""
 
 		Returns:
 			number
@@ -90,7 +90,7 @@ class Msti(Base):
 
 	@property
 	def Mac(self):
-		"""The 6-byte MAC address for the MSTI root. This is part of the MSTI regional root identifier.
+		"""
 
 		Returns:
 			str
@@ -102,7 +102,7 @@ class Msti(Base):
 
 	@property
 	def MstiHops(self):
-		"""The number of MSTI hops remaining. An unsigned integer. The valid range is 1 to 255. (default = 20)
+		"""
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class Msti(Base):
 
 	@property
 	def MstiId(self):
-		"""The identifier for this MST Instance (MSTI). The valid range is 1 to 4,094. (default = 1)
+		"""
 
 		Returns:
 			number
@@ -126,7 +126,7 @@ class Msti(Base):
 
 	@property
 	def MstiName(self):
-		"""The name of the MSTI which is configured from the list of MSTIs. Format: MSTI ID-n. (Editable by the user.)
+		"""
 
 		Returns:
 			str
@@ -138,7 +138,7 @@ class Msti(Base):
 
 	@property
 	def PortPriority(self):
-		"""The MSTI Port Priority. This is part of the MSTI Regional Root Identifier. An unsigned integer; a multiple of 16. The valid range is 0 to 240. (default = 0)
+		"""
 
 		Returns:
 			str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)
@@ -150,7 +150,7 @@ class Msti(Base):
 
 	@property
 	def Priority(self):
-		"""The MSTI Root Priority. This is part of the MSTI Regional Root Identifier. Since MAC address reduction is used, only multiples of 4096 are used.
+		"""
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -162,7 +162,7 @@ class Msti(Base):
 
 	@property
 	def UpdateRequired(self):
-		"""If true, causes the MSTI to update.
+		"""
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class Msti(Base):
 
 	@property
 	def VlanStart(self):
-		"""The ID for the first VLAN in the VLAN range to which the MSTI is mapped. An unsigned integer. Valid range: 1 to 4094.
+		"""
 
 		Returns:
 			number
@@ -186,7 +186,7 @@ class Msti(Base):
 
 	@property
 	def VlanStop(self):
-		"""The ID for the last VLAN in the VLAN range to which the MSTI is mapped. An unsigned integer. Valid range: 1 to 4094.
+		"""
 
 		Returns:
 			number
@@ -200,17 +200,17 @@ class Msti(Base):
 		"""Adds a new msti node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): Enables the use of this MSTP MSTI. (default = disabled)
-			InternalRootPathCost (number): The MSTI Internal Root Path Cost. A 4-byte unsigned integer. (default is 0)
-			Mac (str): The 6-byte MAC address for the MSTI root. This is part of the MSTI regional root identifier.
-			MstiHops (number): The number of MSTI hops remaining. An unsigned integer. The valid range is 1 to 255. (default = 20)
-			MstiId (number): The identifier for this MST Instance (MSTI). The valid range is 1 to 4,094. (default = 1)
-			MstiName (str): The name of the MSTI which is configured from the list of MSTIs. Format: MSTI ID-n. (Editable by the user.)
-			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): The MSTI Port Priority. This is part of the MSTI Regional Root Identifier. An unsigned integer; a multiple of 16. The valid range is 0 to 240. (default = 0)
-			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The MSTI Root Priority. This is part of the MSTI Regional Root Identifier. Since MAC address reduction is used, only multiples of 4096 are used.
-			UpdateRequired (bool): If true, causes the MSTI to update.
-			VlanStart (number): The ID for the first VLAN in the VLAN range to which the MSTI is mapped. An unsigned integer. Valid range: 1 to 4094.
-			VlanStop (number): The ID for the last VLAN in the VLAN range to which the MSTI is mapped. An unsigned integer. Valid range: 1 to 4094.
+			Enabled (bool): 
+			InternalRootPathCost (number): 
+			Mac (str): 
+			MstiHops (number): 
+			MstiId (number): 
+			MstiName (str): 
+			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): 
+			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			UpdateRequired (bool): 
+			VlanStart (number): 
+			VlanStop (number): 
 
 		Returns:
 			self: This instance with all currently retrieved msti data using find and the newly added msti data available through an iterator or index
@@ -236,17 +236,17 @@ class Msti(Base):
 		By default the find method takes no parameters and will retrieve all msti data from the server.
 
 		Args:
-			Enabled (bool): Enables the use of this MSTP MSTI. (default = disabled)
-			InternalRootPathCost (number): The MSTI Internal Root Path Cost. A 4-byte unsigned integer. (default is 0)
-			Mac (str): The 6-byte MAC address for the MSTI root. This is part of the MSTI regional root identifier.
-			MstiHops (number): The number of MSTI hops remaining. An unsigned integer. The valid range is 1 to 255. (default = 20)
-			MstiId (number): The identifier for this MST Instance (MSTI). The valid range is 1 to 4,094. (default = 1)
-			MstiName (str): The name of the MSTI which is configured from the list of MSTIs. Format: MSTI ID-n. (Editable by the user.)
-			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): The MSTI Port Priority. This is part of the MSTI Regional Root Identifier. An unsigned integer; a multiple of 16. The valid range is 0 to 240. (default = 0)
-			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The MSTI Root Priority. This is part of the MSTI Regional Root Identifier. Since MAC address reduction is used, only multiples of 4096 are used.
-			UpdateRequired (bool): If true, causes the MSTI to update.
-			VlanStart (number): The ID for the first VLAN in the VLAN range to which the MSTI is mapped. An unsigned integer. Valid range: 1 to 4094.
-			VlanStop (number): The ID for the last VLAN in the VLAN range to which the MSTI is mapped. An unsigned integer. Valid range: 1 to 4094.
+			Enabled (bool): 
+			InternalRootPathCost (number): 
+			Mac (str): 
+			MstiHops (number): 
+			MstiId (number): 
+			MstiName (str): 
+			PortPriority (str(0|16|32|48|64|80|96|112|128|144|160|176|192|208|224|240)): 
+			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
+			UpdateRequired (bool): 
+			VlanStart (number): 
+			VlanStop (number): 
 
 		Returns:
 			self: This instance with matching msti data retrieved from the server available through an iterator or index
@@ -274,13 +274,11 @@ class Msti(Base):
 	def TopologyChange(self):
 		"""Executes the topologyChange operation on the server.
 
-		This command checks to see if a topology change has occurred on the specified STP bridge MSTI.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -292,13 +290,11 @@ class Msti(Base):
 	def UpdateParameters(self):
 		"""Executes the updateParameters operation on the server.
 
-		Updates the current STP parameters on the specified bridge MSTI.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

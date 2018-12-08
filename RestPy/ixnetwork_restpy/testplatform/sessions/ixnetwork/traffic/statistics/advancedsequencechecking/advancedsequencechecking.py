@@ -37,7 +37,7 @@ class AdvancedSequenceChecking(Base):
 
 	@property
 	def AdvancedSequenceThreshold(self):
-		"""Signifies the threshold of advanced sequence
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class AdvancedSequenceChecking(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables advanced sequence checking
+		"""
 
 		Returns:
 			bool

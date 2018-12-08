@@ -37,7 +37,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def CsvDecimalPrecision(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def CsvDumpTxPortLabelMap(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def CsvFormatTimestamp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def CsvLocation(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -97,7 +97,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def CsvStringQuotes(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def CsvSupportsCSVSorting(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def SnapshotSettingsName(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def SnapshotViewContents(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(allPages|currentPage)
@@ -166,7 +166,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def SnapshotViewCsvGenerationMode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(appendCSVFile|newCSVFile|overwriteCSVFile)
@@ -178,7 +178,7 @@ class CsvSnapshot(Base):
 
 	@property
 	def Views(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view])
@@ -190,8 +190,6 @@ class CsvSnapshot(Base):
 
 	def ResetToDefaults(self):
 		"""Executes the resetToDefaults operation on the server.
-
-		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=csvSnapshot)): The method internally sets Arg1 to the current href for this instance
@@ -205,8 +203,6 @@ class CsvSnapshot(Base):
 
 	def TakeCsvSnapshot(self):
 		"""Executes the takeCsvSnapshot operation on the server.
-
-		Takes CSV Snapshot. The views and other settings must be set before the call using the /statistics/csvSnapshot attributes.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=csvSnapshot)): The method internally sets Arg1 to the current href for this instance

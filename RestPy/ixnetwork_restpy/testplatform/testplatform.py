@@ -36,15 +36,15 @@ class TestPlatform(Base):
         rest_port (number): the ip port of the test tool platform that the server is listening on
         platform (str[windows|linux]): the platform type that is being connected to
         log_file_name (str): the name of the log file that trace logging will be written to, if omitted it will be written to the console
-        
+        ignore_env_proxy (bool): if requests is returning a 504 error use this to bypass local environment proxy settings
     Child classes:   
         TestPlatform.Sessions
     """
     _SDM_NAME = None
 
-    def __init__(self, ip_address, rest_port=443, platform='windows', log_file_name=None):
+    def __init__(self, ip_address, rest_port=443, platform='windows', log_file_name=None, ignore_env_proxy=False):
         super(TestPlatform, self).__init__(None)
-        self._connection = Connection(ip_address, rest_port, platform, log_file_name)
+        self._connection = Connection(ip_address, rest_port, platform, log_file_name, ignore_env_proxy)
         self._set_default_href()
          
     def _set_default_href(self, href='/api/v1'):

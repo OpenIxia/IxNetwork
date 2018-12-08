@@ -234,6 +234,37 @@ class InterAreaRouter(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, DCBit=None, DestRouterId=None, DestRouterIdPrefix=None, EBit=None, LinkStateId=None, LinkStateIdStep=None, MCBit=None, Metric=None, NBit=None, RBit=None, RangeSize=None, ReservedBit6=None, ReservedBit7=None, V6Bit=None):
+		"""Base class infrastructure that gets a list of interAreaRouter device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DCBit (str): optional regex of dCBit
+			DestRouterId (str): optional regex of destRouterId
+			DestRouterIdPrefix (str): optional regex of destRouterIdPrefix
+			EBit (str): optional regex of eBit
+			LinkStateId (str): optional regex of linkStateId
+			LinkStateIdStep (str): optional regex of linkStateIdStep
+			MCBit (str): optional regex of mCBit
+			Metric (str): optional regex of metric
+			NBit (str): optional regex of nBit
+			RBit (str): optional regex of rBit
+			RangeSize (str): optional regex of rangeSize
+			ReservedBit6 (str): optional regex of reservedBit6
+			ReservedBit7 (str): optional regex of reservedBit7
+			V6Bit (str): optional regex of v6Bit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Advertise(self):
 		"""Executes the advertise operation on the server.
 

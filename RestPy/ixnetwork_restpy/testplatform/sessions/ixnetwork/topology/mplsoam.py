@@ -51,34 +51,6 @@ class MplsOam(Base):
 		return LearnedInfo(self)
 
 	@property
-	def SbfdInitiator(self):
-		"""An instance of the SbfdInitiator class.
-
-		Returns:
-			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.sbfdinitiator.SbfdInitiator)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		from ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.sbfdinitiator import SbfdInitiator
-		return SbfdInitiator(self)._select()
-
-	@property
-	def SbfdResponder(self):
-		"""An instance of the SbfdResponder class.
-
-		Returns:
-			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.sbfdresponder.SbfdResponder)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		from ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.sbfdresponder import SbfdResponder
-		return SbfdResponder(self)._select()
-
-	@property
 	def Active(self):
 		"""Activate/Deactivate Configuration
 
@@ -262,18 +234,6 @@ class MplsOam(Base):
 		return self._get_attribute('enablePeriodicPing')
 
 	@property
-	def EnableSBfdResponder(self):
-		"""Enables S-BFD Responder
-
-		Returns:
-			bool
-		"""
-		return self._get_attribute('enableSBfdResponder')
-	@EnableSBfdResponder.setter
-	def EnableSBfdResponder(self, value):
-		self._set_attribute('enableSBfdResponder', value)
-
-	@property
 	def Errors(self):
 		"""A list of errors that have occurred
 
@@ -308,18 +268,6 @@ class MplsOam(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('includeVendorEnterpriseNumbeTlv')
-
-	@property
-	def InitiatorSBFDSessionCount(self):
-		"""Number of configured S-BFD Initiator sessions with static MPLS labels per MPLS-OAM Interface. Labels should be configured as the actual label values (not SIDs) for SR-LSPs and should include list of labels learned by Ixia port and not the ones configured on the Tx Port itself.
-
-		Returns:
-			number
-		"""
-		return self._get_attribute('initiatorSBFDSessionCount')
-	@InitiatorSBFDSessionCount.setter
-	def InitiatorSBFDSessionCount(self, value):
-		self._set_attribute('initiatorSBFDSessionCount', value)
 
 	@property
 	def LocalRouterId(self):
@@ -456,13 +404,11 @@ class MplsOam(Base):
 		"""
 		return self._get_attribute('vendorEnterpriseNumber')
 
-	def add(self, ConnectedVia=None, EnableSBfdResponder=None, InitiatorSBFDSessionCount=None, Multiplier=None, Name=None, StackedLayers=None):
+	def add(self, ConnectedVia=None, Multiplier=None, Name=None, StackedLayers=None):
 		"""Adds a new mplsOam node on the server and retrieves it in this instance.
 
 		Args:
 			ConnectedVia (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of layers this layer used to connect to the wire
-			EnableSBfdResponder (bool): Enables S-BFD Responder
-			InitiatorSBFDSessionCount (number): Number of configured S-BFD Initiator sessions with static MPLS labels per MPLS-OAM Interface. Labels should be configured as the actual label values (not SIDs) for SR-LSPs and should include list of labels learned by Ixia port and not the ones configured on the Tx Port itself.
 			Multiplier (number): Number of layer instances per parent instance (multiplier)
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 			StackedLayers (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of secondary (many to one) child layer protocols
@@ -484,7 +430,7 @@ class MplsOam(Base):
 		"""
 		self._delete()
 
-	def find(self, ConnectedVia=None, Count=None, DescriptiveName=None, EnableSBfdResponder=None, Errors=None, InitiatorSBFDSessionCount=None, LocalRouterId=None, Multiplier=None, Name=None, SessionStatus=None, StackedLayers=None, StateCounts=None, Status=None):
+	def find(self, ConnectedVia=None, Count=None, DescriptiveName=None, Errors=None, LocalRouterId=None, Multiplier=None, Name=None, SessionStatus=None, StackedLayers=None, StateCounts=None, Status=None):
 		"""Finds and retrieves mplsOam data from the server.
 
 		All named parameters support regex and can be used to selectively retrieve mplsOam data from the server.
@@ -494,9 +440,7 @@ class MplsOam(Base):
 			ConnectedVia (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of layers this layer used to connect to the wire
 			Count (number): Number of elements inside associated multiplier-scaled container object, e.g. number of devices inside a Device Group
 			DescriptiveName (str): Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
-			EnableSBfdResponder (bool): Enables S-BFD Responder
 			Errors (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/?deepchild=*],arg2:list[str]))): A list of errors that have occurred
-			InitiatorSBFDSessionCount (number): Number of configured S-BFD Initiator sessions with static MPLS labels per MPLS-OAM Interface. Labels should be configured as the actual label values (not SIDs) for SR-LSPs and should include list of labels learned by Ixia port and not the ones configured on the Tx Port itself.
 			LocalRouterId (list(str)): The MPLOAM Router ID value, in IPv4 format.
 			Multiplier (number): Number of layer instances per parent instance (multiplier)
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
@@ -527,6 +471,49 @@ class MplsOam(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, BfdCvType=None, BfdDiscriminatorEnd=None, BfdDiscriminatorStart=None, ControlChannel=None, DestinationAddressIpv4=None, DownstreamAddressType=None, DownstreamInterfaceAddressNumbered=None, DownstreamInterfaceAddressUnnumbered=None, DownstreamIpAddress=None, EchoRequestInterval=None, EchoResponseTimeout=None, EnableDSIflag=None, EnableDownstreamMappingTlv=None, EnableDsNflag=None, EnableFecValidation=None, EnablePeriodicPing=None, FlapTxIntervals=None, IncludePadTlv=None, IncludeVendorEnterpriseNumbeTlv=None, MinRxInterval=None, PadTlvFirstOctet=None, PadTlvLength=None, ReplyMode=None, TimeoutMultiplier=None, TxInterval=None, VendorEnterpriseNumber=None):
+		"""Base class infrastructure that gets a list of mplsOam device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BfdCvType (str): optional regex of bfdCvType
+			BfdDiscriminatorEnd (str): optional regex of bfdDiscriminatorEnd
+			BfdDiscriminatorStart (str): optional regex of bfdDiscriminatorStart
+			ControlChannel (str): optional regex of controlChannel
+			DestinationAddressIpv4 (str): optional regex of destinationAddressIpv4
+			DownstreamAddressType (str): optional regex of downstreamAddressType
+			DownstreamInterfaceAddressNumbered (str): optional regex of downstreamInterfaceAddressNumbered
+			DownstreamInterfaceAddressUnnumbered (str): optional regex of downstreamInterfaceAddressUnnumbered
+			DownstreamIpAddress (str): optional regex of downstreamIpAddress
+			EchoRequestInterval (str): optional regex of echoRequestInterval
+			EchoResponseTimeout (str): optional regex of echoResponseTimeout
+			EnableDSIflag (str): optional regex of enableDSIflag
+			EnableDownstreamMappingTlv (str): optional regex of enableDownstreamMappingTlv
+			EnableDsNflag (str): optional regex of enableDsNflag
+			EnableFecValidation (str): optional regex of enableFecValidation
+			EnablePeriodicPing (str): optional regex of enablePeriodicPing
+			FlapTxIntervals (str): optional regex of flapTxIntervals
+			IncludePadTlv (str): optional regex of includePadTlv
+			IncludeVendorEnterpriseNumbeTlv (str): optional regex of includeVendorEnterpriseNumbeTlv
+			MinRxInterval (str): optional regex of minRxInterval
+			PadTlvFirstOctet (str): optional regex of padTlvFirstOctet
+			PadTlvLength (str): optional regex of padTlvLength
+			ReplyMode (str): optional regex of replyMode
+			TimeoutMultiplier (str): optional regex of timeoutMultiplier
+			TxInterval (str): optional regex of txInterval
+			VendorEnterpriseNumber (str): optional regex of vendorEnterpriseNumber
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def ClearAllLearnedInfo(self, Arg2):
 		"""Executes the clearAllLearnedInfo operation on the server.

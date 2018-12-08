@@ -37,7 +37,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ActionType(self):
-		"""This describes the action associated with the flow entry.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ArpDstHwAddress(self):
-		"""This describes the target hardware address in the ARP payload.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ArpDstIpv4Address(self):
-		"""This describes the target IPv4 address in the ARP payload.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""This describes the ARP opcode.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ArpSrcHwAddress(self):
-		"""This describes the source hardware address in the ARP payload.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ArpSrcIpv4Address(self):
-		"""This describes the source IPv4 address in the ARP payload.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""This describes the destination address of the Ethernet port.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def EthernetSource(self):
-		"""This describes the source address of the Ethernet port.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def EthernetType(self):
-		"""This describes the Ethernet type of the flow match.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Experimenter(self):
-		"""This describes the unique Experimenter identifier. The default value is 1.
+		"""
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""This describes the data of the Experimenter.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def ExperimenterDatalength(self):
-		"""This describes the data length of the Experimenter.
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def GroupId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""This describes the ICMP code.
+		"""
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""This describes the ICMP type.
+		"""
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""This describes the ICMPv6 code.
+		"""
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""This describes the ICMPv6 type.
+		"""
 
 		Returns:
 			number
@@ -190,7 +190,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def IpDscp(self):
-		"""This describes the IP DSCP value for advertising.
+		"""
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def IpEcn(self):
-		"""This describes the ECN bits of the IP header.
+		"""
 
 		Returns:
 			number
@@ -208,7 +208,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def IpProtocol(self):
-		"""This describes the IP Protocol used.
+		"""
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""This describes the IPv4 destination address.
+		"""
 
 		Returns:
 			str
@@ -226,7 +226,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""This describes the IPv4 source address.
+		"""
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""This describes the IPv6 destination address.
+		"""
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""This describes the IPv6 Extension Header pseudo-field.
+		"""
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""This describes the IPv6 Flow label.
+		"""
 
 		Returns:
 			number
@@ -262,7 +262,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""This describes the source link-layer address option in an IPv6 Neighbor Discovery message.
+		"""
 
 		Returns:
 			str
@@ -271,7 +271,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""This describes the target address in an IPv6 Neighbor Discovery message.
+		"""
 
 		Returns:
 			str
@@ -280,7 +280,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6NdTll(self):
-		"""This describes the target link-layer address option in an IPv6 Neighbor Discovery message
+		"""
 
 		Returns:
 			str
@@ -289,7 +289,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""This describes the IPv6 source address.
+		"""
 
 		Returns:
 			str
@@ -298,7 +298,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def MaxByteLength(self):
-		"""This describes the maximum amount of data from a packet that should be sent when the port is OFPP_CONTROLLER.
+		"""
 
 		Returns:
 			number
@@ -307,7 +307,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def MplsBos(self):
-		"""This describes the BoS bit in the first MPLS shim header.
+		"""
 
 		Returns:
 			number
@@ -316,7 +316,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def MplsLabel(self):
-		"""This describes the LABEL in the first MPLS shim header.
+		"""
 
 		Returns:
 			number
@@ -325,7 +325,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def MplsTc(self):
-		"""This describes the TC in the first MPLS shim header.
+		"""
 
 		Returns:
 			number
@@ -334,7 +334,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def MplsTtl(self):
-		"""This replaces the existing MPLS TTL. Only applies to packets with an existing MPLS shim header.
+		"""
 
 		Returns:
 			number
@@ -343,7 +343,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def NetworkTtl(self):
-		"""This describes the IP TTL.
+		"""
 
 		Returns:
 			number
@@ -352,7 +352,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def OutputPort(self):
-		"""This describes the out port value. It requires matching entries to include this as an output port.
+		"""
 
 		Returns:
 			number
@@ -361,7 +361,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def OutputPortType(self):
-		"""This describes the Output Port Type for this Flow Range
+		"""
 
 		Returns:
 			str
@@ -370,7 +370,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def PbbIsid(self):
-		"""This describes the I-SID in the first PBB service instance tag.
+		"""
 
 		Returns:
 			number
@@ -379,7 +379,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def QueueId(self):
-		"""This describes the queue of the port in which the packet should be enqueued.
+		"""
 
 		Returns:
 			number
@@ -388,7 +388,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def SctpDestination(self):
-		"""This describes the SCTP target port.
+		"""
 
 		Returns:
 			number
@@ -397,7 +397,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def SctpSource(self):
-		"""This describes the SCTP source port.
+		"""
 
 		Returns:
 			number
@@ -406,7 +406,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def TcpDestination(self):
-		"""This describes the TCP destination address.
+		"""
 
 		Returns:
 			number
@@ -415,7 +415,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def TcpSource(self):
-		"""This describes the TCP source address.
+		"""
 
 		Returns:
 			number
@@ -424,7 +424,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def TunnelId(self):
-		"""This describes the unique identifier used for the Tunnel.
+		"""
 
 		Returns:
 			str
@@ -433,7 +433,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def UdpDestination(self):
-		"""This describes the UDP destination port.
+		"""
 
 		Returns:
 			number
@@ -442,7 +442,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def UdpSource(self):
-		"""This describes the UDP source port.
+		"""
 
 		Returns:
 			number
@@ -451,7 +451,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def VlanId(self):
-		"""This describes the unique VLAN Identifier.
+		"""
 
 		Returns:
 			number
@@ -460,7 +460,7 @@ class SwitchActionV131LearnedInfo(Base):
 
 	@property
 	def VlanPriority(self):
-		"""This describes the User Priority for this VLAN.
+		"""
 
 		Returns:
 			number
@@ -474,54 +474,54 @@ class SwitchActionV131LearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchActionV131LearnedInfo data from the server.
 
 		Args:
-			ActionType (str): This describes the action associated with the flow entry.
-			ArpDstHwAddress (str): This describes the target hardware address in the ARP payload.
-			ArpDstIpv4Address (number): This describes the target IPv4 address in the ARP payload.
-			ArpOpcode (number): This describes the ARP opcode.
-			ArpSrcHwAddress (str): This describes the source hardware address in the ARP payload.
-			ArpSrcIpv4Address (number): This describes the source IPv4 address in the ARP payload.
-			EthernetDestination (str): This describes the destination address of the Ethernet port.
-			EthernetSource (str): This describes the source address of the Ethernet port.
-			EthernetType (str): This describes the Ethernet type of the flow match.
-			Experimenter (number): This describes the unique Experimenter identifier. The default value is 1.
-			ExperimenterData (str): This describes the data of the Experimenter.
-			ExperimenterDatalength (number): This describes the data length of the Experimenter.
-			GroupId (number): NOT DEFINED
-			Icmpv4Code (number): This describes the ICMP code.
-			Icmpv4Type (number): This describes the ICMP type.
-			Icmpv6Code (number): This describes the ICMPv6 code.
-			Icmpv6Type (number): This describes the ICMPv6 type.
-			IpDscp (str): This describes the IP DSCP value for advertising.
-			IpEcn (number): This describes the ECN bits of the IP header.
-			IpProtocol (number): This describes the IP Protocol used.
-			Ipv4Destination (str): This describes the IPv4 destination address.
-			Ipv4Source (str): This describes the IPv4 source address.
-			Ipv6Destination (str): This describes the IPv6 destination address.
-			Ipv6ExtHeader (number): This describes the IPv6 Extension Header pseudo-field.
-			Ipv6FlowLabel (number): This describes the IPv6 Flow label.
-			Ipv6NdSll (str): This describes the source link-layer address option in an IPv6 Neighbor Discovery message.
-			Ipv6NdTarget (str): This describes the target address in an IPv6 Neighbor Discovery message.
-			Ipv6NdTll (str): This describes the target link-layer address option in an IPv6 Neighbor Discovery message
-			Ipv6Source (str): This describes the IPv6 source address.
-			MaxByteLength (number): This describes the maximum amount of data from a packet that should be sent when the port is OFPP_CONTROLLER.
-			MplsBos (number): This describes the BoS bit in the first MPLS shim header.
-			MplsLabel (number): This describes the LABEL in the first MPLS shim header.
-			MplsTc (number): This describes the TC in the first MPLS shim header.
-			MplsTtl (number): This replaces the existing MPLS TTL. Only applies to packets with an existing MPLS shim header.
-			NetworkTtl (number): This describes the IP TTL.
-			OutputPort (number): This describes the out port value. It requires matching entries to include this as an output port.
-			OutputPortType (str): This describes the Output Port Type for this Flow Range
-			PbbIsid (number): This describes the I-SID in the first PBB service instance tag.
-			QueueId (number): This describes the queue of the port in which the packet should be enqueued.
-			SctpDestination (number): This describes the SCTP target port.
-			SctpSource (number): This describes the SCTP source port.
-			TcpDestination (number): This describes the TCP destination address.
-			TcpSource (number): This describes the TCP source address.
-			TunnelId (str): This describes the unique identifier used for the Tunnel.
-			UdpDestination (number): This describes the UDP destination port.
-			UdpSource (number): This describes the UDP source port.
-			VlanId (number): This describes the unique VLAN Identifier.
-			VlanPriority (number): This describes the User Priority for this VLAN.
+			ActionType (str): 
+			ArpDstHwAddress (str): 
+			ArpDstIpv4Address (number): 
+			ArpOpcode (number): 
+			ArpSrcHwAddress (str): 
+			ArpSrcIpv4Address (number): 
+			EthernetDestination (str): 
+			EthernetSource (str): 
+			EthernetType (str): 
+			Experimenter (number): 
+			ExperimenterData (str): 
+			ExperimenterDatalength (number): 
+			GroupId (number): 
+			Icmpv4Code (number): 
+			Icmpv4Type (number): 
+			Icmpv6Code (number): 
+			Icmpv6Type (number): 
+			IpDscp (str): 
+			IpEcn (number): 
+			IpProtocol (number): 
+			Ipv4Destination (str): 
+			Ipv4Source (str): 
+			Ipv6Destination (str): 
+			Ipv6ExtHeader (number): 
+			Ipv6FlowLabel (number): 
+			Ipv6NdSll (str): 
+			Ipv6NdTarget (str): 
+			Ipv6NdTll (str): 
+			Ipv6Source (str): 
+			MaxByteLength (number): 
+			MplsBos (number): 
+			MplsLabel (number): 
+			MplsTc (number): 
+			MplsTtl (number): 
+			NetworkTtl (number): 
+			OutputPort (number): 
+			OutputPortType (str): 
+			PbbIsid (number): 
+			QueueId (number): 
+			SctpDestination (number): 
+			SctpSource (number): 
+			TcpDestination (number): 
+			TcpSource (number): 
+			TunnelId (str): 
+			UdpDestination (number): 
+			UdpSource (number): 
+			VlanId (number): 
+			VlanPriority (number): 
 
 		Returns:
 			self: This instance with matching switchActionV131LearnedInfo data retrieved from the server available through an iterator or index

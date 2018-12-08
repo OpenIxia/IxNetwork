@@ -262,3 +262,39 @@ class BgpSRTEPoliciesSegmentsCollectionV4(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('trafficClass')
+
+	def get_device_ids(self, PortNames=None, Active=None, BottomOfStack=None, InterfaceIndex=None, Ipv4LocalAddress=None, Ipv4NodeAddress=None, Ipv4RemoteAddress=None, Ipv6LocalAddress=None, Ipv6NodeAddress=None, Ipv6RemoteAddress=None, Ipv6SID=None, Label=None, OptionalBottomOfStack=None, OptionalIpv6SID=None, OptionalLabel=None, OptionalTLVType=None, OptionalTimeToLive=None, OptionalTrafficClass=None, SegmentType=None, TimeToLive=None, TrafficClass=None):
+		"""Base class infrastructure that gets a list of bgpSRTEPoliciesSegmentsCollectionV4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BottomOfStack (str): optional regex of bottomOfStack
+			InterfaceIndex (str): optional regex of interfaceIndex
+			Ipv4LocalAddress (str): optional regex of ipv4LocalAddress
+			Ipv4NodeAddress (str): optional regex of ipv4NodeAddress
+			Ipv4RemoteAddress (str): optional regex of ipv4RemoteAddress
+			Ipv6LocalAddress (str): optional regex of ipv6LocalAddress
+			Ipv6NodeAddress (str): optional regex of ipv6NodeAddress
+			Ipv6RemoteAddress (str): optional regex of ipv6RemoteAddress
+			Ipv6SID (str): optional regex of ipv6SID
+			Label (str): optional regex of label
+			OptionalBottomOfStack (str): optional regex of optionalBottomOfStack
+			OptionalIpv6SID (str): optional regex of optionalIpv6SID
+			OptionalLabel (str): optional regex of optionalLabel
+			OptionalTLVType (str): optional regex of optionalTLVType
+			OptionalTimeToLive (str): optional regex of optionalTimeToLive
+			OptionalTrafficClass (str): optional regex of optionalTrafficClass
+			SegmentType (str): optional regex of segmentType
+			TimeToLive (str): optional regex of timeToLive
+			TrafficClass (str): optional regex of trafficClass
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

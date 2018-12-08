@@ -37,7 +37,7 @@ class LearnedSgState(Base):
 
 	@property
 	def Group(self):
-		"""The first IPv4 multicast group address in the range of group addresses included in the Register message. (default = 255.0.0.0)
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedSgState(Base):
 
 	@property
 	def Source(self):
-		"""The first source address to be included in the Register messages. (default = 0.0.0.1)
+		"""
 
 		Returns:
 			str
@@ -60,8 +60,8 @@ class LearnedSgState(Base):
 		By default the find method takes no parameters and will retrieve all learnedSgState data from the server.
 
 		Args:
-			Group (str): The first IPv4 multicast group address in the range of group addresses included in the Register message. (default = 255.0.0.0)
-			Source (str): The first source address to be included in the Register messages. (default = 0.0.0.1)
+			Group (str): 
+			Source (str): 
 
 		Returns:
 			self: This instance with matching learnedSgState data retrieved from the server available through an iterator or index

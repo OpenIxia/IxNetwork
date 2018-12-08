@@ -291,3 +291,40 @@ class BroadcastDomainV4Vpws(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('vidNormalization')
+
+	def get_device_ids(self, PortNames=None, Active=None, AdRouteLabel=None, BVlanId=None, BVlanPriority=None, BVlanTpid=None, BackupFlag=None, EnableVlanAwareService=None, EthernetTagId=None, FxcType=None, GroupAddress=None, IncludeVpwsL2AttrExtComm=None, L2Mtu=None, PrimaryPE=None, RemoteServiceId=None, RequireCW=None, RootAddress=None, RsvpP2mpId=None, RsvpP2mpIdAsNumber=None, RsvpTunnelId=None, SenderAddressPRootNodeAddress=None, VidNormalization=None):
+		"""Base class infrastructure that gets a list of broadcastDomainV4Vpws device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdRouteLabel (str): optional regex of adRouteLabel
+			BVlanId (str): optional regex of bVlanId
+			BVlanPriority (str): optional regex of bVlanPriority
+			BVlanTpid (str): optional regex of bVlanTpid
+			BackupFlag (str): optional regex of backupFlag
+			EnableVlanAwareService (str): optional regex of enableVlanAwareService
+			EthernetTagId (str): optional regex of ethernetTagId
+			FxcType (str): optional regex of fxcType
+			GroupAddress (str): optional regex of groupAddress
+			IncludeVpwsL2AttrExtComm (str): optional regex of includeVpwsL2AttrExtComm
+			L2Mtu (str): optional regex of l2Mtu
+			PrimaryPE (str): optional regex of primaryPE
+			RemoteServiceId (str): optional regex of remoteServiceId
+			RequireCW (str): optional regex of requireCW
+			RootAddress (str): optional regex of rootAddress
+			RsvpP2mpId (str): optional regex of rsvpP2mpId
+			RsvpP2mpIdAsNumber (str): optional regex of rsvpP2mpIdAsNumber
+			RsvpTunnelId (str): optional regex of rsvpTunnelId
+			SenderAddressPRootNodeAddress (str): optional regex of senderAddressPRootNodeAddress
+			VidNormalization (str): optional regex of vidNormalization
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

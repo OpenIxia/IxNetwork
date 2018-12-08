@@ -37,7 +37,7 @@ class LearnedBsrInfo(Base):
 
 	@property
 	def BsrAddress(self):
-		"""The address of the elected bootstrap router that is sending periodic bootstrap messages.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedBsrInfo(Base):
 
 	@property
 	def LastBsmSendRecv(self):
-		"""Indicates the elapsed time (in seconds) since last bootstrap message was received or sent.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedBsrInfo(Base):
 
 	@property
 	def OurBsrState(self):
-		"""Indicates the state of the configured bootstrap router.
+		"""
 
 		Returns:
 			str(candidate|elected|notStarted|pending)
@@ -64,7 +64,7 @@ class LearnedBsrInfo(Base):
 
 	@property
 	def Priority(self):
-		"""Priority of the elected bootstrap router as received in Bootstrap messages or configured priority.
+		"""
 
 		Returns:
 			number
@@ -78,10 +78,10 @@ class LearnedBsrInfo(Base):
 		By default the find method takes no parameters and will retrieve all learnedBsrInfo data from the server.
 
 		Args:
-			BsrAddress (str): The address of the elected bootstrap router that is sending periodic bootstrap messages.
-			LastBsmSendRecv (number): Indicates the elapsed time (in seconds) since last bootstrap message was received or sent.
-			OurBsrState (str(candidate|elected|notStarted|pending)): Indicates the state of the configured bootstrap router.
-			Priority (number): Priority of the elected bootstrap router as received in Bootstrap messages or configured priority.
+			BsrAddress (str): 
+			LastBsmSendRecv (number): 
+			OurBsrState (str(candidate|elected|notStarted|pending)): 
+			Priority (number): 
 
 		Returns:
 			self: This instance with matching learnedBsrInfo data retrieved from the server available through an iterator or index

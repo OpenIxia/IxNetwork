@@ -51,7 +51,7 @@ class Ospf(Base):
 
 	@property
 	def EnableDrOrBdr(self):
-		"""If true, enables this router as the Designated (DR) or Backup Designated Router (BDR).
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Ospf(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables this emulated OSPF router.
+		"""
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class Ospf(Base):
 
 	@property
 	def FloodLinkStateUpdatesPerInterval(self):
-		"""Sets the number of Flood Link State Updates to be sent in each rate control interval.
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class Ospf(Base):
 
 	@property
 	def RateControlInterval(self):
-		"""Enables the option Rate Control Interval to define a value.
+		"""
 
 		Returns:
 			number
@@ -99,7 +99,7 @@ class Ospf(Base):
 
 	@property
 	def RunningState(self):
-		"""The current state of the OSPF router.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -108,8 +108,6 @@ class Ospf(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the OSPF protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ospf)): The method internally sets Arg1 to the current href for this instance
@@ -123,8 +121,6 @@ class Ospf(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the MLD protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ospf)): The method internally sets Arg1 to the current href for this instance

@@ -38,7 +38,7 @@ class CustomTlvs(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, the custom TLV is enabled.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInCcm(self):
-		"""If true, a custom TLV is included in the bridge CCM messages.
+		"""
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInLbm(self):
-		"""If true, a custom TLV is included in the bridge loopback messages.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInLbr(self):
-		"""If true, a custom TLV is included in the bridge loopback responses messages.
+		"""
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInLmm(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInLmr(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -110,7 +110,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInLtm(self):
-		"""If true, a custom TLV is included in the bridge link trace messages.
+		"""
 
 		Returns:
 			bool
@@ -122,7 +122,7 @@ class CustomTlvs(Base):
 
 	@property
 	def IncludeInLtr(self):
-		"""If true, a custom TLV is included in the bridge link trace response messages.
+		"""
 
 		Returns:
 			bool
@@ -134,7 +134,7 @@ class CustomTlvs(Base):
 
 	@property
 	def Length(self):
-		"""Enter the data for the TLV length field.
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class CustomTlvs(Base):
 
 	@property
 	def Type(self):
-		"""Enter the data for the TLV type field.
+		"""
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class CustomTlvs(Base):
 
 	@property
 	def Value(self):
-		"""Enter the data for the TLV value field. This data is in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -172,17 +172,17 @@ class CustomTlvs(Base):
 		"""Adds a new customTlvs node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true, the custom TLV is enabled.
-			IncludeInCcm (bool): If true, a custom TLV is included in the bridge CCM messages.
-			IncludeInLbm (bool): If true, a custom TLV is included in the bridge loopback messages.
-			IncludeInLbr (bool): If true, a custom TLV is included in the bridge loopback responses messages.
-			IncludeInLmm (bool): NOT DEFINED
-			IncludeInLmr (bool): NOT DEFINED
-			IncludeInLtm (bool): If true, a custom TLV is included in the bridge link trace messages.
-			IncludeInLtr (bool): If true, a custom TLV is included in the bridge link trace response messages.
-			Length (number): Enter the data for the TLV length field.
-			Type (number): Enter the data for the TLV type field.
-			Value (str): Enter the data for the TLV value field. This data is in hexadecimal format.
+			Enabled (bool): 
+			IncludeInCcm (bool): 
+			IncludeInLbm (bool): 
+			IncludeInLbr (bool): 
+			IncludeInLmm (bool): 
+			IncludeInLmr (bool): 
+			IncludeInLtm (bool): 
+			IncludeInLtr (bool): 
+			Length (number): 
+			Type (number): 
+			Value (str): 
 
 		Returns:
 			self: This instance with all currently retrieved customTlvs data using find and the newly added customTlvs data available through an iterator or index
@@ -208,17 +208,17 @@ class CustomTlvs(Base):
 		By default the find method takes no parameters and will retrieve all customTlvs data from the server.
 
 		Args:
-			Enabled (bool): If true, the custom TLV is enabled.
-			IncludeInCcm (bool): If true, a custom TLV is included in the bridge CCM messages.
-			IncludeInLbm (bool): If true, a custom TLV is included in the bridge loopback messages.
-			IncludeInLbr (bool): If true, a custom TLV is included in the bridge loopback responses messages.
-			IncludeInLmm (bool): NOT DEFINED
-			IncludeInLmr (bool): NOT DEFINED
-			IncludeInLtm (bool): If true, a custom TLV is included in the bridge link trace messages.
-			IncludeInLtr (bool): If true, a custom TLV is included in the bridge link trace response messages.
-			Length (number): Enter the data for the TLV length field.
-			Type (number): Enter the data for the TLV type field.
-			Value (str): Enter the data for the TLV value field. This data is in hexadecimal format.
+			Enabled (bool): 
+			IncludeInCcm (bool): 
+			IncludeInLbm (bool): 
+			IncludeInLbr (bool): 
+			IncludeInLmm (bool): 
+			IncludeInLmr (bool): 
+			IncludeInLtm (bool): 
+			IncludeInLtr (bool): 
+			Length (number): 
+			Type (number): 
+			Value (str): 
 
 		Returns:
 			self: This instance with matching customTlvs data retrieved from the server available through an iterator or index

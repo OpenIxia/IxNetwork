@@ -164,7 +164,7 @@ class OfChannel(Base):
 
 	@property
 	def CalculateFlows(self):
-		"""If true, calculates the rate at which flows are transmitted by the controller.
+		"""
 
 		Returns:
 			bool
@@ -176,7 +176,7 @@ class OfChannel(Base):
 
 	@property
 	def CalculatePacketInReplyDelay(self):
-		"""If true, calculates delay between Packet-In sent from Switch and reply received from Controller.
+		"""
 
 		Returns:
 			bool
@@ -188,7 +188,7 @@ class OfChannel(Base):
 
 	@property
 	def DataPathId(self):
-		"""Indicates the Datapath ID of the OpenFlow switch.
+		"""
 
 		Returns:
 			str
@@ -200,7 +200,7 @@ class OfChannel(Base):
 
 	@property
 	def DataPathIdInHex(self):
-		"""Indicates the Datapath ID in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -212,7 +212,7 @@ class OfChannel(Base):
 
 	@property
 	def DatapathDescritpion(self):
-		"""Indicates a description of the datapath.
+		"""
 
 		Returns:
 			str
@@ -224,7 +224,7 @@ class OfChannel(Base):
 
 	@property
 	def Description(self):
-		"""A description of the OF Channel used to identify it.
+		"""
 
 		Returns:
 			str
@@ -236,7 +236,7 @@ class OfChannel(Base):
 
 	@property
 	def EnableCalculateFlowsPerSecondUsingBarrierReq(self):
-		"""If true, enables flow rate Calculation using Barrier request message.
+		"""
 
 		Returns:
 			bool
@@ -248,7 +248,7 @@ class OfChannel(Base):
 
 	@property
 	def EnableHelloElement(self):
-		"""Enables Hello element for version negotiation.
+		"""
 
 		Returns:
 			bool
@@ -260,7 +260,7 @@ class OfChannel(Base):
 
 	@property
 	def EnableStartupEmptyTableFeatureRequest(self):
-		"""If true, the Table Feature Request is sent at start up. The default value is false
+		"""
 
 		Returns:
 			bool
@@ -272,7 +272,7 @@ class OfChannel(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, the OF Channel is used in the OpenFlow configuration.
+		"""
 
 		Returns:
 			bool
@@ -284,7 +284,7 @@ class OfChannel(Base):
 
 	@property
 	def FlowTxBurstSize(self):
-		"""Indicates the number of flows sent in a single burst.
+		"""
 
 		Returns:
 			number
@@ -296,7 +296,7 @@ class OfChannel(Base):
 
 	@property
 	def HardwareDescription(self):
-		"""Indicates the hardware description of the switch.
+		"""
 
 		Returns:
 			str
@@ -308,7 +308,7 @@ class OfChannel(Base):
 
 	@property
 	def InterFlowBurstGap(self):
-		"""Indicates the duration, in milliseconds, to wait between successive flow bursts.
+		"""
 
 		Returns:
 			number
@@ -320,7 +320,7 @@ class OfChannel(Base):
 
 	@property
 	def InterPacketInBurstGap(self):
-		"""Indicates the duration, in milliseconds, to wait between successive Packet-In bursts.
+		"""
 
 		Returns:
 			number
@@ -332,7 +332,7 @@ class OfChannel(Base):
 
 	@property
 	def LocalIp(self):
-		"""Indicates the local IP address of the interface. This field is auto-populated and cannot be changed.
+		"""
 
 		Returns:
 			str
@@ -341,7 +341,7 @@ class OfChannel(Base):
 
 	@property
 	def ManufacturerDescription(self):
-		"""Indicates the description of the switch manufacturer.
+		"""
 
 		Returns:
 			str
@@ -353,7 +353,7 @@ class OfChannel(Base):
 
 	@property
 	def MaximumNumberOfFlowsProcessed(self):
-		"""Indicates the maximum number of flows that the controller can advertise before backing off.
+		"""
 
 		Returns:
 			number
@@ -365,7 +365,7 @@ class OfChannel(Base):
 
 	@property
 	def MaximumPacketInBytes(self):
-		"""Indicates the maximum size of data in a Packet-In a message.
+		"""
 
 		Returns:
 			number
@@ -377,7 +377,7 @@ class OfChannel(Base):
 
 	@property
 	def NumberOfBuffers(self):
-		"""Indicates the maximum number of packets that can be stored in the buffered at a time.
+		"""
 
 		Returns:
 			number
@@ -389,7 +389,7 @@ class OfChannel(Base):
 
 	@property
 	def PacketInReplyTimeout(self):
-		"""Indicates the duration for which the Switch should wait for Packet-in-reply before freeing the buffer.
+		"""
 
 		Returns:
 			number
@@ -401,7 +401,7 @@ class OfChannel(Base):
 
 	@property
 	def PacketInTxBurstSize(self):
-		"""Indicates the number of packets in messages sent in a single burst.
+		"""
 
 		Returns:
 			number
@@ -413,7 +413,7 @@ class OfChannel(Base):
 
 	@property
 	def RemoteIp(self):
-		"""Indicates the IP address of the DUT at the other end of OF channel.
+		"""
 
 		Returns:
 			str
@@ -425,7 +425,7 @@ class OfChannel(Base):
 
 	@property
 	def SerialNumber(self):
-		"""Indicates the Serial Number of the switch.
+		"""
 
 		Returns:
 			str
@@ -437,7 +437,7 @@ class OfChannel(Base):
 
 	@property
 	def SoftwareDescription(self):
-		"""Indicates the description of the software installed on the switch.
+		"""
 
 		Returns:
 			str
@@ -449,7 +449,7 @@ class OfChannel(Base):
 
 	@property
 	def StartUpGenerationId(self):
-		"""A 64-bit sequence number field that identifies a given mastership view. A new incremented Generation ID is assigned each time the mastership view changes, for instance, when a new master is designated. On receiving a role change request, the switch compares the Generation ID in the message against the largest Generation ID seen so far. A message with a Generation ID smaller than a previously seen Generation ID is discarded.
+		"""
 
 		Returns:
 			str
@@ -461,7 +461,7 @@ class OfChannel(Base):
 
 	@property
 	def StartUpRoleRequest(self):
-		"""If selected, the controller sends a Role Request message when connection is established to change its role as per the option selected.
+		"""
 
 		Returns:
 			str(noRoleRequest|master|slave)
@@ -473,7 +473,7 @@ class OfChannel(Base):
 
 	@property
 	def StartupFeatureRequest(self):
-		"""If true, a feature request is sent at startup.
+		"""
 
 		Returns:
 			bool
@@ -485,7 +485,7 @@ class OfChannel(Base):
 
 	@property
 	def StoreFlows(self):
-		"""If true, the switch will store the flows advertised by the controller in its tables.
+		"""
 
 		Returns:
 			bool
@@ -497,7 +497,7 @@ class OfChannel(Base):
 
 	@property
 	def UseDataPathIdAsChannelIdentifier(self):
-		"""If true, the Datapath ID of the switch is used.
+		"""
 
 		Returns:
 			bool
@@ -509,7 +509,7 @@ class OfChannel(Base):
 
 	@property
 	def UseDatapathId(self):
-		"""Use datapath Id that is configured.
+		"""
 
 		Returns:
 			bool
@@ -523,35 +523,35 @@ class OfChannel(Base):
 		"""Adds a new ofChannel node on the server and retrieves it in this instance.
 
 		Args:
-			CalculateFlows (bool): If true, calculates the rate at which flows are transmitted by the controller.
-			CalculatePacketInReplyDelay (bool): If true, calculates delay between Packet-In sent from Switch and reply received from Controller.
-			DataPathId (str): Indicates the Datapath ID of the OpenFlow switch.
-			DataPathIdInHex (str): Indicates the Datapath ID in hexadecimal format.
-			DatapathDescritpion (str): Indicates a description of the datapath.
-			Description (str): A description of the OF Channel used to identify it.
-			EnableCalculateFlowsPerSecondUsingBarrierReq (bool): If true, enables flow rate Calculation using Barrier request message.
-			EnableHelloElement (bool): Enables Hello element for version negotiation.
-			EnableStartupEmptyTableFeatureRequest (bool): If true, the Table Feature Request is sent at start up. The default value is false
-			Enabled (bool): If true, the OF Channel is used in the OpenFlow configuration.
-			FlowTxBurstSize (number): Indicates the number of flows sent in a single burst.
-			HardwareDescription (str): Indicates the hardware description of the switch.
-			InterFlowBurstGap (number): Indicates the duration, in milliseconds, to wait between successive flow bursts.
-			InterPacketInBurstGap (number): Indicates the duration, in milliseconds, to wait between successive Packet-In bursts.
-			ManufacturerDescription (str): Indicates the description of the switch manufacturer.
-			MaximumNumberOfFlowsProcessed (number): Indicates the maximum number of flows that the controller can advertise before backing off.
-			MaximumPacketInBytes (number): Indicates the maximum size of data in a Packet-In a message.
-			NumberOfBuffers (number): Indicates the maximum number of packets that can be stored in the buffered at a time.
-			PacketInReplyTimeout (number): Indicates the duration for which the Switch should wait for Packet-in-reply before freeing the buffer.
-			PacketInTxBurstSize (number): Indicates the number of packets in messages sent in a single burst.
-			RemoteIp (str): Indicates the IP address of the DUT at the other end of OF channel.
-			SerialNumber (str): Indicates the Serial Number of the switch.
-			SoftwareDescription (str): Indicates the description of the software installed on the switch.
-			StartUpGenerationId (str): A 64-bit sequence number field that identifies a given mastership view. A new incremented Generation ID is assigned each time the mastership view changes, for instance, when a new master is designated. On receiving a role change request, the switch compares the Generation ID in the message against the largest Generation ID seen so far. A message with a Generation ID smaller than a previously seen Generation ID is discarded.
-			StartUpRoleRequest (str(noRoleRequest|master|slave)): If selected, the controller sends a Role Request message when connection is established to change its role as per the option selected.
-			StartupFeatureRequest (bool): If true, a feature request is sent at startup.
-			StoreFlows (bool): If true, the switch will store the flows advertised by the controller in its tables.
-			UseDataPathIdAsChannelIdentifier (bool): If true, the Datapath ID of the switch is used.
-			UseDatapathId (bool): Use datapath Id that is configured.
+			CalculateFlows (bool): 
+			CalculatePacketInReplyDelay (bool): 
+			DataPathId (str): 
+			DataPathIdInHex (str): 
+			DatapathDescritpion (str): 
+			Description (str): 
+			EnableCalculateFlowsPerSecondUsingBarrierReq (bool): 
+			EnableHelloElement (bool): 
+			EnableStartupEmptyTableFeatureRequest (bool): 
+			Enabled (bool): 
+			FlowTxBurstSize (number): 
+			HardwareDescription (str): 
+			InterFlowBurstGap (number): 
+			InterPacketInBurstGap (number): 
+			ManufacturerDescription (str): 
+			MaximumNumberOfFlowsProcessed (number): 
+			MaximumPacketInBytes (number): 
+			NumberOfBuffers (number): 
+			PacketInReplyTimeout (number): 
+			PacketInTxBurstSize (number): 
+			RemoteIp (str): 
+			SerialNumber (str): 
+			SoftwareDescription (str): 
+			StartUpGenerationId (str): 
+			StartUpRoleRequest (str(noRoleRequest|master|slave)): 
+			StartupFeatureRequest (bool): 
+			StoreFlows (bool): 
+			UseDataPathIdAsChannelIdentifier (bool): 
+			UseDatapathId (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved ofChannel data using find and the newly added ofChannel data available through an iterator or index
@@ -577,36 +577,36 @@ class OfChannel(Base):
 		By default the find method takes no parameters and will retrieve all ofChannel data from the server.
 
 		Args:
-			CalculateFlows (bool): If true, calculates the rate at which flows are transmitted by the controller.
-			CalculatePacketInReplyDelay (bool): If true, calculates delay between Packet-In sent from Switch and reply received from Controller.
-			DataPathId (str): Indicates the Datapath ID of the OpenFlow switch.
-			DataPathIdInHex (str): Indicates the Datapath ID in hexadecimal format.
-			DatapathDescritpion (str): Indicates a description of the datapath.
-			Description (str): A description of the OF Channel used to identify it.
-			EnableCalculateFlowsPerSecondUsingBarrierReq (bool): If true, enables flow rate Calculation using Barrier request message.
-			EnableHelloElement (bool): Enables Hello element for version negotiation.
-			EnableStartupEmptyTableFeatureRequest (bool): If true, the Table Feature Request is sent at start up. The default value is false
-			Enabled (bool): If true, the OF Channel is used in the OpenFlow configuration.
-			FlowTxBurstSize (number): Indicates the number of flows sent in a single burst.
-			HardwareDescription (str): Indicates the hardware description of the switch.
-			InterFlowBurstGap (number): Indicates the duration, in milliseconds, to wait between successive flow bursts.
-			InterPacketInBurstGap (number): Indicates the duration, in milliseconds, to wait between successive Packet-In bursts.
-			LocalIp (str): Indicates the local IP address of the interface. This field is auto-populated and cannot be changed.
-			ManufacturerDescription (str): Indicates the description of the switch manufacturer.
-			MaximumNumberOfFlowsProcessed (number): Indicates the maximum number of flows that the controller can advertise before backing off.
-			MaximumPacketInBytes (number): Indicates the maximum size of data in a Packet-In a message.
-			NumberOfBuffers (number): Indicates the maximum number of packets that can be stored in the buffered at a time.
-			PacketInReplyTimeout (number): Indicates the duration for which the Switch should wait for Packet-in-reply before freeing the buffer.
-			PacketInTxBurstSize (number): Indicates the number of packets in messages sent in a single burst.
-			RemoteIp (str): Indicates the IP address of the DUT at the other end of OF channel.
-			SerialNumber (str): Indicates the Serial Number of the switch.
-			SoftwareDescription (str): Indicates the description of the software installed on the switch.
-			StartUpGenerationId (str): A 64-bit sequence number field that identifies a given mastership view. A new incremented Generation ID is assigned each time the mastership view changes, for instance, when a new master is designated. On receiving a role change request, the switch compares the Generation ID in the message against the largest Generation ID seen so far. A message with a Generation ID smaller than a previously seen Generation ID is discarded.
-			StartUpRoleRequest (str(noRoleRequest|master|slave)): If selected, the controller sends a Role Request message when connection is established to change its role as per the option selected.
-			StartupFeatureRequest (bool): If true, a feature request is sent at startup.
-			StoreFlows (bool): If true, the switch will store the flows advertised by the controller in its tables.
-			UseDataPathIdAsChannelIdentifier (bool): If true, the Datapath ID of the switch is used.
-			UseDatapathId (bool): Use datapath Id that is configured.
+			CalculateFlows (bool): 
+			CalculatePacketInReplyDelay (bool): 
+			DataPathId (str): 
+			DataPathIdInHex (str): 
+			DatapathDescritpion (str): 
+			Description (str): 
+			EnableCalculateFlowsPerSecondUsingBarrierReq (bool): 
+			EnableHelloElement (bool): 
+			EnableStartupEmptyTableFeatureRequest (bool): 
+			Enabled (bool): 
+			FlowTxBurstSize (number): 
+			HardwareDescription (str): 
+			InterFlowBurstGap (number): 
+			InterPacketInBurstGap (number): 
+			LocalIp (str): 
+			ManufacturerDescription (str): 
+			MaximumNumberOfFlowsProcessed (number): 
+			MaximumPacketInBytes (number): 
+			NumberOfBuffers (number): 
+			PacketInReplyTimeout (number): 
+			PacketInTxBurstSize (number): 
+			RemoteIp (str): 
+			SerialNumber (str): 
+			SoftwareDescription (str): 
+			StartUpGenerationId (str): 
+			StartUpRoleRequest (str(noRoleRequest|master|slave)): 
+			StartupFeatureRequest (bool): 
+			StoreFlows (bool): 
+			UseDataPathIdAsChannelIdentifier (bool): 
+			UseDatapathId (bool): 
 
 		Returns:
 			self: This instance with matching ofChannel data retrieved from the server available through an iterator or index
@@ -634,13 +634,11 @@ class OfChannel(Base):
 	def UpdateRole(self):
 		"""Executes the updateRole operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ofChannel)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			number: NOT DEFINED
+			number: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

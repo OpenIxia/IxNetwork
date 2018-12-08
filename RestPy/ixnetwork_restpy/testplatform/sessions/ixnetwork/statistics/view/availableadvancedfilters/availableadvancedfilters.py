@@ -37,7 +37,7 @@ class AvailableAdvancedFilters(Base):
 
 	@property
 	def Expression(self):
-		"""Allows you to get the filter expression or the body from the id.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class AvailableAdvancedFilters(Base):
 
 	@property
 	def Name(self):
-		"""Allows you to get the filter name from the id.
+		"""
 
 		Returns:
 			str
@@ -60,8 +60,8 @@ class AvailableAdvancedFilters(Base):
 		By default the find method takes no parameters and will retrieve all availableAdvancedFilters data from the server.
 
 		Args:
-			Expression (str): Allows you to get the filter expression or the body from the id.
-			Name (str): Allows you to get the filter name from the id.
+			Expression (str): 
+			Name (str): 
 
 		Returns:
 			self: This instance with matching availableAdvancedFilters data retrieved from the server available through an iterator or index

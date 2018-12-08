@@ -24,77 +24,16 @@ from ixnetwork_restpy.files import Files
 
 
 class DefaultStacks(Base):
-	"""The DefaultStacks class encapsulates a system managed defaultStacks node in the ixnetwork hierarchy.
+	"""The DefaultStacks class encapsulates a required defaultStacks node in the ixnetwork hierarchy.
 
 	An instance of the class can be obtained by accessing the DefaultStacks property from a parent instance.
-	The internal properties list will be empty when the property is accessed and is populated from the server by using the find method.
+	The internal properties list will contain one and only one set of properties which is populated when the property is accessed.
 	"""
 
 	_SDM_NAME = 'defaultStacks'
 
 	def __init__(self, parent):
 		super(DefaultStacks, self).__init__(parent)
-
-	@property
-	def DefaultStackTypeId(self):
-		"""uniquely identifies a default stack type
-
-		Returns:
-			str
-		"""
-		return self._get_attribute('defaultStackTypeId')
-
-	@property
-	def DisplayName(self):
-		"""human readable name of a stack type that can be created
-
-		Returns:
-			str
-		"""
-		return self._get_attribute('displayName')
-
-	@property
-	def NodeName(self):
-		"""related SDM node name from /topology/.
-
-		Returns:
-			str
-		"""
-		return self._get_attribute('nodeName')
-
-	def find(self, DefaultStackTypeId=None, DisplayName=None, NodeName=None):
-		"""Finds and retrieves defaultStacks data from the server.
-
-		All named parameters support regex and can be used to selectively retrieve defaultStacks data from the server.
-		By default the find method takes no parameters and will retrieve all defaultStacks data from the server.
-
-		Args:
-			DefaultStackTypeId (str): uniquely identifies a default stack type
-			DisplayName (str): human readable name of a stack type that can be created
-			NodeName (str): related SDM node name from /topology/.
-
-		Returns:
-			self: This instance with matching defaultStacks data retrieved from the server available through an iterator or index
-
-		Raises:
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		return self._select(locals())
-
-	def read(self, href):
-		"""Retrieves a single instance of defaultStacks data from the server.
-
-		Args:
-			href (str): An href to the instance to be retrieved
-
-		Returns:
-			self: This instance with the defaultStacks data from the server available through an iterator or index
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		return self._read(href)
 
 	def Create(self, Arg2):
 		"""Executes the create operation on the server.

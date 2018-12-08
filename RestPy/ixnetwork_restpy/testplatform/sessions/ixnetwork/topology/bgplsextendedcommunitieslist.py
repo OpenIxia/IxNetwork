@@ -206,3 +206,31 @@ class BgpLsExtendedCommunitiesList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, AsNumber2Bytes=None, AsNumber4Bytes=None, AssignedNumber2Bytes=None, AssignedNumber4Bytes=None, ColorCOBits=None, ColorReservedBits=None, ColorValue=None, Ip=None, LinkBandwidth=None, OpaqueData=None, SubType=None, Type=None):
+		"""Base class infrastructure that gets a list of bgpLsExtendedCommunitiesList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AsNumber2Bytes (str): optional regex of asNumber2Bytes
+			AsNumber4Bytes (str): optional regex of asNumber4Bytes
+			AssignedNumber2Bytes (str): optional regex of assignedNumber2Bytes
+			AssignedNumber4Bytes (str): optional regex of assignedNumber4Bytes
+			ColorCOBits (str): optional regex of colorCOBits
+			ColorReservedBits (str): optional regex of colorReservedBits
+			ColorValue (str): optional regex of colorValue
+			Ip (str): optional regex of ip
+			LinkBandwidth (str): optional regex of linkBandwidth
+			OpaqueData (str): optional regex of opaqueData
+			SubType (str): optional regex of subType
+			Type (str): optional regex of type
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

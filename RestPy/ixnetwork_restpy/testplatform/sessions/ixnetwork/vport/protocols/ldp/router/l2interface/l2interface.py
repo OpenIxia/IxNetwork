@@ -52,7 +52,7 @@ class L2Interface(Base):
 
 	@property
 	def Count(self):
-		"""The number of contiguous values of groupId that will be used in generating FECs.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class L2Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the use of this interface for the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class L2Interface(Base):
 
 	@property
 	def GroupId(self):
-		"""The group ID associated with all VC FEC elements of this interface.
+		"""
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class L2Interface(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -100,7 +100,7 @@ class L2Interface(Base):
 
 	@property
 	def Type(self):
-		"""The type of virtual circuit.
+		"""
 
 		Returns:
 			str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)
@@ -114,11 +114,11 @@ class L2Interface(Base):
 		"""Adds a new l2Interface node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): The number of contiguous values of groupId that will be used in generating FECs.
-			Enabled (bool): Enables the use of this interface for the simulated router.
-			GroupId (number): The group ID associated with all VC FEC elements of this interface.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
-			Type (str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)): The type of virtual circuit.
+			Count (number): 
+			Enabled (bool): 
+			GroupId (number): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			Type (str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)): 
 
 		Returns:
 			self: This instance with all currently retrieved l2Interface data using find and the newly added l2Interface data available through an iterator or index
@@ -144,11 +144,11 @@ class L2Interface(Base):
 		By default the find method takes no parameters and will retrieve all l2Interface data from the server.
 
 		Args:
-			Count (number): The number of contiguous values of groupId that will be used in generating FECs.
-			Enabled (bool): Enables the use of this interface for the simulated router.
-			GroupId (number): The group ID associated with all VC FEC elements of this interface.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
-			Type (str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)): The type of virtual circuit.
+			Count (number): 
+			Enabled (bool): 
+			GroupId (number): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			Type (str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)): 
 
 		Returns:
 			self: This instance with matching l2Interface data retrieved from the server available through an iterator or index

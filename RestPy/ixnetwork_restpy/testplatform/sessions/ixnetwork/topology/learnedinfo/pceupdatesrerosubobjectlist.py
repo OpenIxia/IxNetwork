@@ -252,3 +252,40 @@ class PceUpdateSrEroSubObjectList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, ActiveThisEro=None, Bos=None, FBit=None, Ipv4NodeId=None, Ipv6NodeId=None, LocalInterfaceId=None, LocalIpv4Address=None, LocalIpv6Address=None, LocalNodeId=None, LooseHop=None, MplsLabel=None, MplsLabel32=None, NaiType=None, RemoteInterfaceId=None, RemoteIpv4Address=None, RemoteIpv6Address=None, RemoteNodeId=None, Sid=None, SidType=None, Tc=None, Ttl=None):
+		"""Base class infrastructure that gets a list of pceUpdateSrEroSubObjectList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ActiveThisEro (str): optional regex of activeThisEro
+			Bos (str): optional regex of bos
+			FBit (str): optional regex of fBit
+			Ipv4NodeId (str): optional regex of ipv4NodeId
+			Ipv6NodeId (str): optional regex of ipv6NodeId
+			LocalInterfaceId (str): optional regex of localInterfaceId
+			LocalIpv4Address (str): optional regex of localIpv4Address
+			LocalIpv6Address (str): optional regex of localIpv6Address
+			LocalNodeId (str): optional regex of localNodeId
+			LooseHop (str): optional regex of looseHop
+			MplsLabel (str): optional regex of mplsLabel
+			MplsLabel32 (str): optional regex of mplsLabel32
+			NaiType (str): optional regex of naiType
+			RemoteInterfaceId (str): optional regex of remoteInterfaceId
+			RemoteIpv4Address (str): optional regex of remoteIpv4Address
+			RemoteIpv6Address (str): optional regex of remoteIpv6Address
+			RemoteNodeId (str): optional regex of remoteNodeId
+			Sid (str): optional regex of sid
+			SidType (str): optional regex of sidType
+			Tc (str): optional regex of tc
+			Ttl (str): optional regex of ttl
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

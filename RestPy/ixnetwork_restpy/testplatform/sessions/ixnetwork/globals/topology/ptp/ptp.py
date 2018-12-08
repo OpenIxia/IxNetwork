@@ -146,3 +146,24 @@ class Ptp(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('ttl')
+
+	def get_device_ids(self, PortNames=None, HopLimit=None, Timestamps=None, Tos=None, TrafficClass=None, Ttl=None):
+		"""Base class infrastructure that gets a list of ptp device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			HopLimit (str): optional regex of hopLimit
+			Timestamps (str): optional regex of timestamps
+			Tos (str): optional regex of tos
+			TrafficClass (str): optional regex of trafficClass
+			Ttl (str): optional regex of ttl
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

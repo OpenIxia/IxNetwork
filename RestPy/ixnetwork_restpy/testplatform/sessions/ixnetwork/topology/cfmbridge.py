@@ -37,20 +37,6 @@ class CfmBridge(Base):
 		super(CfmBridge, self).__init__(parent)
 
 	@property
-	def CfmCcmLearnedInfoFilters(self):
-		"""An instance of the CfmCcmLearnedInfoFilters class.
-
-		Returns:
-			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.cfmccmlearnedinfofilters.CfmCcmLearnedInfoFilters)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		from ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.cfmccmlearnedinfofilters import CfmCcmLearnedInfoFilters
-		return CfmCcmLearnedInfoFilters(self)._select()
-
-	@property
 	def Connector(self):
 		"""An instance of the Connector class.
 
@@ -324,6 +310,29 @@ class CfmBridge(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, BridgeId=None, EnableOutOfSequenceCcmDetection=None, EncapsulationType=None, EtherType=None, GarbageCollectionTime=None, OperationMode=None):
+		"""Base class infrastructure that gets a list of cfmBridge device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BridgeId (str): optional regex of bridgeId
+			EnableOutOfSequenceCcmDetection (str): optional regex of enableOutOfSequenceCcmDetection
+			EncapsulationType (str): optional regex of encapsulationType
+			EtherType (str): optional regex of etherType
+			GarbageCollectionTime (str): optional regex of garbageCollectionTime
+			OperationMode (str): optional regex of operationMode
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self, Arg2):
 		"""Executes the clearAllLearnedInfo operation on the server.
 
@@ -380,6 +389,44 @@ class CfmBridge(Base):
 		"""
 		Arg1 = self.href
 		return self._execute('GetCfmCcmLearnedInformation', payload=locals(), response_object=None)
+
+	def GetCfmLinkTraceDbLearnedInformation(self, Arg2):
+		"""Executes the getCfmLinkTraceDbLearnedInformation operation on the server.
+
+		Please provide a proper help text here.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the protocol plugin.An empty list indicates all instances in the plugin.
+
+		Returns:
+			list(str): Please provide a proper description here.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('GetCfmLinkTraceDbLearnedInformation', payload=locals(), response_object=None)
+
+	def GetCfmLoopbackDbLearnedInformation(self, Arg2):
+		"""Executes the getCfmLoopbackDbLearnedInformation operation on the server.
+
+		Please provide a proper help text here.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the protocol plugin.An empty list indicates all instances in the plugin.
+
+		Returns:
+			list(str): Please provide a proper description here.
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('GetCfmLoopbackDbLearnedInformation', payload=locals(), response_object=None)
 
 	def GetPeriodicOAMLearnedInformation(self, Arg2):
 		"""Executes the getPeriodicOAMLearnedInformation operation on the server.

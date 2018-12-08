@@ -1233,6 +1233,92 @@ class Pppoxclient(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, AcMatchMac=None, AcMatchName=None, AcOptions=None, ActualRateDownstream=None, ActualRateUpstream=None, AgentAccessAggregationCircuitId=None, AgentCircuitId=None, AgentRemoteId=None, AuthRetries=None, AuthTimeout=None, AuthType=None, ChapName=None, ChapSecret=None, ClientDnsOptions=None, ClientLocalIp=None, ClientLocalIpv6Iid=None, ClientNcpOptions=None, ClientNetmask=None, ClientNetmaskOptions=None, ClientPrimaryDnsAddress=None, ClientSecondaryDnsAddress=None, ClientSignalIWF=None, ClientSignalLoopChar=None, ClientSignalLoopEncapsulation=None, ClientSignalLoopId=None, ClientV6NcpOptions=None, ClientWinsOptions=None, ClientWinsPrimaryAddress=None, ClientWinsSecondaryAddress=None, DataLink=None, DomainList=None, DslTypeTlv=None, EchoReqInterval=None, EnableDomainGroups=None, EnableEchoReq=None, EnableEchoRsp=None, EnableHostUniq=None, EnableMaxPayload=None, EnableRedial=None, Encaps1=None, Encaps2=None, HostUniq=None, HostUniqLength=None, LcpAccm=None, LcpEnableAccm=None, LcpMaxFailure=None, LcpRetries=None, LcpStartDelay=None, LcpTermRetries=None, LcpTimeout=None, MaxPayload=None, MruNegotiation=None, Mtu=None, NcpRetries=None, NcpTimeout=None, NcpType=None, PadiRetries=None, PadiTimeout=None, PadrRetries=None, PadrTimeout=None, PapPassword=None, PapUser=None, PonTypeTlv=None, RedialMax=None, RedialTimeout=None, ServiceName=None, ServiceOptions=None, UnlimitedRedialAttempts=None, UserDefinedDslType=None, UserDefinedPonType=None):
+		"""Base class infrastructure that gets a list of pppoxclient device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AcMatchMac (str): optional regex of acMatchMac
+			AcMatchName (str): optional regex of acMatchName
+			AcOptions (str): optional regex of acOptions
+			ActualRateDownstream (str): optional regex of actualRateDownstream
+			ActualRateUpstream (str): optional regex of actualRateUpstream
+			AgentAccessAggregationCircuitId (str): optional regex of agentAccessAggregationCircuitId
+			AgentCircuitId (str): optional regex of agentCircuitId
+			AgentRemoteId (str): optional regex of agentRemoteId
+			AuthRetries (str): optional regex of authRetries
+			AuthTimeout (str): optional regex of authTimeout
+			AuthType (str): optional regex of authType
+			ChapName (str): optional regex of chapName
+			ChapSecret (str): optional regex of chapSecret
+			ClientDnsOptions (str): optional regex of clientDnsOptions
+			ClientLocalIp (str): optional regex of clientLocalIp
+			ClientLocalIpv6Iid (str): optional regex of clientLocalIpv6Iid
+			ClientNcpOptions (str): optional regex of clientNcpOptions
+			ClientNetmask (str): optional regex of clientNetmask
+			ClientNetmaskOptions (str): optional regex of clientNetmaskOptions
+			ClientPrimaryDnsAddress (str): optional regex of clientPrimaryDnsAddress
+			ClientSecondaryDnsAddress (str): optional regex of clientSecondaryDnsAddress
+			ClientSignalIWF (str): optional regex of clientSignalIWF
+			ClientSignalLoopChar (str): optional regex of clientSignalLoopChar
+			ClientSignalLoopEncapsulation (str): optional regex of clientSignalLoopEncapsulation
+			ClientSignalLoopId (str): optional regex of clientSignalLoopId
+			ClientV6NcpOptions (str): optional regex of clientV6NcpOptions
+			ClientWinsOptions (str): optional regex of clientWinsOptions
+			ClientWinsPrimaryAddress (str): optional regex of clientWinsPrimaryAddress
+			ClientWinsSecondaryAddress (str): optional regex of clientWinsSecondaryAddress
+			DataLink (str): optional regex of dataLink
+			DomainList (str): optional regex of domainList
+			DslTypeTlv (str): optional regex of dslTypeTlv
+			EchoReqInterval (str): optional regex of echoReqInterval
+			EnableDomainGroups (str): optional regex of enableDomainGroups
+			EnableEchoReq (str): optional regex of enableEchoReq
+			EnableEchoRsp (str): optional regex of enableEchoRsp
+			EnableHostUniq (str): optional regex of enableHostUniq
+			EnableMaxPayload (str): optional regex of enableMaxPayload
+			EnableRedial (str): optional regex of enableRedial
+			Encaps1 (str): optional regex of encaps1
+			Encaps2 (str): optional regex of encaps2
+			HostUniq (str): optional regex of hostUniq
+			HostUniqLength (str): optional regex of hostUniqLength
+			LcpAccm (str): optional regex of lcpAccm
+			LcpEnableAccm (str): optional regex of lcpEnableAccm
+			LcpMaxFailure (str): optional regex of lcpMaxFailure
+			LcpRetries (str): optional regex of lcpRetries
+			LcpStartDelay (str): optional regex of lcpStartDelay
+			LcpTermRetries (str): optional regex of lcpTermRetries
+			LcpTimeout (str): optional regex of lcpTimeout
+			MaxPayload (str): optional regex of maxPayload
+			MruNegotiation (str): optional regex of mruNegotiation
+			Mtu (str): optional regex of mtu
+			NcpRetries (str): optional regex of ncpRetries
+			NcpTimeout (str): optional regex of ncpTimeout
+			NcpType (str): optional regex of ncpType
+			PadiRetries (str): optional regex of padiRetries
+			PadiTimeout (str): optional regex of padiTimeout
+			PadrRetries (str): optional regex of padrRetries
+			PadrTimeout (str): optional regex of padrTimeout
+			PapPassword (str): optional regex of papPassword
+			PapUser (str): optional regex of papUser
+			PonTypeTlv (str): optional regex of ponTypeTlv
+			RedialMax (str): optional regex of redialMax
+			RedialTimeout (str): optional regex of redialTimeout
+			ServiceName (str): optional regex of serviceName
+			ServiceOptions (str): optional regex of serviceOptions
+			UnlimitedRedialAttempts (str): optional regex of unlimitedRedialAttempts
+			UserDefinedDslType (str): optional regex of userDefinedDslType
+			UserDefinedPonType (str): optional regex of userDefinedPonType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def CloseIpcp(self):
 		"""Executes the closeIpcp operation on the server.
 

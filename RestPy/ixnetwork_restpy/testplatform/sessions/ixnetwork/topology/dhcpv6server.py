@@ -311,6 +311,28 @@ class Dhcpv6server(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, DnsDomain=None, IpDns1=None, IpDns2=None, ReconfviaRelay=None, SubnetAddrAssign=None, UseRapidCommit=None):
+		"""Base class infrastructure that gets a list of dhcpv6server device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			DnsDomain (str): optional regex of dnsDomain
+			IpDns1 (str): optional regex of ipDns1
+			IpDns2 (str): optional regex of ipDns2
+			ReconfviaRelay (str): optional regex of reconfviaRelay
+			SubnetAddrAssign (str): optional regex of subnetAddrAssign
+			UseRapidCommit (str): optional regex of useRapidCommit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Reconfigure(self):
 		"""Executes the reconfigure operation on the server.
 

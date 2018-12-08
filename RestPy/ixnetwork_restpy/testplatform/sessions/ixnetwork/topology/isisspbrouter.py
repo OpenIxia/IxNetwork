@@ -454,6 +454,49 @@ class IsisSpbRouter(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AreaAddresses=None, AreaAuthenticationType=None, AreaTransmitPasswordOrMD5Key=None, Attached=None, CSNPInterval=None, DiscardLSPs=None, EnableHelloPadding=None, EnableHitlessRestart=None, EnableHostName=None, EnableWideMetric=None, HitlessRestartMode=None, HitlessRestartTime=None, HitlessRestartVersion=None, HostName=None, IgnoreMTPortCapability=None, IgnoreReceiveMD5=None, InterLSPsOrMGroupPDUBurstGap=None, LSPLifetime=None, LSPRefreshRate=None, LSPorMGroupPDUMinTransmissionInterval=None, MaxAreaAddresses=None, MaxLSPSize=None, MaxLSPsOrMGroupPDUsPerBurst=None, Overloaded=None, PSNPInterval=None, PartitionRepair=None):
+		"""Base class infrastructure that gets a list of isisSpbRouter device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AreaAddresses (str): optional regex of areaAddresses
+			AreaAuthenticationType (str): optional regex of areaAuthenticationType
+			AreaTransmitPasswordOrMD5Key (str): optional regex of areaTransmitPasswordOrMD5Key
+			Attached (str): optional regex of attached
+			CSNPInterval (str): optional regex of cSNPInterval
+			DiscardLSPs (str): optional regex of discardLSPs
+			EnableHelloPadding (str): optional regex of enableHelloPadding
+			EnableHitlessRestart (str): optional regex of enableHitlessRestart
+			EnableHostName (str): optional regex of enableHostName
+			EnableWideMetric (str): optional regex of enableWideMetric
+			HitlessRestartMode (str): optional regex of hitlessRestartMode
+			HitlessRestartTime (str): optional regex of hitlessRestartTime
+			HitlessRestartVersion (str): optional regex of hitlessRestartVersion
+			HostName (str): optional regex of hostName
+			IgnoreMTPortCapability (str): optional regex of ignoreMTPortCapability
+			IgnoreReceiveMD5 (str): optional regex of ignoreReceiveMD5
+			InterLSPsOrMGroupPDUBurstGap (str): optional regex of interLSPsOrMGroupPDUBurstGap
+			LSPLifetime (str): optional regex of lSPLifetime
+			LSPRefreshRate (str): optional regex of lSPRefreshRate
+			LSPorMGroupPDUMinTransmissionInterval (str): optional regex of lSPorMGroupPDUMinTransmissionInterval
+			MaxAreaAddresses (str): optional regex of maxAreaAddresses
+			MaxLSPSize (str): optional regex of maxLSPSize
+			MaxLSPsOrMGroupPDUsPerBurst (str): optional regex of maxLSPsOrMGroupPDUsPerBurst
+			Overloaded (str): optional regex of overloaded
+			PSNPInterval (str): optional regex of pSNPInterval
+			PartitionRepair (str): optional regex of partitionRepair
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def IsisStartRouter(self):
 		"""Executes the isisStartRouter operation on the server.
 

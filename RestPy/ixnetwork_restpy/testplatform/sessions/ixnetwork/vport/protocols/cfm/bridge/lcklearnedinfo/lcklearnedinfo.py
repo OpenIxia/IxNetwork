@@ -37,7 +37,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def MepMacAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def RemoteMepMacAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def RxCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def RxInterval(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def RxState(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def TxCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class LckLearnedInfo(Base):
 
 	@property
 	def TxState(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -132,16 +132,16 @@ class LckLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all lckLearnedInfo data from the server.
 
 		Args:
-			BVlan (str): NOT DEFINED
-			CVlan (str): NOT DEFINED
-			MepMacAddress (str): NOT DEFINED
-			RemoteMepMacAddress (str): NOT DEFINED
-			RxCount (number): NOT DEFINED
-			RxInterval (str): NOT DEFINED
-			RxState (str): NOT DEFINED
-			SVlan (str): NOT DEFINED
-			TxCount (number): NOT DEFINED
-			TxState (str): NOT DEFINED
+			BVlan (str): 
+			CVlan (str): 
+			MepMacAddress (str): 
+			RemoteMepMacAddress (str): 
+			RxCount (number): 
+			RxInterval (str): 
+			RxState (str): 
+			SVlan (str): 
+			TxCount (number): 
+			TxState (str): 
 
 		Returns:
 			self: This instance with matching lckLearnedInfo data retrieved from the server available through an iterator or index

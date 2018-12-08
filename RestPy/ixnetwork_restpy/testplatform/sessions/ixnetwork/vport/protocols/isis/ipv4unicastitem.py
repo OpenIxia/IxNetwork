@@ -37,7 +37,7 @@ class Ipv4UnicastItem(Base):
 
 	@property
 	def Ipv4UnicastSourceAddress(self):
-		"""This indicates the IPv4 Source, if any, associated with the IPv4 Multicast Group Address.
+		"""
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class Ipv4UnicastItem(Base):
 		By default the find method takes no parameters and will retrieve all ipv4UnicastItem data from the server.
 
 		Args:
-			Ipv4UnicastSourceAddress (str): This indicates the IPv4 Source, if any, associated with the IPv4 Multicast Group Address.
+			Ipv4UnicastSourceAddress (str): 
 
 		Returns:
 			self: This instance with matching ipv4UnicastItem data retrieved from the server available through an iterator or index

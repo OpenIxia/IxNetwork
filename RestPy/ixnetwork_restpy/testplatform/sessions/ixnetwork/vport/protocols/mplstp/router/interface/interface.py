@@ -52,7 +52,7 @@ class Interface(Base):
 
 	@property
 	def DutMacAddress(self):
-		"""This signifies the MAC address of the DUT.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""This signifies the enablement of the use of this interface for the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class Interface(Base):
 
 	@property
 	def Interfaces(self):
-		"""This signifies the Interface that has been assigned for this range.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -90,9 +90,9 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			DutMacAddress (str): This signifies the MAC address of the DUT.
-			Enabled (bool): This signifies the enablement of the use of this interface for the simulated router.
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): This signifies the Interface that has been assigned for this range.
+			DutMacAddress (str): 
+			Enabled (bool): 
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -118,9 +118,9 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			DutMacAddress (str): This signifies the MAC address of the DUT.
-			Enabled (bool): This signifies the enablement of the use of this interface for the simulated router.
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): This signifies the Interface that has been assigned for this range.
+			DutMacAddress (str): 
+			Enabled (bool): 
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index

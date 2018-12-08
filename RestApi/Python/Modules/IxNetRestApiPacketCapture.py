@@ -1,4 +1,4 @@
-import sys
+import sys, re 
 from IxNetRestApiFileMgmt import FileMgmt
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApi import IxNetRestApiException
@@ -211,32 +211,72 @@ class PacketCapture(object):
 
             typeOfCapture: data|control
 
-            saveToTempLocation: Where to temporary save the .cap file on the ReST API server: 
-                                For Windows, provide any path with double backslashes: C:\\Temp
-                                The folder will be created if it doesn't exists.
+            saveToTempLocation: For Windows:
+                                    Where to temporary save the .cap file on the ReST API server: 
+                                    Provide any path with double backslashes: C:\\Temp.
+                                    The folder will be created if it doesn't exists.
 
-                                For Linux, ignore. This API will automatically create a temp folder.
-
+                                For Linux, value= 'linux'.
+ 
             localLinuxLocation: Where to save the .cap file on the local Linux machine.
 
             appendToSavedCapturedFile: Add a text string to the captured file.
 
         Example:
             captureObj.getCapFile([ixChassisIp, '2', '1'], 'control', 'c:\\Temp', '/home/hgee/test')
-        """
 
+        Syntaxes:
+               PATCH: /vport/2
+               DATA: {'rxMode': 'captureAndMeasure'}
+
+               PATCH: /vport/2/capture
+               DATA: {'softwareEnabled': False, 'hardwareEnabled': True}
+ 
+               # Set traffic item to send continuous packets
+               PATCH: /traffic/trafficItem/1/configElement/<id>/transmissionControl
+               DATA: {'type': 'continuous'}
+
+               POST: /traffic/trafficItem/operations/generate
+               DATA: {"arg1": ["/api/v1/sessions/<id>/ixnetwork/traffic/trafficItem/1"]}
+
+               POST: /traffic/operations/apply
+               DATA: {"arg1": "/api/v1/sessions/<id>/ixnetwork/traffic"}
+
+               POST: /traffic/operations/start
+               DATA: {"arg1": "https://192.168.70.12/api/v1/sessions/<id>/ixnetwork/traffic"}
+
+               Start continuous traffic
+
+               POST: /ixnetwork/operations/startcapture
+               POST: /ixnetwork/operations/stopcapture
+               POST: /ixnetwork/operations/savecapturefiles
+               DATA: {"arg1": "packetCaptureFolder"}  <-- This could be any name.  Just a temporary folder to store the captured file.
+
+               Wait for the /operations/savecapturefiles/<id> to complete.  May take up to a minute or more.
+
+               For Windows API server:
+                  POST: /ixnetwork/operations/copyfile
+                  DATA: {"arg1": "c:\\Results\\port2_HW.cap", "arg2": "/api/v1/sessions/1/ixnetwork/files/port2_HW.cap"}
+                  GET: /ixnetwork/files?filename=port2_HW.cap
+
+               For Linux API server:
+                  POST: /ixnetwork/operations/copyfile
+                  DATA: {"arg1": "captures/packetCaptureFolder/port2_HW.cap", "arg2": "/api/v1/sessions/<id>/ixnetwork/files/port2_HW.cap"}
+                  GET: /ixnetwork/files?filename=captures/packetCaptureFolder/port2_HW.cap
+        """
+        
         # For Linux API server
         if '\\' not in saveToTempLocation:
             # For Linux API server, need to give a name for a temporary folder
             saveToTempLocation = 'packetCaptureFolder'
 
-            # Get the vport name
+            # For Linux API server, must get the vport name and cannot modify the vport name.
             vport = self.portMgmtObj.getVports([port])[0]
             response = self.ixnObj.get(self.ixnObj.httpHeader + vport)
             vportName = response.json()['name']
 
-            vportName.replace('/', '\\/')
-            vportName.replace(' ', '_')
+            vportName = vportName.replace('/', '_')
+            vportName = vportName.replace(' ', '_')
             self.ixnObj.logInfo('vportName: {}'.format(vportName))
 
         if appendToSavedCapturedFile != None:
@@ -244,13 +284,12 @@ class PacketCapture(object):
         else:
             data = {'arg1': saveToTempLocation}
 
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/savecapture', data=data)
-        self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/operations/savecapture/'+response.json()['id'], timeout=300)
+        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/savecapturefiles', data=data)
+        self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+ response.json()['url'], timeout=300)
 
         if typeOfCapture == 'control':
             if '\\' not in saveToTempLocation:
                 # For Linux
-                #capFileToGet = saveToTempLocation+'/'+port[1]+'-'+port[2]+'_SW.cap'
                 capFileToGet = '/home/ixia_apps/web/platform/apps-resources/ixnetworkweb/configs/captures/{0}/{1}_SW.cap'.format(
                     saveToTempLocation, vportName)
             else:
@@ -259,7 +298,7 @@ class PacketCapture(object):
 
         if typeOfCapture == 'data':
             if '\\' not in saveToTempLocation:
-                #capFileToGet = saveToTempLocation+'/'+port[1]+'-'+port[2]+'_HW.cap'
+                # For Linux
                 capFileToGet = '/home/ixia_apps/web/platform/apps-resources/ixnetworkweb/configs/captures/{0}/{1}_HW.cap'.format(
                     saveToTempLocation, vportName)
             else:
@@ -271,5 +310,10 @@ class PacketCapture(object):
             fileMgmtObj.copyFileWindowsToLocalLinux(windowsPathAndFileName=capFileToGet, localPath=localLinuxLocation,
                                                     renameDestinationFile=None)
         if self.ixnObj.serverOs == 'linux':
+            # Parse out captures/packetCaptureFolder/<vportName>_HW.cap
+            match = re.search('.*(captures.*)', capFileToGet)
+            pathExtension = match.group(1)
+
             fileMgmtObj.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=capFileToGet, localPath=localLinuxLocation,
-                                                  renameDestinationFile=None)
+                                                  renameDestinationFile=None, linuxApiServerPathExtension=pathExtension)
+            

@@ -550,6 +550,51 @@ class Ospfv2Router(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, BIERPrefix=None, Active=None, Algorithm=None, BBit=None, BierAFlag=None, BierNFlag=None, ConfigureSIDIndexLabel=None, DiscardLearnedLsa=None, DoNotGenerateRouterLsa=None, EBit=None, EFlag=None, EnableMappingServer=None, GracefulRestart=None, InterFloodLsUpdateBurstGap=None, LFlag=None, LsaRefreshTime=None, LsaRetransmitTime=None, MFlag=None, MaxLsUpdatesPerBurst=None, NpFlag=None, OobResyncBreakout=None, SidIndexLabel=None, StrictLsaChecking=None, SupportForRfc3623=None, SupportReasonSoftReloadUpgrade=None, SupportReasonSoftRestart=None, SupportReasonSwitchRedundantCntrlProcessor=None, SupportReasonUnknown=None, VFlag=None):
+		"""Base class infrastructure that gets a list of ospfv2Router device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BIERPrefix (str): optional regex of BIERPrefix
+			Active (str): optional regex of active
+			Algorithm (str): optional regex of algorithm
+			BBit (str): optional regex of bBit
+			BierAFlag (str): optional regex of bierAFlag
+			BierNFlag (str): optional regex of bierNFlag
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			DiscardLearnedLsa (str): optional regex of discardLearnedLsa
+			DoNotGenerateRouterLsa (str): optional regex of doNotGenerateRouterLsa
+			EBit (str): optional regex of eBit
+			EFlag (str): optional regex of eFlag
+			EnableMappingServer (str): optional regex of enableMappingServer
+			GracefulRestart (str): optional regex of gracefulRestart
+			InterFloodLsUpdateBurstGap (str): optional regex of interFloodLsUpdateBurstGap
+			LFlag (str): optional regex of lFlag
+			LsaRefreshTime (str): optional regex of lsaRefreshTime
+			LsaRetransmitTime (str): optional regex of lsaRetransmitTime
+			MFlag (str): optional regex of mFlag
+			MaxLsUpdatesPerBurst (str): optional regex of maxLsUpdatesPerBurst
+			NpFlag (str): optional regex of npFlag
+			OobResyncBreakout (str): optional regex of oobResyncBreakout
+			SidIndexLabel (str): optional regex of sidIndexLabel
+			StrictLsaChecking (str): optional regex of strictLsaChecking
+			SupportForRfc3623 (str): optional regex of supportForRfc3623
+			SupportReasonSoftReloadUpgrade (str): optional regex of supportReasonSoftReloadUpgrade
+			SupportReasonSoftRestart (str): optional regex of supportReasonSoftRestart
+			SupportReasonSwitchRedundantCntrlProcessor (str): optional regex of supportReasonSwitchRedundantCntrlProcessor
+			SupportReasonUnknown (str): optional regex of supportReasonUnknown
+			VFlag (str): optional regex of vFlag
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def OspfStartRouter(self):
 		"""Executes the ospfStartRouter operation on the server.
 

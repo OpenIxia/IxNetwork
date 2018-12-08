@@ -37,7 +37,7 @@ class FrameSize(Base):
 
 	@property
 	def FixedSize(self):
-		"""Sets all frames to a constant specified size.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class FrameSize(Base):
 
 	@property
 	def IncrementFrom(self):
-		"""Specifies the Start Value if the Frame Size is incremented.
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class FrameSize(Base):
 
 	@property
 	def IncrementStep(self):
-		"""Specifies the Step Value if the Frame Size is Increment.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class FrameSize(Base):
 
 	@property
 	def IncrementTo(self):
-		"""Specifies the Final Value if the Frame Size is Increment.
+		"""
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class FrameSize(Base):
 
 	@property
 	def PresetDistribution(self):
-		"""If set, Frame Size is set to IMIX.
+		"""
 
 		Returns:
 			str(cisco|imix|ipSecImix|ipV6Imix|rprQuar|rprTri|standardImix|tcpImix|tolly)
@@ -97,7 +97,7 @@ class FrameSize(Base):
 
 	@property
 	def QuadGaussian(self):
-		"""This option allows to set frames to use a calculated distribution of Frame sizes. Quad Gaussian is the superposition of four Gaussian distributions. The user can specify the center (or mean), width of half maximum, and weight of each Gaussian distribution. The distribution is then normalized to a single distribution and generates the random numbers according to the normalized distribution.
+		"""
 
 		Returns:
 			list(number)
@@ -109,7 +109,7 @@ class FrameSize(Base):
 
 	@property
 	def RandomMax(self):
-		"""Sets frame size to maximum length in bytes. The maximum length is 1518 bytes.
+		"""
 
 		Returns:
 			number
@@ -121,7 +121,7 @@ class FrameSize(Base):
 
 	@property
 	def RandomMin(self):
-		"""Sets frame size to minimum length in bytes. The maximum length is 64 bytes.
+		"""
 
 		Returns:
 			number
@@ -133,7 +133,7 @@ class FrameSize(Base):
 
 	@property
 	def Type(self):
-		"""Sets the type of Frame Size.
+		"""
 
 		Returns:
 			str(auto|fixed|increment|presetDistribution|quadGaussian|random|weightedPairs)
@@ -145,7 +145,7 @@ class FrameSize(Base):
 
 	@property
 	def WeightedPairs(self):
-		"""Defines the values for the weight pairs.
+		"""
 
 		Returns:
 			list(number)
@@ -157,7 +157,7 @@ class FrameSize(Base):
 
 	@property
 	def WeightedRangePairs(self):
-		"""A list of structures that define the weighted range.
+		"""
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:number))

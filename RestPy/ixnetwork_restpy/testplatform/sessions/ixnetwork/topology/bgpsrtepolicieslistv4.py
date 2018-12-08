@@ -482,3 +482,51 @@ class BgpSRTEPoliciesListV4(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('srtepolicyName')
+
+	def get_device_ids(self, PortNames=None, Active=None, AddPathId=None, AggregatorAs=None, AggregatorId=None, AsSetMode=None, Distinguisher=None, EnableAddPath=None, EnableAggregatorId=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableCluster=None, EnableCommunity=None, EnableExtendedCommunity=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EndPointV4=None, EndPointV6=None, Ipv4NextHop=None, Ipv6NextHop=None, LocalPreference=None, MultiExitDiscriminator=None, Origin=None, OriginatorId=None, OverridePeerAsSetMode=None, PolicyColor=None, PolicyType=None, SetNextHop=None, SetNextHopIpType=None, SrtepolicyName=None):
+		"""Base class infrastructure that gets a list of bgpSRTEPoliciesListV4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AddPathId (str): optional regex of addPathId
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AsSetMode (str): optional regex of asSetMode
+			Distinguisher (str): optional regex of distinguisher
+			EnableAddPath (str): optional regex of enableAddPath
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EndPointV4 (str): optional regex of endPointV4
+			EndPointV6 (str): optional regex of endPointV6
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LocalPreference (str): optional regex of localPreference
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			OverridePeerAsSetMode (str): optional regex of overridePeerAsSetMode
+			PolicyColor (str): optional regex of policyColor
+			PolicyType (str): optional regex of policyType
+			SetNextHop (str): optional regex of setNextHop
+			SetNextHopIpType (str): optional regex of setNextHopIpType
+			SrtepolicyName (str): optional regex of srtepolicyName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

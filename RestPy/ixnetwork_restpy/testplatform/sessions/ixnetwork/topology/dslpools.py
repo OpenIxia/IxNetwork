@@ -381,6 +381,42 @@ class DslPools(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, ActualNetDataRateDownstream=None, ActualNetDataRateDownstreamTolerance=None, ActualNetDataRateUpstream=None, ActualNetDataRateUpstreamTolerance=None, CircuitId=None, DslType=None, EnableActualNetDataRateDownstream=None, EnableActualNetDataRateUpstream=None, EnableDslType=None, EnablePonType=None, EnableRemoteId=None, FlappingMode=None, InnerVlanId=None, LineDownInterval=None, LineUpInterval=None, OuterVlanId=None, PonType=None, RemoteId=None, TechType=None, VlanAllocationModel=None):
+		"""Base class infrastructure that gets a list of dslPools device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ActualNetDataRateDownstream (str): optional regex of actualNetDataRateDownstream
+			ActualNetDataRateDownstreamTolerance (str): optional regex of actualNetDataRateDownstreamTolerance
+			ActualNetDataRateUpstream (str): optional regex of actualNetDataRateUpstream
+			ActualNetDataRateUpstreamTolerance (str): optional regex of actualNetDataRateUpstreamTolerance
+			CircuitId (str): optional regex of circuitId
+			DslType (str): optional regex of dslType
+			EnableActualNetDataRateDownstream (str): optional regex of enableActualNetDataRateDownstream
+			EnableActualNetDataRateUpstream (str): optional regex of enableActualNetDataRateUpstream
+			EnableDslType (str): optional regex of enableDslType
+			EnablePonType (str): optional regex of enablePonType
+			EnableRemoteId (str): optional regex of enableRemoteId
+			FlappingMode (str): optional regex of flappingMode
+			InnerVlanId (str): optional regex of innerVlanId
+			LineDownInterval (str): optional regex of lineDownInterval
+			LineUpInterval (str): optional regex of lineUpInterval
+			OuterVlanId (str): optional regex of outerVlanId
+			PonType (str): optional regex of ponType
+			RemoteId (str): optional regex of remoteId
+			TechType (str): optional regex of techType
+			VlanAllocationModel (str): optional regex of vlanAllocationModel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def SendPortDown(self):
 		"""Executes the sendPortDown operation on the server.
 

@@ -216,6 +216,35 @@ class OspfPseudoRouterStubNetworks(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, Algorithm=None, ConfigureSIDIndexLabel=None, EFlag=None, LFlag=None, MFlag=None, Metric=None, NetworkAddress=None, NpFlag=None, PrefixLength=None, RangeSize=None, SidIndexLabel=None, VFlag=None):
+		"""Base class infrastructure that gets a list of ospfPseudoRouterStubNetworks device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Algorithm (str): optional regex of algorithm
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			EFlag (str): optional regex of eFlag
+			LFlag (str): optional regex of lFlag
+			MFlag (str): optional regex of mFlag
+			Metric (str): optional regex of metric
+			NetworkAddress (str): optional regex of networkAddress
+			NpFlag (str): optional regex of npFlag
+			PrefixLength (str): optional regex of prefixLength
+			RangeSize (str): optional regex of rangeSize
+			SidIndexLabel (str): optional regex of sidIndexLabel
+			VFlag (str): optional regex of vFlag
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Advertise(self):
 		"""Executes the advertise operation on the server.
 

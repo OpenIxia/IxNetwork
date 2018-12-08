@@ -51,7 +51,7 @@ class Rip(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the use of this emulated RIP router in the emulated RIP network. (default = disabled)
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Rip(Base):
 
 	@property
 	def RunningState(self):
-		"""The current running state of the RIP router.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -72,8 +72,6 @@ class Rip(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the RIP protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=rip)): The method internally sets Arg1 to the current href for this instance
@@ -87,8 +85,6 @@ class Rip(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the RIP protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=rip)): The method internally sets Arg1 to the current href for this instance

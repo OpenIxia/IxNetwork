@@ -38,7 +38,7 @@ class EnumerationFilter(Base):
 
 	@property
 	def SortDirection(self):
-		"""Sets the display order of the view.
+		"""
 
 		Returns:
 			str(ascending|descending)
@@ -50,7 +50,7 @@ class EnumerationFilter(Base):
 
 	@property
 	def TrackingFilterId(self):
-		"""Selected tracking filters from the availableTrackingFilter list.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)
@@ -64,8 +64,8 @@ class EnumerationFilter(Base):
 		"""Adds a new enumerationFilter node on the server and retrieves it in this instance.
 
 		Args:
-			SortDirection (str(ascending|descending)): Sets the display order of the view.
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): Selected tracking filters from the availableTrackingFilter list.
+			SortDirection (str(ascending|descending)): 
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): 
 
 		Returns:
 			self: This instance with all currently retrieved enumerationFilter data using find and the newly added enumerationFilter data available through an iterator or index
@@ -91,8 +91,8 @@ class EnumerationFilter(Base):
 		By default the find method takes no parameters and will retrieve all enumerationFilter data from the server.
 
 		Args:
-			SortDirection (str(ascending|descending)): Sets the display order of the view.
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): Selected tracking filters from the availableTrackingFilter list.
+			SortDirection (str(ascending|descending)): 
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): 
 
 		Returns:
 			self: This instance with matching enumerationFilter data retrieved from the server available through an iterator or index

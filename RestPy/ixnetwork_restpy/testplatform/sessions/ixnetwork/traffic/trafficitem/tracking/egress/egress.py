@@ -51,7 +51,7 @@ class Egress(Base):
 
 	@property
 	def AvailableEncapsulations(self):
-		"""Specifies the available Encapsulations for Egress Tracking.
+		"""
 
 		Returns:
 			list(str)
@@ -60,7 +60,7 @@ class Egress(Base):
 
 	@property
 	def AvailableOffsets(self):
-		"""Specifies the available Offsets for Egress Tracking.
+		"""
 
 		Returns:
 			list(str)
@@ -69,7 +69,7 @@ class Egress(Base):
 
 	@property
 	def CustomOffsetBits(self):
-		"""Specifies the Custom Offset in bits for Egress Tracking when Encapsulation is Any: Use Custom Settings.
+		"""
 
 		Returns:
 			number
@@ -81,7 +81,7 @@ class Egress(Base):
 
 	@property
 	def CustomWidthBits(self):
-		"""Specifies the Custom Width in bits for Egress Tracking when Encapsulation is Any: Use Custom Settings.
+		"""
 
 		Returns:
 			number
@@ -93,7 +93,7 @@ class Egress(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, egress tracking is enabled.
+		"""
 
 		Returns:
 			bool
@@ -105,7 +105,7 @@ class Egress(Base):
 
 	@property
 	def Encapsulation(self):
-		"""Specifies the Encapsulation for Egress Tracking.
+		"""
 
 		Returns:
 			str
@@ -117,7 +117,7 @@ class Egress(Base):
 
 	@property
 	def Offset(self):
-		"""Specifies the Offset for Egress Tracking.
+		"""
 
 		Returns:
 			str

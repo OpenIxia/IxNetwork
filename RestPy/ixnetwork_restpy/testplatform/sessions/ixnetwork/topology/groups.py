@@ -203,6 +203,28 @@ class Groups(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, GroupAdvertise=None, GroupDescription=None, GroupId=None, GroupType=None, OfChannel=None):
+		"""Base class infrastructure that gets a list of groups device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			GroupAdvertise (str): optional regex of groupAdvertise
+			GroupDescription (str): optional regex of groupDescription
+			GroupId (str): optional regex of groupId
+			GroupType (str): optional regex of groupType
+			OfChannel (str): optional regex of ofChannel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def SendAllGroupAdd(self):
 		"""Executes the sendAllGroupAdd operation on the server.
 

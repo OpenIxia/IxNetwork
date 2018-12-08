@@ -37,7 +37,7 @@ class MeterCapabilities(Base):
 
 	@property
 	def CollectStatistics(self):
-		"""The capability to collect statistics.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class MeterCapabilities(Base):
 
 	@property
 	def DoBurstSize(self):
-		"""The size of burst.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class MeterCapabilities(Base):
 
 	@property
 	def KiloBitPerSecond(self):
-		"""Rate value in kilo-bit per second.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class MeterCapabilities(Base):
 
 	@property
 	def PacketPerSecond(self):
-		"""Rate value in packet per second.
+		"""
 
 		Returns:
 			bool

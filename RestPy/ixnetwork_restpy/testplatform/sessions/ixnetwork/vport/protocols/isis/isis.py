@@ -51,7 +51,7 @@ class Isis(Base):
 
 	@property
 	def AllL1RbridgesMac(self):
-		"""ISIS All L1 RBridge MAC
+		"""
 
 		Returns:
 			str
@@ -63,7 +63,7 @@ class Isis(Base):
 
 	@property
 	def EmulationType(self):
-		"""Sets the router emulation type of ISIS component of the protocol server for a particular port.
+		"""
 
 		Returns:
 			str(isisL3Routing|dceIsis|spbIsis|trillIsis)
@@ -75,7 +75,7 @@ class Isis(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the use of this emulated IS-IS router in the emulated IS-IS network. (default = disabled)
+		"""
 
 		Returns:
 			bool
@@ -87,7 +87,7 @@ class Isis(Base):
 
 	@property
 	def HelloMulticastMac(self):
-		"""ISIS Hello Multicast MAC
+		"""
 
 		Returns:
 			str
@@ -99,7 +99,7 @@ class Isis(Base):
 
 	@property
 	def LspMgroupPdusPerInterval(self):
-		"""Indicates the number of LSP MGROUP-PDUs to be sent for each interval.
+		"""
 
 		Returns:
 			number
@@ -111,7 +111,7 @@ class Isis(Base):
 
 	@property
 	def NlpId(self):
-		"""ISIS NLP ID
+		"""
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class Isis(Base):
 
 	@property
 	def RateControlInterval(self):
-		"""Indicates the wait time for transmission.
+		"""
 
 		Returns:
 			number
@@ -135,7 +135,7 @@ class Isis(Base):
 
 	@property
 	def RunningState(self):
-		"""The current running state of the ISIS server.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -144,7 +144,7 @@ class Isis(Base):
 
 	@property
 	def SendP2PHellosToUnicastMac(self):
-		"""If enabled, sends point to point hello messages to unicast mac addresses.
+		"""
 
 		Returns:
 			bool
@@ -156,7 +156,7 @@ class Isis(Base):
 
 	@property
 	def SpbAllL1BridgesMac(self):
-		"""Contains all SPB ISIS specific attributes.
+		"""
 
 		Returns:
 			str
@@ -168,7 +168,7 @@ class Isis(Base):
 
 	@property
 	def SpbHelloMulticastMac(self):
-		"""Contains all hello messages to multicast mac addresses.
+		"""
 
 		Returns:
 			str
@@ -180,7 +180,7 @@ class Isis(Base):
 
 	@property
 	def SpbNlpId(self):
-		"""SPB NLP ID
+		"""
 
 		Returns:
 			number
@@ -192,8 +192,6 @@ class Isis(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the ISIS protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=isis)): The method internally sets Arg1 to the current href for this instance
@@ -207,8 +205,6 @@ class Isis(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the ISIS protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=isis)): The method internally sets Arg1 to the current href for this instance

@@ -163,3 +163,30 @@ class DceSimulatedMCastMacGroupList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('vlanId')
+
+	def get_device_ids(self, PortNames=None, Active=None, InterGrpUcastAddrIncr=None, McastAddrCnt=None, McastAddrIncr=None, SrcGrpMapping=None, StartMcastAddr=None, StartUcastAddr=None, TopologyId=None, UcastAddrIncr=None, UcastSrcCnt=None, VlanId=None):
+		"""Base class infrastructure that gets a list of dceSimulatedMCastMacGroupList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			InterGrpUcastAddrIncr (str): optional regex of interGrpUcastAddrIncr
+			McastAddrCnt (str): optional regex of mcastAddrCnt
+			McastAddrIncr (str): optional regex of mcastAddrIncr
+			SrcGrpMapping (str): optional regex of srcGrpMapping
+			StartMcastAddr (str): optional regex of startMcastAddr
+			StartUcastAddr (str): optional regex of startUcastAddr
+			TopologyId (str): optional regex of topologyId
+			UcastAddrIncr (str): optional regex of ucastAddrIncr
+			UcastSrcCnt (str): optional regex of ucastSrcCnt
+			VlanId (str): optional regex of vlanId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

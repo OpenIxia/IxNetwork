@@ -51,7 +51,7 @@ class OfTopologyLearnedInformation(Base):
 
 	@property
 	def EnableInstallLldpFlow(self):
-		"""If true, Install Flow in Switch for LLDP Packets to explicitly send to Controller.
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class OfTopologyLearnedInformation(Base):
 
 	@property
 	def EnableRefreshLldpLearnedInformation(self):
-		"""If true, the LLDP trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class OfTopologyLearnedInformation(Base):
 
 	@property
 	def IsOfTopologyLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Topology Learned Info is received.
+		"""
 
 		Returns:
 			bool
@@ -84,7 +84,7 @@ class OfTopologyLearnedInformation(Base):
 
 	@property
 	def LldpDestinationMac(self):
-		"""Indicates the Destination MAC Address for LLDP PacketOut.
+		"""
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class OfTopologyLearnedInformation(Base):
 
 	@property
 	def LldpResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no Topology learned info response is received.
+		"""
 
 		Returns:
 			number
@@ -109,13 +109,11 @@ class OfTopologyLearnedInformation(Base):
 	def RefreshOfTopology(self):
 		"""Executes the refreshOfTopology operation on the server.
 
-		Exec to refresh ofChannel topology.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ofTopologyLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			number: NOT DEFINED
+			number: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

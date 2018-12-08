@@ -597,6 +597,64 @@ class BgpEthernetSegmentV6(Base):
 		"""
 		return self._get_attribute('useSameSequenceNumber')
 
+	def get_device_ids(self, PortNames=None, AdvertiseAliasingBeforeAdPerEsRoute=None, AdvertiseInclusiveMulticastRoute=None, AliasingRouteGranularity=None, Active=None, AdvertiseAliasingAutomatically=None, AggregatorAs=None, AggregatorId=None, AsSetMode=None, AutoConfigureEsImport=None, BMacPrefix=None, BMacPrefixLength=None, DfElectionTimer=None, EnableAggregatorId=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableCluster=None, EnableCommunity=None, EnableExtendedCommunity=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EnableSingleActive=None, EnableStickyStaticFlag=None, EsImport=None, EsiLabel=None, EsiType=None, EsiValue=None, IncludeMacMobilityExtendedCommunity=None, Ipv4NextHop=None, Ipv6NextHop=None, LocalPreference=None, MultiExitDiscriminator=None, Origin=None, OriginatorId=None, OverridePeerAsSetMode=None, SetNextHop=None, SetNextHopIpType=None, SupportFastConvergence=None, SupportMultihomedEsAutoDiscovery=None, UseSameSequenceNumber=None):
+		"""Base class infrastructure that gets a list of bgpEthernetSegmentV6 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AdvertiseAliasingBeforeAdPerEsRoute (str): optional regex of AdvertiseAliasingBeforeAdPerEsRoute
+			AdvertiseInclusiveMulticastRoute (str): optional regex of AdvertiseInclusiveMulticastRoute
+			AliasingRouteGranularity (str): optional regex of AliasingRouteGranularity
+			Active (str): optional regex of active
+			AdvertiseAliasingAutomatically (str): optional regex of advertiseAliasingAutomatically
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AsSetMode (str): optional regex of asSetMode
+			AutoConfigureEsImport (str): optional regex of autoConfigureEsImport
+			BMacPrefix (str): optional regex of bMacPrefix
+			BMacPrefixLength (str): optional regex of bMacPrefixLength
+			DfElectionTimer (str): optional regex of dfElectionTimer
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EnableSingleActive (str): optional regex of enableSingleActive
+			EnableStickyStaticFlag (str): optional regex of enableStickyStaticFlag
+			EsImport (str): optional regex of esImport
+			EsiLabel (str): optional regex of esiLabel
+			EsiType (str): optional regex of esiType
+			EsiValue (str): optional regex of esiValue
+			IncludeMacMobilityExtendedCommunity (str): optional regex of includeMacMobilityExtendedCommunity
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LocalPreference (str): optional regex of localPreference
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			OverridePeerAsSetMode (str): optional regex of overridePeerAsSetMode
+			SetNextHop (str): optional regex of setNextHop
+			SetNextHopIpType (str): optional regex of setNextHopIpType
+			SupportFastConvergence (str): optional regex of supportFastConvergence
+			SupportMultihomedEsAutoDiscovery (str): optional regex of supportMultihomedEsAutoDiscovery
+			UseSameSequenceNumber (str): optional regex of useSameSequenceNumber
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def AdvertiseAdPerEsRoute(self, Arg2):
 		"""Executes the advertiseAdPerEsRoute operation on the server.
 

@@ -116,3 +116,21 @@ class BgpAsNumberList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, AsNumber=None, EnableASNumber=None):
+		"""Base class infrastructure that gets a list of bgpAsNumberList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AsNumber (str): optional regex of asNumber
+			EnableASNumber (str): optional regex of enableASNumber
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

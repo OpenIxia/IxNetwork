@@ -37,7 +37,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def ErrorTlvType(self):
-		"""This signifies Error TLV if it is received in lsp ping echo reply message.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def IncomingLabelOuterInner(self):
-		"""This signifies the incoming label information.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def InterfaceLabelStackTlvInterface(self):
-		"""This Signifies the inclusion of the Interface Id within Interface and Label Stack TLV in received lsp ping echo reply message.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def InterfaceLabelStackTlvIpAddress(self):
-		"""This Signifies the inclusion of the IP Address within Interface and Label Stack TLV in received lsp ping echo reply message.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def InterfaceLabelStackTlvLabels(self):
-		"""This signifies the label stack in Interface and Label Stack TLV received in lsp ping echo reply message.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelOuterInner(self):
-		"""This signifies the Outgoing Label information.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def Reachability(self):
-		"""This specifies whether the queried MEP could be reached or not, Yes or No.
+		"""
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def ReturnCode(self):
-		"""This signifies the value of the return code in the Echo reply message.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def ReturnSubcode(self):
-		"""This signifies the value of the return sub-code in the Echo reply message.
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def ReversePathVerificationCode(self):
-		"""This Signifies the reverse path verification code received in the lsp ping echo reply message.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def Rtt(self):
-		"""This signifies the Round Trip Time.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def SenderHandle(self):
-		"""This signifies the sender handle information.
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""This signifies the sequence number for the ping learned information.
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class PingLearnedInfo(Base):
 
 	@property
 	def Type(self):
-		"""This signifies the type of the learned info.
+		"""
 
 		Returns:
 			str
@@ -168,20 +168,20 @@ class PingLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pingLearnedInfo data from the server.
 
 		Args:
-			ErrorTlvType (number): This signifies Error TLV if it is received in lsp ping echo reply message.
-			IncomingLabelOuterInner (str): This signifies the incoming label information.
-			InterfaceLabelStackTlvInterface (number): This Signifies the inclusion of the Interface Id within Interface and Label Stack TLV in received lsp ping echo reply message.
-			InterfaceLabelStackTlvIpAddress (str): This Signifies the inclusion of the IP Address within Interface and Label Stack TLV in received lsp ping echo reply message.
-			InterfaceLabelStackTlvLabels (str): This signifies the label stack in Interface and Label Stack TLV received in lsp ping echo reply message.
-			OutgoingLabelOuterInner (str): This signifies the Outgoing Label information.
-			Reachability (bool): This specifies whether the queried MEP could be reached or not, Yes or No.
-			ReturnCode (str): This signifies the value of the return code in the Echo reply message.
-			ReturnSubcode (number): This signifies the value of the return sub-code in the Echo reply message.
-			ReversePathVerificationCode (str): This Signifies the reverse path verification code received in the lsp ping echo reply message.
-			Rtt (str): This signifies the Round Trip Time.
-			SenderHandle (number): This signifies the sender handle information.
-			SequenceNumber (number): This signifies the sequence number for the ping learned information.
-			Type (str): This signifies the type of the learned info.
+			ErrorTlvType (number): 
+			IncomingLabelOuterInner (str): 
+			InterfaceLabelStackTlvInterface (number): 
+			InterfaceLabelStackTlvIpAddress (str): 
+			InterfaceLabelStackTlvLabels (str): 
+			OutgoingLabelOuterInner (str): 
+			Reachability (bool): 
+			ReturnCode (str): 
+			ReturnSubcode (number): 
+			ReversePathVerificationCode (str): 
+			Rtt (str): 
+			SenderHandle (number): 
+			SequenceNumber (number): 
+			Type (str): 
 
 		Returns:
 			self: This instance with matching pingLearnedInfo data retrieved from the server available through an iterator or index

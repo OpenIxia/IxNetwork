@@ -38,7 +38,7 @@ class Interface(Base):
 
 	@property
 	def BfdCvType(self):
-		"""This signifies the BFD Connectivity Verification type. Possible values include:
+		"""
 
 		Returns:
 			str(bfdCvTypeIpUdp|bfdCvTypePwAch)
@@ -50,7 +50,7 @@ class Interface(Base):
 
 	@property
 	def BfdDiscriminatorEnd(self):
-		"""This signifies the last BFD Discriminator value. This value should be greater than the BFD.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class Interface(Base):
 
 	@property
 	def BfdDiscriminatorStart(self):
-		"""This signifies the first BFD Discriminator value. The default value is 5000.
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class Interface(Base):
 
 	@property
 	def ControlChannel(self):
-		"""This signifies the communication control channel. Possible values include
+		"""
 
 		Returns:
 			str(controlChannelRouterAlert|controlChannelPwAch)
@@ -86,7 +86,7 @@ class Interface(Base):
 
 	@property
 	def DestinationAddressIpv4(self):
-		"""This signifies the destination IPv4 address.
+		"""
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class Interface(Base):
 
 	@property
 	def DownStreamAddressType(self):
-		"""This signifies the address type of the downstream traffic. Possible values include:
+		"""
 
 		Returns:
 			str(ipv4Numbered|ipv4UnNumbered|ipv6Numbered|ipv6UnNumbered)
@@ -110,7 +110,7 @@ class Interface(Base):
 
 	@property
 	def DownStreamInterfaceAddress(self):
-		"""This signifies the interface address of the downstream traffic.
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class Interface(Base):
 
 	@property
 	def DownStreamIpAddress(self):
-		"""This signifies the IPv4/IPv6 address of the downstream traffic.
+		"""
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class Interface(Base):
 
 	@property
 	def EchoRequestInterval(self):
-		"""This signifies the minimum interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class Interface(Base):
 
 	@property
 	def EchoResponseTimeout(self):
-		"""This signifies the minimum tiomeout interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
+		"""
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class Interface(Base):
 
 	@property
 	def EnableDownStreamMappingTlv(self):
-		"""This signifies the enablement of downstream mapping TLV.
+		"""
 
 		Returns:
 			bool
@@ -170,7 +170,7 @@ class Interface(Base):
 
 	@property
 	def EnableDsIflag(self):
-		"""This signifies the activation of the DS I Flag.
+		"""
 
 		Returns:
 			bool
@@ -182,7 +182,7 @@ class Interface(Base):
 
 	@property
 	def EnableDsNflag(self):
-		"""This signifies the activation of the DS N Flag.
+		"""
 
 		Returns:
 			bool
@@ -194,7 +194,7 @@ class Interface(Base):
 
 	@property
 	def EnableFecValidation(self):
-		"""This signifies the selection of the check box to enable FEC validation.
+		"""
 
 		Returns:
 			bool
@@ -206,7 +206,7 @@ class Interface(Base):
 
 	@property
 	def EnablePeriodicPing(self):
-		"""If true, the router is pinged at regular intervals.
+		"""
 
 		Returns:
 			bool
@@ -218,7 +218,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, it enables or disables the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -230,7 +230,7 @@ class Interface(Base):
 
 	@property
 	def FlapTxIntervals(self):
-		"""This signifies the number of seconds between route flaps for BFD. A value of zero means no flapping.
+		"""
 
 		Returns:
 			number
@@ -242,7 +242,7 @@ class Interface(Base):
 
 	@property
 	def IncludePadTlv(self):
-		"""If true, includes Pad TLV in triggered ping.
+		"""
 
 		Returns:
 			bool
@@ -254,7 +254,7 @@ class Interface(Base):
 
 	@property
 	def IncludeVendorEnterpriseNumberTlv(self):
-		"""If true, includes the TLV number of the vendor, in triggered ping.
+		"""
 
 		Returns:
 			bool
@@ -266,7 +266,7 @@ class Interface(Base):
 
 	@property
 	def Interfaces(self):
-		"""This signifies the interfaces that are associated with the selected interface type.Object references are:
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -278,7 +278,7 @@ class Interface(Base):
 
 	@property
 	def MinRxInterval(self):
-		"""This signifies the minimum interval, in milliseconds, between received BFD Control packets that this interface is capable of supporting.
+		"""
 
 		Returns:
 			number
@@ -290,7 +290,7 @@ class Interface(Base):
 
 	@property
 	def Multiplier(self):
-		"""This signifies the negotiated transmit interval, multiplied by this value, provides the detection time for the interface.
+		"""
 
 		Returns:
 			number
@@ -302,7 +302,7 @@ class Interface(Base):
 
 	@property
 	def PadTlvFirstOctet(self):
-		"""This signifies the selection of the first octate of the Pad TLV. Possible values include:
+		"""
 
 		Returns:
 			str(dropPadTlvFromReply|copyPadTlvToReply)
@@ -314,7 +314,7 @@ class Interface(Base):
 
 	@property
 	def PadTlvLength(self):
-		"""This signifies the specification of the length of the Pad TLV.
+		"""
 
 		Returns:
 			number
@@ -326,7 +326,7 @@ class Interface(Base):
 
 	@property
 	def ReplyMode(self):
-		"""This signifies the selecion of the mode of reply.Possible values include DoNotReply, ReplyViaApplicationLevelControlChannel, ReplyViaIpv4Ipv6UdpPacket and ReplyViaIpv4Ipv6UdpPacketWithRouterAlert.
+		"""
 
 		Returns:
 			str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)
@@ -338,7 +338,7 @@ class Interface(Base):
 
 	@property
 	def TxInterval(self):
-		"""This signifies the minimum interval, in milliseconds, that the interface would like to use when transmitting BFD Control packets.
+		"""
 
 		Returns:
 			number
@@ -350,7 +350,7 @@ class Interface(Base):
 
 	@property
 	def VendorEnterpriseNumber(self):
-		"""This signifies the specification of the enterprise number of the vendor.
+		"""
 
 		Returns:
 			number
@@ -364,33 +364,33 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			BfdCvType (str(bfdCvTypeIpUdp|bfdCvTypePwAch)): This signifies the BFD Connectivity Verification type. Possible values include:
-			BfdDiscriminatorEnd (number): This signifies the last BFD Discriminator value. This value should be greater than the BFD.
-			BfdDiscriminatorStart (number): This signifies the first BFD Discriminator value. The default value is 5000.
-			ControlChannel (str(controlChannelRouterAlert|controlChannelPwAch)): This signifies the communication control channel. Possible values include
-			DestinationAddressIpv4 (str): This signifies the destination IPv4 address.
-			DownStreamAddressType (str(ipv4Numbered|ipv4UnNumbered|ipv6Numbered|ipv6UnNumbered)): This signifies the address type of the downstream traffic. Possible values include:
-			DownStreamInterfaceAddress (number): This signifies the interface address of the downstream traffic.
-			DownStreamIpAddress (str): This signifies the IPv4/IPv6 address of the downstream traffic.
-			EchoRequestInterval (number): This signifies the minimum interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
-			EchoResponseTimeout (number): This signifies the minimum tiomeout interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
-			EnableDownStreamMappingTlv (bool): This signifies the enablement of downstream mapping TLV.
-			EnableDsIflag (bool): This signifies the activation of the DS I Flag.
-			EnableDsNflag (bool): This signifies the activation of the DS N Flag.
-			EnableFecValidation (bool): This signifies the selection of the check box to enable FEC validation.
-			EnablePeriodicPing (bool): If true, the router is pinged at regular intervals.
-			Enabled (bool): If true, it enables or disables the simulated router.
-			FlapTxIntervals (number): This signifies the number of seconds between route flaps for BFD. A value of zero means no flapping.
-			IncludePadTlv (bool): If true, includes Pad TLV in triggered ping.
-			IncludeVendorEnterpriseNumberTlv (bool): If true, includes the TLV number of the vendor, in triggered ping.
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): This signifies the interfaces that are associated with the selected interface type.Object references are:
-			MinRxInterval (number): This signifies the minimum interval, in milliseconds, between received BFD Control packets that this interface is capable of supporting.
-			Multiplier (number): This signifies the negotiated transmit interval, multiplied by this value, provides the detection time for the interface.
-			PadTlvFirstOctet (str(dropPadTlvFromReply|copyPadTlvToReply)): This signifies the selection of the first octate of the Pad TLV. Possible values include:
-			PadTlvLength (number): This signifies the specification of the length of the Pad TLV.
-			ReplyMode (str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)): This signifies the selecion of the mode of reply.Possible values include DoNotReply, ReplyViaApplicationLevelControlChannel, ReplyViaIpv4Ipv6UdpPacket and ReplyViaIpv4Ipv6UdpPacketWithRouterAlert.
-			TxInterval (number): This signifies the minimum interval, in milliseconds, that the interface would like to use when transmitting BFD Control packets.
-			VendorEnterpriseNumber (number): This signifies the specification of the enterprise number of the vendor.
+			BfdCvType (str(bfdCvTypeIpUdp|bfdCvTypePwAch)): 
+			BfdDiscriminatorEnd (number): 
+			BfdDiscriminatorStart (number): 
+			ControlChannel (str(controlChannelRouterAlert|controlChannelPwAch)): 
+			DestinationAddressIpv4 (str): 
+			DownStreamAddressType (str(ipv4Numbered|ipv4UnNumbered|ipv6Numbered|ipv6UnNumbered)): 
+			DownStreamInterfaceAddress (number): 
+			DownStreamIpAddress (str): 
+			EchoRequestInterval (number): 
+			EchoResponseTimeout (number): 
+			EnableDownStreamMappingTlv (bool): 
+			EnableDsIflag (bool): 
+			EnableDsNflag (bool): 
+			EnableFecValidation (bool): 
+			EnablePeriodicPing (bool): 
+			Enabled (bool): 
+			FlapTxIntervals (number): 
+			IncludePadTlv (bool): 
+			IncludeVendorEnterpriseNumberTlv (bool): 
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			MinRxInterval (number): 
+			Multiplier (number): 
+			PadTlvFirstOctet (str(dropPadTlvFromReply|copyPadTlvToReply)): 
+			PadTlvLength (number): 
+			ReplyMode (str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)): 
+			TxInterval (number): 
+			VendorEnterpriseNumber (number): 
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -416,33 +416,33 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			BfdCvType (str(bfdCvTypeIpUdp|bfdCvTypePwAch)): This signifies the BFD Connectivity Verification type. Possible values include:
-			BfdDiscriminatorEnd (number): This signifies the last BFD Discriminator value. This value should be greater than the BFD.
-			BfdDiscriminatorStart (number): This signifies the first BFD Discriminator value. The default value is 5000.
-			ControlChannel (str(controlChannelRouterAlert|controlChannelPwAch)): This signifies the communication control channel. Possible values include
-			DestinationAddressIpv4 (str): This signifies the destination IPv4 address.
-			DownStreamAddressType (str(ipv4Numbered|ipv4UnNumbered|ipv6Numbered|ipv6UnNumbered)): This signifies the address type of the downstream traffic. Possible values include:
-			DownStreamInterfaceAddress (number): This signifies the interface address of the downstream traffic.
-			DownStreamIpAddress (str): This signifies the IPv4/IPv6 address of the downstream traffic.
-			EchoRequestInterval (number): This signifies the minimum interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
-			EchoResponseTimeout (number): This signifies the minimum tiomeout interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
-			EnableDownStreamMappingTlv (bool): This signifies the enablement of downstream mapping TLV.
-			EnableDsIflag (bool): This signifies the activation of the DS I Flag.
-			EnableDsNflag (bool): This signifies the activation of the DS N Flag.
-			EnableFecValidation (bool): This signifies the selection of the check box to enable FEC validation.
-			EnablePeriodicPing (bool): If true, the router is pinged at regular intervals.
-			Enabled (bool): If true, it enables or disables the simulated router.
-			FlapTxIntervals (number): This signifies the number of seconds between route flaps for BFD. A value of zero means no flapping.
-			IncludePadTlv (bool): If true, includes Pad TLV in triggered ping.
-			IncludeVendorEnterpriseNumberTlv (bool): If true, includes the TLV number of the vendor, in triggered ping.
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): This signifies the interfaces that are associated with the selected interface type.Object references are:
-			MinRxInterval (number): This signifies the minimum interval, in milliseconds, between received BFD Control packets that this interface is capable of supporting.
-			Multiplier (number): This signifies the negotiated transmit interval, multiplied by this value, provides the detection time for the interface.
-			PadTlvFirstOctet (str(dropPadTlvFromReply|copyPadTlvToReply)): This signifies the selection of the first octate of the Pad TLV. Possible values include:
-			PadTlvLength (number): This signifies the specification of the length of the Pad TLV.
-			ReplyMode (str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)): This signifies the selecion of the mode of reply.Possible values include DoNotReply, ReplyViaApplicationLevelControlChannel, ReplyViaIpv4Ipv6UdpPacket and ReplyViaIpv4Ipv6UdpPacketWithRouterAlert.
-			TxInterval (number): This signifies the minimum interval, in milliseconds, that the interface would like to use when transmitting BFD Control packets.
-			VendorEnterpriseNumber (number): This signifies the specification of the enterprise number of the vendor.
+			BfdCvType (str(bfdCvTypeIpUdp|bfdCvTypePwAch)): 
+			BfdDiscriminatorEnd (number): 
+			BfdDiscriminatorStart (number): 
+			ControlChannel (str(controlChannelRouterAlert|controlChannelPwAch)): 
+			DestinationAddressIpv4 (str): 
+			DownStreamAddressType (str(ipv4Numbered|ipv4UnNumbered|ipv6Numbered|ipv6UnNumbered)): 
+			DownStreamInterfaceAddress (number): 
+			DownStreamIpAddress (str): 
+			EchoRequestInterval (number): 
+			EchoResponseTimeout (number): 
+			EnableDownStreamMappingTlv (bool): 
+			EnableDsIflag (bool): 
+			EnableDsNflag (bool): 
+			EnableFecValidation (bool): 
+			EnablePeriodicPing (bool): 
+			Enabled (bool): 
+			FlapTxIntervals (number): 
+			IncludePadTlv (bool): 
+			IncludeVendorEnterpriseNumberTlv (bool): 
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			MinRxInterval (number): 
+			Multiplier (number): 
+			PadTlvFirstOctet (str(dropPadTlvFromReply|copyPadTlvToReply)): 
+			PadTlvLength (number): 
+			ReplyMode (str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)): 
+			TxInterval (number): 
+			VendorEnterpriseNumber (number): 
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index

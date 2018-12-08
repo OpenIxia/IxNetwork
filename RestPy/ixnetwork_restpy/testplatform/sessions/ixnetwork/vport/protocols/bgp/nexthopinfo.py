@@ -51,7 +51,7 @@ class NextHopInfo(Base):
 
 	@property
 	def NextHop(self):
-		"""(Read Only) Next Hop IP.
+		"""
 
 		Returns:
 			str
@@ -65,7 +65,7 @@ class NextHopInfo(Base):
 		By default the find method takes no parameters and will retrieve all nextHopInfo data from the server.
 
 		Args:
-			NextHop (str): (Read Only) Next Hop IP.
+			NextHop (str): 
 
 		Returns:
 			self: This instance with matching nextHopInfo data retrieved from the server available through an iterator or index

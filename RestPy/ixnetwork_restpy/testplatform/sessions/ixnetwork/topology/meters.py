@@ -184,6 +184,27 @@ class Meters(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, Advertise=None, Flags=None, MeterDesc=None, MeterId=None):
+		"""Base class infrastructure that gets a list of meters device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Advertise (str): optional regex of advertise
+			Flags (str): optional regex of flags
+			MeterDesc (str): optional regex of meterDesc
+			MeterId (str): optional regex of meterId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def SendAllMeterAdd(self):
 		"""Executes the sendAllMeterAdd operation on the server.
 

@@ -59,6 +59,15 @@ class IPv6PseudoNodeRoutes(Base):
 		return self._get_attribute('active')
 
 	@property
+	def AdvIPv6Prefix(self):
+		"""Advertise IPv6 Prefix
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('advIPv6Prefix')
+
+	@property
 	def Algorithm(self):
 		"""Algorithm
 
@@ -86,6 +95,15 @@ class IPv6PseudoNodeRoutes(Base):
 		return self._get_attribute('count')
 
 	@property
+	def DBitInsideSRv6SidTLV(self):
+		"""When the SID is leaked from level-2 to level-1, the D bit MUST be set. Otherwise, this bit MUST be clear.
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('dBitInsideSRv6SidTLV')
+
+	@property
 	def DescriptiveName(self):
 		"""Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
 
@@ -93,6 +111,24 @@ class IPv6PseudoNodeRoutes(Base):
 			str
 		"""
 		return self._get_attribute('descriptiveName')
+
+	@property
+	def Funcflags(self):
+		"""This is the function flags
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('funcflags')
+
+	@property
+	def Function(self):
+		"""This specifies endpoint function codes
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('function')
 
 	@property
 	def Ipv6EFlag(self):
@@ -167,6 +203,24 @@ class IPv6PseudoNodeRoutes(Base):
 		return self._get_attribute('ipv6RouteOrigin')
 
 	@property
+	def Ipv6SID(self):
+		"""This refers to the IPv6 SID that is being used to reach the advertised IPv6 Prefix
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('ipv6SID')
+
+	@property
+	def Ipv6Srh(self):
+		"""Advertise IPv6 SID
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('ipv6Srh')
+
+	@property
 	def Ipv6VFlag(self):
 		"""Value Flag
 
@@ -215,6 +269,15 @@ class IPv6PseudoNodeRoutes(Base):
 		return self._get_attribute('rangeSize')
 
 	@property
+	def ReservedInsideFlagsOfSRv6SidTLV(self):
+		"""This is the reserved field (part of Flags field of SRv6 SID TLV)
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('reservedInsideFlagsOfSRv6SidTLV')
+
+	@property
 	def SIDIndexLabel(self):
 		"""SID/Index/Label
 
@@ -256,6 +319,45 @@ class IPv6PseudoNodeRoutes(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, AdvIPv6Prefix=None, Algorithm=None, ConfigureSIDIndexLabel=None, DBitInsideSRv6SidTLV=None, Funcflags=None, Function=None, Ipv6EFlag=None, Ipv6LFlag=None, Ipv6Metric=None, Ipv6NFlag=None, Ipv6PFlag=None, Ipv6RFlag=None, Ipv6Redistribution=None, Ipv6RouteOrigin=None, Ipv6SID=None, Ipv6Srh=None, Ipv6VFlag=None, NetworkAddress=None, Prefix=None, RangeSize=None, ReservedInsideFlagsOfSRv6SidTLV=None, SIDIndexLabel=None):
+		"""Base class infrastructure that gets a list of IPv6PseudoNodeRoutes device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdvIPv6Prefix (str): optional regex of advIPv6Prefix
+			Algorithm (str): optional regex of algorithm
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			DBitInsideSRv6SidTLV (str): optional regex of dBitInsideSRv6SidTLV
+			Funcflags (str): optional regex of funcflags
+			Function (str): optional regex of function
+			Ipv6EFlag (str): optional regex of ipv6EFlag
+			Ipv6LFlag (str): optional regex of ipv6LFlag
+			Ipv6Metric (str): optional regex of ipv6Metric
+			Ipv6NFlag (str): optional regex of ipv6NFlag
+			Ipv6PFlag (str): optional regex of ipv6PFlag
+			Ipv6RFlag (str): optional regex of ipv6RFlag
+			Ipv6Redistribution (str): optional regex of ipv6Redistribution
+			Ipv6RouteOrigin (str): optional regex of ipv6RouteOrigin
+			Ipv6SID (str): optional regex of ipv6SID
+			Ipv6Srh (str): optional regex of ipv6Srh
+			Ipv6VFlag (str): optional regex of ipv6VFlag
+			NetworkAddress (str): optional regex of networkAddress
+			Prefix (str): optional regex of prefix
+			RangeSize (str): optional regex of rangeSize
+			ReservedInsideFlagsOfSRv6SidTLV (str): optional regex of reservedInsideFlagsOfSRv6SidTLV
+			SIDIndexLabel (str): optional regex of sIDIndexLabel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def Start(self):
 		"""Executes the start operation on the server.

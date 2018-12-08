@@ -37,7 +37,7 @@ class DynamicFrameSize(Base):
 
 	@property
 	def FixedSize(self):
-		"""Sets all frames to a specified constant size. The default is 64 bytes.
+		"""
 
 		Returns:
 			number
@@ -58,7 +58,7 @@ class DynamicFrameSize(Base):
 
 	@property
 	def RandomMax(self):
-		"""Sets frame size to maximum length in bytes. The maximum length is 1518 bytes.
+		"""
 
 		Returns:
 			number
@@ -70,7 +70,7 @@ class DynamicFrameSize(Base):
 
 	@property
 	def RandomMin(self):
-		"""Sets frame size to minimum length in bytes. The maximum length is 64 bytes.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class DynamicFrameSize(Base):
 
 	@property
 	def Type(self):
-		"""Sets the frame size to either fixed or random lengths in bytes.
+		"""
 
 		Returns:
 			str(fixed|random)
@@ -108,12 +108,12 @@ class DynamicFrameSize(Base):
 		By default the find method takes no parameters and will retrieve all dynamicFrameSize data from the server.
 
 		Args:
-			FixedSize (number): Sets all frames to a specified constant size. The default is 64 bytes.
+			FixedSize (number): 
 			HighLevelStreamName (str): The name of the high level stream
-			RandomMax (number): Sets frame size to maximum length in bytes. The maximum length is 1518 bytes.
-			RandomMin (number): Sets frame size to minimum length in bytes. The maximum length is 64 bytes.
+			RandomMax (number): 
+			RandomMin (number): 
 			TrafficItemName (str): The name of the parent traffic item.
-			Type (str(fixed|random)): Sets the frame size to either fixed or random lengths in bytes.
+			Type (str(fixed|random)): 
 
 		Returns:
 			self: This instance with matching dynamicFrameSize data retrieved from the server available through an iterator or index

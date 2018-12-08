@@ -863,6 +863,66 @@ class BgpIPv4EvpnVXLANVpws(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AdRouteLabel=None, AdvertiseL3vniSeparately=None, AggregatorAs=None, AggregatorId=None, AsSetMode=None, AutoConfigPMSITunnelId=None, AutoConfigureRdIpAddress=None, BMacFirstLabel=None, BMacSecondLabel=None, EnableAggregatorId=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableBMacSecondLabel=None, EnableCluster=None, EnableCommunity=None, EnableExtendedCommunity=None, EnableL3TargetOnlyForRouteType5=None, EnableL3vniTargetList=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EsiType=None, IncludePmsiTunnelAttribute=None, Ipv4NextHop=None, Ipv6NextHop=None, LocalPreference=None, MultiExitDiscriminator=None, MulticastTunnelType=None, MulticastTunnelTypeVxlan=None, Origin=None, OriginatorId=None, OverridePeerAsSetMode=None, PmsiTunnelIDv4=None, PmsiTunnelIDv6=None, RdEvi=None, RdIpAddress=None, SetNextHop=None, SetNextHopIpType=None, UpstreamDownstreamAssignedMplsLabel=None, UseIpv4MappedIpv6Address=None, UseUpstreamDownstreamAssignedMplsLabel=None):
+		"""Base class infrastructure that gets a list of bgpIPv4EvpnVXLANVpws device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdRouteLabel (str): optional regex of adRouteLabel
+			AdvertiseL3vniSeparately (str): optional regex of advertiseL3vniSeparately
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AsSetMode (str): optional regex of asSetMode
+			AutoConfigPMSITunnelId (str): optional regex of autoConfigPMSITunnelId
+			AutoConfigureRdIpAddress (str): optional regex of autoConfigureRdIpAddress
+			BMacFirstLabel (str): optional regex of bMacFirstLabel
+			BMacSecondLabel (str): optional regex of bMacSecondLabel
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableBMacSecondLabel (str): optional regex of enableBMacSecondLabel
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableL3TargetOnlyForRouteType5 (str): optional regex of enableL3TargetOnlyForRouteType5
+			EnableL3vniTargetList (str): optional regex of enableL3vniTargetList
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EsiType (str): optional regex of esiType
+			IncludePmsiTunnelAttribute (str): optional regex of includePmsiTunnelAttribute
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LocalPreference (str): optional regex of localPreference
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			MulticastTunnelType (str): optional regex of multicastTunnelType
+			MulticastTunnelTypeVxlan (str): optional regex of multicastTunnelTypeVxlan
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			OverridePeerAsSetMode (str): optional regex of overridePeerAsSetMode
+			PmsiTunnelIDv4 (str): optional regex of pmsiTunnelIDv4
+			PmsiTunnelIDv6 (str): optional regex of pmsiTunnelIDv6
+			RdEvi (str): optional regex of rdEvi
+			RdIpAddress (str): optional regex of rdIpAddress
+			SetNextHop (str): optional regex of setNextHop
+			SetNextHopIpType (str): optional regex of setNextHopIpType
+			UpstreamDownstreamAssignedMplsLabel (str): optional regex of upstreamDownstreamAssignedMplsLabel
+			UseIpv4MappedIpv6Address (str): optional regex of useIpv4MappedIpv6Address
+			UseUpstreamDownstreamAssignedMplsLabel (str): optional regex of useUpstreamDownstreamAssignedMplsLabel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

@@ -38,7 +38,7 @@ class MsAllowedEidRange(Base):
 
 	@property
 	def Address(self):
-		"""It gives details about the address
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class MsAllowedEidRange(Base):
 
 	@property
 	def Count(self):
-		"""it gives details about the count
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class MsAllowedEidRange(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, it enables the protocol
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class MsAllowedEidRange(Base):
 
 	@property
 	def Family(self):
-		"""It details about the ip family
+		"""
 
 		Returns:
 			str(ipv4|ipv6)
@@ -86,7 +86,7 @@ class MsAllowedEidRange(Base):
 
 	@property
 	def PrefixLength(self):
-		"""It gives details about the prefix length
+		"""
 
 		Returns:
 			number
@@ -100,11 +100,11 @@ class MsAllowedEidRange(Base):
 		"""Adds a new msAllowedEidRange node on the server and retrieves it in this instance.
 
 		Args:
-			Address (str): It gives details about the address
-			Count (number): it gives details about the count
-			Enabled (bool): If true, it enables the protocol
-			Family (str(ipv4|ipv6)): It details about the ip family
-			PrefixLength (number): It gives details about the prefix length
+			Address (str): 
+			Count (number): 
+			Enabled (bool): 
+			Family (str(ipv4|ipv6)): 
+			PrefixLength (number): 
 
 		Returns:
 			self: This instance with all currently retrieved msAllowedEidRange data using find and the newly added msAllowedEidRange data available through an iterator or index
@@ -130,11 +130,11 @@ class MsAllowedEidRange(Base):
 		By default the find method takes no parameters and will retrieve all msAllowedEidRange data from the server.
 
 		Args:
-			Address (str): It gives details about the address
-			Count (number): it gives details about the count
-			Enabled (bool): If true, it enables the protocol
-			Family (str(ipv4|ipv6)): It details about the ip family
-			PrefixLength (number): It gives details about the prefix length
+			Address (str): 
+			Count (number): 
+			Enabled (bool): 
+			Family (str(ipv4|ipv6)): 
+			PrefixLength (number): 
 
 		Returns:
 			self: This instance with matching msAllowedEidRange data retrieved from the server available through an iterator or index

@@ -51,7 +51,7 @@ class DiscoveredAppliance(Base):
 
 	@property
 	def ApplianceName(self):
-		"""Represents the appliance Name
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class DiscoveredAppliance(Base):
 
 	@property
 	def ApplianceType(self):
-		"""Represents the appliance host type
+		"""
 
 		Returns:
 			str(qemu|vCenter|vmware)
@@ -69,7 +69,7 @@ class DiscoveredAppliance(Base):
 
 	@property
 	def InterfacesNumber(self):
-		"""Represents the number of test interfaces
+		"""
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class DiscoveredAppliance(Base):
 
 	@property
 	def ManagementIp(self):
-		"""Represents the management Ip
+		"""
 
 		Returns:
 			str
@@ -92,10 +92,10 @@ class DiscoveredAppliance(Base):
 		By default the find method takes no parameters and will retrieve all discoveredAppliance data from the server.
 
 		Args:
-			ApplianceName (str): Represents the appliance Name
-			ApplianceType (str(qemu|vCenter|vmware)): Represents the appliance host type
-			InterfacesNumber (number): Represents the number of test interfaces
-			ManagementIp (str): Represents the management Ip
+			ApplianceName (str): 
+			ApplianceType (str(qemu|vCenter|vmware)): 
+			InterfacesNumber (number): 
+			ManagementIp (str): 
 
 		Returns:
 			self: This instance with matching discoveredAppliance data retrieved from the server available through an iterator or index

@@ -185,6 +185,34 @@ class NtpServers(Base):
 		"""
 		return self._get_attribute('serverIPv6Address')
 
+	def get_device_ids(self, PortNames=None, Active=None, AuthDelay=None, Authentication=None, AuthenticationKey=None, BurstMode=None, InitialBurstMode=None, KeyId=None, MaxPollInterval=None, MinPollInterval=None, ParticipateInClockSelect=None, ServerIPAddress=None, ServerIPv6Address=None):
+		"""Base class infrastructure that gets a list of ntpServers device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AuthDelay (str): optional regex of authDelay
+			Authentication (str): optional regex of authentication
+			AuthenticationKey (str): optional regex of authenticationKey
+			BurstMode (str): optional regex of burstMode
+			InitialBurstMode (str): optional regex of initialBurstMode
+			KeyId (str): optional regex of keyId
+			MaxPollInterval (str): optional regex of maxPollInterval
+			MinPollInterval (str): optional regex of minPollInterval
+			ParticipateInClockSelect (str): optional regex of participateInClockSelect
+			ServerIPAddress (str): optional regex of serverIPAddress
+			ServerIPv6Address (str): optional regex of serverIPv6Address
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

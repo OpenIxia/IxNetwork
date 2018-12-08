@@ -150,7 +150,7 @@ class Router(Base):
 
 	@property
 	def EnableBfdMplsLearnedLsp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class Router(Base):
 
 	@property
 	def EnableFilterFec(self):
-		"""Enables Filter FEC, which allows the user to control which received FEC ranges will be stored in the state machine.
+		"""
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class Router(Base):
 
 	@property
 	def EnableGracefulRestart(self):
-		"""If enabled, LDP Graceful Restart is enabled on this Ixia-emulated LDP Router.
+		"""
 
 		Returns:
 			bool
@@ -186,7 +186,7 @@ class Router(Base):
 
 	@property
 	def EnableLspPingLearnedLsp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -198,7 +198,7 @@ class Router(Base):
 
 	@property
 	def EnableOverrideRbit(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -210,7 +210,7 @@ class Router(Base):
 
 	@property
 	def EnableP2mpCapabilty(self):
-		"""If true, enables P2MP capability.
+		"""
 
 		Returns:
 			bool
@@ -222,7 +222,7 @@ class Router(Base):
 
 	@property
 	def EnablePduRateControl(self):
-		"""Enables the PDU Rate Control feature.
+		"""
 
 		Returns:
 			bool
@@ -234,7 +234,7 @@ class Router(Base):
 
 	@property
 	def EnableVcFecs(self):
-		"""Enables the use of Layer 2 Virtual Circuit FECs.
+		"""
 
 		Returns:
 			bool
@@ -246,7 +246,7 @@ class Router(Base):
 
 	@property
 	def EnableVcGroupMatch(self):
-		"""If enabled, the VC Group ID must be matched in addition to the VC ID, VC Type, and Peer for the PseudoWire to be considered Up (Up status).
+		"""
 
 		Returns:
 			bool
@@ -258,7 +258,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -270,7 +270,7 @@ class Router(Base):
 
 	@property
 	def InterPduGap(self):
-		"""The user-specified gap time between PDUs, in milliseconds (ms).
+		"""
 
 		Returns:
 			number
@@ -282,7 +282,7 @@ class Router(Base):
 
 	@property
 	def IsBgpAdVplsLearnedInfoRefreshed(self):
-		"""Refreshes the AD VPLS Learned Info.
+		"""
 
 		Returns:
 			bool
@@ -291,7 +291,7 @@ class Router(Base):
 
 	@property
 	def ReconnectTime(self):
-		"""This Fault Tolerant (FT) Reconnect Timer value is advertised in the FT Session TLV in the Initialization message sent by a neighbor LSR. It is a request sent by an LSR to its neighbor(s) in the event that the receiving neighbor detects that the LDP session has failed, the receiver should maintain MPLS forwarding state and wait for the sender to perform a restart of the control plane and LDP protocol. If the value = 0, the sender is indicating that it will not preserve its MPLS forwarding state across the restart.
+		"""
 
 		Returns:
 			number
@@ -303,7 +303,7 @@ class Router(Base):
 
 	@property
 	def RecoveryTime(self):
-		"""The restarting LSR is advertising the amount of time that it will retain its MPLS forwarding state. This time period begins when it sends the restart Initialization message, with the FT session TLV, to the neighbor LSRs (to re-establish the LDP session). This timer allows the neighbors some time to resync the LSPs in an orderly manner. If the value = 0, it means that the restarting LSR was not able to preserve the MPLS forwarding state.
+		"""
 
 		Returns:
 			number
@@ -315,7 +315,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""The ID of the simulated router, expressed as an IP address.
+		"""
 
 		Returns:
 			str
@@ -327,7 +327,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -339,7 +339,7 @@ class Router(Base):
 
 	@property
 	def TransportAddress(self):
-		"""The string interface description for the transport address.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -351,7 +351,7 @@ class Router(Base):
 
 	@property
 	def UseTransportAddress(self):
-		"""The boolean value for the transport address.
+		"""
 
 		Returns:
 			bool
@@ -365,23 +365,23 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			EnableBfdMplsLearnedLsp (bool): NOT DEFINED
-			EnableFilterFec (bool): Enables Filter FEC, which allows the user to control which received FEC ranges will be stored in the state machine.
-			EnableGracefulRestart (bool): If enabled, LDP Graceful Restart is enabled on this Ixia-emulated LDP Router.
-			EnableLspPingLearnedLsp (bool): NOT DEFINED
-			EnableOverrideRbit (bool): NOT DEFINED
-			EnableP2mpCapabilty (bool): If true, enables P2MP capability.
-			EnablePduRateControl (bool): Enables the PDU Rate Control feature.
-			EnableVcFecs (bool): Enables the use of Layer 2 Virtual Circuit FECs.
-			EnableVcGroupMatch (bool): If enabled, the VC Group ID must be matched in addition to the VC ID, VC Type, and Peer for the PseudoWire to be considered Up (Up status).
-			Enabled (bool): Enables or disables the simulated router.
-			InterPduGap (number): The user-specified gap time between PDUs, in milliseconds (ms).
-			ReconnectTime (number): This Fault Tolerant (FT) Reconnect Timer value is advertised in the FT Session TLV in the Initialization message sent by a neighbor LSR. It is a request sent by an LSR to its neighbor(s) in the event that the receiving neighbor detects that the LDP session has failed, the receiver should maintain MPLS forwarding state and wait for the sender to perform a restart of the control plane and LDP protocol. If the value = 0, the sender is indicating that it will not preserve its MPLS forwarding state across the restart.
-			RecoveryTime (number): The restarting LSR is advertising the amount of time that it will retain its MPLS forwarding state. This time period begins when it sends the restart Initialization message, with the FT session TLV, to the neighbor LSRs (to re-establish the LDP session). This timer allows the neighbors some time to resync the LSPs in an orderly manner. If the value = 0, it means that the restarting LSR was not able to preserve the MPLS forwarding state.
-			RouterId (str): The ID of the simulated router, expressed as an IP address.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
-			TransportAddress (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The string interface description for the transport address.
-			UseTransportAddress (bool): The boolean value for the transport address.
+			EnableBfdMplsLearnedLsp (bool): 
+			EnableFilterFec (bool): 
+			EnableGracefulRestart (bool): 
+			EnableLspPingLearnedLsp (bool): 
+			EnableOverrideRbit (bool): 
+			EnableP2mpCapabilty (bool): 
+			EnablePduRateControl (bool): 
+			EnableVcFecs (bool): 
+			EnableVcGroupMatch (bool): 
+			Enabled (bool): 
+			InterPduGap (number): 
+			ReconnectTime (number): 
+			RecoveryTime (number): 
+			RouterId (str): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			TransportAddress (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			UseTransportAddress (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -407,24 +407,24 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			EnableBfdMplsLearnedLsp (bool): NOT DEFINED
-			EnableFilterFec (bool): Enables Filter FEC, which allows the user to control which received FEC ranges will be stored in the state machine.
-			EnableGracefulRestart (bool): If enabled, LDP Graceful Restart is enabled on this Ixia-emulated LDP Router.
-			EnableLspPingLearnedLsp (bool): NOT DEFINED
-			EnableOverrideRbit (bool): NOT DEFINED
-			EnableP2mpCapabilty (bool): If true, enables P2MP capability.
-			EnablePduRateControl (bool): Enables the PDU Rate Control feature.
-			EnableVcFecs (bool): Enables the use of Layer 2 Virtual Circuit FECs.
-			EnableVcGroupMatch (bool): If enabled, the VC Group ID must be matched in addition to the VC ID, VC Type, and Peer for the PseudoWire to be considered Up (Up status).
-			Enabled (bool): Enables or disables the simulated router.
-			InterPduGap (number): The user-specified gap time between PDUs, in milliseconds (ms).
-			IsBgpAdVplsLearnedInfoRefreshed (bool): Refreshes the AD VPLS Learned Info.
-			ReconnectTime (number): This Fault Tolerant (FT) Reconnect Timer value is advertised in the FT Session TLV in the Initialization message sent by a neighbor LSR. It is a request sent by an LSR to its neighbor(s) in the event that the receiving neighbor detects that the LDP session has failed, the receiver should maintain MPLS forwarding state and wait for the sender to perform a restart of the control plane and LDP protocol. If the value = 0, the sender is indicating that it will not preserve its MPLS forwarding state across the restart.
-			RecoveryTime (number): The restarting LSR is advertising the amount of time that it will retain its MPLS forwarding state. This time period begins when it sends the restart Initialization message, with the FT session TLV, to the neighbor LSRs (to re-establish the LDP session). This timer allows the neighbors some time to resync the LSPs in an orderly manner. If the value = 0, it means that the restarting LSR was not able to preserve the MPLS forwarding state.
-			RouterId (str): The ID of the simulated router, expressed as an IP address.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
-			TransportAddress (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The string interface description for the transport address.
-			UseTransportAddress (bool): The boolean value for the transport address.
+			EnableBfdMplsLearnedLsp (bool): 
+			EnableFilterFec (bool): 
+			EnableGracefulRestart (bool): 
+			EnableLspPingLearnedLsp (bool): 
+			EnableOverrideRbit (bool): 
+			EnableP2mpCapabilty (bool): 
+			EnablePduRateControl (bool): 
+			EnableVcFecs (bool): 
+			EnableVcGroupMatch (bool): 
+			Enabled (bool): 
+			InterPduGap (number): 
+			IsBgpAdVplsLearnedInfoRefreshed (bool): 
+			ReconnectTime (number): 
+			RecoveryTime (number): 
+			RouterId (str): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			TransportAddress (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			UseTransportAddress (bool): 
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index
@@ -452,13 +452,11 @@ class Router(Base):
 	def RefreshBgpAdVplsLearnedInfo(self):
 		"""Executes the refreshBgpAdVplsLearnedInfo operation on the server.
 
-		If enabled, it refreshes BGP advanced LSP learned information.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

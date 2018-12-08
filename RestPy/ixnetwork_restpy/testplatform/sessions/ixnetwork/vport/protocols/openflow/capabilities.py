@@ -37,7 +37,7 @@ class Capabilities(Base):
 
 	@property
 	def FlowStatistics(self):
-		"""Indicates that the ofChannel capabilities of the switch includes flow statistics.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Capabilities(Base):
 
 	@property
 	def MatchIpAddressInArpPackets(self):
-		"""Indicates that the ofChannel capabilities of the switch includes Match IP addresses in ARP pkts.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Capabilities(Base):
 
 	@property
 	def PortStatistics(self):
-		"""Indicates that the ofChannel capabilities of the switch includes port statistics.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Capabilities(Base):
 
 	@property
 	def QueueStatistics(self):
-		"""Indicates that the ofChannel capabilities of the switch include Queue statistics.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Capabilities(Base):
 
 	@property
 	def ReassambleIpFragments(self):
-		"""Indicates that the ofChannel capabilities of the switch include reassemble IP fragments at the receiver.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Capabilities(Base):
 
 	@property
 	def Reserved(self):
-		"""Indicates that the ofChannel capabilities of the switch includes reserved, must be zero.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Capabilities(Base):
 
 	@property
 	def SpanningTree(self):
-		"""Indicates that the ofChannel capabilities of the switch includes 802.1d spanning tree.
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class Capabilities(Base):
 
 	@property
 	def TableStatistics(self):
-		"""Indicates that the ofChannel capabilities of the switch includes table statistics.
+		"""
 
 		Returns:
 			bool

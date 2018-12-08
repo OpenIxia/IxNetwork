@@ -387,7 +387,7 @@ class LearnedInformation(Base):
 
 	@property
 	def AsyncConfStatResponseTimeOut(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -399,7 +399,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DescriptionStatResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no description statistics response is received.
+		"""
 
 		Returns:
 			number
@@ -411,7 +411,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterFlowRemovedFlowDelete(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Flow Removed Flow Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -423,7 +423,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterFlowRemovedGroupDelete(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Flow Removed Group Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -435,7 +435,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterFlowRemovedHardTimeOut(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Flow Removed Hard Time Out is received.
+		"""
 
 		Returns:
 			bool
@@ -447,7 +447,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterFlowRemovedIdleTimeOut(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -459,7 +459,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterPacketInActionOutputToController(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Packet In Action Output To Controller is received.
+		"""
 
 		Returns:
 			bool
@@ -471,7 +471,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterPacketInInvalidTtl(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Packet In Invalid Ttl is received.
+		"""
 
 		Returns:
 			bool
@@ -483,7 +483,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterPacketInNoMatching(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Packet In No Matching is received.
+		"""
 
 		Returns:
 			bool
@@ -495,7 +495,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterPortStatusAdd(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Port Status Add is received.
+		"""
 
 		Returns:
 			bool
@@ -507,7 +507,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterPortStatusDelete(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Master Port Status Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -519,7 +519,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfMasterPortStatusModify(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Port Status Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -531,7 +531,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlaveFlowRemovedFlowDelete(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Flow Removed Flow Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -543,7 +543,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlaveFlowRemovedGroupDelete(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Flow Removed Group Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -555,7 +555,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlaveFlowRemovedHardTimeOut(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Flow Removed Hard Time Out is received.
+		"""
 
 		Returns:
 			bool
@@ -567,7 +567,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlaveFlowRemovedIdleTimeOut(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Flow Removed Idle Time Out is received.
+		"""
 
 		Returns:
 			bool
@@ -579,7 +579,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlavePacketInActionOutputToController(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Packet In Action Output To Controller is received.
+		"""
 
 		Returns:
 			bool
@@ -591,7 +591,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlavePacketInInvalidTtl(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Packet In Invalid Ttl is received.
+		"""
 
 		Returns:
 			bool
@@ -603,7 +603,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlavePacketInNoMatching(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Packet In No Matching is received.
+		"""
 
 		Returns:
 			bool
@@ -615,7 +615,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlavePortStatusAdd(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Port Status Add is received.
+		"""
 
 		Returns:
 			bool
@@ -627,7 +627,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlavePortStatusDelete(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Port Status Delete is received.
+		"""
 
 		Returns:
 			bool
@@ -639,7 +639,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAsyncConfSlavePortStatusModify(self):
-		"""If enabled,it denotes that the enable Asynchronous Configuration Slave Port Status Modify is received.
+		"""
 
 		Returns:
 			bool
@@ -651,7 +651,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableFlowAggregatedStatMatchCapability(self):
-		"""Checks to see if the switch has the capability to publish Flow Aggregated Statistics
+		"""
 
 		Returns:
 			bool
@@ -663,7 +663,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableFlowStatMatchCapability(self):
-		"""Checks to see if the switch has the capability to publish Flow Statistics
+		"""
 
 		Returns:
 			bool
@@ -675,7 +675,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableGroupStatMatchCapability(self):
-		"""If enabled,it denotes that the enable Group Statistics Match Capability is received.
+		"""
 
 		Returns:
 			bool
@@ -687,7 +687,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnablePortStatMatchCapability(self):
-		"""Checks to see if the switch has the capability to publish Port Statistics
+		"""
 
 		Returns:
 			bool
@@ -699,7 +699,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableQueueStatMatchCapability(self):
-		"""If true, the switch has the capability to publish Queue Statistics.
+		"""
 
 		Returns:
 			bool
@@ -711,7 +711,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTableFeaturesTrigger(self):
-		"""If enabled,it denotes that the enable Send Table Features Trigger is received.
+		"""
 
 		Returns:
 			bool
@@ -723,7 +723,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggerPortFeaturesLearnedInformation(self):
-		"""Enables Trigger for port features learned information.
+		"""
 
 		Returns:
 			bool
@@ -735,7 +735,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredAsyncConfStatLearnedInformation(self):
-		"""If enabled,it denotes that the Triggered Asynchronous Configuration Statistics Learned Information is received.
+		"""
 
 		Returns:
 			bool
@@ -747,7 +747,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredBarrierRequestMessage(self):
-		"""If true, enables trigger for barrier request message
+		"""
 
 		Returns:
 			bool
@@ -759,7 +759,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredDescriptionStatLearnedInformation(self):
-		"""If true, the description statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -771,7 +771,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredFlowAggregatedStatLearnedInformation(self):
-		"""If true, the flow aggregated statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -783,7 +783,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredFlowStatLearnedInformation(self):
-		"""If true, the flow statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -795,7 +795,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredGroupDescriptionStatLearnedInformation(self):
-		"""If enabled,it denotes that the enable Send Triggered Group Description Statistics Learned Information is received.
+		"""
 
 		Returns:
 			bool
@@ -807,7 +807,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredGroupFeatureStatLearnedInformation(self):
-		"""If enabled,it denotes that the enable Send Triggered Group Feature Statistics Learned Information is received.
+		"""
 
 		Returns:
 			bool
@@ -819,7 +819,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredGroupStatLearnedInformation(self):
-		"""If enabled,it denotes that the Send Triggered Group Statistics Learned Information is received.
+		"""
 
 		Returns:
 			bool
@@ -831,7 +831,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredPacketOutMessage(self):
-		"""If enabled,it denotes that the enable Send Triggered Packet Out Message is received.
+		"""
 
 		Returns:
 			bool
@@ -843,7 +843,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredPortModificationMessage(self):
-		"""If enabled,it denotes that the enable Send Triggered Port Modification Message is received.
+		"""
 
 		Returns:
 			bool
@@ -855,7 +855,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredPortStatLearnedInformation(self):
-		"""If true, the port statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -867,7 +867,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredQueueConfigLearnedInformation(self):
-		"""If true, the queue config trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -879,7 +879,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredQueueStatLearnedInformation(self):
-		"""If true, the queue statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -891,7 +891,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredRoleRequestMessage(self):
-		"""If enabled,it denotes that the Triggered Role Request Message is received.
+		"""
 
 		Returns:
 			bool
@@ -903,7 +903,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredSwitchConfigLearnedInformation(self):
-		"""If enabled,it denotes that the enable Switch Configuration Learned Information is received.
+		"""
 
 		Returns:
 			bool
@@ -915,7 +915,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredTableStatLearnedInformation(self):
-		"""If true, the table statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -927,7 +927,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredVendorStatLearnedInformation(self):
-		"""If true, the vendor statistic trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -939,7 +939,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSetAsyncConfig(self):
-		"""If enabled,it denotes that the Set Asynchronous Configuration is received.
+		"""
 
 		Returns:
 			bool
@@ -951,7 +951,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSetSwitchConfig(self):
-		"""If enabled,it denotes that the enable Set Switch Configuration is received.
+		"""
 
 		Returns:
 			bool
@@ -963,7 +963,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSetTableFeatures(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -975,7 +975,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableTableStatMatchCapability(self):
-		"""If true, the switch has the capability to publish Table Statistics.
+		"""
 
 		Returns:
 			bool
@@ -987,7 +987,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableTriggeredVendorMessage(self):
-		"""If true, the vendor message trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -999,7 +999,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatEthernetDestination(self):
-		"""Signifies the ethernet destination address.
+		"""
 
 		Returns:
 			str
@@ -1011,7 +1011,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatEthernetSource(self):
-		"""Signifies the ethernet source address.
+		"""
 
 		Returns:
 			str
@@ -1023,7 +1023,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatEthernetType(self):
-		"""Signifies the type of Ethernet used.
+		"""
 
 		Returns:
 			str
@@ -1035,7 +1035,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatInPort(self):
-		"""Signifies the input port used.
+		"""
 
 		Returns:
 			str
@@ -1047,7 +1047,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatIpDscp(self):
-		"""Signifies the IP DSCP value for advertising.
+		"""
 
 		Returns:
 			str
@@ -1059,7 +1059,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatIpProtocol(self):
-		"""Signifies the IP protocol used.
+		"""
 
 		Returns:
 			str
@@ -1071,7 +1071,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatIpv4Destination(self):
-		"""Signifies the IPv4 destination address.
+		"""
 
 		Returns:
 			str
@@ -1083,7 +1083,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatIpv4Source(self):
-		"""Signifies the IPv4 source address.
+		"""
 
 		Returns:
 			str
@@ -1095,7 +1095,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatOutPortInputMode(self):
-		"""Signifies the identifier output mode of the aggregated flow statistics table.
+		"""
 
 		Returns:
 			str(ofppInPort|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppNone|custom)
@@ -1107,7 +1107,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no flow aggregated statistics response is received.
+		"""
 
 		Returns:
 			number
@@ -1119,7 +1119,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatTableIdInputMode(self):
-		"""Signifies the identifier input mode of the flow aggregated statistics table.
+		"""
 
 		Returns:
 			str(allTables|emergency|custom)
@@ -1131,7 +1131,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatTableIdInputModeNumber(self):
-		"""Signifies the identifier input mode of the flow aggregated statistics table.
+		"""
 
 		Returns:
 			number
@@ -1143,7 +1143,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatTransportDestination(self):
-		"""Signifies the Transport destination address.
+		"""
 
 		Returns:
 			str
@@ -1155,7 +1155,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatTransportSource(self):
-		"""Signifies the Transport source address.
+		"""
 
 		Returns:
 			str
@@ -1167,7 +1167,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatVlanId(self):
-		"""Signifies the unique VLAN Identifier.
+		"""
 
 		Returns:
 			str
@@ -1179,7 +1179,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowAggregatedStatVlanPriority(self):
-		"""Signifies the User Priority for this VLAN.
+		"""
 
 		Returns:
 			str
@@ -1191,7 +1191,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatEthernetDestination(self):
-		"""Specifies the Ethernet destination address.
+		"""
 
 		Returns:
 			str
@@ -1203,7 +1203,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatEthernetSource(self):
-		"""Specifies the Ethernet source address.
+		"""
 
 		Returns:
 			str
@@ -1215,7 +1215,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatEthernetType(self):
-		"""Specifies the type of Ethernet used.
+		"""
 
 		Returns:
 			str
@@ -1227,7 +1227,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatInPort(self):
-		"""Specifies the input port used.
+		"""
 
 		Returns:
 			str
@@ -1239,7 +1239,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatIpDscp(self):
-		"""Specifies the IP DSCP value for advertising.
+		"""
 
 		Returns:
 			str
@@ -1251,7 +1251,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatIpProtocol(self):
-		"""Specifies the IP protocol used.
+		"""
 
 		Returns:
 			str
@@ -1263,7 +1263,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatIpv4Destination(self):
-		"""Specifies the The IPv4 destination address.
+		"""
 
 		Returns:
 			str
@@ -1275,7 +1275,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatIpv4Source(self):
-		"""Specifies the The IPv4 source address.
+		"""
 
 		Returns:
 			str
@@ -1287,7 +1287,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatOutPortInputMode(self):
-		"""Specifies the output mode of the Table identifier.
+		"""
 
 		Returns:
 			str(ofppInPort|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppNone|custom)
@@ -1299,7 +1299,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no response is received.
+		"""
 
 		Returns:
 			number
@@ -1311,7 +1311,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatTableIdInputMode(self):
-		"""Specifies the input mode of the Table identifier.
+		"""
 
 		Returns:
 			str(allTables|emergency|custom)
@@ -1323,7 +1323,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatTableIdInputModeNumber(self):
-		"""Signifies the identifier input mode of the flow statistics table.
+		"""
 
 		Returns:
 			number
@@ -1335,7 +1335,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatTransportDestination(self):
-		"""Specifies the Transport destination address.
+		"""
 
 		Returns:
 			str
@@ -1347,7 +1347,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatTransportSource(self):
-		"""Specifies the Transport source address.
+		"""
 
 		Returns:
 			str
@@ -1359,7 +1359,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatVlanId(self):
-		"""Specifies the unique VLAN Identifier.
+		"""
 
 		Returns:
 			str
@@ -1371,7 +1371,7 @@ class LearnedInformation(Base):
 
 	@property
 	def FlowStatVlanPriority(self):
-		"""Specifies the User Priority for this VLAN.
+		"""
 
 		Returns:
 			str
@@ -1383,7 +1383,7 @@ class LearnedInformation(Base):
 
 	@property
 	def GroupDescriptionStatResponseTimeOut(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1395,7 +1395,7 @@ class LearnedInformation(Base):
 
 	@property
 	def GroupFeatureStatResponseTimeOut(self):
-		"""The time in milliseconds after which the trigger request times out if no response is received.
+		"""
 
 		Returns:
 			number
@@ -1407,7 +1407,7 @@ class LearnedInformation(Base):
 
 	@property
 	def GroupId(self):
-		"""The ID of the group used. .
+		"""
 
 		Returns:
 			number
@@ -1419,7 +1419,7 @@ class LearnedInformation(Base):
 
 	@property
 	def GroupIdType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(ofpgAll|ofpgAny|manual)
@@ -1431,7 +1431,7 @@ class LearnedInformation(Base):
 
 	@property
 	def GroupStatResponseTimeOut(self):
-		"""The time in milliseconds after which the trigger request times out if no response is received.
+		"""
 
 		Returns:
 			number
@@ -1443,7 +1443,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsAsyncConfStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Queue Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1452,7 +1452,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsDescriptionStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Description Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1461,7 +1461,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsFlowAggregatedStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Flow Aggregated Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1470,7 +1470,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsFlowStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Flow Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1479,7 +1479,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsGroupDescriptionStatLearnedInformationRefreshed(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -1488,7 +1488,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsGroupFeatureStatLearnedInformationRefreshed(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -1497,7 +1497,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsGroupStatLearnedInformationRefreshed(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -1506,7 +1506,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsOfChannelLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the OF Channels is received.
+		"""
 
 		Returns:
 			bool
@@ -1515,7 +1515,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsPortFeaturesLearnedInformationRefreshed(self):
-		"""Checks if the learned information for the port feature Learned Information is refreshed.
+		"""
 
 		Returns:
 			bool
@@ -1524,7 +1524,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsPortStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Port Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1533,7 +1533,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsQueueConfigLearnedInformationRefreshed(self):
-		"""If true, it denotes that the reply for the queue config request is received.
+		"""
 
 		Returns:
 			bool
@@ -1542,7 +1542,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsQueueStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Queue Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1551,7 +1551,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsTableStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Table Statistics is received.
+		"""
 
 		Returns:
 			bool
@@ -1560,7 +1560,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsVendorStatLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the Vendor Statistics is received
+		"""
 
 		Returns:
 			bool
@@ -1569,7 +1569,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutAuxiliaryId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1581,7 +1581,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutBufferId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1593,7 +1593,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutBufferIdInputMode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(opfNoBuffer|manual)
@@ -1605,7 +1605,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutData(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -1617,7 +1617,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutDataLength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1629,7 +1629,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutInPortInputMode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(ofppController|ofppLocal|manual)
@@ -1641,7 +1641,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PacketOutInPortNumber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1653,7 +1653,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PortFeaturesResponseTimeOut(self):
-		"""The time in milliseconds after which the trigger request times out if no response is received.
+		"""
 
 		Returns:
 			number
@@ -1665,7 +1665,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PortNumber(self):
-		"""Specifies the port number.
+		"""
 
 		Returns:
 			number
@@ -1677,7 +1677,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PortNumberInputMode(self):
-		"""Specifies the input mode for the Port number.
+		"""
 
 		Returns:
 			str(ofppNone|custom)
@@ -1689,7 +1689,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PortStatResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no port statistics response is received.
+		"""
 
 		Returns:
 			number
@@ -1701,7 +1701,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueConfigPortNumber(self):
-		"""Indicates the Port for which the queue config request is sought.
+		"""
 
 		Returns:
 			number
@@ -1713,7 +1713,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueConfigResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no queue config response is received.
+		"""
 
 		Returns:
 			number
@@ -1725,7 +1725,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueId(self):
-		"""Indicates the queue ID for which queue statistics is being sought.
+		"""
 
 		Returns:
 			number
@@ -1737,7 +1737,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueIdInputMode(self):
-		"""Request queue statistics for the queues belonging to the specified ports.
+		"""
 
 		Returns:
 			str(ofpqAll|custom)
@@ -1749,7 +1749,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueStatPortNumber(self):
-		"""Specifies the port number for which queue statistics is sought.
+		"""
 
 		Returns:
 			number
@@ -1761,7 +1761,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueStatPortNumberInputMode(self):
-		"""Indicates the ports for which queue statistics is sought.
+		"""
 
 		Returns:
 			str(ofppAll|custom)
@@ -1773,7 +1773,7 @@ class LearnedInformation(Base):
 
 	@property
 	def QueueStatResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no queue statistics response is received.
+		"""
 
 		Returns:
 			number
@@ -1785,7 +1785,7 @@ class LearnedInformation(Base):
 
 	@property
 	def RoleRequestGenerationId(self):
-		"""The generation ID number.
+		"""
 
 		Returns:
 			str
@@ -1797,7 +1797,7 @@ class LearnedInformation(Base):
 
 	@property
 	def RoleRequestType(self):
-		"""Select the type of role for the controller.
+		"""
 
 		Returns:
 			str(equal|master|slave|noChange)
@@ -1809,7 +1809,7 @@ class LearnedInformation(Base):
 
 	@property
 	def SwitchConfigDropFragments(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -1821,7 +1821,7 @@ class LearnedInformation(Base):
 
 	@property
 	def SwitchConfigMissSendLength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1833,7 +1833,7 @@ class LearnedInformation(Base):
 
 	@property
 	def SwitchConfigReassembleFragments(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -1845,7 +1845,7 @@ class LearnedInformation(Base):
 
 	@property
 	def SwitchConfigResponseTimeOut(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -1857,7 +1857,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureConfig(self):
-		"""The bitmap of OFPTC_* values.
+		"""
 
 		Returns:
 			number
@@ -1869,7 +1869,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureMaxEntries(self):
-		"""The maximum number of entries supported.
+		"""
 
 		Returns:
 			number
@@ -1881,7 +1881,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureMetadataMatch(self):
-		"""The bits of metadata which the table can match.
+		"""
 
 		Returns:
 			str
@@ -1893,7 +1893,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureMetadataWrite(self):
-		"""MetaData Write The bits of metadata which the table can write.
+		"""
 
 		Returns:
 			str
@@ -1905,7 +1905,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureName(self):
-		"""The table name.
+		"""
 
 		Returns:
 			str
@@ -1917,7 +1917,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureResponseTimeOut(self):
-		"""The time in milliseconds after which the trigger request times out if no response is received.
+		"""
 
 		Returns:
 			number
@@ -1929,7 +1929,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableFeatureTableId(self):
-		"""The table identifier.
+		"""
 
 		Returns:
 			number
@@ -1941,7 +1941,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TableStatResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no table statistics response is received.
+		"""
 
 		Returns:
 			number
@@ -1953,7 +1953,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TriggeredVendorMessage(self):
-		"""Indicates the vendor data of the vendor message trigger.
+		"""
 
 		Returns:
 			str
@@ -1965,7 +1965,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TriggeredVendorMessageId(self):
-		"""Indicates the ID of the vendor for which vendor message is triggered.
+		"""
 
 		Returns:
 			number
@@ -1977,7 +1977,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TriggeredVendorMessageLength(self):
-		"""Indicates the length of vendor data of the vendor message trigger.
+		"""
 
 		Returns:
 			number
@@ -1989,7 +1989,7 @@ class LearnedInformation(Base):
 
 	@property
 	def VendorId(self):
-		"""Specifies the unique Vendor identifier.
+		"""
 
 		Returns:
 			number
@@ -2001,7 +2001,7 @@ class LearnedInformation(Base):
 
 	@property
 	def VendorMessage(self):
-		"""Speciifes the vendor message value.
+		"""
 
 		Returns:
 			str
@@ -2013,7 +2013,7 @@ class LearnedInformation(Base):
 
 	@property
 	def VendorMessageLength(self):
-		"""Specifies the length of the message being transmitted.
+		"""
 
 		Returns:
 			number
@@ -2025,7 +2025,7 @@ class LearnedInformation(Base):
 
 	@property
 	def VendorStateResponseTimeOut(self):
-		"""Indicates the duration in milliseconds after which the trigger request times out if no vendor statistics response is received.
+		"""
 
 		Returns:
 			number
@@ -2038,13 +2038,11 @@ class LearnedInformation(Base):
 	def ClearRecordsForTrigger(self):
 		"""Executes the clearRecordsForTrigger operation on the server.
 
-		This describes the record cleared for trigger settings.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -2056,13 +2054,11 @@ class LearnedInformation(Base):
 	def RefreshLearnedInformation(self):
 		"""Executes the refreshLearnedInformation operation on the server.
 
-		This describes the learned information is refreshed.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -2074,13 +2070,11 @@ class LearnedInformation(Base):
 	def Trigger(self):
 		"""Executes the trigger operation on the server.
 
-		This describes the learned info trigger settings.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			number: NOT DEFINED
+			number: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

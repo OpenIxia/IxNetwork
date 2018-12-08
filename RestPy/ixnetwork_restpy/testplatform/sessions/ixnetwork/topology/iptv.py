@@ -182,6 +182,34 @@ class Iptv(Base):
 		"""
 		return self._get_attribute('zapIntervalType')
 
+	def get_device_ids(self, PortNames=None, EnableGeneralQueryResponse=None, JoinLatencyThreshold=None, LeaveLatencyThreshold=None, LogAllTimestamps=None, LogFailureTimestamps=None, NumChannelChangesBeforeView=None, StbLeaveJoinDelay=None, ViewDuration=None, ZapBehavior=None, ZapDirection=None, ZapInterval=None, ZapIntervalType=None):
+		"""Base class infrastructure that gets a list of iptv device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			EnableGeneralQueryResponse (str): optional regex of enableGeneralQueryResponse
+			JoinLatencyThreshold (str): optional regex of joinLatencyThreshold
+			LeaveLatencyThreshold (str): optional regex of leaveLatencyThreshold
+			LogAllTimestamps (str): optional regex of logAllTimestamps
+			LogFailureTimestamps (str): optional regex of logFailureTimestamps
+			NumChannelChangesBeforeView (str): optional regex of numChannelChangesBeforeView
+			StbLeaveJoinDelay (str): optional regex of stbLeaveJoinDelay
+			ViewDuration (str): optional regex of viewDuration
+			ZapBehavior (str): optional regex of zapBehavior
+			ZapDirection (str): optional regex of zapDirection
+			ZapInterval (str): optional regex of zapInterval
+			ZapIntervalType (str): optional regex of zapIntervalType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def StartIptv(self):
 		"""Executes the startIptv operation on the server.
 

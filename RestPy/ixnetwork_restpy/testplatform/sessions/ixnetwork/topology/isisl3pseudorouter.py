@@ -707,6 +707,76 @@ class IsisL3PseudoRouter(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AdvertiseSRLB=None, AdvertiseSidAsLocator=None, Algorithm=None, ConfigureSIDIndexLabel=None, DBit=None, DBitForSRv6Cap=None, DBitInsideSRv6SidTLV=None, EFlag=None, EFlagOfSRv6CapTlv=None, Enable=None, EnableMTIPv6=None, EnableWMforTEinNetworkGroup=None, EnableWideMetric=None, Funcflags=None, Function=None, IncludeMaximumEndDSrhTLV=None, IncludeMaximumEndPopSrhTLV=None, IncludeMaximumSLTLV=None, IncludeMaximumTEncapSrhTLV=None, IncludeMaximumTInsertSrhTLV=None, Ipv4Flag=None, Ipv6Flag=None, Ipv6MTMetric=None, Ipv6NodePrefix=None, Ipv6Srh=None, LFlag=None, LocatorPrefixLength=None, Mask=None, MaxEndD=None, MaxEndPopSrh=None, MaxSL=None, MaxTEncap=None, MaxTInsert=None, NFlag=None, NodePrefix=None, OFlagOfSRv6CapTlv=None, PFlag=None, PrefixLength=None, RFlag=None, Redistribution=None, RedistributionForSRv6=None, ReservedInsideFlagsOfSRv6SidTLV=None, ReservedInsideSRv6CapFlag=None, RouteMetric=None, RouteOrigin=None, RtrcapId=None, RtrcapIdForSrv6=None, SBit=None, SBitForSRv6Cap=None, SIDIndexLabel=None, SrlbFlags=None, TERouterId=None, VFlag=None):
+		"""Base class infrastructure that gets a list of isisL3PseudoRouter device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdvertiseSRLB (str): optional regex of advertiseSRLB
+			AdvertiseSidAsLocator (str): optional regex of advertiseSidAsLocator
+			Algorithm (str): optional regex of algorithm
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			DBit (str): optional regex of dBit
+			DBitForSRv6Cap (str): optional regex of dBitForSRv6Cap
+			DBitInsideSRv6SidTLV (str): optional regex of dBitInsideSRv6SidTLV
+			EFlag (str): optional regex of eFlag
+			EFlagOfSRv6CapTlv (str): optional regex of eFlagOfSRv6CapTlv
+			Enable (str): optional regex of enable
+			EnableMTIPv6 (str): optional regex of enableMTIPv6
+			EnableWMforTEinNetworkGroup (str): optional regex of enableWMforTEinNetworkGroup
+			EnableWideMetric (str): optional regex of enableWideMetric
+			Funcflags (str): optional regex of funcflags
+			Function (str): optional regex of function
+			IncludeMaximumEndDSrhTLV (str): optional regex of includeMaximumEndDSrhTLV
+			IncludeMaximumEndPopSrhTLV (str): optional regex of includeMaximumEndPopSrhTLV
+			IncludeMaximumSLTLV (str): optional regex of includeMaximumSLTLV
+			IncludeMaximumTEncapSrhTLV (str): optional regex of includeMaximumTEncapSrhTLV
+			IncludeMaximumTInsertSrhTLV (str): optional regex of includeMaximumTInsertSrhTLV
+			Ipv4Flag (str): optional regex of ipv4Flag
+			Ipv6Flag (str): optional regex of ipv6Flag
+			Ipv6MTMetric (str): optional regex of ipv6MTMetric
+			Ipv6NodePrefix (str): optional regex of ipv6NodePrefix
+			Ipv6Srh (str): optional regex of ipv6Srh
+			LFlag (str): optional regex of lFlag
+			LocatorPrefixLength (str): optional regex of locatorPrefixLength
+			Mask (str): optional regex of mask
+			MaxEndD (str): optional regex of maxEndD
+			MaxEndPopSrh (str): optional regex of maxEndPopSrh
+			MaxSL (str): optional regex of maxSL
+			MaxTEncap (str): optional regex of maxTEncap
+			MaxTInsert (str): optional regex of maxTInsert
+			NFlag (str): optional regex of nFlag
+			NodePrefix (str): optional regex of nodePrefix
+			OFlagOfSRv6CapTlv (str): optional regex of oFlagOfSRv6CapTlv
+			PFlag (str): optional regex of pFlag
+			PrefixLength (str): optional regex of prefixLength
+			RFlag (str): optional regex of rFlag
+			Redistribution (str): optional regex of redistribution
+			RedistributionForSRv6 (str): optional regex of redistributionForSRv6
+			ReservedInsideFlagsOfSRv6SidTLV (str): optional regex of reservedInsideFlagsOfSRv6SidTLV
+			ReservedInsideSRv6CapFlag (str): optional regex of reservedInsideSRv6CapFlag
+			RouteMetric (str): optional regex of routeMetric
+			RouteOrigin (str): optional regex of routeOrigin
+			RtrcapId (str): optional regex of rtrcapId
+			RtrcapIdForSrv6 (str): optional regex of rtrcapIdForSrv6
+			SBit (str): optional regex of sBit
+			SBitForSRv6Cap (str): optional regex of sBitForSRv6Cap
+			SIDIndexLabel (str): optional regex of sIDIndexLabel
+			SrlbFlags (str): optional regex of srlbFlags
+			TERouterId (str): optional regex of tERouterId
+			VFlag (str): optional regex of vFlag
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

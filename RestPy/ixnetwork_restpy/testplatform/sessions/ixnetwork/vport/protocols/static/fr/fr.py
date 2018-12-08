@@ -38,7 +38,7 @@ class Fr(Base):
 
 	@property
 	def Count(self):
-		"""The total number of DLCIs to create for this range.
+		"""
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class Fr(Base):
 
 	@property
 	def Dlci(self):
-		"""The Data Link Connection Identifier (DLCI) value.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class Fr(Base):
 
 	@property
 	def EnableIncrement(self):
-		"""Creates a range of DLCIs for this entry. Each additional DLCI value will be incremented by 1.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class Fr(Base):
 
 	@property
 	def Enabled(self):
-		"""Check this box to enable this Frame Relay (FR) DLCI entry.
+		"""
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class Fr(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -100,11 +100,11 @@ class Fr(Base):
 		"""Adds a new fr node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): The total number of DLCIs to create for this range.
-			Dlci (number): The Data Link Connection Identifier (DLCI) value.
-			EnableIncrement (bool): Creates a range of DLCIs for this entry. Each additional DLCI value will be incremented by 1.
-			Enabled (bool): Check this box to enable this Frame Relay (FR) DLCI entry.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			Count (number): 
+			Dlci (number): 
+			EnableIncrement (bool): 
+			Enabled (bool): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with all currently retrieved fr data using find and the newly added fr data available through an iterator or index
@@ -130,11 +130,11 @@ class Fr(Base):
 		By default the find method takes no parameters and will retrieve all fr data from the server.
 
 		Args:
-			Count (number): The total number of DLCIs to create for this range.
-			Dlci (number): The Data Link Connection Identifier (DLCI) value.
-			EnableIncrement (bool): Creates a range of DLCIs for this entry. Each additional DLCI value will be incremented by 1.
-			Enabled (bool): Check this box to enable this Frame Relay (FR) DLCI entry.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			Count (number): 
+			Dlci (number): 
+			EnableIncrement (bool): 
+			Enabled (bool): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with matching fr data retrieved from the server available through an iterator or index

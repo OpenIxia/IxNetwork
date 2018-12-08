@@ -37,7 +37,7 @@ class RemoteLocators(Base):
 
 	@property
 	def MPriority(self):
-		"""It gives details about the m priority (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class RemoteLocators(Base):
 
 	@property
 	def MWeight(self):
-		"""It gives details about the m weight (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class RemoteLocators(Base):
 
 	@property
 	def Priority(self):
-		"""It gives details about the priority (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class RemoteLocators(Base):
 
 	@property
 	def RemoteLocator(self):
-		"""It gives details about the remote locators (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class RemoteLocators(Base):
 
 	@property
 	def RemoteLocatorAfi(self):
-		"""It gives details about the remote locators Afi (Read-Only)
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class RemoteLocators(Base):
 
 	@property
 	def RlocFlagL(self):
-		"""It gives details about the rLoc Flag L (Read-Only)
+		"""
 
 		Returns:
 			bool
@@ -91,7 +91,7 @@ class RemoteLocators(Base):
 
 	@property
 	def RlocFlagP(self):
-		"""It gives details about the rLoc FlagP (Read-Only)
+		"""
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class RemoteLocators(Base):
 
 	@property
 	def RlocFlagR(self):
-		"""If True, It gives details about the rLoc Flag R (Read-Only)
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class RemoteLocators(Base):
 
 	@property
 	def Weight(self):
-		"""It gives details about the weight (Read-Only)
+		"""
 
 		Returns:
 			number
@@ -123,15 +123,15 @@ class RemoteLocators(Base):
 		By default the find method takes no parameters and will retrieve all remoteLocators data from the server.
 
 		Args:
-			MPriority (number): It gives details about the m priority (Read-Only)
-			MWeight (number): It gives details about the m weight (Read-Only)
-			Priority (number): It gives details about the priority (Read-Only)
-			RemoteLocator (str): It gives details about the remote locators (Read-Only)
-			RemoteLocatorAfi (str): It gives details about the remote locators Afi (Read-Only)
-			RlocFlagL (bool): It gives details about the rLoc Flag L (Read-Only)
-			RlocFlagP (bool): It gives details about the rLoc FlagP (Read-Only)
-			RlocFlagR (bool): If True, It gives details about the rLoc Flag R (Read-Only)
-			Weight (number): It gives details about the weight (Read-Only)
+			MPriority (number): 
+			MWeight (number): 
+			Priority (number): 
+			RemoteLocator (str): 
+			RemoteLocatorAfi (str): 
+			RlocFlagL (bool): 
+			RlocFlagP (bool): 
+			RlocFlagR (bool): 
+			Weight (number): 
 
 		Returns:
 			self: This instance with matching remoteLocators data retrieved from the server available through an iterator or index

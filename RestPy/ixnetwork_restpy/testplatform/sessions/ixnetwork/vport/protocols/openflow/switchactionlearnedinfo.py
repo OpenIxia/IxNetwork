@@ -37,7 +37,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def ActionType(self):
-		"""This describes the action associated with the flow entry
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""This describes Ethernet destination address.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def EthernetSource(self):
-		"""This describes Ethernet source address.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def IpDscp(self):
-		"""This describes the IP DSCP value for advertising.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""This describes the IPv4 destination address.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""This describes the IPv4 source address.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def MaxByteLength(self):
-		"""This describes the maximum amount of data from a packet that should be sent when the port is OFPP_CONTROLLER.
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def OutputPort(self):
-		"""This describes the output port through which the packet should be sent.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def QueueId(self):
-		"""This describes the queue of the port in which the packet should be enqueued.
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def TransportDestination(self):
-		"""This describes the transport destination address
+		"""
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def TransportSource(self):
-		"""This describes the transport source address
+		"""
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def VlanId(self):
-		"""This describes the Value of the VLAN ID field.
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class SwitchActionLearnedInfo(Base):
 
 	@property
 	def VlanPriority(self):
-		"""This describes the VLAN priority
+		"""
 
 		Returns:
 			number
@@ -159,19 +159,19 @@ class SwitchActionLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchActionLearnedInfo data from the server.
 
 		Args:
-			ActionType (str): This describes the action associated with the flow entry
-			EthernetDestination (str): This describes Ethernet destination address.
-			EthernetSource (str): This describes Ethernet source address.
-			IpDscp (str): This describes the IP DSCP value for advertising.
-			Ipv4Destination (str): This describes the IPv4 destination address.
-			Ipv4Source (str): This describes the IPv4 source address.
-			MaxByteLength (number): This describes the maximum amount of data from a packet that should be sent when the port is OFPP_CONTROLLER.
-			OutputPort (number): This describes the output port through which the packet should be sent.
-			QueueId (number): This describes the queue of the port in which the packet should be enqueued.
-			TransportDestination (number): This describes the transport destination address
-			TransportSource (number): This describes the transport source address
-			VlanId (number): This describes the Value of the VLAN ID field.
-			VlanPriority (number): This describes the VLAN priority
+			ActionType (str): 
+			EthernetDestination (str): 
+			EthernetSource (str): 
+			IpDscp (str): 
+			Ipv4Destination (str): 
+			Ipv4Source (str): 
+			MaxByteLength (number): 
+			OutputPort (number): 
+			QueueId (number): 
+			TransportDestination (number): 
+			TransportSource (number): 
+			VlanId (number): 
+			VlanPriority (number): 
 
 		Returns:
 			self: This instance with matching switchActionLearnedInfo data retrieved from the server available through an iterator or index

@@ -155,3 +155,25 @@ class IsisSpbRouter(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('sendP2PHellosToUnicastMAC')
+
+	def get_device_ids(self, PortNames=None, AllL1BridgesMAC=None, HelloMulticastMAC=None, NlpId=None, NoOfLSPsOrMgroupPDUsPerInterval=None, RateControlInterval=None, SendP2PHellosToUnicastMAC=None):
+		"""Base class infrastructure that gets a list of isisSpbRouter device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AllL1BridgesMAC (str): optional regex of allL1BridgesMAC
+			HelloMulticastMAC (str): optional regex of helloMulticastMAC
+			NlpId (str): optional regex of nlpId
+			NoOfLSPsOrMgroupPDUsPerInterval (str): optional regex of noOfLSPsOrMgroupPDUsPerInterval
+			RateControlInterval (str): optional regex of rateControlInterval
+			SendP2PHellosToUnicastMAC (str): optional regex of sendP2PHellosToUnicastMAC
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

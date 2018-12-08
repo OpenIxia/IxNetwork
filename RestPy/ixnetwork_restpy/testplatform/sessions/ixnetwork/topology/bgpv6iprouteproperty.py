@@ -971,6 +971,84 @@ class BgpV6IPRouteProperty(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, OverridePeerAsSetMode=None, Active=None, AddPathId=None, AdvertiseAsBGPLSPrefix=None, AdvertiseNexthopAsV4=None, AggregatorAs=None, AggregatorId=None, AggregatorIdMode=None, AsNumSuffixRange=None, AsPathPerRoute=None, AsRandomSeed=None, AsSegDist=None, AsSetMode=None, Delay=None, Downtime=None, EnableAddPath=None, EnableAggregatorId=None, EnableAigp=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableCluster=None, EnableCommunity=None, EnableExtendedCommunity=None, EnableFlapping=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EnableRandomAsPath=None, EnableSRGB=None, EnableWeight=None, FlapFromRouteIndex=None, FlapToRouteIndex=None, IncrementMode=None, Ipv4NextHop=None, Ipv6NextHop=None, LabelEnd=None, LabelStart=None, LabelStep=None, LocalPreference=None, MaxASNumPerSegment=None, MaxNoOfASPathSegmentsPerRouteRange=None, MinASNumPerSegment=None, MinNoOfASPathSegmentsPerRouteRange=None, MultiExitDiscriminator=None, NextHopIPType=None, NextHopIncrementMode=None, NextHopType=None, Origin=None, OriginatorId=None, PackingFrom=None, PackingTo=None, PartialFlap=None, RouteOrigin=None, SegmentId=None, SendMulticastWithProperSAFI=None, SkipMulticast=None, SpecialLabel=None, Uptime=None, UseTraditionalNlri=None, Weight=None):
+		"""Base class infrastructure that gets a list of bgpV6IPRouteProperty device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			OverridePeerAsSetMode (str): optional regex of OverridePeerAsSetMode
+			Active (str): optional regex of active
+			AddPathId (str): optional regex of addPathId
+			AdvertiseAsBGPLSPrefix (str): optional regex of advertiseAsBGPLSPrefix
+			AdvertiseNexthopAsV4 (str): optional regex of advertiseNexthopAsV4
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AggregatorIdMode (str): optional regex of aggregatorIdMode
+			AsNumSuffixRange (str): optional regex of asNumSuffixRange
+			AsPathPerRoute (str): optional regex of asPathPerRoute
+			AsRandomSeed (str): optional regex of asRandomSeed
+			AsSegDist (str): optional regex of asSegDist
+			AsSetMode (str): optional regex of asSetMode
+			Delay (str): optional regex of delay
+			Downtime (str): optional regex of downtime
+			EnableAddPath (str): optional regex of enableAddPath
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAigp (str): optional regex of enableAigp
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableFlapping (str): optional regex of enableFlapping
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EnableRandomAsPath (str): optional regex of enableRandomAsPath
+			EnableSRGB (str): optional regex of enableSRGB
+			EnableWeight (str): optional regex of enableWeight
+			FlapFromRouteIndex (str): optional regex of flapFromRouteIndex
+			FlapToRouteIndex (str): optional regex of flapToRouteIndex
+			IncrementMode (str): optional regex of incrementMode
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LabelEnd (str): optional regex of labelEnd
+			LabelStart (str): optional regex of labelStart
+			LabelStep (str): optional regex of labelStep
+			LocalPreference (str): optional regex of localPreference
+			MaxASNumPerSegment (str): optional regex of maxASNumPerSegment
+			MaxNoOfASPathSegmentsPerRouteRange (str): optional regex of maxNoOfASPathSegmentsPerRouteRange
+			MinASNumPerSegment (str): optional regex of minASNumPerSegment
+			MinNoOfASPathSegmentsPerRouteRange (str): optional regex of minNoOfASPathSegmentsPerRouteRange
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			NextHopIPType (str): optional regex of nextHopIPType
+			NextHopIncrementMode (str): optional regex of nextHopIncrementMode
+			NextHopType (str): optional regex of nextHopType
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			PackingFrom (str): optional regex of packingFrom
+			PackingTo (str): optional regex of packingTo
+			PartialFlap (str): optional regex of partialFlap
+			RouteOrigin (str): optional regex of routeOrigin
+			SegmentId (str): optional regex of segmentId
+			SendMulticastWithProperSAFI (str): optional regex of sendMulticastWithProperSAFI
+			SkipMulticast (str): optional regex of skipMulticast
+			SpecialLabel (str): optional regex of specialLabel
+			Uptime (str): optional regex of uptime
+			UseTraditionalNlri (str): optional regex of useTraditionalNlri
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def AgeOutRoutes(self, Percentage):
 		"""Executes the ageOutRoutes operation on the server.
 

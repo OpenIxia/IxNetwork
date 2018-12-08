@@ -65,7 +65,7 @@ class FortyGigLan(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""The auto instrumentation mode.
+		"""
 
 		Returns:
 			str(endOfFrame|floating)
@@ -77,7 +77,7 @@ class FortyGigLan(Base):
 
 	@property
 	def EnableLASIMonitoring(self):
-		"""If selected, enables LASI monitoring.
+		"""
 
 		Returns:
 			bool
@@ -89,7 +89,7 @@ class FortyGigLan(Base):
 
 	@property
 	def EnablePPM(self):
-		"""If true, enables the portsppm.
+		"""
 
 		Returns:
 			bool
@@ -101,7 +101,7 @@ class FortyGigLan(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""Enables the port's MAC Flow control mechanisms to listen for a directed address pause message.
+		"""
 
 		Returns:
 			bool
@@ -113,7 +113,7 @@ class FortyGigLan(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""This is the 48-bit MAC address that the port will listen on for a directed pause message.
+		"""
 
 		Returns:
 			str
@@ -125,7 +125,7 @@ class FortyGigLan(Base):
 
 	@property
 	def Loopback(self):
-		"""If enabled, the port is set to internally loopback from transmit to receive.
+		"""
 
 		Returns:
 			bool
@@ -137,7 +137,7 @@ class FortyGigLan(Base):
 
 	@property
 	def Ppm(self):
-		"""Indicates the value that needs to be adjusted for the line transmit frequency.
+		"""
 
 		Returns:
 			number
@@ -149,7 +149,7 @@ class FortyGigLan(Base):
 
 	@property
 	def TransmitClocking(self):
-		"""Allows to select the transmit clocing options.
+		"""
 
 		Returns:
 			str(external|internal|recovered)
@@ -161,7 +161,7 @@ class FortyGigLan(Base):
 
 	@property
 	def TxIgnoreRxLinkFaults(self):
-		"""Tx ignore Rx link fault.
+		"""
 
 		Returns:
 			bool

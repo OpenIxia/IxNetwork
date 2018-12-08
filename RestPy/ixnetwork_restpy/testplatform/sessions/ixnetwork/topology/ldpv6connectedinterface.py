@@ -287,6 +287,30 @@ class Ldpv6ConnectedInterface(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, Authentication=None, BasicHelloInterval=None, BasicHoldTime=None, EnableBfdRegistration=None, LabelSpaceID=None, MD5Key=None, OperationMode=None):
+		"""Base class infrastructure that gets a list of ldpv6ConnectedInterface device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Authentication (str): optional regex of authentication
+			BasicHelloInterval (str): optional regex of basicHelloInterval
+			BasicHoldTime (str): optional regex of basicHoldTime
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			LabelSpaceID (str): optional regex of labelSpaceID
+			MD5Key (str): optional regex of mD5Key
+			OperationMode (str): optional regex of operationMode
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

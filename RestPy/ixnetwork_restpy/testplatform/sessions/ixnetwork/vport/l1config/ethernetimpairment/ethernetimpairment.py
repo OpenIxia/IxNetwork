@@ -37,7 +37,7 @@ class EthernetImpairment(Base):
 
 	@property
 	def EnablePPM(self):
-		"""If true, enables the portsppm.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class EthernetImpairment(Base):
 
 	@property
 	def Ppm(self):
-		"""Indicates the value that needs to be adjusted for the line transmit frequency.
+		"""
 
 		Returns:
 			number

@@ -79,7 +79,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DestinationAddressIpv4(self):
-		"""This signifies the destination IPv4 address.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DownstreamAddressType(self):
-		"""This signifies the address type of the downstream traffic. Possible values include Ipv4Numbered and Ipv4UnNumbered.
+		"""
 
 		Returns:
 			str(ipv4Numbered|ipv4UnNumbered)
@@ -103,7 +103,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DownstreamInterfaceAddress(self):
-		"""This signifies the interface address of the downstream LSR.
+		"""
 
 		Returns:
 			str
@@ -115,7 +115,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DownstreamIpAddress(self):
-		"""This signifies the IPv4/IPv6 address of the downstream LSR.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EchoResponseTimeoutMs(self):
-		"""This signifies the minimum tiomeout interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
+		"""
 
 		Returns:
 			number
@@ -139,7 +139,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAdvance(self):
-		"""This signifies the enablement of advance.
+		"""
 
 		Returns:
 			bool
@@ -151,7 +151,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableDsiFlag(self):
-		"""This signifies the activation of the DS I Flag.
+		"""
 
 		Returns:
 			bool
@@ -163,7 +163,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableDsnFlag(self):
-		"""This signifies the activation of the DN S Flag.
+		"""
 
 		Returns:
 			bool
@@ -175,7 +175,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableFecValidation(self):
-		"""This signifies the selection of the check box to enable FEC validation.
+		"""
 
 		Returns:
 			bool
@@ -187,7 +187,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableIncludeDownstreamMappingTlv(self):
-		"""This signifies the inclusion of the downstream mapping TLV in triggered Trace Route.
+		"""
 
 		Returns:
 			bool
@@ -199,7 +199,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableIncludePadTlv(self):
-		"""This signifies the selection of the check box to include Pad TLV.
+		"""
 
 		Returns:
 			bool
@@ -211,7 +211,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableIncludeVendorEnterpriseNumberTlv(self):
-		"""This signifies the selection of the checkbox to include the the TLV number of the vendor organization.
+		"""
 
 		Returns:
 			bool
@@ -223,7 +223,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnablePauseResumeBfdPduTrigger(self):
-		"""This signifies the pausing of the BFD PDU trigger.
+		"""
 
 		Returns:
 			bool
@@ -235,7 +235,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnablePauseResumeReplyTrigger(self):
-		"""This signifies the pausing of the reply trigger.
+		"""
 
 		Returns:
 			bool
@@ -247,7 +247,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredPing(self):
-		"""This signifies the sending of the triggered ping.
+		"""
 
 		Returns:
 			bool
@@ -259,7 +259,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSendTriggeredTraceroute(self):
-		"""This signifies the enablement of the sending of triggered trace route.
+		"""
 
 		Returns:
 			bool
@@ -271,7 +271,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableSetResetEchoReplyCodeTrigger(self):
-		"""This signifies the setting of the echo reply code trigger.
+		"""
 
 		Returns:
 			bool
@@ -283,7 +283,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsGeneralLearnedInformationRefreshed(self):
-		"""This signifies the refreshing of the general learned information.
+		"""
 
 		Returns:
 			bool
@@ -292,7 +292,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsTriggeredPingLearnedInformationRefreshed(self):
-		"""This signifies the checking of if the Triggered ping learned information is refreshed.
+		"""
 
 		Returns:
 			bool
@@ -301,7 +301,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsTriggeredTraceRouteLearnedInformationRefreshed(self):
-		"""This signifies the checking of if the Triggered Trace route information is refreshed.
+		"""
 
 		Returns:
 			bool
@@ -310,7 +310,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PadTlvFirstOctetOptions(self):
-		"""This signifies the first octate of Pad TLV in triggered ping. Possible values include CopyPadTlvToReply and DropPadTlvFromReply.
+		"""
 
 		Returns:
 			str(dropPadTlvFromReply|copyPadTlvToReply)
@@ -322,7 +322,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PadTlvLength(self):
-		"""This signifies the specification of the length of the Pad TLV.
+		"""
 
 		Returns:
 			number
@@ -334,7 +334,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PauseResumeBfdPduTriggerOption(self):
-		"""This signifies the pausing of the BFD PDU trigger option.Possible values include Pause and Resume.
+		"""
 
 		Returns:
 			str(pause|resume)
@@ -346,7 +346,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PauseResumeReplyTriggerOption(self):
-		"""This signifies the pausing of the reply trigger option. Possible values include Pause and Resume.
+		"""
 
 		Returns:
 			str(pause|resume)
@@ -358,7 +358,7 @@ class LearnedInformation(Base):
 
 	@property
 	def ReplyMode(self):
-		"""This signifies the selection of the mode of reply. Possible values include:
+		"""
 
 		Returns:
 			str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)
@@ -370,7 +370,7 @@ class LearnedInformation(Base):
 
 	@property
 	def ReturnCodeOption(self):
-		"""This signifies the return code option value. Possible values include:
+		"""
 
 		Returns:
 			str(noReturnCode|malformedEchoRequestReceived|oneOrMoreOfTheTlvsWasNotUnderstood|replyingRouterIsAnEgressForTheFecAtStackDepthRsc|replyingRouterHasNoMappingForTheFecAtStackDepthRsc|downstreamMappingMismatch|upstreamInterfaceIndexUnknown|lspPingReserved|labelSwitchedAtStackDepthRsc|labelSwitchedButNoMplsForwardingAtStackDepthRsc|mappingForThisFecIsNotTheGivenLabelAtStackDepthRsc|noLabelEntryAtStackDepthRsc|protocolNotAssociatedWithInterfaceatFecStackDepthRsc|prematureTerminationOfPingDueToLabelStackShrinkingToSingleLabel)
@@ -382,7 +382,7 @@ class LearnedInformation(Base):
 
 	@property
 	def ReturnSubCode(self):
-		"""This signifies the return subcode value.
+		"""
 
 		Returns:
 			number
@@ -394,7 +394,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TriggerOptions(self):
-		"""This signifies the trigger option value. Possible values include:
+		"""
 
 		Returns:
 			str(tx|rx|txRx)
@@ -406,7 +406,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TriggerType(self):
-		"""This signifies the type of the trigger. Possible values include:
+		"""
 
 		Returns:
 			str(resetToNormalReply|forceReplyCode)
@@ -418,7 +418,7 @@ class LearnedInformation(Base):
 
 	@property
 	def TtlLimit(self):
-		"""This signifies the maximum value of TTL up to which the TTL will be incremented while sending echo request packets.
+		"""
 
 		Returns:
 			number
@@ -430,7 +430,7 @@ class LearnedInformation(Base):
 
 	@property
 	def VendorEnterpriseNumber(self):
-		"""This signifies the specification of the enterprise number of the vendor.
+		"""
 
 		Returns:
 			number
@@ -447,37 +447,37 @@ class LearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all learnedInformation data from the server.
 
 		Args:
-			DestinationAddressIpv4 (str): This signifies the destination IPv4 address.
-			DownstreamAddressType (str(ipv4Numbered|ipv4UnNumbered)): This signifies the address type of the downstream traffic. Possible values include Ipv4Numbered and Ipv4UnNumbered.
-			DownstreamInterfaceAddress (str): This signifies the interface address of the downstream LSR.
-			DownstreamIpAddress (str): This signifies the IPv4/IPv6 address of the downstream LSR.
-			EchoResponseTimeoutMs (number): This signifies the minimum tiomeout interval, in milliseconds, between received Echo packets that this interface is capable of supporting.
-			EnableAdvance (bool): This signifies the enablement of advance.
-			EnableDsiFlag (bool): This signifies the activation of the DS I Flag.
-			EnableDsnFlag (bool): This signifies the activation of the DN S Flag.
-			EnableFecValidation (bool): This signifies the selection of the check box to enable FEC validation.
-			EnableIncludeDownstreamMappingTlv (bool): This signifies the inclusion of the downstream mapping TLV in triggered Trace Route.
-			EnableIncludePadTlv (bool): This signifies the selection of the check box to include Pad TLV.
-			EnableIncludeVendorEnterpriseNumberTlv (bool): This signifies the selection of the checkbox to include the the TLV number of the vendor organization.
-			EnablePauseResumeBfdPduTrigger (bool): This signifies the pausing of the BFD PDU trigger.
-			EnablePauseResumeReplyTrigger (bool): This signifies the pausing of the reply trigger.
-			EnableSendTriggeredPing (bool): This signifies the sending of the triggered ping.
-			EnableSendTriggeredTraceroute (bool): This signifies the enablement of the sending of triggered trace route.
-			EnableSetResetEchoReplyCodeTrigger (bool): This signifies the setting of the echo reply code trigger.
-			IsGeneralLearnedInformationRefreshed (bool): This signifies the refreshing of the general learned information.
-			IsTriggeredPingLearnedInformationRefreshed (bool): This signifies the checking of if the Triggered ping learned information is refreshed.
-			IsTriggeredTraceRouteLearnedInformationRefreshed (bool): This signifies the checking of if the Triggered Trace route information is refreshed.
-			PadTlvFirstOctetOptions (str(dropPadTlvFromReply|copyPadTlvToReply)): This signifies the first octate of Pad TLV in triggered ping. Possible values include CopyPadTlvToReply and DropPadTlvFromReply.
-			PadTlvLength (number): This signifies the specification of the length of the Pad TLV.
-			PauseResumeBfdPduTriggerOption (str(pause|resume)): This signifies the pausing of the BFD PDU trigger option.Possible values include Pause and Resume.
-			PauseResumeReplyTriggerOption (str(pause|resume)): This signifies the pausing of the reply trigger option. Possible values include Pause and Resume.
-			ReplyMode (str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)): This signifies the selection of the mode of reply. Possible values include:
-			ReturnCodeOption (str(noReturnCode|malformedEchoRequestReceived|oneOrMoreOfTheTlvsWasNotUnderstood|replyingRouterIsAnEgressForTheFecAtStackDepthRsc|replyingRouterHasNoMappingForTheFecAtStackDepthRsc|downstreamMappingMismatch|upstreamInterfaceIndexUnknown|lspPingReserved|labelSwitchedAtStackDepthRsc|labelSwitchedButNoMplsForwardingAtStackDepthRsc|mappingForThisFecIsNotTheGivenLabelAtStackDepthRsc|noLabelEntryAtStackDepthRsc|protocolNotAssociatedWithInterfaceatFecStackDepthRsc|prematureTerminationOfPingDueToLabelStackShrinkingToSingleLabel)): This signifies the return code option value. Possible values include:
-			ReturnSubCode (number): This signifies the return subcode value.
-			TriggerOptions (str(tx|rx|txRx)): This signifies the trigger option value. Possible values include:
-			TriggerType (str(resetToNormalReply|forceReplyCode)): This signifies the type of the trigger. Possible values include:
-			TtlLimit (number): This signifies the maximum value of TTL up to which the TTL will be incremented while sending echo request packets.
-			VendorEnterpriseNumber (number): This signifies the specification of the enterprise number of the vendor.
+			DestinationAddressIpv4 (str): 
+			DownstreamAddressType (str(ipv4Numbered|ipv4UnNumbered)): 
+			DownstreamInterfaceAddress (str): 
+			DownstreamIpAddress (str): 
+			EchoResponseTimeoutMs (number): 
+			EnableAdvance (bool): 
+			EnableDsiFlag (bool): 
+			EnableDsnFlag (bool): 
+			EnableFecValidation (bool): 
+			EnableIncludeDownstreamMappingTlv (bool): 
+			EnableIncludePadTlv (bool): 
+			EnableIncludeVendorEnterpriseNumberTlv (bool): 
+			EnablePauseResumeBfdPduTrigger (bool): 
+			EnablePauseResumeReplyTrigger (bool): 
+			EnableSendTriggeredPing (bool): 
+			EnableSendTriggeredTraceroute (bool): 
+			EnableSetResetEchoReplyCodeTrigger (bool): 
+			IsGeneralLearnedInformationRefreshed (bool): 
+			IsTriggeredPingLearnedInformationRefreshed (bool): 
+			IsTriggeredTraceRouteLearnedInformationRefreshed (bool): 
+			PadTlvFirstOctetOptions (str(dropPadTlvFromReply|copyPadTlvToReply)): 
+			PadTlvLength (number): 
+			PauseResumeBfdPduTriggerOption (str(pause|resume)): 
+			PauseResumeReplyTriggerOption (str(pause|resume)): 
+			ReplyMode (str(doNotReply|replyViaIpv4Ipv6UdpPacket|replyViaIpv4Ipv6UdpPacketWithRouterAlert|replyViaApplicationLevelControlChannel)): 
+			ReturnCodeOption (str(noReturnCode|malformedEchoRequestReceived|oneOrMoreOfTheTlvsWasNotUnderstood|replyingRouterIsAnEgressForTheFecAtStackDepthRsc|replyingRouterHasNoMappingForTheFecAtStackDepthRsc|downstreamMappingMismatch|upstreamInterfaceIndexUnknown|lspPingReserved|labelSwitchedAtStackDepthRsc|labelSwitchedButNoMplsForwardingAtStackDepthRsc|mappingForThisFecIsNotTheGivenLabelAtStackDepthRsc|noLabelEntryAtStackDepthRsc|protocolNotAssociatedWithInterfaceatFecStackDepthRsc|prematureTerminationOfPingDueToLabelStackShrinkingToSingleLabel)): 
+			ReturnSubCode (number): 
+			TriggerOptions (str(tx|rx|txRx)): 
+			TriggerType (str(resetToNormalReply|forceReplyCode)): 
+			TtlLimit (number): 
+			VendorEnterpriseNumber (number): 
 
 		Returns:
 			self: This instance with matching learnedInformation data retrieved from the server available through an iterator or index
@@ -505,13 +505,11 @@ class LearnedInformation(Base):
 	def ClearRecordsForTrigger(self):
 		"""Executes the clearRecordsForTrigger operation on the server.
 
-		This signifies the record cleared for trigger settings.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -523,13 +521,11 @@ class LearnedInformation(Base):
 	def RefreshLearnedInformation(self):
 		"""Executes the refreshLearnedInformation operation on the server.
 
-		This signifies that the learned information is refreshed.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -541,13 +537,11 @@ class LearnedInformation(Base):
 	def Trigger(self):
 		"""Executes the trigger operation on the server.
 
-		This signifies the learned info trigger settings.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			number: NOT DEFINED
+			number: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

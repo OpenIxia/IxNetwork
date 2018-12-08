@@ -181,3 +181,23 @@ class Buckets(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, BucketDescription=None, WatchGroup=None, WatchPort=None, Weight=None):
+		"""Base class infrastructure that gets a list of buckets device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BucketDescription (str): optional regex of bucketDescription
+			WatchGroup (str): optional regex of watchGroup
+			WatchPort (str): optional regex of watchPort
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

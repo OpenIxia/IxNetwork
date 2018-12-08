@@ -117,7 +117,7 @@ class Topology(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		from ixnetwork_restpy.testplatform.sessions.ixnetwork.globals.topology.defaultstacks.defaultstacks import DefaultStacks
-		return DefaultStacks(self)
+		return DefaultStacks(self)._select()
 
 	@property
 	def Dhcpv4client(self):

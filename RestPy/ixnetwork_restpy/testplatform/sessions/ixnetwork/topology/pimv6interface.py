@@ -543,6 +543,46 @@ class PimV6Interface(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AutoPickNeighbor=None, BootstrapHashMaskLength=None, BootstrapInterval=None, BootstrapPriority=None, BootstrapTimeout=None, DisableTriggered=None, DiscardLearnedRpInfo=None, EnableBfdRegistration=None, EnableBootstrap=None, EnablePrune=None, ForceSemantic=None, HelloHoldTime=None, HelloInterval=None, LanPruneTbit=None, LearnSelectedRpSet=None, NeighborV6Address=None, OverrideInterval=None, PruneDelay=None, SendBidirectional=None, SendGenerationIdOption=None, SendGenerationMode=None, SupportUnicastBsm=None, TriggeredHelloDelay=None):
+		"""Base class infrastructure that gets a list of pimV6Interface device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AutoPickNeighbor (str): optional regex of autoPickNeighbor
+			BootstrapHashMaskLength (str): optional regex of bootstrapHashMaskLength
+			BootstrapInterval (str): optional regex of bootstrapInterval
+			BootstrapPriority (str): optional regex of bootstrapPriority
+			BootstrapTimeout (str): optional regex of bootstrapTimeout
+			DisableTriggered (str): optional regex of disableTriggered
+			DiscardLearnedRpInfo (str): optional regex of discardLearnedRpInfo
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			EnableBootstrap (str): optional regex of enableBootstrap
+			EnablePrune (str): optional regex of enablePrune
+			ForceSemantic (str): optional regex of forceSemantic
+			HelloHoldTime (str): optional regex of helloHoldTime
+			HelloInterval (str): optional regex of helloInterval
+			LanPruneTbit (str): optional regex of lanPruneTbit
+			LearnSelectedRpSet (str): optional regex of learnSelectedRpSet
+			NeighborV6Address (str): optional regex of neighborV6Address
+			OverrideInterval (str): optional regex of overrideInterval
+			PruneDelay (str): optional regex of pruneDelay
+			SendBidirectional (str): optional regex of sendBidirectional
+			SendGenerationIdOption (str): optional regex of sendGenerationIdOption
+			SendGenerationMode (str): optional regex of sendGenerationMode
+			SupportUnicastBsm (str): optional regex of supportUnicastBsm
+			TriggeredHelloDelay (str): optional regex of triggeredHelloDelay
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearLearnedInfo(self):
 		"""Executes the clearLearnedInfo operation on the server.
 

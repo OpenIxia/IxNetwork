@@ -37,7 +37,7 @@ class LearnedCrpInfo(Base):
 
 	@property
 	def CrpAddress(self):
-		"""The RP address expresing candidacy for the specific group of RPs.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedCrpInfo(Base):
 
 	@property
 	def ExpiryTimer(self):
-		"""The expiry time for the specific record as received in CRP Adv Message.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedCrpInfo(Base):
 
 	@property
 	def GroupAddress(self):
-		"""The Group Address learnt through Candidate RP advertisements.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LearnedCrpInfo(Base):
 
 	@property
 	def GroupMaskWidth(self):
-		"""It shows the prefix length (in bits) of the group address learnt.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LearnedCrpInfo(Base):
 
 	@property
 	def Priority(self):
-		"""Priority of the selected Candidate RP.
+		"""
 
 		Returns:
 			number
@@ -87,11 +87,11 @@ class LearnedCrpInfo(Base):
 		By default the find method takes no parameters and will retrieve all learnedCrpInfo data from the server.
 
 		Args:
-			CrpAddress (str): The RP address expresing candidacy for the specific group of RPs.
-			ExpiryTimer (number): The expiry time for the specific record as received in CRP Adv Message.
-			GroupAddress (str): The Group Address learnt through Candidate RP advertisements.
-			GroupMaskWidth (number): It shows the prefix length (in bits) of the group address learnt.
-			Priority (number): Priority of the selected Candidate RP.
+			CrpAddress (str): 
+			ExpiryTimer (number): 
+			GroupAddress (str): 
+			GroupMaskWidth (number): 
+			Priority (number): 
 
 		Returns:
 			self: This instance with matching learnedCrpInfo data retrieved from the server available through an iterator or index

@@ -135,7 +135,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def EnableVendorExperimenterMessage(self):
-		"""If true, the vendor message trigger configuration parameters are available.
+		"""
 
 		Returns:
 			bool
@@ -147,7 +147,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""This describes the flow match value for ethernet destination address field.
+		"""
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def EthernetSource(self):
-		"""This describes the flow match value for ethernet source address field.
+		"""
 
 		Returns:
 			str
@@ -171,7 +171,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def EthernetType(self):
-		"""This describes the Ethernet type of the flow match.
+		"""
 
 		Returns:
 			str
@@ -183,7 +183,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def InPort(self):
-		"""This describes the flow match value for input port field
+		"""
 
 		Returns:
 			str
@@ -195,7 +195,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def IpDscp(self):
-		"""This describes the flow match value for IP ToS field.
+		"""
 
 		Returns:
 			str
@@ -207,7 +207,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def IpProtocol(self):
-		"""This describes the flow match value for IP Protocol field.
+		"""
 
 		Returns:
 			str
@@ -219,7 +219,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""This describes the flow match value for IPv4 source address field.
+		"""
 
 		Returns:
 			str
@@ -231,7 +231,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def Ipv4destination(self):
-		"""This describes the flow match value for IPv4 destination address field.
+		"""
 
 		Returns:
 			str
@@ -243,7 +243,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def IsOfChannelLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Learned Info for the OF Channels is received.
+		"""
 
 		Returns:
 			bool
@@ -252,7 +252,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def IsOfFlowsLearnedInformationRefreshed(self):
-		"""If true, it denotes that the Flow Learned Info for the OF Channels is received.
+		"""
 
 		Returns:
 			bool
@@ -261,7 +261,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def OutPort(self):
-		"""This describes the flow match value for output port field.
+		"""
 
 		Returns:
 			number
@@ -273,7 +273,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def OutPortInputMode(self):
-		"""This describes the output port type.
+		"""
 
 		Returns:
 			str(ofppMax|ofppInPort|ofppTable|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppNone|outPortCustom)
@@ -285,7 +285,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def TableId(self):
-		"""This describes the table identifier. It indicates the next table in the packet processing pipeline.
+		"""
 
 		Returns:
 			number
@@ -297,7 +297,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def TableIdInputMode(self):
-		"""This describes the type of table from which flow statistics will be sought.
+		"""
 
 		Returns:
 			str(allTables|emergency|tableIdCustom)
@@ -309,7 +309,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def TansportSource(self):
-		"""This describes the flow match value for transport source field.
+		"""
 
 		Returns:
 			str
@@ -321,7 +321,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def TransportDestination(self):
-		"""This describes the flow match value for transport destination field.
+		"""
 
 		Returns:
 			str
@@ -333,7 +333,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def VendorExperimenterId(self):
-		"""This describes the ID of the vendor for which vendor message is triggered.
+		"""
 
 		Returns:
 			number
@@ -345,7 +345,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def VendorExperimenterType(self):
-		"""This describes the Type of experimenter only for v 1.3.
+		"""
 
 		Returns:
 			number
@@ -357,7 +357,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def VendorMessage(self):
-		"""This describes the vendor data of the vendor message trigger.
+		"""
 
 		Returns:
 			str
@@ -369,7 +369,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def VendorMessageLength(self):
-		"""This describes the length of vendor data of the vendor message trigger.
+		"""
 
 		Returns:
 			number
@@ -381,7 +381,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def VlanId(self):
-		"""This describes the flow match value for VLAN ID field.
+		"""
 
 		Returns:
 			str
@@ -393,7 +393,7 @@ class SwitchLearnedInformation(Base):
 
 	@property
 	def VlanPriority(self):
-		"""This describes the flow match value for VLAN Priority field.
+		"""
 
 		Returns:
 			str
@@ -406,13 +406,11 @@ class SwitchLearnedInformation(Base):
 	def ClearRecordsForTrigger(self):
 		"""Executes the clearRecordsForTrigger operation on the server.
 
-		API to clear records for any trigger.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -424,13 +422,11 @@ class SwitchLearnedInformation(Base):
 	def RefreshFlows(self):
 		"""Executes the refreshFlows operation on the server.
 
-		This describes that the flows learned information is refreshed.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -442,13 +438,11 @@ class SwitchLearnedInformation(Base):
 	def RefreshGroupLearnedInformation(self):
 		"""Executes the refreshGroupLearnedInformation operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -460,13 +454,11 @@ class SwitchLearnedInformation(Base):
 	def RefreshMeterLearnedInformation(self):
 		"""Executes the refreshMeterLearnedInformation operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -478,13 +470,11 @@ class SwitchLearnedInformation(Base):
 	def RefreshOfChannelLearnedInformation(self):
 		"""Executes the refreshOfChannelLearnedInformation operation on the server.
 
-		This describes that the ofChannellearned information is refreshed.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -496,13 +486,11 @@ class SwitchLearnedInformation(Base):
 	def RefreshTableFeature(self):
 		"""Executes the refreshTableFeature operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -514,13 +502,11 @@ class SwitchLearnedInformation(Base):
 	def Trigger(self):
 		"""Executes the trigger operation on the server.
 
-		API to send Trigger.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			number: NOT DEFINED
+			number: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

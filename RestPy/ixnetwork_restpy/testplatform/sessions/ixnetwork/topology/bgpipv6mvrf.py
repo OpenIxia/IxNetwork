@@ -501,6 +501,36 @@ class BgpIpv6MVrf(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, IncludePmsiTunnelAttribute=None, MulticastDistinguisherAs4Number=None, MulticastDistinguisherAsNumber=None, MulticastDistinguisherAssignedNumber=None, MulticastDistinguisherIpAddress=None, MulticastDistinguisherType=None, MulticastTunnelType=None, RootAddress=None, RsvpP2mpId=None, RsvpP2mpIdAsNumber=None, RsvpTunnelId=None, UpOrDownStreamAssignedLabel=None, UseUpOrDownStreamAssigneLabel=None):
+		"""Base class infrastructure that gets a list of bgpIpv6MVrf device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			IncludePmsiTunnelAttribute (str): optional regex of includePmsiTunnelAttribute
+			MulticastDistinguisherAs4Number (str): optional regex of multicastDistinguisherAs4Number
+			MulticastDistinguisherAsNumber (str): optional regex of multicastDistinguisherAsNumber
+			MulticastDistinguisherAssignedNumber (str): optional regex of multicastDistinguisherAssignedNumber
+			MulticastDistinguisherIpAddress (str): optional regex of multicastDistinguisherIpAddress
+			MulticastDistinguisherType (str): optional regex of multicastDistinguisherType
+			MulticastTunnelType (str): optional regex of multicastTunnelType
+			RootAddress (str): optional regex of rootAddress
+			RsvpP2mpId (str): optional regex of rsvpP2mpId
+			RsvpP2mpIdAsNumber (str): optional regex of rsvpP2mpIdAsNumber
+			RsvpTunnelId (str): optional regex of rsvpTunnelId
+			UpOrDownStreamAssignedLabel (str): optional regex of upOrDownStreamAssignedLabel
+			UseUpOrDownStreamAssigneLabel (str): optional regex of useUpOrDownStreamAssigneLabel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

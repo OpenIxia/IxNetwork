@@ -65,7 +65,7 @@ class MplsOam(Base):
 
 	@property
 	def Enabled(self):
-		"""This signifies the enablement or disablement of the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -77,7 +77,7 @@ class MplsOam(Base):
 
 	@property
 	def RunningState(self):
-		"""This signifies the current running state of the MPLS-OAM server. Possible values include Started, Starting, Stopped, Stopping and Unknown.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -86,8 +86,6 @@ class MplsOam(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		This signifies the starting of the MPLS-OAM protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mplsOam)): The method internally sets Arg1 to the current href for this instance
@@ -101,8 +99,6 @@ class MplsOam(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		This signifies the stopping of the MPLS OAM protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mplsOam)): The method internally sets Arg1 to the current href for this instance

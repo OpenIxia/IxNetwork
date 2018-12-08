@@ -37,7 +37,7 @@ class Instruction(Base):
 
 	@property
 	def ApplyActions(self):
-		"""If selected, applies the actions associated with a flow immediately.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Instruction(Base):
 
 	@property
 	def ClearActions(self):
-		"""If selected, clears the actions attached with the flow.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Instruction(Base):
 
 	@property
 	def Experimenter(self):
-		"""Set the Experimenter details.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Instruction(Base):
 
 	@property
 	def GoToTable(self):
-		"""If selected, forwards the packet to the next table in the pipeline.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Instruction(Base):
 
 	@property
 	def Meter(self):
-		"""If selected, directs a flow to a particular meter.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Instruction(Base):
 
 	@property
 	def WriteActions(self):
-		"""If selected, appends actions to the existing action set of the packet.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Instruction(Base):
 
 	@property
 	def WriteMetadata(self):
-		"""If selected, writes the masked metadata field to the match.
+		"""
 
 		Returns:
 			bool

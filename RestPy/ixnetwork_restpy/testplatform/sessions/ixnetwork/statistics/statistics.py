@@ -135,7 +135,7 @@ class Statistics(Base):
 
 	@property
 	def AdditionalFcoeStat1(self):
-		"""Signifies additional FCOE stat 1
+		"""
 
 		Returns:
 			str(fcoeInvalidDelimiter|fcoeInvalidFrames|fcoeInvalidSize|fcoeNormalSizeBadFcCRC|fcoeNormalSizeGoodFcCRC|fcoeUndersizeBadFcCRC|fcoeUndersizeGoodFcCRC|fcoeValidFrames)
@@ -147,7 +147,7 @@ class Statistics(Base):
 
 	@property
 	def AdditionalFcoeStat2(self):
-		"""Sets the additional FCoE shared stats.
+		"""
 
 		Returns:
 			str(fcoeInvalidDelimiter|fcoeInvalidFrames|fcoeInvalidSize|fcoeNormalSizeBadFcCRC|fcoeNormalSizeGoodFcCRC|fcoeUndersizeBadFcCRC|fcoeUndersizeGoodFcCRC|fcoeValidFrames)
@@ -159,7 +159,7 @@ class Statistics(Base):
 
 	@property
 	def CsvFilePath(self):
-		"""Sets the CSV file path.
+		"""
 
 		Returns:
 			str
@@ -171,7 +171,7 @@ class Statistics(Base):
 
 	@property
 	def CsvLogPollIntervalMultiplier(self):
-		"""Used to specify the time interval between log polling events.
+		"""
 
 		Returns:
 			number
@@ -183,7 +183,7 @@ class Statistics(Base):
 
 	@property
 	def DataStorePollingIntervalMultiplier(self):
-		"""The data store polling interval value is the result of the data store polling interval multiplier value multiplied by the polling interval value set for the test.
+		"""
 
 		Returns:
 			number
@@ -195,7 +195,7 @@ class Statistics(Base):
 
 	@property
 	def EnableAutoDataStore(self):
-		"""If this option is enabled, StatViewer writes the statistical values in binary format for all test results in a view. The test results is converted into a binary array and written to a file.
+		"""
 
 		Returns:
 			bool
@@ -207,7 +207,7 @@ class Statistics(Base):
 
 	@property
 	def EnableCsvLogging(self):
-		"""If this option is enabled, StatViewer writes the statistical values in comma separated value format for all test results in a view.
+		"""
 
 		Returns:
 			bool
@@ -219,7 +219,7 @@ class Statistics(Base):
 
 	@property
 	def EnableDataCenterSharedStats(self):
-		"""If true, enables statistics for Data Center.
+		"""
 
 		Returns:
 			bool
@@ -231,7 +231,7 @@ class Statistics(Base):
 
 	@property
 	def GuardrailEnabled(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -243,7 +243,7 @@ class Statistics(Base):
 
 	@property
 	def MaxNumberOfStatsPerCustomGraph(self):
-		"""The data store polling interval value is the result of the data store polling interval multiplier value multiplied by the polling interval value set for the test.
+		"""
 
 		Returns:
 			number
@@ -255,7 +255,7 @@ class Statistics(Base):
 
 	@property
 	def PollInterval(self):
-		"""The multiplier used with the frequency (2 seconds), to set the time interval between polling events. The default is 1 (1 times 2 seconds = 2 seconds).
+		"""
 
 		Returns:
 			number
@@ -267,7 +267,7 @@ class Statistics(Base):
 
 	@property
 	def TimeSynchronization(self):
-		"""The statistics polling time can be configured to get synchronized with the system clock or reset it to 0 when the test starts. The time synchronization behavior can be changed only before the test starts and does not apply during test run.
+		"""
 
 		Returns:
 			str(syncTimeToSystemClock|syncTimeToTestStart)
@@ -279,7 +279,7 @@ class Statistics(Base):
 
 	@property
 	def TimestampPrecision(self):
-		"""The timestamp precision allows you to change the timestamp precision from microseconds to nanoseconds for specific StatViewer statistics and features. The timestamp precision can be set to have the fstatistics display values with decimals ranging from 0 to 9.
+		"""
 
 		Returns:
 			number
@@ -291,7 +291,7 @@ class Statistics(Base):
 
 	@property
 	def UgsTcpPort(self):
-		"""Used to specify the UGS TCP port.
+		"""
 
 		Returns:
 			number
@@ -301,11 +301,9 @@ class Statistics(Base):
 	def CheckViewTreeGroupExists(self, Arg2):
 		"""Executes the checkViewTreeGroupExists operation on the server.
 
-		This command verifies that the specified group name exists in the StatViewer tree.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): NOT DEFINED
+			Arg2 (str): 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -316,8 +314,6 @@ class Statistics(Base):
 
 	def DockStatViewer(self):
 		"""Executes the dockStatViewer operation on the server.
-
-		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics)): The method internally sets Arg1 to the current href for this instance
@@ -332,15 +328,13 @@ class Statistics(Base):
 	def GetPGIDList(self, Arg2, Arg3):
 		"""Executes the getPGIDList operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): NOT DEFINED
-			Arg3 (str): NOT DEFINED
+			Arg2 (str): 
+			Arg3 (str): 
 
 		Returns:
-			list(str): NOT DEFINED
+			list(str): 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -352,16 +346,14 @@ class Statistics(Base):
 	def GetStatsFooters(self, Arg2, Arg3, Arg4):
 		"""Executes the getStatsFooters operation on the server.
 
-		This command retrieves Stats Footers from traffic stats.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): NOT DEFINED
-			Arg3 (str): NOT DEFINED
-			Arg4 (str): NOT DEFINED
+			Arg2 (str): 
+			Arg3 (str): 
+			Arg4 (str): 
 
 		Returns:
-			str: NOT DEFINED
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

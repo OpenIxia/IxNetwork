@@ -37,7 +37,7 @@ class SupportedActions(Base):
 
 	@property
 	def Enqueue(self):
-		"""Indicates that the supported action of the switch includes Output to queue.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class SupportedActions(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""Indicates that the supported action of the switch includes setting Ethernet destination address.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class SupportedActions(Base):
 
 	@property
 	def EthernetSource(self):
-		"""Indicates that the supported action of the switch includes setting Ethernet source address.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class SupportedActions(Base):
 
 	@property
 	def IpDscp(self):
-		"""Indicates that the supported action of the switch includes setting IP ToS, DSCP field, 6 bits.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class SupportedActions(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""Indicates that the supported action of the switch includes setting IP destination address.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class SupportedActions(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""Indicates that the supported action of the switch includes setting IP source address.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class SupportedActions(Base):
 
 	@property
 	def Output(self):
-		"""Indicates that the supported action of the switch includes Output to switch port.
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class SupportedActions(Base):
 
 	@property
 	def StripVlanHeader(self):
-		"""Indicates that the supported action of the switch includes stripping the 802.1q header.
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class SupportedActions(Base):
 
 	@property
 	def TransportDestination(self):
-		"""Indicates that the supported action of the switch includes setting TCP/UDP destination port.
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class SupportedActions(Base):
 
 	@property
 	def TransportSource(self):
-		"""Indicates that the supported action of the switch includes setting TCP/UDP source port.
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class SupportedActions(Base):
 
 	@property
 	def VlanId(self):
-		"""Indicates that the supported action of the switch includes setting the 802.1q VLAN id.
+		"""
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class SupportedActions(Base):
 
 	@property
 	def VlanPriority(self):
-		"""Indicates that the supported action of the switch includes setting the 802.1q priority.
+		"""
 
 		Returns:
 			bool

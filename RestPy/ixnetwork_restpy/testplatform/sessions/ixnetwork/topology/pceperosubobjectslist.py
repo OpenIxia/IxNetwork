@@ -323,3 +323,44 @@ class PcepEroSubObjectsList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, AsNumber=None, Bos=None, FBit=None, Ipv4NodeId=None, Ipv4Prefix=None, Ipv6NodeId=None, Ipv6Prefix=None, LocalInterfaceId=None, LocalIpv4Address=None, LocalIpv6Address=None, LocalNodeId=None, LooseHop=None, MplsLabel=None, NaiType=None, PrefixLength=None, RemoteInterfaceId=None, RemoteIpv4Address=None, RemoteIpv6Address=None, RemoteNodeId=None, Sid=None, SidType=None, SubObjectType=None, Tc=None, Ttl=None):
+		"""Base class infrastructure that gets a list of pcepEroSubObjectsList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AsNumber (str): optional regex of asNumber
+			Bos (str): optional regex of bos
+			FBit (str): optional regex of fBit
+			Ipv4NodeId (str): optional regex of ipv4NodeId
+			Ipv4Prefix (str): optional regex of ipv4Prefix
+			Ipv6NodeId (str): optional regex of ipv6NodeId
+			Ipv6Prefix (str): optional regex of ipv6Prefix
+			LocalInterfaceId (str): optional regex of localInterfaceId
+			LocalIpv4Address (str): optional regex of localIpv4Address
+			LocalIpv6Address (str): optional regex of localIpv6Address
+			LocalNodeId (str): optional regex of localNodeId
+			LooseHop (str): optional regex of looseHop
+			MplsLabel (str): optional regex of mplsLabel
+			NaiType (str): optional regex of naiType
+			PrefixLength (str): optional regex of prefixLength
+			RemoteInterfaceId (str): optional regex of remoteInterfaceId
+			RemoteIpv4Address (str): optional regex of remoteIpv4Address
+			RemoteIpv6Address (str): optional regex of remoteIpv6Address
+			RemoteNodeId (str): optional regex of remoteNodeId
+			Sid (str): optional regex of sid
+			SidType (str): optional regex of sidType
+			SubObjectType (str): optional regex of subObjectType
+			Tc (str): optional regex of tc
+			Ttl (str): optional regex of ttl
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

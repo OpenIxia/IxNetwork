@@ -51,7 +51,7 @@ class Stack(Base):
 
 	@property
 	def DisplayName(self):
-		"""The display name of the stack.
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class Stack(Base):
 
 	@property
 	def TemplateName(self):
-		"""Indiates the protocol template name that is added to a packet in a stack.
+		"""
 
 		Returns:
 			str
@@ -83,9 +83,9 @@ class Stack(Base):
 		By default the find method takes no parameters and will retrieve all stack data from the server.
 
 		Args:
-			DisplayName (str): The display name of the stack.
+			DisplayName (str): 
 			StackTypeId (str): 
-			TemplateName (str): Indiates the protocol template name that is added to a packet in a stack.
+			TemplateName (str): 
 
 		Returns:
 			self: This instance with matching stack data retrieved from the server available through an iterator or index
@@ -147,24 +147,6 @@ class Stack(Base):
 		"""
 		Arg1 = self.href
 		return self._execute('AppendProtocol', payload=locals(), response_object=None)
-
-	def GetValidProtocols(self):
-		"""Executes the getValidProtocols operation on the server.
-
-		Retrieves the list of recommended protocols that can be added on top of the current protocol.
-
-		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=stack)): The method internally sets Arg1 to the current href for this instance
-
-		Returns:
-			list(str): This exec returns an array containing: the name of the protocol, the reference of the protocol and the type of it (successor or ancestor)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self.href
-		return self._execute('GetValidProtocols', payload=locals(), response_object=None)
 
 	def Insert(self, Arg2):
 		"""Executes the insert operation on the server.

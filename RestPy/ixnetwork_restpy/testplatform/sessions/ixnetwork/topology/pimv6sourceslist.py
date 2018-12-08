@@ -232,6 +232,37 @@ class PimV6SourcesList(Base):
 		"""
 		return self._get_attribute('udpSourcePort')
 
+	def get_device_ids(self, PortNames=None, Active=None, DiscardSgJoinStates=None, GroupAddress=None, GroupCount=None, MulticastDataLength=None, RegisterProbeTime=None, RpAddress=None, SendNullRegAtBegin=None, SourceAddress=None, SourceCount=None, SupressionTime=None, SwitchOverInterval=None, TxIterationGap=None, UdpDestinationPort=None, UdpSourcePort=None):
+		"""Base class infrastructure that gets a list of pimV6SourcesList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DiscardSgJoinStates (str): optional regex of discardSgJoinStates
+			GroupAddress (str): optional regex of groupAddress
+			GroupCount (str): optional regex of groupCount
+			MulticastDataLength (str): optional regex of multicastDataLength
+			RegisterProbeTime (str): optional regex of registerProbeTime
+			RpAddress (str): optional regex of rpAddress
+			SendNullRegAtBegin (str): optional regex of sendNullRegAtBegin
+			SourceAddress (str): optional regex of sourceAddress
+			SourceCount (str): optional regex of sourceCount
+			SupressionTime (str): optional regex of supressionTime
+			SwitchOverInterval (str): optional regex of switchOverInterval
+			TxIterationGap (str): optional regex of txIterationGap
+			UdpDestinationPort (str): optional regex of udpDestinationPort
+			UdpSourcePort (str): optional regex of udpSourcePort
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

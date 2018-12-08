@@ -154,3 +154,28 @@ class PimRouter(Base):
 			list(str)
 		"""
 		return self._get_attribute('rowNames')
+
+	def get_device_ids(self, PortNames=None, BootstrapMessagePerInterval=None, CRpAdvertiseMessagePerInterval=None, DiscardJoinPruneProcessing=None, EnableRateControl=None, HelloMessagePerInterval=None, Interval=None, JoinPruneMessagePerInterval=None, RegisterMessagePerInterval=None, RegisterStopMessagePerInterval=None):
+		"""Base class infrastructure that gets a list of pimRouter device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BootstrapMessagePerInterval (str): optional regex of bootstrapMessagePerInterval
+			CRpAdvertiseMessagePerInterval (str): optional regex of cRpAdvertiseMessagePerInterval
+			DiscardJoinPruneProcessing (str): optional regex of discardJoinPruneProcessing
+			EnableRateControl (str): optional regex of enableRateControl
+			HelloMessagePerInterval (str): optional regex of helloMessagePerInterval
+			Interval (str): optional regex of interval
+			JoinPruneMessagePerInterval (str): optional regex of joinPruneMessagePerInterval
+			RegisterMessagePerInterval (str): optional regex of registerMessagePerInterval
+			RegisterStopMessagePerInterval (str): optional regex of registerStopMessagePerInterval
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

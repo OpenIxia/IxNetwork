@@ -51,7 +51,7 @@ class Ingress(Base):
 
 	@property
 	def EnableEro(self):
-		"""Enables use of the ERO option in Ingress mode.
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Ingress(Base):
 
 	@property
 	def Ero(self):
-		"""Enables use of the ERO option in Ingress mode.
+		"""
 
 		Returns:
 			list(dict(arg1:str[ip|as],arg2:str,arg3:number,arg4:bool))
@@ -75,7 +75,7 @@ class Ingress(Base):
 
 	@property
 	def PrefixLength(self):
-		"""If the DUT's address is to be prepended to the ERO list, this indicates what prefix length is to be used for the entry.
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class Ingress(Base):
 
 	@property
 	def PrependDutToEro(self):
-		"""Enables the user to insert the DUT address at the beginning of the list of hops in the path.
+		"""
 
 		Returns:
 			str(none|prependLoose|prependStrict)
@@ -99,7 +99,7 @@ class Ingress(Base):
 
 	@property
 	def ReservationErrorTlv(self):
-		"""a set of custom TLVs to be included in RESV ERR messages. These may only be used for ingress routers.
+		"""
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -111,7 +111,7 @@ class Ingress(Base):
 
 	@property
 	def Rro(self):
-		"""If enabled, an RRO is reflected back to the originating router.
+		"""
 
 		Returns:
 			list(dict(arg1:str[ip|label],arg2:str,arg3:bool,arg4:bool,arg5:number,arg6:bool,arg7:bool,arg8:bool))
@@ -123,7 +123,7 @@ class Ingress(Base):
 
 	@property
 	def SendRro(self):
-		"""When the destination range is used in Ingress mode, this indicates that a SEND RRO option is to be included in RSVP messages sent downstream.
+		"""
 
 		Returns:
 			bool
@@ -135,7 +135,7 @@ class Ingress(Base):
 
 	@property
 	def TunnelIdsCount(self):
-		"""The number of destination routers. Each router's address is one greater than the previous one's.
+		"""
 
 		Returns:
 			number
@@ -147,7 +147,7 @@ class Ingress(Base):
 
 	@property
 	def TunnelIdsStart(self):
-		"""Sets the start of the range of Tunnel IDs to be used in simulations.
+		"""
 
 		Returns:
 			number

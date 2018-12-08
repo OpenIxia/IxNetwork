@@ -79,7 +79,7 @@ class Impairment(Base):
 
 	@property
 	def Errors(self):
-		"""List of errors which occurred while applying changes to the impairment configuration.
+		"""
 
 		Returns:
 			list(str)
@@ -88,7 +88,7 @@ class Impairment(Base):
 
 	@property
 	def State(self):
-		"""Indicates whether changes are being applied to the impairment configuration.
+		"""
 
 		Returns:
 			str(applyingChanges|changesPending|errorOccurred|ready)
@@ -97,7 +97,7 @@ class Impairment(Base):
 
 	@property
 	def Warnings(self):
-		"""List of warnings which occurred while applying changes to the impairment configuration.
+		"""
 
 		Returns:
 			list(str)
@@ -106,8 +106,6 @@ class Impairment(Base):
 
 	def Apply(self):
 		"""Executes the apply operation on the server.
-
-		Applies traffic impairments defined by user.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/impairment)): The method internally sets Arg1 to the current href for this instance

@@ -94,7 +94,7 @@ class DestinationRange(Base):
 
 	@property
 	def Behavior(self):
-		"""Indicates whether the destination range corresponds to an Ingress or Egress router.
+		"""
 
 		Returns:
 			str(ingress|egress)
@@ -106,7 +106,7 @@ class DestinationRange(Base):
 
 	@property
 	def EmulationType(self):
-		"""The emulation type selected, the values being RSVP-TE, RSVP-TE P2MP.
+		"""
 
 		Returns:
 			str(reserved|rsvpTe|rsvpTeP2mP)
@@ -118,7 +118,7 @@ class DestinationRange(Base):
 
 	@property
 	def EnableReplyingLspPing(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -130,7 +130,7 @@ class DestinationRange(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the use of the destination range.
+		"""
 
 		Returns:
 			bool
@@ -142,7 +142,7 @@ class DestinationRange(Base):
 
 	@property
 	def IpAddressFrom(self):
-		"""The IP address of the first destination router.
+		"""
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class DestinationRange(Base):
 
 	@property
 	def IpCount(self):
-		"""The number of destination routers. Each router's address is one greater than the previous one's.
+		"""
 
 		Returns:
 			number
@@ -166,7 +166,7 @@ class DestinationRange(Base):
 
 	@property
 	def IsConnectedIpAppended(self):
-		"""Append the connected IP as RRO/SRRO subobject at the end of the RRo/SRRO list in the packet.
+		"""
 
 		Returns:
 			bool
@@ -178,7 +178,7 @@ class DestinationRange(Base):
 
 	@property
 	def IsHeadIpPrepended(self):
-		"""If true, prepend the tunnel head IP as a RRO/SERO subobject at the beginning of the RRO/SRRO list in the packet.
+		"""
 
 		Returns:
 			bool
@@ -190,7 +190,7 @@ class DestinationRange(Base):
 
 	@property
 	def IsLeafIpPrepended(self):
-		"""If true, prepend the tunnel leaf IP as a RRO/SRRO subobject at the beginning of the RRO/SRRO list in the packet.
+		"""
 
 		Returns:
 			bool
@@ -202,7 +202,7 @@ class DestinationRange(Base):
 
 	@property
 	def IsSendingAsRro(self):
-		"""If true, send this as a RRO. True only if emulation type is RSVP-TE P2MP.
+		"""
 
 		Returns:
 			bool
@@ -214,7 +214,7 @@ class DestinationRange(Base):
 
 	@property
 	def IsSendingAsSrro(self):
-		"""If true, send this as a SRRO. Note that both Send as RRO and Send as SRRO can be selected at the same time if so required by the user. True only if emulation type is RSVP-TE P2MP.
+		"""
 
 		Returns:
 			bool
@@ -226,7 +226,7 @@ class DestinationRange(Base):
 
 	@property
 	def P2mpId(self):
-		"""The P2MP id represented in IP address format.
+		"""
 
 		Returns:
 			str
@@ -240,18 +240,18 @@ class DestinationRange(Base):
 		"""Adds a new destinationRange node on the server and retrieves it in this instance.
 
 		Args:
-			Behavior (str(ingress|egress)): Indicates whether the destination range corresponds to an Ingress or Egress router.
-			EmulationType (str(reserved|rsvpTe|rsvpTeP2mP)): The emulation type selected, the values being RSVP-TE, RSVP-TE P2MP.
-			EnableReplyingLspPing (bool): NOT DEFINED
-			Enabled (bool): Enables or disables the use of the destination range.
-			IpAddressFrom (str): The IP address of the first destination router.
-			IpCount (number): The number of destination routers. Each router's address is one greater than the previous one's.
-			IsConnectedIpAppended (bool): Append the connected IP as RRO/SRRO subobject at the end of the RRo/SRRO list in the packet.
-			IsHeadIpPrepended (bool): If true, prepend the tunnel head IP as a RRO/SERO subobject at the beginning of the RRO/SRRO list in the packet.
-			IsLeafIpPrepended (bool): If true, prepend the tunnel leaf IP as a RRO/SRRO subobject at the beginning of the RRO/SRRO list in the packet.
-			IsSendingAsRro (bool): If true, send this as a RRO. True only if emulation type is RSVP-TE P2MP.
-			IsSendingAsSrro (bool): If true, send this as a SRRO. Note that both Send as RRO and Send as SRRO can be selected at the same time if so required by the user. True only if emulation type is RSVP-TE P2MP.
-			P2mpId (str): The P2MP id represented in IP address format.
+			Behavior (str(ingress|egress)): 
+			EmulationType (str(reserved|rsvpTe|rsvpTeP2mP)): 
+			EnableReplyingLspPing (bool): 
+			Enabled (bool): 
+			IpAddressFrom (str): 
+			IpCount (number): 
+			IsConnectedIpAppended (bool): 
+			IsHeadIpPrepended (bool): 
+			IsLeafIpPrepended (bool): 
+			IsSendingAsRro (bool): 
+			IsSendingAsSrro (bool): 
+			P2mpId (str): 
 
 		Returns:
 			self: This instance with all currently retrieved destinationRange data using find and the newly added destinationRange data available through an iterator or index
@@ -277,18 +277,18 @@ class DestinationRange(Base):
 		By default the find method takes no parameters and will retrieve all destinationRange data from the server.
 
 		Args:
-			Behavior (str(ingress|egress)): Indicates whether the destination range corresponds to an Ingress or Egress router.
-			EmulationType (str(reserved|rsvpTe|rsvpTeP2mP)): The emulation type selected, the values being RSVP-TE, RSVP-TE P2MP.
-			EnableReplyingLspPing (bool): NOT DEFINED
-			Enabled (bool): Enables or disables the use of the destination range.
-			IpAddressFrom (str): The IP address of the first destination router.
-			IpCount (number): The number of destination routers. Each router's address is one greater than the previous one's.
-			IsConnectedIpAppended (bool): Append the connected IP as RRO/SRRO subobject at the end of the RRo/SRRO list in the packet.
-			IsHeadIpPrepended (bool): If true, prepend the tunnel head IP as a RRO/SERO subobject at the beginning of the RRO/SRRO list in the packet.
-			IsLeafIpPrepended (bool): If true, prepend the tunnel leaf IP as a RRO/SRRO subobject at the beginning of the RRO/SRRO list in the packet.
-			IsSendingAsRro (bool): If true, send this as a RRO. True only if emulation type is RSVP-TE P2MP.
-			IsSendingAsSrro (bool): If true, send this as a SRRO. Note that both Send as RRO and Send as SRRO can be selected at the same time if so required by the user. True only if emulation type is RSVP-TE P2MP.
-			P2mpId (str): The P2MP id represented in IP address format.
+			Behavior (str(ingress|egress)): 
+			EmulationType (str(reserved|rsvpTe|rsvpTeP2mP)): 
+			EnableReplyingLspPing (bool): 
+			Enabled (bool): 
+			IpAddressFrom (str): 
+			IpCount (number): 
+			IsConnectedIpAppended (bool): 
+			IsHeadIpPrepended (bool): 
+			IsLeafIpPrepended (bool): 
+			IsSendingAsRro (bool): 
+			IsSendingAsSrro (bool): 
+			P2mpId (str): 
 
 		Returns:
 			self: This instance with matching destinationRange data retrieved from the server available through an iterator or index

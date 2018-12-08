@@ -37,7 +37,7 @@ class ExtendedCommunity(Base):
 
 	@property
 	def ExtendedCommunity(self):
-		"""Associates BGP4 extended community attributes with a route item.
+		"""
 
 		Returns:
 			list(dict(arg1:str[decimal|hex|ip|ieeeFloat],arg2:str[decimal|hex|ip|ieeeFloat],arg3:str[twoOctetAs|fourOctetAs|opaque|ip],arg4:str[routeTarget|origin|extendedBandwidthSubType],arg5:str))

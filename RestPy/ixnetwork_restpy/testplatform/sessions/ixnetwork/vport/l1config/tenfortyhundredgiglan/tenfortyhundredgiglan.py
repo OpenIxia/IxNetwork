@@ -65,7 +65,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""The auto instrumentation mode.
+		"""
 
 		Returns:
 			str(endOfFrame|floating)
@@ -77,7 +77,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def BadBlocksNumber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -89,7 +89,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def EnableAutoNegotiation(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -101,7 +101,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def EnablePPM(self):
-		"""If true, enables the portsppm.
+		"""
 
 		Returns:
 			bool
@@ -113,7 +113,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def EnableRsFec(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -125,7 +125,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def EnableRsFecStats(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -137,7 +137,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""If true, enables the port's MAC flow control and mechanisms to listen for a directed address pause message.
+		"""
 
 		Returns:
 			bool
@@ -149,7 +149,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -161,7 +161,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def GoodBlocksNumber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -173,7 +173,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def IeeeL1Defaults(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -185,7 +185,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def LaserOn(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -197,7 +197,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def LinkTraining(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -209,7 +209,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def LoopContinuously(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -221,7 +221,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def LoopCountNumber(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -233,7 +233,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def Loopback(self):
-		"""If enabled, the port is set to internally loopback from transmit to receive.
+		"""
 
 		Returns:
 			bool
@@ -245,7 +245,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def LoopbackMode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(internalLoopback|lineLoopback|none)
@@ -257,7 +257,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def Ppm(self):
-		"""Indicates the value that needs to be adjusted for the line transmit frequency
+		"""
 
 		Returns:
 			number
@@ -269,7 +269,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def SendSetsMode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(alternate|typeAOnly|typeBOnly)
@@ -281,7 +281,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def Speed(self):
-		"""The speed of the lan
+		"""
 
 		Returns:
 			str(speed100g|speed10g|speed25g|speed40g|speed50g)
@@ -293,7 +293,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def StartErrorInsertion(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -305,7 +305,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def TxIgnoreRxLinkFaults(self):
-		"""If enabled, will allow transmission of packets even if the receive link is down.
+		"""
 
 		Returns:
 			bool
@@ -317,7 +317,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def TypeAOrderedSets(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(localFault|remoteFault)
@@ -329,7 +329,7 @@ class TenFortyHundredGigLan(Base):
 
 	@property
 	def TypeBOrderedSets(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(localFault|remoteFault)

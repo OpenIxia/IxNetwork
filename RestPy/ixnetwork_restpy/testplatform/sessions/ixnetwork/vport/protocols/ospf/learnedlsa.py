@@ -37,7 +37,7 @@ class LearnedLsa(Base):
 
 	@property
 	def AdvRouterId(self):
-		"""The router ID of the router that is originating the LSA. (default = 0.0.0.0)
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedLsa(Base):
 
 	@property
 	def Age(self):
-		"""Read only. Only available when this command is used to access a learned LSA. This value holds the age of the LSA extracted from the LSA header.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedLsa(Base):
 
 	@property
 	def LinkStateId(self):
-		"""The router ID of the originating router. (default = 0.0.0.0)
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LearnedLsa(Base):
 
 	@property
 	def LsaType(self):
-		"""Read-only. The current LSA type. (default = 0)
+		"""
 
 		Returns:
 			str(router|network|areaSummary|externalSummary|external|nssa|opaqueLocalScope|opaqueAreaScope|opaqueAsScope)
@@ -73,7 +73,7 @@ class LearnedLsa(Base):
 
 	@property
 	def SeqNumber(self):
-		"""Read only. Only available when this command is used to access a learned LSA. This value holds the sequence number of the LSA extracted from the LSA header.
+		"""
 
 		Returns:
 			str
@@ -87,11 +87,11 @@ class LearnedLsa(Base):
 		By default the find method takes no parameters and will retrieve all learnedLsa data from the server.
 
 		Args:
-			AdvRouterId (str): The router ID of the router that is originating the LSA. (default = 0.0.0.0)
-			Age (number): Read only. Only available when this command is used to access a learned LSA. This value holds the age of the LSA extracted from the LSA header.
-			LinkStateId (str): The router ID of the originating router. (default = 0.0.0.0)
-			LsaType (str(router|network|areaSummary|externalSummary|external|nssa|opaqueLocalScope|opaqueAreaScope|opaqueAsScope)): Read-only. The current LSA type. (default = 0)
-			SeqNumber (str): Read only. Only available when this command is used to access a learned LSA. This value holds the sequence number of the LSA extracted from the LSA header.
+			AdvRouterId (str): 
+			Age (number): 
+			LinkStateId (str): 
+			LsaType (str(router|network|areaSummary|externalSummary|external|nssa|opaqueLocalScope|opaqueAreaScope|opaqueAsScope)): 
+			SeqNumber (str): 
 
 		Returns:
 			self: This instance with matching learnedLsa data retrieved from the server available through an iterator or index

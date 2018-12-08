@@ -37,7 +37,7 @@ class FilterPalette(Base):
 
 	@property
 	def DestinationAddress1(self):
-		"""Destination address 1.
+		"""
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class FilterPalette(Base):
 
 	@property
 	def DestinationAddress1Mask(self):
-		"""The destination address mask.
+		"""
 
 		Returns:
 			str
@@ -61,7 +61,7 @@ class FilterPalette(Base):
 
 	@property
 	def DestinationAddress2(self):
-		"""Destination address 2.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class FilterPalette(Base):
 
 	@property
 	def DestinationAddress2Mask(self):
-		"""Destination address to mask.
+		"""
 
 		Returns:
 			str
@@ -85,7 +85,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern1(self):
-		"""Pattern 1.
+		"""
 
 		Returns:
 			str
@@ -97,7 +97,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern1Mask(self):
-		"""Pattern 1 mask.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern1Offset(self):
-		"""Pattern 1 offset.
+		"""
 
 		Returns:
 			number
@@ -121,7 +121,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern1OffsetType(self):
-		"""The pattern offset type.
+		"""
 
 		Returns:
 			str(fromStartOfFrame|fromStartOfIp|fromStartOfProtocol|fromStartOfSonet)
@@ -133,7 +133,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern2(self):
-		"""Patternt 2.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern2Mask(self):
-		"""The pattern mask.
+		"""
 
 		Returns:
 			str
@@ -157,7 +157,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern2Offset(self):
-		"""The offset at which the pattern is located in the packet.
+		"""
 
 		Returns:
 			number
@@ -169,7 +169,7 @@ class FilterPalette(Base):
 
 	@property
 	def Pattern2OffsetType(self):
-		"""Pattern 2 offset type
+		"""
 
 		Returns:
 			str(fromStartOfFrame|fromStartOfIp|fromStartOfProtocol|fromStartOfSonet)
@@ -181,7 +181,7 @@ class FilterPalette(Base):
 
 	@property
 	def SourceAddress1(self):
-		"""Source address 1.
+		"""
 
 		Returns:
 			str
@@ -193,7 +193,7 @@ class FilterPalette(Base):
 
 	@property
 	def SourceAddress1Mask(self):
-		"""Source address 1 mask.
+		"""
 
 		Returns:
 			str
@@ -205,7 +205,7 @@ class FilterPalette(Base):
 
 	@property
 	def SourceAddress2(self):
-		"""Source address 2.
+		"""
 
 		Returns:
 			str
@@ -217,7 +217,7 @@ class FilterPalette(Base):
 
 	@property
 	def SourceAddress2Mask(self):
-		"""Source address to mask.
+		"""
 
 		Returns:
 			str

@@ -127,3 +127,25 @@ class MldHost(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('unicastMode')
+
+	def get_device_ids(self, PortNames=None, Enabled=None, InterStbStartDelay=None, IntervalInMs=None, RatePerInterval=None, TrafficClass=None, UnicastMode=None):
+		"""Base class infrastructure that gets a list of mldHost device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Enabled (str): optional regex of enabled
+			InterStbStartDelay (str): optional regex of interStbStartDelay
+			IntervalInMs (str): optional regex of intervalInMs
+			RatePerInterval (str): optional regex of ratePerInterval
+			TrafficClass (str): optional regex of trafficClass
+			UnicastMode (str): optional regex of unicastMode
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

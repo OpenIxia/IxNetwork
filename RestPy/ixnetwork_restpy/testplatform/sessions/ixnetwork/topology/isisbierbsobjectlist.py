@@ -125,3 +125,22 @@ class IsisBierBSObjectList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, BIERBitStringLength=None, LabelRangeSize=None, LabelStart=None):
+		"""Base class infrastructure that gets a list of isisBierBSObjectList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BIERBitStringLength (str): optional regex of BIERBitStringLength
+			LabelRangeSize (str): optional regex of labelRangeSize
+			LabelStart (str): optional regex of labelStart
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

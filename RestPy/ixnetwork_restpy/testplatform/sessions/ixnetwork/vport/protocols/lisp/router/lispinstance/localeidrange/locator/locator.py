@@ -38,7 +38,7 @@ class Locator(Base):
 
 	@property
 	def Address(self):
-		"""It gives details about the Ip
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class Locator(Base):
 
 	@property
 	def Enabled(self):
-		"""It True, it enables the protocol
+		"""
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class Locator(Base):
 
 	@property
 	def Family(self):
-		"""It gives details about the family
+		"""
 
 		Returns:
 			str(ipv4|ipv6)
@@ -74,7 +74,7 @@ class Locator(Base):
 
 	@property
 	def LispInterfaceId(self):
-		"""It gives details about the LISP interface id
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class Locator(Base):
 
 	@property
 	def LocalLocator(self):
-		"""If True, It gives the address of the local locator
+		"""
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class Locator(Base):
 
 	@property
 	def MPriority(self):
-		"""It denotes the m priority
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class Locator(Base):
 
 	@property
 	def MWeight(self):
-		"""It denotes the m weight
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class Locator(Base):
 
 	@property
 	def Priority(self):
-		"""It gives the priority
+		"""
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class Locator(Base):
 
 	@property
 	def ProtocolInterfaceIpItemId(self):
-		"""It gives details about the protocol interface ip item id
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class Locator(Base):
 
 	@property
 	def Reachability(self):
-		"""If true, it defines the reachability
+		"""
 
 		Returns:
 			bool
@@ -158,7 +158,7 @@ class Locator(Base):
 
 	@property
 	def Weight(self):
-		"""It gives details about the weight
+		"""
 
 		Returns:
 			number
@@ -172,17 +172,17 @@ class Locator(Base):
 		"""Adds a new locator node on the server and retrieves it in this instance.
 
 		Args:
-			Address (str): It gives details about the Ip
-			Enabled (bool): It True, it enables the protocol
-			Family (str(ipv4|ipv6)): It gives details about the family
-			LispInterfaceId (number): It gives details about the LISP interface id
-			LocalLocator (bool): If True, It gives the address of the local locator
-			MPriority (number): It denotes the m priority
-			MWeight (number): It denotes the m weight
-			Priority (number): It gives the priority
-			ProtocolInterfaceIpItemId (number): It gives details about the protocol interface ip item id
-			Reachability (bool): If true, it defines the reachability
-			Weight (number): It gives details about the weight
+			Address (str): 
+			Enabled (bool): 
+			Family (str(ipv4|ipv6)): 
+			LispInterfaceId (number): 
+			LocalLocator (bool): 
+			MPriority (number): 
+			MWeight (number): 
+			Priority (number): 
+			ProtocolInterfaceIpItemId (number): 
+			Reachability (bool): 
+			Weight (number): 
 
 		Returns:
 			self: This instance with all currently retrieved locator data using find and the newly added locator data available through an iterator or index
@@ -208,17 +208,17 @@ class Locator(Base):
 		By default the find method takes no parameters and will retrieve all locator data from the server.
 
 		Args:
-			Address (str): It gives details about the Ip
-			Enabled (bool): It True, it enables the protocol
-			Family (str(ipv4|ipv6)): It gives details about the family
-			LispInterfaceId (number): It gives details about the LISP interface id
-			LocalLocator (bool): If True, It gives the address of the local locator
-			MPriority (number): It denotes the m priority
-			MWeight (number): It denotes the m weight
-			Priority (number): It gives the priority
-			ProtocolInterfaceIpItemId (number): It gives details about the protocol interface ip item id
-			Reachability (bool): If true, it defines the reachability
-			Weight (number): It gives details about the weight
+			Address (str): 
+			Enabled (bool): 
+			Family (str(ipv4|ipv6)): 
+			LispInterfaceId (number): 
+			LocalLocator (bool): 
+			MPriority (number): 
+			MWeight (number): 
+			Priority (number): 
+			ProtocolInterfaceIpItemId (number): 
+			Reachability (bool): 
+			Weight (number): 
 
 		Returns:
 			self: This instance with matching locator data retrieved from the server available through an iterator or index

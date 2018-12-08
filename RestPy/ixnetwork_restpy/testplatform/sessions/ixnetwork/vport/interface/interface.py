@@ -192,7 +192,7 @@ class Interface(Base):
 
 	@property
 	def Description(self):
-		"""The identifier for the port including card and port numbers, and the port type.
+		"""
 
 		Returns:
 			str
@@ -204,7 +204,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the selected protocol interface.
+		"""
 
 		Returns:
 			bool
@@ -216,7 +216,7 @@ class Interface(Base):
 
 	@property
 	def Eui64Id(self):
-		"""This is the 64-bit IEEE Modified EUI ID value for the Interface Identifier portion of the IPv6 address.
+		"""
 
 		Returns:
 			str
@@ -228,7 +228,7 @@ class Interface(Base):
 
 	@property
 	def Mtu(self):
-		"""The maximum transmission unit for the interfaces created with this range.
+		"""
 
 		Returns:
 			number
@@ -240,7 +240,7 @@ class Interface(Base):
 
 	@property
 	def Type(self):
-		"""The identifier or 'tag' for this DHCP option.
+		"""
 
 		Returns:
 			str(default|gre|routed)
@@ -254,11 +254,11 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			Description (str): The identifier for the port including card and port numbers, and the port type.
-			Enabled (bool): Enables the selected protocol interface.
-			Eui64Id (str): This is the 64-bit IEEE Modified EUI ID value for the Interface Identifier portion of the IPv6 address.
-			Mtu (number): The maximum transmission unit for the interfaces created with this range.
-			Type (str(default|gre|routed)): The identifier or 'tag' for this DHCP option.
+			Description (str): 
+			Enabled (bool): 
+			Eui64Id (str): 
+			Mtu (number): 
+			Type (str(default|gre|routed)): 
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -284,11 +284,11 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			Description (str): The identifier for the port including card and port numbers, and the port type.
-			Enabled (bool): Enables the selected protocol interface.
-			Eui64Id (str): This is the 64-bit IEEE Modified EUI ID value for the Interface Identifier portion of the IPv6 address.
-			Mtu (number): The maximum transmission unit for the interfaces created with this range.
-			Type (str(default|gre|routed)): The identifier or 'tag' for this DHCP option.
+			Description (str): 
+			Enabled (bool): 
+			Eui64Id (str): 
+			Mtu (number): 
+			Type (str(default|gre|routed)): 
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index
@@ -316,8 +316,6 @@ class Interface(Base):
 	def SendArp(self):
 		"""Executes the sendArp operation on the server.
 
-		Sends an ARP to an interface or group of interfaces.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
@@ -330,8 +328,6 @@ class Interface(Base):
 
 	def SendArpAndNS(self):
 		"""Executes the sendArpAndNS operation on the server.
-
-		Send ARP and neighbor solicitation to an interface or group of interfaces.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
@@ -346,8 +342,6 @@ class Interface(Base):
 	def SendNs(self):
 		"""Executes the sendNs operation on the server.
 
-		Sends NS to an interface or group of interfaces.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
@@ -361,14 +355,12 @@ class Interface(Base):
 	def SendPing(self, Arg2):
 		"""Executes the sendPing operation on the server.
 
-		Sends a ping to a port or group of ports.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): IP address for which ping is send.
+			Arg2 (str): 
 
 		Returns:
-			str: Returns reply from the IP for which ping has been send.
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -379,8 +371,6 @@ class Interface(Base):
 
 	def SendRs(self):
 		"""Executes the sendRs operation on the server.
-
-		Sends router solicitation to an interface or group of interfaces.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance

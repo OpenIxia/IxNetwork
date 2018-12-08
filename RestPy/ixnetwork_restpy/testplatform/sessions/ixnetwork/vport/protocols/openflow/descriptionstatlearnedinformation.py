@@ -37,7 +37,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def DataPathDescription(self):
-		"""Indicates a description of datapath.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""Indicates the datapath ID of the switch.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""Indicates the datapath ID, in Hex, of the switch.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""Signifies the error code of the error received.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""Signifies the type of the error received.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def HardwareDescription(self):
-		"""Indicates the hardware description of the switch.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""Indicates the duration elapsed (in microsecond) between the learned info request and response.
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""Indicates the local IP of the Controller.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def ManufacturerDescription(self):
-		"""Indicates the description of the switch manufacturer.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""Indicates the IP of the remote end of the OF Channel.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""Indicates the reply state of the switch.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def SerialNumber(self):
-		"""Indicates the Serial Number of the switch.
+		"""
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class DescriptionStatLearnedInformation(Base):
 
 	@property
 	def SoftwareDescription(self):
-		"""Indicates the description of the software installed on the switch.
+		"""
 
 		Returns:
 			str
@@ -168,20 +168,20 @@ class DescriptionStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all descriptionStatLearnedInformation data from the server.
 
 		Args:
-			DataPathDescription (str): Indicates a description of datapath.
-			DataPathId (str): Indicates the datapath ID of the switch.
-			DataPathIdAsHex (str): Indicates the datapath ID, in Hex, of the switch.
-			ErrorCode (str): Signifies the error code of the error received.
-			ErrorType (str): Signifies the type of the error received.
-			HardwareDescription (str): Indicates the hardware description of the switch.
-			Latency (number): Indicates the duration elapsed (in microsecond) between the learned info request and response.
-			LocalIp (str): Indicates the local IP of the Controller.
-			ManufacturerDescription (str): Indicates the description of the switch manufacturer.
-			NegotiatedVersion (str): Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
-			RemoteIp (str): Indicates the IP of the remote end of the OF Channel.
-			ReplyState (str): Indicates the reply state of the switch.
-			SerialNumber (str): Indicates the Serial Number of the switch.
-			SoftwareDescription (str): Indicates the description of the software installed on the switch.
+			DataPathDescription (str): 
+			DataPathId (str): 
+			DataPathIdAsHex (str): 
+			ErrorCode (str): 
+			ErrorType (str): 
+			HardwareDescription (str): 
+			Latency (number): 
+			LocalIp (str): 
+			ManufacturerDescription (str): 
+			NegotiatedVersion (str): 
+			RemoteIp (str): 
+			ReplyState (str): 
+			SerialNumber (str): 
+			SoftwareDescription (str): 
 
 		Returns:
 			self: This instance with matching descriptionStatLearnedInformation data retrieved from the server available through an iterator or index

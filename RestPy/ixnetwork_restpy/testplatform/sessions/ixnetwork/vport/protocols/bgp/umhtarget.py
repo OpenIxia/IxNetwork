@@ -37,7 +37,7 @@ class UmhTarget(Base):
 
 	@property
 	def TargetList(self):
-		"""Configures a route target to be exported while advertising UMH routes
+		"""
 
 		Returns:
 			list(dict(arg1:str[asNumber2|as|ip],arg2:number,arg3:str,arg4:number,arg5:number,arg6:number,arg7:str))

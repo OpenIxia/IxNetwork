@@ -610,6 +610,65 @@ class RequestedLsps(Base):
 		"""
 		return self._get_attribute('symbolicPathName')
 
+	def get_device_ids(self, PortNames=None, Active=None, ActiveDataTrafficEndPoints=None, Bandwidth=None, BiDirectional=None, DestinationIpv4Address=None, DestinationIpv6Address=None, ExcludeAny=None, FailBit=None, HoldingPriority=None, IncludeAll=None, IncludeAny=None, IncludeBandwidth=None, IncludeEndPoints=None, IncludeIro=None, IncludeLsp=None, IncludeLspa=None, IncludeMetric=None, IncludeRp=None, IncludeSymbolicPathNameTlv=None, IncludeXro=None, InitialDelegation=None, IpVersion=None, LocalProtection=None, Loose=None, OverrideSourceAddress=None, PFlagBandwidth=None, PFlagIro=None, PFlagLsp=None, PFlagLspa=None, PFlagRp=None, PFlagXro=None, PflagEndpoints=None, PlspId=None, Priority=None, ReOptimization=None, RedelegationTimeoutInterval=None, RequestId=None, SetupPriority=None, SourceEndPointIPv4=None, SourceEndPointIPv6=None, SourceIpv4Address=None, SourceIpv6Address=None, SymbolicPathName=None):
+		"""Base class infrastructure that gets a list of requestedLsps device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ActiveDataTrafficEndPoints (str): optional regex of activeDataTrafficEndPoints
+			Bandwidth (str): optional regex of bandwidth
+			BiDirectional (str): optional regex of biDirectional
+			DestinationIpv4Address (str): optional regex of destinationIpv4Address
+			DestinationIpv6Address (str): optional regex of destinationIpv6Address
+			ExcludeAny (str): optional regex of excludeAny
+			FailBit (str): optional regex of failBit
+			HoldingPriority (str): optional regex of holdingPriority
+			IncludeAll (str): optional regex of includeAll
+			IncludeAny (str): optional regex of includeAny
+			IncludeBandwidth (str): optional regex of includeBandwidth
+			IncludeEndPoints (str): optional regex of includeEndPoints
+			IncludeIro (str): optional regex of includeIro
+			IncludeLsp (str): optional regex of includeLsp
+			IncludeLspa (str): optional regex of includeLspa
+			IncludeMetric (str): optional regex of includeMetric
+			IncludeRp (str): optional regex of includeRp
+			IncludeSymbolicPathNameTlv (str): optional regex of includeSymbolicPathNameTlv
+			IncludeXro (str): optional regex of includeXro
+			InitialDelegation (str): optional regex of initialDelegation
+			IpVersion (str): optional regex of ipVersion
+			LocalProtection (str): optional regex of localProtection
+			Loose (str): optional regex of loose
+			OverrideSourceAddress (str): optional regex of overrideSourceAddress
+			PFlagBandwidth (str): optional regex of pFlagBandwidth
+			PFlagIro (str): optional regex of pFlagIro
+			PFlagLsp (str): optional regex of pFlagLsp
+			PFlagLspa (str): optional regex of pFlagLspa
+			PFlagRp (str): optional regex of pFlagRp
+			PFlagXro (str): optional regex of pFlagXro
+			PflagEndpoints (str): optional regex of pflagEndpoints
+			PlspId (str): optional regex of plspId
+			Priority (str): optional regex of priority
+			ReOptimization (str): optional regex of reOptimization
+			RedelegationTimeoutInterval (str): optional regex of redelegationTimeoutInterval
+			RequestId (str): optional regex of requestId
+			SetupPriority (str): optional regex of setupPriority
+			SourceEndPointIPv4 (str): optional regex of sourceEndPointIPv4
+			SourceEndPointIPv6 (str): optional regex of sourceEndPointIPv6
+			SourceIpv4Address (str): optional regex of sourceIpv4Address
+			SourceIpv6Address (str): optional regex of sourceIpv6Address
+			SymbolicPathName (str): optional regex of symbolicPathName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Delegate(self, Arg2):
 		"""Executes the delegate operation on the server.
 

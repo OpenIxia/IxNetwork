@@ -37,7 +37,7 @@ class FlowRemovedMaskMaster(Base):
 
 	@property
 	def Delete(self):
-		"""This indicates that flow entry is evicted by a delete Flow Mod message.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class FlowRemovedMaskMaster(Base):
 
 	@property
 	def GroupDelete(self):
-		"""This indicates that the group is removed.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class FlowRemovedMaskMaster(Base):
 
 	@property
 	def HardTimeout(self):
-		"""This indicates that Flow idle time exceeded hard timeout.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class FlowRemovedMaskMaster(Base):
 
 	@property
 	def IdleTimeout(self):
-		"""This indicates that Flow idle time exceeded idle timeout.
+		"""
 
 		Returns:
 			bool

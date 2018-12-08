@@ -38,7 +38,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def IncludeMacGroup(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def IntraGroupUnicastMacIncrement(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def MulticastAddressNodeStep(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def MulticastMacCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def MulticastMacStep(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def NumberOfUnicastSourceMacsPerMulticast(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def SourceGroupMapping(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(fully-Meshed|one-To-One|manual-Mapping)
@@ -122,7 +122,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def StartMulticastMac(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def StartUnicastSourceMac(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def UnicastAddressNodeStep(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class CustomTopologyMulticastMacRange(Base):
 
 	@property
 	def VlanId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -172,17 +172,17 @@ class CustomTopologyMulticastMacRange(Base):
 		"""Adds a new customTopologyMulticastMacRange node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeMacGroup (bool): NOT DEFINED
-			IntraGroupUnicastMacIncrement (str): NOT DEFINED
-			MulticastAddressNodeStep (str): NOT DEFINED
-			MulticastMacCount (number): NOT DEFINED
-			MulticastMacStep (str): NOT DEFINED
-			NumberOfUnicastSourceMacsPerMulticast (number): NOT DEFINED
-			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): NOT DEFINED
-			StartMulticastMac (str): NOT DEFINED
-			StartUnicastSourceMac (str): NOT DEFINED
-			UnicastAddressNodeStep (str): NOT DEFINED
-			VlanId (number): NOT DEFINED
+			IncludeMacGroup (bool): 
+			IntraGroupUnicastMacIncrement (str): 
+			MulticastAddressNodeStep (str): 
+			MulticastMacCount (number): 
+			MulticastMacStep (str): 
+			NumberOfUnicastSourceMacsPerMulticast (number): 
+			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): 
+			StartMulticastMac (str): 
+			StartUnicastSourceMac (str): 
+			UnicastAddressNodeStep (str): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyMulticastMacRange data using find and the newly added customTopologyMulticastMacRange data available through an iterator or index
@@ -208,17 +208,17 @@ class CustomTopologyMulticastMacRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyMulticastMacRange data from the server.
 
 		Args:
-			IncludeMacGroup (bool): NOT DEFINED
-			IntraGroupUnicastMacIncrement (str): NOT DEFINED
-			MulticastAddressNodeStep (str): NOT DEFINED
-			MulticastMacCount (number): NOT DEFINED
-			MulticastMacStep (str): NOT DEFINED
-			NumberOfUnicastSourceMacsPerMulticast (number): NOT DEFINED
-			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): NOT DEFINED
-			StartMulticastMac (str): NOT DEFINED
-			StartUnicastSourceMac (str): NOT DEFINED
-			UnicastAddressNodeStep (str): NOT DEFINED
-			VlanId (number): NOT DEFINED
+			IncludeMacGroup (bool): 
+			IntraGroupUnicastMacIncrement (str): 
+			MulticastAddressNodeStep (str): 
+			MulticastMacCount (number): 
+			MulticastMacStep (str): 
+			NumberOfUnicastSourceMacsPerMulticast (number): 
+			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): 
+			StartMulticastMac (str): 
+			StartUnicastSourceMac (str): 
+			UnicastAddressNodeStep (str): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with matching customTopologyMulticastMacRange data retrieved from the server available through an iterator or index

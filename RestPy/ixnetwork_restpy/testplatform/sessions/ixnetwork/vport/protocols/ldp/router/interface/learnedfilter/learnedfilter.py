@@ -37,7 +37,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableFilter(self):
-		"""Enables the use of the LDP learned labels filter.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableIpv4FecAddress(self):
-		"""If enabled, uses the network address associated with the FEC.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableIpv4FecMask(self):
-		"""(FEC Mask Match must be enabled for this option to be active.)
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableIpv4RootAddress(self):
-		"""If enabled, it signifies the IP version 4 root address.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableLabel(self):
-		"""If enabled, uses the label value added to the packet(s) by the upstream LDP peer.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableMartiniDescription(self):
-		"""An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableMartiniGroupId(self):
-		"""An arbitrary 32-bit value used to identify a group of VCs.
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableMartiniVcId(self):
-		"""The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableMartiniVcType(self):
-		"""Enables the type of martini virtual circuit.
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnablePeerAddress(self):
-		"""Uses the IP address of the LDP peer.
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnablePeerMask(self):
-		"""(Peer address must be enabled for this option to be active.) If enabled, uses the number of bits in the mask for the peer's IP address for a loose match.
+		"""
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class LearnedFilter(Base):
 
 	@property
 	def Ipv4FecAddress(self):
-		"""The IPv4 address component of the FEC. (default = 0.0.0.0)
+		"""
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class LearnedFilter(Base):
 
 	@property
 	def Ipv4FecMask(self):
-		"""The prefix length of the network IPv4 address. (default = 24)
+		"""
 
 		Returns:
 			number
@@ -193,7 +193,7 @@ class LearnedFilter(Base):
 
 	@property
 	def Ipv4FecMaskMatch(self):
-		"""FEC Mask Match must be enabled for this option to be active.
+		"""
 
 		Returns:
 			str(exactMatch|looseMatch)
@@ -205,7 +205,7 @@ class LearnedFilter(Base):
 
 	@property
 	def Label(self):
-		"""The first label to be assigned to the FEC.
+		"""
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class LearnedFilter(Base):
 
 	@property
 	def MartiniDescription(self):
-		"""An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
+		"""
 
 		Returns:
 			str
@@ -229,7 +229,7 @@ class LearnedFilter(Base):
 
 	@property
 	def MartiniGroupId(self):
-		"""An arbitrary 32-bit value used to identify a group of VCs.
+		"""
 
 		Returns:
 			number
@@ -241,7 +241,7 @@ class LearnedFilter(Base):
 
 	@property
 	def MartiniVcId(self):
-		"""The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
+		"""
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class LearnedFilter(Base):
 
 	@property
 	def MartiniVcType(self):
-		"""The type of L2 VC depends on the Layer 2 protocol types.
+		"""
 
 		Returns:
 			str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip)
@@ -265,7 +265,7 @@ class LearnedFilter(Base):
 
 	@property
 	def PeerAddress(self):
-		"""If enabled, uses the IP address of the LDP peer.
+		"""
 
 		Returns:
 			str
@@ -277,7 +277,7 @@ class LearnedFilter(Base):
 
 	@property
 	def PeerMask(self):
-		"""(Peer Address must be enabled for this option to be active.) If enabled, uses the number of bits in the mask for the peer's IP address for a loose match.
+		"""
 
 		Returns:
 			number
@@ -289,7 +289,7 @@ class LearnedFilter(Base):
 
 	@property
 	def RootAddress(self):
-		"""Indicates the root address.
+		"""
 
 		Returns:
 			str

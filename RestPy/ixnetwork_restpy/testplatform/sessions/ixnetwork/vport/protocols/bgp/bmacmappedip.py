@@ -38,7 +38,7 @@ class BMacMappedIp(Base):
 
 	@property
 	def Enabled(self):
-		"""If true then this IP is associated with the B-MAC of the ethernet segment. Default value is false.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class BMacMappedIp(Base):
 
 	@property
 	def IpAddress(self):
-		"""IP address value is given here depending on the IP Type. Default value is all zero.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class BMacMappedIp(Base):
 
 	@property
 	def IpType(self):
-		"""Drop down of {IPv4, IPv6}. If IPv4 is selected then IPv4 address is used. If IPv6 is selected then IPv6 address is used. Default value is IPv4.
+		"""
 
 		Returns:
 			str(ipV4|ipV6)
@@ -76,9 +76,9 @@ class BMacMappedIp(Base):
 		"""Adds a new bMacMappedIp node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true then this IP is associated with the B-MAC of the ethernet segment. Default value is false.
-			IpAddress (str): IP address value is given here depending on the IP Type. Default value is all zero.
-			IpType (str(ipV4|ipV6)): Drop down of {IPv4, IPv6}. If IPv4 is selected then IPv4 address is used. If IPv6 is selected then IPv6 address is used. Default value is IPv4.
+			Enabled (bool): 
+			IpAddress (str): 
+			IpType (str(ipV4|ipV6)): 
 
 		Returns:
 			self: This instance with all currently retrieved bMacMappedIp data using find and the newly added bMacMappedIp data available through an iterator or index
@@ -104,9 +104,9 @@ class BMacMappedIp(Base):
 		By default the find method takes no parameters and will retrieve all bMacMappedIp data from the server.
 
 		Args:
-			Enabled (bool): If true then this IP is associated with the B-MAC of the ethernet segment. Default value is false.
-			IpAddress (str): IP address value is given here depending on the IP Type. Default value is all zero.
-			IpType (str(ipV4|ipV6)): Drop down of {IPv4, IPv6}. If IPv4 is selected then IPv4 address is used. If IPv6 is selected then IPv6 address is used. Default value is IPv4.
+			Enabled (bool): 
+			IpAddress (str): 
+			IpType (str(ipV4|ipV6)): 
 
 		Returns:
 			self: This instance with matching bMacMappedIp data retrieved from the server available through an iterator or index

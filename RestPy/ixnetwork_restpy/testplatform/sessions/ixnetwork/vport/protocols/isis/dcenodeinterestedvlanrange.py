@@ -38,7 +38,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def IncludeInLsp(self):
-		"""If true, a custom VLAN is included in the LSP.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def IncludeInMgroupPdu(self):
-		"""If true, a custom VLAN is included in the MGROUP PDU.
+		"""
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def IncludeInterestedVlan(self):
-		"""If true, the interested VLAN is included.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def InternodeVlanStep(self):
-		"""It shows the Increment Step of internode Vlan ID. Default is 1.
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def M4BitEnabled(self):
-		"""If true, the M4 bit is enabled.
+		"""
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def M6BitEnabled(self):
-		"""If true, the M6 bit is enabled.
+		"""
 
 		Returns:
 			bool
@@ -110,7 +110,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def NoOfSpanningTreeRoot(self):
-		"""The number of spanning tree roots for the VLAN.
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def StartSpanningTreeRootBridgeId(self):
-		"""If true, starts the spanning tree root Bridge Id.
+		"""
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def StartVlanId(self):
-		"""The VLAN Id of first VLAN. Default is 1.
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class DceNodeInterestedVlanRange(Base):
 
 	@property
 	def VlanIdCount(self):
-		"""The count of the VLAN Id.
+		"""
 
 		Returns:
 			number
@@ -160,16 +160,16 @@ class DceNodeInterestedVlanRange(Base):
 		"""Adds a new dceNodeInterestedVlanRange node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeInLsp (bool): If true, a custom VLAN is included in the LSP.
-			IncludeInMgroupPdu (bool): If true, a custom VLAN is included in the MGROUP PDU.
-			IncludeInterestedVlan (bool): If true, the interested VLAN is included.
-			InternodeVlanStep (number): It shows the Increment Step of internode Vlan ID. Default is 1.
-			M4BitEnabled (bool): If true, the M4 bit is enabled.
-			M6BitEnabled (bool): If true, the M6 bit is enabled.
-			NoOfSpanningTreeRoot (number): The number of spanning tree roots for the VLAN.
-			StartSpanningTreeRootBridgeId (str): If true, starts the spanning tree root Bridge Id.
-			StartVlanId (number): The VLAN Id of first VLAN. Default is 1.
-			VlanIdCount (number): The count of the VLAN Id.
+			IncludeInLsp (bool): 
+			IncludeInMgroupPdu (bool): 
+			IncludeInterestedVlan (bool): 
+			InternodeVlanStep (number): 
+			M4BitEnabled (bool): 
+			M6BitEnabled (bool): 
+			NoOfSpanningTreeRoot (number): 
+			StartSpanningTreeRootBridgeId (str): 
+			StartVlanId (number): 
+			VlanIdCount (number): 
 
 		Returns:
 			self: This instance with all currently retrieved dceNodeInterestedVlanRange data using find and the newly added dceNodeInterestedVlanRange data available through an iterator or index
@@ -195,16 +195,16 @@ class DceNodeInterestedVlanRange(Base):
 		By default the find method takes no parameters and will retrieve all dceNodeInterestedVlanRange data from the server.
 
 		Args:
-			IncludeInLsp (bool): If true, a custom VLAN is included in the LSP.
-			IncludeInMgroupPdu (bool): If true, a custom VLAN is included in the MGROUP PDU.
-			IncludeInterestedVlan (bool): If true, the interested VLAN is included.
-			InternodeVlanStep (number): It shows the Increment Step of internode Vlan ID. Default is 1.
-			M4BitEnabled (bool): If true, the M4 bit is enabled.
-			M6BitEnabled (bool): If true, the M6 bit is enabled.
-			NoOfSpanningTreeRoot (number): The number of spanning tree roots for the VLAN.
-			StartSpanningTreeRootBridgeId (str): If true, starts the spanning tree root Bridge Id.
-			StartVlanId (number): The VLAN Id of first VLAN. Default is 1.
-			VlanIdCount (number): The count of the VLAN Id.
+			IncludeInLsp (bool): 
+			IncludeInMgroupPdu (bool): 
+			IncludeInterestedVlan (bool): 
+			InternodeVlanStep (number): 
+			M4BitEnabled (bool): 
+			M6BitEnabled (bool): 
+			NoOfSpanningTreeRoot (number): 
+			StartSpanningTreeRootBridgeId (str): 
+			StartVlanId (number): 
+			VlanIdCount (number): 
 
 		Returns:
 			self: This instance with matching dceNodeInterestedVlanRange data retrieved from the server available through an iterator or index

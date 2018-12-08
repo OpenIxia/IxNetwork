@@ -613,6 +613,10 @@ class Connect:
 
         # http://192.168.70.127:11009
         self.httpHeader = self.sessionUrl.split('/api')[0]
+
+        # /api/v1/sessions/{id}/ixnetwork
+        self.apiSessionId = '/api/v1/sessions/{0}/ixnetwork'.format(str(self.sessionId))
+
         self.get(self.sessionUrl)
 
     def deleteSession(self):

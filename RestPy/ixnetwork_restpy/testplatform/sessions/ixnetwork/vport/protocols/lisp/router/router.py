@@ -94,7 +94,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, it enables the router
+		"""
 
 		Returns:
 			bool
@@ -106,7 +106,7 @@ class Router(Base):
 
 	@property
 	def InstanceIdForEidToRlocMapCacheRefresh(self):
-		"""It shows the instance ID for Eid to RLOc the refreshed Map Cache
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class Router(Base):
 
 	@property
 	def InstanceIdForMapServerCacheRefresh(self):
-		"""It shows the instance ID for refreshed Map Server Cache
+		"""
 
 		Returns:
 			number
@@ -130,7 +130,7 @@ class Router(Base):
 
 	@property
 	def IsEidToRlocMapCacheInfoRefreshed(self):
-		"""If true, it shows the Eid to Rloc Map Cache information refreshed
+		"""
 
 		Returns:
 			bool
@@ -139,7 +139,7 @@ class Router(Base):
 
 	@property
 	def IsEidToRlocMapCacheRefreshAllInstances(self):
-		"""If true, it shows the Eid to Rloc Map Cache refreshed in all instances
+		"""
 
 		Returns:
 			bool
@@ -151,7 +151,7 @@ class Router(Base):
 
 	@property
 	def IsMapServerCacheInfoRefreshed(self):
-		"""If true, it shows the Map Server Cache Information refreshed (Read-only)
+		"""
 
 		Returns:
 			bool
@@ -160,7 +160,7 @@ class Router(Base):
 
 	@property
 	def IsMapServerCacheRefreshAllInstances(self):
-		"""If true, it shows the Map Server Cache All Instances refreshed (Read-only)
+		"""
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class Router(Base):
 
 	@property
 	def MappingServiceMode(self):
-		"""It shows the mapping of service mode
+		"""
 
 		Returns:
 			str(standAlone|alt|na)
@@ -184,7 +184,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""It shows the Router id
+		"""
 
 		Returns:
 			str
@@ -196,7 +196,7 @@ class Router(Base):
 
 	@property
 	def TunnelRouterMode(self):
-		"""It shows the tunnel Router mode
+		"""
 
 		Returns:
 			str(itr|etr|xtr|msmr)
@@ -210,14 +210,14 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true, it enables the router
-			InstanceIdForEidToRlocMapCacheRefresh (number): It shows the instance ID for Eid to RLOc the refreshed Map Cache
-			InstanceIdForMapServerCacheRefresh (number): It shows the instance ID for refreshed Map Server Cache
-			IsEidToRlocMapCacheRefreshAllInstances (bool): If true, it shows the Eid to Rloc Map Cache refreshed in all instances
-			IsMapServerCacheRefreshAllInstances (bool): If true, it shows the Map Server Cache All Instances refreshed (Read-only)
-			MappingServiceMode (str(standAlone|alt|na)): It shows the mapping of service mode
-			RouterId (str): It shows the Router id
-			TunnelRouterMode (str(itr|etr|xtr|msmr)): It shows the tunnel Router mode
+			Enabled (bool): 
+			InstanceIdForEidToRlocMapCacheRefresh (number): 
+			InstanceIdForMapServerCacheRefresh (number): 
+			IsEidToRlocMapCacheRefreshAllInstances (bool): 
+			IsMapServerCacheRefreshAllInstances (bool): 
+			MappingServiceMode (str(standAlone|alt|na)): 
+			RouterId (str): 
+			TunnelRouterMode (str(itr|etr|xtr|msmr)): 
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -243,16 +243,16 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			Enabled (bool): If true, it enables the router
-			InstanceIdForEidToRlocMapCacheRefresh (number): It shows the instance ID for Eid to RLOc the refreshed Map Cache
-			InstanceIdForMapServerCacheRefresh (number): It shows the instance ID for refreshed Map Server Cache
-			IsEidToRlocMapCacheInfoRefreshed (bool): If true, it shows the Eid to Rloc Map Cache information refreshed
-			IsEidToRlocMapCacheRefreshAllInstances (bool): If true, it shows the Eid to Rloc Map Cache refreshed in all instances
-			IsMapServerCacheInfoRefreshed (bool): If true, it shows the Map Server Cache Information refreshed (Read-only)
-			IsMapServerCacheRefreshAllInstances (bool): If true, it shows the Map Server Cache All Instances refreshed (Read-only)
-			MappingServiceMode (str(standAlone|alt|na)): It shows the mapping of service mode
-			RouterId (str): It shows the Router id
-			TunnelRouterMode (str(itr|etr|xtr|msmr)): It shows the tunnel Router mode
+			Enabled (bool): 
+			InstanceIdForEidToRlocMapCacheRefresh (number): 
+			InstanceIdForMapServerCacheRefresh (number): 
+			IsEidToRlocMapCacheInfoRefreshed (bool): 
+			IsEidToRlocMapCacheRefreshAllInstances (bool): 
+			IsMapServerCacheInfoRefreshed (bool): 
+			IsMapServerCacheRefreshAllInstances (bool): 
+			MappingServiceMode (str(standAlone|alt|na)): 
+			RouterId (str): 
+			TunnelRouterMode (str(itr|etr|xtr|msmr)): 
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index
@@ -280,13 +280,11 @@ class Router(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

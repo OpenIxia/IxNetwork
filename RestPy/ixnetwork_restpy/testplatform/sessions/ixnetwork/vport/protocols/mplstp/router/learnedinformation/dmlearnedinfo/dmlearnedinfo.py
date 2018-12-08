@@ -37,7 +37,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def AverageLooseRtt(self):
-		"""This signifies the average loose RTT.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def AverageLooseRttVariation(self):
-		"""This signifies the average loose RTT variation.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def AverageStrictRtt(self):
-		"""This signifies the average strict RTT.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def AverageStrictRttVariation(self):
-		"""This signifies the average strict RTT variation.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def DmQueriesSent(self):
-		"""This signifies the number of DM queries sent.
+		"""
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def DmResponsesReceived(self):
-		"""This signifies the total number of DM responses received.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def IncomingLabelOuterInner(self):
-		"""This signifies the incoming label information.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def MaxLooseRtt(self):
-		"""This signifies the maximum loose RTT.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def MaxStrictRtt(self):
-		"""This signifies the maximum strict RTT.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def MinLooseRtt(self):
-		"""This signifies the minimum loose RTT.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def MinStrictRtt(self):
-		"""This signifies the minimum strict RTT.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelOuterInner(self):
-		"""This signifies the Outgoing Label information.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class DmLearnedInfo(Base):
 
 	@property
 	def Type(self):
-		"""This signifies the type of the learned information.
+		"""
 
 		Returns:
 			str
@@ -159,19 +159,19 @@ class DmLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all dmLearnedInfo data from the server.
 
 		Args:
-			AverageLooseRtt (str): This signifies the average loose RTT.
-			AverageLooseRttVariation (str): This signifies the average loose RTT variation.
-			AverageStrictRtt (str): This signifies the average strict RTT.
-			AverageStrictRttVariation (str): This signifies the average strict RTT variation.
-			DmQueriesSent (number): This signifies the number of DM queries sent.
-			DmResponsesReceived (number): This signifies the total number of DM responses received.
-			IncomingLabelOuterInner (str): This signifies the incoming label information.
-			MaxLooseRtt (str): This signifies the maximum loose RTT.
-			MaxStrictRtt (str): This signifies the maximum strict RTT.
-			MinLooseRtt (str): This signifies the minimum loose RTT.
-			MinStrictRtt (str): This signifies the minimum strict RTT.
-			OutgoingLabelOuterInner (str): This signifies the Outgoing Label information.
-			Type (str): This signifies the type of the learned information.
+			AverageLooseRtt (str): 
+			AverageLooseRttVariation (str): 
+			AverageStrictRtt (str): 
+			AverageStrictRttVariation (str): 
+			DmQueriesSent (number): 
+			DmResponsesReceived (number): 
+			IncomingLabelOuterInner (str): 
+			MaxLooseRtt (str): 
+			MaxStrictRtt (str): 
+			MinLooseRtt (str): 
+			MinStrictRtt (str): 
+			OutgoingLabelOuterInner (str): 
+			Type (str): 
 
 		Returns:
 			self: This instance with matching dmLearnedInfo data retrieved from the server available through an iterator or index

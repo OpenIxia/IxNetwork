@@ -260,6 +260,31 @@ class BgpMVpnSenderSitesIpv4(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, GroupAddressCount=None, GroupMaskWidth=None, SendTriggeredSourceActiveADRoute=None, SourceAddressCount=None, SourceGroupMapping=None, SourceMaskWidth=None, StartGroupAddressIpv4=None, StartSourceAddressIpv4=None):
+		"""Base class infrastructure that gets a list of bgpMVpnSenderSitesIpv4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			GroupAddressCount (str): optional regex of groupAddressCount
+			GroupMaskWidth (str): optional regex of groupMaskWidth
+			SendTriggeredSourceActiveADRoute (str): optional regex of sendTriggeredSourceActiveADRoute
+			SourceAddressCount (str): optional regex of sourceAddressCount
+			SourceGroupMapping (str): optional regex of sourceGroupMapping
+			SourceMaskWidth (str): optional regex of sourceMaskWidth
+			StartGroupAddressIpv4 (str): optional regex of startGroupAddressIpv4
+			StartSourceAddressIpv4 (str): optional regex of startSourceAddressIpv4
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

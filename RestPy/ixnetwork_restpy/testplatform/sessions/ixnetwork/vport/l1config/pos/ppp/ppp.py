@@ -37,7 +37,7 @@ class Ppp(Base):
 
 	@property
 	def ConfigurationRetries(self):
-		"""The number of additional PPP configuration requests to send before beginning the termination process (if the peer is not properly acknowledging them). The default is 9 requests.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Ppp(Base):
 
 	@property
 	def EnableAccmNegotiation(self):
-		"""Enables negotiation of Asynchronous Control Character Mask (ACCM).
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Ppp(Base):
 
 	@property
 	def EnableIpV4(self):
-		"""Enables the IPv4 Network Control Protocol (IPCP).
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Ppp(Base):
 
 	@property
 	def EnableIpV6(self):
-		"""Enables the IPv6 Network Control Protocol (IPCP).
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Ppp(Base):
 
 	@property
 	def EnableLqm(self):
-		"""Enables Link Quality Monitoring (LQM) on the link.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Ppp(Base):
 
 	@property
 	def EnableMpls(self):
-		"""Enables MPLS on the link.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Ppp(Base):
 
 	@property
 	def EnableOsi(self):
-		"""Enables the Open System Interconnection (OSI) Network Layer Control Protocol (OSINLCP).
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class Ppp(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables PPP for the POS port.
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class Ppp(Base):
 
 	@property
 	def LocalIpAddress(self):
-		"""The local port's requested IPv4 address. This address is sent by the local peer to the remote peer, as a Configuration Option in an IPCP Configuration Request packet. The default is 0.0.0.1.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class Ppp(Base):
 
 	@property
 	def LocalIpV6IdType(self):
-		"""The type of Interface Identifier (IID). It is a Configuration Options sent in the Configuration Request packet. A globally unique, non-zero Interface Identifier is preferred.
+		"""
 
 		Returns:
 			str(ipV6|lastNegotiated|macBased|random)
@@ -157,7 +157,7 @@ class Ppp(Base):
 
 	@property
 	def LocalIpV6Iid(self):
-		"""(a 64-bit/8-octet value) The IPv6 Interface Identifier. It MUST be unique on the link.
+		"""
 
 		Returns:
 			str
@@ -169,7 +169,7 @@ class Ppp(Base):
 
 	@property
 	def LocalIpV6MacBasedIid(self):
-		"""(a 48-bit/6-octet value) The MAC Interface Identifier. It MUST be unique on the link.
+		"""
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class Ppp(Base):
 
 	@property
 	def LocalIpV6NegotiationMode(self):
-		"""Before the negotiation of the Interface Identifier (IID), the node chooses a tentative Interface Identifier.
+		"""
 
 		Returns:
 			str(localMay|localMust|peerMust)
@@ -193,7 +193,7 @@ class Ppp(Base):
 
 	@property
 	def LqmReportInterval(self):
-		"""The number of seconds between Link Quality Monitoring (LQM) reports.
+		"""
 
 		Returns:
 			number
@@ -205,7 +205,7 @@ class Ppp(Base):
 
 	@property
 	def PeerIpV6IdType(self):
-		"""The type of Interface Identifier (IID). It is a Configuration Options sent in the Configuration Request packet. A globally unique, non-zero Interface Identifier is preferred.
+		"""
 
 		Returns:
 			str(ipV6|lastNegotiated|macBased|random)
@@ -217,7 +217,7 @@ class Ppp(Base):
 
 	@property
 	def PeerIpV6Iid(self):
-		"""(a 64-bit/8-octet value) The IPv6 Interface Identifier. It MUST be unique on the link.
+		"""
 
 		Returns:
 			str
@@ -229,7 +229,7 @@ class Ppp(Base):
 
 	@property
 	def PeerIpV6MacBasedIid(self):
-		"""(a 48-bit/6-octet value) The MAC Interface Identifier. It MUST be unique on the link.
+		"""
 
 		Returns:
 			str
@@ -241,7 +241,7 @@ class Ppp(Base):
 
 	@property
 	def PeerIpV6NegotiationMode(self):
-		"""Before the negotiation of the Interface Identifier (IID), the node chooses a tentative Interface Identifier.
+		"""
 
 		Returns:
 			str(localMust|peerMay|peerMust)
@@ -253,7 +253,7 @@ class Ppp(Base):
 
 	@property
 	def PppLinkState(self):
-		"""(Read-only) Indicates the current port link state. If PPP is enabled, the fully operational link state is indicated as PPP Up.
+		"""
 
 		Returns:
 			str
@@ -262,7 +262,7 @@ class Ppp(Base):
 
 	@property
 	def RetryTimeout(self):
-		"""The time, in seconds, between retransmissions of successive configuration or termination requests. The default is 8 seconds.
+		"""
 
 		Returns:
 			number
@@ -274,7 +274,7 @@ class Ppp(Base):
 
 	@property
 	def RxAlignment(self):
-		"""The byte alignment desired for Receive, in bytes. The default is 0 bytes.
+		"""
 
 		Returns:
 			number
@@ -286,7 +286,7 @@ class Ppp(Base):
 
 	@property
 	def RxMaxReceiveUnit(self):
-		"""The maximum transmit frame size desired, in bytes. The default is 65,535 bytes.
+		"""
 
 		Returns:
 			number
@@ -298,7 +298,7 @@ class Ppp(Base):
 
 	@property
 	def TxAlignment(self):
-		"""The byte alignment desired for Transmit, in bytes. The default is 0 bytes.
+		"""
 
 		Returns:
 			number
@@ -310,7 +310,7 @@ class Ppp(Base):
 
 	@property
 	def TxMaxReceiveUnit(self):
-		"""The maximum transmit frame size desired, in bytes. The default is 65,535 bytes.
+		"""
 
 		Returns:
 			number
@@ -322,7 +322,7 @@ class Ppp(Base):
 
 	@property
 	def UseMagicNumber(self):
-		"""If enabled, magic number handling is enabled for negotiation and usage. The magic number is used primarily to detect looped connections.
+		"""
 
 		Returns:
 			bool

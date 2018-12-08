@@ -259,6 +259,40 @@ class PimV4JoinPruneList(Base):
 		"""
 		return self._get_attribute('switchOverInterval')
 
+	def get_device_ids(self, PortNames=None, Active=None, EnableFlapInfo=None, EnablePack=None, FlapInterval=None, GroupAddressCount=None, GroupV4Address=None, GroupV4MaskWidth=None, PruneSourceAddressCount=None, PruneSourceV4Address=None, PruneSourceV4MaskWidth=None, RangeType=None, RegisterStopTriggerCount=None, RpV4Address=None, SourceAddressCount=None, SourceGroupMappingType=None, SourceV4Address=None, SourceV4MaskWidth=None, SwitchOverInterval=None):
+		"""Base class infrastructure that gets a list of pimV4JoinPruneList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnableFlapInfo (str): optional regex of enableFlapInfo
+			EnablePack (str): optional regex of enablePack
+			FlapInterval (str): optional regex of flapInterval
+			GroupAddressCount (str): optional regex of groupAddressCount
+			GroupV4Address (str): optional regex of groupV4Address
+			GroupV4MaskWidth (str): optional regex of groupV4MaskWidth
+			PruneSourceAddressCount (str): optional regex of pruneSourceAddressCount
+			PruneSourceV4Address (str): optional regex of pruneSourceV4Address
+			PruneSourceV4MaskWidth (str): optional regex of pruneSourceV4MaskWidth
+			RangeType (str): optional regex of rangeType
+			RegisterStopTriggerCount (str): optional regex of registerStopTriggerCount
+			RpV4Address (str): optional regex of rpV4Address
+			SourceAddressCount (str): optional regex of sourceAddressCount
+			SourceGroupMappingType (str): optional regex of sourceGroupMappingType
+			SourceV4Address (str): optional regex of sourceV4Address
+			SourceV4MaskWidth (str): optional regex of sourceV4MaskWidth
+			SwitchOverInterval (str): optional regex of switchOverInterval
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Join(self):
 		"""Executes the join operation on the server.
 

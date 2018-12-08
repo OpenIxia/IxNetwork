@@ -51,20 +51,6 @@ class NetconfClient(Base):
 		return CommandSnippetsData(self)._select()
 
 	@property
-	def LearnedInfo(self):
-		"""An instance of the LearnedInfo class.
-
-		Returns:
-			obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.learnedinfo.learnedinfo.LearnedInfo)
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		from ixnetwork_restpy.testplatform.sessions.ixnetwork.topology.learnedinfo.learnedinfo import LearnedInfo
-		return LearnedInfo(self)
-
-	@property
 	def Active(self):
 		"""Activate/Deactivate Configuration
 
@@ -239,39 +225,6 @@ class NetconfClient(Base):
 		return self._get_attribute('errors')
 
 	@property
-	def FetchSchemaInfo(self):
-		"""Whether a get-schema operation will be performed after capability exchange
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('fetchSchemaInfo')
-
-	@property
-	def LogCleanUpOption(self):
-		"""Debug Log Clean Up
-
-		Returns:
-			str(clean|notClean)
-		"""
-		return self._get_attribute('logCleanUpOption')
-	@LogCleanUpOption.setter
-	def LogCleanUpOption(self, value):
-		self._set_attribute('logCleanUpOption', value)
-
-	@property
-	def LogFileAge(self):
-		"""This field determines how old logs to be deleted.
-
-		Returns:
-			number
-		"""
-		return self._get_attribute('logFileAge')
-	@LogFileAge.setter
-	def LogFileAge(self, value):
-		self._set_attribute('logFileAge', value)
-
-	@property
 	def Multiplier(self):
 		"""Number of layer instances per parent instance (multiplier)
 
@@ -380,15 +333,6 @@ class NetconfClient(Base):
 		return self._get_attribute('saveReplyXML')
 
 	@property
-	def SchemaOutputDirectory(self):
-		"""Location of Directory in Client where the retrieved modules will be stored.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('schemaOutputDirectory')
-
-	@property
 	def ServerIpv4Address(self):
 		"""Specify the IPv4 address of the DUT to which the Netconf Server should connect.
 
@@ -454,13 +398,11 @@ class NetconfClient(Base):
 		"""
 		return self._get_attribute('userName')
 
-	def add(self, ConnectedVia=None, LogCleanUpOption=None, LogFileAge=None, Multiplier=None, Name=None, NumberOfCommandSnippetsPerClient=None, StackedLayers=None):
+	def add(self, ConnectedVia=None, Multiplier=None, Name=None, NumberOfCommandSnippetsPerClient=None, StackedLayers=None):
 		"""Adds a new netconfClient node on the server and retrieves it in this instance.
 
 		Args:
 			ConnectedVia (list(str[None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*])): List of layers this layer used to connect to the wire
-			LogCleanUpOption (str(clean|notClean)): Debug Log Clean Up
-			LogFileAge (number): This field determines how old logs to be deleted.
 			Multiplier (number): Number of layer instances per parent instance (multiplier)
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 			NumberOfCommandSnippetsPerClient (number): Number of Command Snippets per client.Maximum 100 are allowed per client.
@@ -483,7 +425,7 @@ class NetconfClient(Base):
 		"""
 		self._delete()
 
-	def find(self, ConnectedVia=None, Count=None, DescriptiveName=None, Errors=None, LogCleanUpOption=None, LogFileAge=None, Multiplier=None, Name=None, NetconfSessionState=None, NumberOfCommandSnippetsPerClient=None, SessionStatus=None, StackedLayers=None, StateCounts=None, Status=None):
+	def find(self, ConnectedVia=None, Count=None, DescriptiveName=None, Errors=None, Multiplier=None, Name=None, NetconfSessionState=None, NumberOfCommandSnippetsPerClient=None, SessionStatus=None, StackedLayers=None, StateCounts=None, Status=None):
 		"""Finds and retrieves netconfClient data from the server.
 
 		All named parameters support regex and can be used to selectively retrieve netconfClient data from the server.
@@ -494,8 +436,6 @@ class NetconfClient(Base):
 			Count (number): Number of elements inside associated multiplier-scaled container object, e.g. number of devices inside a Device Group
 			DescriptiveName (str): Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
 			Errors (list(dict(arg1:str[None|/api/v1/sessions/1/ixnetwork/?deepchild=*],arg2:list[str]))): A list of errors that have occurred
-			LogCleanUpOption (str(clean|notClean)): Debug Log Clean Up
-			LogFileAge (number): This field determines how old logs to be deleted.
 			Multiplier (number): Number of layer instances per parent instance (multiplier)
 			Name (str): Name of NGPF element, guaranteed to be unique in Scenario
 			NetconfSessionState (list(str[authenticating|connecting|initialized|none|openingChannel|ready|reconnecting|requestingSubsystem])): Shows the current state of the Netconf SSH Session. None - Not started. Initialized - Configuration has reached the port and TCP connect is on-going. Connecting - SSH Connect is in process. Authenticating - The SSH session is authenticating with the DUT using user/password or Key-based authentication. Open Channel - SSH session is established and SSH Channel is being opened on which data will be sent. Requesting Subsystem - Netconf Subsystem is being requested on top of SSH channel. Ready - The SSH session is in Ready state and waiting for Netconf data to be exchanged. Note that this does not mean that NETCONF is in Up state. That is reached only after Netconf Capabilities are negotiated and there is at least one matching Netconf version (1.0 or 1.1) supported on both client and server. Reconnecting - The TCP connection is broken with DUT and the client is trying to reconnect via TCP with the server.
@@ -528,8 +468,49 @@ class NetconfClient(Base):
 		"""
 		return self._read(href)
 
-	def ClearAllLearnedInfo(self):
-		"""Executes the clearAllLearnedInfo operation on the server.
+	def get_device_ids(self, PortNames=None, Active=None, CapabilitiesBase1Dot0=None, CapabilitiesBase1Dot1=None, CapabilitiesCandidate=None, CapabilitiesConfirmedCommit=None, CapabilitiesInterleave=None, CapabilitiesNotification=None, CapabilitiesRollbackOnError=None, CapabilitiesStartup=None, CapabilitiesUrl=None, CapabilitiesValidate=None, CapabilitiesWritableRunning=None, CapabilitiesXpath=None, DecryptedCapture=None, EnablePassphrase=None, OutputDirectory=None, Passphrase=None, Password=None, PortNumber=None, PrivateKeyDirectory=None, PrivateKeyFileName=None, SaveReplyXML=None, ServerIpv4Address=None, SshAuthenticationMechanism=None, UserName=None):
+		"""Base class infrastructure that gets a list of netconfClient device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			CapabilitiesBase1Dot0 (str): optional regex of capabilitiesBase1Dot0
+			CapabilitiesBase1Dot1 (str): optional regex of capabilitiesBase1Dot1
+			CapabilitiesCandidate (str): optional regex of capabilitiesCandidate
+			CapabilitiesConfirmedCommit (str): optional regex of capabilitiesConfirmedCommit
+			CapabilitiesInterleave (str): optional regex of capabilitiesInterleave
+			CapabilitiesNotification (str): optional regex of capabilitiesNotification
+			CapabilitiesRollbackOnError (str): optional regex of capabilitiesRollbackOnError
+			CapabilitiesStartup (str): optional regex of capabilitiesStartup
+			CapabilitiesUrl (str): optional regex of capabilitiesUrl
+			CapabilitiesValidate (str): optional regex of capabilitiesValidate
+			CapabilitiesWritableRunning (str): optional regex of capabilitiesWritableRunning
+			CapabilitiesXpath (str): optional regex of capabilitiesXpath
+			DecryptedCapture (str): optional regex of decryptedCapture
+			EnablePassphrase (str): optional regex of enablePassphrase
+			OutputDirectory (str): optional regex of outputDirectory
+			Passphrase (str): optional regex of passphrase
+			Password (str): optional regex of password
+			PortNumber (str): optional regex of portNumber
+			PrivateKeyDirectory (str): optional regex of privateKeyDirectory
+			PrivateKeyFileName (str): optional regex of privateKeyFileName
+			SaveReplyXML (str): optional regex of saveReplyXML
+			ServerIpv4Address (str): optional regex of serverIpv4Address
+			SshAuthenticationMechanism (str): optional regex of sshAuthenticationMechanism
+			UserName (str): optional regex of userName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
+	def ClearAllLearnedSchemaInfo(self):
+		"""Executes the clearAllLearnedSchemaInfo operation on the server.
 
 		Clear All Learned Schema Info.
 
@@ -541,10 +522,10 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self
-		return self._execute('ClearAllLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('ClearAllLearnedSchemaInfo', payload=locals(), response_object=None)
 
-	def ClearAllLearnedInfo(self, SessionIndices):
-		"""Executes the clearAllLearnedInfo operation on the server.
+	def ClearAllLearnedSchemaInfo(self, SessionIndices):
+		"""Executes the clearAllLearnedSchemaInfo operation on the server.
 
 		Clear All Learned Schema Info.
 
@@ -557,10 +538,10 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self
-		return self._execute('ClearAllLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('ClearAllLearnedSchemaInfo', payload=locals(), response_object=None)
 
-	def ClearAllLearnedInfo(self, SessionIndices):
-		"""Executes the clearAllLearnedInfo operation on the server.
+	def ClearAllLearnedSchemaInfo(self, SessionIndices):
+		"""Executes the clearAllLearnedSchemaInfo operation on the server.
 
 		Clear All Learned Schema Info.
 
@@ -573,10 +554,10 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self
-		return self._execute('ClearAllLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('ClearAllLearnedSchemaInfo', payload=locals(), response_object=None)
 
-	def ClearAllLearnedInfoInClient(self, Arg2):
-		"""Executes the clearAllLearnedInfoInClient operation on the server.
+	def ClearAllLearnedSchemaInfoInClient(self, Arg2):
+		"""Executes the clearAllLearnedSchemaInfoInClient operation on the server.
 
 		Clears ALL learned info.
 
@@ -592,7 +573,7 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self.href
-		return self._execute('ClearAllLearnedInfoInClient', payload=locals(), response_object=None)
+		return self._execute('ClearAllLearnedSchemaInfoInClient', payload=locals(), response_object=None)
 
 	def ExecuteCommandGet(self):
 		"""Executes the executeCommandGet operation on the server.
@@ -679,8 +660,8 @@ class NetconfClient(Base):
 		Arg1 = self.href
 		return self._execute('GetDecryptedCapture', payload=locals(), response_object=None)
 
-	def GetLearnedInfo(self):
-		"""Executes the getLearnedInfo operation on the server.
+	def GetLearnedSchemaInfo(self):
+		"""Executes the getLearnedSchemaInfo operation on the server.
 
 		Get Learned Schema Info.
 
@@ -692,10 +673,10 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self
-		return self._execute('GetLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
 
-	def GetLearnedInfo(self, SessionIndices):
-		"""Executes the getLearnedInfo operation on the server.
+	def GetLearnedSchemaInfo(self, SessionIndices):
+		"""Executes the getLearnedSchemaInfo operation on the server.
 
 		Get Learned Schema Info.
 
@@ -708,10 +689,10 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self
-		return self._execute('GetLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
 
-	def GetLearnedInfo(self, SessionIndices):
-		"""Executes the getLearnedInfo operation on the server.
+	def GetLearnedSchemaInfo(self, SessionIndices):
+		"""Executes the getLearnedSchemaInfo operation on the server.
 
 		Get Learned Schema Info.
 
@@ -724,10 +705,10 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self
-		return self._execute('GetLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
 
-	def GetLearnedInfo(self, Arg2):
-		"""Executes the getLearnedInfo operation on the server.
+	def GetLearnedSchemaInfo(self, Arg2):
+		"""Executes the getLearnedSchemaInfo operation on the server.
 
 		Gets learned info.
 
@@ -743,7 +724,7 @@ class NetconfClient(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self.href
-		return self._execute('GetLearnedInfo', payload=locals(), response_object=None)
+		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
 
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.

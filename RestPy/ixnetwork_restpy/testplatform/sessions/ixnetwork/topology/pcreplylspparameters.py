@@ -105,24 +105,6 @@ class PcReplyLspParameters(Base):
 		return self._get_attribute('biDirectional')
 
 	@property
-	def BindingType(self):
-		"""Indicates the type of binding included in the TLV. Types are as follows: 20bit MPLS Label 32bit MPLS Label. Default value is 20bit MPLS Label.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('bindingType')
-
-	@property
-	def Bos(self):
-		"""This bit is set to true for the last entry in the label stack i.e., for the bottom of the stack, and false for all other label stack entries. This control will be editable only if Binding Type is MPLS Label 32bit.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('bos')
-
-	@property
 	def Count(self):
 		"""Number of elements inside associated multiplier-scaled container object, e.g. number of devices inside a Device Group
 
@@ -276,15 +258,6 @@ class PcReplyLspParameters(Base):
 		return self._get_attribute('includeSymbolicPathNameTlv')
 
 	@property
-	def IncludeTEPathBindingTLV(self):
-		"""Indicates if TE-PATH-BINDING TLV is to be included in PCInitiate message.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('includeTEPathBindingTLV')
-
-	@property
 	def LocalProtection(self):
 		"""Local Protection
 
@@ -292,15 +265,6 @@ class PcReplyLspParameters(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('localProtection')
-
-	@property
-	def MplsLabel(self):
-		"""This control will be editable if the Binding Type is set to either 20bit or 32bit MPLS-Label. This field will take the 20bit value of the MPLS-Label
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('mplsLabel')
 
 	@property
 	def Name(self):
@@ -459,15 +423,6 @@ class PcReplyLspParameters(Base):
 		return self._get_attribute('responsePathType')
 
 	@property
-	def SendEmptyTLV(self):
-		"""If enabled all fields after Binding Type will be grayed out.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('sendEmptyTLV')
-
-	@property
 	def SessionInfo(self):
 		"""Logs additional information about the LSP state
 
@@ -494,23 +449,52 @@ class PcReplyLspParameters(Base):
 		"""
 		return self._get_attribute('symbolicPathName')
 
-	@property
-	def Tc(self):
-		"""This field is used to carry traffic class information. This control will be editable only if Binding Type is MPLS Label 32bit.
+	def get_device_ids(self, PortNames=None, Active=None, Bandwidth=None, BiDirectional=None, EnableCFlag=None, EnableEro=None, EnableLoose=None, EnableXro=None, ExcludeAny=None, FailBit=None, HoldingPriority=None, IncludeAll=None, IncludeAny=None, IncludeBandwidth=None, IncludeLsp=None, IncludeLspa=None, IncludeMetric=None, IncludeRp=None, IncludeSymbolicPathNameTlv=None, LocalProtection=None, NatureOfIssue=None, PlspId=None, PriorityValue=None, ProcessType=None, ReflectLSP=None, ReflectRP=None, ReflectedObjectNoPath=None, RequestId=None, ResponseOptions=None, ResponsePathType=None, SetupPriority=None, SymbolicPathName=None):
+		"""Base class infrastructure that gets a list of pcReplyLspParameters device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Bandwidth (str): optional regex of bandwidth
+			BiDirectional (str): optional regex of biDirectional
+			EnableCFlag (str): optional regex of enableCFlag
+			EnableEro (str): optional regex of enableEro
+			EnableLoose (str): optional regex of enableLoose
+			EnableXro (str): optional regex of enableXro
+			ExcludeAny (str): optional regex of excludeAny
+			FailBit (str): optional regex of failBit
+			HoldingPriority (str): optional regex of holdingPriority
+			IncludeAll (str): optional regex of includeAll
+			IncludeAny (str): optional regex of includeAny
+			IncludeBandwidth (str): optional regex of includeBandwidth
+			IncludeLsp (str): optional regex of includeLsp
+			IncludeLspa (str): optional regex of includeLspa
+			IncludeMetric (str): optional regex of includeMetric
+			IncludeRp (str): optional regex of includeRp
+			IncludeSymbolicPathNameTlv (str): optional regex of includeSymbolicPathNameTlv
+			LocalProtection (str): optional regex of localProtection
+			NatureOfIssue (str): optional regex of natureOfIssue
+			PlspId (str): optional regex of plspId
+			PriorityValue (str): optional regex of priorityValue
+			ProcessType (str): optional regex of processType
+			ReflectLSP (str): optional regex of reflectLSP
+			ReflectRP (str): optional regex of reflectRP
+			ReflectedObjectNoPath (str): optional regex of reflectedObjectNoPath
+			RequestId (str): optional regex of requestId
+			ResponseOptions (str): optional regex of responseOptions
+			ResponsePathType (str): optional regex of responsePathType
+			SetupPriority (str): optional regex of setupPriority
+			SymbolicPathName (str): optional regex of symbolicPathName
 
 		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('tc')
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
 
-	@property
-	def Ttl(self):
-		"""This field is used to encode a time-to-live value. This control will be editable only if Binding Type is MPLS Label 32bit.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
 		"""
-		return self._get_attribute('ttl')
+		return self._get_ngpf_device_ids(locals())
 
 	def ReturnDelegation(self):
 		"""Executes the returnDelegation operation on the server.

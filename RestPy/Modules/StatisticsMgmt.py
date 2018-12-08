@@ -108,7 +108,7 @@ class Statistics(object):
             if counter == counterStop and len(viewResults) == 0 :
                 raise Exception('\nAPI server failed to provide stat views for [{0}] {1}'.format(statViewName, deeperView))
 
-    def verifyAllProtocolSessions(self):
+    def verifyAllProtocolSessions(self, timeout=60):
         """
         Verify all configured protocols summary sessions for up.
         """
@@ -117,7 +117,7 @@ class Statistics(object):
         self.getStatView(caption='Protocols Summary')
 
         columnCaptions = self.getStatViewResults(statViewName='Protocols Summary', getColumnCaptions=True)
-        counterStop = 60
+        counterStop = timeout
         for counter in range(1, counterStop+1): 
             pageValues = self.getStatViewResults(statViewName='Protocols Summary', getPageValues=True)
             

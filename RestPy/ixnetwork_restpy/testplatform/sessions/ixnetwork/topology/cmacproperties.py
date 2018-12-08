@@ -656,6 +656,63 @@ class CMacProperties(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, ActiveTs=None, AdvertiseIpv4Address=None, AdvertiseIpv6Address=None, AggregatorAs=None, AggregatorId=None, AsSetMode=None, EnableAggregatorId=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableCluster=None, EnableCommunity=None, EnableExtendedCommunity=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EnableSecondLabel=None, EnableStickyStaticFlag=None, EnableUserDefinedSequenceNumber=None, EviId=None, FirstLabelStart=None, IncludeDefaultGatewayExtendedCommunity=None, Ipv4AddressPrefixLength=None, Ipv4NextHop=None, Ipv6AddressPrefixLength=None, Ipv6NextHop=None, LabelMode=None, LabelStep=None, LocalPreference=None, MultiExitDiscriminator=None, Origin=None, OriginatorId=None, OverridePeerAsSetMode=None, PeerAddress=None, SecondLabelStart=None, SequenceNumber=None, SetNextHop=None, SetNextHopIpType=None, UseSameSequenceNumber=None):
+		"""Base class infrastructure that gets a list of cMacProperties device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ActiveTs (str): optional regex of activeTs
+			AdvertiseIpv4Address (str): optional regex of advertiseIpv4Address
+			AdvertiseIpv6Address (str): optional regex of advertiseIpv6Address
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AsSetMode (str): optional regex of asSetMode
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EnableSecondLabel (str): optional regex of enableSecondLabel
+			EnableStickyStaticFlag (str): optional regex of enableStickyStaticFlag
+			EnableUserDefinedSequenceNumber (str): optional regex of enableUserDefinedSequenceNumber
+			EviId (str): optional regex of eviId
+			FirstLabelStart (str): optional regex of firstLabelStart
+			IncludeDefaultGatewayExtendedCommunity (str): optional regex of includeDefaultGatewayExtendedCommunity
+			Ipv4AddressPrefixLength (str): optional regex of ipv4AddressPrefixLength
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6AddressPrefixLength (str): optional regex of ipv6AddressPrefixLength
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LabelMode (str): optional regex of labelMode
+			LabelStep (str): optional regex of labelStep
+			LocalPreference (str): optional regex of localPreference
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			OverridePeerAsSetMode (str): optional regex of overridePeerAsSetMode
+			PeerAddress (str): optional regex of peerAddress
+			SecondLabelStart (str): optional regex of secondLabelStart
+			SequenceNumber (str): optional regex of sequenceNumber
+			SetNextHop (str): optional regex of setNextHop
+			SetNextHopIpType (str): optional regex of setNextHopIpType
+			UseSameSequenceNumber (str): optional regex of useSameSequenceNumber
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ReadvertiseCMac(self):
 		"""Executes the readvertiseCMac operation on the server.
 

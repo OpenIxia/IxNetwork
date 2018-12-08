@@ -51,7 +51,7 @@ class Pimsm(Base):
 
 	@property
 	def BsmFramePerInterval(self):
-		"""Allows to specify the rate of the number of BSM messages to be sent per interval. Note: This field is enabled only after enabling Rate Control interval.
+		"""
 
 		Returns:
 			number
@@ -63,7 +63,7 @@ class Pimsm(Base):
 
 	@property
 	def CrpFramePerInterval(self):
-		"""Allows to specify the rate of the number of CRP Adv messages to be sent per interval. Note: This field is enabled only after enabling Rate Control interval.
+		"""
 
 		Returns:
 			number
@@ -75,7 +75,7 @@ class Pimsm(Base):
 
 	@property
 	def DataMdtFramePerInterval(self):
-		"""The number of Data MST message to be sent per interval specified in the interval field below. The default value is 0, which means that messages will be sent on a best effort basis.
+		"""
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class Pimsm(Base):
 
 	@property
 	def DenyGrePimIpPrefix(self):
-		"""Ixia will reject all GRE-PIM packets whose outer source IP address falls within this specified network prefix.
+		"""
 
 		Returns:
 			str
@@ -99,7 +99,7 @@ class Pimsm(Base):
 
 	@property
 	def EnableDiscardJoinPruneProcessing(self):
-		"""If enabled, discards the join/prune messages.
+		"""
 
 		Returns:
 			bool
@@ -111,7 +111,7 @@ class Pimsm(Base):
 
 	@property
 	def EnableRateControl(self):
-		"""Rate control (flow control) is enabled on this PIM-SM port.
+		"""
 
 		Returns:
 			bool
@@ -123,7 +123,7 @@ class Pimsm(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the emulated PIM-SM router.
+		"""
 
 		Returns:
 			bool
@@ -135,7 +135,7 @@ class Pimsm(Base):
 
 	@property
 	def GreFilterType(self):
-		"""Specifies type of filter for GRE.
+		"""
 
 		Returns:
 			str(noDataMdt|dataMdtIpv4)
@@ -147,7 +147,7 @@ class Pimsm(Base):
 
 	@property
 	def HelloMsgsPerInterval(self):
-		"""The total hello messages received per interval.
+		"""
 
 		Returns:
 			number
@@ -159,7 +159,7 @@ class Pimsm(Base):
 
 	@property
 	def Interval(self):
-		"""The length of the interval during which a number of messages are sent. The default value is 0, which means that messages will be sent on a best effort basis.
+		"""
 
 		Returns:
 			number
@@ -171,7 +171,7 @@ class Pimsm(Base):
 
 	@property
 	def JoinPruneMessagesPerInterval(self):
-		"""The join/prune interval specifies the length of time between transmissions of join/prune messages.The default is 60 seconds.
+		"""
 
 		Returns:
 			number
@@ -183,7 +183,7 @@ class Pimsm(Base):
 
 	@property
 	def OverrideSourceIpForSmInterface(self):
-		"""If enabled, it will override source ip for SM interfaces.
+		"""
 
 		Returns:
 			bool
@@ -195,7 +195,7 @@ class Pimsm(Base):
 
 	@property
 	def RegisterMessagesPerInterval(self):
-		"""The number of Register messages to be sent per interval specified in the Interval field below. The default value is 0, which means that messages will be sent on a best effort basis.
+		"""
 
 		Returns:
 			number
@@ -207,7 +207,7 @@ class Pimsm(Base):
 
 	@property
 	def RegisterStopMessagesPerInterval(self):
-		"""The number of Register messages to be sent per interval specified in the Interval field below. The default value is 0, which means that messages will be sent on a best effort basis.
+		"""
 
 		Returns:
 			number
@@ -219,7 +219,7 @@ class Pimsm(Base):
 
 	@property
 	def RunningState(self):
-		"""The current running state of the PIM-SM server.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -228,8 +228,6 @@ class Pimsm(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the PIMSM protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=pimsm)): The method internally sets Arg1 to the current href for this instance
@@ -243,8 +241,6 @@ class Pimsm(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the PIMSM protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=pimsm)): The method internally sets Arg1 to the current href for this instance

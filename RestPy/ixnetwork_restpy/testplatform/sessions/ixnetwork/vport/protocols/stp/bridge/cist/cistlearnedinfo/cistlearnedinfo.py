@@ -37,7 +37,7 @@ class CistLearnedInfo(Base):
 
 	@property
 	def RegRootCost(self):
-		"""(Read-only) The cost for the shortest path from the advertising bridge to the regional root bridge.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class CistLearnedInfo(Base):
 
 	@property
 	def RegRootMac(self):
-		"""(Read-only) The regional root MAC address being advertised by the bridge.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class CistLearnedInfo(Base):
 
 	@property
 	def RegRootPriority(self):
-		"""(Read-only) The regional root priority being advertised by the bridge.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class CistLearnedInfo(Base):
 
 	@property
 	def RootCost(self):
-		"""(Read-only) The cost for the shortest path from the advertising bridge to the root bridge.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class CistLearnedInfo(Base):
 
 	@property
 	def RootMac(self):
-		"""(Read-only) The root bridge MAC address being advertised.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class CistLearnedInfo(Base):
 
 	@property
 	def RootPriority(self):
-		"""(Read-only) The priority being advertised for the root bridge.
+		"""
 
 		Returns:
 			number

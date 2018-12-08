@@ -1245,6 +1245,126 @@ class Ptp(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, AlternateMasterFlag=None, AnnounceCurrentUtcOffsetValid=None, AnnounceDropRate=None, AnnounceFrequencyTraceable=None, AnnounceLeap59=None, AnnounceLeap61=None, AnnouncePtpTimescale=None, AnnounceReceiptTimeout=None, AnnounceTimeTraceable=None, Bmca=None, ClockAccuracy=None, ClockClass=None, ClockIdentity=None, CommunicationMode=None, CumulativeScaledRateOffset=None, CurrentUtcOffset=None, CustomClockId=None, DelayMechanism=None, DelayReqDropRate=None, DelayReqOffset=None, DelayReqResidenceTime=None, DelayReqSpread=None, DelayRespDropRate=None, DelayRespReceiptTimeout=None, DelayRespResidenceTime=None, DelayResponseDelay=None, DelayResponseDelayInsertionRate=None, Domain=None, DropMalformed=None, DropSignalReqAnnounce=None, DropSignalReqDelayResp=None, DropSignalReqSync=None, FollowUpBadCrcRate=None, FollowUpDelay=None, FollowUpDelayInsertionRate=None, FollowUpDropRate=None, FollowUpResidenceTime=None, GmTimeBaseIndicator=None, GrandmasterIdentity=None, GrantDelayRespDurationInterval=None, GrantSyncDurationInterval=None, GrantUnicastDurationInterval=None, HandleAnnounceTlv=None, HandleCancelTlv=None, LastGmPhaseChange=None, LearnPortId=None, LogAnnounceInterval=None, LogDelayReqInterval=None, LogSyncInterval=None, MasterClockId=None, MasterCount=None, MasterIpAddress=None, MasterIpIncrementBy=None, MasterIpv6Address=None, MasterIpv6IncrementBy=None, MasterMacAddress=None, MasterMacIncrementBy=None, MulticastAddress=None, NanosecondsPerSecond=None, NotSlave=None, OffsetScaledLogVariance=None, OneWay=None, PDelayFollowUpDelay=None, PDelayFollowUpDelayInsertionRate=None, PDelayFollowUpDropRate=None, PDelayFollowUpResidenceTime=None, PathTraceTLV=None, PortNumber=None, Priority1=None, Priority2=None, Profile=None, RenewalInvited=None, RequestAttempts=None, RequestHolddown=None, RequestInterval=None, ReverseSync=None, ReverseSyncIntervalPercent=None, Role=None, RxCalibration=None, ScaledLastGmFreqChange=None, SendMulticastAnnounce=None, SignalInterval=None, SignalUnicastHandling=None, SimulateBoundary=None, SimulateTransparent=None, SlaveCount=None, SlaveIpAddress=None, SlaveIpIncrementBy=None, SlaveIpv6Address=None, SlaveIpv6IncrementBy=None, SlaveMacAddress=None, SlaveMacIncrementBy=None, StepMode=None, StepsRemoved=None, StrictGrant=None, SyncDropRate=None, SyncReceiptTimeout=None, SyncReceiptTimeoutgPTP=None, SyncResidenceTime=None, TimeSource=None, TimestampOffset=None, TxCalibration=None, TxTwoStepCalibration=None, UpdateTime=None):
+		"""Base class infrastructure that gets a list of ptp device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AlternateMasterFlag (str): optional regex of alternateMasterFlag
+			AnnounceCurrentUtcOffsetValid (str): optional regex of announceCurrentUtcOffsetValid
+			AnnounceDropRate (str): optional regex of announceDropRate
+			AnnounceFrequencyTraceable (str): optional regex of announceFrequencyTraceable
+			AnnounceLeap59 (str): optional regex of announceLeap59
+			AnnounceLeap61 (str): optional regex of announceLeap61
+			AnnouncePtpTimescale (str): optional regex of announcePtpTimescale
+			AnnounceReceiptTimeout (str): optional regex of announceReceiptTimeout
+			AnnounceTimeTraceable (str): optional regex of announceTimeTraceable
+			Bmca (str): optional regex of bmca
+			ClockAccuracy (str): optional regex of clockAccuracy
+			ClockClass (str): optional regex of clockClass
+			ClockIdentity (str): optional regex of clockIdentity
+			CommunicationMode (str): optional regex of communicationMode
+			CumulativeScaledRateOffset (str): optional regex of cumulativeScaledRateOffset
+			CurrentUtcOffset (str): optional regex of currentUtcOffset
+			CustomClockId (str): optional regex of customClockId
+			DelayMechanism (str): optional regex of delayMechanism
+			DelayReqDropRate (str): optional regex of delayReqDropRate
+			DelayReqOffset (str): optional regex of delayReqOffset
+			DelayReqResidenceTime (str): optional regex of delayReqResidenceTime
+			DelayReqSpread (str): optional regex of delayReqSpread
+			DelayRespDropRate (str): optional regex of delayRespDropRate
+			DelayRespReceiptTimeout (str): optional regex of delayRespReceiptTimeout
+			DelayRespResidenceTime (str): optional regex of delayRespResidenceTime
+			DelayResponseDelay (str): optional regex of delayResponseDelay
+			DelayResponseDelayInsertionRate (str): optional regex of delayResponseDelayInsertionRate
+			Domain (str): optional regex of domain
+			DropMalformed (str): optional regex of dropMalformed
+			DropSignalReqAnnounce (str): optional regex of dropSignalReqAnnounce
+			DropSignalReqDelayResp (str): optional regex of dropSignalReqDelayResp
+			DropSignalReqSync (str): optional regex of dropSignalReqSync
+			FollowUpBadCrcRate (str): optional regex of followUpBadCrcRate
+			FollowUpDelay (str): optional regex of followUpDelay
+			FollowUpDelayInsertionRate (str): optional regex of followUpDelayInsertionRate
+			FollowUpDropRate (str): optional regex of followUpDropRate
+			FollowUpResidenceTime (str): optional regex of followUpResidenceTime
+			GmTimeBaseIndicator (str): optional regex of gmTimeBaseIndicator
+			GrandmasterIdentity (str): optional regex of grandmasterIdentity
+			GrantDelayRespDurationInterval (str): optional regex of grantDelayRespDurationInterval
+			GrantSyncDurationInterval (str): optional regex of grantSyncDurationInterval
+			GrantUnicastDurationInterval (str): optional regex of grantUnicastDurationInterval
+			HandleAnnounceTlv (str): optional regex of handleAnnounceTlv
+			HandleCancelTlv (str): optional regex of handleCancelTlv
+			LastGmPhaseChange (str): optional regex of lastGmPhaseChange
+			LearnPortId (str): optional regex of learnPortId
+			LogAnnounceInterval (str): optional regex of logAnnounceInterval
+			LogDelayReqInterval (str): optional regex of logDelayReqInterval
+			LogSyncInterval (str): optional regex of logSyncInterval
+			MasterClockId (str): optional regex of masterClockId
+			MasterCount (str): optional regex of masterCount
+			MasterIpAddress (str): optional regex of masterIpAddress
+			MasterIpIncrementBy (str): optional regex of masterIpIncrementBy
+			MasterIpv6Address (str): optional regex of masterIpv6Address
+			MasterIpv6IncrementBy (str): optional regex of masterIpv6IncrementBy
+			MasterMacAddress (str): optional regex of masterMacAddress
+			MasterMacIncrementBy (str): optional regex of masterMacIncrementBy
+			MulticastAddress (str): optional regex of multicastAddress
+			NanosecondsPerSecond (str): optional regex of nanosecondsPerSecond
+			NotSlave (str): optional regex of notSlave
+			OffsetScaledLogVariance (str): optional regex of offsetScaledLogVariance
+			OneWay (str): optional regex of oneWay
+			PDelayFollowUpDelay (str): optional regex of pDelayFollowUpDelay
+			PDelayFollowUpDelayInsertionRate (str): optional regex of pDelayFollowUpDelayInsertionRate
+			PDelayFollowUpDropRate (str): optional regex of pDelayFollowUpDropRate
+			PDelayFollowUpResidenceTime (str): optional regex of pDelayFollowUpResidenceTime
+			PathTraceTLV (str): optional regex of pathTraceTLV
+			PortNumber (str): optional regex of portNumber
+			Priority1 (str): optional regex of priority1
+			Priority2 (str): optional regex of priority2
+			Profile (str): optional regex of profile
+			RenewalInvited (str): optional regex of renewalInvited
+			RequestAttempts (str): optional regex of requestAttempts
+			RequestHolddown (str): optional regex of requestHolddown
+			RequestInterval (str): optional regex of requestInterval
+			ReverseSync (str): optional regex of reverseSync
+			ReverseSyncIntervalPercent (str): optional regex of reverseSyncIntervalPercent
+			Role (str): optional regex of role
+			RxCalibration (str): optional regex of rxCalibration
+			ScaledLastGmFreqChange (str): optional regex of scaledLastGmFreqChange
+			SendMulticastAnnounce (str): optional regex of sendMulticastAnnounce
+			SignalInterval (str): optional regex of signalInterval
+			SignalUnicastHandling (str): optional regex of signalUnicastHandling
+			SimulateBoundary (str): optional regex of simulateBoundary
+			SimulateTransparent (str): optional regex of simulateTransparent
+			SlaveCount (str): optional regex of slaveCount
+			SlaveIpAddress (str): optional regex of slaveIpAddress
+			SlaveIpIncrementBy (str): optional regex of slaveIpIncrementBy
+			SlaveIpv6Address (str): optional regex of slaveIpv6Address
+			SlaveIpv6IncrementBy (str): optional regex of slaveIpv6IncrementBy
+			SlaveMacAddress (str): optional regex of slaveMacAddress
+			SlaveMacIncrementBy (str): optional regex of slaveMacIncrementBy
+			StepMode (str): optional regex of stepMode
+			StepsRemoved (str): optional regex of stepsRemoved
+			StrictGrant (str): optional regex of strictGrant
+			SyncDropRate (str): optional regex of syncDropRate
+			SyncReceiptTimeout (str): optional regex of syncReceiptTimeout
+			SyncReceiptTimeoutgPTP (str): optional regex of syncReceiptTimeoutgPTP
+			SyncResidenceTime (str): optional regex of syncResidenceTime
+			TimeSource (str): optional regex of timeSource
+			TimestampOffset (str): optional regex of timestampOffset
+			TxCalibration (str): optional regex of txCalibration
+			TxTwoStepCalibration (str): optional regex of txTwoStepCalibration
+			UpdateTime (str): optional regex of updateTime
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def GPtpSendSignaling(self, LinkDelayInterval, TimeSyncInterval, AnnounceInterval, ComputeNeighborRateRatio, ComputeNeighborPropDelay):
 		"""Executes the gPtpSendSignaling operation on the server.
 

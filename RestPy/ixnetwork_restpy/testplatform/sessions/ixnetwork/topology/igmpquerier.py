@@ -355,6 +355,36 @@ class IgmpQuerier(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, DiscardLearntInfo=None, GeneralQueryInterval=None, GeneralQueryResponseInterval=None, ProxyQuerier=None, RobustnessVariable=None, RouterAlert=None, SpecificQueryResponseInterval=None, SpecificQueryTransmissionCount=None, StartupQueryCount=None, SupportElection=None, SupportOlderVersionHost=None, SupportOlderVersionQuerier=None, VersionType=None):
+		"""Base class infrastructure that gets a list of igmpQuerier device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DiscardLearntInfo (str): optional regex of discardLearntInfo
+			GeneralQueryInterval (str): optional regex of generalQueryInterval
+			GeneralQueryResponseInterval (str): optional regex of generalQueryResponseInterval
+			ProxyQuerier (str): optional regex of proxyQuerier
+			RobustnessVariable (str): optional regex of robustnessVariable
+			RouterAlert (str): optional regex of routerAlert
+			SpecificQueryResponseInterval (str): optional regex of specificQueryResponseInterval
+			SpecificQueryTransmissionCount (str): optional regex of specificQueryTransmissionCount
+			StartupQueryCount (str): optional regex of startupQueryCount
+			SupportElection (str): optional regex of supportElection
+			SupportOlderVersionHost (str): optional regex of supportOlderVersionHost
+			SupportOlderVersionQuerier (str): optional regex of supportOlderVersionQuerier
+			VersionType (str): optional regex of versionType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfoInClient(self, Arg2):
 		"""Executes the clearAllLearnedInfoInClient operation on the server.
 

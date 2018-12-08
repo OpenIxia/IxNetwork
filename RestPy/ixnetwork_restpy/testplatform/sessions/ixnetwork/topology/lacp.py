@@ -422,6 +422,45 @@ class Lacp(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, ActorKey=None, ActorPortNumber=None, ActorPortPriority=None, ActorSystemId=None, ActorSystemPriority=None, AdministrativeKey=None, AggregationFlagState=None, CollectingFlag=None, CollectorsMaxdelay=None, DistributingFlag=None, InterMarkerPDUDelay=None, InterMarkerPDUDelayRandomMax=None, InterMarkerPDUDelayRandomMin=None, LacpActivity=None, LacpduPeriodicTimeInterval=None, LacpduTimeout=None, MarkerRequestMode=None, MarkerResponseWaitTime=None, PeriodicSendingOfMarkerRequest=None, SendMarkerRequestOnLagChange=None, SupportRespondingToMarker=None, SynchronizationFlag=None):
+		"""Base class infrastructure that gets a list of lacp device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ActorKey (str): optional regex of actorKey
+			ActorPortNumber (str): optional regex of actorPortNumber
+			ActorPortPriority (str): optional regex of actorPortPriority
+			ActorSystemId (str): optional regex of actorSystemId
+			ActorSystemPriority (str): optional regex of actorSystemPriority
+			AdministrativeKey (str): optional regex of administrativeKey
+			AggregationFlagState (str): optional regex of aggregationFlagState
+			CollectingFlag (str): optional regex of collectingFlag
+			CollectorsMaxdelay (str): optional regex of collectorsMaxdelay
+			DistributingFlag (str): optional regex of distributingFlag
+			InterMarkerPDUDelay (str): optional regex of interMarkerPDUDelay
+			InterMarkerPDUDelayRandomMax (str): optional regex of interMarkerPDUDelayRandomMax
+			InterMarkerPDUDelayRandomMin (str): optional regex of interMarkerPDUDelayRandomMin
+			LacpActivity (str): optional regex of lacpActivity
+			LacpduPeriodicTimeInterval (str): optional regex of lacpduPeriodicTimeInterval
+			LacpduTimeout (str): optional regex of lacpduTimeout
+			MarkerRequestMode (str): optional regex of markerRequestMode
+			MarkerResponseWaitTime (str): optional regex of markerResponseWaitTime
+			PeriodicSendingOfMarkerRequest (str): optional regex of periodicSendingOfMarkerRequest
+			SendMarkerRequestOnLagChange (str): optional regex of sendMarkerRequestOnLagChange
+			SupportRespondingToMarker (str): optional regex of supportRespondingToMarker
+			SynchronizationFlag (str): optional regex of synchronizationFlag
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def LacpStartPDU(self):
 		"""Executes the lacpStartPDU operation on the server.
 

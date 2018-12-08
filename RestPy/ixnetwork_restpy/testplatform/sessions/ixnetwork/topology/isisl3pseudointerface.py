@@ -580,6 +580,60 @@ class IsisL3PseudoInterface(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, AdjSID=None, AdministratorGroup=None, BFlag=None, BandwidthPriority0_Bps=None, BandwidthPriority1_Bps=None, BandwidthPriority2_Bps=None, BandwidthPriority3_Bps=None, BandwidthPriority4_Bps=None, BandwidthPriority5_Bps=None, BandwidthPriority6_Bps=None, BandwidthPriority7_Bps=None, DedicatedOnePlusOne=None, DedicatedOneToOne=None, EnableAdjSID=None, EnableIPv6SID=None, EnableLinkProtection=None, EnableSRLG=None, Enhanced=None, ExtraTraffic=None, FFlag=None, Funcflags=None, Function=None, Ipv6SidValue=None, LFlag=None, LinkType=None, MaxBandwidth_Bps=None, MaxReservableBandwidth_Bps=None, MetricLevel=None, OverrideFFlag=None, PFlag=None, Reserved0x40=None, Reserved0x80=None, SFlag=None, Shared=None, Srv6SidFlags=None, Unprotected=None, VFlag=None, Weight=None):
+		"""Base class infrastructure that gets a list of isisL3PseudoInterface device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AdjSID (str): optional regex of adjSID
+			AdministratorGroup (str): optional regex of administratorGroup
+			BFlag (str): optional regex of bFlag
+			BandwidthPriority0_Bps (str): optional regex of bandwidthPriority0_Bps
+			BandwidthPriority1_Bps (str): optional regex of bandwidthPriority1_Bps
+			BandwidthPriority2_Bps (str): optional regex of bandwidthPriority2_Bps
+			BandwidthPriority3_Bps (str): optional regex of bandwidthPriority3_Bps
+			BandwidthPriority4_Bps (str): optional regex of bandwidthPriority4_Bps
+			BandwidthPriority5_Bps (str): optional regex of bandwidthPriority5_Bps
+			BandwidthPriority6_Bps (str): optional regex of bandwidthPriority6_Bps
+			BandwidthPriority7_Bps (str): optional regex of bandwidthPriority7_Bps
+			DedicatedOnePlusOne (str): optional regex of dedicatedOnePlusOne
+			DedicatedOneToOne (str): optional regex of dedicatedOneToOne
+			EnableAdjSID (str): optional regex of enableAdjSID
+			EnableIPv6SID (str): optional regex of enableIPv6SID
+			EnableLinkProtection (str): optional regex of enableLinkProtection
+			EnableSRLG (str): optional regex of enableSRLG
+			Enhanced (str): optional regex of enhanced
+			ExtraTraffic (str): optional regex of extraTraffic
+			FFlag (str): optional regex of fFlag
+			Funcflags (str): optional regex of funcflags
+			Function (str): optional regex of function
+			Ipv6SidValue (str): optional regex of ipv6SidValue
+			LFlag (str): optional regex of lFlag
+			LinkType (str): optional regex of linkType
+			MaxBandwidth_Bps (str): optional regex of maxBandwidth_Bps
+			MaxReservableBandwidth_Bps (str): optional regex of maxReservableBandwidth_Bps
+			MetricLevel (str): optional regex of metricLevel
+			OverrideFFlag (str): optional regex of overrideFFlag
+			PFlag (str): optional regex of pFlag
+			Reserved0x40 (str): optional regex of reserved0x40
+			Reserved0x80 (str): optional regex of reserved0x80
+			SFlag (str): optional regex of sFlag
+			Shared (str): optional regex of shared
+			Srv6SidFlags (str): optional regex of srv6SidFlags
+			Unprotected (str): optional regex of unprotected
+			VFlag (str): optional regex of vFlag
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

@@ -37,7 +37,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf100GbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf100MbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf100MbHd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf10GbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf10MbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf10MbHd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf1GbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf1GbHd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf1TbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class LinkMode(Base):
 
 	@property
 	def Ofppf40GbFd(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class LinkMode(Base):
 
 	@property
 	def OfppfOther(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool

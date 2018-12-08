@@ -233,7 +233,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def ApplyActions(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -242,7 +242,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def ApplyActionsMiss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -251,7 +251,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def ApplySetField(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -260,7 +260,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def ApplySetFieldMiss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -269,7 +269,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def Config(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -278,7 +278,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def DataPathId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -287,7 +287,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -296,7 +296,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def Instruction(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -305,7 +305,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def InstructionMiss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -314,7 +314,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -323,7 +323,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def Match(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -332,7 +332,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def MaxEntries(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -341,7 +341,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def MetadataMatch(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -350,7 +350,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def MetadataWrite(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -359,7 +359,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def Name(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -368,7 +368,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def NextTable(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -377,7 +377,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def NextTableMiss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -386,7 +386,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def TableId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -395,7 +395,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def WildCards(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -404,7 +404,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def WriteActions(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -413,7 +413,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def WriteActionsMiss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -422,7 +422,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def WriteSetField(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -431,7 +431,7 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 
 	@property
 	def WriteSetFieldMiss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -445,29 +445,29 @@ class SwitchTableFeaturesStatLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchTableFeaturesStatLearnedInfo data from the server.
 
 		Args:
-			ApplyActions (str): NOT DEFINED
-			ApplyActionsMiss (str): NOT DEFINED
-			ApplySetField (str): NOT DEFINED
-			ApplySetFieldMiss (str): NOT DEFINED
-			Config (number): NOT DEFINED
-			DataPathId (str): NOT DEFINED
-			DataPathIdAsHex (str): NOT DEFINED
-			Instruction (str): NOT DEFINED
-			InstructionMiss (str): NOT DEFINED
-			LocalIp (str): NOT DEFINED
-			Match (str): NOT DEFINED
-			MaxEntries (number): NOT DEFINED
-			MetadataMatch (str): NOT DEFINED
-			MetadataWrite (str): NOT DEFINED
-			Name (str): NOT DEFINED
-			NextTable (str): NOT DEFINED
-			NextTableMiss (str): NOT DEFINED
-			TableId (str): NOT DEFINED
-			WildCards (str): NOT DEFINED
-			WriteActions (str): NOT DEFINED
-			WriteActionsMiss (str): NOT DEFINED
-			WriteSetField (str): NOT DEFINED
-			WriteSetFieldMiss (str): NOT DEFINED
+			ApplyActions (str): 
+			ApplyActionsMiss (str): 
+			ApplySetField (str): 
+			ApplySetFieldMiss (str): 
+			Config (number): 
+			DataPathId (str): 
+			DataPathIdAsHex (str): 
+			Instruction (str): 
+			InstructionMiss (str): 
+			LocalIp (str): 
+			Match (str): 
+			MaxEntries (number): 
+			MetadataMatch (str): 
+			MetadataWrite (str): 
+			Name (str): 
+			NextTable (str): 
+			NextTableMiss (str): 
+			TableId (str): 
+			WildCards (str): 
+			WriteActions (str): 
+			WriteActionsMiss (str): 
+			WriteSetField (str): 
+			WriteSetFieldMiss (str): 
 
 		Returns:
 			self: This instance with matching switchTableFeaturesStatLearnedInfo data retrieved from the server available through an iterator or index

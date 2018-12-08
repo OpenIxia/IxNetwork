@@ -360,3 +360,47 @@ class SwitchTablesList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, ApplyActions=None, ApplyActionsMiss=None, ApplySetField=None, ApplySetFieldMask=None, ApplySetFieldMiss=None, ApplySetFieldMissMask=None, AutoConfigNextTable=None, FeaturesSupported=None, Instruction=None, InstructionMiss=None, Match=None, MatchMask=None, MaxTableEntries=None, MetadataMatch=None, MetadataWrite=None, NextTable=None, NextTableMiss=None, TableId=None, TableName=None, WildcardFeature=None, WildcardFeatureMask=None, WriteActions=None, WriteActionsMiss=None, WriteSetField=None, WriteSetFieldMask=None, WriteSetFieldMiss=None, WriteSetFieldMissMask=None):
+		"""Base class infrastructure that gets a list of switchTablesList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ApplyActions (str): optional regex of applyActions
+			ApplyActionsMiss (str): optional regex of applyActionsMiss
+			ApplySetField (str): optional regex of applySetField
+			ApplySetFieldMask (str): optional regex of applySetFieldMask
+			ApplySetFieldMiss (str): optional regex of applySetFieldMiss
+			ApplySetFieldMissMask (str): optional regex of applySetFieldMissMask
+			AutoConfigNextTable (str): optional regex of autoConfigNextTable
+			FeaturesSupported (str): optional regex of featuresSupported
+			Instruction (str): optional regex of instruction
+			InstructionMiss (str): optional regex of instructionMiss
+			Match (str): optional regex of match
+			MatchMask (str): optional regex of matchMask
+			MaxTableEntries (str): optional regex of maxTableEntries
+			MetadataMatch (str): optional regex of metadataMatch
+			MetadataWrite (str): optional regex of metadataWrite
+			NextTable (str): optional regex of nextTable
+			NextTableMiss (str): optional regex of nextTableMiss
+			TableId (str): optional regex of tableId
+			TableName (str): optional regex of tableName
+			WildcardFeature (str): optional regex of wildcardFeature
+			WildcardFeatureMask (str): optional regex of wildcardFeatureMask
+			WriteActions (str): optional regex of writeActions
+			WriteActionsMiss (str): optional regex of writeActionsMiss
+			WriteSetField (str): optional regex of writeSetField
+			WriteSetFieldMask (str): optional regex of writeSetFieldMask
+			WriteSetFieldMiss (str): optional regex of writeSetFieldMiss
+			WriteSetFieldMissMask (str): optional regex of writeSetFieldMissMask
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

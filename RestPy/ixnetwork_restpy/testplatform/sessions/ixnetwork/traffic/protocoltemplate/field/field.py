@@ -37,7 +37,7 @@ class Field(Base):
 
 	@property
 	def __id__(self):
-		"""An alphanumeric string that defines the internal field ID.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class Field(Base):
 
 	@property
 	def DisplayName(self):
-		"""It is used to get the name of the particular field as available in the protocol template.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Field(Base):
 
 	@property
 	def Length(self):
-		"""It is used to get the length of the field in bits.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class Field(Base):
 
 	@property
 	def Trackable(self):
-		"""The trackable fields.
+		"""
 
 		Returns:
 			bool
@@ -87,11 +87,11 @@ class Field(Base):
 		By default the find method takes no parameters and will retrieve all field data from the server.
 
 		Args:
-			__id__ (str): An alphanumeric string that defines the internal field ID.
-			DisplayName (str): It is used to get the name of the particular field as available in the protocol template.
+			__id__ (str): 
+			DisplayName (str): 
 			FieldTypeId (str): 
-			Length (number): It is used to get the length of the field in bits.
-			Trackable (bool): The trackable fields.
+			Length (number): 
+			Trackable (bool): 
 
 		Returns:
 			self: This instance with matching field data retrieved from the server available through an iterator or index

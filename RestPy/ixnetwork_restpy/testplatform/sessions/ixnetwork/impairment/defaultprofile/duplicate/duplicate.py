@@ -37,7 +37,7 @@ class Duplicate(Base):
 
 	@property
 	def ClusterSize(self):
-		"""Number of packets to duplicate on each occurrence.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Duplicate(Base):
 
 	@property
 	def DuplicateCount(self):
-		"""Number of times to duplicate each packet.
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class Duplicate(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, periodically duplicate received packets.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Duplicate(Base):
 
 	@property
 	def PercentRate(self):
-		"""How often to duplicate packets.
+		"""
 
 		Returns:
 			number

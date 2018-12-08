@@ -73,24 +73,6 @@ class PceBasicRsvpSyncLspUpdateParams(Base):
 		return self._get_attribute('bandwidth')
 
 	@property
-	def BindingTypeTriggerParam(self):
-		"""Indicates the type of binding included in the TLV. Types are as follows: 20bit MPLS Label 32bit MPLS Label. Default value is 20bit MPLS Label.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('bindingTypeTriggerParam')
-
-	@property
-	def Bos_TriggerParam(self):
-		"""This bit is set to true for the last entry in the label stack i.e., for the bottom of the stack, and false for all other label stack entries. This control will be editable only if Binding Type is MPLS Label 32bit.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('bos_TriggerParam')
-
-	@property
 	def ConfigureBandwidth(self):
 		"""Configure Bandwidth
 
@@ -190,15 +172,6 @@ class PceBasicRsvpSyncLspUpdateParams(Base):
 		return self._get_attribute('includeSymbolicPathName')
 
 	@property
-	def IncludeTEPathBindingTLVTriggerParam(self):
-		"""Indicates if TE-PATH-BINDING TLV is to be included in PCUpate trigger message.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('includeTEPathBindingTLVTriggerParam')
-
-	@property
 	def LocalProtection(self):
 		"""Local Protection
 
@@ -206,15 +179,6 @@ class PceBasicRsvpSyncLspUpdateParams(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('localProtection')
-
-	@property
-	def Mpls_label_20_TriggerParam(self):
-		"""This control will be editable if the Binding Type is set to either 20bit or 32bit MPLS-Label. This field will take the 20bit value of the MPLS-Label
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('mpls_label_20_TriggerParam')
 
 	@property
 	def NumberOfEroSubObjects(self):
@@ -259,15 +223,6 @@ class PceBasicRsvpSyncLspUpdateParams(Base):
 		return self._get_attribute('pceTriggersChoiceList')
 
 	@property
-	def SendEmptyTLVTriggerParam(self):
-		"""If enabled all fields after Binding Type will be grayed out.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('sendEmptyTLVTriggerParam')
-
-	@property
 	def SetupPriority(self):
 		"""Setup Priority
 
@@ -284,24 +239,6 @@ class PceBasicRsvpSyncLspUpdateParams(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('srpId')
-
-	@property
-	def Tos_TriggerParam(self):
-		"""This field is used to carry traffic class information. This control will be editable only if Binding Type is MPLS Label 32bit.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('tos_TriggerParam')
-
-	@property
-	def Ttl_TriggerParam(self):
-		"""This field is used to encode a time-to-live value. This control will be editable only if Binding Type is MPLS Label 32bit.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('ttl_TriggerParam')
 
 	def find(self, NumberOfEroSubObjects=None, NumberOfMetricSubObjects=None):
 		"""Finds and retrieves pceBasicRsvpSyncLspUpdateParams data from the server.
@@ -335,6 +272,39 @@ class PceBasicRsvpSyncLspUpdateParams(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Bandwidth=None, ConfigureBandwidth=None, ConfigureEro=None, ConfigureLsp=None, ConfigureLspa=None, ConfigureMetric=None, ExcludeAny=None, HoldingPriority=None, IncludeAll=None, IncludeAny=None, IncludeSrp=None, IncludeSymbolicPathName=None, LocalProtection=None, OverrideSrpId=None, PceTriggersChoiceList=None, SetupPriority=None, SrpId=None):
+		"""Base class infrastructure that gets a list of pceBasicRsvpSyncLspUpdateParams device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Bandwidth (str): optional regex of bandwidth
+			ConfigureBandwidth (str): optional regex of configureBandwidth
+			ConfigureEro (str): optional regex of configureEro
+			ConfigureLsp (str): optional regex of configureLsp
+			ConfigureLspa (str): optional regex of configureLspa
+			ConfigureMetric (str): optional regex of configureMetric
+			ExcludeAny (str): optional regex of excludeAny
+			HoldingPriority (str): optional regex of holdingPriority
+			IncludeAll (str): optional regex of includeAll
+			IncludeAny (str): optional regex of includeAny
+			IncludeSrp (str): optional regex of includeSrp
+			IncludeSymbolicPathName (str): optional regex of includeSymbolicPathName
+			LocalProtection (str): optional regex of localProtection
+			OverrideSrpId (str): optional regex of overrideSrpId
+			PceTriggersChoiceList (str): optional regex of pceTriggersChoiceList
+			SetupPriority (str): optional regex of setupPriority
+			SrpId (str): optional regex of srpId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def SendPcUpdate(self, Arg2):
 		"""Executes the sendPcUpdate operation on the server.

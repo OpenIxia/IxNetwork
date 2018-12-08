@@ -65,7 +65,7 @@ class Lisp(Base):
 
 	@property
 	def BurstIntervalInMs(self):
-		"""It shows the details abou the burst interval in micro seconds
+		"""
 
 		Returns:
 			number
@@ -77,7 +77,7 @@ class Lisp(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, it shows enabled.
+		"""
 
 		Returns:
 			bool
@@ -89,7 +89,7 @@ class Lisp(Base):
 
 	@property
 	def Ipv4MapRegisterPacketsPerBurst(self):
-		"""It gives details about the ip v4 map register packets per burst
+		"""
 
 		Returns:
 			number
@@ -101,7 +101,7 @@ class Lisp(Base):
 
 	@property
 	def Ipv4MapRequestPacketsPerBurst(self):
-		"""It gives details about the ip v4 map requests packets per burst
+		"""
 
 		Returns:
 			number
@@ -113,7 +113,7 @@ class Lisp(Base):
 
 	@property
 	def Ipv4SmrPacketsPerBurst(self):
-		"""It gives details about the Ip v4 Smr packets per bursts
+		"""
 
 		Returns:
 			number
@@ -125,7 +125,7 @@ class Lisp(Base):
 
 	@property
 	def Ipv6MapRegisterPacketsPerBurst(self):
-		"""It gives details about the ip v6 map register packets per burst
+		"""
 
 		Returns:
 			number
@@ -137,7 +137,7 @@ class Lisp(Base):
 
 	@property
 	def Ipv6MapRequestPacketsPerBurst(self):
-		"""It gives details about the ip v6 map requests packets per burst
+		"""
 
 		Returns:
 			number
@@ -149,7 +149,7 @@ class Lisp(Base):
 
 	@property
 	def Ipv6SmrPacketsPerBurst(self):
-		"""It gives details about the Ip v6 Smr packets per bursts
+		"""
 
 		Returns:
 			number
@@ -161,7 +161,7 @@ class Lisp(Base):
 
 	@property
 	def ProtocolState(self):
-		"""Shows different protocol states (read-only)
+		"""
 
 		Returns:
 			str(stopped|unknown|stopping|started|starting)
@@ -170,8 +170,6 @@ class Lisp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lisp)): The method internally sets Arg1 to the current href for this instance
@@ -185,8 +183,6 @@ class Lisp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lisp)): The method internally sets Arg1 to the current href for this instance

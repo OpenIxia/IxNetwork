@@ -214,6 +214,28 @@ class PppoxServerSessions(Base):
 		"""
 		return self._get_attribute('sessionInfo')
 
+	def get_device_ids(self, PortNames=None, ChapName=None, ChapSecret=None, DomainList=None, EnableDomainGroups=None, PapPassword=None, PapUser=None):
+		"""Base class infrastructure that gets a list of pppoxServerSessions device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ChapName (str): optional regex of chapName
+			ChapSecret (str): optional regex of chapSecret
+			DomainList (str): optional regex of domainList
+			EnableDomainGroups (str): optional regex of enableDomainGroups
+			PapPassword (str): optional regex of papPassword
+			PapUser (str): optional regex of papUser
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def CloseIpcp(self):
 		"""Executes the closeIpcp operation on the server.
 

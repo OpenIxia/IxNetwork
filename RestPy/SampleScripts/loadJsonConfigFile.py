@@ -23,8 +23,8 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-         - Statistics.py and PortMgmt.py 
+   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
+                       - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -44,33 +44,34 @@ Usage:
 
 """
 
-from __future__ import absolute_import, print_function
 import json, sys, os
 
-# Adding some relevant paths if you are not installing RestPy by Pip.
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-
-# Import the main client module
+# Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
+
+# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# your system knows where the RestPy modules are located.
+#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
+
+# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
+# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
+# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
+sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
 # Import modules containing helper functions
 from StatisticsMgmt import Statistics
 from PortMgmt import Ports
 
-if len(sys.argv) > 1:
-    # Command line input: windows or linux
-    osPlatform = sys.argv[1]
-else:
-    # Defaulting to windows
-    osPlatform = 'windows'
+# Defaulting to windows
+osPlatform = 'windows'
 
-# Are you using IxNetwork Connection Manager in a Windows server 2012/2016?
-isWindowsConnectionMgr = False
+if len(sys.argv) > 1:
+    # Command line input: windows, windowsConnectionMgr or linux
+    osPlatform = sys.argv[1]
 
 # Change API server values to use your setup
-if osPlatform == 'windows':
+if osPlatform in ['windows', 'windowsConnectionMgr']:
     platform = 'windows'
     apiServerIp = '192.168.70.3'
     apiServerPort = 11009
@@ -153,12 +154,20 @@ try:
     ixNetwork.Traffic.Start()
 
     # Get and show the Traffic Item column caption names and stat values
-    columnCaptions =   statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
+    columnNames      = statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
     trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItemName)
-    txFramesIndex = columnCaptions.index('Tx Frames')
-    rxFramesIndex = columnCaptions.index('Rx Frames')
-    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}'.format(trafficItemStats[txFramesIndex],
-                                                                         trafficItemStats[rxFramesIndex]))
+
+    # The columnNames variable contains all the stat counter names.
+    # Get the index position of the stat counter that you want.
+    # The index is aligned with trafficItemStats that contains the statistic values.
+    txFramesIndex = columnNames.index('Tx Frames')
+    rxFramesIndex = columnNames.index('Rx Frames')
+
+    # Get the statistic values with the indexes.
+    txFrames = trafficItemStats[txFramesIndex]
+    rxFrames = trafficItemStats[rxFramesIndex]
+
+    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}\n'.format(txFrames, rxFrames))
     
     # Get and show the Flow Statistics column caption names and stat values
     columnCaptions =   statObj.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)

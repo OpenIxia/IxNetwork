@@ -37,7 +37,7 @@ class DynamicRate(Base):
 
 	@property
 	def BitRateUnitsType(self):
-		"""The rate units for transmitting packet.
+		"""
 
 		Returns:
 			str(bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec)
@@ -49,7 +49,7 @@ class DynamicRate(Base):
 
 	@property
 	def EnforceMinimumInterPacketGap(self):
-		"""Sets the minimum inter-packet gap allowed for Ethernet ports only.
+		"""
 
 		Returns:
 			number
@@ -70,7 +70,7 @@ class DynamicRate(Base):
 
 	@property
 	def InterPacketGapUnitsType(self):
-		"""The inter-packet gap expressed in units.
+		"""
 
 		Returns:
 			str(bytes|nanoseconds)
@@ -82,7 +82,7 @@ class DynamicRate(Base):
 
 	@property
 	def OverSubscribed(self):
-		"""If true, the packet transmission rate is oversubscribed.
+		"""
 
 		Returns:
 			bool
@@ -91,7 +91,7 @@ class DynamicRate(Base):
 
 	@property
 	def Rate(self):
-		"""The rate at which packet is transmitted.
+		"""
 
 		Returns:
 			number
@@ -103,7 +103,7 @@ class DynamicRate(Base):
 
 	@property
 	def RateType(self):
-		"""The types of packet rate transmission.
+		"""
 
 		Returns:
 			str(bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate)
@@ -124,7 +124,7 @@ class DynamicRate(Base):
 
 	@property
 	def TxPort(self):
-		"""The transmitting port.
+		"""
 
 		Returns:
 			number
@@ -138,15 +138,15 @@ class DynamicRate(Base):
 		By default the find method takes no parameters and will retrieve all dynamicRate data from the server.
 
 		Args:
-			BitRateUnitsType (str(bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec)): The rate units for transmitting packet.
-			EnforceMinimumInterPacketGap (number): Sets the minimum inter-packet gap allowed for Ethernet ports only.
+			BitRateUnitsType (str(bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec)): 
+			EnforceMinimumInterPacketGap (number): 
 			HighLevelStreamName (str): The name of the high level stream
-			InterPacketGapUnitsType (str(bytes|nanoseconds)): The inter-packet gap expressed in units.
-			OverSubscribed (bool): If true, the packet transmission rate is oversubscribed.
-			Rate (number): The rate at which packet is transmitted.
-			RateType (str(bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate)): The types of packet rate transmission.
+			InterPacketGapUnitsType (str(bytes|nanoseconds)): 
+			OverSubscribed (bool): 
+			Rate (number): 
+			RateType (str(bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate)): 
 			TrafficItemName (str): The name of the parent traffic item.
-			TxPort (number): The transmitting port.
+			TxPort (number): 
 
 		Returns:
 			self: This instance with matching dynamicRate data retrieved from the server available through an iterator or index

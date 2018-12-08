@@ -297,6 +297,44 @@ class ExternalRoutes(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, EBit=None, ExternalRouteTag=None, FBit=None, ForwardingAddress=None, LABit=None, LinkStateId=None, LinkStateIdStep=None, MCBit=None, Metric=None, NUBit=None, NetworkAddress=None, PBit=None, Prefix=None, RangeSize=None, RefLSType=None, ReferencedLinkStateId=None, TBit=None, UnusedBit4=None, UnusedBit5=None, UnusedBit6=None, UnusedBit7=None):
+		"""Base class infrastructure that gets a list of externalRoutes device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EBit (str): optional regex of eBit
+			ExternalRouteTag (str): optional regex of externalRouteTag
+			FBit (str): optional regex of fBit
+			ForwardingAddress (str): optional regex of forwardingAddress
+			LABit (str): optional regex of lABit
+			LinkStateId (str): optional regex of linkStateId
+			LinkStateIdStep (str): optional regex of linkStateIdStep
+			MCBit (str): optional regex of mCBit
+			Metric (str): optional regex of metric
+			NUBit (str): optional regex of nUBit
+			NetworkAddress (str): optional regex of networkAddress
+			PBit (str): optional regex of pBit
+			Prefix (str): optional regex of prefix
+			RangeSize (str): optional regex of rangeSize
+			RefLSType (str): optional regex of refLSType
+			ReferencedLinkStateId (str): optional regex of referencedLinkStateId
+			TBit (str): optional regex of tBit
+			UnusedBit4 (str): optional regex of unusedBit4
+			UnusedBit5 (str): optional regex of unusedBit5
+			UnusedBit6 (str): optional regex of unusedBit6
+			UnusedBit7 (str): optional regex of unusedBit7
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Advertise(self):
 		"""Executes the advertise operation on the server.
 

@@ -37,7 +37,7 @@ class SwitchFlow131TriggerAttributes(Base):
 
 	@property
 	def OutGroup(self):
-		"""This describes the out group value. It requires matching entries to include this as an output group.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class SwitchFlow131TriggerAttributes(Base):
 
 	@property
 	def OutGroupInputMode(self):
-		"""This describes the input mode of the out group value.
+		"""
 
 		Returns:
 			str(allGroups|anyGroup|outGroupCustom)
@@ -61,7 +61,7 @@ class SwitchFlow131TriggerAttributes(Base):
 
 	@property
 	def OutPort(self):
-		"""This describes the out port value. It requires matching entries to include this as an output port.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class SwitchFlow131TriggerAttributes(Base):
 
 	@property
 	def OutPortInputMode(self):
-		"""This describes the input mode of the out port value.
+		"""
 
 		Returns:
 			str(ofppInPort|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppAny|outPortCustom)
@@ -85,7 +85,7 @@ class SwitchFlow131TriggerAttributes(Base):
 
 	@property
 	def TableId(self):
-		"""This describes the table identifier. It indicates the next table in the packet processing pipeline.
+		"""
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class SwitchFlow131TriggerAttributes(Base):
 
 	@property
 	def TableIdInputMode(self):
-		"""This describes the input mode of the Table Identifier.
+		"""
 
 		Returns:
 			str(allTables|emergency|custom)

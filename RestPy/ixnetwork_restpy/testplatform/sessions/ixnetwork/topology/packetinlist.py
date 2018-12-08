@@ -163,6 +163,28 @@ class PacketInList(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, AuxiliaryId=None, FlowTable=None, InPort=None, PacketInName=None, PhysicalInPort=None, SendPacketIn=None):
+		"""Base class infrastructure that gets a list of packetInList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AuxiliaryId (str): optional regex of auxiliaryId
+			FlowTable (str): optional regex of flowTable
+			InPort (str): optional regex of inPort
+			PacketInName (str): optional regex of packetInName
+			PhysicalInPort (str): optional regex of physicalInPort
+			SendPacketIn (str): optional regex of sendPacketIn
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def SendPause(self, Arg2):
 		"""Executes the sendPause operation on the server.
 

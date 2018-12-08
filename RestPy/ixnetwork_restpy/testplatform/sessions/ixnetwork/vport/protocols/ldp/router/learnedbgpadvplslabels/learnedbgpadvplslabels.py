@@ -37,7 +37,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def CBit(self):
-		"""(Read Only) The boolean value for c Bit.
+		"""
 
 		Returns:
 			bool
@@ -46,7 +46,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def GroupId(self):
-		"""(Read Only) The 4-byte unsigned number indicating the Group Id.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def Label(self):
-		"""(Read Only) The 4-byte unsigned number indicating the Label.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def LocalPwSubState(self):
-		"""(Read Only) The 4-byte unsigned number indicating the Local PW Sub State.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def Mtu(self):
-		"""(Read Only) The 2 byte value for the maximum Transmission Unit (MTU).
+		"""
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def PeerAddress(self):
-		"""(Read Only) The Peer Address.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def PwState(self):
-		"""(Read Only) The boolean value for PW State.
+		"""
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def RemotePwSubState(self):
-		"""(Read Only)The 4-byte unsigned number indicating the PE Sub State.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def SourceAii(self):
-		"""(Read Only) The 4 byte unsigned number indicationg the Source AII.
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def TargetAii(self):
-		"""(Read Only) The 4 byte unsigned number indicationg the Target AII.
+		"""
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class LearnedBgpAdVplsLabels(Base):
 
 	@property
 	def VplsId(self):
-		"""(Read Only) The VPLS ID indicated by an IP or AS.
+		"""
 
 		Returns:
 			str
@@ -141,17 +141,17 @@ class LearnedBgpAdVplsLabels(Base):
 		By default the find method takes no parameters and will retrieve all learnedBgpAdVplsLabels data from the server.
 
 		Args:
-			CBit (bool): (Read Only) The boolean value for c Bit.
-			GroupId (number): (Read Only) The 4-byte unsigned number indicating the Group Id.
-			Label (number): (Read Only) The 4-byte unsigned number indicating the Label.
-			LocalPwSubState (number): (Read Only) The 4-byte unsigned number indicating the Local PW Sub State.
-			Mtu (number): (Read Only) The 2 byte value for the maximum Transmission Unit (MTU).
-			PeerAddress (str): (Read Only) The Peer Address.
-			PwState (bool): (Read Only) The boolean value for PW State.
-			RemotePwSubState (number): (Read Only)The 4-byte unsigned number indicating the PE Sub State.
-			SourceAii (number): (Read Only) The 4 byte unsigned number indicationg the Source AII.
-			TargetAii (number): (Read Only) The 4 byte unsigned number indicationg the Target AII.
-			VplsId (str): (Read Only) The VPLS ID indicated by an IP or AS.
+			CBit (bool): 
+			GroupId (number): 
+			Label (number): 
+			LocalPwSubState (number): 
+			Mtu (number): 
+			PeerAddress (str): 
+			PwState (bool): 
+			RemotePwSubState (number): 
+			SourceAii (number): 
+			TargetAii (number): 
+			VplsId (str): 
 
 		Returns:
 			self: This instance with matching learnedBgpAdVplsLabels data retrieved from the server available through an iterator or index

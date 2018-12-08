@@ -97,7 +97,7 @@ class AppLibProfile(Base):
 
 	@property
 	def ObjectiveType(self):
-		"""The objective type of the test.A Test Objective is the way the user sets the actual rate of the Application Library Traffic transmission.
+		"""
 
 		Returns:
 			str(simulatedUsers|throughputGbps|throughputKbps|throughputMbps)
@@ -109,7 +109,7 @@ class AppLibProfile(Base):
 
 	@property
 	def ObjectiveValue(self):
-		"""The absolute value of either simulated users or throughput in its measure unit.
+		"""
 
 		Returns:
 			number
@@ -135,8 +135,8 @@ class AppLibProfile(Base):
 			ConfiguredFlows (list(str[])): Configured application library flows within profile.
 			EnablePerIPStats (bool): Enable Per IP Stats. When true then Per IP statistic drilldown is available.
 			ObjectiveDistribution (str(applyFullObjectiveToEachPort|splitObjectiveEvenlyAmongPorts)): Objective distribution value.
-			ObjectiveType (str(simulatedUsers|throughputGbps|throughputKbps|throughputMbps)): The objective type of the test.A Test Objective is the way the user sets the actual rate of the Application Library Traffic transmission.
-			ObjectiveValue (number): The absolute value of either simulated users or throughput in its measure unit.
+			ObjectiveType (str(simulatedUsers|throughputGbps|throughputKbps|throughputMbps)): 
+			ObjectiveValue (number): 
 
 		Returns:
 			self: This instance with all currently retrieved appLibProfile data using find and the newly added appLibProfile data available through an iterator or index
@@ -166,8 +166,8 @@ class AppLibProfile(Base):
 			ConfiguredFlows (list(str[])): Configured application library flows within profile.
 			EnablePerIPStats (bool): Enable Per IP Stats. When true then Per IP statistic drilldown is available.
 			ObjectiveDistribution (str(applyFullObjectiveToEachPort|splitObjectiveEvenlyAmongPorts)): Objective distribution value.
-			ObjectiveType (str(simulatedUsers|throughputGbps|throughputKbps|throughputMbps)): The objective type of the test.A Test Objective is the way the user sets the actual rate of the Application Library Traffic transmission.
-			ObjectiveValue (number): The absolute value of either simulated users or throughput in its measure unit.
+			ObjectiveType (str(simulatedUsers|throughputGbps|throughputKbps|throughputMbps)): 
+			ObjectiveValue (number): 
 			TrafficState (str(Configured|Interim|Running|Unconfigured)): (Read only) A read-only field which indicates the current state of the traffic item.
 
 		Returns:

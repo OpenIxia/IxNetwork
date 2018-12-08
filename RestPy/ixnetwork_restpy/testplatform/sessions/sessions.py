@@ -41,9 +41,16 @@ class Sessions(Base):
         
         Returns: 
             obj(ixnetwork_restpy.testplatform.sessions.ixnetwork.ixnetwork.Ixnetwork):
+
+        Raises: 
+            ValueError: If the version of IxNetwork server is not suporrted. The minimum version supported is 8.42.
         """
         from ixnetwork_restpy.testplatform.sessions.ixnetwork.ixnetwork import Ixnetwork
         ixnetwork = Ixnetwork(self)
+        build_number = ixnetwork._connection._read('%s/ixnetwork/globals' % self.href)['buildNumber']
+        from distutils.version import LooseVersion
+        if LooseVersion(build_number) < LooseVersion('8.42'):
+            raise ValueError('IxNetwork server version %s is not supported. The minimum version supported is 8.42' % build_number)
         ixnetwork._set_properties(ixnetwork._connection._read('%s/%s' % (self.href, Ixnetwork._SDM_NAME)))
         return ixnetwork
     

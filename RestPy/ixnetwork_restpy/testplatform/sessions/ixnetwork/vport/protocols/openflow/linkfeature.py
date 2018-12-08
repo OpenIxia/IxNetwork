@@ -37,7 +37,7 @@ class LinkFeature(Base):
 
 	@property
 	def OfppfAutoNegotiation(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class LinkFeature(Base):
 
 	@property
 	def OfppfPause(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class LinkFeature(Base):
 
 	@property
 	def OfppfPauseAsym(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool

@@ -153,3 +153,24 @@ class BackupLspEROSubObjectsList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, AsNumber=None, Ip=None, LooseFlag=None, PrefixLength=None, Type=None):
+		"""Base class infrastructure that gets a list of backupLspEROSubObjectsList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AsNumber (str): optional regex of asNumber
+			Ip (str): optional regex of ip
+			LooseFlag (str): optional regex of looseFlag
+			PrefixLength (str): optional regex of prefixLength
+			Type (str): optional regex of type
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

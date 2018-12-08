@@ -37,7 +37,7 @@ class TransmissionControl(Base):
 
 	@property
 	def BurstPacketCount(self):
-		"""Specifies the number of packets per burst.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class TransmissionControl(Base):
 
 	@property
 	def Duration(self):
-		"""Indicates the time duration.
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class TransmissionControl(Base):
 
 	@property
 	def EnableInterBurstGap(self):
-		"""Enables the inter-burst gap of a frame.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class TransmissionControl(Base):
 
 	@property
 	def EnableInterStreamGap(self):
-		"""Enables the inter-stream gap of a frame.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class TransmissionControl(Base):
 
 	@property
 	def FrameCount(self):
-		"""Specifies Fixed Packet Count when Transmission Mode is Interleaved.
+		"""
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class TransmissionControl(Base):
 
 	@property
 	def InterBurstGap(self):
-		"""Specifies the gap between any two consecutive burst.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class TransmissionControl(Base):
 
 	@property
 	def InterBurstGapUnits(self):
-		"""Specifies unit of Inter Burst Gap either in bytes or nanoseconds.
+		"""
 
 		Returns:
 			str(bytes|nanoseconds)
@@ -121,7 +121,7 @@ class TransmissionControl(Base):
 
 	@property
 	def InterStreamGap(self):
-		"""Specifies the gap between any two consecutive Flow Groups when Transmission Mode is Sequential.
+		"""
 
 		Returns:
 			number
@@ -133,7 +133,7 @@ class TransmissionControl(Base):
 
 	@property
 	def IterationCount(self):
-		"""Specifies the number of iterations the Flow Group can have when Transmission Mode is Interleaved.
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class TransmissionControl(Base):
 
 	@property
 	def MinGapBytes(self):
-		"""Specifies the minimum gap between any 2 packets or frames in term of bytes.
+		"""
 
 		Returns:
 			number
@@ -157,7 +157,7 @@ class TransmissionControl(Base):
 
 	@property
 	def RepeatBurst(self):
-		"""Specifies number of times a burst can be repeated when Transmission Mode is Sequential.
+		"""
 
 		Returns:
 			number
@@ -169,7 +169,7 @@ class TransmissionControl(Base):
 
 	@property
 	def StartDelay(self):
-		"""Specifies the delay in Start when Transmission Mode is Interleaved.
+		"""
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class TransmissionControl(Base):
 
 	@property
 	def StartDelayUnits(self):
-		"""Specifies the unit for Delay in Start when Transmission Mode is Interleaved.
+		"""
 
 		Returns:
 			str(bytes|nanoseconds)
@@ -193,7 +193,7 @@ class TransmissionControl(Base):
 
 	@property
 	def Type(self):
-		"""The Transmission Control types.
+		"""
 
 		Returns:
 			str(auto|continuous|custom|fixedDuration|fixedFrameCount|fixedIterationCount)

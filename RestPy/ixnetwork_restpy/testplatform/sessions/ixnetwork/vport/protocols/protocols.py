@@ -388,7 +388,7 @@ class Protocols(Base):
 
 	@property
 	def ProtocolMaxNodeCount(self):
-		"""Shows maximum number of node.
+		"""
 
 		Returns:
 			number
@@ -422,7 +422,7 @@ class Protocols(Base):
 		By default the find method takes no parameters and will retrieve all protocols data from the server.
 
 		Args:
-			ProtocolMaxNodeCount (number): Shows maximum number of node.
+			ProtocolMaxNodeCount (number): 
 
 		Returns:
 			self: This instance with matching protocols data retrieved from the server available through an iterator or index

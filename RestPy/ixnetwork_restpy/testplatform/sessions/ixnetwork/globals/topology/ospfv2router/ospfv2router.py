@@ -181,3 +181,24 @@ class Ospfv2Router(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, BierMplsEncapSubTlvType=None, BierSubTlvType=None, EnableDrBdr=None, FloodLsUpdatesPerInterval=None, RateControlInterval=None):
+		"""Base class infrastructure that gets a list of ospfv2Router device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BierMplsEncapSubTlvType (str): optional regex of bierMplsEncapSubTlvType
+			BierSubTlvType (str): optional regex of bierSubTlvType
+			EnableDrBdr (str): optional regex of enableDrBdr
+			FloodLsUpdatesPerInterval (str): optional regex of floodLsUpdatesPerInterval
+			RateControlInterval (str): optional regex of rateControlInterval
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

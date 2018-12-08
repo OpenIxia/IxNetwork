@@ -65,7 +65,7 @@ class Multicast(Base):
 
 	@property
 	def EnableMulticast(self):
-		"""Enables the use of Multicast VRFs (MVRFs). (default = false)
+		"""
 
 		Returns:
 			bool
@@ -77,7 +77,7 @@ class Multicast(Base):
 
 	@property
 	def EnableMulticastCluster(self):
-		"""If true, enables the use of BGP route reflection clusters for multicast VPN route distribution. (default = false)
+		"""
 
 		Returns:
 			bool
@@ -89,7 +89,7 @@ class Multicast(Base):
 
 	@property
 	def GroupAddress(self):
-		"""The IP address for the Multicast Group. The default value is the default MDT group address, used as the Multicast Group address used as the destination for the MVPN tunnel. (default = 239.1.1.1
+		"""
 
 		Returns:
 			str

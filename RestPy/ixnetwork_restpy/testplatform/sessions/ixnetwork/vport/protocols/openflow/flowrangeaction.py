@@ -38,7 +38,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def EthDestination(self):
-		"""Specifies the destination address of the Ethernet port. This attribute value is applicable only when the typeOfAction selected is setEthernetDst.
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def EthSource(self):
-		"""Specifies the source address of the Ethernet port. This attribute value is applicable only when the typeOfAction selected is setEthernetSrc.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def IpDscp(self):
-		"""Specifies the IP DSCP value. This attribute value is applicable only when the typeOfAction selected is setIpv4TosBits.
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""Specifies the destination IPv4 address for this flow range. This attribute value is applicable only when the typeOfAction selected is setIpv4DstAddress.
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""Specifies the source IPv4 address for this flow range. This attribute value is applicable only when the typeOfAction selected is setIpv4SrcAddress.
+		"""
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def MaxByteLength(self):
-		"""Indicates the maximum length in bytes.
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def OutputPort(self):
-		"""Specifies the number of Output ports used. This attribute value is applicable only when the typeOfOutPort selected is ofppManual.
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def QueueId(self):
-		"""Indicates the Queue ID for this Flow Range. This attribute value is applicable only when the typeOfAction selected is enqueue.
+		"""
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def TransportDestination(self):
-		"""Specifies the transport destination address. This attribute value is applicable only when the typeOfAction selected is setTransportDestination.
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def TransportSource(self):
-		"""Specifies the Transport source address. This attribute value is applicable only when the typeOfAction selected is setTransportSource.
+		"""
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def TypeOfAction(self):
-		"""Indicates the action type associated with this Flow Range.
+		"""
 
 		Returns:
 			str(none|output|enqueue|setVlanId|setVlanPriority|stripVlanHeader|setEthernetSrc|setEthernetDst|setIpv4TosBits|setIpv4SrcAddress|setIpv4DstAddress|setTransportSource|setTransportDestination|setVendorAction)
@@ -170,7 +170,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def TypeOfOutPort(self):
-		"""Specifies the Output Port Type for this Flow Range. This attribute value is applicable only when the typeOfAction selected is output
+		"""
 
 		Returns:
 			str(ofppManual|ofppAll|ofppController|ofppInPort|ofppLocal|ofppNormal|ofppFlood)
@@ -182,7 +182,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def VendorData(self):
-		"""Specifies the data of the Vendor. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
+		"""
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def VendorDataLength(self):
-		"""Specifies the data length of the Vendor. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
+		"""
 
 		Returns:
 			number
@@ -206,7 +206,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def VendorId(self):
-		"""Specifies the unique Vendor identifier. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
+		"""
 
 		Returns:
 			number
@@ -218,7 +218,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def VlanId(self):
-		"""Specifies the unique VLAN Identifier for this VLAN. This attribute value is applicable only when the typeOfAction selected is setVlanId.
+		"""
 
 		Returns:
 			number
@@ -230,7 +230,7 @@ class FlowRangeAction(Base):
 
 	@property
 	def VlanPriority(self):
-		"""Specifies the User Priority for this VLAN. This attribute value is applicable only when the typeOfAction selected is setVlanPriority.
+		"""
 
 		Returns:
 			number
@@ -244,23 +244,23 @@ class FlowRangeAction(Base):
 		"""Adds a new flowRangeAction node on the server and retrieves it in this instance.
 
 		Args:
-			EthDestination (str): Specifies the destination address of the Ethernet port. This attribute value is applicable only when the typeOfAction selected is setEthernetDst.
-			EthSource (str): Specifies the source address of the Ethernet port. This attribute value is applicable only when the typeOfAction selected is setEthernetSrc.
-			IpDscp (number): Specifies the IP DSCP value. This attribute value is applicable only when the typeOfAction selected is setIpv4TosBits.
-			Ipv4Destination (str): Specifies the destination IPv4 address for this flow range. This attribute value is applicable only when the typeOfAction selected is setIpv4DstAddress.
-			Ipv4Source (str): Specifies the source IPv4 address for this flow range. This attribute value is applicable only when the typeOfAction selected is setIpv4SrcAddress.
-			MaxByteLength (number): Indicates the maximum length in bytes.
-			OutputPort (number): Specifies the number of Output ports used. This attribute value is applicable only when the typeOfOutPort selected is ofppManual.
-			QueueId (number): Indicates the Queue ID for this Flow Range. This attribute value is applicable only when the typeOfAction selected is enqueue.
-			TransportDestination (number): Specifies the transport destination address. This attribute value is applicable only when the typeOfAction selected is setTransportDestination.
-			TransportSource (number): Specifies the Transport source address. This attribute value is applicable only when the typeOfAction selected is setTransportSource.
-			TypeOfAction (str(none|output|enqueue|setVlanId|setVlanPriority|stripVlanHeader|setEthernetSrc|setEthernetDst|setIpv4TosBits|setIpv4SrcAddress|setIpv4DstAddress|setTransportSource|setTransportDestination|setVendorAction)): Indicates the action type associated with this Flow Range.
-			TypeOfOutPort (str(ofppManual|ofppAll|ofppController|ofppInPort|ofppLocal|ofppNormal|ofppFlood)): Specifies the Output Port Type for this Flow Range. This attribute value is applicable only when the typeOfAction selected is output
-			VendorData (str): Specifies the data of the Vendor. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
-			VendorDataLength (number): Specifies the data length of the Vendor. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
-			VendorId (number): Specifies the unique Vendor identifier. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
-			VlanId (number): Specifies the unique VLAN Identifier for this VLAN. This attribute value is applicable only when the typeOfAction selected is setVlanId.
-			VlanPriority (number): Specifies the User Priority for this VLAN. This attribute value is applicable only when the typeOfAction selected is setVlanPriority.
+			EthDestination (str): 
+			EthSource (str): 
+			IpDscp (number): 
+			Ipv4Destination (str): 
+			Ipv4Source (str): 
+			MaxByteLength (number): 
+			OutputPort (number): 
+			QueueId (number): 
+			TransportDestination (number): 
+			TransportSource (number): 
+			TypeOfAction (str(none|output|enqueue|setVlanId|setVlanPriority|stripVlanHeader|setEthernetSrc|setEthernetDst|setIpv4TosBits|setIpv4SrcAddress|setIpv4DstAddress|setTransportSource|setTransportDestination|setVendorAction)): 
+			TypeOfOutPort (str(ofppManual|ofppAll|ofppController|ofppInPort|ofppLocal|ofppNormal|ofppFlood)): 
+			VendorData (str): 
+			VendorDataLength (number): 
+			VendorId (number): 
+			VlanId (number): 
+			VlanPriority (number): 
 
 		Returns:
 			self: This instance with all currently retrieved flowRangeAction data using find and the newly added flowRangeAction data available through an iterator or index
@@ -286,23 +286,23 @@ class FlowRangeAction(Base):
 		By default the find method takes no parameters and will retrieve all flowRangeAction data from the server.
 
 		Args:
-			EthDestination (str): Specifies the destination address of the Ethernet port. This attribute value is applicable only when the typeOfAction selected is setEthernetDst.
-			EthSource (str): Specifies the source address of the Ethernet port. This attribute value is applicable only when the typeOfAction selected is setEthernetSrc.
-			IpDscp (number): Specifies the IP DSCP value. This attribute value is applicable only when the typeOfAction selected is setIpv4TosBits.
-			Ipv4Destination (str): Specifies the destination IPv4 address for this flow range. This attribute value is applicable only when the typeOfAction selected is setIpv4DstAddress.
-			Ipv4Source (str): Specifies the source IPv4 address for this flow range. This attribute value is applicable only when the typeOfAction selected is setIpv4SrcAddress.
-			MaxByteLength (number): Indicates the maximum length in bytes.
-			OutputPort (number): Specifies the number of Output ports used. This attribute value is applicable only when the typeOfOutPort selected is ofppManual.
-			QueueId (number): Indicates the Queue ID for this Flow Range. This attribute value is applicable only when the typeOfAction selected is enqueue.
-			TransportDestination (number): Specifies the transport destination address. This attribute value is applicable only when the typeOfAction selected is setTransportDestination.
-			TransportSource (number): Specifies the Transport source address. This attribute value is applicable only when the typeOfAction selected is setTransportSource.
-			TypeOfAction (str(none|output|enqueue|setVlanId|setVlanPriority|stripVlanHeader|setEthernetSrc|setEthernetDst|setIpv4TosBits|setIpv4SrcAddress|setIpv4DstAddress|setTransportSource|setTransportDestination|setVendorAction)): Indicates the action type associated with this Flow Range.
-			TypeOfOutPort (str(ofppManual|ofppAll|ofppController|ofppInPort|ofppLocal|ofppNormal|ofppFlood)): Specifies the Output Port Type for this Flow Range. This attribute value is applicable only when the typeOfAction selected is output
-			VendorData (str): Specifies the data of the Vendor. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
-			VendorDataLength (number): Specifies the data length of the Vendor. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
-			VendorId (number): Specifies the unique Vendor identifier. This attribute value is applicable only when the typeOfAction selected is setVendorAction.
-			VlanId (number): Specifies the unique VLAN Identifier for this VLAN. This attribute value is applicable only when the typeOfAction selected is setVlanId.
-			VlanPriority (number): Specifies the User Priority for this VLAN. This attribute value is applicable only when the typeOfAction selected is setVlanPriority.
+			EthDestination (str): 
+			EthSource (str): 
+			IpDscp (number): 
+			Ipv4Destination (str): 
+			Ipv4Source (str): 
+			MaxByteLength (number): 
+			OutputPort (number): 
+			QueueId (number): 
+			TransportDestination (number): 
+			TransportSource (number): 
+			TypeOfAction (str(none|output|enqueue|setVlanId|setVlanPriority|stripVlanHeader|setEthernetSrc|setEthernetDst|setIpv4TosBits|setIpv4SrcAddress|setIpv4DstAddress|setTransportSource|setTransportDestination|setVendorAction)): 
+			TypeOfOutPort (str(ofppManual|ofppAll|ofppController|ofppInPort|ofppLocal|ofppNormal|ofppFlood)): 
+			VendorData (str): 
+			VendorDataLength (number): 
+			VendorId (number): 
+			VlanId (number): 
+			VlanPriority (number): 
 
 		Returns:
 			self: This instance with matching flowRangeAction data retrieved from the server available through an iterator or index

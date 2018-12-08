@@ -190,6 +190,31 @@ class RsvpRROSubObjectsList(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, BandwidthProtection=None, CType=None, GlobalLabel=None, Ip=None, Label=None, NodeProtection=None, ProtectionAvailable=None, ProtectionInUse=None, Type=None):
+		"""Base class infrastructure that gets a list of rsvpRROSubObjectsList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BandwidthProtection (str): optional regex of bandwidthProtection
+			CType (str): optional regex of cType
+			GlobalLabel (str): optional regex of globalLabel
+			Ip (str): optional regex of ip
+			Label (str): optional regex of label
+			NodeProtection (str): optional regex of nodeProtection
+			ProtectionAvailable (str): optional regex of protectionAvailable
+			ProtectionInUse (str): optional regex of protectionInUse
+			Type (str): optional regex of type
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 
 class RsvpRroSubObjectsList(Base):
 	"""The RsvpRroSubObjectsList class encapsulates a system managed rsvpRroSubObjectsList node in the ixnetwork hierarchy.
@@ -377,3 +402,28 @@ class RsvpRroSubObjectsList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, BandwidthProtection=None, CType=None, GlobalLabel=None, Ip=None, Label=None, NodeProtection=None, ProtectionAvailable=None, ProtectionInUse=None, Type=None):
+		"""Base class infrastructure that gets a list of rsvpRroSubObjectsList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BandwidthProtection (str): optional regex of bandwidthProtection
+			CType (str): optional regex of cType
+			GlobalLabel (str): optional regex of globalLabel
+			Ip (str): optional regex of ip
+			Label (str): optional regex of label
+			NodeProtection (str): optional regex of nodeProtection
+			ProtectionAvailable (str): optional regex of protectionAvailable
+			ProtectionInUse (str): optional regex of protectionInUse
+			Type (str): optional regex of type
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

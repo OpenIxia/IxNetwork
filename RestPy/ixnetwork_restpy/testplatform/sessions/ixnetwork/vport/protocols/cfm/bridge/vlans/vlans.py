@@ -52,7 +52,7 @@ class Vlans(Base):
 
 	@property
 	def CVlanId(self):
-		"""The stacked VLAN identifier.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class Vlans(Base):
 
 	@property
 	def CVlanPriority(self):
-		"""The stacked VLAN priority.
+		"""
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class Vlans(Base):
 
 	@property
 	def CVlanTpId(self):
-		"""The stacked VLAN TPID. EtherTypes identify the protocol that follows the VLAN header. Select from: 0x8100, 0x9100, 0x9200, or 0x88A8.
+		"""
 
 		Returns:
 			str
@@ -88,7 +88,7 @@ class Vlans(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, the VLAN is enabled.
+		"""
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class Vlans(Base):
 
 	@property
 	def SVlanId(self):
-		"""The single VLAN identifier.
+		"""
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class Vlans(Base):
 
 	@property
 	def SVlanPriority(self):
-		"""The single VLAN priority.
+		"""
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class Vlans(Base):
 
 	@property
 	def SVlanTpId(self):
-		"""The single VLAN TPID. EtherTypes identify the protocol that follows the VLAN header. Select from: 0x8100, 0x9100, 0x9200, or 0x88A8.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class Vlans(Base):
 
 	@property
 	def Type(self):
-		"""Sets the VLAN type.
+		"""
 
 		Returns:
 			str(singleVlan|stackedVlan)
@@ -150,14 +150,14 @@ class Vlans(Base):
 		"""Adds a new vlans node on the server and retrieves it in this instance.
 
 		Args:
-			CVlanId (number): The stacked VLAN identifier.
-			CVlanPriority (number): The stacked VLAN priority.
-			CVlanTpId (str): The stacked VLAN TPID. EtherTypes identify the protocol that follows the VLAN header. Select from: 0x8100, 0x9100, 0x9200, or 0x88A8.
-			Enabled (bool): If true, the VLAN is enabled.
-			SVlanId (number): The single VLAN identifier.
-			SVlanPriority (number): The single VLAN priority.
-			SVlanTpId (str): The single VLAN TPID. EtherTypes identify the protocol that follows the VLAN header. Select from: 0x8100, 0x9100, 0x9200, or 0x88A8.
-			Type (str(singleVlan|stackedVlan)): Sets the VLAN type.
+			CVlanId (number): 
+			CVlanPriority (number): 
+			CVlanTpId (str): 
+			Enabled (bool): 
+			SVlanId (number): 
+			SVlanPriority (number): 
+			SVlanTpId (str): 
+			Type (str(singleVlan|stackedVlan)): 
 
 		Returns:
 			self: This instance with all currently retrieved vlans data using find and the newly added vlans data available through an iterator or index
@@ -183,14 +183,14 @@ class Vlans(Base):
 		By default the find method takes no parameters and will retrieve all vlans data from the server.
 
 		Args:
-			CVlanId (number): The stacked VLAN identifier.
-			CVlanPriority (number): The stacked VLAN priority.
-			CVlanTpId (str): The stacked VLAN TPID. EtherTypes identify the protocol that follows the VLAN header. Select from: 0x8100, 0x9100, 0x9200, or 0x88A8.
-			Enabled (bool): If true, the VLAN is enabled.
-			SVlanId (number): The single VLAN identifier.
-			SVlanPriority (number): The single VLAN priority.
-			SVlanTpId (str): The single VLAN TPID. EtherTypes identify the protocol that follows the VLAN header. Select from: 0x8100, 0x9100, 0x9200, or 0x88A8.
-			Type (str(singleVlan|stackedVlan)): Sets the VLAN type.
+			CVlanId (number): 
+			CVlanPriority (number): 
+			CVlanTpId (str): 
+			Enabled (bool): 
+			SVlanId (number): 
+			SVlanPriority (number): 
+			SVlanTpId (str): 
+			Type (str(singleVlan|stackedVlan)): 
 
 		Returns:
 			self: This instance with matching vlans data retrieved from the server available through an iterator or index

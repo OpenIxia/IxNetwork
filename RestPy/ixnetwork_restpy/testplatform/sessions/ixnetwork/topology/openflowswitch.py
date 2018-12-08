@@ -885,6 +885,76 @@ class OpenFlowSwitch(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AuxConnTimeout=None, AuxNonHelloStartupOption=None, BadVersionErrorAction=None, BandTypes=None, BarrierReplyDelayType=None, BarrierReplyMaxDelay=None, Capabilities=None, ControllerFlowTxRate=None, DatapathDesc=None, DatapathId=None, DatapathIdHex=None, DirectoryName=None, EchoInterval=None, EchoTimeOut=None, EnableHelloElement=None, FileCaCertificate=None, FileCertificate=None, FilePrivKey=None, FlowRemovedMask=None, FlowRemovedMaskSlave=None, GroupCapabilities=None, GroupType=None, HardwareDesc=None, InterPacketInBurstGap=None, ManufacturerDesc=None, MaxBandPerMeter=None, MaxColorValue=None, MaxNumberOfBucketsPerGroups=None, MaxPacketInBytes=None, MeterCapabilities=None, NumMeter=None, NumberOfBuffers=None, PacketInMaskMaster=None, PacketInMaskSlave=None, PacketInReplyDelay=None, PacketInReplyTimeout=None, PacketInTxBurst=None, PacketOutRxRate=None, PeriodicEcho=None, PortStatusMaskMaster=None, PortStatusMaskSlave=None, SerialNumber=None, SoftwareDesc=None, StoreFlows=None, SwitchDesc=None, TableMissAction=None, TcpPort=None, TimeoutOption=None, TimeoutOptionValue=None, TlsVersion=None, TransactionID=None, TypeOfConnection=None, VersionSupported=None):
+		"""Base class infrastructure that gets a list of openFlowSwitch device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AuxConnTimeout (str): optional regex of auxConnTimeout
+			AuxNonHelloStartupOption (str): optional regex of auxNonHelloStartupOption
+			BadVersionErrorAction (str): optional regex of badVersionErrorAction
+			BandTypes (str): optional regex of bandTypes
+			BarrierReplyDelayType (str): optional regex of barrierReplyDelayType
+			BarrierReplyMaxDelay (str): optional regex of barrierReplyMaxDelay
+			Capabilities (str): optional regex of capabilities
+			ControllerFlowTxRate (str): optional regex of controllerFlowTxRate
+			DatapathDesc (str): optional regex of datapathDesc
+			DatapathId (str): optional regex of datapathId
+			DatapathIdHex (str): optional regex of datapathIdHex
+			DirectoryName (str): optional regex of directoryName
+			EchoInterval (str): optional regex of echoInterval
+			EchoTimeOut (str): optional regex of echoTimeOut
+			EnableHelloElement (str): optional regex of enableHelloElement
+			FileCaCertificate (str): optional regex of fileCaCertificate
+			FileCertificate (str): optional regex of fileCertificate
+			FilePrivKey (str): optional regex of filePrivKey
+			FlowRemovedMask (str): optional regex of flowRemovedMask
+			FlowRemovedMaskSlave (str): optional regex of flowRemovedMaskSlave
+			GroupCapabilities (str): optional regex of groupCapabilities
+			GroupType (str): optional regex of groupType
+			HardwareDesc (str): optional regex of hardwareDesc
+			InterPacketInBurstGap (str): optional regex of interPacketInBurstGap
+			ManufacturerDesc (str): optional regex of manufacturerDesc
+			MaxBandPerMeter (str): optional regex of maxBandPerMeter
+			MaxColorValue (str): optional regex of maxColorValue
+			MaxNumberOfBucketsPerGroups (str): optional regex of maxNumberOfBucketsPerGroups
+			MaxPacketInBytes (str): optional regex of maxPacketInBytes
+			MeterCapabilities (str): optional regex of meterCapabilities
+			NumMeter (str): optional regex of numMeter
+			NumberOfBuffers (str): optional regex of numberOfBuffers
+			PacketInMaskMaster (str): optional regex of packetInMaskMaster
+			PacketInMaskSlave (str): optional regex of packetInMaskSlave
+			PacketInReplyDelay (str): optional regex of packetInReplyDelay
+			PacketInReplyTimeout (str): optional regex of packetInReplyTimeout
+			PacketInTxBurst (str): optional regex of packetInTxBurst
+			PacketOutRxRate (str): optional regex of packetOutRxRate
+			PeriodicEcho (str): optional regex of periodicEcho
+			PortStatusMaskMaster (str): optional regex of portStatusMaskMaster
+			PortStatusMaskSlave (str): optional regex of portStatusMaskSlave
+			SerialNumber (str): optional regex of serialNumber
+			SoftwareDesc (str): optional regex of softwareDesc
+			StoreFlows (str): optional regex of storeFlows
+			SwitchDesc (str): optional regex of switchDesc
+			TableMissAction (str): optional regex of tableMissAction
+			TcpPort (str): optional regex of tcpPort
+			TimeoutOption (str): optional regex of timeoutOption
+			TimeoutOptionValue (str): optional regex of timeoutOptionValue
+			TlsVersion (str): optional regex of tlsVersion
+			TransactionID (str): optional regex of transactionID
+			TypeOfConnection (str): optional regex of typeOfConnection
+			VersionSupported (str): optional regex of versionSupported
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self, Arg2):
 		"""Executes the clearAllLearnedInfo operation on the server.
 

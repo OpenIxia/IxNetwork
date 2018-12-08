@@ -80,7 +80,7 @@ class Router(Base):
 
 	@property
 	def ActiveTime(self):
-		"""It determines the maximum time (in minutes) for which a route learned from a neighbor will be active in the topology table, if the neighbor stops sending Hellos. The valid range is 1 to 4294967295. (default = 3 minutes)
+		"""
 
 		Returns:
 			number
@@ -92,7 +92,7 @@ class Router(Base):
 
 	@property
 	def AsNumber(self):
-		"""The identifier of the Autonomous System (AS) where this emulated EIGRP router is located. The valid range is 1 to 4294967295. (default = 1)
+		"""
 
 		Returns:
 			number
@@ -104,7 +104,7 @@ class Router(Base):
 
 	@property
 	def DiscardLearnedRoutes(self):
-		"""If enabled, routes learned by emulated EIGRP Routers on this port will be discarded (not stored).
+		"""
 
 		Returns:
 			bool
@@ -116,7 +116,7 @@ class Router(Base):
 
 	@property
 	def EigrpAddressFamily(self):
-		"""It denotes IP address type, one of IPv4 or IPv6 (Default is IPv4)
+		"""
 
 		Returns:
 			str(ipv4|ipv6)
@@ -128,7 +128,7 @@ class Router(Base):
 
 	@property
 	def EigrpMajorVersion(self):
-		"""The major version level of the EIGRP software. The valid range is 0 to 255. (default = 1)
+		"""
 
 		Returns:
 			number
@@ -140,7 +140,7 @@ class Router(Base):
 
 	@property
 	def EigrpMinorVersion(self):
-		"""The minor version level of the EIGRP software. The valid range is 0 to 255. (default = 2).
+		"""
 
 		Returns:
 			number
@@ -152,7 +152,7 @@ class Router(Base):
 
 	@property
 	def EnablePiggyBack(self):
-		"""If enabled, then EIGRP will piggyback an acknowledgement for the initial update with any unicast packet sent to the neighbor, instead of directly sending a separate acknowledgement packet to the neighbor.
+		"""
 
 		Returns:
 			bool
@@ -164,7 +164,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -176,7 +176,7 @@ class Router(Base):
 
 	@property
 	def IosMajorVersion(self):
-		"""The major version level of the referenced software. The valid range is 0 to 255. (default = 12)
+		"""
 
 		Returns:
 			number
@@ -188,7 +188,7 @@ class Router(Base):
 
 	@property
 	def IosMinorVersion(self):
-		"""The major version level of the referenced software. The valid range is 0 to 255. (default = 3)
+		"""
 
 		Returns:
 			number
@@ -200,7 +200,7 @@ class Router(Base):
 
 	@property
 	def IsRefreshComplete(self):
-		"""If true, the routes have been refreshed.
+		"""
 
 		Returns:
 			number
@@ -209,7 +209,7 @@ class Router(Base):
 
 	@property
 	def K1(self):
-		"""Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 1)
+		"""
 
 		Returns:
 			number
@@ -221,7 +221,7 @@ class Router(Base):
 
 	@property
 	def K2(self):
-		"""Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -233,7 +233,7 @@ class Router(Base):
 
 	@property
 	def K3(self):
-		"""Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 1)
+		"""
 
 		Returns:
 			number
@@ -245,7 +245,7 @@ class Router(Base):
 
 	@property
 	def K4(self):
-		"""Advanced parameter, only used in condition checking for establishing neighbor relationship.The valid range is 0 to 255. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -257,7 +257,7 @@ class Router(Base):
 
 	@property
 	def K5(self):
-		"""Advanced parameter, only used in condition checking for establishing neighbor relationship.The valid range is 0 to 255. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -269,7 +269,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""This is an IP-formatted string. Its default value is dependent on card/port type.
+		"""
 
 		Returns:
 			str
@@ -281,7 +281,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -295,23 +295,23 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			ActiveTime (number): It determines the maximum time (in minutes) for which a route learned from a neighbor will be active in the topology table, if the neighbor stops sending Hellos. The valid range is 1 to 4294967295. (default = 3 minutes)
-			AsNumber (number): The identifier of the Autonomous System (AS) where this emulated EIGRP router is located. The valid range is 1 to 4294967295. (default = 1)
-			DiscardLearnedRoutes (bool): If enabled, routes learned by emulated EIGRP Routers on this port will be discarded (not stored).
-			EigrpAddressFamily (str(ipv4|ipv6)): It denotes IP address type, one of IPv4 or IPv6 (Default is IPv4)
-			EigrpMajorVersion (number): The major version level of the EIGRP software. The valid range is 0 to 255. (default = 1)
-			EigrpMinorVersion (number): The minor version level of the EIGRP software. The valid range is 0 to 255. (default = 2).
-			EnablePiggyBack (bool): If enabled, then EIGRP will piggyback an acknowledgement for the initial update with any unicast packet sent to the neighbor, instead of directly sending a separate acknowledgement packet to the neighbor.
-			Enabled (bool): Enables the simulated router.
-			IosMajorVersion (number): The major version level of the referenced software. The valid range is 0 to 255. (default = 12)
-			IosMinorVersion (number): The major version level of the referenced software. The valid range is 0 to 255. (default = 3)
-			K1 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 1)
-			K2 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 0)
-			K3 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 1)
-			K4 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship.The valid range is 0 to 255. (default = 0)
-			K5 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship.The valid range is 0 to 255. (default = 0)
-			RouterId (str): This is an IP-formatted string. Its default value is dependent on card/port type.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			ActiveTime (number): 
+			AsNumber (number): 
+			DiscardLearnedRoutes (bool): 
+			EigrpAddressFamily (str(ipv4|ipv6)): 
+			EigrpMajorVersion (number): 
+			EigrpMinorVersion (number): 
+			EnablePiggyBack (bool): 
+			Enabled (bool): 
+			IosMajorVersion (number): 
+			IosMinorVersion (number): 
+			K1 (number): 
+			K2 (number): 
+			K3 (number): 
+			K4 (number): 
+			K5 (number): 
+			RouterId (str): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -337,24 +337,24 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			ActiveTime (number): It determines the maximum time (in minutes) for which a route learned from a neighbor will be active in the topology table, if the neighbor stops sending Hellos. The valid range is 1 to 4294967295. (default = 3 minutes)
-			AsNumber (number): The identifier of the Autonomous System (AS) where this emulated EIGRP router is located. The valid range is 1 to 4294967295. (default = 1)
-			DiscardLearnedRoutes (bool): If enabled, routes learned by emulated EIGRP Routers on this port will be discarded (not stored).
-			EigrpAddressFamily (str(ipv4|ipv6)): It denotes IP address type, one of IPv4 or IPv6 (Default is IPv4)
-			EigrpMajorVersion (number): The major version level of the EIGRP software. The valid range is 0 to 255. (default = 1)
-			EigrpMinorVersion (number): The minor version level of the EIGRP software. The valid range is 0 to 255. (default = 2).
-			EnablePiggyBack (bool): If enabled, then EIGRP will piggyback an acknowledgement for the initial update with any unicast packet sent to the neighbor, instead of directly sending a separate acknowledgement packet to the neighbor.
-			Enabled (bool): Enables the simulated router.
-			IosMajorVersion (number): The major version level of the referenced software. The valid range is 0 to 255. (default = 12)
-			IosMinorVersion (number): The major version level of the referenced software. The valid range is 0 to 255. (default = 3)
-			IsRefreshComplete (number): If true, the routes have been refreshed.
-			K1 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 1)
-			K2 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 0)
-			K3 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship. The valid range is 0 to 255. (default = 1)
-			K4 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship.The valid range is 0 to 255. (default = 0)
-			K5 (number): Advanced parameter, only used in condition checking for establishing neighbor relationship.The valid range is 0 to 255. (default = 0)
-			RouterId (str): This is an IP-formatted string. Its default value is dependent on card/port type.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			ActiveTime (number): 
+			AsNumber (number): 
+			DiscardLearnedRoutes (bool): 
+			EigrpAddressFamily (str(ipv4|ipv6)): 
+			EigrpMajorVersion (number): 
+			EigrpMinorVersion (number): 
+			EnablePiggyBack (bool): 
+			Enabled (bool): 
+			IosMajorVersion (number): 
+			IosMinorVersion (number): 
+			IsRefreshComplete (number): 
+			K1 (number): 
+			K2 (number): 
+			K3 (number): 
+			K4 (number): 
+			K5 (number): 
+			RouterId (str): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index
@@ -382,13 +382,11 @@ class Router(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
-		This exec refreshes the EIGRP learned information from the DUT.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

@@ -38,7 +38,7 @@ class Ipv4(Base):
 
 	@property
 	def Gateway(self):
-		"""The IPv4 address of the Gateway to the network, typically an interface on the DUT.
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class Ipv4(Base):
 
 	@property
 	def Ip(self):
-		"""The 32-bit IPv4 address assigned to this unconnected interface.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class Ipv4(Base):
 
 	@property
 	def MaskWidth(self):
-		"""The number of bits in the mask used with the IPv4 address. The default is 24 bits.
+		"""
 
 		Returns:
 			number
@@ -76,9 +76,9 @@ class Ipv4(Base):
 		"""Adds a new ipv4 node on the server and retrieves it in this instance.
 
 		Args:
-			Gateway (str): The IPv4 address of the Gateway to the network, typically an interface on the DUT.
-			Ip (str): The 32-bit IPv4 address assigned to this unconnected interface.
-			MaskWidth (number): The number of bits in the mask used with the IPv4 address. The default is 24 bits.
+			Gateway (str): 
+			Ip (str): 
+			MaskWidth (number): 
 
 		Returns:
 			self: This instance with all currently retrieved ipv4 data using find and the newly added ipv4 data available through an iterator or index
@@ -104,9 +104,9 @@ class Ipv4(Base):
 		By default the find method takes no parameters and will retrieve all ipv4 data from the server.
 
 		Args:
-			Gateway (str): The IPv4 address of the Gateway to the network, typically an interface on the DUT.
-			Ip (str): The 32-bit IPv4 address assigned to this unconnected interface.
-			MaskWidth (number): The number of bits in the mask used with the IPv4 address. The default is 24 bits.
+			Gateway (str): 
+			Ip (str): 
+			MaskWidth (number): 
 
 		Returns:
 			self: This instance with matching ipv4 data retrieved from the server available through an iterator or index

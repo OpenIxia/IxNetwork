@@ -206,6 +206,30 @@ class ClusterData(Base):
 		"""
 		return self._get_attribute('vni')
 
+	def get_device_ids(self, PortNames=None, ActionTriggered=None, AttachAtStart=None, AutoSyncAtStart=None, LogicalSwitchName=None, PhysicalPortName=None, PhysicalSwitchName=None, Vlan=None, Vni=None):
+		"""Base class infrastructure that gets a list of clusterData device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ActionTriggered (str): optional regex of actionTriggered
+			AttachAtStart (str): optional regex of attachAtStart
+			AutoSyncAtStart (str): optional regex of autoSyncAtStart
+			LogicalSwitchName (str): optional regex of logicalSwitchName
+			PhysicalPortName (str): optional regex of physicalPortName
+			PhysicalSwitchName (str): optional regex of physicalSwitchName
+			Vlan (str): optional regex of vlan
+			Vni (str): optional regex of vni
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Attach(self, Arg2):
 		"""Executes the attach operation on the server.
 

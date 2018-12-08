@@ -66,7 +66,7 @@ class Interface(Base):
 
 	@property
 	def AcceptUnconfiguredChannel(self):
-		"""If true, un-configured channels are accepted for this interface.
+		"""
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Interface(Base):
 
 	@property
 	def AllFlowsDelOnStart(self):
-		"""If set, Ixia sends out an OpenFlow flow delete message (all wildcard) at startup. This should delete all existing flows in DUT.
+		"""
 
 		Returns:
 			bool
@@ -90,7 +90,7 @@ class Interface(Base):
 
 	@property
 	def AuxiliaryConnectionTimeout(self):
-		"""Period of time after which auxiliary connection will time out , if no messages are received.
+		"""
 
 		Returns:
 			str(auxReSendFeatureRequest|auxFeatureRequestTerminateConnection)
@@ -102,7 +102,7 @@ class Interface(Base):
 
 	@property
 	def BadVersionErrorAction(self):
-		"""Defines what action to take in case an auxiliary connection receives an error of type OFPET_BAD_REQUEST and code OFPBRC_BAD_VERSION.
+		"""
 
 		Returns:
 			str(auxReSendHello|auxTerminateConnection)
@@ -114,7 +114,7 @@ class Interface(Base):
 
 	@property
 	def EchoInterval(self):
-		"""Indicates the periodic interval in seconds at which the Interface sends Echo Request Packets applicable if enablePeriodicEcho attribute is set.
+		"""
 
 		Returns:
 			number
@@ -126,7 +126,7 @@ class Interface(Base):
 
 	@property
 	def EchoMultiplier(self):
-		"""Indicates the value specified for the selected Timeout option.
+		"""
 
 		Returns:
 			number
@@ -138,7 +138,7 @@ class Interface(Base):
 
 	@property
 	def EchoTimeout(self):
-		"""Indicates the duration interval of the state machine waiting for echo reply to arrive applicable if echoTimeout is set.
+		"""
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class Interface(Base):
 
 	@property
 	def EnableEchoTimeOut(self):
-		"""If true, enables echoTimeout field.
+		"""
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class Interface(Base):
 
 	@property
 	def EnableMultipleLogicalSwitch(self):
-		"""if true, we add multiple number of switch per interface
+		"""
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class Interface(Base):
 
 	@property
 	def EnablePeriodicEcho(self):
-		"""If set enables echoInterval field.
+		"""
 
 		Returns:
 			bool
@@ -186,7 +186,7 @@ class Interface(Base):
 
 	@property
 	def EnablePeriodicLldp(self):
-		"""If true, enables Periodic LLDP PacketOut Sending for each Switch Port
+		"""
 
 		Returns:
 			bool
@@ -198,7 +198,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""If set enables the interface.
+		"""
 
 		Returns:
 			bool
@@ -210,7 +210,7 @@ class Interface(Base):
 
 	@property
 	def FeatureRequestTimeout(self):
-		"""Specifies the time after which a feature request will time out , if feature reply is received.
+		"""
 
 		Returns:
 			number
@@ -222,7 +222,7 @@ class Interface(Base):
 
 	@property
 	def FeatureRequestTimeoutAction(self):
-		"""Specifies if action should be taken when feature request timeouts.
+		"""
 
 		Returns:
 			number
@@ -234,7 +234,7 @@ class Interface(Base):
 
 	@property
 	def InstallFlowForLldp(self):
-		"""If true, installs Flow in Switch for LLDP Packets to be explicitly send to Controller.
+		"""
 
 		Returns:
 			bool
@@ -246,7 +246,7 @@ class Interface(Base):
 
 	@property
 	def LldpDestinationMacAddress(self):
-		"""Indicates the Destination MAC Address for LLDP Packet Out.
+		"""
 
 		Returns:
 			str
@@ -258,7 +258,7 @@ class Interface(Base):
 
 	@property
 	def ModeOfConnection(self):
-		"""Indicates the mode of connection used for the Interface.
+		"""
 
 		Returns:
 			str(passive|active|mixed)
@@ -270,7 +270,7 @@ class Interface(Base):
 
 	@property
 	def NonHelloMessageStartupAction(self):
-		"""Defines what action to take in case an auxiliary connection receives a non-hello message at startup.
+		"""
 
 		Returns:
 			str(auxAcceptConnection|auxSendError)
@@ -282,7 +282,7 @@ class Interface(Base):
 
 	@property
 	def PeriodicLldpInterval(self):
-		"""Indicates the Periodic LLDP Packet Out Interval.
+		"""
 
 		Returns:
 			number
@@ -294,7 +294,7 @@ class Interface(Base):
 
 	@property
 	def ProtocolInterfaces(self):
-		"""Indicates the name of the protocol interface being used for this OpenFlow configuration.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -306,7 +306,7 @@ class Interface(Base):
 
 	@property
 	def SendPortFeatureAtStartup(self):
-		"""If true , Port feature request is sent , once OF session is established.
+		"""
 
 		Returns:
 			bool
@@ -318,7 +318,7 @@ class Interface(Base):
 
 	@property
 	def TcpPort(self):
-		"""Specify the TCP port for this interface.
+		"""
 
 		Returns:
 			number
@@ -330,7 +330,7 @@ class Interface(Base):
 
 	@property
 	def TimeOutOption(self):
-		"""Indicates the types of timeout options supported.
+		"""
 
 		Returns:
 			str(multiplier|timeOutValue)
@@ -342,7 +342,7 @@ class Interface(Base):
 
 	@property
 	def TypeOfConnection(self):
-		"""Indicates the type of connection used for the Interfaces.
+		"""
 
 		Returns:
 			str(tcp|tls)
@@ -356,30 +356,30 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			AcceptUnconfiguredChannel (bool): If true, un-configured channels are accepted for this interface.
-			AllFlowsDelOnStart (bool): If set, Ixia sends out an OpenFlow flow delete message (all wildcard) at startup. This should delete all existing flows in DUT.
-			AuxiliaryConnectionTimeout (str(auxReSendFeatureRequest|auxFeatureRequestTerminateConnection)): Period of time after which auxiliary connection will time out , if no messages are received.
-			BadVersionErrorAction (str(auxReSendHello|auxTerminateConnection)): Defines what action to take in case an auxiliary connection receives an error of type OFPET_BAD_REQUEST and code OFPBRC_BAD_VERSION.
-			EchoInterval (number): Indicates the periodic interval in seconds at which the Interface sends Echo Request Packets applicable if enablePeriodicEcho attribute is set.
-			EchoMultiplier (number): Indicates the value specified for the selected Timeout option.
-			EchoTimeout (number): Indicates the duration interval of the state machine waiting for echo reply to arrive applicable if echoTimeout is set.
-			EnableEchoTimeOut (bool): If true, enables echoTimeout field.
-			EnableMultipleLogicalSwitch (bool): if true, we add multiple number of switch per interface
-			EnablePeriodicEcho (bool): If set enables echoInterval field.
-			EnablePeriodicLldp (bool): If true, enables Periodic LLDP PacketOut Sending for each Switch Port
-			Enabled (bool): If set enables the interface.
-			FeatureRequestTimeout (number): Specifies the time after which a feature request will time out , if feature reply is received.
-			FeatureRequestTimeoutAction (number): Specifies if action should be taken when feature request timeouts.
-			InstallFlowForLldp (bool): If true, installs Flow in Switch for LLDP Packets to be explicitly send to Controller.
-			LldpDestinationMacAddress (str): Indicates the Destination MAC Address for LLDP Packet Out.
-			ModeOfConnection (str(passive|active|mixed)): Indicates the mode of connection used for the Interface.
-			NonHelloMessageStartupAction (str(auxAcceptConnection|auxSendError)): Defines what action to take in case an auxiliary connection receives a non-hello message at startup.
-			PeriodicLldpInterval (number): Indicates the Periodic LLDP Packet Out Interval.
-			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): Indicates the name of the protocol interface being used for this OpenFlow configuration.
-			SendPortFeatureAtStartup (bool): If true , Port feature request is sent , once OF session is established.
-			TcpPort (number): Specify the TCP port for this interface.
-			TimeOutOption (str(multiplier|timeOutValue)): Indicates the types of timeout options supported.
-			TypeOfConnection (str(tcp|tls)): Indicates the type of connection used for the Interfaces.
+			AcceptUnconfiguredChannel (bool): 
+			AllFlowsDelOnStart (bool): 
+			AuxiliaryConnectionTimeout (str(auxReSendFeatureRequest|auxFeatureRequestTerminateConnection)): 
+			BadVersionErrorAction (str(auxReSendHello|auxTerminateConnection)): 
+			EchoInterval (number): 
+			EchoMultiplier (number): 
+			EchoTimeout (number): 
+			EnableEchoTimeOut (bool): 
+			EnableMultipleLogicalSwitch (bool): 
+			EnablePeriodicEcho (bool): 
+			EnablePeriodicLldp (bool): 
+			Enabled (bool): 
+			FeatureRequestTimeout (number): 
+			FeatureRequestTimeoutAction (number): 
+			InstallFlowForLldp (bool): 
+			LldpDestinationMacAddress (str): 
+			ModeOfConnection (str(passive|active|mixed)): 
+			NonHelloMessageStartupAction (str(auxAcceptConnection|auxSendError)): 
+			PeriodicLldpInterval (number): 
+			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			SendPortFeatureAtStartup (bool): 
+			TcpPort (number): 
+			TimeOutOption (str(multiplier|timeOutValue)): 
+			TypeOfConnection (str(tcp|tls)): 
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -405,30 +405,30 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			AcceptUnconfiguredChannel (bool): If true, un-configured channels are accepted for this interface.
-			AllFlowsDelOnStart (bool): If set, Ixia sends out an OpenFlow flow delete message (all wildcard) at startup. This should delete all existing flows in DUT.
-			AuxiliaryConnectionTimeout (str(auxReSendFeatureRequest|auxFeatureRequestTerminateConnection)): Period of time after which auxiliary connection will time out , if no messages are received.
-			BadVersionErrorAction (str(auxReSendHello|auxTerminateConnection)): Defines what action to take in case an auxiliary connection receives an error of type OFPET_BAD_REQUEST and code OFPBRC_BAD_VERSION.
-			EchoInterval (number): Indicates the periodic interval in seconds at which the Interface sends Echo Request Packets applicable if enablePeriodicEcho attribute is set.
-			EchoMultiplier (number): Indicates the value specified for the selected Timeout option.
-			EchoTimeout (number): Indicates the duration interval of the state machine waiting for echo reply to arrive applicable if echoTimeout is set.
-			EnableEchoTimeOut (bool): If true, enables echoTimeout field.
-			EnableMultipleLogicalSwitch (bool): if true, we add multiple number of switch per interface
-			EnablePeriodicEcho (bool): If set enables echoInterval field.
-			EnablePeriodicLldp (bool): If true, enables Periodic LLDP PacketOut Sending for each Switch Port
-			Enabled (bool): If set enables the interface.
-			FeatureRequestTimeout (number): Specifies the time after which a feature request will time out , if feature reply is received.
-			FeatureRequestTimeoutAction (number): Specifies if action should be taken when feature request timeouts.
-			InstallFlowForLldp (bool): If true, installs Flow in Switch for LLDP Packets to be explicitly send to Controller.
-			LldpDestinationMacAddress (str): Indicates the Destination MAC Address for LLDP Packet Out.
-			ModeOfConnection (str(passive|active|mixed)): Indicates the mode of connection used for the Interface.
-			NonHelloMessageStartupAction (str(auxAcceptConnection|auxSendError)): Defines what action to take in case an auxiliary connection receives a non-hello message at startup.
-			PeriodicLldpInterval (number): Indicates the Periodic LLDP Packet Out Interval.
-			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): Indicates the name of the protocol interface being used for this OpenFlow configuration.
-			SendPortFeatureAtStartup (bool): If true , Port feature request is sent , once OF session is established.
-			TcpPort (number): Specify the TCP port for this interface.
-			TimeOutOption (str(multiplier|timeOutValue)): Indicates the types of timeout options supported.
-			TypeOfConnection (str(tcp|tls)): Indicates the type of connection used for the Interfaces.
+			AcceptUnconfiguredChannel (bool): 
+			AllFlowsDelOnStart (bool): 
+			AuxiliaryConnectionTimeout (str(auxReSendFeatureRequest|auxFeatureRequestTerminateConnection)): 
+			BadVersionErrorAction (str(auxReSendHello|auxTerminateConnection)): 
+			EchoInterval (number): 
+			EchoMultiplier (number): 
+			EchoTimeout (number): 
+			EnableEchoTimeOut (bool): 
+			EnableMultipleLogicalSwitch (bool): 
+			EnablePeriodicEcho (bool): 
+			EnablePeriodicLldp (bool): 
+			Enabled (bool): 
+			FeatureRequestTimeout (number): 
+			FeatureRequestTimeoutAction (number): 
+			InstallFlowForLldp (bool): 
+			LldpDestinationMacAddress (str): 
+			ModeOfConnection (str(passive|active|mixed)): 
+			NonHelloMessageStartupAction (str(auxAcceptConnection|auxSendError)): 
+			PeriodicLldpInterval (number): 
+			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			SendPortFeatureAtStartup (bool): 
+			TcpPort (number): 
+			TimeOutOption (str(multiplier|timeOutValue)): 
+			TypeOfConnection (str(tcp|tls)): 
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index

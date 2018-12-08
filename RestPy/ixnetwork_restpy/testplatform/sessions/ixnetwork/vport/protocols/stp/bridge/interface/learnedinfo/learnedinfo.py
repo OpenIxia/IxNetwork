@@ -37,7 +37,7 @@ class LearnedInfo(Base):
 
 	@property
 	def DesignatedCost(self):
-		"""Root Path Cost. The administrative cost for the shortest path from this bridge to the Root bridge. A 4-byte unsigned integer. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class LearnedInfo(Base):
 
 	@property
 	def DesignatedMac(self):
-		"""(Read-only) The 6-byte MAC address of the designated bridge on the LAN segment.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class LearnedInfo(Base):
 
 	@property
 	def DesignatedPortId(self):
-		"""(Read-only) The port ID of the designated bridge's designated port on the LAN segment.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedInfo(Base):
 
 	@property
 	def DesignatedPriority(self):
-		"""(Read-only) The priority of the designated bridge on the LAN segment.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LearnedInfo(Base):
 
 	@property
 	def InterfaceDesc(self):
-		"""(Read-only) The descriptive identifier of the protocol interface.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedInfo(Base):
 
 	@property
 	def InterfaceRole(self):
-		"""(Read-only) The role of the Interface. One of the following options: Disabled, Root, Designated, Alternate, or Backup.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LearnedInfo(Base):
 
 	@property
 	def InterfaceState(self):
-		"""Read-only) The state of the interface. One of the following options: Discarding, learning, or forwarding.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class LearnedInfo(Base):
 
 	@property
 	def RootMac(self):
-		"""(Read-only) The 6-byte MAC address of the root bridge.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class LearnedInfo(Base):
 
 	@property
 	def RootPriority(self):
-		"""(Read-only) The priority of the root bridge.
+		"""
 
 		Returns:
 			number

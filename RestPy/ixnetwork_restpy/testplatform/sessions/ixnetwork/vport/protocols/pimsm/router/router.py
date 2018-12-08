@@ -52,7 +52,7 @@ class Router(Base):
 
 	@property
 	def DataMdtInterval(self):
-		"""The time interval, in seconds, between transmissions of Data MDT Join TLV messages by the source PE Router. (default = 60)
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class Router(Base):
 
 	@property
 	def DataMdtTimeOut(self):
-		"""The Data MDT hold time, in seconds. If a PE router connected to a receiver does not receive a Data MDT Join TLV message within this time period, it will leave the Data MDT group. (default = 180)
+		"""
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class Router(Base):
 
 	@property
 	def DrPriority(self):
-		"""The Designated Router (DR) priority, used for DR election.
+		"""
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the router's simulation.
+		"""
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class Router(Base):
 
 	@property
 	def JoinPruneHoldTime(self):
-		"""The amount of time that neighbor routers should hold a received Join state.
+		"""
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class Router(Base):
 
 	@property
 	def JoinPruneInterval(self):
-		"""The interval between transmitted Join/Prune messages.
+		"""
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""The ID of the router, in IPv4 format.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class Router(Base):
 
 	@property
 	def RpDiscoveryMode(self):
-		"""Sets the discovery mode of the router.
+		"""
 
 		Returns:
 			str(manual|auto)
@@ -148,7 +148,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""The name of the group to which this emulated router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -162,15 +162,15 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			DataMdtInterval (number): The time interval, in seconds, between transmissions of Data MDT Join TLV messages by the source PE Router. (default = 60)
-			DataMdtTimeOut (number): The Data MDT hold time, in seconds. If a PE router connected to a receiver does not receive a Data MDT Join TLV message within this time period, it will leave the Data MDT group. (default = 180)
-			DrPriority (number): The Designated Router (DR) priority, used for DR election.
-			Enabled (bool): Enables or disables the router's simulation.
-			JoinPruneHoldTime (number): The amount of time that neighbor routers should hold a received Join state.
-			JoinPruneInterval (number): The interval between transmitted Join/Prune messages.
-			RouterId (str): The ID of the router, in IPv4 format.
-			RpDiscoveryMode (str(manual|auto)): Sets the discovery mode of the router.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this emulated router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			DataMdtInterval (number): 
+			DataMdtTimeOut (number): 
+			DrPriority (number): 
+			Enabled (bool): 
+			JoinPruneHoldTime (number): 
+			JoinPruneInterval (number): 
+			RouterId (str): 
+			RpDiscoveryMode (str(manual|auto)): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -196,15 +196,15 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			DataMdtInterval (number): The time interval, in seconds, between transmissions of Data MDT Join TLV messages by the source PE Router. (default = 60)
-			DataMdtTimeOut (number): The Data MDT hold time, in seconds. If a PE router connected to a receiver does not receive a Data MDT Join TLV message within this time period, it will leave the Data MDT group. (default = 180)
-			DrPriority (number): The Designated Router (DR) priority, used for DR election.
-			Enabled (bool): Enables or disables the router's simulation.
-			JoinPruneHoldTime (number): The amount of time that neighbor routers should hold a received Join state.
-			JoinPruneInterval (number): The interval between transmitted Join/Prune messages.
-			RouterId (str): The ID of the router, in IPv4 format.
-			RpDiscoveryMode (str(manual|auto)): Sets the discovery mode of the router.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this emulated router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			DataMdtInterval (number): 
+			DataMdtTimeOut (number): 
+			DrPriority (number): 
+			Enabled (bool): 
+			JoinPruneHoldTime (number): 
+			JoinPruneInterval (number): 
+			RouterId (str): 
+			RpDiscoveryMode (str(manual|auto)): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index

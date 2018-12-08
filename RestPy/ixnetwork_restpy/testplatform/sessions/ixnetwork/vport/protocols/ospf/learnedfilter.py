@@ -37,7 +37,7 @@ class LearnedFilter(Base):
 
 	@property
 	def AdvRouterId(self):
-		"""Filter on the router ID of the router that is originating the LSA.
+		"""
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class LearnedFilter(Base):
 
 	@property
 	def AreaSummaryLsaCount(self):
-		"""Filter on the number of LSAs in the Summary Area.
+		"""
 
 		Returns:
 			number
@@ -58,7 +58,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableAdvRouterId(self):
-		"""If true filter on the advertised router ID.
+		"""
 
 		Returns:
 			bool
@@ -70,7 +70,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableFilter(self):
-		"""Enables the use of the OSPF learned filter.
+		"""
 
 		Returns:
 			bool
@@ -82,7 +82,7 @@ class LearnedFilter(Base):
 
 	@property
 	def EnableLinkStateId(self):
-		"""If true, filter on the Link State ID.
+		"""
 
 		Returns:
 			bool
@@ -94,7 +94,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ExcludeAdvRouterId(self):
-		"""If true, filter on no advertised router ID available.
+		"""
 
 		Returns:
 			bool
@@ -106,7 +106,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ExcludeLinkStateId(self):
-		"""If true, filter on no Link State ID available.
+		"""
 
 		Returns:
 			bool
@@ -118,7 +118,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ExternalLsaCount(self):
-		"""Filter on the number of External LSAs.
+		"""
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ExternalSummaryLsaCount(self):
-		"""Filter on the number of External Summary LSAs.
+		"""
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class LearnedFilter(Base):
 
 	@property
 	def IsComplete(self):
-		"""If true, indicates the Filter operation has finished.
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class LearnedFilter(Base):
 
 	@property
 	def LinkStateId(self):
-		"""Filter on the Link State ID.
+		"""
 
 		Returns:
 			str
@@ -157,7 +157,7 @@ class LearnedFilter(Base):
 
 	@property
 	def NetworkLsaCount(self):
-		"""Filter on the number of Network LSAs.
+		"""
 
 		Returns:
 			number
@@ -166,7 +166,7 @@ class LearnedFilter(Base):
 
 	@property
 	def NssaLsaCount(self):
-		"""Filter on the number of NSSA LSAs.
+		"""
 
 		Returns:
 			number
@@ -175,7 +175,7 @@ class LearnedFilter(Base):
 
 	@property
 	def OpaqueAreaScopeLsaCount(self):
-		"""Filter on the number of Opaque Area LSAs.
+		"""
 
 		Returns:
 			number
@@ -184,7 +184,7 @@ class LearnedFilter(Base):
 
 	@property
 	def OpaqueAsScopeLsaCount(self):
-		"""Filter on the number of AS Scope LSAs.
+		"""
 
 		Returns:
 			number
@@ -193,7 +193,7 @@ class LearnedFilter(Base):
 
 	@property
 	def OpaqueLocalScopeLsaCount(self):
-		"""Filter on the number of Local Scope LSAs.
+		"""
 
 		Returns:
 			number
@@ -202,7 +202,7 @@ class LearnedFilter(Base):
 
 	@property
 	def RouterLsaCount(self):
-		"""Filter on the number of Router LSAs.
+		"""
 
 		Returns:
 			number
@@ -211,7 +211,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowExternalAsLsa(self):
-		"""If true, filter on the LSAs from routers with External routes.
+		"""
 
 		Returns:
 			bool
@@ -223,7 +223,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowNetworkLsa(self):
-		"""If true, filter on LSAs from router with Network routes.
+		"""
 
 		Returns:
 			bool
@@ -235,7 +235,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowNssaLsa(self):
-		"""If true, filter on LSAs from router with NSSA routes.
+		"""
 
 		Returns:
 			bool
@@ -247,7 +247,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowOpaqueAreaLsa(self):
-		"""If true, filter on LSAs from router with Opaque Area routes.
+		"""
 
 		Returns:
 			bool
@@ -259,7 +259,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowOpaqueDomainLsa(self):
-		"""If true, filter on LSAs from router with Opaque Domain routes.
+		"""
 
 		Returns:
 			bool
@@ -271,7 +271,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowOpaqueLocalLsa(self):
-		"""If true, filter on LSAs from router with Opaque Local routes.
+		"""
 
 		Returns:
 			bool
@@ -283,7 +283,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowRouterLsa(self):
-		"""If true, filter on LSAs from router with BR or DBR routes.
+		"""
 
 		Returns:
 			bool
@@ -295,7 +295,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowSummaryAsLsa(self):
-		"""If true, filter on LSAs from router with Summary AS routes.
+		"""
 
 		Returns:
 			bool
@@ -307,7 +307,7 @@ class LearnedFilter(Base):
 
 	@property
 	def ShowSummaryIpLsa(self):
-		"""If true, filter on LSAs from router with Summary IP routes.
+		"""
 
 		Returns:
 			bool
@@ -319,7 +319,7 @@ class LearnedFilter(Base):
 
 	@property
 	def TotalLsaCount(self):
-		"""Filter on the total number of LSAs.
+		"""
 
 		Returns:
 			number

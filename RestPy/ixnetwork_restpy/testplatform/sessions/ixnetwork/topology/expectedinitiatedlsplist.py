@@ -138,3 +138,23 @@ class ExpectedInitiatedLspList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('symbolicPathName')
+
+	def get_device_ids(self, PortNames=None, Active=None, SourceIpv4Address=None, SourceIpv6Address=None, SymbolicPathName=None):
+		"""Base class infrastructure that gets a list of expectedInitiatedLspList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			SourceIpv4Address (str): optional regex of sourceIpv4Address
+			SourceIpv6Address (str): optional regex of sourceIpv6Address
+			SymbolicPathName (str): optional regex of symbolicPathName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

@@ -52,7 +52,7 @@ class Router(Base):
 
 	@property
 	def AuthorizationPassword(self):
-		"""If enableAuthorization is set, this is the 16-character password to be used. Only simple password authentication is supported.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Router(Base):
 
 	@property
 	def EnableAuthorization(self):
-		"""Indicates whether authorization is included in update messages.
+		"""
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -88,7 +88,7 @@ class Router(Base):
 
 	@property
 	def InterfaceId(self):
-		"""The ID associated with the simulated interface.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -100,7 +100,7 @@ class Router(Base):
 
 	@property
 	def ReceiveType(self):
-		"""Filters the RIP version of messages this router will receive.
+		"""
 
 		Returns:
 			str(receiveVersion1|receiveVersion2|receiveVersion1And2)
@@ -112,7 +112,7 @@ class Router(Base):
 
 	@property
 	def ResponseMode(self):
-		"""Controls the manner in which received routes are repeated back to their source. The modes are split horizon, no split horizon, and split horizon with poison reverse.
+		"""
 
 		Returns:
 			str(default|splitHorizon|poisonReverse|splitHorizonSpaceSaver|silent)
@@ -124,7 +124,7 @@ class Router(Base):
 
 	@property
 	def SendType(self):
-		"""The method for sending RIP packets.
+		"""
 
 		Returns:
 			str(multicast|broadcastV1|broadcastV2)
@@ -136,7 +136,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -148,7 +148,7 @@ class Router(Base):
 
 	@property
 	def UpdateInterval(self):
-		"""The time, in seconds, between transmitted update messages.
+		"""
 
 		Returns:
 			number
@@ -160,7 +160,7 @@ class Router(Base):
 
 	@property
 	def UpdateIntervalOffset(self):
-		"""A random percentage of the time value, expressed in seconds, is added to or subtracted from the update interval to stagger the transmission of messages.
+		"""
 
 		Returns:
 			number
@@ -174,16 +174,16 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			AuthorizationPassword (str): If enableAuthorization is set, this is the 16-character password to be used. Only simple password authentication is supported.
-			EnableAuthorization (bool): Indicates whether authorization is included in update messages.
-			Enabled (bool): Enables or disables the simulated router.
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The ID associated with the simulated interface.
-			ReceiveType (str(receiveVersion1|receiveVersion2|receiveVersion1And2)): Filters the RIP version of messages this router will receive.
-			ResponseMode (str(default|splitHorizon|poisonReverse|splitHorizonSpaceSaver|silent)): Controls the manner in which received routes are repeated back to their source. The modes are split horizon, no split horizon, and split horizon with poison reverse.
-			SendType (str(multicast|broadcastV1|broadcastV2)): The method for sending RIP packets.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
-			UpdateInterval (number): The time, in seconds, between transmitted update messages.
-			UpdateIntervalOffset (number): A random percentage of the time value, expressed in seconds, is added to or subtracted from the update interval to stagger the transmission of messages.
+			AuthorizationPassword (str): 
+			EnableAuthorization (bool): 
+			Enabled (bool): 
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			ReceiveType (str(receiveVersion1|receiveVersion2|receiveVersion1And2)): 
+			ResponseMode (str(default|splitHorizon|poisonReverse|splitHorizonSpaceSaver|silent)): 
+			SendType (str(multicast|broadcastV1|broadcastV2)): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			UpdateInterval (number): 
+			UpdateIntervalOffset (number): 
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -209,16 +209,16 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			AuthorizationPassword (str): If enableAuthorization is set, this is the 16-character password to be used. Only simple password authentication is supported.
-			EnableAuthorization (bool): Indicates whether authorization is included in update messages.
-			Enabled (bool): Enables or disables the simulated router.
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The ID associated with the simulated interface.
-			ReceiveType (str(receiveVersion1|receiveVersion2|receiveVersion1And2)): Filters the RIP version of messages this router will receive.
-			ResponseMode (str(default|splitHorizon|poisonReverse|splitHorizonSpaceSaver|silent)): Controls the manner in which received routes are repeated back to their source. The modes are split horizon, no split horizon, and split horizon with poison reverse.
-			SendType (str(multicast|broadcastV1|broadcastV2)): The method for sending RIP packets.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
-			UpdateInterval (number): The time, in seconds, between transmitted update messages.
-			UpdateIntervalOffset (number): A random percentage of the time value, expressed in seconds, is added to or subtracted from the update interval to stagger the transmission of messages.
+			AuthorizationPassword (str): 
+			EnableAuthorization (bool): 
+			Enabled (bool): 
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			ReceiveType (str(receiveVersion1|receiveVersion2|receiveVersion1And2)): 
+			ResponseMode (str(default|splitHorizon|poisonReverse|splitHorizonSpaceSaver|silent)): 
+			SendType (str(multicast|broadcastV1|broadcastV2)): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			UpdateInterval (number): 
+			UpdateIntervalOffset (number): 
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index

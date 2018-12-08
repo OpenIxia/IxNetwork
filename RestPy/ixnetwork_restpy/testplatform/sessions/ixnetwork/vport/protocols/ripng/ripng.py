@@ -51,7 +51,7 @@ class Ripng(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables this particular protocol interface.
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Ripng(Base):
 
 	@property
 	def NumRoutes(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -75,7 +75,7 @@ class Ripng(Base):
 
 	@property
 	def RunningState(self):
-		"""The current running state of the RIPng router.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -84,7 +84,7 @@ class Ripng(Base):
 
 	@property
 	def TimePeriod(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -96,8 +96,6 @@ class Ripng(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the RIPng protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ripng)): The method internally sets Arg1 to the current href for this instance
@@ -111,8 +109,6 @@ class Ripng(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the RIPng protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ripng)): The method internally sets Arg1 to the current href for this instance

@@ -108,7 +108,7 @@ class Uni(Base):
 
 	@property
 	def DataInstance(self):
-		"""This four-octet field indicates the Data Instance value to be sent in transmitted packet. It will be configurable only if Override Data Instance is enabled. By default it is grayed out with default value 0 for UNI-C and 1 for UNI-N. Max 4294967295, Min 0 for UNI-C and 1 for UNI- V. Change of value in this field takes effect when protocol is running.
+		"""
 
 		Returns:
 			number
@@ -120,7 +120,7 @@ class Uni(Base):
 
 	@property
 	def EnablePollingVerificationTimer(self):
-		"""If enabled, it shows the default value.
+		"""
 
 		Returns:
 			bool
@@ -132,7 +132,7 @@ class Uni(Base):
 
 	@property
 	def Enabled(self):
-		"""It signifies whether the protocol is enabled or disabled.
+		"""
 
 		Returns:
 			bool
@@ -144,7 +144,7 @@ class Uni(Base):
 
 	@property
 	def IsEvcStatusLearnedInfoRefreshed(self):
-		"""It checks whether the EVC status learned info is refreshed or not.
+		"""
 
 		Returns:
 			bool
@@ -153,7 +153,7 @@ class Uni(Base):
 
 	@property
 	def IsLmiStatusLearnedInfoRefreshed(self):
-		"""It checks whether the LMI status learned info is refreshed or not.
+		"""
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class Uni(Base):
 
 	@property
 	def IsUniStatusLearnedInfoRefreshed(self):
-		"""It checks whether the UNI status learned info is refreshed or not.
+		"""
 
 		Returns:
 			bool
@@ -171,7 +171,7 @@ class Uni(Base):
 
 	@property
 	def Mode(self):
-		"""It is a type of UNI end point.
+		"""
 
 		Returns:
 			str(uniC|uniN)
@@ -183,7 +183,7 @@ class Uni(Base):
 
 	@property
 	def OverrideDataInstance(self):
-		"""If enabled, it updates the Data Instance field of Data Instance Information Element (IE). Default is false. Change of value in this field takes effect when protocol is running.
+		"""
 
 		Returns:
 			bool
@@ -195,7 +195,7 @@ class Uni(Base):
 
 	@property
 	def OverrideReceiveSequenceNumber(self):
-		"""If enabled, it updates the receive sequence number. This is used for negative testing. Default is false. Change of value in this field takes effect when protocol is running.
+		"""
 
 		Returns:
 			bool
@@ -207,7 +207,7 @@ class Uni(Base):
 
 	@property
 	def OverrideSendSequenceNumber(self):
-		"""If enabled, it updates the send sequence number. This is used for negative testing. Default is false. Change of value in this field takes effect when protocol is running.
+		"""
 
 		Returns:
 			bool
@@ -219,7 +219,7 @@ class Uni(Base):
 
 	@property
 	def PollingCounter(self):
-		"""It signifies the full status (status of UNI and all EVCs) polling count. Range is 1- 65k. Default is 360. This is applicable only for UNI-C.
+		"""
 
 		Returns:
 			number
@@ -231,7 +231,7 @@ class Uni(Base):
 
 	@property
 	def PollingTimer(self):
-		"""The range is 5-30 in seconds. Default is 10 seconds. This is applicable only for UNI-C.
+		"""
 
 		Returns:
 			number
@@ -243,7 +243,7 @@ class Uni(Base):
 
 	@property
 	def PollingVerificationTimer(self):
-		"""This is applicable only for UNI-N. Range is 5-30 secs. Default is 15 seconds.
+		"""
 
 		Returns:
 			number
@@ -255,7 +255,7 @@ class Uni(Base):
 
 	@property
 	def ProtocolInterface(self):
-		"""It signifies the configured protocol interface. User has to select one interface to enable configuring UNI. Until and unless protocol interface is selected user will not be able to configure and enable UNI. Default is unassigned.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -267,7 +267,7 @@ class Uni(Base):
 
 	@property
 	def ProtocolVersion(self):
-		"""This one-octet field indicates the version supported by the sending entity (UNI-C or UNI-N). Default value is ox1. Max 255, Min - 1.
+		"""
 
 		Returns:
 			number
@@ -279,7 +279,7 @@ class Uni(Base):
 
 	@property
 	def ReceiveSequenceNumber(self):
-		"""This one-octet field indicates the sequence number to be sent in the 'Receive Sequence Number' in transmitted packet. It will be configurable only if Override Receive Sequence Number is enabled. Default value of this field is 0. Max 255, Min - 0 Change of value in this field takes effect when protocol is running.
+		"""
 
 		Returns:
 			number
@@ -291,7 +291,7 @@ class Uni(Base):
 
 	@property
 	def SendSequenceNumber(self):
-		"""This one-octet field indicates the sequence number to be sent in the 'Send Sequence Number' field in transmitted packet. It will be configurable only if Override Send Sequence Number is enabled. Default value of this field is 0. Max 255, Min - 0 Change of value in this field takes effect when protocol is running.
+		"""
 
 		Returns:
 			number
@@ -303,7 +303,7 @@ class Uni(Base):
 
 	@property
 	def StatusCounter(self):
-		"""It signifies the count of consecutive errors. Range is 2 10. Default is 4.
+		"""
 
 		Returns:
 			number
@@ -317,21 +317,21 @@ class Uni(Base):
 		"""Adds a new uni node on the server and retrieves it in this instance.
 
 		Args:
-			DataInstance (number): This four-octet field indicates the Data Instance value to be sent in transmitted packet. It will be configurable only if Override Data Instance is enabled. By default it is grayed out with default value 0 for UNI-C and 1 for UNI-N. Max 4294967295, Min 0 for UNI-C and 1 for UNI- V. Change of value in this field takes effect when protocol is running.
-			EnablePollingVerificationTimer (bool): If enabled, it shows the default value.
-			Enabled (bool): It signifies whether the protocol is enabled or disabled.
-			Mode (str(uniC|uniN)): It is a type of UNI end point.
-			OverrideDataInstance (bool): If enabled, it updates the Data Instance field of Data Instance Information Element (IE). Default is false. Change of value in this field takes effect when protocol is running.
-			OverrideReceiveSequenceNumber (bool): If enabled, it updates the receive sequence number. This is used for negative testing. Default is false. Change of value in this field takes effect when protocol is running.
-			OverrideSendSequenceNumber (bool): If enabled, it updates the send sequence number. This is used for negative testing. Default is false. Change of value in this field takes effect when protocol is running.
-			PollingCounter (number): It signifies the full status (status of UNI and all EVCs) polling count. Range is 1- 65k. Default is 360. This is applicable only for UNI-C.
-			PollingTimer (number): The range is 5-30 in seconds. Default is 10 seconds. This is applicable only for UNI-C.
-			PollingVerificationTimer (number): This is applicable only for UNI-N. Range is 5-30 secs. Default is 15 seconds.
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): It signifies the configured protocol interface. User has to select one interface to enable configuring UNI. Until and unless protocol interface is selected user will not be able to configure and enable UNI. Default is unassigned.
-			ProtocolVersion (number): This one-octet field indicates the version supported by the sending entity (UNI-C or UNI-N). Default value is ox1. Max 255, Min - 1.
-			ReceiveSequenceNumber (number): This one-octet field indicates the sequence number to be sent in the 'Receive Sequence Number' in transmitted packet. It will be configurable only if Override Receive Sequence Number is enabled. Default value of this field is 0. Max 255, Min - 0 Change of value in this field takes effect when protocol is running.
-			SendSequenceNumber (number): This one-octet field indicates the sequence number to be sent in the 'Send Sequence Number' field in transmitted packet. It will be configurable only if Override Send Sequence Number is enabled. Default value of this field is 0. Max 255, Min - 0 Change of value in this field takes effect when protocol is running.
-			StatusCounter (number): It signifies the count of consecutive errors. Range is 2 10. Default is 4.
+			DataInstance (number): 
+			EnablePollingVerificationTimer (bool): 
+			Enabled (bool): 
+			Mode (str(uniC|uniN)): 
+			OverrideDataInstance (bool): 
+			OverrideReceiveSequenceNumber (bool): 
+			OverrideSendSequenceNumber (bool): 
+			PollingCounter (number): 
+			PollingTimer (number): 
+			PollingVerificationTimer (number): 
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			ProtocolVersion (number): 
+			ReceiveSequenceNumber (number): 
+			SendSequenceNumber (number): 
+			StatusCounter (number): 
 
 		Returns:
 			self: This instance with all currently retrieved uni data using find and the newly added uni data available through an iterator or index
@@ -357,24 +357,24 @@ class Uni(Base):
 		By default the find method takes no parameters and will retrieve all uni data from the server.
 
 		Args:
-			DataInstance (number): This four-octet field indicates the Data Instance value to be sent in transmitted packet. It will be configurable only if Override Data Instance is enabled. By default it is grayed out with default value 0 for UNI-C and 1 for UNI-N. Max 4294967295, Min 0 for UNI-C and 1 for UNI- V. Change of value in this field takes effect when protocol is running.
-			EnablePollingVerificationTimer (bool): If enabled, it shows the default value.
-			Enabled (bool): It signifies whether the protocol is enabled or disabled.
-			IsEvcStatusLearnedInfoRefreshed (bool): It checks whether the EVC status learned info is refreshed or not.
-			IsLmiStatusLearnedInfoRefreshed (bool): It checks whether the LMI status learned info is refreshed or not.
-			IsUniStatusLearnedInfoRefreshed (bool): It checks whether the UNI status learned info is refreshed or not.
-			Mode (str(uniC|uniN)): It is a type of UNI end point.
-			OverrideDataInstance (bool): If enabled, it updates the Data Instance field of Data Instance Information Element (IE). Default is false. Change of value in this field takes effect when protocol is running.
-			OverrideReceiveSequenceNumber (bool): If enabled, it updates the receive sequence number. This is used for negative testing. Default is false. Change of value in this field takes effect when protocol is running.
-			OverrideSendSequenceNumber (bool): If enabled, it updates the send sequence number. This is used for negative testing. Default is false. Change of value in this field takes effect when protocol is running.
-			PollingCounter (number): It signifies the full status (status of UNI and all EVCs) polling count. Range is 1- 65k. Default is 360. This is applicable only for UNI-C.
-			PollingTimer (number): The range is 5-30 in seconds. Default is 10 seconds. This is applicable only for UNI-C.
-			PollingVerificationTimer (number): This is applicable only for UNI-N. Range is 5-30 secs. Default is 15 seconds.
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): It signifies the configured protocol interface. User has to select one interface to enable configuring UNI. Until and unless protocol interface is selected user will not be able to configure and enable UNI. Default is unassigned.
-			ProtocolVersion (number): This one-octet field indicates the version supported by the sending entity (UNI-C or UNI-N). Default value is ox1. Max 255, Min - 1.
-			ReceiveSequenceNumber (number): This one-octet field indicates the sequence number to be sent in the 'Receive Sequence Number' in transmitted packet. It will be configurable only if Override Receive Sequence Number is enabled. Default value of this field is 0. Max 255, Min - 0 Change of value in this field takes effect when protocol is running.
-			SendSequenceNumber (number): This one-octet field indicates the sequence number to be sent in the 'Send Sequence Number' field in transmitted packet. It will be configurable only if Override Send Sequence Number is enabled. Default value of this field is 0. Max 255, Min - 0 Change of value in this field takes effect when protocol is running.
-			StatusCounter (number): It signifies the count of consecutive errors. Range is 2 10. Default is 4.
+			DataInstance (number): 
+			EnablePollingVerificationTimer (bool): 
+			Enabled (bool): 
+			IsEvcStatusLearnedInfoRefreshed (bool): 
+			IsLmiStatusLearnedInfoRefreshed (bool): 
+			IsUniStatusLearnedInfoRefreshed (bool): 
+			Mode (str(uniC|uniN)): 
+			OverrideDataInstance (bool): 
+			OverrideReceiveSequenceNumber (bool): 
+			OverrideSendSequenceNumber (bool): 
+			PollingCounter (number): 
+			PollingTimer (number): 
+			PollingVerificationTimer (number): 
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			ProtocolVersion (number): 
+			ReceiveSequenceNumber (number): 
+			SendSequenceNumber (number): 
+			StatusCounter (number): 
 
 		Returns:
 			self: This instance with matching uni data retrieved from the server available through an iterator or index
@@ -402,13 +402,11 @@ class Uni(Base):
 	def RefreshEvcStatusLearnedInfo(self):
 		"""Executes the refreshEvcStatusLearnedInfo operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=uni)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -420,13 +418,11 @@ class Uni(Base):
 	def RefreshLmiStatusLearnedInfo(self):
 		"""Executes the refreshLmiStatusLearnedInfo operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=uni)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -438,13 +434,11 @@ class Uni(Base):
 	def RefreshUniStatusLearnedInfo(self):
 		"""Executes the refreshUniStatusLearnedInfo operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=uni)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

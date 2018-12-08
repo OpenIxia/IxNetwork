@@ -37,7 +37,7 @@ class Ethernet(Base):
 
 	@property
 	def MacAddress(self):
-		"""A 48-bit hardware address that uniquely identifies each node of a network.
+		"""
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class Ethernet(Base):
 
 	@property
 	def Mtu(self):
-		"""The maximum packet size, in bytes, that a particular interface can handle.
+		"""
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class Ethernet(Base):
 
 	@property
 	def UidFromMac(self):
-		"""The interface identifier is derived from the MAC address. The interface identifier u (universal/local) bit will be set to zero to indicate global scope.
+		"""
 
 		Returns:
 			bool

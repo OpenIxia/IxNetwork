@@ -150,3 +150,27 @@ class IsidList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('transmissionType')
+
+	def get_device_ids(self, PortNames=None, Active=None, BaseVid=None, Isid=None, ItagEthernetType=None, Rbit=None, Tbit=None, TopologyId=None, TransmissionType=None):
+		"""Base class infrastructure that gets a list of isidList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BaseVid (str): optional regex of baseVid
+			Isid (str): optional regex of isid
+			ItagEthernetType (str): optional regex of itagEthernetType
+			Rbit (str): optional regex of rbit
+			Tbit (str): optional regex of tbit
+			TopologyId (str): optional regex of topologyId
+			TransmissionType (str): optional regex of transmissionType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

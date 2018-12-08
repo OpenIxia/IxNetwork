@@ -198,3 +198,31 @@ class LdpRootRangeV4(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('startGroupAddressV6')
+
+	def get_device_ids(self, PortNames=None, ContinuousIncrementOVAcrossRoot=None, FilterOnGroupAddress=None, GroupCountPerLSP=None, LspCountPerRoot=None, RootAddress=None, RootAddressCount=None, RootAddressStep=None, SourceAddressV4=None, SourceAddressV6=None, SourceCountPerLSP=None, StartGroupAddressV4=None, StartGroupAddressV6=None):
+		"""Base class infrastructure that gets a list of ldpRootRangeV4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ContinuousIncrementOVAcrossRoot (str): optional regex of continuousIncrementOVAcrossRoot
+			FilterOnGroupAddress (str): optional regex of filterOnGroupAddress
+			GroupCountPerLSP (str): optional regex of groupCountPerLSP
+			LspCountPerRoot (str): optional regex of lspCountPerRoot
+			RootAddress (str): optional regex of rootAddress
+			RootAddressCount (str): optional regex of rootAddressCount
+			RootAddressStep (str): optional regex of rootAddressStep
+			SourceAddressV4 (str): optional regex of sourceAddressV4
+			SourceAddressV6 (str): optional regex of sourceAddressV6
+			SourceCountPerLSP (str): optional regex of sourceCountPerLSP
+			StartGroupAddressV4 (str): optional regex of startGroupAddressV4
+			StartGroupAddressV6 (str): optional regex of startGroupAddressV6
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

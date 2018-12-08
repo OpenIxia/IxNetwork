@@ -220,6 +220,35 @@ class BroadcastDomainV6(Base):
 	def UsebVlan(self, value):
 		self._set_attribute('usebVlan', value)
 
+	def get_device_ids(self, PortNames=None, Active=None, AdRouteLabel=None, BVlanId=None, BVlanPriority=None, BVlanTpid=None, EnableVlanAwareService=None, EthernetTagId=None, GroupAddress=None, RootAddress=None, RsvpP2mpId=None, RsvpP2mpIdAsNumber=None, RsvpTunnelId=None, SenderAddressPRootNodeAddress=None):
+		"""Base class infrastructure that gets a list of broadcastDomainV6 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdRouteLabel (str): optional regex of adRouteLabel
+			BVlanId (str): optional regex of bVlanId
+			BVlanPriority (str): optional regex of bVlanPriority
+			BVlanTpid (str): optional regex of bVlanTpid
+			EnableVlanAwareService (str): optional regex of enableVlanAwareService
+			EthernetTagId (str): optional regex of ethernetTagId
+			GroupAddress (str): optional regex of groupAddress
+			RootAddress (str): optional regex of rootAddress
+			RsvpP2mpId (str): optional regex of rsvpP2mpId
+			RsvpP2mpIdAsNumber (str): optional regex of rsvpP2mpIdAsNumber
+			RsvpTunnelId (str): optional regex of rsvpTunnelId
+			SenderAddressPRootNodeAddress (str): optional regex of senderAddressPRootNodeAddress
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def AdvertiseAliasing(self, Arg2):
 		"""Executes the advertiseAliasing operation on the server.
 

@@ -38,7 +38,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def IncludeMacGroups(self):
-		"""If true, includes MAC groups for this Network Range.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def InterGroupUnicastMacIncrement(self):
-		"""The MAC address format of the Unicast MAC between one or more node groups.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def IntraGroupUnicastMacIncrement(self):
-		"""The MAC address format of the Unicast MAC within a node group.
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def MulticastAddressNodeStep(self):
-		"""The Multicast MAC address that configures the increment across the Network Range simulated RBridges.
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def MulticastMacCount(self):
-		"""The number of Multicast MAC addresses.
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def MulticastMacStep(self):
-		"""The incremental value of Multicast MAC address.
+		"""
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def NoOfUnicastScrMacsPerMulicastMac(self):
-		"""The number of Unicast Source for each Multicast MAC address.
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def SourceGroupMapping(self):
-		"""The Source Group mapping type.
+		"""
 
 		Returns:
 			str(fullyMeshed|oneToOne|manualMapping)
@@ -134,7 +134,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def StartMulticastMac(self):
-		"""The MAC address format of the starting Multicast MAC.
+		"""
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def StartUnicastSourceMac(self):
-		"""The MAC address format of the starting Unicast Source MAC.
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def UnicastAddressNodeStep(self):
-		"""The Unicast MAC address that configures the increment across the Network Range simulated RBridges.
+		"""
 
 		Returns:
 			str
@@ -170,7 +170,7 @@ class DceNodeMacGroups(Base):
 
 	@property
 	def VlanId(self):
-		"""The VLAN ID of the enabled Multicast MAC Range.
+		"""
 
 		Returns:
 			number
@@ -184,18 +184,18 @@ class DceNodeMacGroups(Base):
 		"""Adds a new dceNodeMacGroups node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeMacGroups (bool): If true, includes MAC groups for this Network Range.
-			InterGroupUnicastMacIncrement (str): The MAC address format of the Unicast MAC between one or more node groups.
-			IntraGroupUnicastMacIncrement (str): The MAC address format of the Unicast MAC within a node group.
-			MulticastAddressNodeStep (str): The Multicast MAC address that configures the increment across the Network Range simulated RBridges.
-			MulticastMacCount (number): The number of Multicast MAC addresses.
-			MulticastMacStep (str): The incremental value of Multicast MAC address.
-			NoOfUnicastScrMacsPerMulicastMac (number): The number of Unicast Source for each Multicast MAC address.
-			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): The Source Group mapping type.
-			StartMulticastMac (str): The MAC address format of the starting Multicast MAC.
-			StartUnicastSourceMac (str): The MAC address format of the starting Unicast Source MAC.
-			UnicastAddressNodeStep (str): The Unicast MAC address that configures the increment across the Network Range simulated RBridges.
-			VlanId (number): The VLAN ID of the enabled Multicast MAC Range.
+			IncludeMacGroups (bool): 
+			InterGroupUnicastMacIncrement (str): 
+			IntraGroupUnicastMacIncrement (str): 
+			MulticastAddressNodeStep (str): 
+			MulticastMacCount (number): 
+			MulticastMacStep (str): 
+			NoOfUnicastScrMacsPerMulicastMac (number): 
+			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): 
+			StartMulticastMac (str): 
+			StartUnicastSourceMac (str): 
+			UnicastAddressNodeStep (str): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with all currently retrieved dceNodeMacGroups data using find and the newly added dceNodeMacGroups data available through an iterator or index
@@ -221,18 +221,18 @@ class DceNodeMacGroups(Base):
 		By default the find method takes no parameters and will retrieve all dceNodeMacGroups data from the server.
 
 		Args:
-			IncludeMacGroups (bool): If true, includes MAC groups for this Network Range.
-			InterGroupUnicastMacIncrement (str): The MAC address format of the Unicast MAC between one or more node groups.
-			IntraGroupUnicastMacIncrement (str): The MAC address format of the Unicast MAC within a node group.
-			MulticastAddressNodeStep (str): The Multicast MAC address that configures the increment across the Network Range simulated RBridges.
-			MulticastMacCount (number): The number of Multicast MAC addresses.
-			MulticastMacStep (str): The incremental value of Multicast MAC address.
-			NoOfUnicastScrMacsPerMulicastMac (number): The number of Unicast Source for each Multicast MAC address.
-			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): The Source Group mapping type.
-			StartMulticastMac (str): The MAC address format of the starting Multicast MAC.
-			StartUnicastSourceMac (str): The MAC address format of the starting Unicast Source MAC.
-			UnicastAddressNodeStep (str): The Unicast MAC address that configures the increment across the Network Range simulated RBridges.
-			VlanId (number): The VLAN ID of the enabled Multicast MAC Range.
+			IncludeMacGroups (bool): 
+			InterGroupUnicastMacIncrement (str): 
+			IntraGroupUnicastMacIncrement (str): 
+			MulticastAddressNodeStep (str): 
+			MulticastMacCount (number): 
+			MulticastMacStep (str): 
+			NoOfUnicastScrMacsPerMulicastMac (number): 
+			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): 
+			StartMulticastMac (str): 
+			StartUnicastSourceMac (str): 
+			UnicastAddressNodeStep (str): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with matching dceNodeMacGroups data retrieved from the server available through an iterator or index

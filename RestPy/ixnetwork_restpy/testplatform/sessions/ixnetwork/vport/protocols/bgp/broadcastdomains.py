@@ -52,7 +52,7 @@ class BroadcastDomains(Base):
 
 	@property
 	def AdRouteLabel(self):
-		"""Label value carried in AD route per Broadcast Domain. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class BroadcastDomains(Base):
 
 	@property
 	def BVlanId(self):
-		"""B-VLAN Identifier used for PBB-EVPN traffic. Default value is 1. Minimum value is 0 and maximum value is 4095.
+		"""
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class BroadcastDomains(Base):
 
 	@property
 	def BVlanPriority(self):
-		"""B-VLAN Priority used for PBB-EVPN traffic. Default value is 0. Minimum value is 0 and maximum value is 7.
+		"""
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class BroadcastDomains(Base):
 
 	@property
 	def BVlanTpId(self):
-		"""B-VLAN TPID used for PBB-EVPN traffic. Default value is 0x8100. User can select any one of {0x8100, 0x9100, 0x9200, 0x88A8}.
+		"""
 
 		Returns:
 			str(0x8100|0x9100|0x9200|0x88A8)
@@ -100,7 +100,7 @@ class BroadcastDomains(Base):
 
 	@property
 	def Enabled(self):
-		"""If true then Broadcast Domain is used in EVPN.
+		"""
 
 		Returns:
 			bool
@@ -112,7 +112,7 @@ class BroadcastDomains(Base):
 
 	@property
 	def EthernetTagId(self):
-		"""Ethernet Tag Id of an EVI. This can be I-SID, VLAN. Default value is 1. Minimum value is 0 and maximum value is 0xFFFFFFFF.
+		"""
 
 		Returns:
 			number
@@ -126,12 +126,12 @@ class BroadcastDomains(Base):
 		"""Adds a new broadcastDomains node on the server and retrieves it in this instance.
 
 		Args:
-			AdRouteLabel (number): Label value carried in AD route per Broadcast Domain. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
-			BVlanId (number): B-VLAN Identifier used for PBB-EVPN traffic. Default value is 1. Minimum value is 0 and maximum value is 4095.
-			BVlanPriority (number): B-VLAN Priority used for PBB-EVPN traffic. Default value is 0. Minimum value is 0 and maximum value is 7.
-			BVlanTpId (str(0x8100|0x9100|0x9200|0x88A8)): B-VLAN TPID used for PBB-EVPN traffic. Default value is 0x8100. User can select any one of {0x8100, 0x9100, 0x9200, 0x88A8}.
-			Enabled (bool): If true then Broadcast Domain is used in EVPN.
-			EthernetTagId (number): Ethernet Tag Id of an EVI. This can be I-SID, VLAN. Default value is 1. Minimum value is 0 and maximum value is 0xFFFFFFFF.
+			AdRouteLabel (number): 
+			BVlanId (number): 
+			BVlanPriority (number): 
+			BVlanTpId (str(0x8100|0x9100|0x9200|0x88A8)): 
+			Enabled (bool): 
+			EthernetTagId (number): 
 
 		Returns:
 			self: This instance with all currently retrieved broadcastDomains data using find and the newly added broadcastDomains data available through an iterator or index
@@ -157,12 +157,12 @@ class BroadcastDomains(Base):
 		By default the find method takes no parameters and will retrieve all broadcastDomains data from the server.
 
 		Args:
-			AdRouteLabel (number): Label value carried in AD route per Broadcast Domain. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
-			BVlanId (number): B-VLAN Identifier used for PBB-EVPN traffic. Default value is 1. Minimum value is 0 and maximum value is 4095.
-			BVlanPriority (number): B-VLAN Priority used for PBB-EVPN traffic. Default value is 0. Minimum value is 0 and maximum value is 7.
-			BVlanTpId (str(0x8100|0x9100|0x9200|0x88A8)): B-VLAN TPID used for PBB-EVPN traffic. Default value is 0x8100. User can select any one of {0x8100, 0x9100, 0x9200, 0x88A8}.
-			Enabled (bool): If true then Broadcast Domain is used in EVPN.
-			EthernetTagId (number): Ethernet Tag Id of an EVI. This can be I-SID, VLAN. Default value is 1. Minimum value is 0 and maximum value is 0xFFFFFFFF.
+			AdRouteLabel (number): 
+			BVlanId (number): 
+			BVlanPriority (number): 
+			BVlanTpId (str(0x8100|0x9100|0x9200|0x88A8)): 
+			Enabled (bool): 
+			EthernetTagId (number): 
 
 		Returns:
 			self: This instance with matching broadcastDomains data retrieved from the server available through an iterator or index
@@ -190,13 +190,11 @@ class BroadcastDomains(Base):
 	def AdvertiseAliasing(self):
 		"""Executes the advertiseAliasing operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=broadcastDomains)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: NOT DEFINED
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -208,13 +206,11 @@ class BroadcastDomains(Base):
 	def WithdrawAliasing(self):
 		"""Executes the withdrawAliasing operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=broadcastDomains)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: NOT DEFINED
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

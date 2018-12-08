@@ -184,15 +184,6 @@ class NetconfServer(Base):
 		return self._get_attribute('count')
 
 	@property
-	def DecryptedCapture(self):
-		"""Whether SSH packets for this session will be captured and stored on client in decrypted form. Note that this is not linked to IxNetwork control or data capture which will capture the packets in encrypted format only. The Decrypted Capture can be viewed by either doing right-click on a client where this option is enabled and doing Get Decrypted Capture ( allowed on 5 clients at a time ; each of the captures will be opened in a new Wireshark pop-up) OR by stopping the client and then directly opening it from the configured Output Directory from inside the current run folder/capture. This option can be enabled even when a session is already up in which case the capture will be started from that point of time.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('decryptedCapture')
-
-	@property
 	def DescriptiveName(self):
 		"""Longer, more descriptive name for element. It's not guaranteed to be unique like -name-, but maybe offers more context
 
@@ -235,15 +226,6 @@ class NetconfServer(Base):
 		self._set_attribute('name', value)
 
 	@property
-	def OutputDirectory(self):
-		"""Location of Directory in Client where the decrypted capture, if enabled, will be stored.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('outputDirectory')
-
-	@property
 	def Password(self):
 		"""Password for Username/Password mode.
 
@@ -251,15 +233,6 @@ class NetconfServer(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('password')
-
-	@property
-	def PortNumber(self):
-		"""The TCP Port Number the Netconf Server is listening on to which to connect.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('portNumber')
 
 	@property
 	def PublicKeyDirectory(self):
@@ -403,7 +376,42 @@ class NetconfServer(Base):
 		"""
 		return self._read(href)
 
-	def GetDecryptedCapture(self, Arg2):
+	def get_device_ids(self, PortNames=None, Active=None, CapabilitiesBase1Dot0=None, CapabilitiesBase1Dot1=None, CapabilitiesCandidate=None, CapabilitiesConfirmedCommit=None, CapabilitiesInterleave=None, CapabilitiesNotification=None, CapabilitiesRollbackOnError=None, CapabilitiesStartup=None, CapabilitiesUrl=None, CapabilitiesValidate=None, CapabilitiesWritableRunning=None, CapabilitiesXpath=None, ClientIpv4Address=None, Password=None, PublicKeyDirectory=None, PublicKeyFileName=None, SshAuthenticationMechanism=None, UserName=None):
+		"""Base class infrastructure that gets a list of netconfServer device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			CapabilitiesBase1Dot0 (str): optional regex of capabilitiesBase1Dot0
+			CapabilitiesBase1Dot1 (str): optional regex of capabilitiesBase1Dot1
+			CapabilitiesCandidate (str): optional regex of capabilitiesCandidate
+			CapabilitiesConfirmedCommit (str): optional regex of capabilitiesConfirmedCommit
+			CapabilitiesInterleave (str): optional regex of capabilitiesInterleave
+			CapabilitiesNotification (str): optional regex of capabilitiesNotification
+			CapabilitiesRollbackOnError (str): optional regex of capabilitiesRollbackOnError
+			CapabilitiesStartup (str): optional regex of capabilitiesStartup
+			CapabilitiesUrl (str): optional regex of capabilitiesUrl
+			CapabilitiesValidate (str): optional regex of capabilitiesValidate
+			CapabilitiesWritableRunning (str): optional regex of capabilitiesWritableRunning
+			CapabilitiesXpath (str): optional regex of capabilitiesXpath
+			ClientIpv4Address (str): optional regex of clientIpv4Address
+			Password (str): optional regex of password
+			PublicKeyDirectory (str): optional regex of publicKeyDirectory
+			PublicKeyFileName (str): optional regex of publicKeyFileName
+			SshAuthenticationMechanism (str): optional regex of sshAuthenticationMechanism
+			UserName (str): optional regex of userName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
+	def GetDecryptedCapture(self, Arg2, Arg3):
 		"""Executes the getDecryptedCapture operation on the server.
 
 		If Enable Capture is enabled, this will fetch and open the decrypted capture for selected sessions.
@@ -411,6 +419,7 @@ class NetconfServer(Base):
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
 			Arg2 (list(number)): List of indices into the device group.
+			Arg3 (number): The TCP Port number of the server connection for which the capture file is to be fetched. Enter 0 for the first server connection
 
 		Returns:
 			list(str): ID to associate each async action invocation
@@ -468,6 +477,204 @@ class NetconfServer(Base):
 		"""
 		Arg1 = self
 		return self._execute('RestartDown', payload=locals(), response_object=None)
+
+	def ResumeRPCReply(self):
+		"""Executes the resumeRPCReply operation on the server.
+
+		Resume sending responses to RPC requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('ResumeRPCReply', payload=locals(), response_object=None)
+
+	def ResumeRPCReply(self, SessionIndices):
+		"""Executes the resumeRPCReply operation on the server.
+
+		Resume sending responses to RPC requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('ResumeRPCReply', payload=locals(), response_object=None)
+
+	def ResumeRPCReply(self, SessionIndices):
+		"""Executes the resumeRPCReply operation on the server.
+
+		Resume sending responses to RPC requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('ResumeRPCReply', payload=locals(), response_object=None)
+
+	def ResumeRPCReply(self, Arg2):
+		"""Executes the resumeRPCReply operation on the server.
+
+		Resume sending responses to RPC requests.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the device group.
+
+		Returns:
+			list(str): ID to associate each async action invocation
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('ResumeRPCReply', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongCharacterCount(self):
+		"""Executes the sendRPCReplyWithWrongCharacterCount operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRPCReplyWithWrongCharacterCount', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongCharacterCount(self, SessionIndices):
+		"""Executes the sendRPCReplyWithWrongCharacterCount operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRPCReplyWithWrongCharacterCount', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongCharacterCount(self, SessionIndices):
+		"""Executes the sendRPCReplyWithWrongCharacterCount operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRPCReplyWithWrongCharacterCount', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongCharacterCount(self, Arg2):
+		"""Executes the sendRPCReplyWithWrongCharacterCount operation on the server.
+
+		The response to the next RPC request will be sent with wrong character count.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the device group.
+
+		Returns:
+			list(str): ID to associate each async action invocation
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendRPCReplyWithWrongCharacterCount', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongMessageId(self):
+		"""Executes the sendRPCReplyWithWrongMessageId operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRPCReplyWithWrongMessageId', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongMessageId(self, SessionIndices):
+		"""Executes the sendRPCReplyWithWrongMessageId operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRPCReplyWithWrongMessageId', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongMessageId(self, SessionIndices):
+		"""Executes the sendRPCReplyWithWrongMessageId operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('SendRPCReplyWithWrongMessageId', payload=locals(), response_object=None)
+
+	def SendRPCReplyWithWrongMessageId(self, Arg2):
+		"""Executes the sendRPCReplyWithWrongMessageId operation on the server.
+
+		The response to the next RPC request will be sent with wrong message Id.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the device group.
+
+		Returns:
+			list(str): ID to associate each async action invocation
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('SendRPCReplyWithWrongMessageId', payload=locals(), response_object=None)
 
 	def Start(self):
 		"""Executes the start operation on the server.
@@ -562,3 +769,135 @@ class NetconfServer(Base):
 		"""
 		Arg1 = self
 		return self._execute('Stop', payload=locals(), response_object=None)
+
+	def StopRPCReplyDropOutstandingRequests(self):
+		"""Executes the stopRPCReplyDropOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Drop the outstanding requests so that when Resume RPC Reply is triggered, responses will not be sent for these requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('StopRPCReplyDropOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyDropOutstandingRequests(self, SessionIndices):
+		"""Executes the stopRPCReplyDropOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Drop the outstanding requests so that when Resume RPC Reply is triggered, responses will not be sent for these requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('StopRPCReplyDropOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyDropOutstandingRequests(self, SessionIndices):
+		"""Executes the stopRPCReplyDropOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Drop the outstanding requests so that when Resume RPC Reply is triggered, responses will not be sent for these requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('StopRPCReplyDropOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyDropOutstandingRequests(self, Arg2):
+		"""Executes the stopRPCReplyDropOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Drop the outstanding requests so that when Resume RPC Reply is triggered, responses will not be sent for these requests.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the device group.
+
+		Returns:
+			list(str): ID to associate each async action invocation
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('StopRPCReplyDropOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyStoreOutstandingRequests(self):
+		"""Executes the stopRPCReplyStoreOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Store the outstanding requests so that when Resume RPC Reply is triggered, responses will be sent for these requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('StopRPCReplyStoreOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyStoreOutstandingRequests(self, SessionIndices):
+		"""Executes the stopRPCReplyStoreOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Store the outstanding requests so that when Resume RPC Reply is triggered, responses will be sent for these requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('StopRPCReplyStoreOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyStoreOutstandingRequests(self, SessionIndices):
+		"""Executes the stopRPCReplyStoreOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Store the outstanding requests so that when Resume RPC Reply is triggered, responses will be sent for these requests.
+
+		Args:
+			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
+			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self
+		return self._execute('StopRPCReplyStoreOutstandingRequests', payload=locals(), response_object=None)
+
+	def StopRPCReplyStoreOutstandingRequests(self, Arg2):
+		"""Executes the stopRPCReplyStoreOutstandingRequests operation on the server.
+
+		Stop sending replies to rpc requests. Store the outstanding requests so that when Resume RPC Reply is triggered, responses will be sent for these requests.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
+			Arg2 (list(number)): List of indices into the device group.
+
+		Returns:
+			list(str): ID to associate each async action invocation
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('StopRPCReplyStoreOutstandingRequests', payload=locals(), response_object=None)

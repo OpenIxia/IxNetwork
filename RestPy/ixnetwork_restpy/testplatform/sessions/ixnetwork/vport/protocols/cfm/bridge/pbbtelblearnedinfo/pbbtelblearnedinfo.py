@@ -37,7 +37,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""(read only) The VLAN identifier for the loopback message.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""(read only) The destination MAC address for the loopback message.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""(read only) The MD level for the loopback message.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def Reachability(self):
-		"""(read only) If true, the Ping message was received and responded to.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def Rtt(self):
-		"""(read only) The round trip time for the PBB-TE loopback message.
+		"""
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""(read only) The source MAC address for the loopback message.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class PbbTeLbLearnedInfo(Base):
 
 	@property
 	def TransactionId(self):
-		"""(read only) The transaction identifier sent with the loopback message.
+		"""
 
 		Returns:
 			number
@@ -105,13 +105,13 @@ class PbbTeLbLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pbbTeLbLearnedInfo data from the server.
 
 		Args:
-			BVlan (str): (read only) The VLAN identifier for the loopback message.
-			DstMacAddress (str): (read only) The destination MAC address for the loopback message.
-			MdLevel (number): (read only) The MD level for the loopback message.
-			Reachability (bool): (read only) If true, the Ping message was received and responded to.
-			Rtt (number): (read only) The round trip time for the PBB-TE loopback message.
-			SrcMacAddress (str): (read only) The source MAC address for the loopback message.
-			TransactionId (number): (read only) The transaction identifier sent with the loopback message.
+			BVlan (str): 
+			DstMacAddress (str): 
+			MdLevel (number): 
+			Reachability (bool): 
+			Rtt (number): 
+			SrcMacAddress (str): 
+			TransactionId (number): 
 
 		Returns:
 			self: This instance with matching pbbTeLbLearnedInfo data retrieved from the server available through an iterator or index

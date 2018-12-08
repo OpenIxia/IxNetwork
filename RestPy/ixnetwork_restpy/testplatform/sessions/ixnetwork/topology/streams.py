@@ -350,6 +350,37 @@ class Streams(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, ClassMeasurementInterval=None, DataFramePriority=None, DestinationMac=None, MaxFrameSize=None, MaxIntervalFrames=None, PerFrameOverhead=None, PortTcMaxLatency=None, Rank=None, SourceMac=None, SrClass=None, StreamId=None, StreamName=None, UniqueId=None, VlanId=None):
+		"""Base class infrastructure that gets a list of streams device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ClassMeasurementInterval (str): optional regex of classMeasurementInterval
+			DataFramePriority (str): optional regex of dataFramePriority
+			DestinationMac (str): optional regex of destinationMac
+			MaxFrameSize (str): optional regex of maxFrameSize
+			MaxIntervalFrames (str): optional regex of maxIntervalFrames
+			PerFrameOverhead (str): optional regex of perFrameOverhead
+			PortTcMaxLatency (str): optional regex of portTcMaxLatency
+			Rank (str): optional regex of rank
+			SourceMac (str): optional regex of sourceMac
+			SrClass (str): optional regex of srClass
+			StreamId (str): optional regex of streamId
+			StreamName (str): optional regex of streamName
+			UniqueId (str): optional regex of uniqueId
+			VlanId (str): optional regex of vlanId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ApplyTSpecToPort(self, Arg2, Arg3):
 		"""Executes the applyTSpecToPort operation on the server.
 

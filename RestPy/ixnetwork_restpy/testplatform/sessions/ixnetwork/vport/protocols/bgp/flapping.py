@@ -37,7 +37,7 @@ class Flapping(Base):
 
 	@property
 	def DownTime(self):
-		"""During route flapping operation, the amount of time that the route ranges are withdrawn/down.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Flapping(Base):
 
 	@property
 	def EnablePartialFlap(self):
-		"""If enabled, only a specified range of routes is flapped.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Flapping(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables route flapping.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Flapping(Base):
 
 	@property
 	def RoutesToFlapFrom(self):
-		"""The first route in the route range to be flapped.
+		"""
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class Flapping(Base):
 
 	@property
 	def RoutesToFlapTo(self):
-		"""The last route in the route range to be flapped.
+		"""
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class Flapping(Base):
 
 	@property
 	def UpTime(self):
-		"""During the route flapping operation, the amount of time that the route ranges are up.
+		"""
 
 		Returns:
 			number

@@ -37,7 +37,7 @@ class DynamicUpdate(Base):
 
 	@property
 	def AvailableDynamicUpdateFields(self):
-		"""(Read only) Specifies the available Dynamic Updates support.
+		"""
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class DynamicUpdate(Base):
 
 	@property
 	def AvailableSessionAwareTrafficFields(self):
-		"""(Read only) Specifies the available Kill Bit support.
+		"""
 
 		Returns:
 			list(str)
@@ -55,7 +55,7 @@ class DynamicUpdate(Base):
 
 	@property
 	def EnabledDynamicUpdateFields(self):
-		"""If true, enables the Dynamic Updates support.
+		"""
 
 		Returns:
 			list(str)
@@ -76,7 +76,7 @@ class DynamicUpdate(Base):
 
 	@property
 	def EnabledSessionAwareTrafficFields(self):
-		"""If true, enables the Kill Bit support.
+		"""
 
 		Returns:
 			list(str)
@@ -93,11 +93,11 @@ class DynamicUpdate(Base):
 		By default the find method takes no parameters and will retrieve all dynamicUpdate data from the server.
 
 		Args:
-			AvailableDynamicUpdateFields (list(str)): (Read only) Specifies the available Dynamic Updates support.
-			AvailableSessionAwareTrafficFields (list(str)): (Read only) Specifies the available Kill Bit support.
-			EnabledDynamicUpdateFields (list(str)): If true, enables the Dynamic Updates support.
+			AvailableDynamicUpdateFields (list(str)): 
+			AvailableSessionAwareTrafficFields (list(str)): 
+			EnabledDynamicUpdateFields (list(str)): 
 			EnabledDynamicUpdateFieldsDisplayNames (list(str)): Returns user friendly list of dynamic update fields
-			EnabledSessionAwareTrafficFields (list(str)): If true, enables the Kill Bit support.
+			EnabledSessionAwareTrafficFields (list(str)): 
 
 		Returns:
 			self: This instance with matching dynamicUpdate data retrieved from the server available through an iterator or index

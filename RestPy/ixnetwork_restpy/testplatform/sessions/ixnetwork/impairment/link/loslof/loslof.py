@@ -37,7 +37,7 @@ class LosLof(Base):
 
 	@property
 	def Duration(self):
-		"""The burst duration.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class LosLof(Base):
 
 	@property
 	def IsBurst(self):
-		"""If true, loss of signal or loss of frame will be enabled for the specified duration.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class LosLof(Base):
 
 	@property
 	def State(self):
-		"""Gets the loss of signal or loss of framing state.
+		"""
 
 		Returns:
 			str(started|stopped)
@@ -70,7 +70,7 @@ class LosLof(Base):
 
 	@property
 	def Type(self):
-		"""Selects loss of signal or loss of framing.
+		"""
 
 		Returns:
 			str(lof|los)
@@ -82,7 +82,7 @@ class LosLof(Base):
 
 	@property
 	def Units(self):
-		"""Burst duration units.
+		"""
 
 		Returns:
 			str(kMicroseconds|kMilliseconds|kSeconds|microseconds|milliseconds|seconds)
@@ -94,8 +94,6 @@ class LosLof(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the impairments defined by user (traffic will be impaired).
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=losLof)): The method internally sets Arg1 to the current href for this instance
@@ -109,8 +107,6 @@ class LosLof(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the impairments defined by user (traffic will pass unimpaired).
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=losLof)): The method internally sets Arg1 to the current href for this instance

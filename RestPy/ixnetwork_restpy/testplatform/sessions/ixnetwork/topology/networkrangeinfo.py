@@ -264,6 +264,33 @@ class NetworkRangeInfo(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, NetworkRangeIPByMask=None, NetworkRangeInterfaceIp=None, NetworkRangeInterfaceIpMask=None, NetworkRangeIp=None, NetworkRangeIpIncrementBy=None, NetworkRangeIpMask=None, NetworkRangeLinkType=None, NetworkRangeRID=None, NetworkRangeRIDIncrement=None, NumColumns=None, NumRows=None):
+		"""Base class infrastructure that gets a list of networkRangeInfo device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			NetworkRangeIPByMask (str): optional regex of networkRangeIPByMask
+			NetworkRangeInterfaceIp (str): optional regex of networkRangeInterfaceIp
+			NetworkRangeInterfaceIpMask (str): optional regex of networkRangeInterfaceIpMask
+			NetworkRangeIp (str): optional regex of networkRangeIp
+			NetworkRangeIpIncrementBy (str): optional regex of networkRangeIpIncrementBy
+			NetworkRangeIpMask (str): optional regex of networkRangeIpMask
+			NetworkRangeLinkType (str): optional regex of networkRangeLinkType
+			NetworkRangeRID (str): optional regex of networkRangeRID
+			NetworkRangeRIDIncrement (str): optional regex of networkRangeRIDIncrement
+			NumColumns (str): optional regex of numColumns
+			NumRows (str): optional regex of numRows
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

@@ -37,7 +37,7 @@ class WriteActions(Base):
 
 	@property
 	def CopyTtlIn(self):
-		"""Applies copy TTL inwards action to the packet from outermost to next-to-outermost.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class WriteActions(Base):
 
 	@property
 	def CopyTtlOut(self):
-		"""Applies copy TTL outwards action to the packet from next-to-outermost to outermost.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class WriteActions(Base):
 
 	@property
 	def DecrementMplsTtl(self):
-		"""Decrements the MPLS TTL. Only applies to packets with an existing MPLS shim header.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class WriteActions(Base):
 
 	@property
 	def DecrementNetworkTtl(self):
-		"""Decrement the IP TTL.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class WriteActions(Base):
 
 	@property
 	def Experimenter(self):
-		"""Sets the Experimenter details.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class WriteActions(Base):
 
 	@property
 	def Group(self):
-		"""Sets the Group ID.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class WriteActions(Base):
 
 	@property
 	def Output(self):
-		"""Output to switch port.
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class WriteActions(Base):
 
 	@property
 	def PopMpls(self):
-		"""Pops the outer MPLS tag.
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class WriteActions(Base):
 
 	@property
 	def PopPbb(self):
-		"""Pops the outer PBB service tag (I-TAG).
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class WriteActions(Base):
 
 	@property
 	def PopVlan(self):
-		"""Pops the outer VLAN tag.
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class WriteActions(Base):
 
 	@property
 	def PushMpls(self):
-		"""Pushes a new MPLS tag.
+		"""
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class WriteActions(Base):
 
 	@property
 	def PushPbb(self):
-		"""Pushes a new PBB service tag (I-TAG).
+		"""
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class WriteActions(Base):
 
 	@property
 	def PushVlan(self):
-		"""Pushes a new VLAN tag.
+		"""
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class WriteActions(Base):
 
 	@property
 	def SetField(self):
-		"""Sets a header field using OXM TLV format.
+		"""
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class WriteActions(Base):
 
 	@property
 	def SetMplsTtl(self):
-		"""Replaces the existing MPLS TTL. Only applies to packets with an existing MPLS shim header.
+		"""
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class WriteActions(Base):
 
 	@property
 	def SetNetworkTtl(self):
-		"""Sets the IP TTL.
+		"""
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class WriteActions(Base):
 
 	@property
 	def SetQueue(self):
-		"""Set queue ID when outputting to a port.
+		"""
 
 		Returns:
 			bool

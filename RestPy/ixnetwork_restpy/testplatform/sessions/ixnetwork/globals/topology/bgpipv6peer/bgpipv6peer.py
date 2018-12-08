@@ -441,18 +441,6 @@ class BgpIpv6Peer(Base):
 		return self._get_attribute('srtePolicyType')
 
 	@property
-	def Srv6DraftNum(self):
-		"""L3VPN SRv6 Draft Version Number
-
-		Returns:
-			str(version03|version04)
-		"""
-		return self._get_attribute('srv6DraftNum')
-	@Srv6DraftNum.setter
-	def Srv6DraftNum(self, value):
-		self._set_attribute('srv6DraftNum', value)
-
-	@property
 	def TriggerVplsPwInitiation(self):
 		"""Trigger VPLS PW Initiation
 
@@ -505,3 +493,61 @@ class BgpIpv6Peer(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('weightType')
+
+	def get_device_ids(self, PortNames=None, BIERTunnelType=None, LLGRCapabilityCode=None, BgpConfMemType=None, BgpRouterId=None, BindingType=None, ColorType=None, DisableReceivedUpdateValidation=None, EnLenthForPolicyNLRI=None, EnableAdVplsPrefixLength=None, IBgpTester4BytesAsNumber=None, IBgpTesterAsNumber=None, InitiateEbgpActiveConnection=None, InitiateIbgpActiveConnection=None, Ipv4AddrIndexType=None, Ipv4LocRemoteAddrType=None, Ipv4NodeAddrType=None, Ipv6AddrIndexType=None, Ipv6LocRemoteAddrType=None, Ipv6NodeAddrType=None, Ipv6SIDType=None, LenthForPolicyNLRI=None, MldpP2mpFecType=None, MplsSIDType=None, PeerAdjSidType=None, PeerNodeSidType=None, PeerSetSidType=None, PreferenceType=None, PrefixSIDAttrType=None, ProtoclIdType=None, RemoteEndpointType=None, RequestVpnLabelExchangeOverLsp=None, SRv6VPNSIDTLVType=None, SegmentListType=None, SrtePolicyAttrType=None, SrtePolicySAFI=None, SrtePolicyType=None, TriggerVplsPwInitiation=None, UdpDestinationPort=None, UseUnicastDestMacForBierTraffic=None, VPNSIDType=None, VrfRouteImportExtendedCommunitySubType=None, WeightType=None):
+		"""Base class infrastructure that gets a list of bgpIpv6Peer device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BIERTunnelType (str): optional regex of BIERTunnelType
+			LLGRCapabilityCode (str): optional regex of LLGRCapabilityCode
+			BgpConfMemType (str): optional regex of bgpConfMemType
+			BgpRouterId (str): optional regex of bgpRouterId
+			BindingType (str): optional regex of bindingType
+			ColorType (str): optional regex of colorType
+			DisableReceivedUpdateValidation (str): optional regex of disableReceivedUpdateValidation
+			EnLenthForPolicyNLRI (str): optional regex of enLenthForPolicyNLRI
+			EnableAdVplsPrefixLength (str): optional regex of enableAdVplsPrefixLength
+			IBgpTester4BytesAsNumber (str): optional regex of iBgpTester4BytesAsNumber
+			IBgpTesterAsNumber (str): optional regex of iBgpTesterAsNumber
+			InitiateEbgpActiveConnection (str): optional regex of initiateEbgpActiveConnection
+			InitiateIbgpActiveConnection (str): optional regex of initiateIbgpActiveConnection
+			Ipv4AddrIndexType (str): optional regex of ipv4AddrIndexType
+			Ipv4LocRemoteAddrType (str): optional regex of ipv4LocRemoteAddrType
+			Ipv4NodeAddrType (str): optional regex of ipv4NodeAddrType
+			Ipv6AddrIndexType (str): optional regex of ipv6AddrIndexType
+			Ipv6LocRemoteAddrType (str): optional regex of ipv6LocRemoteAddrType
+			Ipv6NodeAddrType (str): optional regex of ipv6NodeAddrType
+			Ipv6SIDType (str): optional regex of ipv6SIDType
+			LenthForPolicyNLRI (str): optional regex of lenthForPolicyNLRI
+			MldpP2mpFecType (str): optional regex of mldpP2mpFecType
+			MplsSIDType (str): optional regex of mplsSIDType
+			PeerAdjSidType (str): optional regex of peerAdjSidType
+			PeerNodeSidType (str): optional regex of peerNodeSidType
+			PeerSetSidType (str): optional regex of peerSetSidType
+			PreferenceType (str): optional regex of preferenceType
+			PrefixSIDAttrType (str): optional regex of prefixSIDAttrType
+			ProtoclIdType (str): optional regex of protoclIdType
+			RemoteEndpointType (str): optional regex of remoteEndpointType
+			RequestVpnLabelExchangeOverLsp (str): optional regex of requestVpnLabelExchangeOverLsp
+			SRv6VPNSIDTLVType (str): optional regex of sRv6VPNSIDTLVType
+			SegmentListType (str): optional regex of segmentListType
+			SrtePolicyAttrType (str): optional regex of srtePolicyAttrType
+			SrtePolicySAFI (str): optional regex of srtePolicySAFI
+			SrtePolicyType (str): optional regex of srtePolicyType
+			TriggerVplsPwInitiation (str): optional regex of triggerVplsPwInitiation
+			UdpDestinationPort (str): optional regex of udpDestinationPort
+			UseUnicastDestMacForBierTraffic (str): optional regex of useUnicastDestMacForBierTraffic
+			VPNSIDType (str): optional regex of vPNSIDType
+			VrfRouteImportExtendedCommunitySubType (str): optional regex of vrfRouteImportExtendedCommunitySubType
+			WeightType (str): optional regex of weightType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

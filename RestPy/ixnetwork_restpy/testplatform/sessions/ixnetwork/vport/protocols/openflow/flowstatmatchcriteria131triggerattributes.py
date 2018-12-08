@@ -37,7 +37,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpDstHwAddr(self):
-		"""Value of the ARP destination hardware address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -49,7 +49,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpDstIpv4Addr(self):
-		"""The ARP destination IPv4 address field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -61,7 +61,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""Value of the ARP opcode field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -73,7 +73,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpSrcHwAddr(self):
-		"""Value of the ARP source hardware address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -85,7 +85,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpSrcIpv4Addr(self):
-		"""The ARP source IPv4 address field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -97,7 +97,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Cookie(self):
-		"""The Cookie field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -109,7 +109,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""The Ethernet destination address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -121,7 +121,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def EthernetSource(self):
-		"""The Ethernet source address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -133,7 +133,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def EthernetType(self):
-		"""The type of Ethernet port used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -145,7 +145,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""The experimenter data field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -157,7 +157,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""Value of the Experimenter data length field.
+		"""
 
 		Returns:
 			dict(arg1:number,arg2:str)
@@ -169,7 +169,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterField(self):
-		"""Value of the Experimenter Field field.
+		"""
 
 		Returns:
 			dict(arg1:number,arg2:str)
@@ -181,7 +181,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterHashmask(self):
-		"""The experimented hasmask field value.
+		"""
 
 		Returns:
 			dict(arg1:bool,arg2:str)
@@ -193,7 +193,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""Value of the experimenter ID field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -205,7 +205,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""The code of ICMPv4 port used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -217,7 +217,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""The type of ICMPv4 port used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -229,7 +229,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""Value of the ICMPv4 code field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -241,7 +241,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""Value of the ICMPv6 type field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -253,7 +253,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def InPort(self):
-		"""The input port used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -265,7 +265,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def IpDscp(self):
-		"""The IP DSCP value for advertising.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -277,7 +277,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def IpEcn(self):
-		"""The IP ECN field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -289,7 +289,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def IpProtocol(self):
-		"""The IP protocol used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -301,7 +301,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""The IPv4 destination address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -313,7 +313,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""The IPv4 source address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -325,7 +325,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""Value of the IPv6 destination field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -337,7 +337,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""The Ipv6 extension header field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -349,7 +349,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""Value of the IPv6 flow label field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -361,7 +361,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6NdDll(self):
-		"""The IPv6 ND DLL field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -373,7 +373,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""Source link-layer for IPv6 neighbour discovery.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -385,7 +385,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""The IPv6 ND target field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -397,7 +397,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""Value of the IPv6 source field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -409,7 +409,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MetaData(self):
-		"""Value of the metadata field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -421,7 +421,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MplsBos(self):
-		"""Value of the MPLS BoS field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -433,7 +433,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MplsLabel(self):
-		"""Value of the MPLS label field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -445,7 +445,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MplsTc(self):
-		"""The MPLS TC field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -457,7 +457,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def PbbISid(self):
-		"""Value of the PBB I-SID field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -469,7 +469,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def PhysicalInPort(self):
-		"""Value of the Physical IN port field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -481,7 +481,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def SctpDestination(self):
-		"""The SCTP destination field value.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -493,7 +493,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def SctpSource(self):
-		"""Value of the SCTP source field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -505,7 +505,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def TcpDestination(self):
-		"""The Transport destination address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -517,7 +517,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def TcpSource(self):
-		"""Value of the TCP source field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -529,7 +529,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def TunnelId(self):
-		"""Value of the tunnel ID field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -541,7 +541,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def UdpDestination(self):
-		"""Value of the UDP destination field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -553,7 +553,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def UdpSource(self):
-		"""Value of the UDP source field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -565,7 +565,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def VlanId(self):
-		"""The unique VLAN Identifier.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -577,7 +577,7 @@ class FlowStatMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def VlanPriority(self):
-		"""The User Priority for this VLAN.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)

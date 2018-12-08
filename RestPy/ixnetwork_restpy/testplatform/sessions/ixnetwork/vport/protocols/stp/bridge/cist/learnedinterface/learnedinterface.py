@@ -37,7 +37,7 @@ class LearnedInterface(Base):
 
 	@property
 	def DesignatedMac(self):
-		"""(Read-only) The 6-byte MAC Address of the advertised designated MSTP bridge on the LAN segment.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedInterface(Base):
 
 	@property
 	def DesignatedPortId(self):
-		"""(Read-only) The port ID of the advertised eesignated MSTP bridge's port on the LAN segment.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedInterface(Base):
 
 	@property
 	def DesignatedPriority(self):
-		"""(Read-only) The priority of the advertised designated MSTP bridge on the LAN segment.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedInterface(Base):
 
 	@property
 	def InterfaceDesc(self):
-		"""(Read-only) The descriptive identifier of this advertised protocol interface.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class LearnedInterface(Base):
 
 	@property
 	def InterfaceRole(self):
-		"""(Read-only) The role of the advertised interface. One of the following options: Disabled, Root, Designated, Alternate, or Backup.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedInterface(Base):
 
 	@property
 	def InterfaceState(self):
-		"""(Read-only) The state of the advertised interface. One of the following options: Discarding (discarding MAC), Learning (MAC frame learning), or Forwarding (forwarding MAC frames).
+		"""
 
 		Returns:
 			str
@@ -96,12 +96,12 @@ class LearnedInterface(Base):
 		By default the find method takes no parameters and will retrieve all learnedInterface data from the server.
 
 		Args:
-			DesignatedMac (str): (Read-only) The 6-byte MAC Address of the advertised designated MSTP bridge on the LAN segment.
-			DesignatedPortId (number): (Read-only) The port ID of the advertised eesignated MSTP bridge's port on the LAN segment.
-			DesignatedPriority (number): (Read-only) The priority of the advertised designated MSTP bridge on the LAN segment.
-			InterfaceDesc (str): (Read-only) The descriptive identifier of this advertised protocol interface.
-			InterfaceRole (str): (Read-only) The role of the advertised interface. One of the following options: Disabled, Root, Designated, Alternate, or Backup.
-			InterfaceState (str): (Read-only) The state of the advertised interface. One of the following options: Discarding (discarding MAC), Learning (MAC frame learning), or Forwarding (forwarding MAC frames).
+			DesignatedMac (str): 
+			DesignatedPortId (number): 
+			DesignatedPriority (number): 
+			InterfaceDesc (str): 
+			InterfaceRole (str): 
+			InterfaceState (str): 
 
 		Returns:
 			self: This instance with matching learnedInterface data retrieved from the server available through an iterator or index

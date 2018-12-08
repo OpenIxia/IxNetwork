@@ -37,7 +37,7 @@ class InnerGlobalStats(Base):
 
 	@property
 	def ColumnCaptions(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class InnerGlobalStats(Base):
 
 	@property
 	def RowValues(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			list(str)

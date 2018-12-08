@@ -509,6 +509,38 @@ class LdpBasicRouterV6(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, EnableBfdMplsLearnedLsp=None, EnableFec128Advertisement=None, EnableFec129Advertisement=None, EnableGracefulRestart=None, EnableIpv4Advertisement=None, EnableIpv6Advertisement=None, EnableLspPingLearnedLsp=None, EnableP2MPCapability=None, IgnoreStateAdvertisementControlCapability=None, IncludeSac=None, KeepAliveHoldTime=None, KeepAliveInterval=None, ReconnectTime=None, RecoveryTime=None, SessionPreference=None):
+		"""Base class infrastructure that gets a list of ldpBasicRouterV6 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnableBfdMplsLearnedLsp (str): optional regex of enableBfdMplsLearnedLsp
+			EnableFec128Advertisement (str): optional regex of enableFec128Advertisement
+			EnableFec129Advertisement (str): optional regex of enableFec129Advertisement
+			EnableGracefulRestart (str): optional regex of enableGracefulRestart
+			EnableIpv4Advertisement (str): optional regex of enableIpv4Advertisement
+			EnableIpv6Advertisement (str): optional regex of enableIpv6Advertisement
+			EnableLspPingLearnedLsp (str): optional regex of enableLspPingLearnedLsp
+			EnableP2MPCapability (str): optional regex of enableP2MPCapability
+			IgnoreStateAdvertisementControlCapability (str): optional regex of ignoreStateAdvertisementControlCapability
+			IncludeSac (str): optional regex of includeSac
+			KeepAliveHoldTime (str): optional regex of keepAliveHoldTime
+			KeepAliveInterval (str): optional regex of keepAliveInterval
+			ReconnectTime (str): optional regex of reconnectTime
+			RecoveryTime (str): optional regex of recoveryTime
+			SessionPreference (str): optional regex of sessionPreference
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self):
 		"""Executes the clearAllLearnedInfo operation on the server.
 

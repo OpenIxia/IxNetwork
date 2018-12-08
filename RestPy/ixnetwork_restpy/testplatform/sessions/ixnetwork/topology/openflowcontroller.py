@@ -606,6 +606,55 @@ class OpenFlowController(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, AcceptUnconfiguredChannel=None, Active=None, AuxConnTimeout=None, AuxNonHelloStartupOption=None, BadVersionErrorAction=None, DelFlowsAtStartup=None, DirectoryName=None, EchoInterval=None, EchoTimeOut=None, FeatRequestTimeout=None, FeatureRquestTimeoutAction=None, FileCaCertificate=None, FileCertificate=None, FilePrivKey=None, InstallFlowForLLDP=None, InstallLLDPFlow=None, LLDPDestinactionMac=None, LldpDstMacAddress=None, ModeOfConnection=None, PeriodicEcho=None, PeriodicLLDP=None, PeriodicLLDPInterval=None, ResponseTimeout=None, SendPortFeatureAtStartup=None, StartupEmptyTableFeatureRequest=None, StartupFeatureRequest=None, TcpPort=None, TimeoutOption=None, TimeoutOptionValue=None, TlsVersion=None, TriggerLldp=None, TypeOfConnection=None, VersionSupported=None):
+		"""Base class infrastructure that gets a list of openFlowController device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AcceptUnconfiguredChannel (str): optional regex of acceptUnconfiguredChannel
+			Active (str): optional regex of active
+			AuxConnTimeout (str): optional regex of auxConnTimeout
+			AuxNonHelloStartupOption (str): optional regex of auxNonHelloStartupOption
+			BadVersionErrorAction (str): optional regex of badVersionErrorAction
+			DelFlowsAtStartup (str): optional regex of delFlowsAtStartup
+			DirectoryName (str): optional regex of directoryName
+			EchoInterval (str): optional regex of echoInterval
+			EchoTimeOut (str): optional regex of echoTimeOut
+			FeatRequestTimeout (str): optional regex of featRequestTimeout
+			FeatureRquestTimeoutAction (str): optional regex of featureRquestTimeoutAction
+			FileCaCertificate (str): optional regex of fileCaCertificate
+			FileCertificate (str): optional regex of fileCertificate
+			FilePrivKey (str): optional regex of filePrivKey
+			InstallFlowForLLDP (str): optional regex of installFlowForLLDP
+			InstallLLDPFlow (str): optional regex of installLLDPFlow
+			LLDPDestinactionMac (str): optional regex of lLDPDestinactionMac
+			LldpDstMacAddress (str): optional regex of lldpDstMacAddress
+			ModeOfConnection (str): optional regex of modeOfConnection
+			PeriodicEcho (str): optional regex of periodicEcho
+			PeriodicLLDP (str): optional regex of periodicLLDP
+			PeriodicLLDPInterval (str): optional regex of periodicLLDPInterval
+			ResponseTimeout (str): optional regex of responseTimeout
+			SendPortFeatureAtStartup (str): optional regex of sendPortFeatureAtStartup
+			StartupEmptyTableFeatureRequest (str): optional regex of startupEmptyTableFeatureRequest
+			StartupFeatureRequest (str): optional regex of startupFeatureRequest
+			TcpPort (str): optional regex of tcpPort
+			TimeoutOption (str): optional regex of timeoutOption
+			TimeoutOptionValue (str): optional regex of timeoutOptionValue
+			TlsVersion (str): optional regex of tlsVersion
+			TriggerLldp (str): optional regex of triggerLldp
+			TypeOfConnection (str): optional regex of typeOfConnection
+			VersionSupported (str): optional regex of versionSupported
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self):
 		"""Executes the clearAllLearnedInfo operation on the server.
 

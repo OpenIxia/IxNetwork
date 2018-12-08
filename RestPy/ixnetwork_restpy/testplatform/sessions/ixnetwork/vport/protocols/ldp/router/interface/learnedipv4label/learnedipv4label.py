@@ -37,7 +37,7 @@ class LearnedIpv4Label(Base):
 
 	@property
 	def Fec(self):
-		"""Forwarding equivalence class (FEC) type.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedIpv4Label(Base):
 
 	@property
 	def FecPrefixLen(self):
-		"""The length of the prefix associated with the FEC.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedIpv4Label(Base):
 
 	@property
 	def Label(self):
-		"""The label value added to the packet(s) by the upstream LDP peer.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedIpv4Label(Base):
 
 	@property
 	def LabelSpaceId(self):
-		"""Part of the LSR ID. It forms the last 2 octets of the 6-octet LDP identifier.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LearnedIpv4Label(Base):
 
 	@property
 	def PeerIpAddress(self):
-		"""The RID of the upstream LDP peer. Part of the LSR ID. It must be globally unique. It forms the first 4 octets of the 6-octet LDP identifier.
+		"""
 
 		Returns:
 			str
@@ -87,11 +87,11 @@ class LearnedIpv4Label(Base):
 		By default the find method takes no parameters and will retrieve all learnedIpv4Label data from the server.
 
 		Args:
-			Fec (str): Forwarding equivalence class (FEC) type.
-			FecPrefixLen (number): The length of the prefix associated with the FEC.
-			Label (number): The label value added to the packet(s) by the upstream LDP peer.
-			LabelSpaceId (number): Part of the LSR ID. It forms the last 2 octets of the 6-octet LDP identifier.
-			PeerIpAddress (str): The RID of the upstream LDP peer. Part of the LSR ID. It must be globally unique. It forms the first 4 octets of the 6-octet LDP identifier.
+			Fec (str): 
+			FecPrefixLen (number): 
+			Label (number): 
+			LabelSpaceId (number): 
+			PeerIpAddress (str): 
 
 		Returns:
 			self: This instance with matching learnedIpv4Label data retrieved from the server available through an iterator or index

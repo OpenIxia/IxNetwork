@@ -209,6 +209,33 @@ class Bfdv4Session(Base):
 		"""
 		return self._get_attribute('vni')
 
+	def get_device_ids(self, PortNames=None, Active=None, EnableAutoChooseSourceIp=None, EnableOVSDBCommunication=None, EnableRemoteDiscriminatorLearned=None, IpTTL=None, MyDiscriminator=None, RemoteDiscriminator=None, RemoteIp4=None, RemoteMac=None, SessionType=None, SourceIp4=None):
+		"""Base class infrastructure that gets a list of bfdv4Session device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnableAutoChooseSourceIp (str): optional regex of enableAutoChooseSourceIp
+			EnableOVSDBCommunication (str): optional regex of enableOVSDBCommunication
+			EnableRemoteDiscriminatorLearned (str): optional regex of enableRemoteDiscriminatorLearned
+			IpTTL (str): optional regex of ipTTL
+			MyDiscriminator (str): optional regex of myDiscriminator
+			RemoteDiscriminator (str): optional regex of remoteDiscriminator
+			RemoteIp4 (str): optional regex of remoteIp4
+			RemoteMac (str): optional regex of remoteMac
+			SessionType (str): optional regex of sessionType
+			SourceIp4 (str): optional regex of sourceIp4
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

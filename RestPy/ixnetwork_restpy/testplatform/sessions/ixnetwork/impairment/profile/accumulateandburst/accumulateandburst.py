@@ -37,7 +37,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def BurstSize(self):
-		"""Represents the burst octet size. The default value is 1014.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def BurstSizeUnit(self):
-		"""The burst size unit is either megabytes or kilobytes. The default unit is kilobytes.
+		"""
 
 		Returns:
 			str(kilobytes|kKilobytes|kMegabytes|megabytes)
@@ -61,7 +61,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def BurstTimeout(self):
-		"""The burst timeout.The default value is 5 seconds.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def BurstTimeoutUnit(self):
-		"""Seconds(default) / milliseconds / mm:ss.fff time format.
+		"""
 
 		Returns:
 			str(kMilliseconds|kSeconds|kTimeFormat|milliseconds|seconds|timeFormat)
@@ -85,7 +85,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, received packets are queued and transmitted in bursts.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def InterBurstGap(self):
-		"""Tail to head (default) / Head to head.
+		"""
 
 		Returns:
 			str(headToHead|kHeadToHead|kTailToHead|tailToHead)
@@ -109,7 +109,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def InterBurstGapValue(self):
-		"""The InterBurst gap value. The default value is 20 ms.
+		"""
 
 		Returns:
 			number
@@ -121,7 +121,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def InterBurstGapValueUnit(self):
-		"""Seconds / milliseconds (default).
+		"""
 
 		Returns:
 			str(kMilliseconds|kSeconds|milliseconds|seconds)
@@ -133,7 +133,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def PacketCount(self):
-		"""Represents the burst packet count. The default value is 1000 packets.
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def QueueAutoSize(self):
-		"""Gets the automatically calculated queue size when queueAutoSizeEnable is true or zero when queueAutoSizeEnable is false.
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def QueueAutoSizeEnabled(self):
-		"""Automatically calculate queue size. The default value is true.
+		"""
 
 		Returns:
 			bool
@@ -166,7 +166,7 @@ class AccumulateAndBurst(Base):
 
 	@property
 	def QueueSize(self):
-		"""The accumulate-and-burst queue size expressed in MB. The default value is 1.
+		"""
 
 		Returns:
 			number

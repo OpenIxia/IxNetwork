@@ -82,3 +82,21 @@ class LnsAuthCredentials(Base):
 	@Name.setter
 	def Name(self, value):
 		self._set_attribute('name', value)
+
+	def get_device_ids(self, PortNames=None, LacHostName=None, LacSecret=None):
+		"""Base class infrastructure that gets a list of lnsAuthCredentials device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			LacHostName (str): optional regex of lacHostName
+			LacSecret (str): optional regex of lacSecret
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

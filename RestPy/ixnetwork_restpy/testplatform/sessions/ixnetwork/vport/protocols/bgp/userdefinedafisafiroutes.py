@@ -38,7 +38,7 @@ class UserDefinedAfiSafiRoutes(Base):
 
 	@property
 	def Data(self):
-		"""Data to be transmitted for AFI/SAFI, and regular enable-disable.
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class UserDefinedAfiSafiRoutes(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, the user-defined afi/safi is enabled.
+		"""
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class UserDefinedAfiSafiRoutes(Base):
 
 	@property
 	def Length(self):
-		"""The data is padded up to length with left alignment otherwise chopped till length.
+		"""
 
 		Returns:
 			number
@@ -76,9 +76,9 @@ class UserDefinedAfiSafiRoutes(Base):
 		"""Adds a new userDefinedAfiSafiRoutes node on the server and retrieves it in this instance.
 
 		Args:
-			Data (str): Data to be transmitted for AFI/SAFI, and regular enable-disable.
-			Enabled (bool): If true, the user-defined afi/safi is enabled.
-			Length (number): The data is padded up to length with left alignment otherwise chopped till length.
+			Data (str): 
+			Enabled (bool): 
+			Length (number): 
 
 		Returns:
 			self: This instance with all currently retrieved userDefinedAfiSafiRoutes data using find and the newly added userDefinedAfiSafiRoutes data available through an iterator or index
@@ -104,9 +104,9 @@ class UserDefinedAfiSafiRoutes(Base):
 		By default the find method takes no parameters and will retrieve all userDefinedAfiSafiRoutes data from the server.
 
 		Args:
-			Data (str): Data to be transmitted for AFI/SAFI, and regular enable-disable.
-			Enabled (bool): If true, the user-defined afi/safi is enabled.
-			Length (number): The data is padded up to length with left alignment otherwise chopped till length.
+			Data (str): 
+			Enabled (bool): 
+			Length (number): 
 
 		Returns:
 			self: This instance with matching userDefinedAfiSafiRoutes data retrieved from the server available through an iterator or index

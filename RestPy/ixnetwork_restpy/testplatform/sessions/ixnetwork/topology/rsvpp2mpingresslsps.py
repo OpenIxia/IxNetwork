@@ -634,6 +634,69 @@ class RsvpP2mpIngressLsps(Base):
 		"""
 		return self._get_attribute('usingHeadendIp')
 
+	def get_device_ids(self, PortNames=None, Active=None, AutoGenerateSessionName=None, BackupLspId=None, BandwidthProtectionDesired=None, EnableFastReroute=None, EnablePathReOptimization=None, EnablePeriodicReEvaluationRequest=None, ExcludeAny=None, FacilityBackupDesired=None, FastRerouteBandwidth=None, FastRerouteExcludeAny=None, FastRerouteHoldingPriority=None, FastRerouteIncludeAll=None, FastRerouteIncludeAny=None, FastRerouteSetupPriority=None, HoldingPriority=None, HopLimit=None, IncludeAll=None, IncludeAny=None, IncludeConnectedIpOnTop=None, IncludeHeadIpAtBottom=None, InsertIPv6ExplicitNull=None, LabelRecordingDesired=None, LocalProtectionDesired=None, LspId=None, MaximumPacketSize=None, MinimumPolicedUnit=None, NodeProtectionDesired=None, OneToOneBackupDesired=None, P2mpIdAsNumber=None, P2mpIdIp=None, PeakDataRate=None, ReEvaluationRequestInterval=None, RefreshInterval=None, ResourceAffinities=None, SeStyleDesired=None, SendDetour=None, SendRro=None, SessionName=None, SetupPriority=None, SourceIpv4=None, SourceIpv6=None, TimeoutMultiplier=None, TokenBucketRate=None, TokenBucketSize=None, TunnelId=None, UsingHeadendIp=None):
+		"""Base class infrastructure that gets a list of rsvpP2mpIngressLsps device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AutoGenerateSessionName (str): optional regex of autoGenerateSessionName
+			BackupLspId (str): optional regex of backupLspId
+			BandwidthProtectionDesired (str): optional regex of bandwidthProtectionDesired
+			EnableFastReroute (str): optional regex of enableFastReroute
+			EnablePathReOptimization (str): optional regex of enablePathReOptimization
+			EnablePeriodicReEvaluationRequest (str): optional regex of enablePeriodicReEvaluationRequest
+			ExcludeAny (str): optional regex of excludeAny
+			FacilityBackupDesired (str): optional regex of facilityBackupDesired
+			FastRerouteBandwidth (str): optional regex of fastRerouteBandwidth
+			FastRerouteExcludeAny (str): optional regex of fastRerouteExcludeAny
+			FastRerouteHoldingPriority (str): optional regex of fastRerouteHoldingPriority
+			FastRerouteIncludeAll (str): optional regex of fastRerouteIncludeAll
+			FastRerouteIncludeAny (str): optional regex of fastRerouteIncludeAny
+			FastRerouteSetupPriority (str): optional regex of fastRerouteSetupPriority
+			HoldingPriority (str): optional regex of holdingPriority
+			HopLimit (str): optional regex of hopLimit
+			IncludeAll (str): optional regex of includeAll
+			IncludeAny (str): optional regex of includeAny
+			IncludeConnectedIpOnTop (str): optional regex of includeConnectedIpOnTop
+			IncludeHeadIpAtBottom (str): optional regex of includeHeadIpAtBottom
+			InsertIPv6ExplicitNull (str): optional regex of insertIPv6ExplicitNull
+			LabelRecordingDesired (str): optional regex of labelRecordingDesired
+			LocalProtectionDesired (str): optional regex of localProtectionDesired
+			LspId (str): optional regex of lspId
+			MaximumPacketSize (str): optional regex of maximumPacketSize
+			MinimumPolicedUnit (str): optional regex of minimumPolicedUnit
+			NodeProtectionDesired (str): optional regex of nodeProtectionDesired
+			OneToOneBackupDesired (str): optional regex of oneToOneBackupDesired
+			P2mpIdAsNumber (str): optional regex of p2mpIdAsNumber
+			P2mpIdIp (str): optional regex of p2mpIdIp
+			PeakDataRate (str): optional regex of peakDataRate
+			ReEvaluationRequestInterval (str): optional regex of reEvaluationRequestInterval
+			RefreshInterval (str): optional regex of refreshInterval
+			ResourceAffinities (str): optional regex of resourceAffinities
+			SeStyleDesired (str): optional regex of seStyleDesired
+			SendDetour (str): optional regex of sendDetour
+			SendRro (str): optional regex of sendRro
+			SessionName (str): optional regex of sessionName
+			SetupPriority (str): optional regex of setupPriority
+			SourceIpv4 (str): optional regex of sourceIpv4
+			SourceIpv6 (str): optional regex of sourceIpv6
+			TimeoutMultiplier (str): optional regex of timeoutMultiplier
+			TokenBucketRate (str): optional regex of tokenBucketRate
+			TokenBucketSize (str): optional regex of tokenBucketSize
+			TunnelId (str): optional regex of tunnelId
+			UsingHeadendIp (str): optional regex of usingHeadendIp
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def InitiateP2mpPathReoptimization(self):
 		"""Executes the initiateP2mpPathReoptimization operation on the server.
 

@@ -51,7 +51,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""(read only) The stacked VLAN identifier for the link trace message.
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""(read only) The destination MAC address associated with the link trace message.
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def HopCount(self):
-		"""(read only) The hop count for the link trace message.
+		"""
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def Hops(self):
-		"""(read only) The number of hops for the link trace message.
+		"""
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""(read only) The MD level associated with the link trace message.
+		"""
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def ReplyStatus(self):
-		"""(read only) Indicates the status of the reply for the link trace message.
+		"""
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""(read only) The single VLAN identifier associated with the link trace message.
+		"""
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""(read only) The source MAC address associated with the link trace message.
+		"""
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class LtLearnedInfo(Base):
 
 	@property
 	def TransactionId(self):
-		"""(read only) The transaction identifier sent with the link trace message.
+		"""
 
 		Returns:
 			number
@@ -137,15 +137,15 @@ class LtLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all ltLearnedInfo data from the server.
 
 		Args:
-			CVlan (str): (read only) The stacked VLAN identifier for the link trace message.
-			DstMacAddress (str): (read only) The destination MAC address associated with the link trace message.
-			HopCount (number): (read only) The hop count for the link trace message.
-			Hops (str): (read only) The number of hops for the link trace message.
-			MdLevel (number): (read only) The MD level associated with the link trace message.
-			ReplyStatus (str): (read only) Indicates the status of the reply for the link trace message.
-			SVlan (str): (read only) The single VLAN identifier associated with the link trace message.
-			SrcMacAddress (str): (read only) The source MAC address associated with the link trace message.
-			TransactionId (number): (read only) The transaction identifier sent with the link trace message.
+			CVlan (str): 
+			DstMacAddress (str): 
+			HopCount (number): 
+			Hops (str): 
+			MdLevel (number): 
+			ReplyStatus (str): 
+			SVlan (str): 
+			SrcMacAddress (str): 
+			TransactionId (number): 
 
 		Returns:
 			self: This instance with matching ltLearnedInfo data retrieved from the server available through an iterator or index

@@ -480,6 +480,45 @@ class Ospfv3(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AreaId=None, AreaIdIp=None, AuthAlgo=None, DeadInterval=None, DemandCircuit=None, EnableAuthentication=None, EnableBfdRegistration=None, EnableFastHello=None, EnableIgnoreDbDescMtu=None, ExternalCapability=None, HelloInterval=None, HelloMultiplier=None, InstanceId=None, Key=None, LinkMetric=None, NetworkType=None, NssaCapability=None, Priority=None, Router=None, SaId=None, TypeAreaId=None, V6=None):
+		"""Base class infrastructure that gets a list of ospfv3 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AreaId (str): optional regex of areaId
+			AreaIdIp (str): optional regex of areaIdIp
+			AuthAlgo (str): optional regex of authAlgo
+			DeadInterval (str): optional regex of deadInterval
+			DemandCircuit (str): optional regex of demandCircuit
+			EnableAuthentication (str): optional regex of enableAuthentication
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			EnableFastHello (str): optional regex of enableFastHello
+			EnableIgnoreDbDescMtu (str): optional regex of enableIgnoreDbDescMtu
+			ExternalCapability (str): optional regex of externalCapability
+			HelloInterval (str): optional regex of helloInterval
+			HelloMultiplier (str): optional regex of helloMultiplier
+			InstanceId (str): optional regex of instanceId
+			Key (str): optional regex of key
+			LinkMetric (str): optional regex of linkMetric
+			NetworkType (str): optional regex of networkType
+			NssaCapability (str): optional regex of nssaCapability
+			Priority (str): optional regex of priority
+			Router (str): optional regex of router
+			SaId (str): optional regex of saId
+			TypeAreaId (str): optional regex of typeAreaId
+			V6 (str): optional regex of v6
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self):
 		"""Executes the clearAllLearnedInfo operation on the server.
 

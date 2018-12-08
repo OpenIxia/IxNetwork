@@ -290,6 +290,25 @@ class Dhcpv6relayAgent(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Dhcp6RelayAddress=None, Dhcp6ServerAddress=None, ReconfviaRelay=None):
+		"""Base class infrastructure that gets a list of dhcpv6relayAgent device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Dhcp6RelayAddress (str): optional regex of dhcp6RelayAddress
+			Dhcp6ServerAddress (str): optional regex of dhcp6ServerAddress
+			ReconfviaRelay (str): optional regex of reconfviaRelay
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

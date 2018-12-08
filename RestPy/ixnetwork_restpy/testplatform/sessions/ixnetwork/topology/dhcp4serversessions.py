@@ -154,3 +154,28 @@ class Dhcp4ServerSessions(Base):
 			list(str[excessiveTlvs|none|poolTooLarge])
 		"""
 		return self._get_attribute('sessionInfo')
+
+	def get_device_ids(self, PortNames=None, DefaultLeaseTime=None, EchoRelayInfo=None, IpAddress=None, IpAddressIncrement=None, IpDns1=None, IpDns2=None, IpGateway=None, IpPrefix=None, PoolSize=None):
+		"""Base class infrastructure that gets a list of dhcp4ServerSessions device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			DefaultLeaseTime (str): optional regex of defaultLeaseTime
+			EchoRelayInfo (str): optional regex of echoRelayInfo
+			IpAddress (str): optional regex of ipAddress
+			IpAddressIncrement (str): optional regex of ipAddressIncrement
+			IpDns1 (str): optional regex of ipDns1
+			IpDns2 (str): optional regex of ipDns2
+			IpGateway (str): optional regex of ipGateway
+			IpPrefix (str): optional regex of ipPrefix
+			PoolSize (str): optional regex of poolSize
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

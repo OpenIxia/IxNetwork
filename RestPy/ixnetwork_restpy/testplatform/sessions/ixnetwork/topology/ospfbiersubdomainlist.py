@@ -144,3 +144,25 @@ class OspfBierSubDomainList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('subDomainId')
+
+	def get_device_ids(self, PortNames=None, BFRId=None, Bar=None, Active=None, Ipa=None, MtId=None, SubDomainId=None):
+		"""Base class infrastructure that gets a list of ospfBierSubDomainList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BFRId (str): optional regex of BFRId
+			Bar (str): optional regex of Bar
+			Active (str): optional regex of active
+			Ipa (str): optional regex of ipa
+			MtId (str): optional regex of mtId
+			SubDomainId (str): optional regex of subDomainId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

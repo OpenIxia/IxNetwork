@@ -52,7 +52,7 @@ class SwitchTables(Base):
 
 	@property
 	def MaxEntries(self):
-		"""Indicates the maximum number of entries supported. The default value is 10,000.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SwitchTables(Base):
 
 	@property
 	def NumberOfTables(self):
-		"""Indicates the number of entries in the table range.
+		"""
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class SwitchTables(Base):
 
 	@property
 	def TableId(self):
-		"""Indicates the Identifier of the switch table.
+		"""
 
 		Returns:
 			str
@@ -88,7 +88,7 @@ class SwitchTables(Base):
 
 	@property
 	def TableName(self):
-		"""Indicates the name of the switch table
+		"""
 
 		Returns:
 			str
@@ -102,10 +102,10 @@ class SwitchTables(Base):
 		"""Adds a new switchTables node on the server and retrieves it in this instance.
 
 		Args:
-			MaxEntries (str): Indicates the maximum number of entries supported. The default value is 10,000.
-			NumberOfTables (number): Indicates the number of entries in the table range.
-			TableId (str): Indicates the Identifier of the switch table.
-			TableName (str): Indicates the name of the switch table
+			MaxEntries (str): 
+			NumberOfTables (number): 
+			TableId (str): 
+			TableName (str): 
 
 		Returns:
 			self: This instance with all currently retrieved switchTables data using find and the newly added switchTables data available through an iterator or index
@@ -131,10 +131,10 @@ class SwitchTables(Base):
 		By default the find method takes no parameters and will retrieve all switchTables data from the server.
 
 		Args:
-			MaxEntries (str): Indicates the maximum number of entries supported. The default value is 10,000.
-			NumberOfTables (number): Indicates the number of entries in the table range.
-			TableId (str): Indicates the Identifier of the switch table.
-			TableName (str): Indicates the name of the switch table
+			MaxEntries (str): 
+			NumberOfTables (number): 
+			TableId (str): 
+			TableName (str): 
 
 		Returns:
 			self: This instance with matching switchTables data retrieved from the server available through an iterator or index

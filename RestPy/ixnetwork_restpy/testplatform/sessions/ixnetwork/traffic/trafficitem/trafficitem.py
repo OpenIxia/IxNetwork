@@ -150,7 +150,7 @@ class TrafficItem(Base):
 
 	@property
 	def AllowSelfDestined(self):
-		"""If true, this helps to send traffic from routes on an Ixia port to other routes on the same Ixia port.
+		"""
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class TrafficItem(Base):
 
 	@property
 	def BiDirectional(self):
-		"""If true, this enables traffic to be sent in forward and reverse destination.
+		"""
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class TrafficItem(Base):
 
 	@property
 	def EgressEnabled(self):
-		"""Enables the egress.
+		"""
 
 		Returns:
 			bool
@@ -186,7 +186,7 @@ class TrafficItem(Base):
 
 	@property
 	def EnableDynamicMplsLabelValues(self):
-		"""Enables the dynamic MPLS label values.
+		"""
 
 		Returns:
 			bool
@@ -198,7 +198,7 @@ class TrafficItem(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, this enables the selected traffic item.
+		"""
 
 		Returns:
 			bool
@@ -210,7 +210,7 @@ class TrafficItem(Base):
 
 	@property
 	def Errors(self):
-		"""Displays the errors.
+		"""
 
 		Returns:
 			list(str)
@@ -219,7 +219,7 @@ class TrafficItem(Base):
 
 	@property
 	def FlowGroupCount(self):
-		"""Indicates the number of flow groups.
+		"""
 
 		Returns:
 			number
@@ -228,7 +228,7 @@ class TrafficItem(Base):
 
 	@property
 	def HasOpenFlow(self):
-		"""Indicates whether or not this trafficItem has openflow.
+		"""
 
 		Returns:
 			bool
@@ -240,7 +240,7 @@ class TrafficItem(Base):
 
 	@property
 	def HostsPerNetwork(self):
-		"""The number of emulated hosts for the traffic stream.
+		"""
 
 		Returns:
 			number
@@ -252,7 +252,7 @@ class TrafficItem(Base):
 
 	@property
 	def InterAsBgpPreference(self):
-		"""Signifies the inter as BGP prefence
+		"""
 
 		Returns:
 			str(one|two)
@@ -264,7 +264,7 @@ class TrafficItem(Base):
 
 	@property
 	def InterAsLdpPreference(self):
-		"""Preferences inter as LDP
+		"""
 
 		Returns:
 			str(one|two)
@@ -276,7 +276,7 @@ class TrafficItem(Base):
 
 	@property
 	def MaxNumberOfVpnLabelStack(self):
-		"""Signifies the maximum number of VPN label stack
+		"""
 
 		Returns:
 			number
@@ -288,7 +288,7 @@ class TrafficItem(Base):
 
 	@property
 	def MergeDestinations(self):
-		"""If true, merges the traffic flow in the destination ranges.
+		"""
 
 		Returns:
 			bool
@@ -312,7 +312,7 @@ class TrafficItem(Base):
 
 	@property
 	def Name(self):
-		"""The name of the traffic item.
+		"""
 
 		Returns:
 			str
@@ -324,7 +324,7 @@ class TrafficItem(Base):
 
 	@property
 	def NumVlansForMulticastReplication(self):
-		"""Set the number of vlans for multicast replication
+		"""
 
 		Returns:
 			number
@@ -336,7 +336,7 @@ class TrafficItem(Base):
 
 	@property
 	def OrdinalNo(self):
-		"""Signifies the ordinal number
+		"""
 
 		Returns:
 			number
@@ -348,7 +348,7 @@ class TrafficItem(Base):
 
 	@property
 	def OriginatorType(self):
-		"""Indicates who created this trafficItem.
+		"""
 
 		Returns:
 			str(endUser|quickTest)
@@ -360,7 +360,7 @@ class TrafficItem(Base):
 
 	@property
 	def RoundRobinPacketOrdering(self):
-		"""This option enables Round Robin Packet Ordering within endpoints across Rx ports.
+		"""
 
 		Returns:
 			bool
@@ -372,7 +372,7 @@ class TrafficItem(Base):
 
 	@property
 	def RouteMesh(self):
-		"""The traffic flow type between each pair of source route endpoint and destination route endpoint.
+		"""
 
 		Returns:
 			str(fullMesh|oneToOne)
@@ -384,7 +384,7 @@ class TrafficItem(Base):
 
 	@property
 	def SrcDestMesh(self):
-		"""Select the options to set the traffic mesh type between the Source Endpoint and Destination endpoint.
+		"""
 
 		Returns:
 			str(fullMesh|manyToMany|none|oneToOne)
@@ -396,7 +396,7 @@ class TrafficItem(Base):
 
 	@property
 	def State(self):
-		"""(Read only) A read-only field which indicates the current state of the traffic item.
+		"""
 
 		Returns:
 			str
@@ -405,7 +405,7 @@ class TrafficItem(Base):
 
 	@property
 	def Suspend(self):
-		"""Suspends all traffic on this stream.
+		"""
 
 		Returns:
 			bool
@@ -417,7 +417,7 @@ class TrafficItem(Base):
 
 	@property
 	def TrafficItemType(self):
-		"""Helps to configure and edit a traffic item that is sent across Ixia ports.
+		"""
 
 		Returns:
 			str(application|applicationLibrary|l2L3|quick)
@@ -429,7 +429,7 @@ class TrafficItem(Base):
 
 	@property
 	def TrafficType(self):
-		"""Helps to select the type of traffic endpoint to be configured.
+		"""
 
 		Returns:
 			str(atm|avb1722|avbRaw|ethernetVlan|fc|fcoe|frameRelay|hdlc|ipv4|ipv4ApplicationTraffic|ipv6|ipv6ApplicationTraffic|ppp|raw)
@@ -441,7 +441,7 @@ class TrafficItem(Base):
 
 	@property
 	def TransmitMode(self):
-		"""The transmit mode for this traffic item
+		"""
 
 		Returns:
 			str(interleaved|sequential)
@@ -453,7 +453,7 @@ class TrafficItem(Base):
 
 	@property
 	def TransportLdpPreference(self):
-		"""Transports LDP preference
+		"""
 
 		Returns:
 			str(one|two)
@@ -465,7 +465,7 @@ class TrafficItem(Base):
 
 	@property
 	def TransportRsvpTePreference(self):
-		"""Transports RSVP TE preference
+		"""
 
 		Returns:
 			str(one|two)
@@ -501,7 +501,7 @@ class TrafficItem(Base):
 
 	@property
 	def Warnings(self):
-		"""Displays the warnings.
+		"""
 
 		Returns:
 			list(str)
@@ -512,31 +512,31 @@ class TrafficItem(Base):
 		"""Adds a new trafficItem node on the server and retrieves it in this instance.
 
 		Args:
-			AllowSelfDestined (bool): If true, this helps to send traffic from routes on an Ixia port to other routes on the same Ixia port.
-			BiDirectional (bool): If true, this enables traffic to be sent in forward and reverse destination.
-			EgressEnabled (bool): Enables the egress.
-			EnableDynamicMplsLabelValues (bool): Enables the dynamic MPLS label values.
-			Enabled (bool): If true, this enables the selected traffic item.
-			HasOpenFlow (bool): Indicates whether or not this trafficItem has openflow.
-			HostsPerNetwork (number): The number of emulated hosts for the traffic stream.
-			InterAsBgpPreference (str(one|two)): Signifies the inter as BGP prefence
-			InterAsLdpPreference (str(one|two)): Preferences inter as LDP
-			MaxNumberOfVpnLabelStack (number): Signifies the maximum number of VPN label stack
-			MergeDestinations (bool): If true, merges the traffic flow in the destination ranges.
+			AllowSelfDestined (bool): 
+			BiDirectional (bool): 
+			EgressEnabled (bool): 
+			EnableDynamicMplsLabelValues (bool): 
+			Enabled (bool): 
+			HasOpenFlow (bool): 
+			HostsPerNetwork (number): 
+			InterAsBgpPreference (str(one|two)): 
+			InterAsLdpPreference (str(one|two)): 
+			MaxNumberOfVpnLabelStack (number): 
+			MergeDestinations (bool): 
 			MulticastForwardingMode (str(loadBalancing|replication)): 
-			Name (str): The name of the traffic item.
-			NumVlansForMulticastReplication (number): Set the number of vlans for multicast replication
-			OrdinalNo (number): Signifies the ordinal number
-			OriginatorType (str(endUser|quickTest)): Indicates who created this trafficItem.
-			RoundRobinPacketOrdering (bool): This option enables Round Robin Packet Ordering within endpoints across Rx ports.
-			RouteMesh (str(fullMesh|oneToOne)): The traffic flow type between each pair of source route endpoint and destination route endpoint.
-			SrcDestMesh (str(fullMesh|manyToMany|none|oneToOne)): Select the options to set the traffic mesh type between the Source Endpoint and Destination endpoint.
-			Suspend (bool): Suspends all traffic on this stream.
-			TrafficItemType (str(application|applicationLibrary|l2L3|quick)): Helps to configure and edit a traffic item that is sent across Ixia ports.
-			TrafficType (str(atm|avb1722|avbRaw|ethernetVlan|fc|fcoe|frameRelay|hdlc|ipv4|ipv4ApplicationTraffic|ipv6|ipv6ApplicationTraffic|ppp|raw)): Helps to select the type of traffic endpoint to be configured.
-			TransmitMode (str(interleaved|sequential)): The transmit mode for this traffic item
-			TransportLdpPreference (str(one|two)): Transports LDP preference
-			TransportRsvpTePreference (str(one|two)): Transports RSVP TE preference
+			Name (str): 
+			NumVlansForMulticastReplication (number): 
+			OrdinalNo (number): 
+			OriginatorType (str(endUser|quickTest)): 
+			RoundRobinPacketOrdering (bool): 
+			RouteMesh (str(fullMesh|oneToOne)): 
+			SrcDestMesh (str(fullMesh|manyToMany|none|oneToOne)): 
+			Suspend (bool): 
+			TrafficItemType (str(application|applicationLibrary|l2L3|quick)): 
+			TrafficType (str(atm|avb1722|avbRaw|ethernetVlan|fc|fcoe|frameRelay|hdlc|ipv4|ipv4ApplicationTraffic|ipv6|ipv6ApplicationTraffic|ppp|raw)): 
+			TransmitMode (str(interleaved|sequential)): 
+			TransportLdpPreference (str(one|two)): 
+			TransportRsvpTePreference (str(one|two)): 
 			UseControlPlaneFrameSize (bool): 
 			UseControlPlaneRate (bool): 
 
@@ -564,37 +564,37 @@ class TrafficItem(Base):
 		By default the find method takes no parameters and will retrieve all trafficItem data from the server.
 
 		Args:
-			AllowSelfDestined (bool): If true, this helps to send traffic from routes on an Ixia port to other routes on the same Ixia port.
-			BiDirectional (bool): If true, this enables traffic to be sent in forward and reverse destination.
-			EgressEnabled (bool): Enables the egress.
-			EnableDynamicMplsLabelValues (bool): Enables the dynamic MPLS label values.
-			Enabled (bool): If true, this enables the selected traffic item.
-			Errors (list(str)): Displays the errors.
-			FlowGroupCount (number): Indicates the number of flow groups.
-			HasOpenFlow (bool): Indicates whether or not this trafficItem has openflow.
-			HostsPerNetwork (number): The number of emulated hosts for the traffic stream.
-			InterAsBgpPreference (str(one|two)): Signifies the inter as BGP prefence
-			InterAsLdpPreference (str(one|two)): Preferences inter as LDP
-			MaxNumberOfVpnLabelStack (number): Signifies the maximum number of VPN label stack
-			MergeDestinations (bool): If true, merges the traffic flow in the destination ranges.
+			AllowSelfDestined (bool): 
+			BiDirectional (bool): 
+			EgressEnabled (bool): 
+			EnableDynamicMplsLabelValues (bool): 
+			Enabled (bool): 
+			Errors (list(str)): 
+			FlowGroupCount (number): 
+			HasOpenFlow (bool): 
+			HostsPerNetwork (number): 
+			InterAsBgpPreference (str(one|two)): 
+			InterAsLdpPreference (str(one|two)): 
+			MaxNumberOfVpnLabelStack (number): 
+			MergeDestinations (bool): 
 			MulticastForwardingMode (str(loadBalancing|replication)): 
-			Name (str): The name of the traffic item.
-			NumVlansForMulticastReplication (number): Set the number of vlans for multicast replication
-			OrdinalNo (number): Signifies the ordinal number
-			OriginatorType (str(endUser|quickTest)): Indicates who created this trafficItem.
-			RoundRobinPacketOrdering (bool): This option enables Round Robin Packet Ordering within endpoints across Rx ports.
-			RouteMesh (str(fullMesh|oneToOne)): The traffic flow type between each pair of source route endpoint and destination route endpoint.
-			SrcDestMesh (str(fullMesh|manyToMany|none|oneToOne)): Select the options to set the traffic mesh type between the Source Endpoint and Destination endpoint.
-			State (str): (Read only) A read-only field which indicates the current state of the traffic item.
-			Suspend (bool): Suspends all traffic on this stream.
-			TrafficItemType (str(application|applicationLibrary|l2L3|quick)): Helps to configure and edit a traffic item that is sent across Ixia ports.
-			TrafficType (str(atm|avb1722|avbRaw|ethernetVlan|fc|fcoe|frameRelay|hdlc|ipv4|ipv4ApplicationTraffic|ipv6|ipv6ApplicationTraffic|ppp|raw)): Helps to select the type of traffic endpoint to be configured.
-			TransmitMode (str(interleaved|sequential)): The transmit mode for this traffic item
-			TransportLdpPreference (str(one|two)): Transports LDP preference
-			TransportRsvpTePreference (str(one|two)): Transports RSVP TE preference
+			Name (str): 
+			NumVlansForMulticastReplication (number): 
+			OrdinalNo (number): 
+			OriginatorType (str(endUser|quickTest)): 
+			RoundRobinPacketOrdering (bool): 
+			RouteMesh (str(fullMesh|oneToOne)): 
+			SrcDestMesh (str(fullMesh|manyToMany|none|oneToOne)): 
+			State (str): 
+			Suspend (bool): 
+			TrafficItemType (str(application|applicationLibrary|l2L3|quick)): 
+			TrafficType (str(atm|avb1722|avbRaw|ethernetVlan|fc|fcoe|frameRelay|hdlc|ipv4|ipv4ApplicationTraffic|ipv6|ipv6ApplicationTraffic|ppp|raw)): 
+			TransmitMode (str(interleaved|sequential)): 
+			TransportLdpPreference (str(one|two)): 
+			TransportRsvpTePreference (str(one|two)): 
 			UseControlPlaneFrameSize (bool): 
 			UseControlPlaneRate (bool): 
-			Warnings (list(str)): Displays the warnings.
+			Warnings (list(str)): 
 
 		Returns:
 			self: This instance with matching trafficItem data retrieved from the server available through an iterator or index

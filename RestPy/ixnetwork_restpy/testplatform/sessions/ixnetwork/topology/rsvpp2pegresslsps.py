@@ -118,33 +118,6 @@ class RsvpP2PEgressLsps(Base):
 		return self._get_attribute('endPointIpv6')
 
 	@property
-	def ForwardLspSelfPing(self):
-		"""Forward LSP Self Ping
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('forwardLspSelfPing')
-
-	@property
-	def InitialLspSelfPingDropCount(self):
-		"""Initial LSP Self Ping Drop Count.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('initialLspSelfPingDropCount')
-
-	@property
-	def IpTTLDecrementCount(self):
-		"""IP TTL Decrement Count.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('ipTTLDecrementCount')
-
-	@property
 	def LabelValue(self):
 		"""Label Value
 
@@ -161,15 +134,6 @@ class RsvpP2PEgressLsps(Base):
 			list(str)
 		"""
 		return self._get_attribute('localIp')
-
-	@property
-	def LspSelfPingIPDSCP(self):
-		"""LSP Self Ping IP DSCP.
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('lspSelfPingIPDSCP')
 
 	@property
 	def Name(self):
@@ -223,15 +187,6 @@ class RsvpP2PEgressLsps(Base):
 		return self._get_attribute('reservationStyle')
 
 	@property
-	def RetainLspSelfPingDSCP(self):
-		"""Retain LSP Self Ping DSCP
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('retainLspSelfPingDSCP')
-
-	@property
 	def SendReservationConfirmation(self):
 		"""Send Reservation Confirmation
 
@@ -257,6 +212,32 @@ class RsvpP2PEgressLsps(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('timeoutMultiplier')
+
+	def get_device_ids(self, PortNames=None, Active=None, EnableFixedLabelForReservations=None, EnableReplyingLspPing=None, EndPointIpv6=None, LabelValue=None, ReflectRro=None, RefreshInterval=None, ReservationStyle=None, SendReservationConfirmation=None, TimeoutMultiplier=None):
+		"""Base class infrastructure that gets a list of rsvpP2PEgressLsps device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnableFixedLabelForReservations (str): optional regex of enableFixedLabelForReservations
+			EnableReplyingLspPing (str): optional regex of enableReplyingLspPing
+			EndPointIpv6 (str): optional regex of endPointIpv6
+			LabelValue (str): optional regex of labelValue
+			ReflectRro (str): optional regex of reflectRro
+			RefreshInterval (str): optional regex of refreshInterval
+			ReservationStyle (str): optional regex of reservationStyle
+			SendReservationConfirmation (str): optional regex of sendReservationConfirmation
+			TimeoutMultiplier (str): optional regex of timeoutMultiplier
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
 
 	def Start(self):
 		"""Executes the start operation on the server.

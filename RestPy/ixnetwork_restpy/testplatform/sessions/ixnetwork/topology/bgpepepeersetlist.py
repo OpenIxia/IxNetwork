@@ -172,3 +172,31 @@ class BgpEpePeerSetList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('weight')
+
+	def get_device_ids(self, PortNames=None, Active=None, BBit=None, EnablePeerSetSid=None, LBit=None, OtherBits=None, PBit=None, PeerSetGroup=None, Reserved=None, SidIndex=None, SidIndexValue=None, VBit=None, Weight=None):
+		"""Base class infrastructure that gets a list of bgpEpePeerSetList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BBit (str): optional regex of bBit
+			EnablePeerSetSid (str): optional regex of enablePeerSetSid
+			LBit (str): optional regex of lBit
+			OtherBits (str): optional regex of otherBits
+			PBit (str): optional regex of pBit
+			PeerSetGroup (str): optional regex of peerSetGroup
+			Reserved (str): optional regex of reserved
+			SidIndex (str): optional regex of sidIndex
+			SidIndexValue (str): optional regex of sidIndexValue
+			VBit (str): optional regex of vBit
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

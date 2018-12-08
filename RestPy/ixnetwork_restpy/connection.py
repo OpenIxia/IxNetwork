@@ -44,7 +44,7 @@ class Connection(object):
     TRACE_REQUEST = 'request'
     TRACE_REQUEST_RESPONSE = 'request_response'
 
-    def __init__(self, hostname, rest_port=443, platform='windows', log_file_name=None):
+    def __init__(self, hostname, rest_port=443, platform='windows', log_file_name=None, ignore_env_proxy=False):
         """ Set the connection parameters to a rest server
 
         Args:
@@ -52,6 +52,7 @@ class Connection(object):
             rest_port (int, optional, default=443): the rest port of the server
             platform (str): 
             log_file_name (str):
+            ignore_env_proxy (bool):
         """
         if sys.version < '2.7.9':
             import requests.packages.urllib3
@@ -69,6 +70,12 @@ class Connection(object):
         if platform == 'windows':
             self._scheme = 'http'
         self._session = Session()
+
+        if ignore_env_proxy is True:
+            self._session.proxies.update({
+                'http': None,
+                'https': None
+            })
 
         # setup logging to both console and file if requested
         self._trace = Connection.TRACE_NONE
@@ -145,8 +152,14 @@ class Connection(object):
                 data = json.dumps(payload)
             elif isinstance(payload, Files):                          
                 headers['Content-Type'] = 'application/octet-stream'
-                with open(payload.file_path, 'rb') as fid:
-                       data = fid.read()
+                if os.path.isfile(payload.file_path):
+                    with open(payload.file_path, 'rb') as fid:
+                        data = fid.read()
+                else:
+                    response = self._session.request('GET', url.replace('filename=', 'filter='), headers=headers, verify=self._verify_cert, allow_redirects=False)
+                    if response.status_code == 200:
+                        return
+                    data = ''
             elif isinstance(payload, basestring):
                 headers['Content-Type'] = 'application/json'
                 data = payload

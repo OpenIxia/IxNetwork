@@ -37,7 +37,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def CbsMagnitude(self):
-		"""It signifies one octet field.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def CbsMultiplier(self):
-		"""It signifies one octet field.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def Cf(self):
-		"""It signifies coupling flag.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def CirMagnitude(self):
-		"""It signifies one octet field.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def CirMultiplier(self):
-		"""It signifies two octet field.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def Cm(self):
-		"""It signifies color mode flag.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def EbsMagnitude(self):
-		"""It signifies one octet field.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def EbsMultiplier(self):
-		"""It signifies one octet field.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def EirMagnitude(self):
-		"""It signifies one octet field.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def EirMultiplier(self):
-		"""It signifies two octet field.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def EvcMapType(self):
-		"""It signifies the type of EVC MAP type.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def PerCos(self):
-		"""It signifies per cos behavior of bandwidth profile.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UniId(self):
-		"""It signifies the ID of user network interface.
+		"""
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UniIdLength(self):
-		"""It signifies the length of the UNI ID value.
+		"""
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits000(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 000 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits001(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 001 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits010(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 010 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits011(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 011 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits100(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 100 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits101(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 101 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -217,7 +217,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits110(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 110 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -226,7 +226,7 @@ class UniStatusLearnedInfo(Base):
 
 	@property
 	def UserPriorityBits111(self):
-		"""If enabled, Bandwidth Profile applies to frames with user_priority as 111 and the value is set to 1.
+		"""
 
 		Returns:
 			str
@@ -240,28 +240,28 @@ class UniStatusLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all uniStatusLearnedInfo data from the server.
 
 		Args:
-			CbsMagnitude (str): It signifies one octet field.
-			CbsMultiplier (str): It signifies one octet field.
-			Cf (str): It signifies coupling flag.
-			CirMagnitude (str): It signifies one octet field.
-			CirMultiplier (str): It signifies two octet field.
-			Cm (str): It signifies color mode flag.
-			EbsMagnitude (str): It signifies one octet field.
-			EbsMultiplier (str): It signifies one octet field.
-			EirMagnitude (str): It signifies one octet field.
-			EirMultiplier (str): It signifies two octet field.
-			EvcMapType (str): It signifies the type of EVC MAP type.
-			PerCos (str): It signifies per cos behavior of bandwidth profile.
-			UniId (str): It signifies the ID of user network interface.
-			UniIdLength (number): It signifies the length of the UNI ID value.
-			UserPriorityBits000 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 000 and the value is set to 1.
-			UserPriorityBits001 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 001 and the value is set to 1.
-			UserPriorityBits010 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 010 and the value is set to 1.
-			UserPriorityBits011 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 011 and the value is set to 1.
-			UserPriorityBits100 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 100 and the value is set to 1.
-			UserPriorityBits101 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 101 and the value is set to 1.
-			UserPriorityBits110 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 110 and the value is set to 1.
-			UserPriorityBits111 (str): If enabled, Bandwidth Profile applies to frames with user_priority as 111 and the value is set to 1.
+			CbsMagnitude (str): 
+			CbsMultiplier (str): 
+			Cf (str): 
+			CirMagnitude (str): 
+			CirMultiplier (str): 
+			Cm (str): 
+			EbsMagnitude (str): 
+			EbsMultiplier (str): 
+			EirMagnitude (str): 
+			EirMultiplier (str): 
+			EvcMapType (str): 
+			PerCos (str): 
+			UniId (str): 
+			UniIdLength (number): 
+			UserPriorityBits000 (str): 
+			UserPriorityBits001 (str): 
+			UserPriorityBits010 (str): 
+			UserPriorityBits011 (str): 
+			UserPriorityBits100 (str): 
+			UserPriorityBits101 (str): 
+			UserPriorityBits110 (str): 
+			UserPriorityBits111 (str): 
 
 		Returns:
 			self: This instance with matching uniStatusLearnedInfo data retrieved from the server available through an iterator or index

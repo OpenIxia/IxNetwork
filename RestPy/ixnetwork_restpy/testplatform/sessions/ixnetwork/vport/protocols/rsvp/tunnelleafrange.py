@@ -38,7 +38,7 @@ class TunnelLeafRange(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables the RSVP-TE Tunnel Tail Range.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class TunnelLeafRange(Base):
 
 	@property
 	def IpCount(self):
-		"""The number of IPv4 addresses in the range of Tunnel Tail addresses.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class TunnelLeafRange(Base):
 
 	@property
 	def IpStart(self):
-		"""The first IPv4 address in the range of Tunnel Tail addresses to be associated with the Ixia-emulated RSVP-TE router.
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class TunnelLeafRange(Base):
 
 	@property
 	def SubLspDown(self):
-		"""This can be true only for Tail Ranges of type 'Egress'. If enabled and a sub-lsp to the tail is up, it is torn-down by sending a Resv Tear to the ingress. From this point onwards, any Path sent to this Tail is dropped silently, thereby simulating that the sub-lsps terminating on the endpoints in this Tail Range is down.
+		"""
 
 		Returns:
 			bool
@@ -88,10 +88,10 @@ class TunnelLeafRange(Base):
 		"""Adds a new tunnelLeafRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true, enables the RSVP-TE Tunnel Tail Range.
-			IpCount (number): The number of IPv4 addresses in the range of Tunnel Tail addresses.
-			IpStart (str): The first IPv4 address in the range of Tunnel Tail addresses to be associated with the Ixia-emulated RSVP-TE router.
-			SubLspDown (bool): This can be true only for Tail Ranges of type 'Egress'. If enabled and a sub-lsp to the tail is up, it is torn-down by sending a Resv Tear to the ingress. From this point onwards, any Path sent to this Tail is dropped silently, thereby simulating that the sub-lsps terminating on the endpoints in this Tail Range is down.
+			Enabled (bool): 
+			IpCount (number): 
+			IpStart (str): 
+			SubLspDown (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved tunnelLeafRange data using find and the newly added tunnelLeafRange data available through an iterator or index
@@ -117,10 +117,10 @@ class TunnelLeafRange(Base):
 		By default the find method takes no parameters and will retrieve all tunnelLeafRange data from the server.
 
 		Args:
-			Enabled (bool): If true, enables the RSVP-TE Tunnel Tail Range.
-			IpCount (number): The number of IPv4 addresses in the range of Tunnel Tail addresses.
-			IpStart (str): The first IPv4 address in the range of Tunnel Tail addresses to be associated with the Ixia-emulated RSVP-TE router.
-			SubLspDown (bool): This can be true only for Tail Ranges of type 'Egress'. If enabled and a sub-lsp to the tail is up, it is torn-down by sending a Resv Tear to the ingress. From this point onwards, any Path sent to this Tail is dropped silently, thereby simulating that the sub-lsps terminating on the endpoints in this Tail Range is down.
+			Enabled (bool): 
+			IpCount (number): 
+			IpStart (str): 
+			SubLspDown (bool): 
 
 		Returns:
 			self: This instance with matching tunnelLeafRange data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class FilterPallette(Base):
 
 	@property
 	def DA1(self):
-		"""Only frames that contain this destination MAC address are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class FilterPallette(Base):
 
 	@property
 	def DA2(self):
-		"""Only frames that contain this destination MAC address are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -61,7 +61,7 @@ class FilterPallette(Base):
 
 	@property
 	def DAMask1(self):
-		"""Only frames that contain this destination MAC address are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class FilterPallette(Base):
 
 	@property
 	def DAMask2(self):
-		"""A bit mask that allows the user to specify which bits of the DA2 should be used when filtering. If the mask bit is set high, the pattern bit will be used in the filter
+		"""
 
 		Returns:
 			str
@@ -85,7 +85,7 @@ class FilterPallette(Base):
 
 	@property
 	def SA1(self):
-		"""Only frames that contain this source MAC address are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -97,7 +97,7 @@ class FilterPallette(Base):
 
 	@property
 	def SA2(self):
-		"""Only frames that contain this source MAC address are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class FilterPallette(Base):
 
 	@property
 	def SAMask1(self):
-		"""A bit mask that allows the user to specify which bits of the SA1 should be used when filtering. If the mask bit is set high, the pattern bit will be used in the filter.
+		"""
 
 		Returns:
 			str
@@ -121,7 +121,7 @@ class FilterPallette(Base):
 
 	@property
 	def SAMask2(self):
-		"""A bit mask that allows the user to specify which bits of the SA2 should be used when filtering. If the mask bit is set high, the pattern bit will be used in the filter
+		"""
 
 		Returns:
 			str
@@ -133,7 +133,7 @@ class FilterPallette(Base):
 
 	@property
 	def Pattern1(self):
-		"""Only frames that contain this pattern at offset patternOffset1 are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class FilterPallette(Base):
 
 	@property
 	def Pattern2(self):
-		"""Only frames that contain this pattern at offset patternOffset2 are filtered, captured or counted.
+		"""
 
 		Returns:
 			str
@@ -157,7 +157,7 @@ class FilterPallette(Base):
 
 	@property
 	def PatternMask1(self):
-		"""A bit mask that allows the user to specify which bits of pattern1 should be used when filtering. If the mask bit is set low, the pattern bit will be used in the filter.
+		"""
 
 		Returns:
 			str
@@ -169,7 +169,7 @@ class FilterPallette(Base):
 
 	@property
 	def PatternMask2(self):
-		"""A bit mask that allows the user to specify which bits of pattern2 should be used when filtering. If the mask bit is set high, the pattern bit will be used in the filter.
+		"""
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class FilterPallette(Base):
 
 	@property
 	def PatternOffset1(self):
-		"""Offset of pattern1 in the frame to be filtered, captured or counted.
+		"""
 
 		Returns:
 			number
@@ -193,7 +193,7 @@ class FilterPallette(Base):
 
 	@property
 	def PatternOffset2(self):
-		"""Offset of pattern2 in the frame to be filtered, captured or counted.
+		"""
 
 		Returns:
 			number
@@ -205,7 +205,7 @@ class FilterPallette(Base):
 
 	@property
 	def PatternOffsetType1(self):
-		"""For ports that support the portFeaturePatternOffsetFlexible feature, this option specifies the place that patternOffset1 is relative to.
+		"""
 
 		Returns:
 			str(filterPalletteOffsetStartOfFrame|filterPalletteOffsetStartOfIp|filterPalletteOffsetStartOfProtocol)
@@ -217,7 +217,7 @@ class FilterPallette(Base):
 
 	@property
 	def PatternOffsetType2(self):
-		"""For ports that support the portFeaturePatternOffsetFlexible feature, this option specifies the place that patternOffset1 is relative to.
+		"""
 
 		Returns:
 			str(filterPalletteOffsetStartOfFrame|filterPalletteOffsetStartOfIp|filterPalletteOffsetStartOfProtocol)

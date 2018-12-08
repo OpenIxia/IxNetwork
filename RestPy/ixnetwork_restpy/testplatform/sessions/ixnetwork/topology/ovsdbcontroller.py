@@ -630,6 +630,45 @@ class Ovsdbcontroller(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, ClearDumpDbFiles=None, ConnectionType=None, ControllerTcpPort=None, DirectoryName=None, DumpdbDirectoryName=None, EnableOvsdbServerIp=None, ErrorCode=None, ErrorDesc=None, ErrorLogDirectoryName=None, ErrorLogicalSwitchName=None, ErrorPhysicalSwitchName=None, ErrorTimeStamp=None, FileCaCertificate=None, FileCertificate=None, FileHWGatewayCertificate=None, FilePrivKey=None, HSCConfiguration=None, OvsdbSchema=None, OvsdbServerIp=None, ServerConnectionIp=None, TableNames=None, VerifyHWGatewayCertificate=None, VerifyPeerCertificate=None):
+		"""Base class infrastructure that gets a list of ovsdbcontroller device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ClearDumpDbFiles (str): optional regex of clearDumpDbFiles
+			ConnectionType (str): optional regex of connectionType
+			ControllerTcpPort (str): optional regex of controllerTcpPort
+			DirectoryName (str): optional regex of directoryName
+			DumpdbDirectoryName (str): optional regex of dumpdbDirectoryName
+			EnableOvsdbServerIp (str): optional regex of enableOvsdbServerIp
+			ErrorCode (str): optional regex of errorCode
+			ErrorDesc (str): optional regex of errorDesc
+			ErrorLogDirectoryName (str): optional regex of errorLogDirectoryName
+			ErrorLogicalSwitchName (str): optional regex of errorLogicalSwitchName
+			ErrorPhysicalSwitchName (str): optional regex of errorPhysicalSwitchName
+			ErrorTimeStamp (str): optional regex of errorTimeStamp
+			FileCaCertificate (str): optional regex of fileCaCertificate
+			FileCertificate (str): optional regex of fileCertificate
+			FileHWGatewayCertificate (str): optional regex of fileHWGatewayCertificate
+			FilePrivKey (str): optional regex of filePrivKey
+			HSCConfiguration (str): optional regex of hSCConfiguration
+			OvsdbSchema (str): optional regex of ovsdbSchema
+			OvsdbServerIp (str): optional regex of ovsdbServerIp
+			ServerConnectionIp (str): optional regex of serverConnectionIp
+			TableNames (str): optional regex of tableNames
+			VerifyHWGatewayCertificate (str): optional regex of verifyHWGatewayCertificate
+			VerifyPeerCertificate (str): optional regex of verifyPeerCertificate
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def AddServer(self, Arg2):
 		"""Executes the addServer operation on the server.
 

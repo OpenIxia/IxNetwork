@@ -37,7 +37,7 @@ class Cluster(Base):
 
 	@property
 	def Val(self):
-		"""The value of the cluster list.
+		"""
 
 		Returns:
 			list(number)

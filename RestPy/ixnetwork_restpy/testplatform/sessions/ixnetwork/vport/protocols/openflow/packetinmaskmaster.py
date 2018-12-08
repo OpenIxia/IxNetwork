@@ -37,7 +37,7 @@ class PacketInMaskMaster(Base):
 
 	@property
 	def Action(self):
-		"""Action explicitly output to controller.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class PacketInMaskMaster(Base):
 
 	@property
 	def InvalidTtl(self):
-		"""This indicates that a packet with an invalid IP TTL or MPLS TTL was rejected by the OpenFlow pipeline and passed to the controller.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class PacketInMaskMaster(Base):
 
 	@property
 	def NoMatch(self):
-		"""This indicates that a packet with no matching flow (table-miss flow entry) is passed to the controller.
+		"""
 
 		Returns:
 			bool

@@ -65,7 +65,7 @@ class TenGigWan(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""The auto instrumentation mode.
+		"""
 
 		Returns:
 			str(endOfFrame|floating)
@@ -77,7 +77,7 @@ class TenGigWan(Base):
 
 	@property
 	def C2Expected(self):
-		"""The expected value of the link partner's C2 byte. Typically, this will match the value in the Transmit field. (Hex). The default value is 0x24 (hex).
+		"""
 
 		Returns:
 			number
@@ -89,7 +89,7 @@ class TenGigWan(Base):
 
 	@property
 	def C2Tx(self):
-		"""The value of the C2 byte in the transmitted stream. (Hex) The default value is 0x24 (hex).
+		"""
 
 		Returns:
 			number
@@ -101,7 +101,7 @@ class TenGigWan(Base):
 
 	@property
 	def EnablePPM(self):
-		"""If true, enables the portsppm.
+		"""
 
 		Returns:
 			bool
@@ -113,7 +113,7 @@ class TenGigWan(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""Enables the port's MAC Flow control mechanisms to listen for a directed address pause message.
+		"""
 
 		Returns:
 			bool
@@ -125,7 +125,7 @@ class TenGigWan(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""This is the 48-bit MAC address that the port will listen on for a directed pause message.
+		"""
 
 		Returns:
 			str
@@ -137,7 +137,7 @@ class TenGigWan(Base):
 
 	@property
 	def IfsStretch(self):
-		"""If checked, indicates the ifsStretch as the desired mode of operation. The IFS Stretch ratio determines the number of bits in a frame that require one octet of Inter Frame Spacing Extension.
+		"""
 
 		Returns:
 			bool
@@ -149,7 +149,7 @@ class TenGigWan(Base):
 
 	@property
 	def InterfaceType(self):
-		"""The 10G WAN interface type for the port.
+		"""
 
 		Returns:
 			str(wanSdh|wanSonet)
@@ -161,7 +161,7 @@ class TenGigWan(Base):
 
 	@property
 	def Loopback(self):
-		"""If enabled, the port is set to internally loopback from transmit to receive.
+		"""
 
 		Returns:
 			bool
@@ -173,7 +173,7 @@ class TenGigWan(Base):
 
 	@property
 	def Ppm(self):
-		"""Indicates the value that needs to be adjusted for the line transmit frequency.
+		"""
 
 		Returns:
 			number
@@ -185,7 +185,7 @@ class TenGigWan(Base):
 
 	@property
 	def TransmitClocking(self):
-		"""The transmit clocking type for this 10G WAN port.
+		"""
 
 		Returns:
 			str(external|internal|recovered)
@@ -197,7 +197,7 @@ class TenGigWan(Base):
 
 	@property
 	def TxIgnoreRxLinkFaults(self):
-		"""If enabled, will allow transmission of packets even if the receive link is down.
+		"""
 
 		Returns:
 			bool

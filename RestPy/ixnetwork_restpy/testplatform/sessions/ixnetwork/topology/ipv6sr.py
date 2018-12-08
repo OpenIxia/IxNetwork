@@ -355,6 +355,34 @@ class Ipv6sr(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, CleanupFlag=None, FirstSegment=None, OamFlag=None, OuterDestAddr=None, OuterSrcAddr=None, ProtectedFlag=None, SID0=None, SIDEnable0=None, SegmentsLeft=None, TunnelDescription=None, UseAsIngress=None):
+		"""Base class infrastructure that gets a list of ipv6sr device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			CleanupFlag (str): optional regex of cleanupFlag
+			FirstSegment (str): optional regex of firstSegment
+			OamFlag (str): optional regex of oamFlag
+			OuterDestAddr (str): optional regex of outerDestAddr
+			OuterSrcAddr (str): optional regex of outerSrcAddr
+			ProtectedFlag (str): optional regex of protectedFlag
+			SID0 (str): optional regex of sID0
+			SIDEnable0 (str): optional regex of sIDEnable0
+			SegmentsLeft (str): optional regex of segmentsLeft
+			TunnelDescription (str): optional regex of tunnelDescription
+			UseAsIngress (str): optional regex of useAsIngress
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

@@ -37,7 +37,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def Action(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def DestinationHostMac(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def InputPort(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def InputTimeInMs(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def OutputPort(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def OutputTimeInMs(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def SourceHostMac(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def SwitchDataPathId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 
 	@property
 	def SwitchIp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -123,15 +123,15 @@ class SwitchHostRangeHopsLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchHostRangeHopsLearnedInfo data from the server.
 
 		Args:
-			Action (str): NOT DEFINED
-			DestinationHostMac (str): NOT DEFINED
-			InputPort (number): NOT DEFINED
-			InputTimeInMs (number): NOT DEFINED
-			OutputPort (number): NOT DEFINED
-			OutputTimeInMs (number): NOT DEFINED
-			SourceHostMac (str): NOT DEFINED
-			SwitchDataPathId (number): NOT DEFINED
-			SwitchIp (str): NOT DEFINED
+			Action (str): 
+			DestinationHostMac (str): 
+			InputPort (number): 
+			InputTimeInMs (number): 
+			OutputPort (number): 
+			OutputTimeInMs (number): 
+			SourceHostMac (str): 
+			SwitchDataPathId (number): 
+			SwitchIp (str): 
 
 		Returns:
 			self: This instance with matching switchHostRangeHopsLearnedInfo data retrieved from the server available through an iterator or index

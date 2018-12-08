@@ -37,7 +37,7 @@ class DiscoveredInterface(Base):
 
 	@property
 	def InterfaceName(self):
-		"""Represents the interface name
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class DiscoveredInterface(Base):
 
 	@property
 	def State(self):
-		"""Represents the interface state
+		"""
 
 		Returns:
 			str(assigned|available|unusable)
@@ -60,8 +60,8 @@ class DiscoveredInterface(Base):
 		By default the find method takes no parameters and will retrieve all discoveredInterface data from the server.
 
 		Args:
-			InterfaceName (str): Represents the interface name
-			State (str(assigned|available|unusable)): Represents the interface state
+			InterfaceName (str): 
+			State (str(assigned|available|unusable)): 
 
 		Returns:
 			self: This instance with matching discoveredInterface data retrieved from the server available through an iterator or index

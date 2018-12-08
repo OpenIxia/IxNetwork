@@ -37,7 +37,7 @@ class RBridges(Base):
 
 	@property
 	def Age(self):
-		"""This indicates the age in time in seconds, since it was last refreshed.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class RBridges(Base):
 
 	@property
 	def EnableCommonMtId(self):
-		"""If true, common Mt ld is enabled.
+		"""
 
 		Returns:
 			bool
@@ -55,7 +55,7 @@ class RBridges(Base):
 
 	@property
 	def ExtendedCircuitId(self):
-		"""The hexadecimal format of the extended circuit.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class RBridges(Base):
 
 	@property
 	def GraphId(self):
-		"""This indicates the Graph ID value if FTAG is present.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class RBridges(Base):
 
 	@property
 	def HostName(self):
-		"""The host name as retrieved from the related packets.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class RBridges(Base):
 
 	@property
 	def LinkMetric(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class RBridges(Base):
 
 	@property
 	def MtId(self):
-		"""This indicates the MT ID.
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class RBridges(Base):
 
 	@property
 	def PrimaryFtag(self):
-		"""This indicates the Primary FTAG value if FTAG is present.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class RBridges(Base):
 
 	@property
 	def Priority(self):
-		"""This indicates the Broadcast Root Priority as advertised by this RBridge.
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class RBridges(Base):
 
 	@property
 	def Role(self):
-		"""This indicates the role of the RBridge.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class RBridges(Base):
 
 	@property
 	def SecondaryFtag(self):
-		"""This indicates the Secondary FTAG value if FTAG is present.
+		"""
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class RBridges(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""This indicates the sequence number of the LSP containing the route.
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class RBridges(Base):
 
 	@property
 	def SwitchId(self):
-		"""This indicates the Switch ID.
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class RBridges(Base):
 
 	@property
 	def SystemId(self):
-		"""This indicates the ISIS System ID.
+		"""
 
 		Returns:
 			str
@@ -168,20 +168,20 @@ class RBridges(Base):
 		By default the find method takes no parameters and will retrieve all rBridges data from the server.
 
 		Args:
-			Age (number): This indicates the age in time in seconds, since it was last refreshed.
-			EnableCommonMtId (bool): If true, common Mt ld is enabled.
-			ExtendedCircuitId (number): The hexadecimal format of the extended circuit.
-			GraphId (number): This indicates the Graph ID value if FTAG is present.
-			HostName (str): The host name as retrieved from the related packets.
-			LinkMetric (number): NOT DEFINED
-			MtId (number): This indicates the MT ID.
-			PrimaryFtag (number): This indicates the Primary FTAG value if FTAG is present.
-			Priority (number): This indicates the Broadcast Root Priority as advertised by this RBridge.
-			Role (str): This indicates the role of the RBridge.
-			SecondaryFtag (number): This indicates the Secondary FTAG value if FTAG is present.
-			SequenceNumber (number): This indicates the sequence number of the LSP containing the route.
-			SwitchId (number): This indicates the Switch ID.
-			SystemId (str): This indicates the ISIS System ID.
+			Age (number): 
+			EnableCommonMtId (bool): 
+			ExtendedCircuitId (number): 
+			GraphId (number): 
+			HostName (str): 
+			LinkMetric (number): 
+			MtId (number): 
+			PrimaryFtag (number): 
+			Priority (number): 
+			Role (str): 
+			SecondaryFtag (number): 
+			SequenceNumber (number): 
+			SwitchId (number): 
+			SystemId (str): 
 
 		Returns:
 			self: This instance with matching rBridges data retrieved from the server available through an iterator or index

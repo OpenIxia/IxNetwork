@@ -91,3 +91,22 @@ class Manager(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('tcpPort')
+
+	def get_device_ids(self, PortNames=None, ManagerActive=None, ManagerIp=None, TcpPort=None):
+		"""Base class infrastructure that gets a list of manager device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ManagerActive (str): optional regex of managerActive
+			ManagerIp (str): optional regex of managerIp
+			TcpPort (str): optional regex of tcpPort
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

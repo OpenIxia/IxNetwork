@@ -150,7 +150,7 @@ class CustomTopology(Base):
 
 	@property
 	def CapRouterId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -162,7 +162,7 @@ class CustomTopology(Base):
 
 	@property
 	def EnableHostname(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class CustomTopology(Base):
 
 	@property
 	def Enabled(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -186,7 +186,7 @@ class CustomTopology(Base):
 
 	@property
 	def HostNamePrefix(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -198,7 +198,7 @@ class CustomTopology(Base):
 
 	@property
 	def InterfaceMetric(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -210,7 +210,7 @@ class CustomTopology(Base):
 
 	@property
 	def StartSysId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -222,7 +222,7 @@ class CustomTopology(Base):
 
 	@property
 	def SysIdInc(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -236,13 +236,13 @@ class CustomTopology(Base):
 		"""Adds a new customTopology node on the server and retrieves it in this instance.
 
 		Args:
-			CapRouterId (str): NOT DEFINED
-			EnableHostname (bool): NOT DEFINED
-			Enabled (bool): NOT DEFINED
-			HostNamePrefix (str): NOT DEFINED
-			InterfaceMetric (number): NOT DEFINED
-			StartSysId (str): NOT DEFINED
-			SysIdInc (str): NOT DEFINED
+			CapRouterId (str): 
+			EnableHostname (bool): 
+			Enabled (bool): 
+			HostNamePrefix (str): 
+			InterfaceMetric (number): 
+			StartSysId (str): 
+			SysIdInc (str): 
 
 		Returns:
 			self: This instance with all currently retrieved customTopology data using find and the newly added customTopology data available through an iterator or index
@@ -268,13 +268,13 @@ class CustomTopology(Base):
 		By default the find method takes no parameters and will retrieve all customTopology data from the server.
 
 		Args:
-			CapRouterId (str): NOT DEFINED
-			EnableHostname (bool): NOT DEFINED
-			Enabled (bool): NOT DEFINED
-			HostNamePrefix (str): NOT DEFINED
-			InterfaceMetric (number): NOT DEFINED
-			StartSysId (str): NOT DEFINED
-			SysIdInc (str): NOT DEFINED
+			CapRouterId (str): 
+			EnableHostname (bool): 
+			Enabled (bool): 
+			HostNamePrefix (str): 
+			InterfaceMetric (number): 
+			StartSysId (str): 
+			SysIdInc (str): 
 
 		Returns:
 			self: This instance with matching customTopology data retrieved from the server available through an iterator or index

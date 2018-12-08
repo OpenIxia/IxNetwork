@@ -38,7 +38,7 @@ class Hypervisor(Base):
 
 	@property
 	def Enabled(self):
-		"""If true the hypervisor is enabled
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Hypervisor(Base):
 
 	@property
 	def Password(self):
-		"""Represents the hypervisor password
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class Hypervisor(Base):
 
 	@property
 	def ServerIp(self):
-		"""Represents the hypervisor Ip
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class Hypervisor(Base):
 
 	@property
 	def Type(self):
-		"""Represents the hypervisor host type
+		"""
 
 		Returns:
 			str(qemu|vCenter|vmware)
@@ -86,7 +86,7 @@ class Hypervisor(Base):
 
 	@property
 	def User(self):
-		"""Represents the hypervisor username
+		"""
 
 		Returns:
 			str
@@ -100,11 +100,11 @@ class Hypervisor(Base):
 		"""Adds a new hypervisor node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true the hypervisor is enabled
-			Password (str): Represents the hypervisor password
-			ServerIp (str): Represents the hypervisor Ip
-			Type (str(qemu|vCenter|vmware)): Represents the hypervisor host type
-			User (str): Represents the hypervisor username
+			Enabled (bool): 
+			Password (str): 
+			ServerIp (str): 
+			Type (str(qemu|vCenter|vmware)): 
+			User (str): 
 
 		Returns:
 			self: This instance with all currently retrieved hypervisor data using find and the newly added hypervisor data available through an iterator or index
@@ -130,11 +130,11 @@ class Hypervisor(Base):
 		By default the find method takes no parameters and will retrieve all hypervisor data from the server.
 
 		Args:
-			Enabled (bool): If true the hypervisor is enabled
-			Password (str): Represents the hypervisor password
-			ServerIp (str): Represents the hypervisor Ip
-			Type (str(qemu|vCenter|vmware)): Represents the hypervisor host type
-			User (str): Represents the hypervisor username
+			Enabled (bool): 
+			Password (str): 
+			ServerIp (str): 
+			Type (str(qemu|vCenter|vmware)): 
+			User (str): 
 
 		Returns:
 			self: This instance with matching hypervisor data retrieved from the server available through an iterator or index

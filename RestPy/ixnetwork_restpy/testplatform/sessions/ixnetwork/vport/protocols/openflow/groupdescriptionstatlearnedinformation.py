@@ -51,7 +51,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""The Data Path ID of the connected switch.
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""The Data Path ID of the OpenFlow switch in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""The error code of the error received.
+		"""
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""The type of the error received.
+		"""
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def GroupId(self):
-		"""A 32-bit integer uniquely identifying the group.
+		"""
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def GroupType(self):
-		"""Specify the group types supported by Switch.
+		"""
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""The latency measurement for the OpenFlow channel.
+		"""
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""The local IP address of the selected interface.
+		"""
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""The OpenFlow version supported by this configuration.
+		"""
 
 		Returns:
 			str
@@ -132,7 +132,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def NumberOfBucketStats(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -141,7 +141,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""The Remote IP address of the selected interface.
+		"""
 
 		Returns:
 			str
@@ -150,7 +150,7 @@ class GroupDescriptionStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""The reply state of the OF Channel.
+		"""
 
 		Returns:
 			str
@@ -164,18 +164,18 @@ class GroupDescriptionStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all groupDescriptionStatLearnedInformation data from the server.
 
 		Args:
-			DataPathId (str): The Data Path ID of the connected switch.
-			DataPathIdAsHex (str): The Data Path ID of the OpenFlow switch in hexadecimal format.
-			ErrorCode (str): The error code of the error received.
-			ErrorType (str): The type of the error received.
-			GroupId (number): A 32-bit integer uniquely identifying the group.
-			GroupType (str): Specify the group types supported by Switch.
-			Latency (number): The latency measurement for the OpenFlow channel.
-			LocalIp (str): The local IP address of the selected interface.
-			NegotiatedVersion (str): The OpenFlow version supported by this configuration.
-			NumberOfBucketStats (str): NOT DEFINED
-			RemoteIp (str): The Remote IP address of the selected interface.
-			ReplyState (str): The reply state of the OF Channel.
+			DataPathId (str): 
+			DataPathIdAsHex (str): 
+			ErrorCode (str): 
+			ErrorType (str): 
+			GroupId (number): 
+			GroupType (str): 
+			Latency (number): 
+			LocalIp (str): 
+			NegotiatedVersion (str): 
+			NumberOfBucketStats (str): 
+			RemoteIp (str): 
+			ReplyState (str): 
 
 		Returns:
 			self: This instance with matching groupDescriptionStatLearnedInformation data retrieved from the server available through an iterator or index

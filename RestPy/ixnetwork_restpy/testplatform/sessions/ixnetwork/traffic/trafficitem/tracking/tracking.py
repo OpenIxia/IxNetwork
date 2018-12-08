@@ -65,7 +65,7 @@ class Tracking(Base):
 
 	@property
 	def AvailableProtocolOffsets(self):
-		"""Specifies the available Protocol Offsets when the Flows of a Traffic Item are tracked by Custom Override.
+		"""
 
 		Returns:
 			list(str)
@@ -92,7 +92,7 @@ class Tracking(Base):
 
 	@property
 	def FieldWidth(self):
-		"""Specifies the Field Width when the flows of a Traffic Item are tracked by Custom Override.
+		"""
 
 		Returns:
 			str(eightBits|sixteenBits|thirtyTwoBits|twentyFourBits)
@@ -104,7 +104,7 @@ class Tracking(Base):
 
 	@property
 	def Offset(self):
-		"""Specifies the Offset when the Flows of a Traffic Item are tracked by Custom Override.
+		"""
 
 		Returns:
 			number
@@ -116,7 +116,7 @@ class Tracking(Base):
 
 	@property
 	def OneToOneMesh(self):
-		"""If true, one-one mesh is enabled when flows of a traffic item are tracked by Custom Override.
+		"""
 
 		Returns:
 			bool
@@ -128,7 +128,7 @@ class Tracking(Base):
 
 	@property
 	def ProtocolOffset(self):
-		"""Specifies the Protocol Offset when flows of a Traffic Item are tracked by Custom Override.
+		"""
 
 		Returns:
 			str
@@ -140,7 +140,7 @@ class Tracking(Base):
 
 	@property
 	def TrackBy(self):
-		"""Specifies the tracking option by which the Flows of a Traffic Item are tracked.
+		"""
 
 		Returns:
 			list(str)
@@ -152,7 +152,7 @@ class Tracking(Base):
 
 	@property
 	def Values(self):
-		"""Specifies the Values when the Flows of a Traffic Item are tracked by Custom Override.
+		"""
 
 		Returns:
 			list(str)
@@ -169,15 +169,15 @@ class Tracking(Base):
 		By default the find method takes no parameters and will retrieve all tracking data from the server.
 
 		Args:
-			AvailableProtocolOffsets (list(str)): Specifies the available Protocol Offsets when the Flows of a Traffic Item are tracked by Custom Override.
+			AvailableProtocolOffsets (list(str)): 
 			AvailableTrackBy (list(str)): Returns list of available tracking field ids
 			AvailableTrackByInfos (list(dict(arg1:str,arg2:str))): Returns list of tracking fields with id/displayname
-			FieldWidth (str(eightBits|sixteenBits|thirtyTwoBits|twentyFourBits)): Specifies the Field Width when the flows of a Traffic Item are tracked by Custom Override.
-			Offset (number): Specifies the Offset when the Flows of a Traffic Item are tracked by Custom Override.
-			OneToOneMesh (bool): If true, one-one mesh is enabled when flows of a traffic item are tracked by Custom Override.
-			ProtocolOffset (str): Specifies the Protocol Offset when flows of a Traffic Item are tracked by Custom Override.
-			TrackBy (list(str)): Specifies the tracking option by which the Flows of a Traffic Item are tracked.
-			Values (list(str)): Specifies the Values when the Flows of a Traffic Item are tracked by Custom Override.
+			FieldWidth (str(eightBits|sixteenBits|thirtyTwoBits|twentyFourBits)): 
+			Offset (number): 
+			OneToOneMesh (bool): 
+			ProtocolOffset (str): 
+			TrackBy (list(str)): 
+			Values (list(str)): 
 
 		Returns:
 			self: This instance with matching tracking data retrieved from the server available through an iterator or index

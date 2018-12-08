@@ -51,7 +51,7 @@ class ProtocolTemplate(Base):
 
 	@property
 	def DisplayName(self):
-		"""The display name of the template.
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class ProtocolTemplate(Base):
 
 	@property
 	def TemplateName(self):
-		"""Indicates the protocol template name that is added to a packet.
+		"""
 
 		Returns:
 			str
@@ -83,9 +83,9 @@ class ProtocolTemplate(Base):
 		By default the find method takes no parameters and will retrieve all protocolTemplate data from the server.
 
 		Args:
-			DisplayName (str): The display name of the template.
+			DisplayName (str): 
 			StackTypeId (str): 
-			TemplateName (str): Indicates the protocol template name that is added to a packet.
+			TemplateName (str): 
 
 		Returns:
 			self: This instance with matching protocolTemplate data retrieved from the server available through an iterator or index

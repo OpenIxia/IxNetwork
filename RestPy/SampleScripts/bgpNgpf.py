@@ -25,8 +25,8 @@ Requirements:
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-         - Statistics.py and PortMgmt.py
+   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
+                       - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -45,16 +45,19 @@ Usage:
    - Enter: python <script> linux
 """
 
-from __future__ import absolute_import, print_function
 import sys, os
 
-# Adding some paths if you are not installing RestPy by Pip.
-#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-
-# Import the main client module
+# Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
+# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# your system knows where the RestPy modules are located.
+#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
+
+# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
+# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
+# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
+sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
 
 # Import modules containing helper functions
 from StatisticsMgmt import Statistics
@@ -113,7 +116,6 @@ try:
     if osPlatform == 'windows':
         ixNetwork.NewConfig()
 
-    print('\nConfiguring license server')
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
 
@@ -192,12 +194,13 @@ try:
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
     #       Therefore, ConfigElement is a list.
     print('\tConfiguring config elements')
-    trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
-    trafficItem.ConfigElement.find()[0].FrameRate.Type = 'framesPerSecond'
-    trafficItem.ConfigElement.find()[0].TransmissionControl.FrameCount = 10000
-    trafficItem.ConfigElement.find()[0].TransmissionControl.Type = 'fixedFrameCount'
-    trafficItem.ConfigElement.find()[0].FrameRateDistribution.PortDistribution = 'splitRateEvenly'
-    trafficItem.ConfigElement.find()[0].FrameSize.FixedSize = 128
+    configElement = trafficItem.ConfigElement.find()[0]
+    configElement.FrameRate.Rate = 28
+    configElement.FrameRate.Type = 'framesPerSecond'
+    configElement.TransmissionControl.FrameCount = 10000
+    configElement.TransmissionControl.Type = 'fixedFrameCount'
+    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
+    configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     trafficItem.Generate()
@@ -210,14 +213,23 @@ try:
     # Get and show the Traffic Item column caption names and stat values
     columnNames      = statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
     trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItemName)
+
+    # The columnNames variable contains all the stat counter names.
+    # Get the index position of the stat counter that you want.
+    # The index is aligned with trafficItemStats that contains the statistic values.
     txFramesIndex = columnNames.index('Tx Frames')
     rxFramesIndex = columnNames.index('Rx Frames')
-    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}\n'.format(trafficItemStats[txFramesIndex],
-                                                                         trafficItemStats[rxFramesIndex]))
 
-    # Get and show the Flow Statistics column caption names and stat values
+    # Get the statistic values with the indexes.
+    txFrames = trafficItemStats[txFramesIndex]
+    rxFrames = trafficItemStats[rxFramesIndex]
+
+    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}\n'.format(txFrames, rxFrames))
+
+    # This example is for getting Flow Statistics.
     columnNamess =   statObj.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)
     flowStats = statObj.getFlowStatistics()
+
     print('\n', columnNamess)
     for statValues in flowStats:
         print('\n{0}'.format(statValues))

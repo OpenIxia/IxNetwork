@@ -79,7 +79,7 @@ class TenGigLan(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""The auto instrumentation mode.
+		"""
 
 		Returns:
 			str(endOfFrame|floating)
@@ -91,7 +91,7 @@ class TenGigLan(Base):
 
 	@property
 	def AutoNegotiate(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(asymmetric|both|fullDuplex|none)
@@ -103,7 +103,7 @@ class TenGigLan(Base):
 
 	@property
 	def EnableLASIMonitoring(self):
-		"""If selected, enables LASI monitoring.
+		"""
 
 		Returns:
 			bool
@@ -115,7 +115,7 @@ class TenGigLan(Base):
 
 	@property
 	def EnablePPM(self):
-		"""If true, enables the portsppm.
+		"""
 
 		Returns:
 			bool
@@ -127,7 +127,7 @@ class TenGigLan(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""Enables the port's MAC Flow control mechanisms to listen for a directed address pause message.
+		"""
 
 		Returns:
 			bool
@@ -139,7 +139,7 @@ class TenGigLan(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""This is the 48-bit MAC address that the port will listen on for a directed pause message.
+		"""
 
 		Returns:
 			str
@@ -151,7 +151,7 @@ class TenGigLan(Base):
 
 	@property
 	def Loopback(self):
-		"""If enabled, the port is set to internally loopback from transmit to receive.
+		"""
 
 		Returns:
 			bool
@@ -163,7 +163,7 @@ class TenGigLan(Base):
 
 	@property
 	def LoopbackMode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(internalLoopback|lineLoopback|none)
@@ -175,7 +175,7 @@ class TenGigLan(Base):
 
 	@property
 	def Ppm(self):
-		"""Indicates the value that needs to be adjusted for the line transmit frequency.
+		"""
 
 		Returns:
 			number
@@ -187,7 +187,7 @@ class TenGigLan(Base):
 
 	@property
 	def TransmitClocking(self):
-		"""The transmit clocking type for the 10G LAN port.
+		"""
 
 		Returns:
 			str(external|internal|recovered)
@@ -199,7 +199,7 @@ class TenGigLan(Base):
 
 	@property
 	def TxIgnoreRxLinkFaults(self):
-		"""If enabled, will allow transmission of packets even if the receive link is down.
+		"""
 
 		Returns:
 			bool

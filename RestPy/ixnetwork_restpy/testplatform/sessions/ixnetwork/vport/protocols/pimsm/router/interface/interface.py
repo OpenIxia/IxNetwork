@@ -136,7 +136,7 @@ class Interface(Base):
 
 	@property
 	def AddressFamily(self):
-		"""Choose an Address Family for this PIM-SM Interface.
+		"""
 
 		Returns:
 			str(ipv4|ipv6)
@@ -148,7 +148,7 @@ class Interface(Base):
 
 	@property
 	def AutoPickUpstreamNeighbor(self):
-		"""Enables the time-saving Auto Pick feature and the Upstream Neighbor field is not available for use. The Upstream Neighbor address used in the Join/Prune message is determined automatically from received Hello messages. The first time a Hello message is received - containing a Source (link-local) address that does not belong to this interface, that source address will be used as the Upstream Neighbor address.
+		"""
 
 		Returns:
 			bool
@@ -160,7 +160,7 @@ class Interface(Base):
 
 	@property
 	def BootstrapEnable(self):
-		"""If checked, enables the PIM-SM interface to participate in Bootstrap Router election procedure.
+		"""
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class Interface(Base):
 
 	@property
 	def BootstrapHashMaskLen(self):
-		"""Hash Mask Length of the Bootstrap Router (BSR) that is set with the same name in all Bootstrap Messages sent by this BSR.
+		"""
 
 		Returns:
 			number
@@ -184,7 +184,7 @@ class Interface(Base):
 
 	@property
 	def BootstrapInterval(self):
-		"""The time interval (in seconds) between two consecutive bootstrap messages sent by the BSR.
+		"""
 
 		Returns:
 			number
@@ -196,7 +196,7 @@ class Interface(Base):
 
 	@property
 	def BootstrapPriority(self):
-		"""Priority of the Bootstrap Router (BSR) that is set with the same name in all Bootstrap Messages sent by this BSR.
+		"""
 
 		Returns:
 			number
@@ -208,7 +208,7 @@ class Interface(Base):
 
 	@property
 	def BootstrapTimeout(self):
-		"""Amount of time (in seconds) of not receiving any Bootstrap Messages, after which the BSR if candidate at that point of time will decide that the currently elected BSR has gone down and will restart BSR election procedure.
+		"""
 
 		Returns:
 			number
@@ -220,7 +220,7 @@ class Interface(Base):
 
 	@property
 	def DisableTriggeredHello(self):
-		"""If enabled, the triggered hello delay function is disabled.
+		"""
 
 		Returns:
 			bool
@@ -232,7 +232,7 @@ class Interface(Base):
 
 	@property
 	def DiscardDataMdtTlv(self):
-		"""If enabled, received Data MDT TLVs will be discarded.
+		"""
 
 		Returns:
 			bool
@@ -244,7 +244,7 @@ class Interface(Base):
 
 	@property
 	def DiscardLearnedRpInfo(self):
-		"""If checked, disregards group mappings learnt from Bootstrap Message (in case not acting as elected BSR) or from Candidate RP Advertisement (in case of elected BSR).
+		"""
 
 		Returns:
 			bool
@@ -256,7 +256,7 @@ class Interface(Base):
 
 	@property
 	def EnableBfdRegistration(self):
-		"""Indicates if a BFD session is to be created to the PIMSM peer IP address once the PIMSM session is established. This allows PIMSM to use BFD to maintain IPv4 connectivity the PIMSM peer.
+		"""
 
 		Returns:
 			bool
@@ -268,7 +268,7 @@ class Interface(Base):
 
 	@property
 	def EnableV4MappedV6Address(self):
-		"""Use IpV4 mapped IpV6 address
+		"""
 
 		Returns:
 			bool
@@ -280,7 +280,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the use of the interface.
+		"""
 
 		Returns:
 			bool
@@ -292,7 +292,7 @@ class Interface(Base):
 
 	@property
 	def ForceSemanticFragmentation(self):
-		"""If enabled, this forces the BSR to send only one group specific RP list per bootstrap message.
+		"""
 
 		Returns:
 			bool
@@ -304,7 +304,7 @@ class Interface(Base):
 
 	@property
 	def GenerationIdMode(self):
-		"""The mode used for creating the 32-bit value for the Generation ID. This can either be incrementing, random or constant. (default = constant)
+		"""
 
 		Returns:
 			str(incremental|random|constant)
@@ -316,7 +316,7 @@ class Interface(Base):
 
 	@property
 	def HelloHoldTime(self):
-		"""The amount of time that neighbor routers should hold the interface as reachable.
+		"""
 
 		Returns:
 			number
@@ -328,7 +328,7 @@ class Interface(Base):
 
 	@property
 	def HelloInterval(self):
-		"""The interval between transmitted hello messages.
+		"""
 
 		Returns:
 			number
@@ -340,7 +340,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceId(self):
-		"""The identifier for this PIM-SM Interface.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -352,7 +352,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceIndex(self):
-		"""The assigned protocol interface ID for this PIM-SM interface.
+		"""
 
 		Returns:
 			number
@@ -364,7 +364,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceType(self):
-		"""The type of interface to be selected for this PIM-SM interface.
+		"""
 
 		Returns:
 			str
@@ -376,7 +376,7 @@ class Interface(Base):
 
 	@property
 	def Interfaces(self):
-		"""The interfaces that are associated with the selected interface type.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)
@@ -388,7 +388,7 @@ class Interface(Base):
 
 	@property
 	def IsRefreshRpSetComplete(self):
-		"""If enabled, shows the desired set of RPs.
+		"""
 
 		Returns:
 			bool
@@ -397,7 +397,7 @@ class Interface(Base):
 
 	@property
 	def LanPruneDelay(self):
-		"""The value of the LAN Prune (propagation) Delay for this PIM-SM interface. The expected delay for messages propagated on the link. It indicates to an upstream router how long to wait for a Join override message before it prunes an interface.The default value is 500 msec. The valid range is 100 to 0x7FFF msec. (LAN Prune Delay is an Option included in Hello messages.)
+		"""
 
 		Returns:
 			number
@@ -409,7 +409,7 @@ class Interface(Base):
 
 	@property
 	def LanPruneDelayTBit(self):
-		"""If enabled, the T flag bit in the LAN Prune Delay option of the Hello message is set (= 1). Setting this bit specifies that the sending PIM-SM router has the ability to disable Join message suppression.
+		"""
 
 		Returns:
 			bool
@@ -421,7 +421,7 @@ class Interface(Base):
 
 	@property
 	def LearnSelectedRpSet(self):
-		"""If enabled, this displays only the best RP per group (member of selected RP set).
+		"""
 
 		Returns:
 			bool
@@ -433,7 +433,7 @@ class Interface(Base):
 
 	@property
 	def OverrideInterval(self):
-		"""The delay interval, in milliseconds, for randomizing the transmission time for override messages, which are used when scheduling a delayed Join message. This is part of the LAN Prune Delay option included in Hello messages. The valid range is 100 to 7FFF msec. (default = 2500)
+		"""
 
 		Returns:
 			number
@@ -445,7 +445,7 @@ class Interface(Base):
 
 	@property
 	def SendBiDirCapableOption(self):
-		"""If enabled, sets the bidirectional PIM-SM flag bit (=1), per IETF DRAFT draft-ietf-pim-bidir-04.
+		"""
 
 		Returns:
 			bool
@@ -457,7 +457,7 @@ class Interface(Base):
 
 	@property
 	def SendGenIdOption(self):
-		"""Enables the send generation ID option.
+		"""
 
 		Returns:
 			bool
@@ -469,7 +469,7 @@ class Interface(Base):
 
 	@property
 	def SendHelloLanPruneDelayOption(self):
-		"""If set, the LAN Prune propagation delay is enabled for this interface, as indicated in the pruneDelay option. The option is indicated in Hello messages from the interface. (default = true)
+		"""
 
 		Returns:
 			bool
@@ -481,7 +481,7 @@ class Interface(Base):
 
 	@property
 	def ShowSelectedRpSetOnly(self):
-		"""If enabled, this displays only the best RP per group (member of selected RP set).
+		"""
 
 		Returns:
 			bool
@@ -493,7 +493,7 @@ class Interface(Base):
 
 	@property
 	def SupportUnicastBootstrap(self):
-		"""If enabled, this supports the sending and processing of Unicast bootstrap messages.
+		"""
 
 		Returns:
 			bool
@@ -505,7 +505,7 @@ class Interface(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""The name of the group to which this emulated router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -517,7 +517,7 @@ class Interface(Base):
 
 	@property
 	def TriggeredHelloDelay(self):
-		"""The time (in seconds) after which the router senses a delay in sending or receiving PIM-SM hello message.
+		"""
 
 		Returns:
 			number
@@ -529,7 +529,7 @@ class Interface(Base):
 
 	@property
 	def UpstreamNeighbor(self):
-		"""The IP address of the upstream neighbor.
+		"""
 
 		Returns:
 			str
@@ -543,39 +543,39 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			AddressFamily (str(ipv4|ipv6)): Choose an Address Family for this PIM-SM Interface.
-			AutoPickUpstreamNeighbor (bool): Enables the time-saving Auto Pick feature and the Upstream Neighbor field is not available for use. The Upstream Neighbor address used in the Join/Prune message is determined automatically from received Hello messages. The first time a Hello message is received - containing a Source (link-local) address that does not belong to this interface, that source address will be used as the Upstream Neighbor address.
-			BootstrapEnable (bool): If checked, enables the PIM-SM interface to participate in Bootstrap Router election procedure.
-			BootstrapHashMaskLen (number): Hash Mask Length of the Bootstrap Router (BSR) that is set with the same name in all Bootstrap Messages sent by this BSR.
-			BootstrapInterval (number): The time interval (in seconds) between two consecutive bootstrap messages sent by the BSR.
-			BootstrapPriority (number): Priority of the Bootstrap Router (BSR) that is set with the same name in all Bootstrap Messages sent by this BSR.
-			BootstrapTimeout (number): Amount of time (in seconds) of not receiving any Bootstrap Messages, after which the BSR if candidate at that point of time will decide that the currently elected BSR has gone down and will restart BSR election procedure.
-			DisableTriggeredHello (bool): If enabled, the triggered hello delay function is disabled.
-			DiscardDataMdtTlv (bool): If enabled, received Data MDT TLVs will be discarded.
-			DiscardLearnedRpInfo (bool): If checked, disregards group mappings learnt from Bootstrap Message (in case not acting as elected BSR) or from Candidate RP Advertisement (in case of elected BSR).
-			EnableBfdRegistration (bool): Indicates if a BFD session is to be created to the PIMSM peer IP address once the PIMSM session is established. This allows PIMSM to use BFD to maintain IPv4 connectivity the PIMSM peer.
-			EnableV4MappedV6Address (bool): Use IpV4 mapped IpV6 address
-			Enabled (bool): Enables or disables the use of the interface.
-			ForceSemanticFragmentation (bool): If enabled, this forces the BSR to send only one group specific RP list per bootstrap message.
-			GenerationIdMode (str(incremental|random|constant)): The mode used for creating the 32-bit value for the Generation ID. This can either be incrementing, random or constant. (default = constant)
-			HelloHoldTime (number): The amount of time that neighbor routers should hold the interface as reachable.
-			HelloInterval (number): The interval between transmitted hello messages.
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The identifier for this PIM-SM Interface.
-			InterfaceIndex (number): The assigned protocol interface ID for this PIM-SM interface.
-			InterfaceType (str): The type of interface to be selected for this PIM-SM interface.
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): The interfaces that are associated with the selected interface type.
-			LanPruneDelay (number): The value of the LAN Prune (propagation) Delay for this PIM-SM interface. The expected delay for messages propagated on the link. It indicates to an upstream router how long to wait for a Join override message before it prunes an interface.The default value is 500 msec. The valid range is 100 to 0x7FFF msec. (LAN Prune Delay is an Option included in Hello messages.)
-			LanPruneDelayTBit (bool): If enabled, the T flag bit in the LAN Prune Delay option of the Hello message is set (= 1). Setting this bit specifies that the sending PIM-SM router has the ability to disable Join message suppression.
-			LearnSelectedRpSet (bool): If enabled, this displays only the best RP per group (member of selected RP set).
-			OverrideInterval (number): The delay interval, in milliseconds, for randomizing the transmission time for override messages, which are used when scheduling a delayed Join message. This is part of the LAN Prune Delay option included in Hello messages. The valid range is 100 to 7FFF msec. (default = 2500)
-			SendBiDirCapableOption (bool): If enabled, sets the bidirectional PIM-SM flag bit (=1), per IETF DRAFT draft-ietf-pim-bidir-04.
-			SendGenIdOption (bool): Enables the send generation ID option.
-			SendHelloLanPruneDelayOption (bool): If set, the LAN Prune propagation delay is enabled for this interface, as indicated in the pruneDelay option. The option is indicated in Hello messages from the interface. (default = true)
-			ShowSelectedRpSetOnly (bool): If enabled, this displays only the best RP per group (member of selected RP set).
-			SupportUnicastBootstrap (bool): If enabled, this supports the sending and processing of Unicast bootstrap messages.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this emulated router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
-			TriggeredHelloDelay (number): The time (in seconds) after which the router senses a delay in sending or receiving PIM-SM hello message.
-			UpstreamNeighbor (str): The IP address of the upstream neighbor.
+			AddressFamily (str(ipv4|ipv6)): 
+			AutoPickUpstreamNeighbor (bool): 
+			BootstrapEnable (bool): 
+			BootstrapHashMaskLen (number): 
+			BootstrapInterval (number): 
+			BootstrapPriority (number): 
+			BootstrapTimeout (number): 
+			DisableTriggeredHello (bool): 
+			DiscardDataMdtTlv (bool): 
+			DiscardLearnedRpInfo (bool): 
+			EnableBfdRegistration (bool): 
+			EnableV4MappedV6Address (bool): 
+			Enabled (bool): 
+			ForceSemanticFragmentation (bool): 
+			GenerationIdMode (str(incremental|random|constant)): 
+			HelloHoldTime (number): 
+			HelloInterval (number): 
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			InterfaceIndex (number): 
+			InterfaceType (str): 
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): 
+			LanPruneDelay (number): 
+			LanPruneDelayTBit (bool): 
+			LearnSelectedRpSet (bool): 
+			OverrideInterval (number): 
+			SendBiDirCapableOption (bool): 
+			SendGenIdOption (bool): 
+			SendHelloLanPruneDelayOption (bool): 
+			ShowSelectedRpSetOnly (bool): 
+			SupportUnicastBootstrap (bool): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			TriggeredHelloDelay (number): 
+			UpstreamNeighbor (str): 
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -601,40 +601,40 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			AddressFamily (str(ipv4|ipv6)): Choose an Address Family for this PIM-SM Interface.
-			AutoPickUpstreamNeighbor (bool): Enables the time-saving Auto Pick feature and the Upstream Neighbor field is not available for use. The Upstream Neighbor address used in the Join/Prune message is determined automatically from received Hello messages. The first time a Hello message is received - containing a Source (link-local) address that does not belong to this interface, that source address will be used as the Upstream Neighbor address.
-			BootstrapEnable (bool): If checked, enables the PIM-SM interface to participate in Bootstrap Router election procedure.
-			BootstrapHashMaskLen (number): Hash Mask Length of the Bootstrap Router (BSR) that is set with the same name in all Bootstrap Messages sent by this BSR.
-			BootstrapInterval (number): The time interval (in seconds) between two consecutive bootstrap messages sent by the BSR.
-			BootstrapPriority (number): Priority of the Bootstrap Router (BSR) that is set with the same name in all Bootstrap Messages sent by this BSR.
-			BootstrapTimeout (number): Amount of time (in seconds) of not receiving any Bootstrap Messages, after which the BSR if candidate at that point of time will decide that the currently elected BSR has gone down and will restart BSR election procedure.
-			DisableTriggeredHello (bool): If enabled, the triggered hello delay function is disabled.
-			DiscardDataMdtTlv (bool): If enabled, received Data MDT TLVs will be discarded.
-			DiscardLearnedRpInfo (bool): If checked, disregards group mappings learnt from Bootstrap Message (in case not acting as elected BSR) or from Candidate RP Advertisement (in case of elected BSR).
-			EnableBfdRegistration (bool): Indicates if a BFD session is to be created to the PIMSM peer IP address once the PIMSM session is established. This allows PIMSM to use BFD to maintain IPv4 connectivity the PIMSM peer.
-			EnableV4MappedV6Address (bool): Use IpV4 mapped IpV6 address
-			Enabled (bool): Enables or disables the use of the interface.
-			ForceSemanticFragmentation (bool): If enabled, this forces the BSR to send only one group specific RP list per bootstrap message.
-			GenerationIdMode (str(incremental|random|constant)): The mode used for creating the 32-bit value for the Generation ID. This can either be incrementing, random or constant. (default = constant)
-			HelloHoldTime (number): The amount of time that neighbor routers should hold the interface as reachable.
-			HelloInterval (number): The interval between transmitted hello messages.
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The identifier for this PIM-SM Interface.
-			InterfaceIndex (number): The assigned protocol interface ID for this PIM-SM interface.
-			InterfaceType (str): The type of interface to be selected for this PIM-SM interface.
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): The interfaces that are associated with the selected interface type.
-			IsRefreshRpSetComplete (bool): If enabled, shows the desired set of RPs.
-			LanPruneDelay (number): The value of the LAN Prune (propagation) Delay for this PIM-SM interface. The expected delay for messages propagated on the link. It indicates to an upstream router how long to wait for a Join override message before it prunes an interface.The default value is 500 msec. The valid range is 100 to 0x7FFF msec. (LAN Prune Delay is an Option included in Hello messages.)
-			LanPruneDelayTBit (bool): If enabled, the T flag bit in the LAN Prune Delay option of the Hello message is set (= 1). Setting this bit specifies that the sending PIM-SM router has the ability to disable Join message suppression.
-			LearnSelectedRpSet (bool): If enabled, this displays only the best RP per group (member of selected RP set).
-			OverrideInterval (number): The delay interval, in milliseconds, for randomizing the transmission time for override messages, which are used when scheduling a delayed Join message. This is part of the LAN Prune Delay option included in Hello messages. The valid range is 100 to 7FFF msec. (default = 2500)
-			SendBiDirCapableOption (bool): If enabled, sets the bidirectional PIM-SM flag bit (=1), per IETF DRAFT draft-ietf-pim-bidir-04.
-			SendGenIdOption (bool): Enables the send generation ID option.
-			SendHelloLanPruneDelayOption (bool): If set, the LAN Prune propagation delay is enabled for this interface, as indicated in the pruneDelay option. The option is indicated in Hello messages from the interface. (default = true)
-			ShowSelectedRpSetOnly (bool): If enabled, this displays only the best RP per group (member of selected RP set).
-			SupportUnicastBootstrap (bool): If enabled, this supports the sending and processing of Unicast bootstrap messages.
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this emulated router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
-			TriggeredHelloDelay (number): The time (in seconds) after which the router senses a delay in sending or receiving PIM-SM hello message.
-			UpstreamNeighbor (str): The IP address of the upstream neighbor.
+			AddressFamily (str(ipv4|ipv6)): 
+			AutoPickUpstreamNeighbor (bool): 
+			BootstrapEnable (bool): 
+			BootstrapHashMaskLen (number): 
+			BootstrapInterval (number): 
+			BootstrapPriority (number): 
+			BootstrapTimeout (number): 
+			DisableTriggeredHello (bool): 
+			DiscardDataMdtTlv (bool): 
+			DiscardLearnedRpInfo (bool): 
+			EnableBfdRegistration (bool): 
+			EnableV4MappedV6Address (bool): 
+			Enabled (bool): 
+			ForceSemanticFragmentation (bool): 
+			GenerationIdMode (str(incremental|random|constant)): 
+			HelloHoldTime (number): 
+			HelloInterval (number): 
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			InterfaceIndex (number): 
+			InterfaceType (str): 
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): 
+			IsRefreshRpSetComplete (bool): 
+			LanPruneDelay (number): 
+			LanPruneDelayTBit (bool): 
+			LearnSelectedRpSet (bool): 
+			OverrideInterval (number): 
+			SendBiDirCapableOption (bool): 
+			SendGenIdOption (bool): 
+			SendHelloLanPruneDelayOption (bool): 
+			ShowSelectedRpSetOnly (bool): 
+			SupportUnicastBootstrap (bool): 
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			TriggeredHelloDelay (number): 
+			UpstreamNeighbor (str): 
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index
@@ -662,13 +662,11 @@ class Interface(Base):
 	def GetInterfaceAccessorIfaceList(self):
 		"""Executes the getInterfaceAccessorIfaceList operation on the server.
 
-		Gets the interface accesor Iface list.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: Return list of interface.
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -680,13 +678,11 @@ class Interface(Base):
 	def RefreshCrpBsrLearnedInfo(self):
 		"""Executes the refreshCrpBsrLearnedInfo operation on the server.
 
-		If true, refreshes the Bsr learned information
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: Returns boolean value on success.
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

@@ -37,7 +37,7 @@ class PacketLossDuration(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables and fetches packet loss duration statistics
+		"""
 
 		Returns:
 			bool

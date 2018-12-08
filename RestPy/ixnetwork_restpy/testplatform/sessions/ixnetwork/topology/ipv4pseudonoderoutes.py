@@ -257,6 +257,38 @@ class IPv4PseudoNodeRoutes(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, Algorithm=None, ConfigureSIDIndexLabel=None, Ipv4EFlag=None, Ipv4LFlag=None, Ipv4Metric=None, Ipv4NFlag=None, Ipv4PFlag=None, Ipv4RFlag=None, Ipv4Redistribution=None, Ipv4RouteOrigin=None, Ipv4VFlag=None, NetworkAddress=None, PrefixLength=None, RangeSize=None, SIDIndexLabel=None):
+		"""Base class infrastructure that gets a list of IPv4PseudoNodeRoutes device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Algorithm (str): optional regex of algorithm
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			Ipv4EFlag (str): optional regex of ipv4EFlag
+			Ipv4LFlag (str): optional regex of ipv4LFlag
+			Ipv4Metric (str): optional regex of ipv4Metric
+			Ipv4NFlag (str): optional regex of ipv4NFlag
+			Ipv4PFlag (str): optional regex of ipv4PFlag
+			Ipv4RFlag (str): optional regex of ipv4RFlag
+			Ipv4Redistribution (str): optional regex of ipv4Redistribution
+			Ipv4RouteOrigin (str): optional regex of ipv4RouteOrigin
+			Ipv4VFlag (str): optional regex of ipv4VFlag
+			NetworkAddress (str): optional regex of networkAddress
+			PrefixLength (str): optional regex of prefixLength
+			RangeSize (str): optional regex of rangeSize
+			SIDIndexLabel (str): optional regex of sIDIndexLabel
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

@@ -490,6 +490,41 @@ class BgpIpv4L2Site(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, DistinguishAsNumber=None, DistinguishAssignedNumber=None, DistinguishIpAddr=None, EnCluster=None, EnControlWord=None, EnSeqDelivery=None, EnableBfdVccv=None, EnableVccvPing=None, EncapsulationType=None, MtuL2Site=None, NumL2Sites=None, SiteId=None, TargetAsNumber=None, TargetAssignedNumber=None, TargetIpAddr=None, TypeDistinguish=None, TypeTarget=None, VpnName=None):
+		"""Base class infrastructure that gets a list of bgpIpv4L2Site device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			DistinguishAsNumber (str): optional regex of distinguishAsNumber
+			DistinguishAssignedNumber (str): optional regex of distinguishAssignedNumber
+			DistinguishIpAddr (str): optional regex of distinguishIpAddr
+			EnCluster (str): optional regex of enCluster
+			EnControlWord (str): optional regex of enControlWord
+			EnSeqDelivery (str): optional regex of enSeqDelivery
+			EnableBfdVccv (str): optional regex of enableBfdVccv
+			EnableVccvPing (str): optional regex of enableVccvPing
+			EncapsulationType (str): optional regex of encapsulationType
+			MtuL2Site (str): optional regex of mtuL2Site
+			NumL2Sites (str): optional regex of numL2Sites
+			SiteId (str): optional regex of siteId
+			TargetAsNumber (str): optional regex of targetAsNumber
+			TargetAssignedNumber (str): optional regex of targetAssignedNumber
+			TargetIpAddr (str): optional regex of targetIpAddr
+			TypeDistinguish (str): optional regex of typeDistinguish
+			TypeTarget (str): optional regex of typeTarget
+			VpnName (str): optional regex of vpnName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

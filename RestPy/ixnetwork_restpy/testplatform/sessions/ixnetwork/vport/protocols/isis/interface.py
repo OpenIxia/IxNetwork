@@ -38,7 +38,7 @@ class Interface(Base):
 
 	@property
 	def CircuitAuthType(self):
-		"""The type of Circuit Authentication to be used for this emulated ISIS router.
+		"""
 
 		Returns:
 			str(none|password|md5)
@@ -50,7 +50,7 @@ class Interface(Base):
 
 	@property
 	def CircuitReceivedPasswordList(self):
-		"""The Receive Password List is used only for Cleartext Password authentication. MD5 Authentication requires that both of the neighbors have the same MD5 key for the packets to be accepted.
+		"""
 
 		Returns:
 			list(str)
@@ -62,7 +62,7 @@ class Interface(Base):
 
 	@property
 	def CircuitTransmitPassword(self):
-		"""If circuitAuthType is isisAuthTypePassword, then this is the password (or MD5Key) that will be sent with transmitted IIHs.
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class Interface(Base):
 
 	@property
 	def ConfiguredHoldTime(self):
-		"""The configured hold time for the interface. This value is only used if enableConfiguredHoldTime is set to true.
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class Interface(Base):
 
 	@property
 	def Enable3WayHandshake(self):
-		"""If true, Ixia emulated point-to-point circuit will include 3-way TLV in its P2P IIH and attempt to establish the adjacency as specified in RFC 5303.
+		"""
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class Interface(Base):
 
 	@property
 	def EnableAutoAdjustArea(self):
-		"""If set, and a HELLO message is received which contains a protocols TLV, then the interfaces protocols will be adjusted to match the received TLV.
+		"""
 
 		Returns:
 			bool
@@ -110,7 +110,7 @@ class Interface(Base):
 
 	@property
 	def EnableAutoAdjustMtu(self):
-		"""If set, and a padded HELLO message is received on the interface, then the interfaces MTU will be adjusted to match the packet length of the received HELLO message.
+		"""
 
 		Returns:
 			bool
@@ -122,7 +122,7 @@ class Interface(Base):
 
 	@property
 	def EnableAutoAdjustProtocolsSupported(self):
-		"""If set, and a HELLO message is received which contains a protocols TLV, then the interfaces protocols will be adjusted to match the received TLV.
+		"""
 
 		Returns:
 			bool
@@ -134,7 +134,7 @@ class Interface(Base):
 
 	@property
 	def EnableBfdRegistration(self):
-		"""Indicates if a BFD session is to be created to the ISIS peer IP address once the ISIS session is established. This allows ISIS to use BFD to maintain IPv4 connectivity the ISIS peer.
+		"""
 
 		Returns:
 			bool
@@ -146,7 +146,7 @@ class Interface(Base):
 
 	@property
 	def EnableConfiguredHoldTime(self):
-		"""If true, enables a hold time for the created interfaces, based on the value set in the configuredHoldTime object.
+		"""
 
 		Returns:
 			bool
@@ -158,7 +158,7 @@ class Interface(Base):
 
 	@property
 	def EnableConnectedToDut(self):
-		"""If enabled, this ISIS interface is directly connected to the DUT.
+		"""
 
 		Returns:
 			bool
@@ -170,7 +170,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the use of this interface for the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -182,7 +182,7 @@ class Interface(Base):
 
 	@property
 	def ExtendedCircuitId(self):
-		"""The integer value of the local circuit ID.
+		"""
 
 		Returns:
 			number
@@ -194,7 +194,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceId(self):
-		"""The OSI interface ID for this interface.
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -206,7 +206,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceIp(self):
-		"""The IP address for this interface.
+		"""
 
 		Returns:
 			str
@@ -218,7 +218,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceIpMask(self):
-		"""Available only when Interface Connected to DUT is disabled. The mask used with the IPv4 address for this virtual interface on the emulated ISIS router. This interface address is used to connect to virtual ISIS Network Ranges behind the Ixia-emulated ISIS router.
+		"""
 
 		Returns:
 			str
@@ -230,7 +230,7 @@ class Interface(Base):
 
 	@property
 	def Ipv6MtMetric(self):
-		"""This metric is same as the Interface Metric. If true, it allows you to enter data.
+		"""
 
 		Returns:
 			number
@@ -242,7 +242,7 @@ class Interface(Base):
 
 	@property
 	def Level(self):
-		"""The IS-IS level associated with the interface.
+		"""
 
 		Returns:
 			str(level1|level2|level1Level2)
@@ -254,7 +254,7 @@ class Interface(Base):
 
 	@property
 	def Level1DeadTime(self):
-		"""The dead (holding time) interval for level 1 hello messages, in seconds. If an ISIS router sending L1 hellos is not heard from within this time period, it will be considered down.
+		"""
 
 		Returns:
 			number
@@ -266,7 +266,7 @@ class Interface(Base):
 
 	@property
 	def Level1HelloTime(self):
-		"""The hello interval for level 1 hello messages, in seconds.
+		"""
 
 		Returns:
 			number
@@ -278,7 +278,7 @@ class Interface(Base):
 
 	@property
 	def Level2DeadTime(self):
-		"""The dead (holding time) interval for level 2 hello messages, in seconds. If an ISIS router sending L2 hellos is not heard from within this time period, it will be considered down.
+		"""
 
 		Returns:
 			number
@@ -290,7 +290,7 @@ class Interface(Base):
 
 	@property
 	def Level2HelloTime(self):
-		"""The hello interval for level 2 hello messages, in seconds.
+		"""
 
 		Returns:
 			number
@@ -302,7 +302,7 @@ class Interface(Base):
 
 	@property
 	def Metric(self):
-		"""The cost metric associated with the route.
+		"""
 
 		Returns:
 			number
@@ -314,7 +314,7 @@ class Interface(Base):
 
 	@property
 	def NetworkType(self):
-		"""Indicates the type of network attached to the interface: broadcast or point-to-point.
+		"""
 
 		Returns:
 			str(pointToPoint|broadcast|pointToMultipoint)
@@ -326,7 +326,7 @@ class Interface(Base):
 
 	@property
 	def PriorityLevel1(self):
-		"""Indicates the priority level 1.
+		"""
 
 		Returns:
 			number
@@ -338,7 +338,7 @@ class Interface(Base):
 
 	@property
 	def PriorityLevel2(self):
-		"""Indicates the priority level 2.
+		"""
 
 		Returns:
 			number
@@ -350,7 +350,7 @@ class Interface(Base):
 
 	@property
 	def TeAdminGroup(self):
-		"""The traffic engineering administrative group associated with the interface. (default = {00 00 00 00})
+		"""
 
 		Returns:
 			str
@@ -362,7 +362,7 @@ class Interface(Base):
 
 	@property
 	def TeMaxBandwidth(self):
-		"""For setting the maximum link bandwidth (sub-TLV 9) allowed for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -374,7 +374,7 @@ class Interface(Base):
 
 	@property
 	def TeMetricLevel(self):
-		"""A user-defined metric for this TE path.
+		"""
 
 		Returns:
 			number
@@ -386,7 +386,7 @@ class Interface(Base):
 
 	@property
 	def TeResMaxBandwidth(self):
-		"""For setting the Maximum reservable link bandwidth (sub-TLV 10). It is the maximum bandwidth that can be reserved for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -398,7 +398,7 @@ class Interface(Base):
 
 	@property
 	def TeUnreservedBwPriority(self):
-		"""The traffic engineering unreserved bandwidth for each priority to be advertised. There are eight distinct options. (default = 0.0)
+		"""
 
 		Returns:
 			list(number)
@@ -412,37 +412,37 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			CircuitAuthType (str(none|password|md5)): The type of Circuit Authentication to be used for this emulated ISIS router.
-			CircuitReceivedPasswordList (list(str)): The Receive Password List is used only for Cleartext Password authentication. MD5 Authentication requires that both of the neighbors have the same MD5 key for the packets to be accepted.
-			CircuitTransmitPassword (str): If circuitAuthType is isisAuthTypePassword, then this is the password (or MD5Key) that will be sent with transmitted IIHs.
-			ConfiguredHoldTime (number): The configured hold time for the interface. This value is only used if enableConfiguredHoldTime is set to true.
-			Enable3WayHandshake (bool): If true, Ixia emulated point-to-point circuit will include 3-way TLV in its P2P IIH and attempt to establish the adjacency as specified in RFC 5303.
-			EnableAutoAdjustArea (bool): If set, and a HELLO message is received which contains a protocols TLV, then the interfaces protocols will be adjusted to match the received TLV.
-			EnableAutoAdjustMtu (bool): If set, and a padded HELLO message is received on the interface, then the interfaces MTU will be adjusted to match the packet length of the received HELLO message.
-			EnableAutoAdjustProtocolsSupported (bool): If set, and a HELLO message is received which contains a protocols TLV, then the interfaces protocols will be adjusted to match the received TLV.
-			EnableBfdRegistration (bool): Indicates if a BFD session is to be created to the ISIS peer IP address once the ISIS session is established. This allows ISIS to use BFD to maintain IPv4 connectivity the ISIS peer.
-			EnableConfiguredHoldTime (bool): If true, enables a hold time for the created interfaces, based on the value set in the configuredHoldTime object.
-			EnableConnectedToDut (bool): If enabled, this ISIS interface is directly connected to the DUT.
-			Enabled (bool): Enables the use of this interface for the simulated router.
-			ExtendedCircuitId (number): The integer value of the local circuit ID.
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The OSI interface ID for this interface.
-			InterfaceIp (str): The IP address for this interface.
-			InterfaceIpMask (str): Available only when Interface Connected to DUT is disabled. The mask used with the IPv4 address for this virtual interface on the emulated ISIS router. This interface address is used to connect to virtual ISIS Network Ranges behind the Ixia-emulated ISIS router.
-			Ipv6MtMetric (number): This metric is same as the Interface Metric. If true, it allows you to enter data.
-			Level (str(level1|level2|level1Level2)): The IS-IS level associated with the interface.
-			Level1DeadTime (number): The dead (holding time) interval for level 1 hello messages, in seconds. If an ISIS router sending L1 hellos is not heard from within this time period, it will be considered down.
-			Level1HelloTime (number): The hello interval for level 1 hello messages, in seconds.
-			Level2DeadTime (number): The dead (holding time) interval for level 2 hello messages, in seconds. If an ISIS router sending L2 hellos is not heard from within this time period, it will be considered down.
-			Level2HelloTime (number): The hello interval for level 2 hello messages, in seconds.
-			Metric (number): The cost metric associated with the route.
-			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): Indicates the type of network attached to the interface: broadcast or point-to-point.
-			PriorityLevel1 (number): Indicates the priority level 1.
-			PriorityLevel2 (number): Indicates the priority level 2.
-			TeAdminGroup (str): The traffic engineering administrative group associated with the interface. (default = {00 00 00 00})
-			TeMaxBandwidth (number): For setting the maximum link bandwidth (sub-TLV 9) allowed for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.
-			TeMetricLevel (number): A user-defined metric for this TE path.
-			TeResMaxBandwidth (number): For setting the Maximum reservable link bandwidth (sub-TLV 10). It is the maximum bandwidth that can be reserved for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.
-			TeUnreservedBwPriority (list(number)): The traffic engineering unreserved bandwidth for each priority to be advertised. There are eight distinct options. (default = 0.0)
+			CircuitAuthType (str(none|password|md5)): 
+			CircuitReceivedPasswordList (list(str)): 
+			CircuitTransmitPassword (str): 
+			ConfiguredHoldTime (number): 
+			Enable3WayHandshake (bool): 
+			EnableAutoAdjustArea (bool): 
+			EnableAutoAdjustMtu (bool): 
+			EnableAutoAdjustProtocolsSupported (bool): 
+			EnableBfdRegistration (bool): 
+			EnableConfiguredHoldTime (bool): 
+			EnableConnectedToDut (bool): 
+			Enabled (bool): 
+			ExtendedCircuitId (number): 
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			InterfaceIp (str): 
+			InterfaceIpMask (str): 
+			Ipv6MtMetric (number): 
+			Level (str(level1|level2|level1Level2)): 
+			Level1DeadTime (number): 
+			Level1HelloTime (number): 
+			Level2DeadTime (number): 
+			Level2HelloTime (number): 
+			Metric (number): 
+			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): 
+			PriorityLevel1 (number): 
+			PriorityLevel2 (number): 
+			TeAdminGroup (str): 
+			TeMaxBandwidth (number): 
+			TeMetricLevel (number): 
+			TeResMaxBandwidth (number): 
+			TeUnreservedBwPriority (list(number)): 
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -468,37 +468,37 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			CircuitAuthType (str(none|password|md5)): The type of Circuit Authentication to be used for this emulated ISIS router.
-			CircuitReceivedPasswordList (list(str)): The Receive Password List is used only for Cleartext Password authentication. MD5 Authentication requires that both of the neighbors have the same MD5 key for the packets to be accepted.
-			CircuitTransmitPassword (str): If circuitAuthType is isisAuthTypePassword, then this is the password (or MD5Key) that will be sent with transmitted IIHs.
-			ConfiguredHoldTime (number): The configured hold time for the interface. This value is only used if enableConfiguredHoldTime is set to true.
-			Enable3WayHandshake (bool): If true, Ixia emulated point-to-point circuit will include 3-way TLV in its P2P IIH and attempt to establish the adjacency as specified in RFC 5303.
-			EnableAutoAdjustArea (bool): If set, and a HELLO message is received which contains a protocols TLV, then the interfaces protocols will be adjusted to match the received TLV.
-			EnableAutoAdjustMtu (bool): If set, and a padded HELLO message is received on the interface, then the interfaces MTU will be adjusted to match the packet length of the received HELLO message.
-			EnableAutoAdjustProtocolsSupported (bool): If set, and a HELLO message is received which contains a protocols TLV, then the interfaces protocols will be adjusted to match the received TLV.
-			EnableBfdRegistration (bool): Indicates if a BFD session is to be created to the ISIS peer IP address once the ISIS session is established. This allows ISIS to use BFD to maintain IPv4 connectivity the ISIS peer.
-			EnableConfiguredHoldTime (bool): If true, enables a hold time for the created interfaces, based on the value set in the configuredHoldTime object.
-			EnableConnectedToDut (bool): If enabled, this ISIS interface is directly connected to the DUT.
-			Enabled (bool): Enables the use of this interface for the simulated router.
-			ExtendedCircuitId (number): The integer value of the local circuit ID.
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The OSI interface ID for this interface.
-			InterfaceIp (str): The IP address for this interface.
-			InterfaceIpMask (str): Available only when Interface Connected to DUT is disabled. The mask used with the IPv4 address for this virtual interface on the emulated ISIS router. This interface address is used to connect to virtual ISIS Network Ranges behind the Ixia-emulated ISIS router.
-			Ipv6MtMetric (number): This metric is same as the Interface Metric. If true, it allows you to enter data.
-			Level (str(level1|level2|level1Level2)): The IS-IS level associated with the interface.
-			Level1DeadTime (number): The dead (holding time) interval for level 1 hello messages, in seconds. If an ISIS router sending L1 hellos is not heard from within this time period, it will be considered down.
-			Level1HelloTime (number): The hello interval for level 1 hello messages, in seconds.
-			Level2DeadTime (number): The dead (holding time) interval for level 2 hello messages, in seconds. If an ISIS router sending L2 hellos is not heard from within this time period, it will be considered down.
-			Level2HelloTime (number): The hello interval for level 2 hello messages, in seconds.
-			Metric (number): The cost metric associated with the route.
-			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): Indicates the type of network attached to the interface: broadcast or point-to-point.
-			PriorityLevel1 (number): Indicates the priority level 1.
-			PriorityLevel2 (number): Indicates the priority level 2.
-			TeAdminGroup (str): The traffic engineering administrative group associated with the interface. (default = {00 00 00 00})
-			TeMaxBandwidth (number): For setting the maximum link bandwidth (sub-TLV 9) allowed for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.
-			TeMetricLevel (number): A user-defined metric for this TE path.
-			TeResMaxBandwidth (number): For setting the Maximum reservable link bandwidth (sub-TLV 10). It is the maximum bandwidth that can be reserved for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.
-			TeUnreservedBwPriority (list(number)): The traffic engineering unreserved bandwidth for each priority to be advertised. There are eight distinct options. (default = 0.0)
+			CircuitAuthType (str(none|password|md5)): 
+			CircuitReceivedPasswordList (list(str)): 
+			CircuitTransmitPassword (str): 
+			ConfiguredHoldTime (number): 
+			Enable3WayHandshake (bool): 
+			EnableAutoAdjustArea (bool): 
+			EnableAutoAdjustMtu (bool): 
+			EnableAutoAdjustProtocolsSupported (bool): 
+			EnableBfdRegistration (bool): 
+			EnableConfiguredHoldTime (bool): 
+			EnableConnectedToDut (bool): 
+			Enabled (bool): 
+			ExtendedCircuitId (number): 
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			InterfaceIp (str): 
+			InterfaceIpMask (str): 
+			Ipv6MtMetric (number): 
+			Level (str(level1|level2|level1Level2)): 
+			Level1DeadTime (number): 
+			Level1HelloTime (number): 
+			Level2DeadTime (number): 
+			Level2HelloTime (number): 
+			Metric (number): 
+			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): 
+			PriorityLevel1 (number): 
+			PriorityLevel2 (number): 
+			TeAdminGroup (str): 
+			TeMaxBandwidth (number): 
+			TeMetricLevel (number): 
+			TeResMaxBandwidth (number): 
+			TeUnreservedBwPriority (list(number)): 
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index

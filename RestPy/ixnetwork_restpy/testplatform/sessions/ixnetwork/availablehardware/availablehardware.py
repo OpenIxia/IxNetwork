@@ -65,7 +65,7 @@ class AvailableHardware(Base):
 
 	@property
 	def IsLocked(self):
-		"""If true, locks the Hardware Manager.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class AvailableHardware(Base):
 
 	@property
 	def IsOffChassis(self):
-		"""If true, the Hardware Manager is Off Chassis.
+		"""
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class AvailableHardware(Base):
 
 	@property
 	def OffChassisHwM(self):
-		"""Enables the Off Chassis Hardware Manager. The Hardware Manager is an IxOS component that manages the resources on an Ixia chassis. IxNetwork communicates with a chassis through Hardware Manager. Normally, Hardware Manager runs on the chassis itself; however, it can also be installed and run on a separate PC. This configuration is known as an Off-Chassis Hardware Manager.
+		"""
 
 		Returns:
 			str

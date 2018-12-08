@@ -37,7 +37,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ActionsAll(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ActionsFastFailOver(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ActionsIndirect(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ActionsSelect(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""The Data Path ID of the OpenFlow switch in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def DatapathId(self):
-		"""The Data Path ID of the connected switch.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""The error code of the error received.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""The type of the error received.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def GroupCapabilities(self):
-		"""Specify the group capabilities supported by Switch.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def GroupType(self):
-		"""Specify the group types supported by Switch.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""The latency measurement for the OpenFlow channel.
+		"""
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""The local IP address of the selected interface.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def MaxGroupsAll(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def MaxGroupsFastFailOver(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def MaxGroupsIndirect(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def MaxGroupsSelect(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""The OpenFlow version supported by this configuration.
+		"""
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""The Remote IP address of the selected interface.
+		"""
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class GroupFeatureStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""The reply state of the OF Channel.
+		"""
 
 		Returns:
 			str
@@ -213,25 +213,25 @@ class GroupFeatureStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all groupFeatureStatLearnedInformation data from the server.
 
 		Args:
-			ActionsAll (str): NOT DEFINED
-			ActionsFastFailOver (str): NOT DEFINED
-			ActionsIndirect (str): NOT DEFINED
-			ActionsSelect (str): NOT DEFINED
-			DataPathIdAsHex (str): The Data Path ID of the OpenFlow switch in hexadecimal format.
-			DatapathId (str): The Data Path ID of the connected switch.
-			ErrorCode (str): The error code of the error received.
-			ErrorType (str): The type of the error received.
-			GroupCapabilities (str): Specify the group capabilities supported by Switch.
-			GroupType (str): Specify the group types supported by Switch.
-			Latency (number): The latency measurement for the OpenFlow channel.
-			LocalIp (str): The local IP address of the selected interface.
-			MaxGroupsAll (number): NOT DEFINED
-			MaxGroupsFastFailOver (number): NOT DEFINED
-			MaxGroupsIndirect (number): NOT DEFINED
-			MaxGroupsSelect (number): NOT DEFINED
-			NegotiatedVersion (str): The OpenFlow version supported by this configuration.
-			RemoteIp (str): The Remote IP address of the selected interface.
-			ReplyState (str): The reply state of the OF Channel.
+			ActionsAll (str): 
+			ActionsFastFailOver (str): 
+			ActionsIndirect (str): 
+			ActionsSelect (str): 
+			DataPathIdAsHex (str): 
+			DatapathId (str): 
+			ErrorCode (str): 
+			ErrorType (str): 
+			GroupCapabilities (str): 
+			GroupType (str): 
+			Latency (number): 
+			LocalIp (str): 
+			MaxGroupsAll (number): 
+			MaxGroupsFastFailOver (number): 
+			MaxGroupsIndirect (number): 
+			MaxGroupsSelect (number): 
+			NegotiatedVersion (str): 
+			RemoteIp (str): 
+			ReplyState (str): 
 
 		Returns:
 			self: This instance with matching groupFeatureStatLearnedInformation data retrieved from the server available through an iterator or index

@@ -1851,6 +1851,118 @@ class BgpIpv6Peer(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, ActAsRestarted=None, Active=None, AdvertiseEndOfRib=None, AlwaysIncludeTunnelEncExtCommunity=None, AsSetMode=None, Authentication=None, BgpId=None, BgpLsAsSetMode=None, BgpLsEnableAsPathSegments=None, BgpLsEnableCluster=None, BgpLsEnableExtendedCommunity=None, BgpLsOverridePeerAsSetMode=None, CapabilityIpV4Mdt=None, CapabilityIpV4Mpls=None, CapabilityIpV4MplsVpn=None, CapabilityIpV4Multicast=None, CapabilityIpV4MulticastVpn=None, CapabilityIpV4Unicast=None, CapabilityIpV6Mpls=None, CapabilityIpV6MplsVpn=None, CapabilityIpV6Multicast=None, CapabilityIpV6MulticastVpn=None, CapabilityIpV6Unicast=None, CapabilityIpv4UnicastAddPath=None, CapabilityIpv6UnicastAddPath=None, CapabilityLinkStateNonVpn=None, CapabilityNHEncodingCapabilities=None, CapabilityRouteConstraint=None, CapabilityRouteRefresh=None, CapabilitySRTEPoliciesV4=None, CapabilitySRTEPoliciesV6=None, CapabilityVpls=None, Capabilityipv4UnicastFlowSpec=None, Capabilityipv6UnicastFlowSpec=None, ConfigureKeepaliveTimer=None, CustomSidType=None, DiscardIxiaGeneratedRoutes=None, DowntimeInSec=None, DutIp=None, Enable4ByteAs=None, EnableBfdRegistration=None, EnableBgpId=None, EnableBgpIdSameAsRouterId=None, EnableBgpLsCommunity=None, EnableGracefulRestart=None, EnableLlgr=None, Evpn=None, FilterEvpn=None, FilterIpV4Mpls=None, FilterIpV4MplsVpn=None, FilterIpV4Multicast=None, FilterIpV4MulticastVpn=None, FilterIpV4Unicast=None, FilterIpV6Mpls=None, FilterIpV6MplsVpn=None, FilterIpV6Multicast=None, FilterIpV6MulticastVpn=None, FilterIpV6Unicast=None, FilterIpv4MulticastBgpMplsVpn=None, FilterIpv4UnicastFlowSpec=None, FilterIpv6MulticastBgpMplsVpn=None, FilterIpv6UnicastFlowSpec=None, FilterLinkState=None, FilterSRTEPoliciesV4=None, FilterSRTEPoliciesV6=None, FilterVpls=None, Flap=None, HoldTimer=None, Ipv4MplsAddPathMode=None, Ipv4MulticastBgpMplsVpn=None, Ipv4UnicastAddPathMode=None, Ipv6MplsAddPathMode=None, Ipv6MulticastBgpMplsVpn=None, Ipv6UnicastAddPathMode=None, IrbInterfaceLabel=None, IrbIpv6Address=None, KeepaliveTimer=None, LocalAs2Bytes=None, LocalAs4Bytes=None, Md5Key=None, ModeOfBfdOperations=None, NumBgpLsId=None, NumBgpLsInstanceIdentifier=None, NumBgpUpdatesGeneratedPerIteration=None, OperationalModel=None, RestartTime=None, RoutersMacOrIrbMacAddress=None, SendIxiaSignatureWithRoutes=None, StaleTime=None, TcpWindowSizeInBytes=None, Ttl=None, Type=None, UpdateInterval=None, UptimeInSec=None, VplsEnableNextHop=None, VplsNextHop=None):
+		"""Base class infrastructure that gets a list of bgpIpv6Peer device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ActAsRestarted (str): optional regex of actAsRestarted
+			Active (str): optional regex of active
+			AdvertiseEndOfRib (str): optional regex of advertiseEndOfRib
+			AlwaysIncludeTunnelEncExtCommunity (str): optional regex of alwaysIncludeTunnelEncExtCommunity
+			AsSetMode (str): optional regex of asSetMode
+			Authentication (str): optional regex of authentication
+			BgpId (str): optional regex of bgpId
+			BgpLsAsSetMode (str): optional regex of bgpLsAsSetMode
+			BgpLsEnableAsPathSegments (str): optional regex of bgpLsEnableAsPathSegments
+			BgpLsEnableCluster (str): optional regex of bgpLsEnableCluster
+			BgpLsEnableExtendedCommunity (str): optional regex of bgpLsEnableExtendedCommunity
+			BgpLsOverridePeerAsSetMode (str): optional regex of bgpLsOverridePeerAsSetMode
+			CapabilityIpV4Mdt (str): optional regex of capabilityIpV4Mdt
+			CapabilityIpV4Mpls (str): optional regex of capabilityIpV4Mpls
+			CapabilityIpV4MplsVpn (str): optional regex of capabilityIpV4MplsVpn
+			CapabilityIpV4Multicast (str): optional regex of capabilityIpV4Multicast
+			CapabilityIpV4MulticastVpn (str): optional regex of capabilityIpV4MulticastVpn
+			CapabilityIpV4Unicast (str): optional regex of capabilityIpV4Unicast
+			CapabilityIpV6Mpls (str): optional regex of capabilityIpV6Mpls
+			CapabilityIpV6MplsVpn (str): optional regex of capabilityIpV6MplsVpn
+			CapabilityIpV6Multicast (str): optional regex of capabilityIpV6Multicast
+			CapabilityIpV6MulticastVpn (str): optional regex of capabilityIpV6MulticastVpn
+			CapabilityIpV6Unicast (str): optional regex of capabilityIpV6Unicast
+			CapabilityIpv4UnicastAddPath (str): optional regex of capabilityIpv4UnicastAddPath
+			CapabilityIpv6UnicastAddPath (str): optional regex of capabilityIpv6UnicastAddPath
+			CapabilityLinkStateNonVpn (str): optional regex of capabilityLinkStateNonVpn
+			CapabilityNHEncodingCapabilities (str): optional regex of capabilityNHEncodingCapabilities
+			CapabilityRouteConstraint (str): optional regex of capabilityRouteConstraint
+			CapabilityRouteRefresh (str): optional regex of capabilityRouteRefresh
+			CapabilitySRTEPoliciesV4 (str): optional regex of capabilitySRTEPoliciesV4
+			CapabilitySRTEPoliciesV6 (str): optional regex of capabilitySRTEPoliciesV6
+			CapabilityVpls (str): optional regex of capabilityVpls
+			Capabilityipv4UnicastFlowSpec (str): optional regex of capabilityipv4UnicastFlowSpec
+			Capabilityipv6UnicastFlowSpec (str): optional regex of capabilityipv6UnicastFlowSpec
+			ConfigureKeepaliveTimer (str): optional regex of configureKeepaliveTimer
+			CustomSidType (str): optional regex of customSidType
+			DiscardIxiaGeneratedRoutes (str): optional regex of discardIxiaGeneratedRoutes
+			DowntimeInSec (str): optional regex of downtimeInSec
+			DutIp (str): optional regex of dutIp
+			Enable4ByteAs (str): optional regex of enable4ByteAs
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			EnableBgpId (str): optional regex of enableBgpId
+			EnableBgpIdSameAsRouterId (str): optional regex of enableBgpIdSameAsRouterId
+			EnableBgpLsCommunity (str): optional regex of enableBgpLsCommunity
+			EnableGracefulRestart (str): optional regex of enableGracefulRestart
+			EnableLlgr (str): optional regex of enableLlgr
+			Evpn (str): optional regex of evpn
+			FilterEvpn (str): optional regex of filterEvpn
+			FilterIpV4Mpls (str): optional regex of filterIpV4Mpls
+			FilterIpV4MplsVpn (str): optional regex of filterIpV4MplsVpn
+			FilterIpV4Multicast (str): optional regex of filterIpV4Multicast
+			FilterIpV4MulticastVpn (str): optional regex of filterIpV4MulticastVpn
+			FilterIpV4Unicast (str): optional regex of filterIpV4Unicast
+			FilterIpV6Mpls (str): optional regex of filterIpV6Mpls
+			FilterIpV6MplsVpn (str): optional regex of filterIpV6MplsVpn
+			FilterIpV6Multicast (str): optional regex of filterIpV6Multicast
+			FilterIpV6MulticastVpn (str): optional regex of filterIpV6MulticastVpn
+			FilterIpV6Unicast (str): optional regex of filterIpV6Unicast
+			FilterIpv4MulticastBgpMplsVpn (str): optional regex of filterIpv4MulticastBgpMplsVpn
+			FilterIpv4UnicastFlowSpec (str): optional regex of filterIpv4UnicastFlowSpec
+			FilterIpv6MulticastBgpMplsVpn (str): optional regex of filterIpv6MulticastBgpMplsVpn
+			FilterIpv6UnicastFlowSpec (str): optional regex of filterIpv6UnicastFlowSpec
+			FilterLinkState (str): optional regex of filterLinkState
+			FilterSRTEPoliciesV4 (str): optional regex of filterSRTEPoliciesV4
+			FilterSRTEPoliciesV6 (str): optional regex of filterSRTEPoliciesV6
+			FilterVpls (str): optional regex of filterVpls
+			Flap (str): optional regex of flap
+			HoldTimer (str): optional regex of holdTimer
+			Ipv4MplsAddPathMode (str): optional regex of ipv4MplsAddPathMode
+			Ipv4MulticastBgpMplsVpn (str): optional regex of ipv4MulticastBgpMplsVpn
+			Ipv4UnicastAddPathMode (str): optional regex of ipv4UnicastAddPathMode
+			Ipv6MplsAddPathMode (str): optional regex of ipv6MplsAddPathMode
+			Ipv6MulticastBgpMplsVpn (str): optional regex of ipv6MulticastBgpMplsVpn
+			Ipv6UnicastAddPathMode (str): optional regex of ipv6UnicastAddPathMode
+			IrbInterfaceLabel (str): optional regex of irbInterfaceLabel
+			IrbIpv6Address (str): optional regex of irbIpv6Address
+			KeepaliveTimer (str): optional regex of keepaliveTimer
+			LocalAs2Bytes (str): optional regex of localAs2Bytes
+			LocalAs4Bytes (str): optional regex of localAs4Bytes
+			Md5Key (str): optional regex of md5Key
+			ModeOfBfdOperations (str): optional regex of modeOfBfdOperations
+			NumBgpLsId (str): optional regex of numBgpLsId
+			NumBgpLsInstanceIdentifier (str): optional regex of numBgpLsInstanceIdentifier
+			NumBgpUpdatesGeneratedPerIteration (str): optional regex of numBgpUpdatesGeneratedPerIteration
+			OperationalModel (str): optional regex of operationalModel
+			RestartTime (str): optional regex of restartTime
+			RoutersMacOrIrbMacAddress (str): optional regex of routersMacOrIrbMacAddress
+			SendIxiaSignatureWithRoutes (str): optional regex of sendIxiaSignatureWithRoutes
+			StaleTime (str): optional regex of staleTime
+			TcpWindowSizeInBytes (str): optional regex of tcpWindowSizeInBytes
+			Ttl (str): optional regex of ttl
+			Type (str): optional regex of type
+			UpdateInterval (str): optional regex of updateInterval
+			UptimeInSec (str): optional regex of uptimeInSec
+			VplsEnableNextHop (str): optional regex of vplsEnableNextHop
+			VplsNextHop (str): optional regex of vplsNextHop
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def BgpIPv4FlowSpecLearnedInfo(self):
 		"""Executes the bgpIPv4FlowSpecLearnedInfo operation on the server.
 

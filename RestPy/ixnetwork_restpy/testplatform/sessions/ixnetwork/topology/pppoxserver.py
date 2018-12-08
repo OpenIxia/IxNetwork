@@ -1014,6 +1014,75 @@ class Pppoxserver(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, AcName=None, AcceptAnyAuthValue=None, AuthRetries=None, AuthTimeout=None, AuthType=None, ClientBaseIID=None, ClientBaseIp=None, ClientIID=None, ClientIIDIncr=None, ClientIpIncr=None, DnsServerList=None, EchoReqInterval=None, EnableDnsRa=None, EnableEchoReq=None, EnableEchoRsp=None, EnableMaxPayload=None, Ipv6AddrPrefixLen=None, Ipv6PoolPrefix=None, Ipv6PoolPrefixLen=None, LcpAccm=None, LcpEnableAccm=None, LcpMaxFailure=None, LcpRetries=None, LcpStartDelay=None, LcpTermRetries=None, LcpTimeout=None, MruNegotiation=None, Mtu=None, NcpRetries=None, NcpTimeout=None, NcpType=None, ServerBaseIID=None, ServerBaseIp=None, ServerDnsOptions=None, ServerIID=None, ServerIIDIncr=None, ServerIpIncr=None, ServerNcpOptions=None, ServerNetmask=None, ServerNetmaskOptions=None, ServerPrimaryDnsAddress=None, ServerSecondaryDnsAddress=None, ServerSignalDslTypeTlv=None, ServerSignalIWF=None, ServerSignalLoopChar=None, ServerSignalLoopEncapsulation=None, ServerSignalLoopId=None, ServerSignalPonTypeTlv=None, ServerV6NcpOptions=None, ServerWinsOptions=None, ServerWinsPrimaryAddress=None, ServerWinsSecondaryAddress=None, ServiceName=None):
+		"""Base class infrastructure that gets a list of pppoxserver device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AcName (str): optional regex of acName
+			AcceptAnyAuthValue (str): optional regex of acceptAnyAuthValue
+			AuthRetries (str): optional regex of authRetries
+			AuthTimeout (str): optional regex of authTimeout
+			AuthType (str): optional regex of authType
+			ClientBaseIID (str): optional regex of clientBaseIID
+			ClientBaseIp (str): optional regex of clientBaseIp
+			ClientIID (str): optional regex of clientIID
+			ClientIIDIncr (str): optional regex of clientIIDIncr
+			ClientIpIncr (str): optional regex of clientIpIncr
+			DnsServerList (str): optional regex of dnsServerList
+			EchoReqInterval (str): optional regex of echoReqInterval
+			EnableDnsRa (str): optional regex of enableDnsRa
+			EnableEchoReq (str): optional regex of enableEchoReq
+			EnableEchoRsp (str): optional regex of enableEchoRsp
+			EnableMaxPayload (str): optional regex of enableMaxPayload
+			Ipv6AddrPrefixLen (str): optional regex of ipv6AddrPrefixLen
+			Ipv6PoolPrefix (str): optional regex of ipv6PoolPrefix
+			Ipv6PoolPrefixLen (str): optional regex of ipv6PoolPrefixLen
+			LcpAccm (str): optional regex of lcpAccm
+			LcpEnableAccm (str): optional regex of lcpEnableAccm
+			LcpMaxFailure (str): optional regex of lcpMaxFailure
+			LcpRetries (str): optional regex of lcpRetries
+			LcpStartDelay (str): optional regex of lcpStartDelay
+			LcpTermRetries (str): optional regex of lcpTermRetries
+			LcpTimeout (str): optional regex of lcpTimeout
+			MruNegotiation (str): optional regex of mruNegotiation
+			Mtu (str): optional regex of mtu
+			NcpRetries (str): optional regex of ncpRetries
+			NcpTimeout (str): optional regex of ncpTimeout
+			NcpType (str): optional regex of ncpType
+			ServerBaseIID (str): optional regex of serverBaseIID
+			ServerBaseIp (str): optional regex of serverBaseIp
+			ServerDnsOptions (str): optional regex of serverDnsOptions
+			ServerIID (str): optional regex of serverIID
+			ServerIIDIncr (str): optional regex of serverIIDIncr
+			ServerIpIncr (str): optional regex of serverIpIncr
+			ServerNcpOptions (str): optional regex of serverNcpOptions
+			ServerNetmask (str): optional regex of serverNetmask
+			ServerNetmaskOptions (str): optional regex of serverNetmaskOptions
+			ServerPrimaryDnsAddress (str): optional regex of serverPrimaryDnsAddress
+			ServerSecondaryDnsAddress (str): optional regex of serverSecondaryDnsAddress
+			ServerSignalDslTypeTlv (str): optional regex of serverSignalDslTypeTlv
+			ServerSignalIWF (str): optional regex of serverSignalIWF
+			ServerSignalLoopChar (str): optional regex of serverSignalLoopChar
+			ServerSignalLoopEncapsulation (str): optional regex of serverSignalLoopEncapsulation
+			ServerSignalLoopId (str): optional regex of serverSignalLoopId
+			ServerSignalPonTypeTlv (str): optional regex of serverSignalPonTypeTlv
+			ServerV6NcpOptions (str): optional regex of serverV6NcpOptions
+			ServerWinsOptions (str): optional regex of serverWinsOptions
+			ServerWinsPrimaryAddress (str): optional regex of serverWinsPrimaryAddress
+			ServerWinsSecondaryAddress (str): optional regex of serverWinsSecondaryAddress
+			ServiceName (str): optional regex of serviceName
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

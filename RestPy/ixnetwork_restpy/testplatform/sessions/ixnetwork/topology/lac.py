@@ -481,6 +481,48 @@ class Lac(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, BaseLnsIp=None, BearerCapability=None, BearerType=None, ControlMsgsRetryCounter=None, EnableControlChecksum=None, EnableDataChecksum=None, EnableHelloRequest=None, EnableRedial=None, FramingCapability=None, HelloRequestInterval=None, InitRetransmitInterval=None, LacHostName=None, LacSecret=None, MaxRedialAttempts=None, MaxRetransmitInterval=None, OffsetByte=None, OffsetLength=None, ReceiveWindowSize=None, RedialInterval=None, TunnelAuthentication=None, UdpDestinationPort=None, UdpSourcePort=None, UseHiddenAVPs=None, UseLengthBitInPayload=None, UseOffsetBitInPayload=None, UseSequenceNoInPayload=None):
+		"""Base class infrastructure that gets a list of lac device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BaseLnsIp (str): optional regex of baseLnsIp
+			BearerCapability (str): optional regex of bearerCapability
+			BearerType (str): optional regex of bearerType
+			ControlMsgsRetryCounter (str): optional regex of controlMsgsRetryCounter
+			EnableControlChecksum (str): optional regex of enableControlChecksum
+			EnableDataChecksum (str): optional regex of enableDataChecksum
+			EnableHelloRequest (str): optional regex of enableHelloRequest
+			EnableRedial (str): optional regex of enableRedial
+			FramingCapability (str): optional regex of framingCapability
+			HelloRequestInterval (str): optional regex of helloRequestInterval
+			InitRetransmitInterval (str): optional regex of initRetransmitInterval
+			LacHostName (str): optional regex of lacHostName
+			LacSecret (str): optional regex of lacSecret
+			MaxRedialAttempts (str): optional regex of maxRedialAttempts
+			MaxRetransmitInterval (str): optional regex of maxRetransmitInterval
+			OffsetByte (str): optional regex of offsetByte
+			OffsetLength (str): optional regex of offsetLength
+			ReceiveWindowSize (str): optional regex of receiveWindowSize
+			RedialInterval (str): optional regex of redialInterval
+			TunnelAuthentication (str): optional regex of tunnelAuthentication
+			UdpDestinationPort (str): optional regex of udpDestinationPort
+			UdpSourcePort (str): optional regex of udpSourcePort
+			UseHiddenAVPs (str): optional regex of useHiddenAVPs
+			UseLengthBitInPayload (str): optional regex of useLengthBitInPayload
+			UseOffsetBitInPayload (str): optional regex of useOffsetBitInPayload
+			UseSequenceNoInPayload (str): optional regex of useSequenceNoInPayload
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

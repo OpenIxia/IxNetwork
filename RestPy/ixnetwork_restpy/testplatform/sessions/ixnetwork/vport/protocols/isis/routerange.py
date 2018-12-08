@@ -38,7 +38,7 @@ class RouteRange(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the use of this route range for the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class RouteRange(Base):
 
 	@property
 	def FirstRoute(self):
-		"""The first route of the route range, in IPv4 dotted decimal format. (default = 0.0.0.0)
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class RouteRange(Base):
 
 	@property
 	def IsRedistributed(self):
-		"""Sets the Up/Down (Redistribution) bit defined for TLVs 128 and 130 by RFC 2966. It is used for domain-wide advertisement of prefix information.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class RouteRange(Base):
 
 	@property
 	def MaskWidth(self):
-		"""The network mask width for the route range (in bits). The valid range is from 0 to 32 bits. (default = 24)
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class RouteRange(Base):
 
 	@property
 	def Metric(self):
-		"""The user-defined metric associated with this route range.
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class RouteRange(Base):
 
 	@property
 	def NumberOfRoutes(self):
-		"""The number of routes to be generated for this route range.
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class RouteRange(Base):
 
 	@property
 	def RouteOrigin(self):
-		"""The origin of the advertised route - internal or external to the ISIS area.
+		"""
 
 		Returns:
 			bool
@@ -122,7 +122,7 @@ class RouteRange(Base):
 
 	@property
 	def Type(self):
-		"""The IP type of the route range for the ISIS router.
+		"""
 
 		Returns:
 			str(ipAny|ipv4|ipv6)
@@ -136,14 +136,14 @@ class RouteRange(Base):
 		"""Adds a new routeRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): Enables the use of this route range for the simulated router.
-			FirstRoute (str): The first route of the route range, in IPv4 dotted decimal format. (default = 0.0.0.0)
-			IsRedistributed (bool): Sets the Up/Down (Redistribution) bit defined for TLVs 128 and 130 by RFC 2966. It is used for domain-wide advertisement of prefix information.
-			MaskWidth (number): The network mask width for the route range (in bits). The valid range is from 0 to 32 bits. (default = 24)
-			Metric (number): The user-defined metric associated with this route range.
-			NumberOfRoutes (number): The number of routes to be generated for this route range.
-			RouteOrigin (bool): The origin of the advertised route - internal or external to the ISIS area.
-			Type (str(ipAny|ipv4|ipv6)): The IP type of the route range for the ISIS router.
+			Enabled (bool): 
+			FirstRoute (str): 
+			IsRedistributed (bool): 
+			MaskWidth (number): 
+			Metric (number): 
+			NumberOfRoutes (number): 
+			RouteOrigin (bool): 
+			Type (str(ipAny|ipv4|ipv6)): 
 
 		Returns:
 			self: This instance with all currently retrieved routeRange data using find and the newly added routeRange data available through an iterator or index
@@ -169,14 +169,14 @@ class RouteRange(Base):
 		By default the find method takes no parameters and will retrieve all routeRange data from the server.
 
 		Args:
-			Enabled (bool): Enables the use of this route range for the simulated router.
-			FirstRoute (str): The first route of the route range, in IPv4 dotted decimal format. (default = 0.0.0.0)
-			IsRedistributed (bool): Sets the Up/Down (Redistribution) bit defined for TLVs 128 and 130 by RFC 2966. It is used for domain-wide advertisement of prefix information.
-			MaskWidth (number): The network mask width for the route range (in bits). The valid range is from 0 to 32 bits. (default = 24)
-			Metric (number): The user-defined metric associated with this route range.
-			NumberOfRoutes (number): The number of routes to be generated for this route range.
-			RouteOrigin (bool): The origin of the advertised route - internal or external to the ISIS area.
-			Type (str(ipAny|ipv4|ipv6)): The IP type of the route range for the ISIS router.
+			Enabled (bool): 
+			FirstRoute (str): 
+			IsRedistributed (bool): 
+			MaskWidth (number): 
+			Metric (number): 
+			NumberOfRoutes (number): 
+			RouteOrigin (bool): 
+			Type (str(ipAny|ipv4|ipv6)): 
 
 		Returns:
 			self: This instance with matching routeRange data retrieved from the server available through an iterator or index

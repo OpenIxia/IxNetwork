@@ -217,6 +217,31 @@ class RsvpP2mpIngressSubLsps(Base):
 		"""
 		return self._get_attribute('state')
 
+	def get_device_ids(self, PortNames=None, Active=None, AppendLeaf=None, EnableEro=None, LeafIp=None, PrefixLengthOfDut=None, PrefixLengthOfLeaf=None, PrependDut=None, SendAsEro=None, SendAsSero=None):
+		"""Base class infrastructure that gets a list of rsvpP2mpIngressSubLsps device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AppendLeaf (str): optional regex of appendLeaf
+			EnableEro (str): optional regex of enableEro
+			LeafIp (str): optional regex of leafIp
+			PrefixLengthOfDut (str): optional regex of prefixLengthOfDut
+			PrefixLengthOfLeaf (str): optional regex of prefixLengthOfLeaf
+			PrependDut (str): optional regex of prependDut
+			SendAsEro (str): optional regex of sendAsEro
+			SendAsSero (str): optional regex of sendAsSero
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ExcludeEroOrSero(self, Arg2):
 		"""Executes the excludeEroOrSero operation on the server.
 

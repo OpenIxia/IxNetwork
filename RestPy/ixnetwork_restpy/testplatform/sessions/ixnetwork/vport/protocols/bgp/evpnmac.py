@@ -51,7 +51,7 @@ class EvpnMac(Base):
 
 	@property
 	def Esi(self):
-		"""(Read Only) Ethernet Segment Identifier.
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class EvpnMac(Base):
 
 	@property
 	def MacAddress(self):
-		"""(Read Only) The C-MAC or the B-MAC address learned.
+		"""
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class EvpnMac(Base):
 
 	@property
 	def MacPrefixLen(self):
-		"""(Read Only) Prefix length of the learned C-MAC or B-MAC.
+		"""
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class EvpnMac(Base):
 
 	@property
 	def Neighbor(self):
-		"""(Read Only) The neighbor IP.
+		"""
 
 		Returns:
 			str
@@ -92,10 +92,10 @@ class EvpnMac(Base):
 		By default the find method takes no parameters and will retrieve all evpnMac data from the server.
 
 		Args:
-			Esi (str): (Read Only) Ethernet Segment Identifier.
-			MacAddress (str): (Read Only) The C-MAC or the B-MAC address learned.
-			MacPrefixLen (str): (Read Only) Prefix length of the learned C-MAC or B-MAC.
-			Neighbor (str): (Read Only) The neighbor IP.
+			Esi (str): 
+			MacAddress (str): 
+			MacPrefixLen (str): 
+			Neighbor (str): 
 
 		Returns:
 			self: This instance with matching evpnMac data retrieved from the server available through an iterator or index

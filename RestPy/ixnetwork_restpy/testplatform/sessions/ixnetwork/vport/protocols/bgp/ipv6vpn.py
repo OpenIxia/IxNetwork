@@ -37,7 +37,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def AsPath(self):
-		"""Indicates the local IP address of the BGP router.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def BlockOffset(self):
-		"""The label block offset (VBO) is the value used to help define this specific label block uniquely as a subset of all of the possible labels.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def BlockSize(self):
-		"""The size of the label block, in bytes.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def ControlWordEnabled(self):
-		"""If true, the route label uses a control word, as part of the extended community information. (One of the control flags.)
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def IpPrefix(self):
-		"""The route IP prefix.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def LabelBase(self):
-		"""The first label to be assigned to the FEC.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def LocalPreference(self):
-		"""Indicates the value of the local preference attribute.
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def MaxLabel(self):
-		"""The last label to use.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def MultiExitDiscriminator(self):
-		"""A metric field of the route file.
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def Neighbor(self):
-		"""The descriptive identifier for the BGP neighbor.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def NextHop(self):
-		"""A 4-octet IP address which indicates the next hop.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def OriginType(self):
-		"""An indication of where the route entry originated.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def PrefixLength(self):
-		"""The length of the route IP prefix, in bytes.
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def RouteDistinguisher(self):
-		"""The route distinguisher for the route, for use with IPv4 and IPv6 MPLS VPN address types.
+		"""
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def SeqDeliveryEnabled(self):
-		"""Indicates if sequential delivery is enabled.
+		"""
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class Ipv6vpn(Base):
 
 	@property
 	def SiteId(self):
-		"""The site ID.
+		"""
 
 		Returns:
 			number
@@ -186,22 +186,22 @@ class Ipv6vpn(Base):
 		By default the find method takes no parameters and will retrieve all ipv6vpn data from the server.
 
 		Args:
-			AsPath (str): Indicates the local IP address of the BGP router.
-			BlockOffset (number): The label block offset (VBO) is the value used to help define this specific label block uniquely as a subset of all of the possible labels.
-			BlockSize (number): The size of the label block, in bytes.
-			ControlWordEnabled (bool): If true, the route label uses a control word, as part of the extended community information. (One of the control flags.)
-			IpPrefix (str): The route IP prefix.
-			LabelBase (number): The first label to be assigned to the FEC.
-			LocalPreference (number): Indicates the value of the local preference attribute.
-			MaxLabel (number): The last label to use.
-			MultiExitDiscriminator (number): A metric field of the route file.
-			Neighbor (str): The descriptive identifier for the BGP neighbor.
-			NextHop (str): A 4-octet IP address which indicates the next hop.
-			OriginType (str): An indication of where the route entry originated.
-			PrefixLength (number): The length of the route IP prefix, in bytes.
-			RouteDistinguisher (str): The route distinguisher for the route, for use with IPv4 and IPv6 MPLS VPN address types.
-			SeqDeliveryEnabled (bool): Indicates if sequential delivery is enabled.
-			SiteId (number): The site ID.
+			AsPath (str): 
+			BlockOffset (number): 
+			BlockSize (number): 
+			ControlWordEnabled (bool): 
+			IpPrefix (str): 
+			LabelBase (number): 
+			LocalPreference (number): 
+			MaxLabel (number): 
+			MultiExitDiscriminator (number): 
+			Neighbor (str): 
+			NextHop (str): 
+			OriginType (str): 
+			PrefixLength (number): 
+			RouteDistinguisher (str): 
+			SeqDeliveryEnabled (bool): 
+			SiteId (number): 
 
 		Returns:
 			self: This instance with matching ipv6vpn data retrieved from the server available through an iterator or index

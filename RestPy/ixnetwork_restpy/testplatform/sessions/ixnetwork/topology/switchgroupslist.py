@@ -279,3 +279,38 @@ class SwitchGroupsList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, Active=None, ApplyGroup=None, CopyTtlIn=None, CopyTtlOut=None, DecrementMplsTtl=None, DecrementNetwork=None, GroupType=None, MaxNumberOfGroups=None, Output=None, PopMpls=None, PopPbb=None, PopVlan=None, PushMpls=None, PushPbb=None, PushVlan=None, SetField=None, SetMplsTtl=None, SetNetwork=None, SetQueue=None):
+		"""Base class infrastructure that gets a list of switchGroupsList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ApplyGroup (str): optional regex of applyGroup
+			CopyTtlIn (str): optional regex of copyTtlIn
+			CopyTtlOut (str): optional regex of copyTtlOut
+			DecrementMplsTtl (str): optional regex of decrementMplsTtl
+			DecrementNetwork (str): optional regex of decrementNetwork
+			GroupType (str): optional regex of groupType
+			MaxNumberOfGroups (str): optional regex of maxNumberOfGroups
+			Output (str): optional regex of output
+			PopMpls (str): optional regex of popMpls
+			PopPbb (str): optional regex of popPbb
+			PopVlan (str): optional regex of popVlan
+			PushMpls (str): optional regex of pushMpls
+			PushPbb (str): optional regex of pushPbb
+			PushVlan (str): optional regex of pushVlan
+			SetField (str): optional regex of setField
+			SetMplsTtl (str): optional regex of setMplsTtl
+			SetNetwork (str): optional regex of setNetwork
+			SetQueue (str): optional regex of setQueue
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

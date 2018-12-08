@@ -37,7 +37,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def AsPath(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def BlockOffset(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def BlockSize(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def ControlWordEnabled(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def IpPrefix(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def LabelBase(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def LocalPreference(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def MaxLabel(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def MultiExitDiscriminator(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def Neighbor(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def NextHop(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def OriginType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def PrefixLength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def RouteDistinguisher(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def SeqDeliveryEnabled(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class LearnedRouteIpv6(Base):
 
 	@property
 	def SiteId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -186,22 +186,22 @@ class LearnedRouteIpv6(Base):
 		By default the find method takes no parameters and will retrieve all learnedRouteIpv6 data from the server.
 
 		Args:
-			AsPath (str): NOT DEFINED
-			BlockOffset (number): NOT DEFINED
-			BlockSize (number): NOT DEFINED
-			ControlWordEnabled (bool): NOT DEFINED
-			IpPrefix (str): NOT DEFINED
-			LabelBase (number): NOT DEFINED
-			LocalPreference (number): NOT DEFINED
-			MaxLabel (number): NOT DEFINED
-			MultiExitDiscriminator (number): NOT DEFINED
-			Neighbor (str): NOT DEFINED
-			NextHop (str): NOT DEFINED
-			OriginType (str): NOT DEFINED
-			PrefixLength (number): NOT DEFINED
-			RouteDistinguisher (str): NOT DEFINED
-			SeqDeliveryEnabled (bool): NOT DEFINED
-			SiteId (number): NOT DEFINED
+			AsPath (str): 
+			BlockOffset (number): 
+			BlockSize (number): 
+			ControlWordEnabled (bool): 
+			IpPrefix (str): 
+			LabelBase (number): 
+			LocalPreference (number): 
+			MaxLabel (number): 
+			MultiExitDiscriminator (number): 
+			Neighbor (str): 
+			NextHop (str): 
+			OriginType (str): 
+			PrefixLength (number): 
+			RouteDistinguisher (str): 
+			SeqDeliveryEnabled (bool): 
+			SiteId (number): 
 
 		Returns:
 			self: This instance with matching learnedRouteIpv6 data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class AvailableTrafficItemFilter(Base):
 
 	@property
 	def Constraints(self):
-		"""Lists down the constraints associated with the available traffic item filter list.
+		"""
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class AvailableTrafficItemFilter(Base):
 
 	@property
 	def Name(self):
-		"""Displays the name of the traffic item filter.
+		"""
 
 		Returns:
 			str
@@ -60,8 +60,8 @@ class AvailableTrafficItemFilter(Base):
 		By default the find method takes no parameters and will retrieve all availableTrafficItemFilter data from the server.
 
 		Args:
-			Constraints (list(str)): Lists down the constraints associated with the available traffic item filter list.
-			Name (str): Displays the name of the traffic item filter.
+			Constraints (list(str)): 
+			Name (str): 
 
 		Returns:
 			self: This instance with matching availableTrafficItemFilter data retrieved from the server available through an iterator or index

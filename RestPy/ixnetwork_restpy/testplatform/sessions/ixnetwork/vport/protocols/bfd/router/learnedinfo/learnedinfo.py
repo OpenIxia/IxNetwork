@@ -37,7 +37,7 @@ class LearnedInfo(Base):
 
 	@property
 	def DesMinTxInterval(self):
-		"""This is the minimum interval, in microseconds, that the local system would like to use when transmitting BFD Control packets. The value zero is reserved.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class LearnedInfo(Base):
 
 	@property
 	def MyDisc(self):
-		"""The discriminator for the session on this interface.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedInfo(Base):
 
 	@property
 	def MyIpAddress(self):
-		"""The local IP address being used by the configured or auto-created BFD session.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LearnedInfo(Base):
 
 	@property
 	def PeerDisc(self):
-		"""The discriminator for the for side of the BFD session.
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LearnedInfo(Base):
 
 	@property
 	def PeerFlags(self):
-		"""The number of peer generated flags received.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedInfo(Base):
 
 	@property
 	def PeerIpAddress(self):
-		"""The IP address for the far side of the BFD session.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LearnedInfo(Base):
 
 	@property
 	def PeerState(self):
-		"""The state of the far side of the BFD session, either active or not.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class LearnedInfo(Base):
 
 	@property
 	def PeerUpTime(self):
-		"""How long the peer has been active.
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class LearnedInfo(Base):
 
 	@property
 	def ProtocolUsingSession(self):
-		"""Which protocol is using the BFD session (for example, OSPF, BGP).
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class LearnedInfo(Base):
 
 	@property
 	def ReqMinEchoInterval(self):
-		"""This is the minimum interval, in microseconds, between received BFD Echo packets that this system is capable of supporting. If this value is zero, the transmitting system does not support the receipt of BFD Echo packets.
+		"""
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class LearnedInfo(Base):
 
 	@property
 	def ReqMinRxInterval(self):
-		"""The minimum receive interval, in microseconds, for the far side of the BFD session.
+		"""
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class LearnedInfo(Base):
 
 	@property
 	def SessionState(self):
-		"""Whether the session is active or not.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class LearnedInfo(Base):
 
 	@property
 	def SessionType(self):
-		"""The type of BFD session, either single or multiple hop.
+		"""
 
 		Returns:
 			str
@@ -159,19 +159,19 @@ class LearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all learnedInfo data from the server.
 
 		Args:
-			DesMinTxInterval (number): This is the minimum interval, in microseconds, that the local system would like to use when transmitting BFD Control packets. The value zero is reserved.
-			MyDisc (number): The discriminator for the session on this interface.
-			MyIpAddress (str): The local IP address being used by the configured or auto-created BFD session.
-			PeerDisc (number): The discriminator for the for side of the BFD session.
-			PeerFlags (str): The number of peer generated flags received.
-			PeerIpAddress (str): The IP address for the far side of the BFD session.
-			PeerState (str): The state of the far side of the BFD session, either active or not.
-			PeerUpTime (number): How long the peer has been active.
-			ProtocolUsingSession (str): Which protocol is using the BFD session (for example, OSPF, BGP).
-			ReqMinEchoInterval (number): This is the minimum interval, in microseconds, between received BFD Echo packets that this system is capable of supporting. If this value is zero, the transmitting system does not support the receipt of BFD Echo packets.
-			ReqMinRxInterval (number): The minimum receive interval, in microseconds, for the far side of the BFD session.
-			SessionState (str): Whether the session is active or not.
-			SessionType (str): The type of BFD session, either single or multiple hop.
+			DesMinTxInterval (number): 
+			MyDisc (number): 
+			MyIpAddress (str): 
+			PeerDisc (number): 
+			PeerFlags (str): 
+			PeerIpAddress (str): 
+			PeerState (str): 
+			PeerUpTime (number): 
+			ProtocolUsingSession (str): 
+			ReqMinEchoInterval (number): 
+			ReqMinRxInterval (number): 
+			SessionState (str): 
+			SessionType (str): 
 
 		Returns:
 			self: This instance with matching learnedInfo data retrieved from the server available through an iterator or index

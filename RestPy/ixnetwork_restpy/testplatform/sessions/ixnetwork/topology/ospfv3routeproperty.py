@@ -219,6 +219,28 @@ class Ospfv3RouteProperty(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AllowPropagate=None, AutoSelectForwardingAddress=None, ForwardingAddress=None, Metric=None, RouteOrigin=None):
+		"""Base class infrastructure that gets a list of ospfv3RouteProperty device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AllowPropagate (str): optional regex of allowPropagate
+			AutoSelectForwardingAddress (str): optional regex of autoSelectForwardingAddress
+			ForwardingAddress (str): optional regex of forwardingAddress
+			Metric (str): optional regex of metric
+			RouteOrigin (str): optional regex of routeOrigin
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def AgeOutRoutes(self, Percentage):
 		"""Executes the ageOutRoutes operation on the server.
 

@@ -37,7 +37,7 @@ class Base64CodeOptions(Base):
 
 	@property
 	def IncludeSampleCode(self):
-		"""Flag to include sample code
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Base64CodeOptions(Base):
 
 	@property
 	def SampleObjectReferences(self):
-		"""A list of object references used to generate sample code
+		"""
 
 		Returns:
 			list(str[None])

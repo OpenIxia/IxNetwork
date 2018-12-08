@@ -37,7 +37,7 @@ class InterArrivalTimeRate(Base):
 
 	@property
 	def Enabled(self):
-		"""If enabled, fetches inter-arrival time and rate statistics.
+		"""
 
 		Returns:
 			bool

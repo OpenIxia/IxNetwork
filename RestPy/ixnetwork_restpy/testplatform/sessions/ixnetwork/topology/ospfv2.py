@@ -748,6 +748,67 @@ class Ospfv2(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AdjSID=None, AreaId=None, AreaIdIp=None, Authentication=None, AuthenticationPassword=None, BFlag=None, DeadInterval=None, Dedicated1Plus1=None, Dedicated1To1=None, DemandCircuit=None, EnLinkProtection=None, EnableAdjSID=None, EnableBfdRegistration=None, EnableFastHello=None, EnableSRLG=None, Enhanced=None, ExternalAttribute=None, ExternalCapability=None, ExtraTraffic=None, HelloInterval=None, HelloMultiplier=None, LFlag=None, MaxMtu=None, Md5Key=None, Md5KeyId=None, Metric=None, MulticastCapability=None, NeighborIp=None, NetworkType=None, NssaCapability=None, OpaqueLsaForwarded=None, Priority=None, Reserved40=None, Reserved80=None, SFlag=None, Shared=None, SuppressHello=None, TypeAreaId=None, TypeOfServiceRouting=None, Unprotected=None, Unused=None, VFlag=None, ValidateRxMtu=None, Weight=None):
+		"""Base class infrastructure that gets a list of ospfv2 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdjSID (str): optional regex of adjSID
+			AreaId (str): optional regex of areaId
+			AreaIdIp (str): optional regex of areaIdIp
+			Authentication (str): optional regex of authentication
+			AuthenticationPassword (str): optional regex of authenticationPassword
+			BFlag (str): optional regex of bFlag
+			DeadInterval (str): optional regex of deadInterval
+			Dedicated1Plus1 (str): optional regex of dedicated1Plus1
+			Dedicated1To1 (str): optional regex of dedicated1To1
+			DemandCircuit (str): optional regex of demandCircuit
+			EnLinkProtection (str): optional regex of enLinkProtection
+			EnableAdjSID (str): optional regex of enableAdjSID
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			EnableFastHello (str): optional regex of enableFastHello
+			EnableSRLG (str): optional regex of enableSRLG
+			Enhanced (str): optional regex of enhanced
+			ExternalAttribute (str): optional regex of externalAttribute
+			ExternalCapability (str): optional regex of externalCapability
+			ExtraTraffic (str): optional regex of extraTraffic
+			HelloInterval (str): optional regex of helloInterval
+			HelloMultiplier (str): optional regex of helloMultiplier
+			LFlag (str): optional regex of lFlag
+			MaxMtu (str): optional regex of maxMtu
+			Md5Key (str): optional regex of md5Key
+			Md5KeyId (str): optional regex of md5KeyId
+			Metric (str): optional regex of metric
+			MulticastCapability (str): optional regex of multicastCapability
+			NeighborIp (str): optional regex of neighborIp
+			NetworkType (str): optional regex of networkType
+			NssaCapability (str): optional regex of nssaCapability
+			OpaqueLsaForwarded (str): optional regex of opaqueLsaForwarded
+			Priority (str): optional regex of priority
+			Reserved40 (str): optional regex of reserved40
+			Reserved80 (str): optional regex of reserved80
+			SFlag (str): optional regex of sFlag
+			Shared (str): optional regex of shared
+			SuppressHello (str): optional regex of suppressHello
+			TypeAreaId (str): optional regex of typeAreaId
+			TypeOfServiceRouting (str): optional regex of typeOfServiceRouting
+			Unprotected (str): optional regex of unprotected
+			Unused (str): optional regex of unused
+			VFlag (str): optional regex of vFlag
+			ValidateRxMtu (str): optional regex of validateRxMtu
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearAllLearnedInfo(self):
 		"""Executes the clearAllLearnedInfo operation on the server.
 

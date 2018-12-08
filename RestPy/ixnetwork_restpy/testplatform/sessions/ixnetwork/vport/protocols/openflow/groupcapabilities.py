@@ -37,7 +37,7 @@ class GroupCapabilities(Base):
 
 	@property
 	def Chaining(self):
-		"""Chaining groups.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class GroupCapabilities(Base):
 
 	@property
 	def ChainingChecks(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class GroupCapabilities(Base):
 
 	@property
 	def SelectLiveness(self):
-		"""Liveness for select groups.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class GroupCapabilities(Base):
 
 	@property
 	def SelectWeight(self):
-		"""Weight for select groups.
+		"""
 
 		Returns:
 			bool

@@ -298,6 +298,43 @@ class OfSwitchPorts(Base):
 		"""
 		return self._get_attribute('transmissionDelay')
 
+	def get_device_ids(self, PortNames=None, Active=None, AdvertisedFeatures=None, Config=None, CurrentFeatures=None, CurrentSpeed=None, EtherAddr=None, ForcedConnectionType=None, MaxSpeed=None, PeerAdvertisedFeatures=None, PortIndex=None, PortLivenessSupport=None, PortName=None, PortNumber=None, RemotePortIndex=None, RemoteSwitch=None, RemoteSwitchIndex=None, RemoteSwitchPort=None, State=None, SupportedFeatures=None, SwitchIndex=None, TransmissionDelay=None):
+		"""Base class infrastructure that gets a list of ofSwitchPorts device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdvertisedFeatures (str): optional regex of advertisedFeatures
+			Config (str): optional regex of config
+			CurrentFeatures (str): optional regex of currentFeatures
+			CurrentSpeed (str): optional regex of currentSpeed
+			EtherAddr (str): optional regex of etherAddr
+			ForcedConnectionType (str): optional regex of forcedConnectionType
+			MaxSpeed (str): optional regex of maxSpeed
+			PeerAdvertisedFeatures (str): optional regex of peerAdvertisedFeatures
+			PortIndex (str): optional regex of portIndex
+			PortLivenessSupport (str): optional regex of portLivenessSupport
+			PortName (str): optional regex of portName
+			PortNumber (str): optional regex of portNumber
+			RemotePortIndex (str): optional regex of remotePortIndex
+			RemoteSwitch (str): optional regex of remoteSwitch
+			RemoteSwitchIndex (str): optional regex of remoteSwitchIndex
+			RemoteSwitchPort (str): optional regex of remoteSwitchPort
+			State (str): optional regex of state
+			SupportedFeatures (str): optional regex of supportedFeatures
+			SwitchIndex (str): optional regex of switchIndex
+			TransmissionDelay (str): optional regex of transmissionDelay
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def SimulatePortUpDown(self, Arg2):
 		"""Executes the simulatePortUpDown operation on the server.
 

@@ -51,7 +51,7 @@ class Stack(Base):
 
 	@property
 	def DisplayName(self):
-		"""Refers to the name of the stack.
+		"""
 
 		Returns:
 			str
@@ -65,7 +65,7 @@ class Stack(Base):
 		By default the find method takes no parameters and will retrieve all stack data from the server.
 
 		Args:
-			DisplayName (str): Refers to the name of the stack.
+			DisplayName (str): 
 
 		Returns:
 			self: This instance with matching stack data retrieved from the server available through an iterator or index

@@ -38,7 +38,7 @@ class IxVmPort(Base):
 
 	@property
 	def Interface(self):
-		"""Represents the interface name
+		"""
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class IxVmPort(Base):
 
 	@property
 	def IpAddress(self):
-		"""Represents the IP address
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class IxVmPort(Base):
 
 	@property
 	def MacAddress(self):
-		"""Represents the MAC address
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class IxVmPort(Base):
 
 	@property
 	def Mtu(self):
-		"""Represents MTU
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class IxVmPort(Base):
 
 	@property
 	def Owner(self):
-		"""Represents the user owning the port
+		"""
 
 		Returns:
 			str
@@ -95,7 +95,7 @@ class IxVmPort(Base):
 
 	@property
 	def PortId(self):
-		"""Represents a slot on the card
+		"""
 
 		Returns:
 			str
@@ -107,7 +107,7 @@ class IxVmPort(Base):
 
 	@property
 	def PortName(self):
-		"""Represents a port name
+		"""
 
 		Returns:
 			str
@@ -119,7 +119,7 @@ class IxVmPort(Base):
 
 	@property
 	def PortState(self):
-		"""Represents the port State
+		"""
 
 		Returns:
 			str(invalidNIC|ixVmPortUnitialized|portLicenseNotFound|portNotAdded|portOK|portRemoved|portUnconnectedCard|portUnknownError)
@@ -128,7 +128,7 @@ class IxVmPort(Base):
 
 	@property
 	def PromiscMode(self):
-		"""Represents the promiscuos Mode
+		"""
 
 		Returns:
 			bool
@@ -142,13 +142,13 @@ class IxVmPort(Base):
 		"""Adds a new ixVmPort node on the server and retrieves it in this instance.
 
 		Args:
-			Interface (str): Represents the interface name
-			IpAddress (str): Represents the IP address
-			MacAddress (str): Represents the MAC address
-			Mtu (number): Represents MTU
-			PortId (str): Represents a slot on the card
-			PortName (str): Represents a port name
-			PromiscMode (bool): Represents the promiscuos Mode
+			Interface (str): 
+			IpAddress (str): 
+			MacAddress (str): 
+			Mtu (number): 
+			PortId (str): 
+			PortName (str): 
+			PromiscMode (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved ixVmPort data using find and the newly added ixVmPort data available through an iterator or index
@@ -174,15 +174,15 @@ class IxVmPort(Base):
 		By default the find method takes no parameters and will retrieve all ixVmPort data from the server.
 
 		Args:
-			Interface (str): Represents the interface name
-			IpAddress (str): Represents the IP address
-			MacAddress (str): Represents the MAC address
-			Mtu (number): Represents MTU
-			Owner (str): Represents the user owning the port
-			PortId (str): Represents a slot on the card
-			PortName (str): Represents a port name
-			PortState (str(invalidNIC|ixVmPortUnitialized|portLicenseNotFound|portNotAdded|portOK|portRemoved|portUnconnectedCard|portUnknownError)): Represents the port State
-			PromiscMode (bool): Represents the promiscuos Mode
+			Interface (str): 
+			IpAddress (str): 
+			MacAddress (str): 
+			Mtu (number): 
+			Owner (str): 
+			PortId (str): 
+			PortName (str): 
+			PortState (str(invalidNIC|ixVmPortUnitialized|portLicenseNotFound|portNotAdded|portOK|portRemoved|portUnconnectedCard|portUnknownError)): 
+			PromiscMode (bool): 
 
 		Returns:
 			self: This instance with matching ixVmPort data retrieved from the server available through an iterator or index

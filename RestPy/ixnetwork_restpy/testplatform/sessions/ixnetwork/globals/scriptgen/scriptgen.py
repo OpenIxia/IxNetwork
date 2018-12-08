@@ -65,7 +65,7 @@ class Scriptgen(Base):
 
 	@property
 	def ConnectHostname(self):
-		"""The hostname to be used in the connect command
+		"""
 
 		Returns:
 			str
@@ -77,7 +77,7 @@ class Scriptgen(Base):
 
 	@property
 	def ConnectPort(self):
-		"""The port number to be used in the connect command
+		"""
 
 		Returns:
 			number
@@ -89,7 +89,7 @@ class Scriptgen(Base):
 
 	@property
 	def ConnectVersion(self):
-		"""The version number to be used in the connect command
+		"""
 
 		Returns:
 			str
@@ -101,7 +101,7 @@ class Scriptgen(Base):
 
 	@property
 	def IncludeConnect(self):
-		"""Flag to include the connect command
+		"""
 
 		Returns:
 			bool
@@ -113,7 +113,7 @@ class Scriptgen(Base):
 
 	@property
 	def IncludeTestComposer(self):
-		"""Flag to include test composer code
+		"""
 
 		Returns:
 			bool
@@ -125,7 +125,7 @@ class Scriptgen(Base):
 
 	@property
 	def Language(self):
-		"""Select the target scriptgen language
+		"""
 
 		Returns:
 			str(perl|python|ruby|tcl)
@@ -137,7 +137,7 @@ class Scriptgen(Base):
 
 	@property
 	def LinePerAttribute(self):
-		"""If true the scriptgen output will show each attribute on a separate line
+		"""
 
 		Returns:
 			bool
@@ -149,7 +149,7 @@ class Scriptgen(Base):
 
 	@property
 	def OverwriteScriptFilename(self):
-		"""If true the file indicated by the script filename will be overwritten
+		"""
 
 		Returns:
 			bool
@@ -161,7 +161,7 @@ class Scriptgen(Base):
 
 	@property
 	def ScriptFilename(self):
-		"""The name of the target scriptgen file
+		"""
 
 		Returns:
 			str
@@ -173,7 +173,7 @@ class Scriptgen(Base):
 
 	@property
 	def SerializationType(self):
-		"""The scriptgen serialization type
+		"""
 
 		Returns:
 			str(base64|ixNet)

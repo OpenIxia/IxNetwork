@@ -1205,116 +1205,43 @@ def DisableSupressArpAllPortsPy(action='', ipType='ipv4'):
                                         )
                 ixNet.commit()
     return 0
-            
 
-def TakeSnapshotPy(copyToLocalPathAndFileName='', view='Flow Statistics'):
-    # copyToLocalPathAndFileName = The local Linux path + filename to be copied to
+def TakeSnapshotPy(copyToLocalPath='', view='Flow Statistics', osPlatform='windows'):
+    # copyToLocalPath = The local Linux path
 
-    # Take the snapshot and store the csv file in 
-    # this Windows path. Create it if it doesn't exists.
-    path = 'C://Results'
+    if osPlatform == 'windows':
+        path = 'C:\\Results'
 
-    root = ixNet.getRoot()
-    stats = root+'/statistics'
-    viewCaption = view
-    statsViewList = ixNet.getList(stats,'view')
-    indexOfFlowStatisticsView = 0
+    if osPlatform == 'linux':
+        path = '/home/ixia_logs'
 
-    # current statsViewList = [
-    # '::ixNet::OBJ-/statistics/view:"Protocols Summary"', 
-    # '::ixNet::OBJ-/statistics/view:"Port Summary"', 
-    # '::ixNet::OBJ-/statistics/view:"IPv4 Drill Down"', 
-    # '::ixNet::OBJ-/statistics/view:"IGMP Host Drill Down"', 
-    # '::ixNet::OBJ-/statistics/view:"IGMP Host Per Port"', 
-    # '::ixNet::OBJ-/statistics/view:"IGMP Querier Drill Down"', 
-    # '::ixNet::OBJ-/statistics/view:"IGMP Querier Per Port"', 
-    # '::ixNet::OBJ-/statistics/view:"Port Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"Port CPU Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"IGMPQuerierPerPortCustom"', 
-    # '::ixNet::OBJ-/statistics/view:"L2-L3 Test Summary Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"Flow Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"Flow Detective"', 
-    # '::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"User Defined Statistics"', 
-    # '::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"'
-    # ]
-    print '\nstatsViewList is %s' % statsViewList
+    stats = ixNet.getRoot() + '/statistics'
+    csvFileName = view.replace(' ', '_')
+    listOfTrafficStats = [view]
 
-    exitFlag = 0
-    # Find the index for your view
-    for item in statsViewList :
-        if(re.search(viewCaption,item)) :
-            indexOfProtocolStats = statsViewList.index(item)
-            exitFlag = 1
-            break
+    opts = ixNet.execute('GetDefaultSnapshotSettings')
 
-    if exitFlag == 0:
-        print '\nNo such statistic view name: ', viewCaption
-        sys.exit()
+    filePathToChange = 'Snapshot.View.Csv.Location: '+ path
+    opts[1] = filePathToChange
+    generatingModeToChange= 'Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"'
+    opts[2] = generatingModeToChange
+    fileNameToAppend = 'Snapshot.View.Csv.Name: '+ csvFileName ;# Flow_Statistics
+    opts.append(fileNameToAppend)
 
-    flowStatsView = statsViewList[indexOfProtocolStats]
+    ixNet.execute('TakeViewCSVSnapshot', listOfTrafficStats, opts)
 
-    statName = flowStatsView.split('/')[-1]
-    # view:"Flow Statistics"
-    statName = statName.split(':')[-1]
-    statName = statName.replace('"', '')
+    if copyToLocalPathAndFileName[-1] != '/':
+        copyToLocalPath = copyToLocalPath + '/'
 
-    # flowStatsView is ::ixNet::OBJ-/statistics/view:"Flow Statistics", 13 
-    print '\nflowStatsView is %s, %d'  % (flowStatsView, indexOfProtocolStats)
+    if osPlatform == 'windows':
+        readPath = path + '\\' + csvFileName + '.csv'
+        writePath = copyToLocalPath + csvFileName + '.csv'
+        
+    if osPlatform == 'linux':
+        readPath = '/home/ixia_logs/{}.csv'.format(csvFileName)
+        writePath = '{}{}.csv'.format(copyToLocalPath, csvFileName)
 
-    # csvSnapshot = ::ixNet::OBJ-/statistics/csvSnapshot 
-    csvSnapshot = root+'statistics'+'/csvSnapshot'
-
-    # Note that this setting takes a list, so a single value doesn't work
-    ixNet.setAttribute(csvSnapshot, '-views', [flowStatsView])
-    ixNet.commit()
-
-    confirmSetView = ixNet.getAttribute(csvSnapshot, '-views')
-
-    # opts: {Snapshot.View.Contents: "allPages"} 
-    #       {Snapshot.View.Csv.Location: C:\Results} 
-    #       {Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"} 
-    #       {Snapshot.View.Csv.StringQuotes: "False"} 
-    #       {Snapshot.View.Csv.SupportsCSVSorting: "False"} 
-    #       {Snapshot.View.Csv.FormatTimestamp: "True"} 
-    #       {Snapshot.View.Csv.DumpTxPortLabelMap: "False"} 
-    #       {Snapshot.View.Csv.DecimalPrecision: "3"} 
-    #       {Snapshot.Settings.Name: Flow_Statistics} 
-    #       {Snapshot.View.Csv.Name: Flow_Statistics}
-
-    #% set statPath ::ixNet::OBJ-/statistics/csvSnapshot
-    #::ixNet::OBJ-/statistics/csvSnapshot
-    #% ixNet help $statPath
-    #Attributes:
-    #  -csvDecimalPrecision (readOnly=False, type=kInteger)
-    #  -csvDumpTxPortLabelMap (readOnly=False, type=kBool)
-    #  -csvFormatTimestamp (readOnly=False, type=kBool)
-    #  -csvLocation (readOnly=False, type=kString)
-    #  -csvStringQuotes (readOnly=False, type=kBool)
-    #  -csvSupportsCSVSorting (readOnly=False, type=kBool)
-    #  -nextGenRefreshBeforeSnapshot (readOnly=False, type=kBool)
-    #  -snapshotSettingsName (readOnly=True, type=kString)
-    #  -snapshotViewContents (readOnly=False, type=kEnumValue=allPages,currentPage)
-    #  -snapshotViewCsvGenerationMode (readOnly=False, type=kEnumValue=appendCSVFile,newCSVFile,overwriteCSVFile)
-    #  -views (readOnly=False, type=kArray[kObjref=/statistics/view])
-    #Execs:
-    #  resetToDefaults (kObjref=/statistics/csvSnapshot)
-    #  takeCsvSnapshot (kObjref=/statistics/csvSnapshot)
-
-    ixNet.setAttribute(csvSnapshot, '-csvStringQuotes', 'False')
-    ixNet.setAttribute(csvSnapshot, '-snapshotViewContents', 'allPages')
-    ixNet.setAttribute(csvSnapshot, '-snapshotViewCsvGenerationMode', 'kOverwriteCSVFile')
-    ixNet.setAttribute(csvSnapshot, '-snapshotSettingsName', statName)
-    ixNet.setAttribute(csvSnapshot, '-csvFormatTimestamp', 'False')
-    ixNet.setAttribute(csvSnapshot, '-csvLocation', path)
-    ixNet.commit()
-
-    ixNet.execute('takeCsvSnapshot',csvSnapshot)
-    readFrom = ixNet.readFrom('%s\\%s.csv' % (path,statName), "-ixNetRelative")
-    writeTo = ixNet.writeTo(copyToLocalPathAndFileName, '-overwrite')
-    ixNet.execute('copyFile',readFrom, writeTo)
+    ixNet.execute('copyFile', ixNet.readFrom(readPath, '-ixNetRelative'), ixNet.writeTo(writePath, '-overwrite'))
 
 
 def GetVportConnectedToPortPy(vport):

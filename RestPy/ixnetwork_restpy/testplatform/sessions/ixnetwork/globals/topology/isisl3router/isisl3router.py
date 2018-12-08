@@ -91,60 +91,6 @@ class IsisL3Router(Base):
 		return self._get_attribute('descriptiveName')
 
 	@property
-	def LinkMsdSubTlvType(self):
-		"""This specifies the type of Link MSD sub-TLV
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('linkMsdSubTlvType')
-
-	@property
-	def MaxEndDMsdType(self):
-		"""This specifies the type of Max End D MSD
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxEndDMsdType')
-
-	@property
-	def MaxEndPopMsdType(self):
-		"""This specifies the type of Max End Pop MSD
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxEndPopMsdType')
-
-	@property
-	def MaxSegmentsLeftMsdType(self):
-		"""This specifies the type of Max Segments Left MSD
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxSegmentsLeftMsdType')
-
-	@property
-	def MaxTEncapMsdType(self):
-		"""This specifies the type of Max T Encap MSD
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxTEncapMsdType')
-
-	@property
-	def MaxTInsertMsdType(self):
-		"""This specifies the type of Max T Insert MSD
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('maxTInsertMsdType')
-
-	@property
 	def Name(self):
 		"""Name of NGPF element, guaranteed to be unique in Scenario
 
@@ -164,15 +110,6 @@ class IsisL3Router(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('noOfLSPsOrMgroupPDUsPerInterval')
-
-	@property
-	def NodeMsdSubTlvType(self):
-		"""This specifies the type of Node MSD sub-TLV
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('nodeMsdSubTlvType')
 
 	@property
 	def RateControlInterval(self):
@@ -229,6 +166,15 @@ class IsisL3Router(Base):
 		return self._get_attribute('srmsPreferenceSubTlvType')
 
 	@property
+	def Srv6AdjSIDSubTlvType(self):
+		"""This specifies the type of SRv6 Adjacency-SID sub-TLV
+
+		Returns:
+			obj(ixnetwork_restpy.multivalue.Multivalue)
+		"""
+		return self._get_attribute('srv6AdjSIDSubTlvType')
+
+	@property
 	def Srv6CapabilitiesSubTlvType(self):
 		"""This specifies the type of SRv6 Capabilities sub-TLV
 
@@ -238,40 +184,22 @@ class IsisL3Router(Base):
 		return self._get_attribute('srv6CapabilitiesSubTlvType')
 
 	@property
-	def Srv6EndSidSubTlvType(self):
-		"""This specifies the type of SRv6 End SID sub-TLV
+	def Srv6LANAdjSIDSubTlvType(self):
+		"""This specifies the type of SRv6 LAN Adjacency-SID sub-TLV
 
 		Returns:
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
-		return self._get_attribute('srv6EndSidSubTlvType')
+		return self._get_attribute('srv6LANAdjSIDSubTlvType')
 
 	@property
-	def Srv6EndXSidSubTlvType(self):
-		"""This specifies the type of SRv6 End.X SID sub-TLV
+	def Srv6NodeSIDTlvType(self):
+		"""This specifies the type of SRv6 Node SID TLV
 
 		Returns:
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
-		return self._get_attribute('srv6EndXSidSubTlvType')
-
-	@property
-	def Srv6LanEndXSidSubTlvType(self):
-		"""This specifies the type of SRv6 LAN End.X SID sub-TLV
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('srv6LanEndXSidSubTlvType')
-
-	@property
-	def Srv6SidLocatorTlvType(self):
-		"""SRv6 SID Locator Tlv Type
-
-		Returns:
-			obj(ixnetwork_restpy.multivalue.Multivalue)
-		"""
-		return self._get_attribute('srv6SidLocatorTlvType')
+		return self._get_attribute('srv6NodeSIDTlvType')
 
 	def find(self, Count=None, DescriptiveName=None, Name=None, RowNames=None):
 		"""Finds and retrieves isisL3Router data from the server.
@@ -307,3 +235,30 @@ class IsisL3Router(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, BIERInfoSubTLVType=None, NoOfLSPsOrMgroupPDUsPerInterval=None, RateControlInterval=None, SendP2PHellosToUnicastMAC=None, SrDraftExtension=None, SrlbSubTlvType=None, SrmsPreferenceSubTlvType=None, Srv6AdjSIDSubTlvType=None, Srv6CapabilitiesSubTlvType=None, Srv6LANAdjSIDSubTlvType=None, Srv6NodeSIDTlvType=None):
+		"""Base class infrastructure that gets a list of isisL3Router device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BIERInfoSubTLVType (str): optional regex of bIERInfoSubTLVType
+			NoOfLSPsOrMgroupPDUsPerInterval (str): optional regex of noOfLSPsOrMgroupPDUsPerInterval
+			RateControlInterval (str): optional regex of rateControlInterval
+			SendP2PHellosToUnicastMAC (str): optional regex of sendP2PHellosToUnicastMAC
+			SrDraftExtension (str): optional regex of srDraftExtension
+			SrlbSubTlvType (str): optional regex of srlbSubTlvType
+			SrmsPreferenceSubTlvType (str): optional regex of srmsPreferenceSubTlvType
+			Srv6AdjSIDSubTlvType (str): optional regex of srv6AdjSIDSubTlvType
+			Srv6CapabilitiesSubTlvType (str): optional regex of srv6CapabilitiesSubTlvType
+			Srv6LANAdjSIDSubTlvType (str): optional regex of srv6LANAdjSIDSubTlvType
+			Srv6NodeSIDTlvType (str): optional regex of srv6NodeSIDTlvType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

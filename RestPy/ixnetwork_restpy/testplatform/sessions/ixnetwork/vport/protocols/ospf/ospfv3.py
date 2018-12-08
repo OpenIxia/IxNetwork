@@ -51,7 +51,7 @@ class OspfV3(Base):
 
 	@property
 	def EnableDrOrBdr(self):
-		"""Enables the OSPF Router to participate in DR/BDR election process
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class OspfV3(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables this emulated OSPFv3 router.
+		"""
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class OspfV3(Base):
 
 	@property
 	def RunningState(self):
-		"""The current state of the OSPFv6 router.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -85,14 +85,12 @@ class OspfV3(Base):
 	def GracefulRouterRestart(self, Arg2):
 		"""Executes the gracefulRouterRestart operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ospfV3)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router])): NOT DEFINED
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router])): 
 
 		Returns:
-			str: NOT DEFINED
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -104,17 +102,15 @@ class OspfV3(Base):
 	def GracefulRouterRestart(self, Arg2, Arg3, Arg4, Arg5):
 		"""Executes the gracefulRouterRestart operation on the server.
 
-		NOT DEFINED
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ospfV3)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router])): NOT DEFINED
-			Arg3 (number): NOT DEFINED
-			Arg4 (str(softwareReloadOrUpgrade|softwareRestart|switchToRedundantControlProcessor|unknown)): NOT DEFINED
-			Arg5 (number): NOT DEFINED
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router])): 
+			Arg3 (number): 
+			Arg4 (str(softwareReloadOrUpgrade|softwareRestart|switchToRedundantControlProcessor|unknown)): 
+			Arg5 (number): 
 
 		Returns:
-			str: NOT DEFINED
+			str: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -125,8 +121,6 @@ class OspfV3(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts the OSPFv3 protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ospfV3)): The method internally sets Arg1 to the current href for this instance
@@ -140,8 +134,6 @@ class OspfV3(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops the OSPFv3 protocol on a port or group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ospfV3)): The method internally sets Arg1 to the current href for this instance

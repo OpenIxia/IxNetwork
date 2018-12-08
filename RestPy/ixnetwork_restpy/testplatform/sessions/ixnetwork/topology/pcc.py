@@ -539,6 +539,42 @@ class Pcc(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, Authentication=None, BurstInterval=None, DeadInterval=None, ErrorValue=None, KeepaliveInterval=None, MD5Key=None, MaxLspsPerPcRpt=None, MaxReconnectInterval=None, MaxRequestedLspPerInterval=None, MaxSyncLspPerInterval=None, MaximumSidDepth=None, PccPpagTLVType=None, PceIpv4Address=None, RateControl=None, ReconnectInterval=None, ReturnInstantiationError=None, SrPceCapability=None, StateTimeoutInterval=None, TcpPort=None):
+		"""Base class infrastructure that gets a list of pcc device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			Authentication (str): optional regex of authentication
+			BurstInterval (str): optional regex of burstInterval
+			DeadInterval (str): optional regex of deadInterval
+			ErrorValue (str): optional regex of errorValue
+			KeepaliveInterval (str): optional regex of keepaliveInterval
+			MD5Key (str): optional regex of mD5Key
+			MaxLspsPerPcRpt (str): optional regex of maxLspsPerPcRpt
+			MaxReconnectInterval (str): optional regex of maxReconnectInterval
+			MaxRequestedLspPerInterval (str): optional regex of maxRequestedLspPerInterval
+			MaxSyncLspPerInterval (str): optional regex of maxSyncLspPerInterval
+			MaximumSidDepth (str): optional regex of maximumSidDepth
+			PccPpagTLVType (str): optional regex of pccPpagTLVType
+			PceIpv4Address (str): optional regex of pceIpv4Address
+			RateControl (str): optional regex of rateControl
+			ReconnectInterval (str): optional regex of reconnectInterval
+			ReturnInstantiationError (str): optional regex of returnInstantiationError
+			SrPceCapability (str): optional regex of srPceCapability
+			StateTimeoutInterval (str): optional regex of stateTimeoutInterval
+			TcpPort (str): optional regex of tcpPort
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearPccLearnedInfoInClient(self):
 		"""Executes the clearPccLearnedInfoInClient operation on the server.
 

@@ -37,7 +37,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def ApplyActions(self):
-		"""Select the type of apply action instructions that the table flow entry will support. The selected actions associated with a flow are applied immediately.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def ApplyActionsMiss(self):
-		"""Select the type of apply action miss instructions that the table miss flow entry will support.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def ApplySetField(self):
-		"""Apply set field property.
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def ApplySetFieldMiss(self):
-		"""Apply set field for table-miss.
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def Experimenter(self):
-		"""This view lists all the experimenter properties that can be configured. Experimenter messages provide a standard way for OpenFlow switches to offer additional functionality within the OpenFlow message type space.
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def ExperimenterMiss(self):
-		"""Experimenter for table-miss.
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def Instruction(self):
-		"""It select the type of instructions that the table flow entry will support
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def InstructionMiss(self):
-		"""Select the type of instruction miss capabilities that the table miss flow entry will support.
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def Match(self):
-		"""Select the type of match instructions that the table will support.
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def NextTable(self):
-		"""Specify the array of tables that can be directly reached from the present table using the GoTo Table instruction.
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def NextTableMiss(self):
-		"""Specify the Next table Miss value.
+		"""
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def Wildcards(self):
-		"""Select the type of wildcard instructions that the table will support.
+		"""
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def WriteActions(self):
-		"""Select the type of write action instructions that the table flow entry will support.
+		"""
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def WriteActionsMiss(self):
-		"""Select the type of write action miss instructions that the table miss flow entry will support.
+		"""
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def WriteSetField(self):
-		"""Apply set field for table-miss.
+		"""
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class FeaturesSupported(Base):
 
 	@property
 	def WriteSetFieldMiss(self):
-		"""Write set field for table-miss.
+		"""
 
 		Returns:
 			bool

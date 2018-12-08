@@ -52,7 +52,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, it enables or disables the simulated router.
+		"""
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""This signifies the ID of the simulated router, expressed as an IP address.
+		"""
 
 		Returns:
 			str
@@ -78,8 +78,8 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true, it enables or disables the simulated router.
-			RouterId (str): This signifies the ID of the simulated router, expressed as an IP address.
+			Enabled (bool): 
+			RouterId (str): 
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -105,8 +105,8 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			Enabled (bool): If true, it enables or disables the simulated router.
-			RouterId (str): This signifies the ID of the simulated router, expressed as an IP address.
+			Enabled (bool): 
+			RouterId (str): 
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index

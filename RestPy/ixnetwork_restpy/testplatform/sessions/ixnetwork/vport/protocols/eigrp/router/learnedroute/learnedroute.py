@@ -37,7 +37,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Destination(self):
-		"""(Read-only) The destination network that was advertised in the learned route of IPv4/IPv6.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Fd(self):
-		"""(Read-only) The feasible distance. The sum of the Reported Distance and the Link Cost of the interface.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedRoute(Base):
 
 	@property
 	def HopCount(self):
-		"""(Read-only) The hop count of the route learned from the neighbor.
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Neighbor(self):
-		"""(Read-only) The neighbor from which the route was learned.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class LearnedRoute(Base):
 
 	@property
 	def NextHop(self):
-		"""(Read-only) The next hop on the path to the destination contained in the learned route of IPv4/Ipv6.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Prefix(self):
-		"""(Read-only) IP prefix length for the route.
+		"""
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Rd(self):
-		"""(Read-only) The reported distance of the route advertised by the neighbor. It is calculated based on bandwidth, load, delay, and reliability.
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Type(self):
-		"""(Read-only) Indicates whether it is an internal or external route.
+		"""
 
 		Returns:
 			number
@@ -114,14 +114,14 @@ class LearnedRoute(Base):
 		By default the find method takes no parameters and will retrieve all learnedRoute data from the server.
 
 		Args:
-			Destination (str): (Read-only) The destination network that was advertised in the learned route of IPv4/IPv6.
-			Fd (number): (Read-only) The feasible distance. The sum of the Reported Distance and the Link Cost of the interface.
-			HopCount (number): (Read-only) The hop count of the route learned from the neighbor.
-			Neighbor (str): (Read-only) The neighbor from which the route was learned.
-			NextHop (str): (Read-only) The next hop on the path to the destination contained in the learned route of IPv4/Ipv6.
-			Prefix (number): (Read-only) IP prefix length for the route.
-			Rd (number): (Read-only) The reported distance of the route advertised by the neighbor. It is calculated based on bandwidth, load, delay, and reliability.
-			Type (number): (Read-only) Indicates whether it is an internal or external route.
+			Destination (str): 
+			Fd (number): 
+			HopCount (number): 
+			Neighbor (str): 
+			NextHop (str): 
+			Prefix (number): 
+			Rd (number): 
+			Type (number): 
 
 		Returns:
 			self: This instance with matching learnedRoute data retrieved from the server available through an iterator or index

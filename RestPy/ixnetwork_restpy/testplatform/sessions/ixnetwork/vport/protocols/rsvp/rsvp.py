@@ -51,7 +51,7 @@ class Rsvp(Base):
 
 	@property
 	def EnableBgpOverLsp(self):
-		"""Enables the ability to exchange labels over LSP for VPNs.
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Rsvp(Base):
 
 	@property
 	def EnableControlLspInitiationRate(self):
-		"""Controls the LSP initiation rate.
+		"""
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class Rsvp(Base):
 
 	@property
 	def EnableShowTimeValue(self):
-		"""If true, allows to calculate LSP/sub LSP setup time. When a first path message is sent for an LSP or sub LSP, the state machine takes the time stamp and stores it in the internal structure. It repeats this, when a reserve message is received for that LSP or sub LSP.
+		"""
 
 		Returns:
 			bool
@@ -87,7 +87,7 @@ class Rsvp(Base):
 
 	@property
 	def EnableVpnLabelExchangeOverLsp(self):
-		"""If true, enables VPN label exchange over LSP
+		"""
 
 		Returns:
 			bool
@@ -99,7 +99,7 @@ class Rsvp(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables or disables the use of this emulated RSVP router in the emulated RSVP network. (default = disabled)
+		"""
 
 		Returns:
 			bool
@@ -111,7 +111,7 @@ class Rsvp(Base):
 
 	@property
 	def MaxLspInitiationsPerSec(self):
-		"""The maximum number of LSP Initiations sent per second.
+		"""
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class Rsvp(Base):
 
 	@property
 	def RunningState(self):
-		"""The current running state of the RSVP server.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -132,7 +132,7 @@ class Rsvp(Base):
 
 	@property
 	def UseTransportLabelsForMplsOam(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -144,8 +144,6 @@ class Rsvp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		Starts RSVP on a port or a group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=rsvp)): The method internally sets Arg1 to the current href for this instance
@@ -159,8 +157,6 @@ class Rsvp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		Stops RSVP on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=rsvp)): The method internally sets Arg1 to the current href for this instance

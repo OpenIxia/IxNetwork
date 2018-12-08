@@ -117,6 +117,24 @@ class IsisL3PseudoIfaceAttPoint2Config(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, LinkMetric=None):
+		"""Base class infrastructure that gets a list of isisL3PseudoIfaceAttPoint2Config device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			LinkMetric (str): optional regex of linkMetric
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Disconnect(self):
 		"""Executes the disconnect operation on the server.
 

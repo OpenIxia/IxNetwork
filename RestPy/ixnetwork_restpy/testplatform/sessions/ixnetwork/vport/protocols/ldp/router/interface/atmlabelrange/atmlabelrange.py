@@ -38,7 +38,7 @@ class AtmLabelRange(Base):
 
 	@property
 	def MaxVci(self):
-		"""The maximum virtual circuit identifier (VCI) value that will be included in the ATM label range. The valid maximum VCI value = 65,535 [0xFFFF (hex)].
+		"""
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class AtmLabelRange(Base):
 
 	@property
 	def MaxVpi(self):
-		"""The maximum virtual path identifier (VPI) value that will be included in the ATM label range.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class AtmLabelRange(Base):
 
 	@property
 	def MinVci(self):
-		"""The minimum virtual circuit identifier (VCI) value that will be included in the ATM label range.The valid minimum VCI value = 33.
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class AtmLabelRange(Base):
 
 	@property
 	def MinVpi(self):
-		"""The minimum virtual path identifier (VPI) value that will be included in the ATM label range.
+		"""
 
 		Returns:
 			number
@@ -88,10 +88,10 @@ class AtmLabelRange(Base):
 		"""Adds a new atmLabelRange node on the server and retrieves it in this instance.
 
 		Args:
-			MaxVci (number): The maximum virtual circuit identifier (VCI) value that will be included in the ATM label range. The valid maximum VCI value = 65,535 [0xFFFF (hex)].
-			MaxVpi (number): The maximum virtual path identifier (VPI) value that will be included in the ATM label range.
-			MinVci (number): The minimum virtual circuit identifier (VCI) value that will be included in the ATM label range.The valid minimum VCI value = 33.
-			MinVpi (number): The minimum virtual path identifier (VPI) value that will be included in the ATM label range.
+			MaxVci (number): 
+			MaxVpi (number): 
+			MinVci (number): 
+			MinVpi (number): 
 
 		Returns:
 			self: This instance with all currently retrieved atmLabelRange data using find and the newly added atmLabelRange data available through an iterator or index
@@ -117,10 +117,10 @@ class AtmLabelRange(Base):
 		By default the find method takes no parameters and will retrieve all atmLabelRange data from the server.
 
 		Args:
-			MaxVci (number): The maximum virtual circuit identifier (VCI) value that will be included in the ATM label range. The valid maximum VCI value = 65,535 [0xFFFF (hex)].
-			MaxVpi (number): The maximum virtual path identifier (VPI) value that will be included in the ATM label range.
-			MinVci (number): The minimum virtual circuit identifier (VCI) value that will be included in the ATM label range.The valid minimum VCI value = 33.
-			MinVpi (number): The minimum virtual path identifier (VPI) value that will be included in the ATM label range.
+			MaxVci (number): 
+			MaxVpi (number): 
+			MinVci (number): 
+			MinVpi (number): 
 
 		Returns:
 			self: This instance with matching atmLabelRange data retrieved from the server available through an iterator or index

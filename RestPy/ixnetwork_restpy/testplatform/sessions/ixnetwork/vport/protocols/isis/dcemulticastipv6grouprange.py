@@ -38,7 +38,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables the Multicast IPv6 Group Range for a particular DCE ISIS route range. (default = false)
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def InterGroupUnicastIpv6Increment(self):
-		"""The IPv6 address format of the Unicast IPv6 between one or more node groups. (default = 0:0)
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def IntraGroupUnicastIpv6Increment(self):
-		"""The IPv6 address format of the Unicast IPv6 within a node group.
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def MulticastIpv6Count(self):
-		"""The number of Multicast IPv6 addresses.
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def MulticastIpv6Step(self):
-		"""The incremental value of Multicast IPv6 address.
+		"""
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def SourceGroupMapping(self):
-		"""The Source Group mapping type.
+		"""
 
 		Returns:
 			str(fullyMeshed|oneToOne|manualMapping)
@@ -110,7 +110,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def StartMulticastIpv6(self):
-		"""The IP address format of the starting Multicast IPv6 address.
+		"""
 
 		Returns:
 			str
@@ -122,7 +122,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def StartUnicastSourceIpv6(self):
-		"""The IPv6 address format of the starting Unicast Source IPv6.
+		"""
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def Topology(self):
-		"""The topology identifier to which the corresponding IPv6 belongs.
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def UnicastSourcesPerMulticastIpv6(self):
-		"""The number of Unicast Source for each Multicast IPv6 address.
+		"""
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class DceMulticastIpv6GroupRange(Base):
 
 	@property
 	def VlanId(self):
-		"""The VLAN ID of the enabled Multicast IPv6 Group Range.
+		"""
 
 		Returns:
 			number
@@ -172,17 +172,17 @@ class DceMulticastIpv6GroupRange(Base):
 		"""Adds a new dceMulticastIpv6GroupRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true, enables the Multicast IPv6 Group Range for a particular DCE ISIS route range. (default = false)
-			InterGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast IPv6 between one or more node groups. (default = 0:0)
-			IntraGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast IPv6 within a node group.
-			MulticastIpv6Count (number): The number of Multicast IPv6 addresses.
-			MulticastIpv6Step (str): The incremental value of Multicast IPv6 address.
-			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): The Source Group mapping type.
-			StartMulticastIpv6 (str): The IP address format of the starting Multicast IPv6 address.
-			StartUnicastSourceIpv6 (str): The IPv6 address format of the starting Unicast Source IPv6.
-			Topology (number): The topology identifier to which the corresponding IPv6 belongs.
-			UnicastSourcesPerMulticastIpv6 (number): The number of Unicast Source for each Multicast IPv6 address.
-			VlanId (number): The VLAN ID of the enabled Multicast IPv6 Group Range.
+			Enabled (bool): 
+			InterGroupUnicastIpv6Increment (str): 
+			IntraGroupUnicastIpv6Increment (str): 
+			MulticastIpv6Count (number): 
+			MulticastIpv6Step (str): 
+			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): 
+			StartMulticastIpv6 (str): 
+			StartUnicastSourceIpv6 (str): 
+			Topology (number): 
+			UnicastSourcesPerMulticastIpv6 (number): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with all currently retrieved dceMulticastIpv6GroupRange data using find and the newly added dceMulticastIpv6GroupRange data available through an iterator or index
@@ -208,17 +208,17 @@ class DceMulticastIpv6GroupRange(Base):
 		By default the find method takes no parameters and will retrieve all dceMulticastIpv6GroupRange data from the server.
 
 		Args:
-			Enabled (bool): If true, enables the Multicast IPv6 Group Range for a particular DCE ISIS route range. (default = false)
-			InterGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast IPv6 between one or more node groups. (default = 0:0)
-			IntraGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast IPv6 within a node group.
-			MulticastIpv6Count (number): The number of Multicast IPv6 addresses.
-			MulticastIpv6Step (str): The incremental value of Multicast IPv6 address.
-			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): The Source Group mapping type.
-			StartMulticastIpv6 (str): The IP address format of the starting Multicast IPv6 address.
-			StartUnicastSourceIpv6 (str): The IPv6 address format of the starting Unicast Source IPv6.
-			Topology (number): The topology identifier to which the corresponding IPv6 belongs.
-			UnicastSourcesPerMulticastIpv6 (number): The number of Unicast Source for each Multicast IPv6 address.
-			VlanId (number): The VLAN ID of the enabled Multicast IPv6 Group Range.
+			Enabled (bool): 
+			InterGroupUnicastIpv6Increment (str): 
+			IntraGroupUnicastIpv6Increment (str): 
+			MulticastIpv6Count (number): 
+			MulticastIpv6Step (str): 
+			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): 
+			StartMulticastIpv6 (str): 
+			StartUnicastSourceIpv6 (str): 
+			Topology (number): 
+			UnicastSourcesPerMulticastIpv6 (number): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with matching dceMulticastIpv6GroupRange data retrieved from the server available through an iterator or index

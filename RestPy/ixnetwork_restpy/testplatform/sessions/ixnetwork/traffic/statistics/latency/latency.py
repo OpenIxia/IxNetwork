@@ -37,7 +37,7 @@ class Latency(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, latency statistics is enabled and if false, latency statistics is disabled.
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Latency(Base):
 
 	@property
 	def Mode(self):
-		"""Latency statistics is generated according to the mode set if latency is enabled.
+		"""
 
 		Returns:
 			str(cutThrough|forwardingDelay|mef|storeForward)

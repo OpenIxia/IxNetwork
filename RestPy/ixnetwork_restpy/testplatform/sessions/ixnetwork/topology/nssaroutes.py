@@ -189,6 +189,32 @@ class NssaRoutes(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, ForwardingAddress=None, IncludeForwardingAddress=None, LinkStateId=None, LinkStateIdStep=None, Metric=None, NetworkAddress=None, Prefix=None, Propagate=None, RangeSize=None):
+		"""Base class infrastructure that gets a list of nssaRoutes device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ForwardingAddress (str): optional regex of forwardingAddress
+			IncludeForwardingAddress (str): optional regex of includeForwardingAddress
+			LinkStateId (str): optional regex of linkStateId
+			LinkStateIdStep (str): optional regex of linkStateIdStep
+			Metric (str): optional regex of metric
+			NetworkAddress (str): optional regex of networkAddress
+			Prefix (str): optional regex of prefix
+			Propagate (str): optional regex of propagate
+			RangeSize (str): optional regex of rangeSize
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Advertise(self):
 		"""Executes the advertise operation on the server.
 

@@ -52,7 +52,7 @@ class IxVmCard(Base):
 
 	@property
 	def CardId(self):
-		"""Represents slot on the chassis
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class IxVmCard(Base):
 
 	@property
 	def CardName(self):
-		"""Represents the card name
+		"""
 
 		Returns:
 			str
@@ -76,7 +76,7 @@ class IxVmCard(Base):
 
 	@property
 	def CardState(self):
-		"""Represents the card state
+		"""
 
 		Returns:
 			str(cardDisconnected|cardIpInUse|cardOK|cardRemoved|cardUnableToConnect|cardUnitialized|cardUnknownError|cardUnsynchronized|cardVersionMismatch)
@@ -85,7 +85,7 @@ class IxVmCard(Base):
 
 	@property
 	def KeepAliveTimeout(self):
-		"""Represents the keepalive timeout
+		"""
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class IxVmCard(Base):
 
 	@property
 	def ManagementIp(self):
-		"""Represents the management Ip
+		"""
 
 		Returns:
 			str
@@ -111,10 +111,10 @@ class IxVmCard(Base):
 		"""Adds a new ixVmCard node on the server and retrieves it in this instance.
 
 		Args:
-			CardId (str): Represents slot on the chassis
-			CardName (str): Represents the card name
-			KeepAliveTimeout (number): Represents the keepalive timeout
-			ManagementIp (str): Represents the management Ip
+			CardId (str): 
+			CardName (str): 
+			KeepAliveTimeout (number): 
+			ManagementIp (str): 
 
 		Returns:
 			self: This instance with all currently retrieved ixVmCard data using find and the newly added ixVmCard data available through an iterator or index
@@ -140,11 +140,11 @@ class IxVmCard(Base):
 		By default the find method takes no parameters and will retrieve all ixVmCard data from the server.
 
 		Args:
-			CardId (str): Represents slot on the chassis
-			CardName (str): Represents the card name
-			CardState (str(cardDisconnected|cardIpInUse|cardOK|cardRemoved|cardUnableToConnect|cardUnitialized|cardUnknownError|cardUnsynchronized|cardVersionMismatch)): Represents the card state
-			KeepAliveTimeout (number): Represents the keepalive timeout
-			ManagementIp (str): Represents the management Ip
+			CardId (str): 
+			CardName (str): 
+			CardState (str(cardDisconnected|cardIpInUse|cardOK|cardRemoved|cardUnableToConnect|cardUnitialized|cardUnknownError|cardUnsynchronized|cardVersionMismatch)): 
+			KeepAliveTimeout (number): 
+			ManagementIp (str): 
 
 		Returns:
 			self: This instance with matching ixVmCard data retrieved from the server available through an iterator or index

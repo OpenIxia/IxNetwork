@@ -276,3 +276,40 @@ class BgpEpePeerLinkList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('weight')
+
+	def get_device_ids(self, PortNames=None, Active=None, BBit=None, EnableLinkAddress=None, EnableLinkIdentifier=None, EnablePeerAdjSid=None, LBit=None, LinkAddressType=None, LinkLocalIdentifier=None, LinkNumber=None, LinkRemoteIdentifier=None, LocalIpv4LinkAddress=None, LocalIpv6LinkAddress=None, OtherBits=None, PBit=None, RemoteIpv4LinkAddress=None, RemoteIpv6LinkAddress=None, Reserved=None, SidIndex=None, SidIndexValue=None, VBit=None, Weight=None):
+		"""Base class infrastructure that gets a list of bgpEpePeerLinkList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BBit (str): optional regex of bBit
+			EnableLinkAddress (str): optional regex of enableLinkAddress
+			EnableLinkIdentifier (str): optional regex of enableLinkIdentifier
+			EnablePeerAdjSid (str): optional regex of enablePeerAdjSid
+			LBit (str): optional regex of lBit
+			LinkAddressType (str): optional regex of linkAddressType
+			LinkLocalIdentifier (str): optional regex of linkLocalIdentifier
+			LinkNumber (str): optional regex of linkNumber
+			LinkRemoteIdentifier (str): optional regex of linkRemoteIdentifier
+			LocalIpv4LinkAddress (str): optional regex of localIpv4LinkAddress
+			LocalIpv6LinkAddress (str): optional regex of localIpv6LinkAddress
+			OtherBits (str): optional regex of otherBits
+			PBit (str): optional regex of pBit
+			RemoteIpv4LinkAddress (str): optional regex of remoteIpv4LinkAddress
+			RemoteIpv6LinkAddress (str): optional regex of remoteIpv6LinkAddress
+			Reserved (str): optional regex of reserved
+			SidIndex (str): optional regex of sidIndex
+			SidIndexValue (str): optional regex of sidIndexValue
+			VBit (str): optional regex of vBit
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

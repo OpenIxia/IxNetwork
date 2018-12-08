@@ -126,3 +126,26 @@ class PceUpdateRsvpEroSubObjectList(Base):
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		return self._read(href)
+
+	def get_device_ids(self, PortNames=None, ActiveThisEro=None, AsNumber=None, Ipv4Prefix=None, Ipv6Prefix=None, LooseHop=None, PrefixLength=None, SubObjectType=None):
+		"""Base class infrastructure that gets a list of pceUpdateRsvpEroSubObjectList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ActiveThisEro (str): optional regex of activeThisEro
+			AsNumber (str): optional regex of asNumber
+			Ipv4Prefix (str): optional regex of ipv4Prefix
+			Ipv6Prefix (str): optional regex of ipv6Prefix
+			LooseHop (str): optional regex of looseHop
+			PrefixLength (str): optional regex of prefixLength
+			SubObjectType (str): optional regex of subObjectType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

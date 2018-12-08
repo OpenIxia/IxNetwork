@@ -1,9 +1,10 @@
-#!/opt/ActiveTcl-8.5/bin/tclsh
+#!/usr/bin/tclsh
 
 # Description
-#    Load a saved .ixncfg config file
-#       - If you want to use different ports, then set portList [list [$ixChassisIp, $cardId, $portId] ...]
+#    Connect to either a Windows API server or Linux API server
+#    Connect to chassis and ports
 #    Verify port state
+#    Create 2 BGP Topologies
 #    Start all protocols
 #    Start traffic
 #    Get stats
@@ -13,13 +14,13 @@
 #        - The Linux API server is a secured access device.
 #        - Uses SSL (HTTPS).
 #        - You must install:
-#             - OpenSSL for your Linux OS if running this script from Linux.
+#             - OpenSSL for your Linux OS if running this script from Linux: openssl-devel
 #             - TLS for TCL in order to connect to a Linux API server.
 #               Download from: https://sourceforge.net/projects/tls/files/tls
 #
-#    - Open README_LinuxApiServer file to download IxTclNetwork.
+#        - If you're using IxNetwork 8.40, read README_LinuxApiServer file to download IxTclNetwork.
+#        - If you're using IxNetwork 8.50+, do nothing.
 #    - TCL must have Tclx package
-#      If you could, install and use ActiveState TCL.
 #
 # Suports Windows API server and Linux API server
 #
@@ -27,27 +28,32 @@
 package req Tclx
 source api.tcl
 
+# If using IxNetwork 8.40 and follow instructions in README_LinuxApiServer
+#package req IxTclNetworkLinuxApiServer
+
+# IxNetwork 8.50+
+package req IxTclNetwork
+
 set osPlatform windows;# windows|linux
 
 if {$osPlatform == "windows"} {
     set apiServerIp 192.168.70.3
  }
 if {$osPlatform == "linux"} {
-    set apiServerIp 192.168.70.108
+    set apiServerIp 192.168.70.12
 }
 
-set ixNetworkVersion 8.40
+set ixNetworkVersion 8.51
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
-set licenseMode subscription 
+set licenseMode subscription
 set licenseTier tier3
 
-set ixChassisIp 192.168.70.11
-set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
+set ixChassisIp 192.168.70.128
+set portList [list "$ixChassisIp 1 1" "$ixChassisIp 1 2"]
 set port1 [list $ixChassisIp 1 1]
-set port2 [list $ixChassisIp 2 1]
+set port2 [list $ixChassisIp 1 2]
 
 if {$osPlatform == "linux"} {
-    package req IxTclNetworkLinuxApiServer 
    if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
 	exit
     }

@@ -38,7 +38,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def ArpViaInterface(self):
-		"""If selected, ARP request is conveyed through an Interface.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def DestinationPort(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def EnableVlan(self):
-		"""Select this check box to make VLAN available.
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def GatewayMac(self):
-		"""The Gateway MAC address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6Address(self):
-		"""Specify the IPv6 address of the Source Traffic Endpoint. The default value is 0.0.0.0.0.0.0.0
+		"""
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6AddressMask(self):
-		"""Specify the Mask value. The default value is 64.
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6CustomHeaderLength(self):
-		"""The Custom IPv6 Header Length value. The default value is 1.
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6CustomHeaderValue(self):
-		"""The Custom IPv6 Header Value. The default value is 00.
+		"""
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6CustomNextHeader(self):
-		"""The Custom IPv6 Next Header value. The default value is 1.
+		"""
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6Dscp(self):
-		"""The priority specified for the IP address. The default value is 0.
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6Ecn(self):
-		"""The ECN value specified for the IP address.
+		"""
 
 		Returns:
 			str
@@ -170,7 +170,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""The IPv6 Flow Label value.
+		"""
 
 		Returns:
 			str
@@ -182,7 +182,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Ipv6NextHeader(self):
-		"""The IPv6 Next Header value.
+		"""
 
 		Returns:
 			str(custom|tcp|udp)
@@ -194,7 +194,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def MacAddress(self):
-		"""The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+		"""
 
 		Returns:
 			str
@@ -206,7 +206,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def Name(self):
-		"""The name of the Traffic endpoint. It is an auto-populated field but can be customized for convenience.
+		"""
 
 		Returns:
 			str
@@ -218,7 +218,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def ProtocolInterface(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -230,7 +230,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def RangeSize(self):
-		"""Specify the size of the traffic range.
+		"""
 
 		Returns:
 			number
@@ -242,7 +242,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def SourcePort(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -254,7 +254,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def UdpDestination(self):
-		"""Specify the UDP Destination. The default value is 1.
+		"""
 
 		Returns:
 			str
@@ -266,7 +266,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def UdpSource(self):
-		"""Specify the UDP Source. The default value is 1.
+		"""
 
 		Returns:
 			str
@@ -278,7 +278,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def VlanCount(self):
-		"""Specify the VLAN count. The default value is 1.
+		"""
 
 		Returns:
 			number
@@ -290,7 +290,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def VlanId(self):
-		"""Specify the VLAN ID (Outer and Inner).
+		"""
 
 		Returns:
 			str
@@ -302,7 +302,7 @@ class Ipv6TrafficEndPoint(Base):
 
 	@property
 	def VlanPriority(self):
-		"""Specify the VLAN Priority (Outer and Inner).
+		"""
 
 		Returns:
 			str
@@ -316,29 +316,29 @@ class Ipv6TrafficEndPoint(Base):
 		"""Adds a new ipv6TrafficEndPoint node on the server and retrieves it in this instance.
 
 		Args:
-			ArpViaInterface (bool): If selected, ARP request is conveyed through an Interface.
-			DestinationPort (str): NOT DEFINED
-			EnableVlan (bool): Select this check box to make VLAN available.
-			GatewayMac (str): The Gateway MAC address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
-			Ipv6Address (str): Specify the IPv6 address of the Source Traffic Endpoint. The default value is 0.0.0.0.0.0.0.0
-			Ipv6AddressMask (number): Specify the Mask value. The default value is 64.
-			Ipv6CustomHeaderLength (number): The Custom IPv6 Header Length value. The default value is 1.
-			Ipv6CustomHeaderValue (str): The Custom IPv6 Header Value. The default value is 00.
-			Ipv6CustomNextHeader (str): The Custom IPv6 Next Header value. The default value is 1.
-			Ipv6Dscp (str): The priority specified for the IP address. The default value is 0.
-			Ipv6Ecn (str): The ECN value specified for the IP address.
-			Ipv6FlowLabel (str): The IPv6 Flow Label value.
-			Ipv6NextHeader (str(custom|tcp|udp)): The IPv6 Next Header value.
-			MacAddress (str): The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
-			Name (str): The name of the Traffic endpoint. It is an auto-populated field but can be customized for convenience.
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): NOT DEFINED
-			RangeSize (number): Specify the size of the traffic range.
-			SourcePort (str): NOT DEFINED
-			UdpDestination (str): Specify the UDP Destination. The default value is 1.
-			UdpSource (str): Specify the UDP Source. The default value is 1.
-			VlanCount (number): Specify the VLAN count. The default value is 1.
-			VlanId (str): Specify the VLAN ID (Outer and Inner).
-			VlanPriority (str): Specify the VLAN Priority (Outer and Inner).
+			ArpViaInterface (bool): 
+			DestinationPort (str): 
+			EnableVlan (bool): 
+			GatewayMac (str): 
+			Ipv6Address (str): 
+			Ipv6AddressMask (number): 
+			Ipv6CustomHeaderLength (number): 
+			Ipv6CustomHeaderValue (str): 
+			Ipv6CustomNextHeader (str): 
+			Ipv6Dscp (str): 
+			Ipv6Ecn (str): 
+			Ipv6FlowLabel (str): 
+			Ipv6NextHeader (str(custom|tcp|udp)): 
+			MacAddress (str): 
+			Name (str): 
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			RangeSize (number): 
+			SourcePort (str): 
+			UdpDestination (str): 
+			UdpSource (str): 
+			VlanCount (number): 
+			VlanId (str): 
+			VlanPriority (str): 
 
 		Returns:
 			self: This instance with all currently retrieved ipv6TrafficEndPoint data using find and the newly added ipv6TrafficEndPoint data available through an iterator or index
@@ -364,29 +364,29 @@ class Ipv6TrafficEndPoint(Base):
 		By default the find method takes no parameters and will retrieve all ipv6TrafficEndPoint data from the server.
 
 		Args:
-			ArpViaInterface (bool): If selected, ARP request is conveyed through an Interface.
-			DestinationPort (str): NOT DEFINED
-			EnableVlan (bool): Select this check box to make VLAN available.
-			GatewayMac (str): The Gateway MAC address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
-			Ipv6Address (str): Specify the IPv6 address of the Source Traffic Endpoint. The default value is 0.0.0.0.0.0.0.0
-			Ipv6AddressMask (number): Specify the Mask value. The default value is 64.
-			Ipv6CustomHeaderLength (number): The Custom IPv6 Header Length value. The default value is 1.
-			Ipv6CustomHeaderValue (str): The Custom IPv6 Header Value. The default value is 00.
-			Ipv6CustomNextHeader (str): The Custom IPv6 Next Header value. The default value is 1.
-			Ipv6Dscp (str): The priority specified for the IP address. The default value is 0.
-			Ipv6Ecn (str): The ECN value specified for the IP address.
-			Ipv6FlowLabel (str): The IPv6 Flow Label value.
-			Ipv6NextHeader (str(custom|tcp|udp)): The IPv6 Next Header value.
-			MacAddress (str): The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
-			Name (str): The name of the Traffic endpoint. It is an auto-populated field but can be customized for convenience.
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): NOT DEFINED
-			RangeSize (number): Specify the size of the traffic range.
-			SourcePort (str): NOT DEFINED
-			UdpDestination (str): Specify the UDP Destination. The default value is 1.
-			UdpSource (str): Specify the UDP Source. The default value is 1.
-			VlanCount (number): Specify the VLAN count. The default value is 1.
-			VlanId (str): Specify the VLAN ID (Outer and Inner).
-			VlanPriority (str): Specify the VLAN Priority (Outer and Inner).
+			ArpViaInterface (bool): 
+			DestinationPort (str): 
+			EnableVlan (bool): 
+			GatewayMac (str): 
+			Ipv6Address (str): 
+			Ipv6AddressMask (number): 
+			Ipv6CustomHeaderLength (number): 
+			Ipv6CustomHeaderValue (str): 
+			Ipv6CustomNextHeader (str): 
+			Ipv6Dscp (str): 
+			Ipv6Ecn (str): 
+			Ipv6FlowLabel (str): 
+			Ipv6NextHeader (str(custom|tcp|udp)): 
+			MacAddress (str): 
+			Name (str): 
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			RangeSize (number): 
+			SourcePort (str): 
+			UdpDestination (str): 
+			UdpSource (str): 
+			VlanCount (number): 
+			VlanId (str): 
+			VlanPriority (str): 
 
 		Returns:
 			self: This instance with matching ipv6TrafficEndPoint data retrieved from the server available through an iterator or index

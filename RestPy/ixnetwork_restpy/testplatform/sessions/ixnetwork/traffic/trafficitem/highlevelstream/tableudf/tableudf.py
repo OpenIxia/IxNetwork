@@ -51,7 +51,7 @@ class TableUdf(Base):
 
 	@property
 	def Enabled(self):
-		"""If enabled, enables the UDF table for this flow group if it is supported.
+		"""
 
 		Returns:
 			bool
@@ -68,7 +68,7 @@ class TableUdf(Base):
 		By default the find method takes no parameters and will retrieve all tableUdf data from the server.
 
 		Args:
-			Enabled (bool): If enabled, enables the UDF table for this flow group if it is supported.
+			Enabled (bool): 
 
 		Returns:
 			self: This instance with matching tableUdf data retrieved from the server available through an iterator or index

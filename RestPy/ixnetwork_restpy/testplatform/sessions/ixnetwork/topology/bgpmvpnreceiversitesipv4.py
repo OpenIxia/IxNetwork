@@ -378,6 +378,41 @@ class BgpMVpnReceiverSitesIpv4(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, BFRId=None, BFRIpv4Prefix=None, BFRIpv6Prefix=None, BFRPrefixType=None, SubDomainId=None, UseAutoSubDomainId=None, Active=None, CMulticastRouteType=None, DownstreamLabel=None, GroupAddressCount=None, GroupMaskWidth=None, SendTriggeredMulticastRoute=None, SourceAddressCount=None, SourceGroupMapping=None, SourceMaskWidth=None, StartGroupAddressIpv4=None, StartSourceAddressIpv4=None, StartSourceOrCrpAddressIpv4=None, SupportLeafADRoutesSending=None):
+		"""Base class infrastructure that gets a list of bgpMVpnReceiverSitesIpv4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BFRId (str): optional regex of BFRId
+			BFRIpv4Prefix (str): optional regex of BFRIpv4Prefix
+			BFRIpv6Prefix (str): optional regex of BFRIpv6Prefix
+			BFRPrefixType (str): optional regex of BFRPrefixType
+			SubDomainId (str): optional regex of SubDomainId
+			UseAutoSubDomainId (str): optional regex of UseAutoSubDomainId
+			Active (str): optional regex of active
+			CMulticastRouteType (str): optional regex of cMulticastRouteType
+			DownstreamLabel (str): optional regex of downstreamLabel
+			GroupAddressCount (str): optional regex of groupAddressCount
+			GroupMaskWidth (str): optional regex of groupMaskWidth
+			SendTriggeredMulticastRoute (str): optional regex of sendTriggeredMulticastRoute
+			SourceAddressCount (str): optional regex of sourceAddressCount
+			SourceGroupMapping (str): optional regex of sourceGroupMapping
+			SourceMaskWidth (str): optional regex of sourceMaskWidth
+			StartGroupAddressIpv4 (str): optional regex of startGroupAddressIpv4
+			StartSourceAddressIpv4 (str): optional regex of startSourceAddressIpv4
+			StartSourceOrCrpAddressIpv4 (str): optional regex of startSourceOrCrpAddressIpv4
+			SupportLeafADRoutesSending (str): optional regex of supportLeafADRoutesSending
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

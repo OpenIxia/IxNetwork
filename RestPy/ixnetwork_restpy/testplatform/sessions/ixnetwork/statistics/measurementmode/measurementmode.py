@@ -37,7 +37,7 @@ class MeasurementMode(Base):
 
 	@property
 	def MeasurementMode(self):
-		"""Mode of the measurement
+		"""
 
 		Returns:
 			str(cumulativeMode|instantaneousMode|mixedMode)

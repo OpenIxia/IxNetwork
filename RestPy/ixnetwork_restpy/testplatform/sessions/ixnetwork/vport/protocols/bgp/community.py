@@ -37,7 +37,7 @@ class Community(Base):
 
 	@property
 	def Val(self):
-		"""The value of the community attribute.
+		"""
 
 		Returns:
 			list(number)

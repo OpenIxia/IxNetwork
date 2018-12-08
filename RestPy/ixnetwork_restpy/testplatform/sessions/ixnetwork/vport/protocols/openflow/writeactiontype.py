@@ -37,7 +37,7 @@ class WriteActionType(Base):
 
 	@property
 	def CopyTtlIn(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class WriteActionType(Base):
 
 	@property
 	def CopyTtlOut(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class WriteActionType(Base):
 
 	@property
 	def DecrementMplsTtl(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class WriteActionType(Base):
 
 	@property
 	def DecrementNetworkTtl(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class WriteActionType(Base):
 
 	@property
 	def Experimenter(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class WriteActionType(Base):
 
 	@property
 	def Group(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class WriteActionType(Base):
 
 	@property
 	def Output(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class WriteActionType(Base):
 
 	@property
 	def PopMpls(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class WriteActionType(Base):
 
 	@property
 	def PopPbb(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class WriteActionType(Base):
 
 	@property
 	def PopVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class WriteActionType(Base):
 
 	@property
 	def PushMpls(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class WriteActionType(Base):
 
 	@property
 	def PushPbb(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class WriteActionType(Base):
 
 	@property
 	def PushVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class WriteActionType(Base):
 
 	@property
 	def SetField(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class WriteActionType(Base):
 
 	@property
 	def SetMplsTtl(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class WriteActionType(Base):
 
 	@property
 	def SetNetworkTtl(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class WriteActionType(Base):
 
 	@property
 	def SetQueue(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool

@@ -37,7 +37,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpDstHwAddr(self):
-		"""This describes the target hardware address in the ARP payload.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -49,7 +49,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpDstIpv4Addr(self):
-		"""This describes the target IPv4 address in the ARP payload.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -61,7 +61,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""This describes the ARP opcode.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -73,7 +73,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpSrcHwAddr(self):
-		"""This describes the source hardware address in the ARP payload.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -85,7 +85,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ArpSrcIpv4Addr(self):
-		"""This describes the source IPv4 address in the ARP payload.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -97,7 +97,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Cookie(self):
-		"""This describes the Cookie of the flow entry that was looked up. This is the opaque controller-issued identifier.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -109,7 +109,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""This describes the destination address of the Ethernet port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -121,7 +121,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def EthernetSource(self):
-		"""This describes the source address of the Ethernet port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -133,7 +133,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def EthernetType(self):
-		"""This describes the Ethernet type of the flow match.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -145,7 +145,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""This describes the data of the Experimenter.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -157,7 +157,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""This describes the data length of the Experimenter.
+		"""
 
 		Returns:
 			dict(arg1:number,arg2:str)
@@ -169,7 +169,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterField(self):
-		"""This describes the field type for experimenter match.
+		"""
 
 		Returns:
 			dict(arg1:number,arg2:str)
@@ -181,7 +181,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterHashmask(self):
-		"""This describes the experimenter hash mask value.
+		"""
 
 		Returns:
 			dict(arg1:bool,arg2:str)
@@ -193,7 +193,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""This describes the unique identifier for the Experimenter.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -205,7 +205,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""This describes the ICMP code.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -217,7 +217,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""This describes the ICMP type.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -229,7 +229,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""This describes the ICMPv6 code.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -241,7 +241,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""This describes the ICMPv6 type.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -253,7 +253,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def InPort(self):
-		"""This describes the input port used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -265,7 +265,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def IpDscp(self):
-		"""This describes the IP DSCP value for advertising.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -277,7 +277,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def IpEcn(self):
-		"""This describes the ECN bits of the IP header.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -289,7 +289,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def IpProtocol(self):
-		"""This describes the IP Protocol used.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -301,7 +301,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""This describes the IPv4 Destination address for the port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -313,7 +313,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""This describes the IPv4 source address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -325,7 +325,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""This describes the IPv6 destination address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -337,7 +337,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""This describes the IPv6 Extension Header pseudo-field.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -349,7 +349,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""This describes the IPv6 Flow label.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -361,7 +361,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6NdDll(self):
-		"""This describes the target link-layer address option in an IPv6 Neighbor Discovery message.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -373,7 +373,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""This describes the source link-layer address option in an IPv6 Neighbor Discovery message.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -385,7 +385,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""This describes the target address in an IPv6 Neighbor Discovery message.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -397,7 +397,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""This describes the IPv6 source address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -409,7 +409,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MetaData(self):
-		"""This describes the table metadata value used to pass information between tables.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -421,7 +421,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MplsBos(self):
-		"""This describes the BoS bit in the first MPLS shim header.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -433,7 +433,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MplsLabel(self):
-		"""This describes the LABEL in the first MPLS shim header.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -445,7 +445,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def MplsTc(self):
-		"""This describes the TC in the first MPLS shim header.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -457,7 +457,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def PbbIsid(self):
-		"""This describes the I-SID in the first PBB service instance tag.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -469,7 +469,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def PhysicalInPort(self):
-		"""This describes the physical In port value for this flow range. It is the underlying physical port when packet is received on a logical port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -481,7 +481,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def SctpDestination(self):
-		"""This describes the SCTP target port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -493,7 +493,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def SctpSource(self):
-		"""This describes the SCTP source port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -505,7 +505,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def TcpDestination(self):
-		"""This describes the TCP destination address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -517,7 +517,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def TcpSource(self):
-		"""This describes the TCP source address.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -529,7 +529,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def TunnelId(self):
-		"""This describes the unique identifier used for the Tunnel.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -541,7 +541,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def UdpDestination(self):
-		"""This describes the UDP destination port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -553,7 +553,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def UdpSource(self):
-		"""This describes the UDP source port.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -565,7 +565,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def VlanId(self):
-		"""This describes the unique VLAN Identifier.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)
@@ -577,7 +577,7 @@ class SwitchFlowMatchCriteria131TriggerAttributes(Base):
 
 	@property
 	def VlanPriority(self):
-		"""This describes the User Priority for this VLAN.
+		"""
 
 		Returns:
 			dict(arg1:str,arg2:str)

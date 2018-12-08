@@ -52,7 +52,7 @@ class UserLsaGroup(Base):
 
 	@property
 	def AreaId(self):
-		"""The area ID for the LSA group. (default = 0)
+		"""
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class UserLsaGroup(Base):
 
 	@property
 	def Description(self):
-		"""A commentary description for the user LSA group.
+		"""
 
 		Returns:
 			str
@@ -76,7 +76,7 @@ class UserLsaGroup(Base):
 
 	@property
 	def Enabled(self):
-		"""Enables the use of this router in the simulated OSPF network.
+		"""
 
 		Returns:
 			bool
@@ -90,9 +90,9 @@ class UserLsaGroup(Base):
 		"""Adds a new userLsaGroup node on the server and retrieves it in this instance.
 
 		Args:
-			AreaId (number): The area ID for the LSA group. (default = 0)
-			Description (str): A commentary description for the user LSA group.
-			Enabled (bool): Enables the use of this router in the simulated OSPF network.
+			AreaId (number): 
+			Description (str): 
+			Enabled (bool): 
 
 		Returns:
 			self: This instance with all currently retrieved userLsaGroup data using find and the newly added userLsaGroup data available through an iterator or index
@@ -118,9 +118,9 @@ class UserLsaGroup(Base):
 		By default the find method takes no parameters and will retrieve all userLsaGroup data from the server.
 
 		Args:
-			AreaId (number): The area ID for the LSA group. (default = 0)
-			Description (str): A commentary description for the user LSA group.
-			Enabled (bool): Enables the use of this router in the simulated OSPF network.
+			AreaId (number): 
+			Description (str): 
+			Enabled (bool): 
 
 		Returns:
 			self: This instance with matching userLsaGroup data retrieved from the server available through an iterator or index

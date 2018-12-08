@@ -51,7 +51,7 @@ class TraceRouteLearnedInfo(Base):
 
 	@property
 	def IncomingLabelOuterInner(self):
-		"""This signifies the incoming label information.
+		"""
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class TraceRouteLearnedInfo(Base):
 
 	@property
 	def NumberOfReplyingHops(self):
-		"""This signifies the total number of replying hops.
+		"""
 
 		Returns:
 			number
@@ -69,7 +69,7 @@ class TraceRouteLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelOuterInner(self):
-		"""This signifies the Outgoing Label information.
+		"""
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class TraceRouteLearnedInfo(Base):
 
 	@property
 	def Reachability(self):
-		"""This specifies whether the queried MEP could be reached or not, Failure or, Partial or, Complete.
+		"""
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class TraceRouteLearnedInfo(Base):
 
 	@property
 	def SenderHandle(self):
-		"""This signifies the sender handle details.
+		"""
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class TraceRouteLearnedInfo(Base):
 
 	@property
 	def Type(self):
-		"""This signifies the type of path over which the traceroute is carried over, can be LSP, PW or Nested PW and LSP.
+		"""
 
 		Returns:
 			str
@@ -110,12 +110,12 @@ class TraceRouteLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all traceRouteLearnedInfo data from the server.
 
 		Args:
-			IncomingLabelOuterInner (str): This signifies the incoming label information.
-			NumberOfReplyingHops (number): This signifies the total number of replying hops.
-			OutgoingLabelOuterInner (str): This signifies the Outgoing Label information.
-			Reachability (str): This specifies whether the queried MEP could be reached or not, Failure or, Partial or, Complete.
-			SenderHandle (number): This signifies the sender handle details.
-			Type (str): This signifies the type of path over which the traceroute is carried over, can be LSP, PW or Nested PW and LSP.
+			IncomingLabelOuterInner (str): 
+			NumberOfReplyingHops (number): 
+			OutgoingLabelOuterInner (str): 
+			Reachability (str): 
+			SenderHandle (number): 
+			Type (str): 
 
 		Returns:
 			self: This instance with matching traceRouteLearnedInfo data retrieved from the server available through an iterator or index

@@ -407,6 +407,36 @@ class Bfdv4Interface(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, ConfigureEchoSourceIp=None, EchoRxInterval=None, EchoTimeOut=None, EchoTxInterval=None, EnableControlPlaneIndependent=None, EnableDemandMode=None, FlapTxIntervals=None, IpDiffServ=None, MinRxInterval=None, PollInterval=None, SourceIp4=None, TimeoutMultiplier=None, TxInterval=None):
+		"""Base class infrastructure that gets a list of bfdv4Interface device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ConfigureEchoSourceIp (str): optional regex of configureEchoSourceIp
+			EchoRxInterval (str): optional regex of echoRxInterval
+			EchoTimeOut (str): optional regex of echoTimeOut
+			EchoTxInterval (str): optional regex of echoTxInterval
+			EnableControlPlaneIndependent (str): optional regex of enableControlPlaneIndependent
+			EnableDemandMode (str): optional regex of enableDemandMode
+			FlapTxIntervals (str): optional regex of flapTxIntervals
+			IpDiffServ (str): optional regex of ipDiffServ
+			MinRxInterval (str): optional regex of minRxInterval
+			PollInterval (str): optional regex of pollInterval
+			SourceIp4 (str): optional regex of sourceIp4
+			TimeoutMultiplier (str): optional regex of timeoutMultiplier
+			TxInterval (str): optional regex of txInterval
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearLearnedInfo(self):
 		"""Executes the clearLearnedInfo operation on the server.
 

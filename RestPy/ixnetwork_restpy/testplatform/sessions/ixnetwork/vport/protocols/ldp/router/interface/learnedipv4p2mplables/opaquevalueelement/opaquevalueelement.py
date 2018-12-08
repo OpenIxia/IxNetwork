@@ -37,7 +37,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Length(self):
-		"""Signifies the length.
+		"""
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Type(self):
-		"""Signifies teh type.
+		"""
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Value(self):
-		"""Signifies the value.
+		"""
 
 		Returns:
 			str
@@ -69,9 +69,9 @@ class OpaqueValueElement(Base):
 		By default the find method takes no parameters and will retrieve all opaqueValueElement data from the server.
 
 		Args:
-			Length (number): Signifies the length.
-			Type (number): Signifies teh type.
-			Value (str): Signifies the value.
+			Length (number): 
+			Type (number): 
+			Value (str): 
 
 		Returns:
 			self: This instance with matching opaqueValueElement data retrieved from the server available through an iterator or index

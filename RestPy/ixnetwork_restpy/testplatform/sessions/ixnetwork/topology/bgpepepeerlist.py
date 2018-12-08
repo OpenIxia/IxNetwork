@@ -261,3 +261,38 @@ class BgpEpePeerList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('weight')
+
+	def get_device_ids(self, PortNames=None, Active=None, BBit=None, BgpLocalRouterId=None, BgpRemoteRouterId=None, EnablePeerNodeSid=None, LBit=None, LocalAsn=None, OtherBits=None, PBit=None, PeerName=None, PeerSetGroup=None, RemoteAsn=None, Reserved=None, SidIndex=None, SidIndexValue=None, UseLocalConfedId=None, UseRemoteConfedId=None, VBit=None, Weight=None):
+		"""Base class infrastructure that gets a list of bgpEpePeerList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			BBit (str): optional regex of bBit
+			BgpLocalRouterId (str): optional regex of bgpLocalRouterId
+			BgpRemoteRouterId (str): optional regex of bgpRemoteRouterId
+			EnablePeerNodeSid (str): optional regex of enablePeerNodeSid
+			LBit (str): optional regex of lBit
+			LocalAsn (str): optional regex of localAsn
+			OtherBits (str): optional regex of otherBits
+			PBit (str): optional regex of pBit
+			PeerName (str): optional regex of peerName
+			PeerSetGroup (str): optional regex of peerSetGroup
+			RemoteAsn (str): optional regex of remoteAsn
+			Reserved (str): optional regex of reserved
+			SidIndex (str): optional regex of sidIndex
+			SidIndexValue (str): optional regex of sidIndexValue
+			UseLocalConfedId (str): optional regex of useLocalConfedId
+			UseRemoteConfedId (str): optional regex of useRemoteConfedId
+			VBit (str): optional regex of vBit
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

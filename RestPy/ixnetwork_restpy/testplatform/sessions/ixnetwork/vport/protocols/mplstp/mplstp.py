@@ -51,7 +51,7 @@ class MplsTp(Base):
 
 	@property
 	def ApsChannelType(self):
-		"""This signifies the Automatic Protection Switching Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -63,7 +63,7 @@ class MplsTp(Base):
 
 	@property
 	def BfdCcChannelType(self):
-		"""This signifies the BFD Continuity Check Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -75,7 +75,7 @@ class MplsTp(Base):
 
 	@property
 	def DelayManagementChannelType(self):
-		"""This signifies the Delay Measurement Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class MplsTp(Base):
 
 	@property
 	def EnableHighPerformanceMode(self):
-		"""This signifies select the checkbox to enable high performance mode.
+		"""
 
 		Returns:
 			bool
@@ -99,7 +99,7 @@ class MplsTp(Base):
 
 	@property
 	def Enabled(self):
-		"""This signifies that the mplsTp protocol is enabled.
+		"""
 
 		Returns:
 			bool
@@ -111,7 +111,7 @@ class MplsTp(Base):
 
 	@property
 	def FaultManagementChannelType(self):
-		"""This signifies the Fault Management Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class MplsTp(Base):
 
 	@property
 	def LossMeasurementChannelType(self):
-		"""This signifies the Loss Measurement Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -135,7 +135,7 @@ class MplsTp(Base):
 
 	@property
 	def OnDemandCvChannelType(self):
-		"""This signifies the On Demand Connectivity Verification Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -147,7 +147,7 @@ class MplsTp(Base):
 
 	@property
 	def PwStatusChannelType(self):
-		"""This signifies the Pseudowire Status Channel Type.
+		"""
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class MplsTp(Base):
 
 	@property
 	def RunningState(self):
-		"""This signifies the running state of the protocol. Possible values include Started, Starting, Unknown, Stopping and Stopped.
+		"""
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -168,7 +168,7 @@ class MplsTp(Base):
 
 	@property
 	def Y1731ChannelType(self):
-		"""This signifies the Y.1731 Channel Type in hexadecimal format.
+		"""
 
 		Returns:
 			str
@@ -180,8 +180,6 @@ class MplsTp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
-
-		This signifies the starting of the MPLSTP protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mplsTp)): The method internally sets Arg1 to the current href for this instance
@@ -195,8 +193,6 @@ class MplsTp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
-
-		This signifies the stopping of the MPLSTP protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mplsTp)): The method internally sets Arg1 to the current href for this instance

@@ -388,6 +388,39 @@ class BgpIpv4AdL2Vpn(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AsNumberVplsId=None, AsNumberVplsRd=None, AsNumberVplsRt=None, AssignedNumberVplsId=None, AssignedNumberVplsRd=None, AssignedNumberVplsRt=None, ImportRDAsRT=None, ImportVplsIdAsRd=None, IpAddressVplsId=None, IpAddressVplsRd=None, IpAddressVplsRt=None, NumberVsiId=None, TypeVplsId=None, TypeVplsRd=None, TypeVplsRt=None, TypeVsiId=None):
+		"""Base class infrastructure that gets a list of bgpIpv4AdL2Vpn device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AsNumberVplsId (str): optional regex of asNumberVplsId
+			AsNumberVplsRd (str): optional regex of asNumberVplsRd
+			AsNumberVplsRt (str): optional regex of asNumberVplsRt
+			AssignedNumberVplsId (str): optional regex of assignedNumberVplsId
+			AssignedNumberVplsRd (str): optional regex of assignedNumberVplsRd
+			AssignedNumberVplsRt (str): optional regex of assignedNumberVplsRt
+			ImportRDAsRT (str): optional regex of importRDAsRT
+			ImportVplsIdAsRd (str): optional regex of importVplsIdAsRd
+			IpAddressVplsId (str): optional regex of ipAddressVplsId
+			IpAddressVplsRd (str): optional regex of ipAddressVplsRd
+			IpAddressVplsRt (str): optional regex of ipAddressVplsRt
+			NumberVsiId (str): optional regex of numberVsiId
+			TypeVplsId (str): optional regex of typeVplsId
+			TypeVplsRd (str): optional regex of typeVplsRd
+			TypeVplsRt (str): optional regex of typeVplsRt
+			TypeVsiId (str): optional regex of typeVsiId
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ReadvertiseADVPLSRoute(self):
 		"""Executes the readvertiseADVPLSRoute operation on the server.
 

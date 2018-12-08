@@ -751,6 +751,66 @@ class Ldpotherpws(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, ATMPresent=None, Active=None, AutoPeerID=None, BfdPwCV=None, BfdUdpCV=None, CAS=None, CBitEnabled=None, CEMOption=None, CEMOptionPresent=None, CEMPayLoadEnable=None, CEMPayload=None, DescEnabled=None, Description=None, DownInterval=None, DownStart=None, EnableCCCVNegotiation=None, EnablePWStatus=None, Frequency=None, GroupId=None, IfaceType=None, IncludeRTPHeader=None, IncludeSSRC=None, IncludeTDMBitrate=None, IncludeTDMOption=None, IncludeTDMPayload=None, Ipv6PeerId=None, LSPPingCV=None, Label=None, MaxATMCells=None, Mtu=None, PWACHCC=None, PWStatusCode=None, PayloadType=None, PeerId=None, PwStatusSendNotification=None, RepeatCount=None, RouterAlertCC=None, SP=None, SSRC=None, TDMBitrate=None, TDMDataSize=None, TimestampMode=None, UpInterval=None, VCIDStart=None):
+		"""Base class infrastructure that gets a list of ldpotherpws device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ATMPresent (str): optional regex of aTMPresent
+			Active (str): optional regex of active
+			AutoPeerID (str): optional regex of autoPeerID
+			BfdPwCV (str): optional regex of bfdPwCV
+			BfdUdpCV (str): optional regex of bfdUdpCV
+			CAS (str): optional regex of cAS
+			CBitEnabled (str): optional regex of cBitEnabled
+			CEMOption (str): optional regex of cEMOption
+			CEMOptionPresent (str): optional regex of cEMOptionPresent
+			CEMPayLoadEnable (str): optional regex of cEMPayLoadEnable
+			CEMPayload (str): optional regex of cEMPayload
+			DescEnabled (str): optional regex of descEnabled
+			Description (str): optional regex of description
+			DownInterval (str): optional regex of downInterval
+			DownStart (str): optional regex of downStart
+			EnableCCCVNegotiation (str): optional regex of enableCCCVNegotiation
+			EnablePWStatus (str): optional regex of enablePWStatus
+			Frequency (str): optional regex of frequency
+			GroupId (str): optional regex of groupId
+			IfaceType (str): optional regex of ifaceType
+			IncludeRTPHeader (str): optional regex of includeRTPHeader
+			IncludeSSRC (str): optional regex of includeSSRC
+			IncludeTDMBitrate (str): optional regex of includeTDMBitrate
+			IncludeTDMOption (str): optional regex of includeTDMOption
+			IncludeTDMPayload (str): optional regex of includeTDMPayload
+			Ipv6PeerId (str): optional regex of ipv6PeerId
+			LSPPingCV (str): optional regex of lSPPingCV
+			Label (str): optional regex of label
+			MaxATMCells (str): optional regex of maxATMCells
+			Mtu (str): optional regex of mtu
+			PWACHCC (str): optional regex of pWACHCC
+			PWStatusCode (str): optional regex of pWStatusCode
+			PayloadType (str): optional regex of payloadType
+			PeerId (str): optional regex of peerId
+			PwStatusSendNotification (str): optional regex of pwStatusSendNotification
+			RepeatCount (str): optional regex of repeatCount
+			RouterAlertCC (str): optional regex of routerAlertCC
+			SP (str): optional regex of sP
+			SSRC (str): optional regex of sSRC
+			TDMBitrate (str): optional regex of tDMBitrate
+			TDMDataSize (str): optional regex of tDMDataSize
+			TimestampMode (str): optional regex of timestampMode
+			UpInterval (str): optional regex of upInterval
+			VCIDStart (str): optional regex of vCIDStart
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def PurgeVCRanges(self):
 		"""Executes the purgeVCRanges operation on the server.
 

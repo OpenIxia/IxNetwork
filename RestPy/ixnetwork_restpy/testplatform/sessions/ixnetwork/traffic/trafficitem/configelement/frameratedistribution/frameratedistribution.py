@@ -37,7 +37,7 @@ class FrameRateDistribution(Base):
 
 	@property
 	def PortDistribution(self):
-		"""At the port level, apply the target configuration transmission rate for each encapsulation.
+		"""
 
 		Returns:
 			str(applyRateToAll|splitRateEvenly)
@@ -49,7 +49,7 @@ class FrameRateDistribution(Base):
 
 	@property
 	def StreamDistribution(self):
-		"""At the flow group level, apply the target rate of each port.
+		"""
 
 		Returns:
 			str(applyRateToAll|splitRateEvenly)

@@ -37,7 +37,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ActionType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ArpDestinationHwAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ArpDstIpv4Address(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ArpSourceHwAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ArpSrcIpv4Address(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def EthernetSource(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def EthernetType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Experimenter(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def ExperimenterDatalength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def GroupId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -190,7 +190,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def IpDscp(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def IpEcn(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -208,7 +208,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def IpProto(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -226,7 +226,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -262,7 +262,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -271,7 +271,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -280,7 +280,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6NdTll(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -289,7 +289,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -298,7 +298,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def MaxByteLength(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -307,7 +307,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def MplsBos(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -316,7 +316,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def MplsLabel(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -325,7 +325,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def MplsTc(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -334,7 +334,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def MplsTtl(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -343,7 +343,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def NetworkTtl(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -352,7 +352,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def OutputPort(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -361,7 +361,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def OutputPortType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -370,7 +370,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def PbbIsid(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -379,7 +379,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def QueueId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -388,7 +388,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def SctpDestination(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -397,7 +397,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def SctpSource(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -406,7 +406,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def TcpDestination(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -415,7 +415,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def TcpSource(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -424,7 +424,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def TunnelId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -433,7 +433,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def UdpDestination(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -442,7 +442,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def UdpSource(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -451,7 +451,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def VlanId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -460,7 +460,7 @@ class SwitchGroupActionLearnedInfo(Base):
 
 	@property
 	def VlanPriority(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -474,54 +474,54 @@ class SwitchGroupActionLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchGroupActionLearnedInfo data from the server.
 
 		Args:
-			ActionType (str): NOT DEFINED
-			ArpDestinationHwAddress (str): NOT DEFINED
-			ArpDstIpv4Address (str): NOT DEFINED
-			ArpOpcode (number): NOT DEFINED
-			ArpSourceHwAddress (str): NOT DEFINED
-			ArpSrcIpv4Address (str): NOT DEFINED
-			EthernetDestination (str): NOT DEFINED
-			EthernetSource (str): NOT DEFINED
-			EthernetType (str): NOT DEFINED
-			Experimenter (number): NOT DEFINED
-			ExperimenterData (str): NOT DEFINED
-			ExperimenterDatalength (number): NOT DEFINED
-			GroupId (number): NOT DEFINED
-			Icmpv4Code (number): NOT DEFINED
-			Icmpv4Type (number): NOT DEFINED
-			Icmpv6Code (number): NOT DEFINED
-			Icmpv6Type (number): NOT DEFINED
-			IpDscp (str): NOT DEFINED
-			IpEcn (number): NOT DEFINED
-			IpProto (number): NOT DEFINED
-			Ipv4Destination (str): NOT DEFINED
-			Ipv4Source (str): NOT DEFINED
-			Ipv6Destination (str): NOT DEFINED
-			Ipv6ExtHeader (number): NOT DEFINED
-			Ipv6FlowLabel (number): NOT DEFINED
-			Ipv6NdSll (str): NOT DEFINED
-			Ipv6NdTarget (str): NOT DEFINED
-			Ipv6NdTll (str): NOT DEFINED
-			Ipv6Source (str): NOT DEFINED
-			MaxByteLength (number): NOT DEFINED
-			MplsBos (number): NOT DEFINED
-			MplsLabel (number): NOT DEFINED
-			MplsTc (number): NOT DEFINED
-			MplsTtl (number): NOT DEFINED
-			NetworkTtl (number): NOT DEFINED
-			OutputPort (number): NOT DEFINED
-			OutputPortType (str): NOT DEFINED
-			PbbIsid (number): NOT DEFINED
-			QueueId (number): NOT DEFINED
-			SctpDestination (number): NOT DEFINED
-			SctpSource (number): NOT DEFINED
-			TcpDestination (number): NOT DEFINED
-			TcpSource (number): NOT DEFINED
-			TunnelId (str): NOT DEFINED
-			UdpDestination (number): NOT DEFINED
-			UdpSource (number): NOT DEFINED
-			VlanId (number): NOT DEFINED
-			VlanPriority (number): NOT DEFINED
+			ActionType (str): 
+			ArpDestinationHwAddress (str): 
+			ArpDstIpv4Address (str): 
+			ArpOpcode (number): 
+			ArpSourceHwAddress (str): 
+			ArpSrcIpv4Address (str): 
+			EthernetDestination (str): 
+			EthernetSource (str): 
+			EthernetType (str): 
+			Experimenter (number): 
+			ExperimenterData (str): 
+			ExperimenterDatalength (number): 
+			GroupId (number): 
+			Icmpv4Code (number): 
+			Icmpv4Type (number): 
+			Icmpv6Code (number): 
+			Icmpv6Type (number): 
+			IpDscp (str): 
+			IpEcn (number): 
+			IpProto (number): 
+			Ipv4Destination (str): 
+			Ipv4Source (str): 
+			Ipv6Destination (str): 
+			Ipv6ExtHeader (number): 
+			Ipv6FlowLabel (number): 
+			Ipv6NdSll (str): 
+			Ipv6NdTarget (str): 
+			Ipv6NdTll (str): 
+			Ipv6Source (str): 
+			MaxByteLength (number): 
+			MplsBos (number): 
+			MplsLabel (number): 
+			MplsTc (number): 
+			MplsTtl (number): 
+			NetworkTtl (number): 
+			OutputPort (number): 
+			OutputPortType (str): 
+			PbbIsid (number): 
+			QueueId (number): 
+			SctpDestination (number): 
+			SctpSource (number): 
+			TcpDestination (number): 
+			TcpSource (number): 
+			TunnelId (str): 
+			UdpDestination (number): 
+			UdpSource (number): 
+			VlanId (number): 
+			VlanPriority (number): 
 
 		Returns:
 			self: This instance with matching switchGroupActionLearnedInfo data retrieved from the server available through an iterator or index

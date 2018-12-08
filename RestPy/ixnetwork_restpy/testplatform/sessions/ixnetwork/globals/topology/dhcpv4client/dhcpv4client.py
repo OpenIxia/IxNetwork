@@ -210,3 +210,28 @@ class Dhcpv4client(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('skipReleaseOnStop')
+
+	def get_device_ids(self, PortNames=None, Dhcp4ArpGw=None, Dhcp4ClientPort=None, Dhcp4MaxDiscoverTimeout=None, Dhcp4NumRetry=None, Dhcp4ResponseTimeout=None, Dhcp4ResponseTimeoutFactor=None, Dhcp4ServerPort=None, RenewOnLinkUp=None, SkipReleaseOnStop=None):
+		"""Base class infrastructure that gets a list of dhcpv4client device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Dhcp4ArpGw (str): optional regex of dhcp4ArpGw
+			Dhcp4ClientPort (str): optional regex of dhcp4ClientPort
+			Dhcp4MaxDiscoverTimeout (str): optional regex of dhcp4MaxDiscoverTimeout
+			Dhcp4NumRetry (str): optional regex of dhcp4NumRetry
+			Dhcp4ResponseTimeout (str): optional regex of dhcp4ResponseTimeout
+			Dhcp4ResponseTimeoutFactor (str): optional regex of dhcp4ResponseTimeoutFactor
+			Dhcp4ServerPort (str): optional regex of dhcp4ServerPort
+			RenewOnLinkUp (str): optional regex of renewOnLinkUp
+			SkipReleaseOnStop (str): optional regex of skipReleaseOnStop
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

@@ -163,3 +163,30 @@ class InterestedVlanList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('vlanIdIncr')
+
+	def get_device_ids(self, PortNames=None, Active=None, IncludeInLSP=None, IncludeInMGroupPDU=None, M4BitEnabled=None, M6BitEnabled=None, Nickname=None, NoOfSpanningTreeRoots=None, StartSpanningTreeRootBridgeId=None, StartVlanId=None, VlanCount=None, VlanIdIncr=None):
+		"""Base class infrastructure that gets a list of interestedVlanList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			IncludeInLSP (str): optional regex of includeInLSP
+			IncludeInMGroupPDU (str): optional regex of includeInMGroupPDU
+			M4BitEnabled (str): optional regex of m4BitEnabled
+			M6BitEnabled (str): optional regex of m6BitEnabled
+			Nickname (str): optional regex of nickname
+			NoOfSpanningTreeRoots (str): optional regex of noOfSpanningTreeRoots
+			StartSpanningTreeRootBridgeId (str): optional regex of startSpanningTreeRootBridgeId
+			StartVlanId (str): optional regex of startVlanId
+			VlanCount (str): optional regex of vlanCount
+			VlanIdIncr (str): optional regex of vlanIdIncr
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

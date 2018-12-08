@@ -37,7 +37,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def AverageRtt(self):
-		"""This signifies the average Round Trip Time.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def BfdSessionMyState(self):
-		"""This signifies the window provides read-only information about the state of BFD interface on the specified emulated router.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def BfdSessionPeerState(self):
-		"""This signifies the state of the far side of the BFD session, either active or not.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def CcInUse(self):
-		"""This signifies the Continuity Check in use. The values are RA, PW-ACH, or TTL Exp.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def CvInUse(self):
-		"""This signifies the Connectivity Verification in use. The values are LSP Ping, BFD IP/UDP, or LSP Ping.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def Fec(self):
-		"""This signifies the FEC component.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def IncomingLabelStack(self):
-		"""This signifies the BGP sends the assigned labels information to this MPLS OAM module which is used for validation of FEC stack received in an echo request.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def IncomingLspLabel(self):
-		"""This signifies the incoming LSP label value.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def IncomingPwLabel(self):
-		"""This signifies the incoming PW label value.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def LspPingReachability(self):
-		"""This signifies the specification of whether the queried LSP Ping could be reached or not.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def MaxRtt(self):
-		"""This signifies the specification of the maximum Round Trip Time.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def MinRtt(self):
-		"""This signifies the specification of the minimum Round Trip Time.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def MyDiscriminator(self):
-		"""This signifies the discriminator for the session on this interface.
+		"""
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def MyIpAddress(self):
-		"""This signifies the IP address for this interface.
+		"""
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelStack(self):
-		"""This signifies the BGP sends the assigned labels information to this MPLS OAM module which is used for validation of FEC outgoing Label stack that is received in an echo request.
+		"""
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def OutgoingLspLabel(self):
-		"""This signifies the outgoing LSP label value.
+		"""
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def OutgoingPwLabel(self):
-		"""This signifies the outgoing PW label value.
+		"""
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PeerDiscriminator(self):
-		"""This signifies the discriminator for the far side of the session.
+		"""
 
 		Returns:
 			number
@@ -199,7 +199,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PeerIpAddress(self):
-		"""This signifies the learnt IP address for the session.
+		"""
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PingAttempts(self):
-		"""This signifies the specification of the number of ping attempts.
+		"""
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PingFailures(self):
-		"""This signifies the specification of the number of ping failures.
+		"""
 
 		Returns:
 			number
@@ -226,7 +226,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PingReplyTx(self):
-		"""This signifies the specification of the number of ping reply transmitted at regular intervals.
+		"""
 
 		Returns:
 			number
@@ -235,7 +235,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PingRequestRx(self):
-		"""This signifies the specification of the number of ping request received at regular intervals.
+		"""
 
 		Returns:
 			number
@@ -244,7 +244,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def PingSuccess(self):
-		"""This signifies the specification of the rate of ping success.
+		"""
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ReceivedMinRxInterval(self):
-		"""This signifies the minimum receive interval, in milliseconds, for the far side of the session.
+		"""
 
 		Returns:
 			number
@@ -262,7 +262,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ReceivedMultiplier(self):
-		"""This signifies the number of received negotiated transmit intervals when multiplied by this value, provides the detection time for the interface.
+		"""
 
 		Returns:
 			number
@@ -271,7 +271,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ReceivedPeerFlags(self):
-		"""This signifies the number of peer generated flags received.
+		"""
 
 		Returns:
 			str
@@ -280,7 +280,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ReceivedTxInterval(self):
-		"""This signifies the minimum transmit interval, in milliseconds, for the far side of the session.
+		"""
 
 		Returns:
 			number
@@ -289,7 +289,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ReturnCode(self):
-		"""This signifies the return code value.
+		"""
 
 		Returns:
 			str
@@ -298,7 +298,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ReturnSubcode(self):
-		"""This signifies the return subcode value.
+		"""
 
 		Returns:
 			number
@@ -307,7 +307,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def SignalingProtocol(self):
-		"""This signifies the options for signaling protocol are BGP, LDP, RSVP.
+		"""
 
 		Returns:
 			str
@@ -316,7 +316,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def TunnelEndpointType(self):
-		"""This signifies the tunnel endpoint type options include Ingress, Egress, Bi-directional.
+		"""
 
 		Returns:
 			str
@@ -325,7 +325,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def TunnelType(self):
-		"""This signifies the tunnel type options include LSP and PW.
+		"""
 
 		Returns:
 			str
@@ -339,39 +339,39 @@ class GeneralLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all generalLearnedInfo data from the server.
 
 		Args:
-			AverageRtt (str): This signifies the average Round Trip Time.
-			BfdSessionMyState (str): This signifies the window provides read-only information about the state of BFD interface on the specified emulated router.
-			BfdSessionPeerState (str): This signifies the state of the far side of the BFD session, either active or not.
-			CcInUse (str): This signifies the Continuity Check in use. The values are RA, PW-ACH, or TTL Exp.
-			CvInUse (str): This signifies the Connectivity Verification in use. The values are LSP Ping, BFD IP/UDP, or LSP Ping.
-			Fec (str): This signifies the FEC component.
-			IncomingLabelStack (str): This signifies the BGP sends the assigned labels information to this MPLS OAM module which is used for validation of FEC stack received in an echo request.
-			IncomingLspLabel (str): This signifies the incoming LSP label value.
-			IncomingPwLabel (str): This signifies the incoming PW label value.
-			LspPingReachability (str): This signifies the specification of whether the queried LSP Ping could be reached or not.
-			MaxRtt (str): This signifies the specification of the maximum Round Trip Time.
-			MinRtt (str): This signifies the specification of the minimum Round Trip Time.
-			MyDiscriminator (number): This signifies the discriminator for the session on this interface.
-			MyIpAddress (str): This signifies the IP address for this interface.
-			OutgoingLabelStack (str): This signifies the BGP sends the assigned labels information to this MPLS OAM module which is used for validation of FEC outgoing Label stack that is received in an echo request.
-			OutgoingLspLabel (str): This signifies the outgoing LSP label value.
-			OutgoingPwLabel (str): This signifies the outgoing PW label value.
-			PeerDiscriminator (number): This signifies the discriminator for the far side of the session.
-			PeerIpAddress (str): This signifies the learnt IP address for the session.
-			PingAttempts (number): This signifies the specification of the number of ping attempts.
-			PingFailures (number): This signifies the specification of the number of ping failures.
-			PingReplyTx (number): This signifies the specification of the number of ping reply transmitted at regular intervals.
-			PingRequestRx (number): This signifies the specification of the number of ping request received at regular intervals.
-			PingSuccess (number): This signifies the specification of the rate of ping success.
-			ReceivedMinRxInterval (number): This signifies the minimum receive interval, in milliseconds, for the far side of the session.
-			ReceivedMultiplier (number): This signifies the number of received negotiated transmit intervals when multiplied by this value, provides the detection time for the interface.
-			ReceivedPeerFlags (str): This signifies the number of peer generated flags received.
-			ReceivedTxInterval (number): This signifies the minimum transmit interval, in milliseconds, for the far side of the session.
-			ReturnCode (str): This signifies the return code value.
-			ReturnSubcode (number): This signifies the return subcode value.
-			SignalingProtocol (str): This signifies the options for signaling protocol are BGP, LDP, RSVP.
-			TunnelEndpointType (str): This signifies the tunnel endpoint type options include Ingress, Egress, Bi-directional.
-			TunnelType (str): This signifies the tunnel type options include LSP and PW.
+			AverageRtt (str): 
+			BfdSessionMyState (str): 
+			BfdSessionPeerState (str): 
+			CcInUse (str): 
+			CvInUse (str): 
+			Fec (str): 
+			IncomingLabelStack (str): 
+			IncomingLspLabel (str): 
+			IncomingPwLabel (str): 
+			LspPingReachability (str): 
+			MaxRtt (str): 
+			MinRtt (str): 
+			MyDiscriminator (number): 
+			MyIpAddress (str): 
+			OutgoingLabelStack (str): 
+			OutgoingLspLabel (str): 
+			OutgoingPwLabel (str): 
+			PeerDiscriminator (number): 
+			PeerIpAddress (str): 
+			PingAttempts (number): 
+			PingFailures (number): 
+			PingReplyTx (number): 
+			PingRequestRx (number): 
+			PingSuccess (number): 
+			ReceivedMinRxInterval (number): 
+			ReceivedMultiplier (number): 
+			ReceivedPeerFlags (str): 
+			ReceivedTxInterval (number): 
+			ReturnCode (str): 
+			ReturnSubcode (number): 
+			SignalingProtocol (str): 
+			TunnelEndpointType (str): 
+			TunnelType (str): 
 
 		Returns:
 			self: This instance with matching generalLearnedInfo data retrieved from the server available through an iterator or index
@@ -399,13 +399,11 @@ class GeneralLearnedInfo(Base):
 	def AddRecordForTrigger(self):
 		"""Executes the addRecordForTrigger operation on the server.
 
-		This signifies the record added for trigger settings.
-
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=generalLearnedInfo)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: NOT DEFINED
+			bool: 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

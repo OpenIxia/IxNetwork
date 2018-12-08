@@ -37,7 +37,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def DestinationMacAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def FarEndLoss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def FarEndLossRatio(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def LmrReceived(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -91,7 +91,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def NearEndLoss(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def NearEndLossRatio(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def SourceMacAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class LossLearnedInfo(Base):
 
 	@property
 	def SourceMepId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -150,18 +150,18 @@ class LossLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all lossLearnedInfo data from the server.
 
 		Args:
-			BVlan (str): NOT DEFINED
-			CVlan (str): NOT DEFINED
-			DestinationMacAddress (str): NOT DEFINED
-			FarEndLoss (number): NOT DEFINED
-			FarEndLossRatio (str): NOT DEFINED
-			LmrReceived (bool): NOT DEFINED
-			MdLevel (number): NOT DEFINED
-			NearEndLoss (number): NOT DEFINED
-			NearEndLossRatio (str): NOT DEFINED
-			SVlan (str): NOT DEFINED
-			SourceMacAddress (str): NOT DEFINED
-			SourceMepId (number): NOT DEFINED
+			BVlan (str): 
+			CVlan (str): 
+			DestinationMacAddress (str): 
+			FarEndLoss (number): 
+			FarEndLossRatio (str): 
+			LmrReceived (bool): 
+			MdLevel (number): 
+			NearEndLoss (number): 
+			NearEndLossRatio (str): 
+			SVlan (str): 
+			SourceMacAddress (str): 
+			SourceMepId (number): 
 
 		Returns:
 			self: This instance with matching lossLearnedInfo data retrieved from the server available through an iterator or index

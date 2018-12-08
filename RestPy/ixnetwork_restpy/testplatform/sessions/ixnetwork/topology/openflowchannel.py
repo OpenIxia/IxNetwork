@@ -445,6 +445,36 @@ class OpenFlowChannel(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, CalcFlowRate=None, CalcFlowRateWithBarrier=None, DatapathId=None, DatapathIdHex=None, EnableHelloElement=None, FlowTxBurstSize=None, InterFlowBurstGap=None, MaxFlowsAtATime=None, RemoteIp=None, SendRoleRequest=None, StartupGenerationId=None, StartupRoleRequest=None, UseDatapathID=None):
+		"""Base class infrastructure that gets a list of openFlowChannel device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			CalcFlowRate (str): optional regex of calcFlowRate
+			CalcFlowRateWithBarrier (str): optional regex of calcFlowRateWithBarrier
+			DatapathId (str): optional regex of datapathId
+			DatapathIdHex (str): optional regex of datapathIdHex
+			EnableHelloElement (str): optional regex of enableHelloElement
+			FlowTxBurstSize (str): optional regex of flowTxBurstSize
+			InterFlowBurstGap (str): optional regex of interFlowBurstGap
+			MaxFlowsAtATime (str): optional regex of maxFlowsAtATime
+			RemoteIp (str): optional regex of remoteIp
+			SendRoleRequest (str): optional regex of sendRoleRequest
+			StartupGenerationId (str): optional regex of startupGenerationId
+			StartupRoleRequest (str): optional regex of startupRoleRequest
+			UseDatapathID (str): optional regex of useDatapathID
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def GetAsynchronousConfiguration(self):
 		"""Executes the getAsynchronousConfiguration operation on the server.
 

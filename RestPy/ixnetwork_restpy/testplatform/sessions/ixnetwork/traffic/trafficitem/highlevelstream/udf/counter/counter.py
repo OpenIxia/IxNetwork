@@ -37,7 +37,7 @@ class Counter(Base):
 
 	@property
 	def AvailableWidths(self):
-		"""Contains all the possible widths available for a UDF in particular Type.
+		"""
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class Counter(Base):
 
 	@property
 	def BitOffset(self):
-		"""Specifies additional Offset of the UDF in terms of bits. This Offset will start from where the Offset provided in Byte Offset field ends.
+		"""
 
 		Returns:
 			number
@@ -58,7 +58,7 @@ class Counter(Base):
 
 	@property
 	def Count(self):
-		"""Specifies the repeat count for the UDF. After the elapse of this count, UDF will again start from the Start Value.
+		"""
 
 		Returns:
 			number
@@ -70,7 +70,7 @@ class Counter(Base):
 
 	@property
 	def Direction(self):
-		"""Specifies if the UDF value will be incremented or decremented.
+		"""
 
 		Returns:
 			str(decrement|increment)
@@ -82,7 +82,7 @@ class Counter(Base):
 
 	@property
 	def StartValue(self):
-		"""Specifies the Start Value of the UDF.
+		"""
 
 		Returns:
 			number
@@ -94,7 +94,7 @@ class Counter(Base):
 
 	@property
 	def StepValue(self):
-		"""Specifies the Step Value by which the UDF value will be incremented or decremented.
+		"""
 
 		Returns:
 			number
@@ -106,7 +106,7 @@ class Counter(Base):
 
 	@property
 	def Width(self):
-		"""Specifies the width of the UDF.
+		"""
 
 		Returns:
 			str(1|10|11|12|13|14|15|16|17|18|19|2|20|21|22|23|24|25|26|27|28|29|3|30|31|32|4|5|6|7|8|9)
@@ -123,13 +123,13 @@ class Counter(Base):
 		By default the find method takes no parameters and will retrieve all counter data from the server.
 
 		Args:
-			AvailableWidths (list(str)): Contains all the possible widths available for a UDF in particular Type.
-			BitOffset (number): Specifies additional Offset of the UDF in terms of bits. This Offset will start from where the Offset provided in Byte Offset field ends.
-			Count (number): Specifies the repeat count for the UDF. After the elapse of this count, UDF will again start from the Start Value.
-			Direction (str(decrement|increment)): Specifies if the UDF value will be incremented or decremented.
-			StartValue (number): Specifies the Start Value of the UDF.
-			StepValue (number): Specifies the Step Value by which the UDF value will be incremented or decremented.
-			Width (str(1|10|11|12|13|14|15|16|17|18|19|2|20|21|22|23|24|25|26|27|28|29|3|30|31|32|4|5|6|7|8|9)): Specifies the width of the UDF.
+			AvailableWidths (list(str)): 
+			BitOffset (number): 
+			Count (number): 
+			Direction (str(decrement|increment)): 
+			StartValue (number): 
+			StepValue (number): 
+			Width (str(1|10|11|12|13|14|15|16|17|18|19|2|20|21|22|23|24|25|26|27|28|29|3|30|31|32|4|5|6|7|8|9)): 
 
 		Returns:
 			self: This instance with matching counter data retrieved from the server available through an iterator or index

@@ -127,3 +127,25 @@ class VxlanStaticInfo(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('suppressArp')
+
+	def get_device_ids(self, PortNames=None, Active=None, MacStaticConfig=None, RemoteVmStaticIpv4=None, RemoteVmStaticMac=None, RemoteVtepIpv4=None, SuppressArp=None):
+		"""Base class infrastructure that gets a list of vxlanStaticInfo device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			MacStaticConfig (str): optional regex of macStaticConfig
+			RemoteVmStaticIpv4 (str): optional regex of remoteVmStaticIpv4
+			RemoteVmStaticMac (str): optional regex of remoteVmStaticMac
+			RemoteVtepIpv4 (str): optional regex of remoteVtepIpv4
+			SuppressArp (str): optional regex of suppressArp
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

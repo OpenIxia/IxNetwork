@@ -365,6 +365,32 @@ class IgmpHost(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, EnableIptv=None, EnableProxyReporting=None, GQResponseMode=None, GSResponseMode=None, ImResponse=None, ReportFreq=None, RouterAlert=None, USResponseMode=None, VersionType=None):
+		"""Base class infrastructure that gets a list of igmpHost device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnableIptv (str): optional regex of enableIptv
+			EnableProxyReporting (str): optional regex of enableProxyReporting
+			GQResponseMode (str): optional regex of gQResponseMode
+			GSResponseMode (str): optional regex of gSResponseMode
+			ImResponse (str): optional regex of imResponse
+			ReportFreq (str): optional regex of reportFreq
+			RouterAlert (str): optional regex of routerAlert
+			USResponseMode (str): optional regex of uSResponseMode
+			VersionType (str): optional regex of versionType
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def IgmpStartHost(self):
 		"""Executes the igmpStartHost operation on the server.
 

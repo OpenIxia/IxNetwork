@@ -51,7 +51,7 @@ class Egress(Base):
 
 	@property
 	def CommitEgressPage(self):
-		"""Attribute used to commit egress paging from TCL
+		"""
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Egress(Base):
 
 	@property
 	def CurrentPage(self):
-		"""Determines the current egress page for the indicated ingress page.
+		"""
 
 		Returns:
 			number
@@ -75,7 +75,7 @@ class Egress(Base):
 
 	@property
 	def RowCount(self):
-		"""Displays the particular row number in the view.
+		"""
 
 		Returns:
 			number
@@ -84,7 +84,7 @@ class Egress(Base):
 
 	@property
 	def TotalPages(self):
-		"""The total number of egress pages.
+		"""
 
 		Returns:
 			number
@@ -98,10 +98,10 @@ class Egress(Base):
 		By default the find method takes no parameters and will retrieve all egress data from the server.
 
 		Args:
-			CommitEgressPage (bool): Attribute used to commit egress paging from TCL
-			CurrentPage (number): Determines the current egress page for the indicated ingress page.
-			RowCount (number): Displays the particular row number in the view.
-			TotalPages (number): The total number of egress pages.
+			CommitEgressPage (bool): 
+			CurrentPage (number): 
+			RowCount (number): 
+			TotalPages (number): 
 
 		Returns:
 			self: This instance with matching egress data retrieved from the server available through an iterator or index

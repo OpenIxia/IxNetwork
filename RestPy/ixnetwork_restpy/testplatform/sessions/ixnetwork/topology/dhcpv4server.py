@@ -260,6 +260,25 @@ class Dhcpv4server(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Subnet=None, SubnetAddrAssign=None, UseRapidCommit=None):
+		"""Base class infrastructure that gets a list of dhcpv4server device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Subnet (str): optional regex of subnet
+			SubnetAddrAssign (str): optional regex of subnetAddrAssign
+			UseRapidCommit (str): optional regex of useRapidCommit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ForceRenew(self):
 		"""Executes the forceRenew operation on the server.
 

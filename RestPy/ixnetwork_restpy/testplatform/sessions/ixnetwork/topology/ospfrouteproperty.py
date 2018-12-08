@@ -357,6 +357,46 @@ class OspfRouteProperty(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, BAR=None, BFRId=None, BFRIdStep=None, BIERBitStringLength=None, Active=None, Algorithm=None, AllowPropagate=None, BierAFlag=None, BierNFlag=None, ConfigureSIDIndexLabel=None, EFlag=None, IncludeBSLObject=None, Ipa=None, LFlag=None, LabelStart=None, MFlag=None, MaxSI=None, Metric=None, MtId=None, NpFlag=None, RouteOrigin=None, SidIndexLabel=None, SubDomainId=None, VFlag=None):
+		"""Base class infrastructure that gets a list of ospfRouteProperty device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			BAR (str): optional regex of BAR
+			BFRId (str): optional regex of BFRId
+			BFRIdStep (str): optional regex of BFRIdStep
+			BIERBitStringLength (str): optional regex of BIERBitStringLength
+			Active (str): optional regex of active
+			Algorithm (str): optional regex of algorithm
+			AllowPropagate (str): optional regex of allowPropagate
+			BierAFlag (str): optional regex of bierAFlag
+			BierNFlag (str): optional regex of bierNFlag
+			ConfigureSIDIndexLabel (str): optional regex of configureSIDIndexLabel
+			EFlag (str): optional regex of eFlag
+			IncludeBSLObject (str): optional regex of includeBSLObject
+			Ipa (str): optional regex of ipa
+			LFlag (str): optional regex of lFlag
+			LabelStart (str): optional regex of labelStart
+			MFlag (str): optional regex of mFlag
+			MaxSI (str): optional regex of maxSI
+			Metric (str): optional regex of metric
+			MtId (str): optional regex of mtId
+			NpFlag (str): optional regex of npFlag
+			RouteOrigin (str): optional regex of routeOrigin
+			SidIndexLabel (str): optional regex of sidIndexLabel
+			SubDomainId (str): optional regex of subDomainId
+			VFlag (str): optional regex of vFlag
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def AgeOutRoutes(self, Percentage):
 		"""Executes the ageOutRoutes operation on the server.
 

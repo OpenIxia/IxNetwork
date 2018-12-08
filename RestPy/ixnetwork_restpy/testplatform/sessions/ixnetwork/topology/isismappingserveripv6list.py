@@ -227,6 +227,39 @@ class IsisMappingServerIPV6List(Base):
 		"""
 		return self._get_attribute('weight')
 
+	def get_device_ids(self, PortNames=None, AFlag=None, Active=None, Algorithm=None, DFlag=None, EFlag=None, FECPrefix=None, LFlag=None, MFlag=None, NFlag=None, PFlag=None, PrefixLength=None, RFlag=None, Range=None, SFlag=None, StartSIDLabel=None, VFlag=None, Weight=None):
+		"""Base class infrastructure that gets a list of isisMappingServerIPV6List device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			AFlag (str): optional regex of aFlag
+			Active (str): optional regex of active
+			Algorithm (str): optional regex of algorithm
+			DFlag (str): optional regex of dFlag
+			EFlag (str): optional regex of eFlag
+			FECPrefix (str): optional regex of fECPrefix
+			LFlag (str): optional regex of lFlag
+			MFlag (str): optional regex of mFlag
+			NFlag (str): optional regex of nFlag
+			PFlag (str): optional regex of pFlag
+			PrefixLength (str): optional regex of prefixLength
+			RFlag (str): optional regex of rFlag
+			Range (str): optional regex of range
+			SFlag (str): optional regex of sFlag
+			StartSIDLabel (str): optional regex of startSIDLabel
+			VFlag (str): optional regex of vFlag
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Advertise(self, Arg2):
 		"""Executes the advertise operation on the server.
 

@@ -334,6 +334,29 @@ class Ovsdbserver(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, ConnectionType=None, DirectoryName=None, FileCaCertificate=None, FileCertificate=None, FilePrivKey=None, OvsdbSchema=None, ServerTcpPort=None):
+		"""Base class infrastructure that gets a list of ovsdbserver device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			ConnectionType (str): optional regex of connectionType
+			DirectoryName (str): optional regex of directoryName
+			FileCaCertificate (str): optional regex of fileCaCertificate
+			FileCertificate (str): optional regex of fileCertificate
+			FilePrivKey (str): optional regex of filePrivKey
+			OvsdbSchema (str): optional regex of ovsdbSchema
+			ServerTcpPort (str): optional regex of serverTcpPort
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

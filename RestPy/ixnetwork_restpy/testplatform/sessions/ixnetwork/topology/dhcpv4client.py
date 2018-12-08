@@ -518,6 +518,29 @@ class Dhcpv4client(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Dhcp4Broadcast=None, Dhcp4GatewayAddress=None, Dhcp4GatewayMac=None, Dhcp4ServerAddress=None, Dhcp4UseFirstServer=None, RenewTimer=None, UseRapidCommit=None):
+		"""Base class infrastructure that gets a list of dhcpv4client device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Dhcp4Broadcast (str): optional regex of dhcp4Broadcast
+			Dhcp4GatewayAddress (str): optional regex of dhcp4GatewayAddress
+			Dhcp4GatewayMac (str): optional regex of dhcp4GatewayMac
+			Dhcp4ServerAddress (str): optional regex of dhcp4ServerAddress
+			Dhcp4UseFirstServer (str): optional regex of dhcp4UseFirstServer
+			RenewTimer (str): optional regex of renewTimer
+			UseRapidCommit (str): optional regex of useRapidCommit
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Rebind(self):
 		"""Executes the rebind operation on the server.
 

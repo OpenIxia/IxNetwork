@@ -531,6 +531,54 @@ class RsvpteIf(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, ActualRestartTime=None, AdvertisedRestartTime=None, AuthenticationAlgorithm=None, AuthenticationKeyForReceivedPackets=None, AuthenticationKeyForSentPackets=None, AuthenticationKeyIdentifier=None, AutoGenerateAuthenticationKeyIdentifier=None, BundleMessageThresholdTime=None, CheckIntegrityForReceivedPackets=None, DutIp=None, EnableBfdRegistration=None, EnableBundleMessageSending=None, EnableBundleMessageThresholdTimer=None, EnableGracefulRestartHelperMode=None, EnableGracefulRestartRestartingMode=None, EnableHelloExtension=None, EnableRefreshReduction=None, GenerateSequenceNumberBasedOnRealTime=None, HandshakeRequired=None, HelloInterval=None, HelloTimeoutMultiplier=None, InitialSequenceNumber=None, LabelSpaceEnd=None, LabelSpaceStart=None, NumberOfRestarts=None, RecoveryTime=None, RestartStartTime=None, RestartUpTime=None, SummaryRefreshInterval=None, UseSameAuthenticationKeyForPeer=None, UsingGatewayIp=None):
+		"""Base class infrastructure that gets a list of rsvpteIf device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			ActualRestartTime (str): optional regex of actualRestartTime
+			AdvertisedRestartTime (str): optional regex of advertisedRestartTime
+			AuthenticationAlgorithm (str): optional regex of authenticationAlgorithm
+			AuthenticationKeyForReceivedPackets (str): optional regex of authenticationKeyForReceivedPackets
+			AuthenticationKeyForSentPackets (str): optional regex of authenticationKeyForSentPackets
+			AuthenticationKeyIdentifier (str): optional regex of authenticationKeyIdentifier
+			AutoGenerateAuthenticationKeyIdentifier (str): optional regex of autoGenerateAuthenticationKeyIdentifier
+			BundleMessageThresholdTime (str): optional regex of bundleMessageThresholdTime
+			CheckIntegrityForReceivedPackets (str): optional regex of checkIntegrityForReceivedPackets
+			DutIp (str): optional regex of dutIp
+			EnableBfdRegistration (str): optional regex of enableBfdRegistration
+			EnableBundleMessageSending (str): optional regex of enableBundleMessageSending
+			EnableBundleMessageThresholdTimer (str): optional regex of enableBundleMessageThresholdTimer
+			EnableGracefulRestartHelperMode (str): optional regex of enableGracefulRestartHelperMode
+			EnableGracefulRestartRestartingMode (str): optional regex of enableGracefulRestartRestartingMode
+			EnableHelloExtension (str): optional regex of enableHelloExtension
+			EnableRefreshReduction (str): optional regex of enableRefreshReduction
+			GenerateSequenceNumberBasedOnRealTime (str): optional regex of generateSequenceNumberBasedOnRealTime
+			HandshakeRequired (str): optional regex of handshakeRequired
+			HelloInterval (str): optional regex of helloInterval
+			HelloTimeoutMultiplier (str): optional regex of helloTimeoutMultiplier
+			InitialSequenceNumber (str): optional regex of initialSequenceNumber
+			LabelSpaceEnd (str): optional regex of labelSpaceEnd
+			LabelSpaceStart (str): optional regex of labelSpaceStart
+			NumberOfRestarts (str): optional regex of numberOfRestarts
+			RecoveryTime (str): optional regex of recoveryTime
+			RestartStartTime (str): optional regex of restartStartTime
+			RestartUpTime (str): optional regex of restartUpTime
+			SummaryRefreshInterval (str): optional regex of summaryRefreshInterval
+			UseSameAuthenticationKeyForPeer (str): optional regex of useSameAuthenticationKeyForPeer
+			UsingGatewayIp (str): optional regex of usingGatewayIp
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def GetLearnedInfo(self):
 		"""Executes the getLearnedInfo operation on the server.
 

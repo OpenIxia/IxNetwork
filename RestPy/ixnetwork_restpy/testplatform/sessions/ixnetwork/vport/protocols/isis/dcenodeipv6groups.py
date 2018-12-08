@@ -38,7 +38,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def IncludeIpv6Groups(self):
-		"""If true, includes IPv6 groups for this Network Range.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def InterGroupUnicastIpv6Increment(self):
-		"""The IPv6 address format of the Unicast IPv6 between one or more node groups.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def IntraGroupUnicastIpv6Increment(self):
-		"""The IPv6 address format of the Unicast MAC within a node group.
+		"""
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def MulticastAddressNodeStep(self):
-		"""The Multicast IPv6 address that configures the increment across the Network Range simulated RBridges.
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def MulticastIpv6Count(self):
-		"""The number of Multicast IPv6 addresses.
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def MulticastIpv6Step(self):
-		"""The incremental value of Multicast IPv6 address.
+		"""
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def NoOfUnicastScrIpv6sPerMulicastIpv6(self):
-		"""The number of Unicast Source for each Multicast IPv6 address.
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def SourceGroupMapping(self):
-		"""The Source Group mapping type.
+		"""
 
 		Returns:
 			str(fullyMeshed|oneToOne|manualMapping)
@@ -134,7 +134,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def StartMulticastIpv6(self):
-		"""The IP address format of the starting Multicast IPv6 address.
+		"""
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def StartUnicastSourceIpv6(self):
-		"""The IPv6 address format of the starting Unicast Source IPv6.
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def UnicastAddressNodeStep(self):
-		"""The Unicast IPv6 address that configures the increment across the Network Range simulated RBridges.
+		"""
 
 		Returns:
 			str
@@ -170,7 +170,7 @@ class DceNodeIpv6Groups(Base):
 
 	@property
 	def VlanId(self):
-		"""The VLAN ID of the enabled Multicast IPv6 Group Range.
+		"""
 
 		Returns:
 			number
@@ -184,18 +184,18 @@ class DceNodeIpv6Groups(Base):
 		"""Adds a new dceNodeIpv6Groups node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeIpv6Groups (bool): If true, includes IPv6 groups for this Network Range.
-			InterGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast IPv6 between one or more node groups.
-			IntraGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast MAC within a node group.
-			MulticastAddressNodeStep (str): The Multicast IPv6 address that configures the increment across the Network Range simulated RBridges.
-			MulticastIpv6Count (number): The number of Multicast IPv6 addresses.
-			MulticastIpv6Step (str): The incremental value of Multicast IPv6 address.
-			NoOfUnicastScrIpv6sPerMulicastIpv6 (number): The number of Unicast Source for each Multicast IPv6 address.
-			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): The Source Group mapping type.
-			StartMulticastIpv6 (str): The IP address format of the starting Multicast IPv6 address.
-			StartUnicastSourceIpv6 (str): The IPv6 address format of the starting Unicast Source IPv6.
-			UnicastAddressNodeStep (str): The Unicast IPv6 address that configures the increment across the Network Range simulated RBridges.
-			VlanId (number): The VLAN ID of the enabled Multicast IPv6 Group Range.
+			IncludeIpv6Groups (bool): 
+			InterGroupUnicastIpv6Increment (str): 
+			IntraGroupUnicastIpv6Increment (str): 
+			MulticastAddressNodeStep (str): 
+			MulticastIpv6Count (number): 
+			MulticastIpv6Step (str): 
+			NoOfUnicastScrIpv6sPerMulicastIpv6 (number): 
+			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): 
+			StartMulticastIpv6 (str): 
+			StartUnicastSourceIpv6 (str): 
+			UnicastAddressNodeStep (str): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with all currently retrieved dceNodeIpv6Groups data using find and the newly added dceNodeIpv6Groups data available through an iterator or index
@@ -221,18 +221,18 @@ class DceNodeIpv6Groups(Base):
 		By default the find method takes no parameters and will retrieve all dceNodeIpv6Groups data from the server.
 
 		Args:
-			IncludeIpv6Groups (bool): If true, includes IPv6 groups for this Network Range.
-			InterGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast IPv6 between one or more node groups.
-			IntraGroupUnicastIpv6Increment (str): The IPv6 address format of the Unicast MAC within a node group.
-			MulticastAddressNodeStep (str): The Multicast IPv6 address that configures the increment across the Network Range simulated RBridges.
-			MulticastIpv6Count (number): The number of Multicast IPv6 addresses.
-			MulticastIpv6Step (str): The incremental value of Multicast IPv6 address.
-			NoOfUnicastScrIpv6sPerMulicastIpv6 (number): The number of Unicast Source for each Multicast IPv6 address.
-			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): The Source Group mapping type.
-			StartMulticastIpv6 (str): The IP address format of the starting Multicast IPv6 address.
-			StartUnicastSourceIpv6 (str): The IPv6 address format of the starting Unicast Source IPv6.
-			UnicastAddressNodeStep (str): The Unicast IPv6 address that configures the increment across the Network Range simulated RBridges.
-			VlanId (number): The VLAN ID of the enabled Multicast IPv6 Group Range.
+			IncludeIpv6Groups (bool): 
+			InterGroupUnicastIpv6Increment (str): 
+			IntraGroupUnicastIpv6Increment (str): 
+			MulticastAddressNodeStep (str): 
+			MulticastIpv6Count (number): 
+			MulticastIpv6Step (str): 
+			NoOfUnicastScrIpv6sPerMulicastIpv6 (number): 
+			SourceGroupMapping (str(fullyMeshed|oneToOne|manualMapping)): 
+			StartMulticastIpv6 (str): 
+			StartUnicastSourceIpv6 (str): 
+			UnicastAddressNodeStep (str): 
+			VlanId (number): 
 
 		Returns:
 			self: This instance with matching dceNodeIpv6Groups data retrieved from the server available through an iterator or index

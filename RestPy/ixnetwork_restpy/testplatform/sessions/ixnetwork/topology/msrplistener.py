@@ -375,6 +375,30 @@ class MsrpListener(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, Active=None, AdvertiseAs=None, JoinTimer=None, LeaveAllTimer=None, LeaveTimer=None, ProtocolVersion=None, StartVlanId=None, VlanCount=None):
+		"""Base class infrastructure that gets a list of msrpListener device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AdvertiseAs (str): optional regex of advertiseAs
+			JoinTimer (str): optional regex of joinTimer
+			LeaveAllTimer (str): optional regex of leaveAllTimer
+			LeaveTimer (str): optional regex of leaveTimer
+			ProtocolVersion (str): optional regex of protocolVersion
+			StartVlanId (str): optional regex of startVlanId
+			VlanCount (str): optional regex of vlanCount
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ClearListenerDatabasesInClient(self):
 		"""Executes the clearListenerDatabasesInClient operation on the server.
 

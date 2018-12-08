@@ -38,7 +38,7 @@ class GroupTrafficRange(Base):
 
 	@property
 	def AddrFamilyType(self):
-		"""The address family of group address.
+		"""
 
 		Returns:
 			str(ipv4|ipv6)
@@ -50,7 +50,7 @@ class GroupTrafficRange(Base):
 
 	@property
 	def GrpAddress(self):
-		"""Group Address for traffic destination address.
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class GroupTrafficRange(Base):
 
 	@property
 	def GrpCount(self):
-		"""The group address count per LSP.
+		"""
 
 		Returns:
 			number
@@ -76,9 +76,9 @@ class GroupTrafficRange(Base):
 		"""Adds a new groupTrafficRange node on the server and retrieves it in this instance.
 
 		Args:
-			AddrFamilyType (str(ipv4|ipv6)): The address family of group address.
-			GrpAddress (str): Group Address for traffic destination address.
-			GrpCount (number): The group address count per LSP.
+			AddrFamilyType (str(ipv4|ipv6)): 
+			GrpAddress (str): 
+			GrpCount (number): 
 
 		Returns:
 			self: This instance with all currently retrieved groupTrafficRange data using find and the newly added groupTrafficRange data available through an iterator or index
@@ -104,9 +104,9 @@ class GroupTrafficRange(Base):
 		By default the find method takes no parameters and will retrieve all groupTrafficRange data from the server.
 
 		Args:
-			AddrFamilyType (str(ipv4|ipv6)): The address family of group address.
-			GrpAddress (str): Group Address for traffic destination address.
-			GrpCount (number): The group address count per LSP.
+			AddrFamilyType (str(ipv4|ipv6)): 
+			GrpAddress (str): 
+			GrpCount (number): 
 
 		Returns:
 			self: This instance with matching groupTrafficRange data retrieved from the server available through an iterator or index

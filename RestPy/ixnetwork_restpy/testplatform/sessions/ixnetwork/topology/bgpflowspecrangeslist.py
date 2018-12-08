@@ -744,3 +744,83 @@ class BgpFlowSpecRangesList(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('trafficRate')
+
+	def get_device_ids(self, PortNames=None, Active=None, AggregatorAs=None, AggregatorId=None, AsNumber2Bytes=None, AsNumber4Bytes=None, AsSetMode=None, AssignedNumber2Bytes=None, AssignedNumber4Bytes=None, DestPortMatch=None, DestPrefixLengthV6=None, DestPrefixOffset=None, DestPrefixV6=None, DscpMatch=None, EnableAggregatorId=None, EnableAsPathSegments=None, EnableAtomicAggregate=None, EnableCluster=None, EnableCommunity=None, EnableDestPrefixV6=None, EnableExtendedCommunity=None, EnableLocalPreference=None, EnableMultiExitDiscriminator=None, EnableNextHop=None, EnableOrigin=None, EnableOriginatorId=None, EnableRedirect=None, EnableReirectIPv6=None, EnableSourcePrefixV6=None, EnableTrafficAction=None, EnableTrafficMarketing=None, EnableTrafficMarking=None, EnableTrafficRate=None, FlowLabel=None, FlowSpecName=None, FragmentMatchV6=None, IcmpCodeMatch=None, IcmpTypeMatch=None, Ip=None, IpPacketLenMatch=None, Ipv4NextHop=None, Ipv6NextHop=None, LocalPreference=None, MultiExitDiscriminator=None, NextHeader=None, NumberOfFlows=None, Origin=None, OriginatorId=None, OverridePeerAsSetMode=None, PortMatch=None, RedirectCBit=None, RedirectExtCommunityType=None, RedirectIPv6=None, Redirectnexthop=None, SetNextHop=None, SetNextHopIpType=None, SourcePortMatch=None, SourcePrefixLengthV6=None, SourcePrefixV6=None, SrcPrefixOffset=None, TcpFlagsMatch=None, TerminalAction=None, TrafficActionSample=None, TrafficDscp=None, TrafficRate=None):
+		"""Base class infrastructure that gets a list of bgpFlowSpecRangesList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			AggregatorAs (str): optional regex of aggregatorAs
+			AggregatorId (str): optional regex of aggregatorId
+			AsNumber2Bytes (str): optional regex of asNumber2Bytes
+			AsNumber4Bytes (str): optional regex of asNumber4Bytes
+			AsSetMode (str): optional regex of asSetMode
+			AssignedNumber2Bytes (str): optional regex of assignedNumber2Bytes
+			AssignedNumber4Bytes (str): optional regex of assignedNumber4Bytes
+			DestPortMatch (str): optional regex of destPortMatch
+			DestPrefixLengthV6 (str): optional regex of destPrefixLengthV6
+			DestPrefixOffset (str): optional regex of destPrefixOffset
+			DestPrefixV6 (str): optional regex of destPrefixV6
+			DscpMatch (str): optional regex of dscpMatch
+			EnableAggregatorId (str): optional regex of enableAggregatorId
+			EnableAsPathSegments (str): optional regex of enableAsPathSegments
+			EnableAtomicAggregate (str): optional regex of enableAtomicAggregate
+			EnableCluster (str): optional regex of enableCluster
+			EnableCommunity (str): optional regex of enableCommunity
+			EnableDestPrefixV6 (str): optional regex of enableDestPrefixV6
+			EnableExtendedCommunity (str): optional regex of enableExtendedCommunity
+			EnableLocalPreference (str): optional regex of enableLocalPreference
+			EnableMultiExitDiscriminator (str): optional regex of enableMultiExitDiscriminator
+			EnableNextHop (str): optional regex of enableNextHop
+			EnableOrigin (str): optional regex of enableOrigin
+			EnableOriginatorId (str): optional regex of enableOriginatorId
+			EnableRedirect (str): optional regex of enableRedirect
+			EnableReirectIPv6 (str): optional regex of enableReirectIPv6
+			EnableSourcePrefixV6 (str): optional regex of enableSourcePrefixV6
+			EnableTrafficAction (str): optional regex of enableTrafficAction
+			EnableTrafficMarketing (str): optional regex of enableTrafficMarketing
+			EnableTrafficMarking (str): optional regex of enableTrafficMarking
+			EnableTrafficRate (str): optional regex of enableTrafficRate
+			FlowLabel (str): optional regex of flowLabel
+			FlowSpecName (str): optional regex of flowSpecName
+			FragmentMatchV6 (str): optional regex of fragmentMatchV6
+			IcmpCodeMatch (str): optional regex of icmpCodeMatch
+			IcmpTypeMatch (str): optional regex of icmpTypeMatch
+			Ip (str): optional regex of ip
+			IpPacketLenMatch (str): optional regex of ipPacketLenMatch
+			Ipv4NextHop (str): optional regex of ipv4NextHop
+			Ipv6NextHop (str): optional regex of ipv6NextHop
+			LocalPreference (str): optional regex of localPreference
+			MultiExitDiscriminator (str): optional regex of multiExitDiscriminator
+			NextHeader (str): optional regex of nextHeader
+			NumberOfFlows (str): optional regex of numberOfFlows
+			Origin (str): optional regex of origin
+			OriginatorId (str): optional regex of originatorId
+			OverridePeerAsSetMode (str): optional regex of overridePeerAsSetMode
+			PortMatch (str): optional regex of portMatch
+			RedirectCBit (str): optional regex of redirectCBit
+			RedirectExtCommunityType (str): optional regex of redirectExtCommunityType
+			RedirectIPv6 (str): optional regex of redirectIPv6
+			Redirectnexthop (str): optional regex of redirectnexthop
+			SetNextHop (str): optional regex of setNextHop
+			SetNextHopIpType (str): optional regex of setNextHopIpType
+			SourcePortMatch (str): optional regex of sourcePortMatch
+			SourcePrefixLengthV6 (str): optional regex of sourcePrefixLengthV6
+			SourcePrefixV6 (str): optional regex of sourcePrefixV6
+			SrcPrefixOffset (str): optional regex of srcPrefixOffset
+			TcpFlagsMatch (str): optional regex of tcpFlagsMatch
+			TerminalAction (str): optional regex of terminalAction
+			TrafficActionSample (str): optional regex of trafficActionSample
+			TrafficDscp (str): optional regex of trafficDscp
+			TrafficRate (str): optional regex of trafficRate
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

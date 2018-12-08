@@ -206,7 +206,7 @@ class Profile(Base):
 
 	@property
 	def __links__(self):
-		"""List of references to impairment links.
+		"""
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=link])
@@ -218,7 +218,7 @@ class Profile(Base):
 
 	@property
 	def AllLinks(self):
-		"""If true, apply the profile to all impairment links. If not, only apply the profile to packets on selected links.
+		"""
 
 		Returns:
 			bool
@@ -230,7 +230,7 @@ class Profile(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables the profile.
+		"""
 
 		Returns:
 			bool
@@ -242,7 +242,7 @@ class Profile(Base):
 
 	@property
 	def Name(self):
-		"""The name of the profile.
+		"""
 
 		Returns:
 			str
@@ -254,7 +254,7 @@ class Profile(Base):
 
 	@property
 	def Priority(self):
-		"""Profile priority. 1 is highest.
+		"""
 
 		Returns:
 			number
@@ -266,7 +266,7 @@ class Profile(Base):
 
 	@property
 	def ProfileId(self):
-		"""A unique identifier for the profile. Read-only.
+		"""
 
 		Returns:
 			number
@@ -277,11 +277,11 @@ class Profile(Base):
 		"""Adds a new profile node on the server and retrieves it in this instance.
 
 		Args:
-			__links__ (list(str[None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=link])): List of references to impairment links.
-			AllLinks (bool): If true, apply the profile to all impairment links. If not, only apply the profile to packets on selected links.
-			Enabled (bool): If true, enables the profile.
-			Name (str): The name of the profile.
-			Priority (number): Profile priority. 1 is highest.
+			__links__ (list(str[None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=link])): 
+			AllLinks (bool): 
+			Enabled (bool): 
+			Name (str): 
+			Priority (number): 
 
 		Returns:
 			self: This instance with all currently retrieved profile data using find and the newly added profile data available through an iterator or index
@@ -307,12 +307,12 @@ class Profile(Base):
 		By default the find method takes no parameters and will retrieve all profile data from the server.
 
 		Args:
-			__links__ (list(str[None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=link])): List of references to impairment links.
-			AllLinks (bool): If true, apply the profile to all impairment links. If not, only apply the profile to packets on selected links.
-			Enabled (bool): If true, enables the profile.
-			Name (str): The name of the profile.
-			Priority (number): Profile priority. 1 is highest.
-			ProfileId (number): A unique identifier for the profile. Read-only.
+			__links__ (list(str[None|/api/v1/sessions/1/ixnetwork/impairment?deepchild=link])): 
+			AllLinks (bool): 
+			Enabled (bool): 
+			Name (str): 
+			Priority (number): 
+			ProfileId (number): 
 
 		Returns:
 			self: This instance with matching profile data retrieved from the server available through an iterator or index

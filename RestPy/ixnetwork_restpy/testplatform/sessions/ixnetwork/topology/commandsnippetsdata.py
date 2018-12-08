@@ -119,6 +119,28 @@ class CommandSnippetsData(Base):
 		"""
 		return self._get_attribute('transmissionCount')
 
+	def get_device_ids(self, PortNames=None, Active=None, CommandSnippetDirectory=None, CommandSnippetFile=None, PeriodicTransmissionInterval=None, TransmissionBehaviour=None, TransmissionCount=None):
+		"""Base class infrastructure that gets a list of commandSnippetsData device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			CommandSnippetDirectory (str): optional regex of commandSnippetDirectory
+			CommandSnippetFile (str): optional regex of commandSnippetFile
+			PeriodicTransmissionInterval (str): optional regex of periodicTransmissionInterval
+			TransmissionBehaviour (str): optional regex of transmissionBehaviour
+			TransmissionCount (str): optional regex of transmissionCount
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def ExecuteCommand(self):
 		"""Executes the executeCommand operation on the server.
 

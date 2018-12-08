@@ -100,3 +100,23 @@ class Bgpv6BMacMappedIpList(Base):
 	@Name.setter
 	def Name(self, value):
 		self._set_attribute('name', value)
+
+	def get_device_ids(self, PortNames=None, Active=None, IpAddress=None, IpType=None, Ipv6Address=None):
+		"""Base class infrastructure that gets a list of bgpv6BMacMappedIpList device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			IpAddress (str): optional regex of ipAddress
+			IpType (str): optional regex of ipType
+			Ipv6Address (str): optional regex of ipv6Address
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

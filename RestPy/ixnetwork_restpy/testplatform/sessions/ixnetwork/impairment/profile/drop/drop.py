@@ -37,7 +37,7 @@ class Drop(Base):
 
 	@property
 	def ClusterSize(self):
-		"""Number of packets to drop on each occurrence.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Drop(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, periodically drop received packets.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Drop(Base):
 
 	@property
 	def PercentRate(self):
-		"""How often to drop packets, as a percentage.
+		"""
 
 		Returns:
 			number

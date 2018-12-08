@@ -37,7 +37,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def EthernetDestinationAddress(self):
-		"""Indicates the Ethernet destination address for the packet.
+		"""
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def EthernetSourceAddress(self):
-		"""Indicates the ethernet address of the source from which this packet arrived.
+		"""
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def EthernetType(self):
-		"""Indicates the ethernet frame type.
+		"""
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def Ipv4DestinationAddress(self):
-		"""Indicates the IPv4 destination address for this packet.
+		"""
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def Ipv4Protocol(self):
-		"""Defines the protocol used in the data portion of the IP datagram.
+		"""
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def Ipv4SourceAddress(self):
-		"""Indicates the IPv4 address of the source from which this packet arrived.
+		"""
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def Ipv6DestinationAddress(self):
-		"""Indicates the IPv6 destination address for this packet.
+		"""
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""Originally created for giving real-time applications special service.The flow label when set to a non-zero value now serves as a hint to routers and switches with multiple outbound paths that these packets should stay on the same path so that they will not be re-ordered.
+		"""
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def Ipv6SourceAddress(self):
-		"""Indicates the IPv6 address of the source from which this packet arrived.
+		"""
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def TcpDestinationPort(self):
-		"""Identifies the TCP port number of the destination application program.
+		"""
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def TcpSourcePort(self):
-		"""Identifies the TCP port number of the source application program.
+		"""
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def UdpDestinationPort(self):
-		"""Identifies the UDP port number of the destination application program.
+		"""
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def UdpSourcePort(self):
-		"""Identifies the UDP port number of the source application program.
+		"""
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def UniquePacketCount(self):
-		"""Indicates the packet-in count in this Range.
+		"""
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def VlanId(self):
-		"""Indicates the field specifying the VLAN to which the frame belongs.
+		"""
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class PacketInHeaders(Base):
 
 	@property
 	def VlanPriority(self):
-		"""Indicates the frame priority level.
+		"""
 
 		Returns:
 			str

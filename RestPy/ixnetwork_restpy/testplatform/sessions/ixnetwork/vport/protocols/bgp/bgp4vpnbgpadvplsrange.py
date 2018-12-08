@@ -38,7 +38,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def Enabled(self):
-		"""If true, enables one BGP AD VPLS.
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherAsNumber(self):
-		"""This option is available for use if Distinguish Type is set to AS. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherAsNumberStep(self):
-		"""This option is available for use if Distinguish Type is set to AS. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherAssignedNumber(self):
-		"""The distinguisher assigned number. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherAssignedNumberStep(self):
-		"""The distinguisher assigned number. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherIpAddress(self):
-		"""Available for use only if the IPv4 Input is set to IP
+		"""
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherIpAddressStep(self):
-		"""Available for use only if the IPv4 Input is set to IP.
+		"""
 
 		Returns:
 			str
@@ -122,7 +122,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteDistinguisherType(self):
-		"""The RD type, one of AS and IP.
+		"""
 
 		Returns:
 			str(asNumber|ipAddress)
@@ -134,7 +134,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetAsNumber(self):
-		"""Available for use only if Distinguish Type is set to AS.
+		"""
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetAsNumberStep(self):
-		"""Available for use only if Target AS Number is set to AS. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetAssignedNumber(self):
-		"""The target assigned number. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -170,7 +170,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetAssignedNumberStep(self):
-		"""The target assigned number. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetIpAddress(self):
-		"""Available for use only if the IPv4 Input is set to IP.
+		"""
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetIpAddressStep(self):
-		"""Available for use only if it is set to IP. The default is 0.0.0.0.
+		"""
 
 		Returns:
 			str
@@ -206,7 +206,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def RouteTargetType(self):
-		"""The RT format, one of AS and IP. The default is AS.
+		"""
 
 		Returns:
 			str(asNumber|ipAddress)
@@ -218,7 +218,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def UseRouteDistinguisherAsRouteTarget(self):
-		"""If true, the route distinginguisher is used as the route target.
+		"""
 
 		Returns:
 			bool
@@ -230,7 +230,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def UseVplsIdAsRouteDistinguisher(self):
-		"""If true, the VPLS Id is used as the route distinguisher.
+		"""
 
 		Returns:
 			bool
@@ -242,7 +242,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsCount(self):
-		"""The Integer value that indicates the number of VPLS instance emulated using this VPLS range.
+		"""
 
 		Returns:
 			number
@@ -254,7 +254,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdAsNumber(self):
-		"""Available for use if VPLS Id Type is set to AS. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -266,7 +266,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdAsNumberStep(self):
-		"""Available for use only if VPLS Id Type is set to AS. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -278,7 +278,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdAssignedNumber(self):
-		"""The indicated value for the VPLS Id Assigned Number attribute. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -290,7 +290,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdAssignedNumberStep(self):
-		"""The indicated number for the VPLS Id Assigned Number attribute. The default is 0.
+		"""
 
 		Returns:
 			number
@@ -302,7 +302,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdIpAddress(self):
-		"""Available for use only if the route VPLS Id Type is set to IP. The default is 0.0.0.0
+		"""
 
 		Returns:
 			str
@@ -314,7 +314,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdIpAddressStep(self):
-		"""Available for use only if the route VPLS Id Type is set to IP. The default is 0.0.0.0
+		"""
 
 		Returns:
 			str
@@ -326,7 +326,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VplsIdType(self):
-		"""The VPLS ID type, one of AS and IP. Default is AS.
+		"""
 
 		Returns:
 			str(asNumber|ipAddress)
@@ -338,7 +338,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VsiId(self):
-		"""The VSI ID, one of concatenatePeAddress and concatenateAssignedNumber.
+		"""
 
 		Returns:
 			str(concatenatePeAddress|concatenateAssignedNumber)
@@ -350,7 +350,7 @@ class Bgp4VpnBgpAdVplsRange(Base):
 
 	@property
 	def VsiIdAssignedNumber(self):
-		"""The indicated value for the VSI ID Assigned Number attribute.
+		"""
 
 		Returns:
 			number
@@ -364,33 +364,33 @@ class Bgp4VpnBgpAdVplsRange(Base):
 		"""Adds a new bgp4VpnBgpAdVplsRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): If true, enables one BGP AD VPLS.
-			RouteDistinguisherAsNumber (number): This option is available for use if Distinguish Type is set to AS. The default is 0.
-			RouteDistinguisherAsNumberStep (number): This option is available for use if Distinguish Type is set to AS. The default is 0.
-			RouteDistinguisherAssignedNumber (number): The distinguisher assigned number. The default is 0.
-			RouteDistinguisherAssignedNumberStep (number): The distinguisher assigned number. The default is 0.
-			RouteDistinguisherIpAddress (str): Available for use only if the IPv4 Input is set to IP
-			RouteDistinguisherIpAddressStep (str): Available for use only if the IPv4 Input is set to IP.
-			RouteDistinguisherType (str(asNumber|ipAddress)): The RD type, one of AS and IP.
-			RouteTargetAsNumber (number): Available for use only if Distinguish Type is set to AS.
-			RouteTargetAsNumberStep (number): Available for use only if Target AS Number is set to AS. The default is 0.
-			RouteTargetAssignedNumber (number): The target assigned number. The default is 0.
-			RouteTargetAssignedNumberStep (number): The target assigned number. The default is 0.
-			RouteTargetIpAddress (str): Available for use only if the IPv4 Input is set to IP.
-			RouteTargetIpAddressStep (str): Available for use only if it is set to IP. The default is 0.0.0.0.
-			RouteTargetType (str(asNumber|ipAddress)): The RT format, one of AS and IP. The default is AS.
-			UseRouteDistinguisherAsRouteTarget (bool): If true, the route distinginguisher is used as the route target.
-			UseVplsIdAsRouteDistinguisher (bool): If true, the VPLS Id is used as the route distinguisher.
-			VplsCount (number): The Integer value that indicates the number of VPLS instance emulated using this VPLS range.
-			VplsIdAsNumber (number): Available for use if VPLS Id Type is set to AS. The default is 0.
-			VplsIdAsNumberStep (number): Available for use only if VPLS Id Type is set to AS. The default is 0.
-			VplsIdAssignedNumber (number): The indicated value for the VPLS Id Assigned Number attribute. The default is 0.
-			VplsIdAssignedNumberStep (number): The indicated number for the VPLS Id Assigned Number attribute. The default is 0.
-			VplsIdIpAddress (str): Available for use only if the route VPLS Id Type is set to IP. The default is 0.0.0.0
-			VplsIdIpAddressStep (str): Available for use only if the route VPLS Id Type is set to IP. The default is 0.0.0.0
-			VplsIdType (str(asNumber|ipAddress)): The VPLS ID type, one of AS and IP. Default is AS.
-			VsiId (str(concatenatePeAddress|concatenateAssignedNumber)): The VSI ID, one of concatenatePeAddress and concatenateAssignedNumber.
-			VsiIdAssignedNumber (number): The indicated value for the VSI ID Assigned Number attribute.
+			Enabled (bool): 
+			RouteDistinguisherAsNumber (number): 
+			RouteDistinguisherAsNumberStep (number): 
+			RouteDistinguisherAssignedNumber (number): 
+			RouteDistinguisherAssignedNumberStep (number): 
+			RouteDistinguisherIpAddress (str): 
+			RouteDistinguisherIpAddressStep (str): 
+			RouteDistinguisherType (str(asNumber|ipAddress)): 
+			RouteTargetAsNumber (number): 
+			RouteTargetAsNumberStep (number): 
+			RouteTargetAssignedNumber (number): 
+			RouteTargetAssignedNumberStep (number): 
+			RouteTargetIpAddress (str): 
+			RouteTargetIpAddressStep (str): 
+			RouteTargetType (str(asNumber|ipAddress)): 
+			UseRouteDistinguisherAsRouteTarget (bool): 
+			UseVplsIdAsRouteDistinguisher (bool): 
+			VplsCount (number): 
+			VplsIdAsNumber (number): 
+			VplsIdAsNumberStep (number): 
+			VplsIdAssignedNumber (number): 
+			VplsIdAssignedNumberStep (number): 
+			VplsIdIpAddress (str): 
+			VplsIdIpAddressStep (str): 
+			VplsIdType (str(asNumber|ipAddress)): 
+			VsiId (str(concatenatePeAddress|concatenateAssignedNumber)): 
+			VsiIdAssignedNumber (number): 
 
 		Returns:
 			self: This instance with all currently retrieved bgp4VpnBgpAdVplsRange data using find and the newly added bgp4VpnBgpAdVplsRange data available through an iterator or index
@@ -416,33 +416,33 @@ class Bgp4VpnBgpAdVplsRange(Base):
 		By default the find method takes no parameters and will retrieve all bgp4VpnBgpAdVplsRange data from the server.
 
 		Args:
-			Enabled (bool): If true, enables one BGP AD VPLS.
-			RouteDistinguisherAsNumber (number): This option is available for use if Distinguish Type is set to AS. The default is 0.
-			RouteDistinguisherAsNumberStep (number): This option is available for use if Distinguish Type is set to AS. The default is 0.
-			RouteDistinguisherAssignedNumber (number): The distinguisher assigned number. The default is 0.
-			RouteDistinguisherAssignedNumberStep (number): The distinguisher assigned number. The default is 0.
-			RouteDistinguisherIpAddress (str): Available for use only if the IPv4 Input is set to IP
-			RouteDistinguisherIpAddressStep (str): Available for use only if the IPv4 Input is set to IP.
-			RouteDistinguisherType (str(asNumber|ipAddress)): The RD type, one of AS and IP.
-			RouteTargetAsNumber (number): Available for use only if Distinguish Type is set to AS.
-			RouteTargetAsNumberStep (number): Available for use only if Target AS Number is set to AS. The default is 0.
-			RouteTargetAssignedNumber (number): The target assigned number. The default is 0.
-			RouteTargetAssignedNumberStep (number): The target assigned number. The default is 0.
-			RouteTargetIpAddress (str): Available for use only if the IPv4 Input is set to IP.
-			RouteTargetIpAddressStep (str): Available for use only if it is set to IP. The default is 0.0.0.0.
-			RouteTargetType (str(asNumber|ipAddress)): The RT format, one of AS and IP. The default is AS.
-			UseRouteDistinguisherAsRouteTarget (bool): If true, the route distinginguisher is used as the route target.
-			UseVplsIdAsRouteDistinguisher (bool): If true, the VPLS Id is used as the route distinguisher.
-			VplsCount (number): The Integer value that indicates the number of VPLS instance emulated using this VPLS range.
-			VplsIdAsNumber (number): Available for use if VPLS Id Type is set to AS. The default is 0.
-			VplsIdAsNumberStep (number): Available for use only if VPLS Id Type is set to AS. The default is 0.
-			VplsIdAssignedNumber (number): The indicated value for the VPLS Id Assigned Number attribute. The default is 0.
-			VplsIdAssignedNumberStep (number): The indicated number for the VPLS Id Assigned Number attribute. The default is 0.
-			VplsIdIpAddress (str): Available for use only if the route VPLS Id Type is set to IP. The default is 0.0.0.0
-			VplsIdIpAddressStep (str): Available for use only if the route VPLS Id Type is set to IP. The default is 0.0.0.0
-			VplsIdType (str(asNumber|ipAddress)): The VPLS ID type, one of AS and IP. Default is AS.
-			VsiId (str(concatenatePeAddress|concatenateAssignedNumber)): The VSI ID, one of concatenatePeAddress and concatenateAssignedNumber.
-			VsiIdAssignedNumber (number): The indicated value for the VSI ID Assigned Number attribute.
+			Enabled (bool): 
+			RouteDistinguisherAsNumber (number): 
+			RouteDistinguisherAsNumberStep (number): 
+			RouteDistinguisherAssignedNumber (number): 
+			RouteDistinguisherAssignedNumberStep (number): 
+			RouteDistinguisherIpAddress (str): 
+			RouteDistinguisherIpAddressStep (str): 
+			RouteDistinguisherType (str(asNumber|ipAddress)): 
+			RouteTargetAsNumber (number): 
+			RouteTargetAsNumberStep (number): 
+			RouteTargetAssignedNumber (number): 
+			RouteTargetAssignedNumberStep (number): 
+			RouteTargetIpAddress (str): 
+			RouteTargetIpAddressStep (str): 
+			RouteTargetType (str(asNumber|ipAddress)): 
+			UseRouteDistinguisherAsRouteTarget (bool): 
+			UseVplsIdAsRouteDistinguisher (bool): 
+			VplsCount (number): 
+			VplsIdAsNumber (number): 
+			VplsIdAsNumberStep (number): 
+			VplsIdAssignedNumber (number): 
+			VplsIdAssignedNumberStep (number): 
+			VplsIdIpAddress (str): 
+			VplsIdIpAddressStep (str): 
+			VplsIdType (str(asNumber|ipAddress)): 
+			VsiId (str(concatenatePeAddress|concatenateAssignedNumber)): 
+			VsiIdAssignedNumber (number): 
 
 		Returns:
 			self: This instance with matching bgp4VpnBgpAdVplsRange data retrieved from the server available through an iterator or index

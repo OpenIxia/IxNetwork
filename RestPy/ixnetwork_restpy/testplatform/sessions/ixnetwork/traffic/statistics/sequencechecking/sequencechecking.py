@@ -37,7 +37,7 @@ class SequenceChecking(Base):
 
 	@property
 	def AdvancedSequenceThreshold(self):
-		"""Checks the sequence.
+		"""
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class SequenceChecking(Base):
 
 	@property
 	def Enabled(self):
-		"""If enabled, fetches sequence checking statistics to measure duplicate packets, sequence gap, and the last sequence number.
+		"""
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class SequenceChecking(Base):
 
 	@property
 	def SequenceMode(self):
-		"""The mode to conduct sequence checking.
+		"""
 
 		Returns:
 			str(advanced|rxPacketArrival|rxSwitchedPath|rxThreshold)

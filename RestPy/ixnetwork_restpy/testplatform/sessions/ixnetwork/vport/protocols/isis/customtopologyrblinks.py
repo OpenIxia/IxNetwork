@@ -38,7 +38,7 @@ class CustomTopologyRbLinks(Base):
 
 	@property
 	def Enabled(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTopologyRbLinks(Base):
 
 	@property
 	def LinkMetric(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class CustomTopologyRbLinks(Base):
 
 	@property
 	def LinkNodeSystemId(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class CustomTopologyRbLinks(Base):
 		"""Adds a new customTopologyRbLinks node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): NOT DEFINED
-			LinkMetric (number): NOT DEFINED
-			LinkNodeSystemId (str): NOT DEFINED
+			Enabled (bool): 
+			LinkMetric (number): 
+			LinkNodeSystemId (str): 
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyRbLinks data using find and the newly added customTopologyRbLinks data available through an iterator or index
@@ -104,9 +104,9 @@ class CustomTopologyRbLinks(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyRbLinks data from the server.
 
 		Args:
-			Enabled (bool): NOT DEFINED
-			LinkMetric (number): NOT DEFINED
-			LinkNodeSystemId (str): NOT DEFINED
+			Enabled (bool): 
+			LinkMetric (number): 
+			LinkNodeSystemId (str): 
 
 		Returns:
 			self: This instance with matching customTopologyRbLinks data retrieved from the server available through an iterator or index

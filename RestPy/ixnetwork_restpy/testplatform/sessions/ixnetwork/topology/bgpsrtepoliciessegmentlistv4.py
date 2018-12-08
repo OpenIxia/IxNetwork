@@ -144,3 +144,24 @@ class BgpSRTEPoliciesSegmentListV4(Base):
 			obj(ixnetwork_restpy.multivalue.Multivalue)
 		"""
 		return self._get_attribute('weight')
+
+	def get_device_ids(self, PortNames=None, Active=None, EnWeight=None, NumberOfActiveSegments=None, SegmentListNumber=None, Weight=None):
+		"""Base class infrastructure that gets a list of bgpSRTEPoliciesSegmentListV4 device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnWeight (str): optional regex of enWeight
+			NumberOfActiveSegments (str): optional regex of numberOfActiveSegments
+			SegmentListNumber (str): optional regex of segmentListNumber
+			Weight (str): optional regex of weight
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())

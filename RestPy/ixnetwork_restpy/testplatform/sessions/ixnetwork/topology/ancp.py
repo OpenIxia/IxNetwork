@@ -336,6 +336,35 @@ class Ancp(Base):
 		"""
 		return self._read(href)
 
+	def get_device_ids(self, PortNames=None, DynamicTopologyDiscovery=None, KeepAliveRetries=None, KeepAliveTimeout=None, LineConfiguration=None, MaxRedialAttempts=None, NasIp=None, NasServicePort=None, PartitionId=None, RemoteLoopback=None, Standard=None, TransactionalMulticast=None, TriggerAccessLoopEvents=None, UnlimitedRedial=None):
+		"""Base class infrastructure that gets a list of ancp device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			DynamicTopologyDiscovery (str): optional regex of dynamicTopologyDiscovery
+			KeepAliveRetries (str): optional regex of keepAliveRetries
+			KeepAliveTimeout (str): optional regex of keepAliveTimeout
+			LineConfiguration (str): optional regex of lineConfiguration
+			MaxRedialAttempts (str): optional regex of maxRedialAttempts
+			NasIp (str): optional regex of nasIp
+			NasServicePort (str): optional regex of nasServicePort
+			PartitionId (str): optional regex of partitionId
+			RemoteLoopback (str): optional regex of remoteLoopback
+			Standard (str): optional regex of standard
+			TransactionalMulticast (str): optional regex of transactionalMulticast
+			TriggerAccessLoopEvents (str): optional regex of triggerAccessLoopEvents
+			UnlimitedRedial (str): optional regex of unlimitedRedial
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.
 

@@ -191,6 +191,32 @@ class Bfdv6Session(Base):
 		"""
 		return self._get_attribute('vni')
 
+	def get_device_ids(self, PortNames=None, Active=None, EnableAutoChooseSourceIp=None, EnableOVSDBCommunication=None, EnableRemoteDiscriminatorLearned=None, MyDiscriminator=None, RemoteDiscriminator=None, RemoteIp6=None, RemoteMac=None, SessionType=None, SourceIp6=None):
+		"""Base class infrastructure that gets a list of bfdv6Session device ids encapsulated by this object.
+
+		Use the optional regex parameters in the method to refine the list of device ids encapsulated by this object.
+
+		Args:
+			PortNames (str): optional regex of port names
+			Active (str): optional regex of active
+			EnableAutoChooseSourceIp (str): optional regex of enableAutoChooseSourceIp
+			EnableOVSDBCommunication (str): optional regex of enableOVSDBCommunication
+			EnableRemoteDiscriminatorLearned (str): optional regex of enableRemoteDiscriminatorLearned
+			MyDiscriminator (str): optional regex of myDiscriminator
+			RemoteDiscriminator (str): optional regex of remoteDiscriminator
+			RemoteIp6 (str): optional regex of remoteIp6
+			RemoteMac (str): optional regex of remoteMac
+			SessionType (str): optional regex of sessionType
+			SourceIp6 (str): optional regex of sourceIp6
+
+		Returns:
+			list(int): A list of device ids that meets the regex criteria provided in the method parameters
+
+		Raises:
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		return self._get_ngpf_device_ids(locals())
+
 	def Start(self):
 		"""Executes the start operation on the server.
 

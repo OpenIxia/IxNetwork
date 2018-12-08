@@ -38,7 +38,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def CMacAddressCount(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def CMacAddressStep(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def EnableIsid(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def InterNodeCmacAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def InterNodeCvlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def InterNodeIsIdIncrement(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def InterNodeSvlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def Isid(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def RBit(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -146,7 +146,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def StartCmacAddress(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def StartCvlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -170,7 +170,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def StartSvlan(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def TBit(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			bool
@@ -194,7 +194,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def TransmissionType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(unicast|multicast)
@@ -206,7 +206,7 @@ class CustomTopologySpbNodeIsidRange(Base):
 
 	@property
 	def VlanType(self):
-		"""NOT DEFINED
+		"""
 
 		Returns:
 			str(singleVlan|stackedVlanQinQ)
@@ -220,21 +220,21 @@ class CustomTopologySpbNodeIsidRange(Base):
 		"""Adds a new customTopologySpbNodeIsidRange node on the server and retrieves it in this instance.
 
 		Args:
-			CMacAddressCount (number): NOT DEFINED
-			CMacAddressStep (str): NOT DEFINED
-			EnableIsid (bool): NOT DEFINED
-			InterNodeCmacAddress (str): NOT DEFINED
-			InterNodeCvlan (number): NOT DEFINED
-			InterNodeIsIdIncrement (number): NOT DEFINED
-			InterNodeSvlan (number): NOT DEFINED
-			Isid (number): NOT DEFINED
-			RBit (bool): NOT DEFINED
-			StartCmacAddress (str): NOT DEFINED
-			StartCvlan (number): NOT DEFINED
-			StartSvlan (number): NOT DEFINED
-			TBit (bool): NOT DEFINED
-			TransmissionType (str(unicast|multicast)): NOT DEFINED
-			VlanType (str(singleVlan|stackedVlanQinQ)): NOT DEFINED
+			CMacAddressCount (number): 
+			CMacAddressStep (str): 
+			EnableIsid (bool): 
+			InterNodeCmacAddress (str): 
+			InterNodeCvlan (number): 
+			InterNodeIsIdIncrement (number): 
+			InterNodeSvlan (number): 
+			Isid (number): 
+			RBit (bool): 
+			StartCmacAddress (str): 
+			StartCvlan (number): 
+			StartSvlan (number): 
+			TBit (bool): 
+			TransmissionType (str(unicast|multicast)): 
+			VlanType (str(singleVlan|stackedVlanQinQ)): 
 
 		Returns:
 			self: This instance with all currently retrieved customTopologySpbNodeIsidRange data using find and the newly added customTopologySpbNodeIsidRange data available through an iterator or index
@@ -260,21 +260,21 @@ class CustomTopologySpbNodeIsidRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologySpbNodeIsidRange data from the server.
 
 		Args:
-			CMacAddressCount (number): NOT DEFINED
-			CMacAddressStep (str): NOT DEFINED
-			EnableIsid (bool): NOT DEFINED
-			InterNodeCmacAddress (str): NOT DEFINED
-			InterNodeCvlan (number): NOT DEFINED
-			InterNodeIsIdIncrement (number): NOT DEFINED
-			InterNodeSvlan (number): NOT DEFINED
-			Isid (number): NOT DEFINED
-			RBit (bool): NOT DEFINED
-			StartCmacAddress (str): NOT DEFINED
-			StartCvlan (number): NOT DEFINED
-			StartSvlan (number): NOT DEFINED
-			TBit (bool): NOT DEFINED
-			TransmissionType (str(unicast|multicast)): NOT DEFINED
-			VlanType (str(singleVlan|stackedVlanQinQ)): NOT DEFINED
+			CMacAddressCount (number): 
+			CMacAddressStep (str): 
+			EnableIsid (bool): 
+			InterNodeCmacAddress (str): 
+			InterNodeCvlan (number): 
+			InterNodeIsIdIncrement (number): 
+			InterNodeSvlan (number): 
+			Isid (number): 
+			RBit (bool): 
+			StartCmacAddress (str): 
+			StartCvlan (number): 
+			StartSvlan (number): 
+			TBit (bool): 
+			TransmissionType (str(unicast|multicast)): 
+			VlanType (str(singleVlan|stackedVlanQinQ)): 
 
 		Returns:
 			self: This instance with matching customTopologySpbNodeIsidRange data retrieved from the server available through an iterator or index

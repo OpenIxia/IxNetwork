@@ -233,32 +233,20 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
-    # Get the Traffic Item name for getting Traffic Item statistics.
-    trafficItemName = trafficItem.Name
-
-    # Get and show the Traffic Item column caption names and stat values
-    columnNames      = statObj.getStatViewResults(statViewName='Traffic Item Statistics', getColumnCaptions=True)
-    trafficItemStats = statObj.getStatViewResults(statViewName='Traffic Item Statistics', rowValuesLabel=trafficItemName)
-
-    # The columnNames variable contains all the stat counter names.
-    # Get the index position of the stat counter that you want.
-    # The index is aligned with trafficItemStats that contains the statistic values.
-    txFramesIndex = columnNames.index('Tx Frames')
-    rxFramesIndex = columnNames.index('Rx Frames')
-
-    # Get the statistic values with the indexes.
-    txFrames = trafficItemStats[txFramesIndex]
-    rxFrames = trafficItemStats[rxFramesIndex]
-
-    print('\nTraffic Item Stats:\n\tTxFrames: {0}  RxFrames: {1}\n'.format(txFrames, rxFrames))
+    stats = statObj.getTrafficItemStats()
+    
+    # Get the statistic values
+    txFrames = stats[trafficItem.Name]['Tx Frames']
+    rxFrames = stats[trafficItem.Name]['Rx Frames']
+    print('\nTraffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
 
     # This example is for getting Flow Statistics.
-    columnCaptions =   statObj.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)
     flowStats = statObj.getFlowStatistics()
-    print('\n', columnCaptions)
-    for statValues in flowStats:
-        print('\n{0}'.format(statValues))
-    print()
+
+    for row, statValues in flowStats.items():
+        txFrames = statValues['Tx Frames']
+        rxFrames = statValues['Rx Frames']
+        print('Flow Statistics: Row:{} TxFrames: {}  RxFrames: {}\n'.format(row, txFrames, rxFrames))
 
     if deleteSessionWhenDone:
         # For Linux and WindowsConnectionMgr only

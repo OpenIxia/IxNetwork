@@ -1,4 +1,4 @@
-import time
+import re, time
 
 class Statistics(object):
     def __init__(self, ixNetObj):
@@ -20,12 +20,12 @@ class Statistics(object):
             print('\nWaiting for statview: {0}\n'.format(caption))
             viewResults = self.ixNetObj.Statistics.View.find(Caption=caption)
             if counter < counterStop and len(viewResults) == 0:
-                print('\n[{0}] is not ready yet. Wait {1}/{2} seconds\n'.format(caption, counter, counterStop))
+                print('\n{0} is not ready yet. Wait {1}/{2} seconds\n'.format(caption, counter, counterStop))
                 time.sleep(1)
                 continue
 
             if counter < counterStop and len(viewResults) != 0:
-                print('\n[{0}] is ready\n'.format(caption))
+                print('\n{0} is ready\n'.format(caption))
                 return viewResults
 
             if counter == counterStop and len(viewResults) == 0 :
@@ -77,36 +77,36 @@ class Statistics(object):
         counterStop = 60
         for counter in range(1, counterStop+1): 
             if getColumnCaptions:
-                print('\nWaiting for [{0}] Data.ColumnCaptions\n'.format(statViewName))
+                print('\nWaiting for {0} Data.ColumnCaptions\n'.format(statViewName))
                 viewResults = self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].Data.ColumnCaptions
                 deeperView = 'Data.ColumnCaptions'
 
             if getPageValues:
-                print('\nWaiting for [{0}] Data.PageValues\n'.format(statViewName))
+                print('\nWaiting for {0} Data.PageValues\n'.format(statViewName))
                 viewResults = self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].Data.PageValues
                 deeperView = 'Data.PageValues'
 
             if getTotalPages:
-                print('\nWaiting for [{0}] Data.TotalPages\n'.format(statViewName))
+                print('\nWaiting for {0} Data.TotalPages\n'.format(statViewName))
                 return self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].Data.TotalPages
 
             if rowValuesLabel is not None:
-                print('\nWaiting for [{0}] Data.GetRowValues\n'.format(statViewName))
+                print('\nWaiting for {0} Data.GetRowValues\n'.format(statViewName))
                 viewResults = self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].GetRowValues(Arg2=rowValuesLabel)
                 deeperView = 'GetRowValues'
 
             if counter < counterStop and len(viewResults) == 0:
-                print('\n[{0}] {1}: is not ready yet.\n\tWait {2}/{3} seconds\n'.format(statViewName, deeperView,
-                                                                                     counter, counterStop))
+                print('\n{0} {1}: is not ready yet.\n\tWait {2}/{3} seconds\n'.format(statViewName, deeperView,
+                                                                                        counter, counterStop))
                 time.sleep(1)
                 continue
 
             if counter < counterStop and len(viewResults) != 0:
-                print('\n[{0}] {1}: is ready\n'.format(statViewName, deeperView))
+                print('\n{0} {1}: is ready\n'.format(statViewName, deeperView))
                 return viewResults
 
             if counter == counterStop and len(viewResults) == 0 :
-                raise Exception('\nAPI server failed to provide stat views for [{0}] {1}'.format(statViewName, deeperView))
+                raise Exception('\nAPI server failed to provide stat views for {0} {1}'.format(statViewName, deeperView))
 
     def verifyAllProtocolSessions(self, timeout=60):
         """
@@ -168,20 +168,155 @@ class Statistics(object):
             if sessionFailedFlag == 1:
                 raise Exception('Protocol session failed to come up')
 
+    def getStatsByRowLabelName(self, statViewName=None, rowLabelName='all'):
+        """
+        This is an internal helper function for: getTrafficItemStats, getPortStatistics, getProtocolsSummary,
+                                                 getGlobalProtocolStatistics, getDataPlanePortStatistics.
+
+        These stats are identified by a label name for each row shown in the GUI.
+        The label name is the first column value shown in the GUI.
+
+        :param statViewName: 'Port Statistics', 'Traffic Item Statistics', 'Protocols Summary', 'Port CPU Statistics'
+                             'Global Protocol Statistics', 'Data Plane Statistics'
+
+        :param rowLabelName: <str|list|all>: If you look at the IxNetwork GUI for any of the statViewName listed above, 
+                                             their rowLabelName is the first in the column stats.
+
+                             If you're just getting one specific stat, pass in the rowLabelName.
+                             If you want to get multiple stats, pass in a list of rowLabelName.
+                             Defaults to return all the row of stats.
+
+        Return
+           A dict: stats
+        """
+        columnNames = self.getStatViewResults(statViewName=statViewName, getColumnCaptions=True)
+        stats = {}
+
+        if type(rowLabelName) == list or rowLabelName == 'all':
+            statViewValues = self.getStatViewResults(statViewName=statViewName, getPageValues=True)
+
+            if type(rowLabelName) == list:
+                # Get the specified list of traffic item's stats
+                for eachViewStats in statViewValues:
+                    currentRowLabelName = eachViewStats[0][0]
+                    if currentRowLabelName in rowLabelName:
+                        stats[currentRowLabelName] = {}
+                        for columnName, statValue in zip(columnNames, eachViewStats[0]):
+                            stats[currentRowLabelName][columnName] = statValue
+
+            else:
+                # Get all the traffic items
+                for eachViewStat in statViewValues:
+                    currentRowLabelName = eachViewStat[0][0]
+                    stats[currentRowLabelName] = {}                
+                    for columnName, statValue in zip(columnNames, eachViewStat[0]):
+                        stats[currentRowLabelName][columnName] = statValue
+        else:
+            # Get just one traffic item stat
+            statViewValues = self.getStatViewResults(statViewName=statViewName, rowValuesLabel=rowLabelName)
+            if statViewValues == 'kVoid':
+                raise Exception('No such port name found.  Verify for typo: {}'.format(rowLabelName))
+
+            stats[rowLabelName] = {}
+            for columnName, statValue in zip(columnNames, statViewValues):
+                stats[rowLabelName][columnName] = statValue
+
+        return stats
+
     def getFlowStatistics(self):
         """
         Get Flow Statistics and put each row in a list.
 
         Return
-           A list of Flow Statistics in rows.
+           A dict of Flow Statistics: flowStatistics[rowNumber][columnName] = value
         """
-        print('\nGetting Flow Statistics')
+        columnNames =   self.getStatViewResults(statViewName='Flow Statistics', getColumnCaptions=True)
         totalPages = self.getStatViewResults(statViewName='Flow Statistics', getTotalPages=True)
-        flowStatistics = []
+
+        flowStatistics = {}
+        rowNumber = 1
         for pageNumber in range(1, totalPages+1):
             self.ixNetObj.Statistics.View.find(Caption='Flow Statistics')[0].Data.CurrentPage = pageNumber
             pageValues = self.getStatViewResults(statViewName='Flow Statistics', getPageValues=True)
-            for eachRow in pageValues:
-                flowStatistics.append(eachRow[0])
+            for eachRowValue in pageValues:
+
+                flowStatistics[rowNumber] = {}
+                for columnName, rowValue in zip(columnNames, eachRowValue[0]):
+                    flowStatistics[rowNumber][columnName] = rowValue
+                rowNumber += 1
 
         return flowStatistics
+
+    def getTrafficItemStats(self, trafficItemName='all'):
+        """
+        Get Traffic Item statistics.
+
+        :param trafficItemName: <str|list>: The Traffic Item name. 
+                                If you're just getting one traffic item stat, pass in a string name.
+                                If you want to get multiple traffic item stats, pass in a list.
+                                Defaults to return all Traffic Item stats.
+
+        Return
+           A dict of all the TrafficItem statistics
+        """
+        return self.getStatsByRowLabelName(statViewName='Traffic Item Statistics', rowLabelName=trafficItemName)
+
+
+    def getPortStatistics(self, rowLabelName='all'):
+        """
+        Get port statistics.
+
+        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01'
+                             If you're just getting one stat, pass in a rowLabelName.
+                             If you want to get multiple port stats, pass in a list of rowLabelName.
+                             Defaults to return all stats.
+
+        Return
+           dict
+        """
+        return self.getStatsByRowLabelName(statViewName='^Port Statistics$', rowLabelName=rowLabelName)
+
+
+    def getPortCpuStatistics(self, rowLabelName='all'):
+        """
+        Get port cpu statistics.
+
+        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01' 
+                             If you're just getting one port stat, pass in a rowLabelName.
+                             If you want to get multiple port stats, pass in a list of rowLabelName.
+                             Defaults to return all stats.
+
+        Return
+           A dict of Port statistics in rows: portStatistics[statName]
+        """
+        return self.getStatsByRowLabelName(statViewName='Port CPU Statistics', rowLabelName=rowLabelName)
+
+
+    def getGlobalProtocolStatistics(self, rowLabelName='all'):
+        """
+        Get global protocol statistics.
+
+        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01' 
+                             If you're just getting one protocol stat, pass in a string rowLabelName.
+                             If you want to get multiple protocol stats, pass in a list of rowLabelName.
+                             Defaults to return all stats.
+
+        Return
+           dict
+        """
+        return self.getStatsByRowLabelName(statViewName='Global Protocol Statistics', rowLabelName=rowLabelName)
+
+
+    def getDataPlanePortStatistics(self, rowLabelName='all'):
+        """
+        Get data plane port statistics.
+
+        :param rowLabelName: <str|list>: The port name
+                             If you're just getting one port stat, pass in the port name.
+                             If you want to get multiple port  stats, pass in a list of port names.
+                             Defaults to return all stats.
+
+        Return
+           dict
+        """
+        return self.getStatsByRowLabelName(statViewName='Data Plane Port Statistics', rowLabelName=rowLabelName)

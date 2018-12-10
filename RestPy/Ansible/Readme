@@ -136,15 +136,14 @@ Playbook example below:
 
   tasks:
     - name: Configuring BGP NGPF
-      bgpModule:
+      bgpNgpf:
         apiServerIp: 192.168.70.3
-        apiServerIpPort: 11009
-        osPlatform: 'windows'
+        apiServerIpPort: 443
+        osPlatform: 'linux'
         forceTakePortOwnership: True
-        releasePortsWhenDone: False
-        deleteSessionWhenDonet: True
-        ixChassisIp: 192.168.70.11
-        portList: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+        deleteSessionWhenDone: True
+        ixChassisIp: 192.168.70.12
+        portList: [['192.168.70.12', '1', '1'], ['192.168.70.12', '1', '2']]
         linuxUsername: admin
         linuxPassword: admin
         configLicense: True

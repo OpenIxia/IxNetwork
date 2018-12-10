@@ -154,7 +154,8 @@ Playbook example below:
 
 Running Ansible:
 
-    - It will attempt to connect as the user it is being run as.
+    - Before you run Ansible, you should know that Ansible doesn't show real-time loggings.
+    - You could enter: "tail -f restpy.log" in the Playbooks directory to see real time loggings.
 
     The parameters used for this example:
 

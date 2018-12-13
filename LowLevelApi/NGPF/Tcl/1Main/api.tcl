@@ -4088,13 +4088,27 @@ proc CopyFileFromLinuxApiServer {args} {
     #    package require tls
     #    ::http::register https 443 ::tls::socket
     #
+    #    # Example: In Quick Test, use api to get the $resultPath and pass it in with the -linuxSrcFilePath parameter.
+    #    #          This method applies to other tests where there should be an api to get the $resultPath.
+    #    CopyFileFromLinuxApiServer \
+    #       -apiServerIp $apiServerIp \
+    #       -sessionId 5 \
+    #       -apiKey $apiKey \
+    #       -linuxSrcFilePath $resultPath \
+    #       -srcFile logFile.txt \
+    #       -dstFilePath ./qtLogFile.txt
+    #  
+    #    # Example with pathExtension for packet capture
     #    copyFileFromLinuxApiServer \
     #        -apiServerIp $linuxApiServerIp \
     #        -sessionId 7 \
-    #        -apiKey e5d16d3258014241872990301c40bla \
+    #        -apiKey e5d16d3258014241872990301abc \
     #        -pathExtension /captures/packetCapture \
     #        -srcFile port2_HW.cap \
     #        -dstFilePath ./port2_HW.cap
+
+    set linuxSrcFilePath "None"    
+    set pathExtension ""
 
     set argIndex 0
     while {$argIndex < [llength $args]} {
@@ -4116,6 +4130,10 @@ proc CopyFileFromLinuxApiServer {args} {
 		set pathExtension [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
 	    }
+	    -linuxSrcFilePath {
+		set linuxSrcFilePath [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
 	    -srcFile {
 		set srcFile [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -4127,14 +4145,16 @@ proc CopyFileFromLinuxApiServer {args} {
 	}
     }
 
-    set response [::http::geturl https://$apiServerIp\/api/v1/sessions/$sessionId\/ixnetwork/files -headers [list "x-api-key" $apiKey]]
-    set jsonData [::http::data $response]
-    set json2Dict [::json::json2dict $jsonData]
-    set absolutePath [dict get $json2Dict absolute]
-    puts "\nabsolutePath: $absolutePath"
-    
+    if {$linuxSrcFilePath == "None"} {
+	set response [::http::geturl https://$apiServerIp\/api/v1/sessions/$sessionId\/ixnetwork/files -headers [list "x-api-key" $apiKey] -binary True]
+	set jsonData [::http::data $response]
+	set json2Dict [::json::json2dict $jsonData]
+	set linuxSrcFilePath [dict get $json2Dict absolute]
+	puts "\nlinuxSrcFilePath: $linuxSrcFilePath"
+    }
+
     # This the starting path: /root/.local/share/Ixia/sdmStreamManager/common
-    set handle [::http::geturl https://$apiServerIp\/api/v1/sessions/$sessionId\/ixnetwork/files?filename=$srcFile\&absolute=$absolutePath$pathExtension -headers [list "x-api-key" $apiKey]]
+    set handle [::http::geturl https://$apiServerIp\/api/v1/sessions/$sessionId\/ixnetwork/files?filename=$srcFile\&absolute=$linuxSrcFilePath$pathExtension -headers [list "x-api-key" $apiKey]]
     
     set infile [open $dstFilePath "wb"]
     puts $infile [::http::data $handle]

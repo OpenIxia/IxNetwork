@@ -60,28 +60,29 @@ try:
     licenseIsInChassis = False
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
-    licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.11'
+    ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+                [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='192.168.70.12',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
-                          serverOs=osPlatform
+                          serverOs=osPlatform,
+                          generateLogFile='ixiaDebug.log'
                           )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest)
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          generateLogFile='ixiaDebug.log')
 
     #---------- Preference Settings End --------------
 
@@ -100,7 +101,7 @@ try:
     # Configuring license requires releasing all ports even for ports that is not used for this test.
     if licenseIsInChassis == False:
         portObj.releaseAllPorts()
-        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
+        mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
 
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.loadConfigFile(configFile)

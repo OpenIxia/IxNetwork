@@ -4153,8 +4153,7 @@ proc CopyFileFromLinuxApiServer {args} {
 	puts "\nlinuxSrcFilePath: $linuxSrcFilePath"
     }
 
-    # This the starting path: /root/.local/share/Ixia/sdmStreamManager/common
-    set handle [::http::geturl https://$apiServerIp\/api/v1/sessions/$sessionId\/ixnetwork/files?filename=$srcFile\&absolute=$linuxSrcFilePath$pathExtension -headers [list "x-api-key" $apiKey]]
+    set handle [::http::geturl "https://$apiServerIp/api/v1/sessions/$sessionId/ixnetwork/files?absolute=$linuxSrcFilePath$pathExtension&filename=$srcFile" -headers [list "x-api-key" $apiKey]]
     
     set infile [open $dstFilePath "wb"]
     puts $infile [::http::data $handle]
@@ -4183,6 +4182,7 @@ proc SaveCaptureFiles {serverFilePath} {
     # ::ixNet::OK-{kArray,{{kString,captures/packetCapture/port2_HW.cap},{kString,captures/packetCapture/port2_SW.cap}}}
 
     puts "Saving capture file ..."
+    # -strip will make it into a list
     return [ixNet -strip execute saveCaptureFiles $serverFilePath]
 }
 

@@ -439,7 +439,7 @@ class PortMgmt(object):
                 chassisIp = port.split(':')[0]
                 card = port.split(':')[1]
                 port = port.split(':')[2]
-                self.ixnObj.patch(self.ixnObj.httpHeader+vportObj, data={'name': card+'/'+port})
+                self.ixnObj.patch(self.ixnObj.httpHeader+vportObj, data={'name': 'Port'+card+'_'+port})
 
         if rawTraffic:
             vportProtocolList = []

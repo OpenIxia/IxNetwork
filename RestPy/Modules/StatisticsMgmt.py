@@ -49,7 +49,7 @@ class Statistics(object):
 
         :param getColumnCaptions: <bool>: Optional: Returns the statViewName column caption names in a list.
         :param getPageValues: <bool>: Optional: Returns the statViewName page values in a list.
-        :param rowValuesLabel: <str>: Optional: The row's label name. 
+        :param rowValuesLabel: <str>: Optional: Return the stats for just the row's label name. 
         :param getTotalPages: <bool>: Optional: Return the total amount of pages for the statview.
 
         Example 1:
@@ -189,28 +189,32 @@ class Statistics(object):
         Return
            A dict: stats
         """
-        columnNames = self.getStatViewResults(statViewName=statViewName, getColumnCaptions=True, timeout=timeout)
+        columnNames = self.getStatViewResults(statViewName=statViewName, getColumnCaptions=True)
+        totalPages = self.getStatViewResults(statViewName=statViewName, getTotalPages=True)
         stats = {}
 
         if type(rowLabelName) == list or rowLabelName == 'all':
-            statViewValues = self.getStatViewResults(statViewName=statViewName, getPageValues=True, timeout=timeout)
+            for pageNumber in range(1, totalPages+1):
+                self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].Data.CurrentPage = pageNumber
 
-            if type(rowLabelName) == list:
-                # Get the specified list of traffic item's stats
-                for eachViewStats in statViewValues:
-                    currentRowLabelName = eachViewStats[0][0]
-                    if currentRowLabelName in rowLabelName:
-                        stats[currentRowLabelName] = {}
-                        for columnName, statValue in zip(columnNames, eachViewStats[0]):
+                statViewValues = self.getStatViewResults(statViewName=statViewName, getPageValues=True)
+
+                if type(rowLabelName) == list:
+                    # Get the specified list of traffic item's stats
+                    for eachViewStats in statViewValues:
+                        currentRowLabelName = eachViewStats[0][0]
+                        if currentRowLabelName in rowLabelName:
+                            stats[currentRowLabelName] = {}
+                            for columnName, statValue in zip(columnNames, eachViewStats[0]):
+                                stats[currentRowLabelName][columnName] = statValue
+
+                else:
+                    # Get all the traffic items
+                    for eachViewStat in statViewValues:
+                        currentRowLabelName = eachViewStat[0][0]
+                        stats[currentRowLabelName] = {}                
+                        for columnName, statValue in zip(columnNames, eachViewStat[0]):
                             stats[currentRowLabelName][columnName] = statValue
-
-            else:
-                # Get all the traffic items
-                for eachViewStat in statViewValues:
-                    currentRowLabelName = eachViewStat[0][0]
-                    stats[currentRowLabelName] = {}                
-                    for columnName, statValue in zip(columnNames, eachViewStat[0]):
-                        stats[currentRowLabelName][columnName] = statValue
         else:
             # Get just one traffic item stat
             statViewValues = self.getStatViewResults(statViewName=statViewName, rowValuesLabel=rowLabelName, timeout=timeout)

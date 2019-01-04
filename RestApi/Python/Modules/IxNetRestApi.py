@@ -36,7 +36,7 @@ class Connect:
     enableDebugLogFile = False
     robotStdout = None
 
-    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None,
+    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None, manageSessionMode=False,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None, httpsSecured=False,
                  apiKey=None, generateLogFile=True, robotFrameworkStdout=False):
@@ -168,6 +168,7 @@ class Connect:
         self.apiKey = apiKey
         self.verifySslCert = verifySslCert
         self.linuxApiServerIp = apiServerIp
+        self.manageSessionMode = manageSessionMode
         self.apiServerPort = serverIpPort
         self.webQuickTest = webQuickTest
         self.generateLogFile = generateLogFile
@@ -236,11 +237,18 @@ class Connect:
             if self.apiServerPort == None:
                 self.apiServerPort = 443
 
-            if apiKey != None and sessionId == None:
-                raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
+            # Connect to no session ID. Connects to a Linux API server to get and delete open sessions.
+            if self.manageSessionMode:
+                if self.apiKey == None:
+                    response = self.post('https://{}:{}/api/v1/auth/session'.format(self.linuxApiServerIp, self.apiServerPort),
+                                         data={"username": "admin", "password": "admin"},
+                                         headers={'content-type': 'application/json'})
+
+                self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
+                self.sessionUrl = 'https://{0}:{1}/ixnetworkweb/api/v1/sessions'.format(self.linuxApiServerIp, self.apiServerPort)
+                return
 
             # Connect to an existing session on the Linux API server
-
             if apiKey and sessionId:
                 self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
                                                                               self.apiServerPort, str(sessionId))
@@ -971,6 +979,34 @@ class Connect:
         self.logInfo('\t%s' % response.json()['licensingServers'], timestamp=False)
         self.logInfo('\t%s'%  response.json()['mode'], timestamp=False)
         self.logInfo('\t%s' % response.json()['tier'], timestamp=False)
+
+    def getAllOpenSessionIds(self):
+        """
+        Description
+           Get a list of open session IDs and some session metas.
+           
+        Syntax
+            GETE: /api/v1/sessions
+
+        Return
+            A dict
+            
+        """
+        response = self.get(self.sessionUrl)
+        sessionIdDict = {}
+        from pprint import pprint
+        pprint(response.json())
+        return
+        for session in response.json():
+            href = session['links'][0]['href']
+            id = session['id']
+            username = session['userName']
+            state = session['state']
+            createOn = session['createdOn']
+
+            sessionIdDict[id] = {'id': id, 'sessionIdUrl': href, 'username': username, 'state': state, 'createdOn': createOn}
+
+        return sessionIdDict
 
     def linuxServerStopAndDeleteSession(self):
         """

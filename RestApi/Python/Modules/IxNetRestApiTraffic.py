@@ -242,6 +242,12 @@ class Traffic(object):
                 if 'multicastReceivers' in endPoint:
                     endpointSrcDst['multicastReceivers'] = endPoint['multicastReceivers']
 
+                if 'scalableDestinations' in endPoint:
+                    endpointSrcDst['scalableDestinations'] = endPoint['scalableDestinations']
+
+                if 'scalableSources' in endPoint:
+                    endpointSrcDst['scalableSources'] = endPoint['scalableSources']
+
                 response = self.ixnObj.post(self.ixnObj.httpHeader+trafficItemObj+'/endpointSet', data=endpointSrcDst)
 
                 if 'highLevelStreamElements' in endPoint:

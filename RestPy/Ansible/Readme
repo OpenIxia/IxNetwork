@@ -1,0 +1,213 @@
+
+Description:
+     Automating IxNetwork configurations with Ansible using RestPy, a client side
+     utility that uses IxNetwork Rest APIs.
+     
+Tested with:
+    - Ansible version 2.7.4
+    - Python 3.7.0
+    - CentOS 7.5
+    - ixnetwork_restpy version 1.0.13
+    - Two Ixia ports connected back-to-back
+    - IxNetwork 8.50
+
+Requirements:
+    - Python 2.7 or Python >= 3.5
+    - ixnetwork_restpy
+    - Minimum IxNetwork version 8.42
+    - https://github.com/ansible/ansible.git
+ 
+Installation:
+    This was tested using CentOS.  You could use other Linux distributions as well.
+
+       - yum install -y ansible
+       - sudo ./pip3 install ansible
+       - pip install -U --no-cache-dir ixnetwork_restpy
+       - git clone: https://github.com/ansible/ansible.git
+         (If you don't know where to clone it, put it in your home directory)
+
+
+2 things you MUST DO FIRST after you installed everything:
+
+     Assuming that you already did a git clone for https://github.com/ansible/ansible.git.
+     If you haven't, please do this because the ansible.cfg is configured to use the debug module.
+
+     1> Edit ansible.cfg.
+
+          - Locaed in the local directory as this Readme file.
+          - Look for "callback_plugins" in the [default] section and set the path to where you cloned ansible.git
+          - Look at the next section [ansible.cfg] for example.
+
+     2> Edit the top line in the Python modules in the Modules folder
+        to use your Python executable path. For example: #!/usr/local/python3.7
+
+        It won't work without it.
+
+
+ansible.cfg
+
+    - This is Ansible's configuration file
+    - The original is located at /etc/ansible.
+    - A copy of the original ansible.cfg is copied and used in this current local RestPy directory.
+    - This file could be located in various places and it is searched and executed in the following order:
+
+         - Env variable: ANSIBLE_CONFIG
+         - ~/.ansible.cfg (Home directory)
+	 - ansible.cg (Working directory)  <-- This is what OpenIxia is doing
+	 - /etc/ansible/ansible.cfg
+
+     - The settings that OpenIxia are setting:
+
+          [default]
+          log_path = ./ansible.log
+          callback_plugins = /your_git_clone_path/ansible/lib/ansible/plugins/callback
+          stdout_callback = debug
+
+
+The Ansible model that this sample is using contains three components.
+
+    1> Inventory (The host: In this sample, it would be the IxNetwork API server)
+    2> Playbook  (Task execution. Equivalent to testsuites)
+    3> Modules   (Python scripts)
+
+    1> Inventory:
+	- A host file is an inventory of devices. In our case, it would be the IxNetwork API server IP address.
+	- http://docs.ansible.com/ansible/latest/intro_inventory.html
+
+    2> Playbook:
+	- Uses YAML data format.
+	- Think of Playbooks as test suites that states which module(s) to be executed. Ansible calls them task.
+	- For each task, you could set instructions such as:
+	    - Which inventory to use.
+	    - Which module (script) to execute.
+	        - Pass in parameter/value to the module that you are executing.
+            - This means you could create a playbook for each testbed.
+
+	- http://docs.ansible.com/ansible/latest/playbooks.html
+
+    3> Modules:
+	Note: Ansible has 750+ modules that you could download.
+	      They are created by Ansible core developers and Ansible community users.
+
+	- This OpenIxia sample requires you to clone: https://github.com/ansible/ansible.git
+	- It uses the debug module to display errors more human readable.
+	- They are found in the path specified in the env variable ANSIBLE_LIBRARY or
+	  include the --module-path switch in the command line.
+
+    OpenIxia Ansible directory structure:
+
+    /IxNetwork
+       /RestPy
+          /Ansible
+             ansible.cfg
+	     Readme
+             /Inventory
+	        ixia
+             /Playbooks
+	         bgpNgpfWindows.yml
+	         bgpNgpfLinux.yml
+	         /RestPyHelperFunctions
+		    StatisticsMgmt.py
+		    PortMgmt.py
+             /Modules
+	         bgpNgpf.py
+
+
+Inventory example:
+    ixia:
+
+      [IxNetRestApiServer]
+      192.168.70.3
+
+
+Playbook example below:
+    - The 'name' on the top line describes this playbook
+    - 'hosts' is the inventory.  IxNetRestApiServer is the group name to use.
+    - Inside each Play, there is a list of tasks called "name" that describes the task.
+    - Below the name is the Python module to be executed, which is the script.
+    - All the parameter/value below bgpModule are fed into the bgpModule (the script).
+    - You could create multiple playbooks calling the same bgpModule for different testbeds
+      using different chassis and ports.
+    - Playbooks are executed in sequential order, from top to bottom.
+
+---
+- name: BGP test
+  hosts: IxNetRestApiServer
+
+  tasks:
+    - name: Configuring BGP NGPF
+      bgpNgpf:
+        apiServerIp: 192.168.70.3
+        apiServerIpPort: 443
+        osPlatform: 'linux'
+        forceTakePortOwnership: True
+        deleteSessionWhenDone: True
+        ixChassisIp: 192.168.70.12
+        portList: [['192.168.70.12', '1', '1'], ['192.168.70.12', '1', '2']]
+        linuxUsername: admin
+        linuxPassword: admin
+        configLicense: True
+        licenseServerIp: 192.168.70.3
+        licenseMode: subscription
+        licenseTier: tier3
+ 
+
+Running Ansible:
+
+    - Before you run Ansible, you should know that Ansible doesn't show real-time loggings.
+    - You could enter: "tail -f restpy.log" in the Playbooks directory to see real time loggings.
+
+    The parameters used for this example:
+
+          -i: The inventory file to use.
+          --module-path:  The Ansible module to use for pinging.
+          -c:  The connection.  In this example, tell Ansible not to use SSH.
+          -e ansible_python_interpreter = /usr/local/python3.6.3/bin/python3.6
+          -v, vvv: debugging verbosity
+
+
+    - Example 1: 
+          ansible-playbook Playbooks/bgpNgpfWindows.yml -i Inventory/hostsIxia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.7.0/bin/python3.7 -v
+
+    - Example 2:  Run multiple playbooks 
+          ansible-playbook Playbooks/playBgp.yml Playbooks/bgpNgpfLinux.yml -i Inventory/hostsIxia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.7.0/bin/python3.7 -v
+
+
+Output:
+
+   Using /home/hgee/OpenIxiaGit/IxNetwork/RestPy/Ansible/ansible.cfg as config file
+
+   PLAY [BGP test] **************************************************************************
+
+   TASK [Gathering Facts] *******************************************************************
+   ok: [192.168.70.3]
+
+   TASK [Configuring BGP NGPF] **************************************************************
+   ok: [192.168.70.3] => {
+       "changed": true,
+       "test": "Passed"
+   }
+
+   PLAY RECAP *******************************************************************************
+   192.168.70.3               : ok=2    changed=0    unreachable=0    failed=0 
+
+
+
+To make Ansible display human readable debug:
+
+    - Clone the ansible repository to your home directory: 
+         git clone https://github.com/ansible/ansible.git
+	 - In this example, I put it in my /home/hgee directory
+
+    - Edit ansible.cfg in the local RestPy directory
+
+    [defaults]
+    log_path = ./ansible.log
+    callback_plugins = callback_plugins = /home/hgee/ansible/lib/ansible/plugins/callback
+    stdout_callback = debug
+
+
+To add additional modules to the module search paths:
+
+    - export ANSIBLE_LIBRARY=/path_to_modules:/path2_to_modules
+

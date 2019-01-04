@@ -1,0 +1,106 @@
+---
+- name: BGP test using a Windows API server
+  hosts: IxNetRestApiServer
+  tasks:
+    - name: Configure two BGP topologies in IxNetwork NGPF with Windows API server
+      bgpNgpf:
+        apiServerIp: 192.168.70.3
+        apiServerIpPort: 11009
+        osPlatform: windows
+        forceTakePortOwnership: True
+        portList: [['192.168.70.128', '1', '1'], ['192.168.70.128', '1', '2']]
+        licenseServerIp: ['192.168.70.3']
+        licenseMode: subscription
+        restPyLog: restpy.log
+
+        port1Name: Port1
+        port2Name: Port2
+
+        topologyGroup1Name: Topo1
+        topologyGroup1Ports: ['192.168.70.128', '1', '1']
+        topologyGroup2Name: Topo2
+        topologyGroup2Ports: ['192.168.70.128', '1', '2']
+
+        deviceGroup1Name: DG1
+        deviceGroup1Multiplier: 1
+        deviceGroup2Name: DG2
+        deviceGroup2Multiplier: 1
+
+        ethernet1Name: Eth1
+        ethernet1MacAddress: 00:01:01:01:00:01
+        ethernet1MacStep: 00:00:00:00:00:00
+        ethernet1MacPortStep: disabled
+        ethernet1VlanEnabled: True
+        ethernet1VlanId: 103
+        ethernet1VlanIdStep: 0
+
+        ethernet2Name: Eth2
+        ethernet2MacAddress: 00:01:02:01:00:01
+        ethernet2MacStep: 00:00:00:00:00:00
+        ethernet2MacPortStep: disabled
+        ethernet2VlanEnabled: True
+        ethernet2VlanId: 103
+        ethernet2VlanIdStep: 0
+
+        ipv41Name: IPv4-1
+        ipv41Address: 1.1.1.1
+        ipv41AddressStep: 0.0.0.1
+        ipv41AddressPortStep: disabled
+        ipv41Gateway: 1.1.1.2
+        ipv41GatewayStep: 0.0.0.0
+        ipv41GatewayPortStep: disabled
+        ipv41AddressPrefix: 24
+        ipv41ResolveGateway: True
+
+        ipv42Name: IPv4-2
+        ipv42Address: 1.1.1.2
+        ipv42AddressStep: 0.0.0.1 
+        ipv42AddressPortStep: disabled
+        ipv42Gateway: 1.1.1.1
+        ipv42GatewayStep: 0.0.0.0
+        ipv42GatewayPortStep: disabled
+        ipv42AddressPrefix: 24
+        ipv42ResolveGateway: True
+        
+        bgp1Name: bgp-1
+        bgp1HoldTimer: 90
+        bgp1DutIp: 1.1.1.2
+        bgp1DutIpStep: 0.0.0.0
+        bgp1LocalAsBytes: 101
+        bgp1LocalAsBytesStep: 0
+        bgp1Type: internal
+
+        bgp2Name: bgp-2
+        bgp2HoldTimer: 90
+        bgp2DutIp: 1.1.1.1
+        bgp2DutIpStep: 0.0.0.0
+        bgp2LocalAsBytes: 101
+        bgp2LocalAsBytesStep: 0
+        bgp2Type: internal
+
+        networkGroup1Name: NetworkGroup1
+        networkGroup1Multiplier: 100
+        networkGroup1NumberOfAddresses: 100
+        networkGroup1Address: 160.1.0.0
+        networkGroup1AddressStep: 0.0.0.1
+        networkGroup1PrefixLength: 32
+
+        networkGroup2Name: NetworkGroup2
+        networkGroup2Multiplier: 100
+        networkGroup2NumberOfAddresses: 100
+        networkGroup2Address: 180.1.0.0
+        networkGroup2AddressStep: 0.0.0.1
+        networkGroup2PrefixLength: 32
+
+        trafficItemName: Top1 to Topo2
+        trafficItemType: ipv4
+        trafficItemBiDirection: True
+        trafficItemTrackBy: ['flowGroup0', 'vlanVlanId0']
+        endpointName: Flow-Group-1
+        transmissionType: fixedFrameCount
+        frameCount: 50000
+        frameRate: 88
+        frameRateType: percentLineRate
+        portDistribution: splitRateEvenly
+        frameSize: 128
+

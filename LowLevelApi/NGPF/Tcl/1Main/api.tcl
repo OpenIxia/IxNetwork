@@ -9,18 +9,24 @@ proc NewBlankConfig {} {
 proc Connect {args} {
     # osPlatform:  The Ixia chassis OS.  windows|linux.  Defaults to windows
     # apiServerIp: The IxNetwork API server
+    # sessionId:   The Linux API server session ID to connect to. This is for connecting to an existing session.
     # ixNetworkVersion: The IxNetwork version
     # username: Linux API server. login. Defaults = admin
     # password: Linux API server login passwoed. Default = admin
     # apiKey:   Linux API server user login account API-key.
     #           The Proc will automatically get the API-key when login is authenticated.
     #           Optionally, you could pass it in.
-    # closeServerOnDisconnect: True|False
-
+    # closeServerOnDisconnect: 0|1
+    # 
+    # Examples:
+    #    To connect to an existing Linux API server session:
+    #       Connect -apiServerIp 192.168.70.12 -port 443 -ixNetworkVersion 8.50 -sessionId 1 -apiKey $apiKey -closeServerOnDisconnect 0
+    
     # Set the Linux API server admin login default credentials
     set username None
     set password None
     set apiKey None
+    set sessionId None
     set osPlatform windows
 
     set argIndex 0
@@ -36,6 +42,11 @@ proc Connect {args} {
 		incr argIndex 2
 		append paramList " $apiServerIp"
 	    }
+	    -port {
+		set port [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+		append paramList " -port $port"
+	    }
 	    -ixNetworkVersion {
 		set ixNetworkVersion [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -45,6 +56,11 @@ proc Connect {args} {
 		set apiKey [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
 		append paramList " -apiKey $apiKey"
+	    }
+	    -sessionId {
+		set sessionId [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+		append paramList " -sessionId $sessionId"
 	    }
 	    -username {
 		set username [lindex $args [expr $argIndex + 1]]
@@ -75,15 +91,18 @@ proc Connect {args} {
 	    set password admin
 	    append paramList " -username $password -password $password"
 	}
+
 	if {$apiKey == "None"} {
 	    set apiKey [GetApiKey $apiServerIp $username $password]
 	    if {$apiKey == 1} {
 		return 1
 	    }
+	    append paramList " -apiKey $apiKey"
 	}
-	
-	append paramList " -apiKey $apiKey"
+
     }
+
+    append paramList " -setAttribute strict"
 
     puts "\nConnecting to API server: $paramList"
     if {[catch {set connectStatus [eval ixNet connect $paramList]} errMsg]} {
@@ -91,7 +110,7 @@ proc Connect {args} {
 	return 1
     }
 
-    puts "connectStatus: $connectStatus"
+    puts "\nConnectStatus: $connectStatus"
     return 0
 }
 
@@ -4040,4 +4059,137 @@ proc configPacketHeaderField {stackObj args} {
     puts "\nconfigPacketHeaderField: $stackObj\n\t$args"
     eval ixNet setMultiAttribute $stackObj $args
     ixNet commit
+}
+
+proc CopyFileFromLinuxApiServer {args} {
+    # Description
+    #    Using REST API to copy files from a Linux API server to local filesystem.
+    # 
+    # Requirements
+    #     IxNetwork 8.50+ because the package IxTclNetwork comes with http, tls and json
+    #     that this proc needs. Otherwise, you need to install http, tls and json.
+    #
+    # Parameters
+    #    -apiServerIp:   The Linux API server IP address
+    #    -sessionId:     The session ID number
+    #    -apiKey:        The unique user account api-key
+    #    -pathExtension: All files are located in a predefined path in the Linux API server.
+    #                    In some situation like packet capturing, the captured file is located.
+    #                    in deeper subdirectories.  Provide the extended subdirectory without the file name.
+    #                    You need to include the forward slash.
+    #                    For example: /captures/packetCapture
+    #    -srcFile:       The filename to copy from the Linux API server.
+    #    -dstFilePath:   The path+filename in the local filesystem where you want to copy the file to.
+    # 
+    # Example:
+    #
+    #    package require http
+    #    package require json
+    #    package require tls
+    #    ::http::register https 443 ::tls::socket
+    #
+    #    # Example: In Quick Test, use api to get the $resultPath and pass it in with the -linuxSrcFilePath parameter.
+    #    #          This method applies to other tests where there should be an api to get the $resultPath.
+    #    CopyFileFromLinuxApiServer \
+    #       -apiServerIp $apiServerIp \
+    #       -sessionId 5 \
+    #       -apiKey $apiKey \
+    #       -linuxSrcFilePath $resultPath \
+    #       -srcFile logFile.txt \
+    #       -dstFilePath ./qtLogFile.txt
+    #  
+    #    # Example with pathExtension for packet capture
+    #    copyFileFromLinuxApiServer \
+    #        -apiServerIp $linuxApiServerIp \
+    #        -sessionId 7 \
+    #        -apiKey e5d16d3258014241872990301abc \
+    #        -pathExtension /captures/packetCapture \
+    #        -srcFile port2_HW.cap \
+    #        -dstFilePath ./port2_HW.cap
+
+    set linuxSrcFilePath "None"    
+    set pathExtension ""
+
+    set argIndex 0
+    while {$argIndex < [llength $args]} {
+	set currentArg [lindex $args $argIndex]
+	switch -exact -- $currentArg {
+	    -apiServerIp {
+		set apiServerIp [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -sessionId {
+		set sessionId [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -apiKey {
+		set apiKey [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -pathExtension {
+		set pathExtension [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -linuxSrcFilePath {
+		set linuxSrcFilePath [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -srcFile {
+		set srcFile [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	    -dstFilePath {
+		set dstFilePath [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
+	    }
+	}
+    }
+
+    if {$linuxSrcFilePath == "None"} {
+	set response [::http::geturl https://$apiServerIp\/api/v1/sessions/$sessionId\/ixnetwork/files -headers [list "x-api-key" $apiKey] -binary True]
+	set jsonData [::http::data $response]
+	set json2Dict [::json::json2dict $jsonData]
+	set linuxSrcFilePath [dict get $json2Dict absolute]
+	puts "\nlinuxSrcFilePath: $linuxSrcFilePath"
+    }
+
+    set handle [::http::geturl "https://$apiServerIp/api/v1/sessions/$sessionId/ixnetwork/files?absolute=$linuxSrcFilePath$pathExtension&filename=$srcFile" -headers [list "x-api-key" $apiKey]]
+    
+    set infile [open $dstFilePath "wb"]
+    puts $infile [::http::data $handle]
+    close $infile
+}
+
+proc StartCapture {} {
+    puts "Starting capture ..."
+    ixNet execute startCapture
+}
+
+proc StopCapture {} {
+    puts "Stopping capture ..."
+    ixNet execute stopCapture
+}
+
+proc SaveCaptureFiles {serverFilePath} {
+    # serverFilePath: This is just a temp subdirectory.
+    #                 You have to know what subdirectory that you created in order to copy the file
+    #                 out of the Linux API server.
+    # Note:
+    #    saveCaptureFiles is for Linux API server
+    #    saveCapture is for Windows
+    #
+    # ::ixNet::OK-{kArray,{{kString,c:\Results\Port2_HW.cap},{kString,c:\Results\Port2_SW.cap}}}
+    # ::ixNet::OK-{kArray,{{kString,captures/packetCapture/port2_HW.cap},{kString,captures/packetCapture/port2_SW.cap}}}
+
+    puts "Saving capture file ..."
+    # -strip will make it into a list
+    return [ixNet -strip execute saveCaptureFiles $serverFilePath]
+}
+
+proc CopyFile {copyFrom writeTo} {
+    # from: c:\\Results\\Port2_HW.cap
+    # to: Location filesytem. c:\\Temp\\port2_cap.cap
+    
+    puts "\nCopyFile: from: $copyFrom  to: $writeTo"
+    ixNet exec copyFile [ixNet readFrom $copyFrom -ixNetRelative] [ixNet writeTo $writeTo -overwrite]
 }

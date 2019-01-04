@@ -32,7 +32,7 @@ class Statistics(object):
                 raise Exception('\nAPI server failed to provide stat views')
 
     def getStatViewResults(self, statViewName=False, getColumnCaptions=False, getPageValues=False,
-                           rowValuesLabel=None, getTotalPages=False, timeout=60):
+                           rowValuesLabel=None, getTotalPages=False):
         """
         Wait for a statistic view to be ready with stats. Cannot assume the stats are ready.
         For example, if startAllProtocols was executed, protocol summary stats may not be ready
@@ -49,7 +49,7 @@ class Statistics(object):
 
         :param getColumnCaptions: <bool>: Optional: Returns the statViewName column caption names in a list.
         :param getPageValues: <bool>: Optional: Returns the statViewName page values in a list.
-        :param rowValuesLabel: <str>: Optional: Return the stats for just the row's label name. 
+        :param rowValuesLabel: <str>: Optional: The row's label name. 
         :param getTotalPages: <bool>: Optional: Return the total amount of pages for the statview.
 
         Example 1:
@@ -74,7 +74,7 @@ class Statistics(object):
         self.getStatView(caption=statViewName)
 
         viewResults = []
-        counterStop = timeout
+        counterStop = 60
         for counter in range(1, counterStop+1): 
             if getColumnCaptions:
                 print('\nWaiting for {0} Data.ColumnCaptions\n'.format(statViewName))
@@ -108,7 +108,7 @@ class Statistics(object):
             if counter == counterStop and len(viewResults) == 0 :
                 raise Exception('\nAPI server failed to provide stat views for {0} {1}'.format(statViewName, deeperView))
 
-    def verifyAllProtocolSessions(self, timeout=90):
+    def verifyAllProtocolSessions(self, timeout=60):
         """
         Verify all configured protocols summary sessions for up.
         """
@@ -116,10 +116,10 @@ class Statistics(object):
         # Verify for Protocols Summary stats readiness
         self.getStatView(caption='Protocols Summary')
 
-        columnCaptions = self.getStatViewResults(statViewName='Protocols Summary', getColumnCaptions=True, timeout=timeout)
+        columnCaptions = self.getStatViewResults(statViewName='Protocols Summary', getColumnCaptions=True)
         counterStop = timeout
         for counter in range(1, counterStop+1): 
-            pageValues = self.getStatViewResults(statViewName='Protocols Summary', getPageValues=True, timeout=timeout)
+            pageValues = self.getStatViewResults(statViewName='Protocols Summary', getPageValues=True)
             
             print('\n%-16s %-14s %-16s %-23s' % \
                   (columnCaptions[0], columnCaptions[1], columnCaptions[2], columnCaptions[3]))
@@ -147,17 +147,17 @@ class Statistics(object):
                     sessionFailedFlag = 1
 
             if sessionNotStartedFlag == 1:
-                if counter < timeout:
+                if counter < 30:
                     sessionNotStartedFlag = 0
-                    print('Protocol sessions are not started yet. Waiting {0}/{}1 seconds'.format(counter, timeout))
+                    print('Protocol sessions are not started yet. Waiting {0}/30 seconds'.format(counter))
                     time.sleep(1)
                     continue
 
-                if counter == timeout:
+                if counter == 30:
                     raise Exception('Protocol session is not started')
 
             if sessionDownFlag == 1:
-                print('\nWaiting {0}/{1} seconds'.format(counter, timeout))
+                print('\nWaiting {0}/{1} seconds'.format(counter, counterStop))
                 time.sleep(1)
                 continue
 
@@ -168,7 +168,7 @@ class Statistics(object):
             if sessionFailedFlag == 1:
                 raise Exception('Protocol session failed to come up')
 
-    def getStatsByRowLabelName(self, statViewName=None, rowLabelName='all', timeout=90):
+    def getStatsByRowLabelName(self, statViewName=None, rowLabelName='all'):
         """
         This is an internal helper function for: getTrafficItemStats, getPortStatistics, getProtocolsSummary,
                                                  getGlobalProtocolStatistics, getDataPlanePortStatistics.
@@ -190,34 +190,30 @@ class Statistics(object):
            A dict: stats
         """
         columnNames = self.getStatViewResults(statViewName=statViewName, getColumnCaptions=True)
-        totalPages = self.getStatViewResults(statViewName=statViewName, getTotalPages=True)
         stats = {}
 
         if type(rowLabelName) == list or rowLabelName == 'all':
-            for pageNumber in range(1, totalPages+1):
-                self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].Data.CurrentPage = pageNumber
+            statViewValues = self.getStatViewResults(statViewName=statViewName, getPageValues=True)
 
-                statViewValues = self.getStatViewResults(statViewName=statViewName, getPageValues=True)
-
-                if type(rowLabelName) == list:
-                    # Get the specified list of traffic item's stats
-                    for eachViewStats in statViewValues:
-                        currentRowLabelName = eachViewStats[0][0]
-                        if currentRowLabelName in rowLabelName:
-                            stats[currentRowLabelName] = {}
-                            for columnName, statValue in zip(columnNames, eachViewStats[0]):
-                                stats[currentRowLabelName][columnName] = statValue
-
-                else:
-                    # Get all the traffic items
-                    for eachViewStat in statViewValues:
-                        currentRowLabelName = eachViewStat[0][0]
-                        stats[currentRowLabelName] = {}                
-                        for columnName, statValue in zip(columnNames, eachViewStat[0]):
+            if type(rowLabelName) == list:
+                # Get the specified list of traffic item's stats
+                for eachViewStats in statViewValues:
+                    currentRowLabelName = eachViewStats[0][0]
+                    if currentRowLabelName in rowLabelName:
+                        stats[currentRowLabelName] = {}
+                        for columnName, statValue in zip(columnNames, eachViewStats[0]):
                             stats[currentRowLabelName][columnName] = statValue
+
+            else:
+                # Get all the traffic items
+                for eachViewStat in statViewValues:
+                    currentRowLabelName = eachViewStat[0][0]
+                    stats[currentRowLabelName] = {}                
+                    for columnName, statValue in zip(columnNames, eachViewStat[0]):
+                        stats[currentRowLabelName][columnName] = statValue
         else:
             # Get just one traffic item stat
-            statViewValues = self.getStatViewResults(statViewName=statViewName, rowValuesLabel=rowLabelName, timeout=timeout)
+            statViewValues = self.getStatViewResults(statViewName=statViewName, rowValuesLabel=rowLabelName)
             if statViewValues == 'kVoid':
                 raise Exception('No such port name found.  Verify for typo: {}'.format(rowLabelName))
 
@@ -227,7 +223,7 @@ class Statistics(object):
 
         return stats
 
-    def getFlowStatistics(self, timeout=90):
+    def getFlowStatistics(self):
         """
         Get Flow Statistics and put each row in a list.
 
@@ -241,7 +237,7 @@ class Statistics(object):
         rowNumber = 1
         for pageNumber in range(1, totalPages+1):
             self.ixNetObj.Statistics.View.find(Caption='Flow Statistics')[0].Data.CurrentPage = pageNumber
-            pageValues = self.getStatViewResults(statViewName='Flow Statistics', getPageValues=True, timeout=timeout)
+            pageValues = self.getStatViewResults(statViewName='Flow Statistics', getPageValues=True)
             for eachRowValue in pageValues:
 
                 flowStatistics[rowNumber] = {}
@@ -251,7 +247,7 @@ class Statistics(object):
 
         return flowStatistics
 
-    def getTrafficItemStats(self, trafficItemName='all', timeout=90):
+    def getTrafficItemStats(self, trafficItemName='all'):
         """
         Get Traffic Item statistics.
 
@@ -263,10 +259,10 @@ class Statistics(object):
         Return
            A dict of all the TrafficItem statistics
         """
-        return self.getStatsByRowLabelName(statViewName='Traffic Item Statistics', rowLabelName=trafficItemName, timeout=timeout)
+        return self.getStatsByRowLabelName(statViewName='Traffic Item Statistics', rowLabelName=trafficItemName)
 
 
-    def getPortStatistics(self, rowLabelName='all', timeout=90):
+    def getPortStatistics(self, rowLabelName='all'):
         """
         Get port statistics.
 
@@ -278,10 +274,10 @@ class Statistics(object):
         Return
            dict
         """
-        return self.getStatsByRowLabelName(statViewName='^Port Statistics$', rowLabelName=rowLabelName, timeout=timeout)
+        return self.getStatsByRowLabelName(statViewName='^Port Statistics$', rowLabelName=rowLabelName)
 
 
-    def getPortCpuStatistics(self, rowLabelName='all', timeout=90):
+    def getPortCpuStatistics(self, rowLabelName='all'):
         """
         Get port cpu statistics.
 
@@ -293,10 +289,10 @@ class Statistics(object):
         Return
            A dict of Port statistics in rows: portStatistics[statName]
         """
-        return self.getStatsByRowLabelName(statViewName='Port CPU Statistics', rowLabelName=rowLabelName, timeout=timeout)
+        return self.getStatsByRowLabelName(statViewName='Port CPU Statistics', rowLabelName=rowLabelName)
 
 
-    def getGlobalProtocolStatistics(self, rowLabelName='all', timeout=90):
+    def getGlobalProtocolStatistics(self, rowLabelName='all'):
         """
         Get global protocol statistics.
 
@@ -308,10 +304,10 @@ class Statistics(object):
         Return
            dict
         """
-        return self.getStatsByRowLabelName(statViewName='Global Protocol Statistics', rowLabelName=rowLabelName, timeout=timeout)
+        return self.getStatsByRowLabelName(statViewName='Global Protocol Statistics', rowLabelName=rowLabelName)
 
 
-    def getDataPlanePortStatistics(self, rowLabelName='all', timeout=90):
+    def getDataPlanePortStatistics(self, rowLabelName='all'):
         """
         Get data plane port statistics.
 
@@ -323,15 +319,4 @@ class Statistics(object):
         Return
            dict
         """
-        return self.getStatsByRowLabelName(statViewName='Data Plane Port Statistics', rowLabelName=rowLabelName, timeout=90)
-
-    def getProtocolsSummary(self, protocolLabelName='all', timeout=90):
-        """
-        Get protocols summary statistics.
-
-        :param protocolLabelName: <str|list>: The protocol label name: BGP Peer, IPv4, etc.
-
-        Return
-           dict
-        """
-        return self.getStatsByRowLabelName(statViewName='Protocols Summary', rowLabelName=protocolLabelName, timeout=90)
+        return self.getStatsByRowLabelName(statViewName='Data Plane Port Statistics', rowLabelName=rowLabelName)

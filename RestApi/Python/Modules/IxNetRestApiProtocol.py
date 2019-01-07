@@ -959,7 +959,12 @@ class Protocol(object):
         # To create a new BGP stack using IPv4 object.
         if obj != None:
             if 'bgp' not in obj:
-                bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv4Peer'
+                if 'ipv4' in obj:
+                    bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv4Peer'
+
+                if 'ipv6' in obj:
+                    bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv6Peer'
+
                 self.ixnObj.logInfo('Create new BGP in NGPF')
                 response = self.ixnObj.post(bgpUrl)
                 # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
@@ -997,14 +1002,18 @@ class Protocol(object):
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+bgpObj, data={'name': kwargs['name']})
 
+        # For BgpIpv4Peer
         if 'enableBgp' in kwargs and kwargs['enableBgp'] == True:
             multiValue = bgpObjResponse.json()['enableBgpId']
-            self.ixnObj.logInfo('Enabling BGP protocol. Attribut for multivalue = enableBgpId')
+            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': True})
+
+        # For BgpIpv6Peer
+        if 'active' in kwargs and kwargs['active'] == True:
+            multiValue = bgpObjResponse.json()['active']
             self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': True})
 
         if 'dutIp' in kwargs:
             multiValue = bgpObjResponse.json()['dutIp']
-            self.ixnObj.logInfo('Configure BGP DUT IP. Attribut for multivalue = dutIp')
             self.configMultivalue(multiValue, 'counter', data=kwargs['dutIp'])
 
         for key,value in bgpObjResponse.json().items():
@@ -1020,6 +1029,27 @@ class Protocol(object):
 
         self.configuredProtocols.append(bgpObj)
         return bgpObj
+
+    def configBgpIpv6(self, obj=None, routerId=None, port=None, portName=None, ngpfEndpointName=None, hostIp=None, **kwargs):
+        """
+        Creating a namespace for BgpIpv6Peer.  Pass everything to configBgp()
+        
+        Example:
+           ipv6Obj2 = '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv6'
+
+           bgpObj2 = protocolObj.configBgpIpv6(ipv6Obj2,
+                                        name = 'bgp_2',
+                                        active = True,
+                                        holdTimer = 90,
+                                        dutIp={'start': '2001:0:0:1:0:0:0:1', 'direction': 'increment', 'step': '0:0:0:0:0:0:0:0'},
+                                        localAs2Bytes = 101,
+                                        enableGracefulRestart = False,
+                                        restartTime = 45,
+                                        type = 'internal',
+                                        enableBgpIdSameasRouterId = True)
+
+        """
+        return self.configBgp(obj, routerId, port, portName, ngpfEndpointName, hostIp, **kwargs)
 
     def configIgmpHost(self, ipObj, **kwargs):
         """
@@ -1254,6 +1284,7 @@ class Protocol(object):
         """
         Description
             Create or modify a Network Group for network advertisement.
+            Supports both IPv4 and IPv6
 
             Pass in the Device Group obj for creating a new Network Group.
                 /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
@@ -1266,6 +1297,8 @@ class Protocol(object):
             POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools
 
         Example:
+              NOTE: Supports both IPv4 and IPv6
+
                Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
                configNetworkGroup(create=deviceGroupObj
                                   name='networkGroup1',
@@ -1307,31 +1340,45 @@ class Protocol(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+networkGroupObj, data={'multiplier': kwargs['multiplier']})
 
         if 'create' in kwargs:
-            self.ixnObj.logInfo('Create new Network Group IPv4 Prefix Pools')
-            response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools')
-            ipv4PrefixObj = response.json()['links'][0]['href']
+            if ':' in kwargs['networkAddress']['start']:
+                # For IPv6
+                self.ixnObj.logInfo('Create new Network Group IPv6 Prefix Pools')
+                response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv6PrefixPools')
+                prefixObj = response.json()['links'][0]['href']
+            else:
+                # For IPv4
+                self.ixnObj.logInfo('Create new Network Group IPv4 Prefix Pools')
+                response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools')
+                prefixObj = response.json()['links'][0]['href']
         else:
-            ipv4PrefixObj = networkGroupObj+'/ipv4PrefixPools/1'
+            if ':' in kwargs['networkAddress']['start']:
+                prefixObj = networkGroupObj+'/ipv6PrefixPools/1'
+            else:
+                prefixObj = networkGroupObj+'/ipv4PrefixPools/1'
 
         # prefixPoolId = /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/3/ipv4PrefixPools/1
-        response = self.ixnObj.get(self.ixnObj.httpHeader + ipv4PrefixObj)
+        response = self.ixnObj.get(self.ixnObj.httpHeader + prefixObj)
         self.ixnObj.logInfo('Config Network Group advertising routes')
+
         multivalue = response.json()['networkAddress']
+
         data={'start': kwargs['networkAddress']['start'],
               'step': kwargs['networkAddress']['step'],
               'direction': kwargs['networkAddress']['direction']}
+
         self.ixnObj.configMultivalue(multivalue, 'counter', data)
 
         if 'prefixLength' in kwargs:
             self.ixnObj.logInfo('Config Network Group prefix pool length')
-            response = self.ixnObj.get(self.ixnObj.httpHeader + ipv4PrefixObj)
+            response = self.ixnObj.get(self.ixnObj.httpHeader + prefixObj)
             multivalue = response.json()['prefixLength']
             data={'value': kwargs['prefixLength']}
             self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
 
         if 'numberOfAddresses' in kwargs:
-            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4PrefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
-        return networkGroupObj, ipv4PrefixObj
+            self.ixnObj.patch(self.ixnObj.httpHeader+prefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
+
+        return networkGroupObj, prefixObj
 
     def configBgpRouteRangeProperty(self, prefixPoolsObj, protocolRouteRange, data, asPath):
         """
@@ -5362,7 +5409,6 @@ class Protocol(object):
                 self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv6Address'])
 
             # Config IPv6 port step
-            # disabled|0.0.0.1
             if 'ipv6AddressPortStep' in kwargs:
                 portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
                 self.ixnObj.logInfo('Configure IPv6 address port step')

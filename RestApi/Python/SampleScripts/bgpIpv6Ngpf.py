@@ -173,6 +173,7 @@ try:
                                         enableBgpIdSameasRouterId = True)
     
     networkGroupObj1 = protocolObj.configNetworkGroup(create=deviceGroupObj1,
+                                                      ipVersion='ipv6',
                                                       name='networkGroup1',
                                                       multiplier = 100,
                                                       networkAddress = {'start': '1000::1',
@@ -181,6 +182,7 @@ try:
                                                       prefixLength = 64)
 
     networkGroupObj2 = protocolObj.configNetworkGroup(create=deviceGroupObj2,
+                                                      ipVersion='ipv6',
                                                       name='networkGroup2',
                                                       multiplier = 100,
                                                       networkAddress = {'start': '1001::1',

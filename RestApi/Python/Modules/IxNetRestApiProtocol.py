@@ -1535,6 +1535,84 @@ class Protocol(object):
 
         return networkGroupObj, prefixObj
 
+    def configNetworkGroupWithTopology(self, topoType='Linear', **kwargs):
+        """
+        Description
+            Create or modify a Network Group Topology for network advertisement.
+
+            Pass in the Device Group obj for creating a new Network Group.
+                /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+
+            Pass in the Network Group obj to modify.
+               /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
+
+            Pass in topoType(topology type) to configure require network with topology type
+                Ex: 'Custom','Fat Tree','Grid','Hub-And-Spoke','Linear','Mesh','Ring','Tree'
+
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/networkTopology/
+
+        Example:
+               Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+               configNetworkGroupWithTopology(topoType='Linear',create=deviceGroupObj
+                                  name='networkGroup1',
+                                  multiplier = 100
+                                  )
+
+
+               To modify a Network Group:
+               NetworkGroup obj sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
+               configNetworkGroupWithTopology(topoType='Linear',modify=networkGroupObj,
+                                  name='networkGroup-ospf',
+                                  multiplier = 100,
+                                  )
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/networkTopology/netTopologyLinear
+        """
+        # In case it is modify, we still need to return self.prefixPoolObj
+        self.topoTypeDict = {'Custom' 	    : 'netTopologyCustom',
+                            'Fat Tree'	    : 'netTopologyFatTree',
+                            'Grid'     	    : 'netTopologyGrid',
+                            'Hub-And-Spoke' : 'netTopologyHubNSpoke',
+                            'Linear'        : 'netTopologyLinear',
+                            'Mesh'	    : 'netTopologyMesh',
+                            'Ring'	    : 'netTopologyRing',
+                            'Tree'	    : 'netTopologyTree',
+                        }
+
+        self.networkTopologyObj = None
+
+        if 'create' not in kwargs and 'modify' not in kwargs:
+            raise IxNetRestApiException('configNetworkGroup requires either a create or modify parameter.')
+
+        if 'create' in kwargs:
+            deviceGroupObj = kwargs['create']
+            self.ixnObj.logInfo('Creating new Network Group')
+            response = self.ixnObj.post(self.ixnObj.httpHeader + deviceGroupObj + '/networkGroup')
+            networkGroupObj = response.json()['links'][0]['href']
+
+        if 'modify' in kwargs:
+            networkGroupObj = kwargs['modify']
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader + networkGroupObj, data={'name': kwargs['name']})
+
+        if 'multiplier' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader + networkGroupObj, data={'multiplier': kwargs['multiplier']})
+
+        if 'create' in kwargs:
+            self.ixnObj.logInfo('Create new Network Group network topology')
+            response = self.ixnObj.post(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology')
+            response = self.ixnObj.post(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology/'+self.topoTypeDict[topoType])
+            networkTopologyObj = response.json()['links'][0]['href']
+        else:
+            networkTopologyObj = networkGroupObj + '/networkTopology/'+self.topoTypeDict[topoType]
+
+        return networkGroupObj, networkTopologyObj
+
 
     def configNetworkTopologyProperty(self, networkGroupObj, pseudoRouter, **kwargs):
         """

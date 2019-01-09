@@ -1517,9 +1517,12 @@ class Protocol(object):
 
         multivalue = response.json()['networkAddress']
 
-        data={'start': kwargs['networkAddress']['start'],
-              'step': kwargs['networkAddress']['step'],
-              'direction': kwargs['networkAddress']['direction']}
+        if 'networkAddress' in kwargs:
+            data={'start': kwargs['networkAddress']['start'],
+                  'step': kwargs['networkAddress']['step'],
+                  'direction': kwargs['networkAddress']['direction']}
+        else:
+            data={}
 
         self.ixnObj.configMultivalue(multivalue, 'counter', data)
 
@@ -1635,9 +1638,13 @@ class Protocol(object):
         response = self.ixnObj.get(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology/simRouter/1')
         self.ixnObj.logInfo('Config Network Group advertising routes')
         multivalue = response.json()['routerId']
-        data = {'start': kwargs['routerId']['start'],
-                'step': kwargs['routerId']['step'],
-                'direction': kwargs['routerId']['direction']}
+
+        if 'routerId' in kwargs:
+            data = {'start': kwargs['routerId']['start'],
+                    'step': kwargs['routerId']['step'],
+                    'direction': kwargs['routerId']['direction']}
+        else:
+            data = {}
 
         self.ixnObj.configMultivalue(multivalue, 'counter', data)
 

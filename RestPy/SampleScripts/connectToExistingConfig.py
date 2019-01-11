@@ -27,22 +27,19 @@ Script development API doc:
          - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
 """
 
-import os, sys
+import os, sys, time, traceback
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+from ixnetwork_restpy.files import Files
+from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
 # your system knows where the RestPy modules are located.
 #sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 
-# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
-# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
-# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-
 # Import modules containing helper functions
-from StatisticsMgmt import Statistics
-from PortMgmt import Ports
+#from StatisticsMgmt import Statistics
+#from PortMgmt import Ports
 
 # Defaulting to windows
 osPlatform = 'windows'
@@ -67,15 +64,19 @@ if osPlatform == 'linux':
 
 try:
     testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
+    testPlatform.Trace = 'request_response'
+    
+    # authenticate with username and password
+    testPlatform.Authenticate('admin', 'admin')
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'
 
     if osPlatform == 'linux':
         testPlatform.Authenticate(username, password)
-        ixNetwork.ApiKey = '9277fc8fe92047f6a126f54481ba07fc'
-        session = ixNetwork.Sessions(Id=8)
+        session = testPlatform.Sessions.find(Id=12)
         ixNetwork = session.Ixnetwork
+        ixNetwork.ApiKey = '9277fc8fe92047f6a126f54481ba07fc'
 
     if osPlatform == 'windows':
         # Windows support only one session. Id is always equal 1.
@@ -84,10 +85,10 @@ try:
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
 
-    # Instantiate the helper class objects
-    statObj = Statistics(ixNetwork)
-    portObj = Ports(ixNetwork)
+    from pprint import pprint
+    import json
 
 
 except Exception as errMsg:
+    print('\n%s' % traceback.format_exc())
     print('\nrestPy.Exception:', errMsg)

@@ -24,8 +24,6 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-                       - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -45,23 +43,15 @@ Usage:
 
 """
 
-import sys, os, re
+import sys, os, re, traceback
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
 # your system knows where the RestPy modules are located.
 #sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-
-# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
-# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
-# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-
-# Import modules containing helper functions
-from StatisticsMgmt import Statistics
-from PortMgmt import Ports
 
 # Defaulting to windows
 osPlatform = 'windows'
@@ -111,14 +101,10 @@ try:
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    # Instantiate the helper class objects
-    statObj = Statistics(ixNetwork)
-    portObj = Ports(ixNetwork)
-
     if osPlatform == 'windows':
         ixNetwork.NewConfig()    
 
-    print('\nConfiguring license server')
+    ixNetwork.info('Configuring license server')
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
 
@@ -126,23 +112,27 @@ try:
     vport1 = ixNetwork.Vport.add(Name='Port1')
     vport2 = ixNetwork.Vport.add(Name='Port2')
 
-    # getVportList=True because you already created vports from above.
-    # If you did not create vports, then assignPorts will create them and name them with default names.
-    portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
+    # Assign ports
+    testPorts = []
+    vportList = [vport.href for vport in ixNetwork.Vport.find()]
+    for port in portList:
+        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
 
-    print('\nCreate Traffic Item')
+    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+
+    ixNetwork.info('Create Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='RAW MPLS',
                                                     BiDirectional=False,
                                                     TrafficType='raw',
                                                     TrafficItemType='l2L3'
                                                 )
 
-    print('\tAdd flow group')
+    ixNetwork.info('Add flow group')
     trafficItem.EndpointSet.add(Sources=vport1.Protocols.find(), Destinations=vport2.Protocols.find())
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
     #       Therefore, ConfigElement is a list.
-    print('\tConfiguring config elements')
+    ixNetwork.info('Configuring config elements')
     trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
     trafficItem.ConfigElement.find()[0].FrameRate.Type = 'framesPerSecond'
     trafficItem.ConfigElement.find()[0].TransmissionControl.FrameCount = 10000
@@ -156,11 +146,11 @@ try:
 
     # Uncomment this to show a list of all the available protocol templates (packet headers)
     #for protocolHeader in ixNetwork.Traffic.ProtocolTemplate():
-    #    print('\n', protocolHeader.DisplayName)
+    #    ixNetwork.info('\n', protocolHeader.DisplayName)
 
     # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
     #       the IxVM port from your virtual host (ESX-i host or KVM)
-    print('\nConfiguring Ethernet packet header')
+    ixNetwork.info('Configuring Ethernet packet header')
     ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
     ethernetDstField.ValueType = 'increment'
     ethernetDstField.StartValue = "00:0c:29:76:b4:39"
@@ -221,20 +211,27 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
-    stats = statObj.getTrafficItemStats()
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # Examples:
+    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+
+    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
+    ixNetwork.info('{}\n'.format(flowStatistics))
+
+    for rowNumber,flowStat in enumerate(flowStatistics.Rows):
+        ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
+        ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
+            rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
+            flowStat['Tx Frames'], flowStat['Rx Frames']))
+
+    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
+    ixNetwork.info('{}\n'.format(trafficItemStatistics))
     
     # Get the statistic values
-    txFrames = stats[trafficItem.Name]['Tx Frames']
-    rxFrames = stats[trafficItem.Name]['Rx Frames']
-    print('\nTraffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
-
-    # This example is for getting Flow Statistics.
-    flowStats = statObj.getFlowStatistics()
-
-    for row, statValues in flowStats.items():
-        txFrames = statValues['Tx Frames']
-        rxFrames = statValues['Rx Frames']
-        print('Flow Statistics: Row:{} TxFrames: {}  RxFrames: {}\n'.format(row, txFrames, rxFrames))
+    txFrames = trafficItemStatistics.Rows[0]['Tx Frames']
+    rxFrames = trafficItemStatistics.Rows[0]['Rx Frames']
+    ixNetwork.info('Traffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
 
     if deleteSessionWhenDone:
         # For Linux and WindowsConnectionMgr only
@@ -242,7 +239,8 @@ try:
             session.remove()
 
 except Exception as errMsg:
-    print('\nrestPy.Exception:', errMsg)
+    ixNetwork.debug('\n%s' % traceback.format_exc())
+
     if deleteSessionWhenDone and 'session' in locals():
         if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()

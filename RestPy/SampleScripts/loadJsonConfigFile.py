@@ -23,8 +23,6 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-                       - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -44,24 +42,16 @@ Usage:
 
 """
 
-import json, sys, os
+import json, sys, os, traceback
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
+from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
 # your system knows where the RestPy modules are located.
 #sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-
-# This sample script uses helper functions from https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/Modules
-# If you did a git clone, add this path to use the helper modules: StatisticsMgmt.py and PortMgmt.py
-# Otherwise, you could store these helper functions any where on your filesystem and set their path by using sys.path.append('your path')
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-
-# Import modules containing helper functions
-from StatisticsMgmt import Statistics
-from PortMgmt import Ports
 
 # Defaulting to windows
 osPlatform = 'windows'
@@ -90,7 +80,7 @@ licenseServerIp = ['192.168.70.3']
 licenseMode = 'subscription'
 
 # For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
-deleteSessionWhenDone = False
+deleteSessionWhenDone = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -119,23 +109,24 @@ try:
     # ixNetwork is the root object to the IxNetwork API hierarchical tree.
     ixNetwork = session.Ixnetwork
 
-    # Instantiate the helper class objects
-    statObj = Statistics(ixNetwork)
-    portObj = Ports(ixNetwork)
-
     if osPlatform == 'windows':
         ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
 
-    print('\nLoading JSON config file: {0}'.format(jsonConfigFile))
+    ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
     # Assigning ports after loading a saved config is optional because you could use the ports that
     # are saved in the config file. Optionally, reassign ports to use other chassis/ports on different testbeds.
     # getVportList=True because vports are already configured in the config file.
-    portObj.assignPorts(portList, forceTakePortOwnership, getVportList=True)
+    testPorts = []
+    vportList = [vport.href for vport in ixNetwork.Vport.find()]
+    for port in portList:
+        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+
+    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
 
     # Example: How to modify a loaded json config using XPATH
     # Arg3:  True=To create a new config. False=To modify an existing config.
@@ -143,7 +134,12 @@ try:
     ixNetwork.ResourceManager.ImportConfig(Arg2=data, Arg3=False)
 
     ixNetwork.StartAllProtocols(Arg1='sync')
-    statObj.verifyAllProtocolSessions()
+
+    ixNetwork.info('Verify protocol sessions\n')
+    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
+    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
+    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
+    ixNetwork.info(protocolsSummary)
 
     # Get the Traffic Item name for getting Traffic Item statistics.
     trafficItem = ixNetwork.Traffic.TrafficItem.find()[0]
@@ -152,20 +148,19 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
-    stats = statObj.getTrafficItemStats()
-    
-    # Get the statistic values
-    txFrames = stats[trafficItem.Name]['Tx Frames']
-    rxFrames = stats[trafficItem.Name]['Rx Frames']
-    print('\nTraffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # Examples:
+    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
 
-    # This example is for getting Flow Statistics.
-    flowStats = statObj.getFlowStatistics()
+    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
+    ixNetwork.info('{}\n'.format(flowStatistics))
 
-    for row, statValues in flowStats.items():
-        txFrames = statValues['Tx Frames']
-        rxFrames = statValues['Rx Frames']
-        print('Flow Statistics: Row:{} TxFrames: {}  RxFrames: {}\n'.format(row, txFrames, rxFrames))
+    for rowNumber,flowStat in enumerate(flowStatistics.Rows):
+        ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
+        ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
+            rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
+            flowStat['Tx Frames'], flowStat['Rx Frames']))
 
     if deleteSessionWhenDone:
         # For Linux and WindowsConnectionMgr only
@@ -173,7 +168,7 @@ try:
             session.remove()
 
 except Exception as errMsg:
-    print('\nrestPy.Exception:', errMsg)
+    ixNetwork.debug('\n%s' % traceback.format_exc())
     if deleteSessionWhenDone and 'session' in locals():
         if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()

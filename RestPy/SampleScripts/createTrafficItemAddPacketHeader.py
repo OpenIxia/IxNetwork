@@ -13,8 +13,6 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-                       - Statistics.py and PortMgmt.py
 
 Script development API doc:
    - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
@@ -23,27 +21,38 @@ Script development API doc:
          - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
 """
 
-import os, sys
+import os, sys, traceback
 from pprint import pprint
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
+from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Import modules containing helper functions
-sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules')))
-from StatisticsMgmt import Statistics
-from PortMgmt import Ports
+# Defaulting to windows
+osPlatform = 'windows'
 
 # Change values to use your setup
-platform = 'windows'
-apiServerIp = '192.168.70.3'
-apiServerPort = 11009
-configFile = 'bgp_ngpf_8.30.ixncfg'
+if osPlatform in ['windows', 'windowsConnectionMgr']:
+    platform = 'windows'
+    apiServerIp = '192.168.70.3'
+    apiServerPort = 11009
+    configFile = 'bgp_ngpf_8.30.ixncfg'
+
+# Change API server values to use your setup
+if osPlatform == 'linux':
+    platform = 'linux'
+    apiServerIp = '192.168.70.12'
+    apiServerPort = 443
+    username = 'admin'
+    password = 'admin'
 
 licenseServerIp = ['192.168.70.3']
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
+# For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
+deleteSessionWhenDone = True
 
 forceTakePortOwnership = True
 
@@ -56,7 +65,7 @@ try:
     def createNewTrafficItem(trafficItemName, packetHeaderToAdd=None, appendToStack=None):
         trafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name=trafficItemName, BiDirectional=False, TrafficType='ipv4')
 
-        print('\tAdd endpoint flow group')
+        ixNetwork.info('Add endpoint flow group')
         # Get the topology objects
         topology1 = ixNetwork.Topology.find(Name='Topo1')
         topology2 = ixNetwork.Topology.find(Name='Topo2')
@@ -76,15 +85,15 @@ try:
 
         # Show a list of all the available protocol templates (packet headers)
         for protocolHeader in ixNetwork.Traffic.ProtocolTemplate.find():
-            print('\n', protocolHeader)
+            ixNetwork.info('Protocol header: {}'.format(protocolHeader))
 
         # 1> Get the <new packet header> protocol template from the ProtocolTemplate list.
         packetHeaderProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName=packetHeaderToAdd)
-        print('\ngreProtocolTemplate:', packetHeaderProtocolTemplate)
+        ixNetwork.info('greProtocolTemplate: {}'.format(packetHeaderProtocolTemplate))
 
         # 2> Append the <new packet header> object after the specified packet header stack.
         appendToStackObj = trafficItemObj.ConfigElement.find()[0].Stack.find(DisplayName=appendToStack)
-        print('\nappendToStackObj:', appendToStackObj)
+        ixNetwork.info('appendToStackObj: {}'.format(appendToStackObj))
         appendToStackObj.Append(Arg2=packetHeaderProtocolTemplate)
 
         # 3> Get the new packet header stack to use it for appending an IPv4 stack after it.
@@ -93,7 +102,7 @@ try:
         
         # 4> In order to modify the fields, get the field object
         packetHeaderFieldObj = packetHeaderStackObj.Field.find()
-        print('\ngreFieldObj:', packetHeaderFieldObj)
+        ixNetwork.info('packetHeaderFieldObj: {}'.format(packetHeaderFieldObj))
         
         # 5> Save the above configuration to the base config file.
         #ixNetwork.SaveConfig(Files('baseConfig.ixncfg', local_file=True))
@@ -102,27 +111,39 @@ try:
 
 
     # Connect
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform, log_file_name='restpy.log')
+
+    # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'    
-    session = testPlatform.Sessions.find(Id=1)
+
+    if osPlatform == 'linux':
+        testPlatform.Authenticate(username, password)
+
+    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    # Instantiate the helper class objects
-    statObj = Statistics(ixNetwork)
-    portObj = Ports(ixNetwork)
+    if osPlatform == 'windows':
+        ixNetwork.NewConfig()
 
-    ixNetwork.NewConfig()
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
+
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     # Optional: Assign ports.
+    testPorts = []
     vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    testPorts = [dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]) for port in portList]
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership )
-        
+    for port in portList:
+        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+
+    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+
     ixNetwork.StartAllProtocols(Arg1='sync')
-    statObj.verifyAllProtocolSessions()
+    ixNetwork.info('Verify protocol sessions\n')
+    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
+    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
+    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
+    ixNetwork.info(protocolsSummary)
 
     # Create a Traffic Item with GRE packet header
     greTrafficItemObj, greFieldObj = createNewTrafficItem(trafficItemName='GRE', packetHeaderToAdd='^GRE', appendToStack='IPv4')
@@ -151,21 +172,27 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
     
-    stats = statObj.getTrafficItemStats()
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # Examples:
+    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+
+    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
+    ixNetwork.info('{}\n'.format(flowStatistics))
+
+    for rowNumber,flowStat in enumerate(flowStatistics.Rows):
+        ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
+        ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
+            rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
+            flowStat['Tx Frames'], flowStat['Rx Frames']))
+
+    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
+    ixNetwork.info('{}\n'.format(trafficItemStatistics))
+    
     # Get the statistic values
-    txFrames = stats[trafficItem.Name]['Tx Frames']
-    rxFrames = stats[trafficItem.Name]['Rx Frames']
-    print('\nTraffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
-
-    # This example is for getting Flow Statistics.
-    flowStats = statObj.getFlowStatistics()
-
-    pprint(flowStats)
-    for row, statValues in flowStats.items():
-        txFrames = statValues['Tx Frames']
-        rxFrames = statValues['Rx Frames']
-        print('Flow Statistics: Row:{} TxFrames: {}  RxFrames: {}\n'.format(row, txFrames, rxFrames))
-
+    txFrames = trafficItemStatistics.Rows[0]['Tx Frames']
+    rxFrames = trafficItemStatistics.Rows[0]['Rx Frames']
+    ixNetwork.info('Traffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
 
     '''
      Field[13]: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4/field/14
@@ -207,5 +234,15 @@ try:
         ValueType: singleValue
     '''
 
+    if deleteSessionWhenDone:
+        # For Linux and WindowsConnectionMgr only
+        if osPlatform in ['linux', 'windowsConnectionMgr']:
+            session.remove()
+
 except Exception as errMsg:
-    print('\nrestPy.Exception:', errMsg)
+    ixNetwork.debug('\n%s' % traceback.format_exc())
+    if deleteSessionWhenDone and 'session' in locals():
+        if osPlatform in ['linux', 'windowsConnectionMgr']:
+            session.remove()
+
+

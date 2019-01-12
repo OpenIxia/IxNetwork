@@ -1,5 +1,5 @@
 """
-addPacketHeaderRawTraffic.py:
+pcapToRawTrafficItem.py
 
    Tested with two back-2-back Ixia ports
 
@@ -10,11 +10,9 @@ addPacketHeaderRawTraffic.py:
         - If variable forceTakePortOwnership is True, take over the ports if they're owned by another user.
         - If variable forceTakePortOwnership if False, abort test.
    - Configure a Raw Traffic Item
-   - Configure Ethernet packet header
-   - Add packet headers: MPLS and IPv4
-   - Start traffic
-   - Get Traffic Item
-   - Get Flow Statistics stats
+   - Read a PCAP file.
+   - Add Traffic Item packet headers using PCAP packet header values.
+
 
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
@@ -22,6 +20,8 @@ Supports IxNetwork API servers:
 Requirements
    - IxNetwork 8.50
    - Python 2.7 and 3+
+   - tcp.pcap file (Included in the same local directory).
+   - pip install scapy
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
@@ -45,11 +45,13 @@ Usage:
 
 import sys, os, re, traceback
 
+from scapy.all import *
+
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
+# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
 # your system knows where the RestPy modules are located.
 #sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 
@@ -89,6 +91,8 @@ forceTakePortOwnership = True
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
+pcapFile = 'tcp.pcap'
+
 try:
     testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform, log_file_name='restpy.log')
 
@@ -104,7 +108,7 @@ try:
     if osPlatform == 'windows':
         ixNetwork.NewConfig()    
 
-    ixNetwork.info('Configuring license server')
+    ixNetwork.info('\nConfiguring license server')
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
 
@@ -120,8 +124,25 @@ try:
 
     ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
 
+    # This will get the last packet header from the tcp.pcap file.
+    for index, packet in enumerate(PcapReader(pcapFile)):
+        ixNetwork.info('\nPacket: {}:\n'.format(index, packet.show()))
+        try:
+            ethSrcAddr = packet[Ether].src
+            ethDstAddr = packet[Ether].dst
+            ipSrcAddr  = packet[IP].src
+            ipDstAddr  = packet[IP].dst
+            tcpSrcPort = packet[TCP].sport
+            tcpDstPort = packet[TCP].dport
+            
+            ixNetwork.info('ethSrc: {} ethDst: {}'.format(ethSrc, ethDst))
+            ixNetwork.info('ipSrc: {} ipDst: {}'.format(ipSrc, ipDst))
+            ixNetwork.info('tcpSrcPort: {} tcpDstPort: {}'.format(tcpSrcPort, tcpDstPort))
+        except:
+            pass
+
     ixNetwork.info('Create Traffic Item')
-    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='RAW MPLS',
+    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='RAW TCP',
                                                     BiDirectional=False,
                                                     TrafficType='raw',
                                                     TrafficItemType='l2L3'
@@ -132,17 +153,18 @@ try:
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
     #       Therefore, ConfigElement is a list.
-    ixNetwork.info('Configuring config elements')
-    trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
-    trafficItem.ConfigElement.find()[0].FrameRate.Type = 'framesPerSecond'
-    trafficItem.ConfigElement.find()[0].TransmissionControl.FrameCount = 10000
-    trafficItem.ConfigElement.find()[0].TransmissionControl.Type = 'fixedFrameCount'
-    trafficItem.ConfigElement.find()[0].FrameRateDistribution.PortDistribution = 'splitRateEvenly'
-    trafficItem.ConfigElement.find()[0].FrameSize.FixedSize = 128
+    ixNetwork.info('\tConfiguring config elements')
+    configElement = trafficItem.ConfigElement.find()[0]
+    configElement.FrameRate.Rate = 28
+    configElement.FrameRate.Type = 'framesPerSecond'
+    configElement.TransmissionControl.FrameCount = 10000
+    configElement.TransmissionControl.Type = 'fixedFrameCount'
+    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
+    configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     # Show a list of current configured packet headers in the first Traffic Item and first EndpointSet.
-    ethernetStackObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
+    ethernetStackObj = configElement.Stack.find(DisplayName='Ethernet II')
 
     # Uncomment this to show a list of all the available protocol templates (packet headers)
     #for protocolHeader in ixNetwork.Traffic.ProtocolTemplate():
@@ -150,88 +172,64 @@ try:
 
     # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
     #       the IxVM port from your virtual host (ESX-i host or KVM)
-    ixNetwork.info('Configuring Ethernet packet header')
+    ixNetwork.info('\nConfiguring Ethernet packet header')
     ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
     ethernetDstField.ValueType = 'increment'
-    ethernetDstField.StartValue = "00:0c:29:76:b4:39"
+    ethernetDstField.StartValue = ethDstAddr
     ethernetDstField.StepValue = "00:00:00:00:00:00"
     ethernetDstField.CountValue = 1
 
     ethernetSrcField = ethernetStackObj.Field.find(DisplayName='Source MAC Address')
     ethernetSrcField.ValueType = 'increment'
-    ethernetSrcField.StartValue = "00:01:01:01:00:01"
+    ethernetSrcField.StartValue = ethSrcAddr
     ethernetSrcField.StepValue = "00:00:00:00:00:01"
     ethernetSrcField.CountValue = 1
 
-    # 1> Get the MPLS protocol template from the ProtocolTemplate list.
-    mplsProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName='^MPLS$')
-
-    # 2> Append the MPLS protocol object created above after the Ethernet header stack.
-    ethernetStackObj.Append(Arg2=mplsProtocolTemplate)
-    
-    # 3> Get the new MPLS packet header stack to use it for appending an IPv4 stack after it.
-    # Look for the MPLS packet header object and stack ID.
-    mplsStackObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='^MPLS$')
-
-    # 4> In order to modify the MPLS fields, get the mpls field object
-    mplsFieldObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='^MPLS$').Field.find()
-
-    # 5> Configure the mpls packet header
-    mplsFieldObj.ValueType = 'increment'
-    mplsFieldObj.StartValue = "16"
-    mplsFieldObj.StepValue = "1"
-    mplsFieldObj.CountValue = 2
-
-    # Add IPv4 packet header after the MPLS packet header stack
+    # Add IPv4 packet header after the Ethernet stack
     # 1> Get the protocol template for IPv4
     ipv4ProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName='IPv4')
 
-    # 2> Append the IPv4 protocol header after the MPLS header.
-    mplsStackObj.Append(Arg2=ipv4ProtocolTemplate)
+    # 2> Append the IPv4 protocol header after the Ethernet stack.
+    ethernetStackObj.Append(Arg2=ipv4ProtocolTemplate)
 
     # 3> Get the new IPv4 packet header stack to use it for appending any protocol after IP layer such as 
     #    UDP/TCP.
     # Look for the IPv4 packet header object.
-    ipv4StackObj = ixNetwork.Traffic.TrafficItem.find()[0].ConfigElement.find()[0].Stack.find(DisplayName='IPv4')
+    ipv4StackObj = configElement.Stack.find(DisplayName='IPv4')
 
     # 4> Configure the mpls packet header
     ipv4SrcFieldObj = ipv4StackObj.Field.find(DisplayName='Source Address')
     ipv4SrcFieldObj.ValueType = 'increment'
-    ipv4SrcFieldObj.StartValue = "1.1.1.1"
+    ipv4SrcFieldObj.StartValue = ipSrcAddr
     ipv4SrcFieldObj.StepValue = "0.0.0.1"
     ipv4SrcFieldObj.CountValue = 1
 
     ipv4DstFieldObj = ipv4StackObj.Field.find(DisplayName='Destination Address')
     ipv4DstFieldObj.ValueType = 'increment'
-    ipv4DstFieldObj.StartValue = "1.1.1.2"
+    ipv4DstFieldObj.StartValue = ipDstAddr
     ipv4DstFieldObj.StepValue = "0.0.0.1"
     ipv4DstFieldObj.CountValue = 1
 
-    trafficItem.Generate()
-    ixNetwork.Traffic.Apply()
-    ixNetwork.Traffic.Start()
+    # Add TCP packet header after the IPv4 packet header stack
+    # 1> Get the protocol template for TCP
+    tcpProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName='TCP')
 
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
-    # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    # 2> Append the TCP protocol header after the IPv4 header.
+    ipv4StackObj.Append(Arg2=tcpProtocolTemplate)
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
-    ixNetwork.info('{}\n'.format(flowStatistics))
+    tcpStackObj = configElement.Stack.find(DisplayName='TCP')
 
-    for rowNumber,flowStat in enumerate(flowStatistics.Rows):
-        ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
-        ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
-            rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
-            flowStat['Tx Frames'], flowStat['Rx Frames']))
+    tcpSrcPortFieldObj = tcpStackObj.Field.find(DisplayName='TCP-Source-Port')
+    tcpSrcPortFieldObj.Auto = False
+    tcpSrcPortFieldObj.SingleValue = tcpSrcPort
 
-    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
-    ixNetwork.info('{}\n'.format(trafficItemStatistics))
-    
-    # Get the statistic values
-    txFrames = trafficItemStatistics.Rows[0]['Tx Frames']
-    rxFrames = trafficItemStatistics.Rows[0]['Rx Frames']
-    ixNetwork.info('Traffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
+    tcpDstPortFieldObj = tcpStackObj.Field.find(DisplayName='TCP-Dest-Port')
+    tcpDstPortFieldObj.Auto = False
+    tcpDstPortFieldObj.SingleValue = tcpDstPort
+
+    # This sample script does not expect traffic.
+    # It is only demonstrating how to parse a pcap file and insert the values into a 
+    # Traffic Item.
 
     if deleteSessionWhenDone:
         # For Linux and WindowsConnectionMgr only
@@ -239,7 +237,7 @@ try:
             session.remove()
 
 except Exception as errMsg:
-    ixNetwork.debug('\n%s' % traceback.format_exc())
+    ixNetwork.debug(traceback.format_exc())
 
     if deleteSessionWhenDone and 'session' in locals():
         if osPlatform in ['linux', 'windowsConnectionMgr']:

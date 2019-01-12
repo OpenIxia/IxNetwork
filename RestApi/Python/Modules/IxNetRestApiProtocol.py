@@ -907,6 +907,161 @@ class Protocol(object):
                     if key in kwargs:
                         self.ixnObj.patch(self.ixnObj.httpHeader+ospfObj, data={key: kwargs[key]})
 
+        # Anish added
+        ospfv2AttributeList = ['lsaRefreshTime','lsaRetransmitTime','interFloodLsUpdateBurstGap']
+        if (any(attribute in ospfv2AttributeList for attribute in kwargs)):
+            ospfRouterUrl = self.ixnObj.httpHeader+ospfObj.split('ethernet')[0]+'ospfv2Router'
+
+            ospfRouterObjResponse = self.ixnObj.get(ospfRouterUrl+'/'+str(self.ixnObj.get(ospfRouterUrl).json()[0]['id']))
+
+            for key, value in ospfRouterObjResponse.json().items():
+                if key != 'links':
+                    if bool(re.search('multivalue', str(value))) == True:
+                        if key in kwargs:
+                            multiValue = ospfRouterObjResponse.json()[key]
+                            self.ixnObj.logInfo('Configuring OSPF Router multivalue attribute: %s' % key)
+                            self.configMultivalue(multiValue, 'singleValue', data={'value': kwargs[key]})
+                    else:
+                        if key in kwargs:
+                            self.ixnObj.patch(self.ixnObj.httpHeader + ospfRouterObjResponse, data={key: kwargs[key]})
+
+        # Anish added
+        ospfv2TrafficEngAttributeList = ['metricLevel']
+        if (any(attribute in ospfv2TrafficEngAttributeList for attribute in kwargs)):
+            ospfTrafficEngObj = ospfObj + '/ospfTrafficEngineering'
+
+            ospfTrafficEngObjResponse =  self.ixnObj.get(self.ixnObj.httpHeader+ospfTrafficEngObj)
+
+            for key, value in ospfTrafficEngObjResponse.json().items():
+                if key != 'links':
+                    if bool(re.search('multivalue', str(value))) == True:
+                        if key in kwargs:
+                            multiValue = ospfTrafficEngObjResponse.json()[key]
+                            self.ixnObj.logInfo('Configuring OSPF Router multivalue attribute: %s' % key)
+                            self.configMultivalue(multiValue, 'singleValue', data={'value': kwargs[key]})
+                    else:
+                        if key in kwargs:
+                            self.ixnObj.patch(self.ixnObj.httpHeader + ospfTrafficEngObjResponse, data={key: kwargs[key]})
+
+        self.configuredProtocols.append(ospfObj)
+        return ospfObj
+
+    def configOspfv3(self, obj=None, routerId=None, port=None, portName=None, ngpfEndpointName=None, hostIp=None, **kwargs):
+        """
+        Description
+            Create or modify OSPFv3. If creating a new OSPFv3, provide an IPv6 object handle.
+            If modifying a OSPF, there are five options. 2-6 will query for the OSPFv3 object handle.
+
+               1> Provide the OSPFv3 object handle using the obj parameter.
+               2> Set routerId.
+               3> Set port: The physical port.
+               4> Set portName: The vport port name.
+               5> Set NGPF OSPF name that you configured.
+               6> Set hostIp: The src IP.
+
+        Parameters
+            IPv6 object handle example:
+               obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1
+
+            OSPF object handle example:
+               obj: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1/ospfv3/1
+
+            routerId: <str>: The router ID IP address.
+            port: <list>: Format: [ixChassisIp, str(cardNumber), str(portNumber)]
+            portName: <str>: The virtual port name.
+            ngpfEndpointName: <str>: The name that you configured for the NGPF endpoint.
+            hostIp: <src>: The source IP address to query for the object.
+            kwargs: OSPF configuration attributes. The attributes could be obtained from the IxNetwork API browser.
+
+        Syntax
+            POST:  /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6/{id}/ospfv3
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6/{id}/ospfv3/{id}
+
+        Example:
+            ospfObj1 = configOspf(ipv6Obj,
+                          name = 'ospf_1',
+                          areaId = '0',
+                          neighborIp = '::2',
+                          helloInterval = '10',
+                          areaIdIp = '::0',
+                          networkType = 'pointtomultipoint',
+                          deadInterval = '40')
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/ethernet/{id}/ipv6/{id}/ospfv3/{id}
+        """
+        # To create new OSPFV3 object
+
+        if obj != None:
+            if 'ospf' not in obj:
+                ospfUrl = self.ixnObj.httpHeader+obj+'/ospfv3'
+                self.ixnObj.logInfo('Create new OSPFv3 in NGPF')
+                response = self.ixnObj.post(ospfUrl)
+                # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1/ospfv3/1
+                ospfObj = response.json()['links'][0]['href']
+
+            # To modify OSPF
+            if 'ospf' in obj:
+                ospfObj = obj
+
+        # To modify
+        if ngpfEndpointName:
+            ospfObj = self.getNgpfObjectHandleByName(ngpfEndpointName=ngpfEndpointName, ngpfEndpointObject='ospfv3')
+
+        # To modify
+        if port:
+            x = self.getProtocolListByPortNgpf(port=port)
+            ospfObj = self.getProtocolObjFromProtocolList(x['deviceGroup'], 'ospfv3')[0]
+
+        # To modify
+        if portName:
+            x = self.getProtocolListByPortNgpf(portName=portName)
+            ospfObj = self.getProtocolObjFromProtocolList(x['deviceGroup'], 'ospfv3')[0]
+
+        # To modify
+        if routerId:
+            ospfObj = self.getNgpfObjectHandleByRouterId(routerId=routerId, ngpfEndpointObject='ospfv3')
+
+        # To modify
+        if hostIp:
+            x = self.getProtocolListByHostIpNgpf(hostIp)
+            ospfObj = self.getProtocolObjFromHostIp(x, protocol='ospfv3')
+
+        ospfObjResponse = self.ixnObj.get(self.ixnObj.httpHeader+ospfObj)
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader+ospfObj, data={'name': kwargs['name']})
+
+        for key,value in ospfObjResponse.json().items():
+            if key != 'links':
+                if bool(re.search('multivalue', str(value))) == True:
+                    if key in kwargs:
+                        multiValue = ospfObjResponse.json()[key]
+                        self.ixnObj.logInfo('Configuring OSPF multivalue attribute: %s' % key)
+                        self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[key]})
+                else:
+                    if key in kwargs:
+                        self.ixnObj.patch(self.ixnObj.httpHeader+ospfObj, data={key: kwargs[key]})
+
+        ospfv3AttributeList = ['lsaRefreshTime', 'lsaRetransmitTime', 'interFloodLsUpdateBurstGap']
+
+        if (any(attribute in ospfv3AttributeList for attribute in kwargs)):
+            ospfRouterUrl = self.ixnObj.httpHeader + ospfObj.split('ethernet')[0] + 'ospfv3Router'
+
+            ospfRouterObjResponse = self.ixnObj.get(
+                ospfRouterUrl + '/' + str(self.ixnObj.get(ospfRouterUrl).json()[0]['id']))
+
+            for key, value in ospfRouterObjResponse.json().items():
+                if key != 'links':
+                    if bool(re.search('multivalue', str(value))) == True:
+                        if key in kwargs:
+                            multiValue = ospfRouterObjResponse.json()[key]
+                            self.ixnObj.logInfo('Configuring OSPF Router multivalue attribute: %s' % key)
+                            self.configMultivalue(multiValue, 'singleValue', data={'value': kwargs[key]})
+                    else:
+                        if key in kwargs:
+                            self.ixnObj.patch(self.ixnObj.httpHeader + ospfRouterObjResponse, data={key: kwargs[key]})
+
         self.configuredProtocols.append(ospfObj)
         return ospfObj
 
@@ -959,7 +1114,12 @@ class Protocol(object):
         # To create a new BGP stack using IPv4 object.
         if obj != None:
             if 'bgp' not in obj:
-                bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv4Peer'
+                if 'ipv4' in obj:
+                    bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv4Peer'
+
+                if 'ipv6' in obj:
+                    bgpUrl = self.ixnObj.httpHeader+obj+'/bgpIpv6Peer'
+
                 self.ixnObj.logInfo('Create new BGP in NGPF')
                 response = self.ixnObj.post(bgpUrl)
                 # /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
@@ -997,14 +1157,18 @@ class Protocol(object):
         if 'name' in kwargs:
             self.ixnObj.patch(self.ixnObj.httpHeader+bgpObj, data={'name': kwargs['name']})
 
+        # For BgpIpv4Peer
         if 'enableBgp' in kwargs and kwargs['enableBgp'] == True:
             multiValue = bgpObjResponse.json()['enableBgpId']
-            self.ixnObj.logInfo('Enabling BGP protocol. Attribut for multivalue = enableBgpId')
+            self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': True})
+
+        # For BgpIpv6Peer
+        if 'active' in kwargs and kwargs['active'] == True:
+            multiValue = bgpObjResponse.json()['active']
             self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': True})
 
         if 'dutIp' in kwargs:
             multiValue = bgpObjResponse.json()['dutIp']
-            self.ixnObj.logInfo('Configure BGP DUT IP. Attribut for multivalue = dutIp')
             self.configMultivalue(multiValue, 'counter', data=kwargs['dutIp'])
 
         for key,value in bgpObjResponse.json().items():
@@ -1020,6 +1184,27 @@ class Protocol(object):
 
         self.configuredProtocols.append(bgpObj)
         return bgpObj
+
+    def configBgpIpv6(self, obj=None, routerId=None, port=None, portName=None, ngpfEndpointName=None, hostIp=None, **kwargs):
+        """
+        Creating a namespace for BgpIpv6Peer.  Pass everything to configBgp()
+        
+        Example:
+           ipv6Obj2 = '/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1/ipv6'
+
+           bgpObj2 = protocolObj.configBgpIpv6(ipv6Obj2,
+                                        name = 'bgp_2',
+                                        active = True,
+                                        holdTimer = 90,
+                                        dutIp={'start': '2001:0:0:1:0:0:0:1', 'direction': 'increment', 'step': '0:0:0:0:0:0:0:0'},
+                                        localAs2Bytes = 101,
+                                        enableGracefulRestart = False,
+                                        restartTime = 45,
+                                        type = 'internal',
+                                        enableBgpIdSameasRouterId = True)
+
+        """
+        return self.configBgp(obj, routerId, port, portName, ngpfEndpointName, hostIp, **kwargs)
 
     def configIgmpHost(self, ipObj, **kwargs):
         """
@@ -1254,6 +1439,7 @@ class Protocol(object):
         """
         Description
             Create or modify a Network Group for network advertisement.
+            Supports both IPv4 and IPv6
 
             Pass in the Device Group obj for creating a new Network Group.
                 /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
@@ -1266,6 +1452,8 @@ class Protocol(object):
             POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools
 
         Example:
+              NOTE: Supports both IPv4 and IPv6
+
                Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
                configNetworkGroup(create=deviceGroupObj
                                   name='networkGroup1',
@@ -1287,6 +1475,7 @@ class Protocol(object):
         """
         # In case it is modify, we still need to return self.prefixPoolObj 
         self.prefixPoolObj = None
+        ipVersion = kwargs.get('ipVersion','ipv4')
 
         if 'create' not in kwargs and 'modify' not in kwargs:
             raise IxNetRestApiException('configNetworkGroup requires either a create or modify parameter.')
@@ -1307,31 +1496,196 @@ class Protocol(object):
             self.ixnObj.patch(self.ixnObj.httpHeader+networkGroupObj, data={'multiplier': kwargs['multiplier']})
 
         if 'create' in kwargs:
-            self.ixnObj.logInfo('Create new Network Group IPv4 Prefix Pools')
-            response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools')
-            ipv4PrefixObj = response.json()['links'][0]['href']
+            if ipVersion == 'ipv6':
+                self.ixnObj.logInfo('Create new Network Group IPv6 Prefix Pools')
+                response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv6PrefixPools')
+                prefixObj = response.json()['links'][0]['href']
+            else:
+                # For IPv4
+                self.ixnObj.logInfo('Create new Network Group IPv4 Prefix Pools')
+                response = self.ixnObj.post(self.ixnObj.httpHeader+networkGroupObj+'/ipv4PrefixPools')
+                prefixObj = response.json()['links'][0]['href']
         else:
-            ipv4PrefixObj = networkGroupObj+'/ipv4PrefixPools/1'
+            if ipVersion == 'ipv6':
+                prefixObj = networkGroupObj+'/ipv6PrefixPools/1'
+            else:
+                prefixObj = networkGroupObj+'/ipv4PrefixPools/1'
 
         # prefixPoolId = /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/3/ipv4PrefixPools/1
-        response = self.ixnObj.get(self.ixnObj.httpHeader + ipv4PrefixObj)
+        response = self.ixnObj.get(self.ixnObj.httpHeader + prefixObj)
         self.ixnObj.logInfo('Config Network Group advertising routes')
+
         multivalue = response.json()['networkAddress']
-        data={'start': kwargs['networkAddress']['start'],
-              'step': kwargs['networkAddress']['step'],
-              'direction': kwargs['networkAddress']['direction']}
+
+        if 'networkAddress' in kwargs:
+            data={'start': kwargs['networkAddress']['start'],
+                  'step': kwargs['networkAddress']['step'],
+                  'direction': kwargs['networkAddress']['direction']}
+        else:
+            data={}
+
         self.ixnObj.configMultivalue(multivalue, 'counter', data)
 
         if 'prefixLength' in kwargs:
             self.ixnObj.logInfo('Config Network Group prefix pool length')
-            response = self.ixnObj.get(self.ixnObj.httpHeader + ipv4PrefixObj)
+            response = self.ixnObj.get(self.ixnObj.httpHeader + prefixObj)
             multivalue = response.json()['prefixLength']
             data={'value': kwargs['prefixLength']}
             self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
 
         if 'numberOfAddresses' in kwargs:
-            self.ixnObj.patch(self.ixnObj.httpHeader+ipv4PrefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
-        return networkGroupObj, ipv4PrefixObj
+            self.ixnObj.patch(self.ixnObj.httpHeader+prefixObj, data={'numberOfAddresses': kwargs['numberOfAddresses']})
+
+        return networkGroupObj, prefixObj
+
+    def configNetworkGroupWithTopology(self, topoType='Linear', **kwargs):
+        """
+        Description
+            Create or modify a Network Group Topology for network advertisement.
+
+            Pass in the Device Group obj for creating a new Network Group.
+                /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+
+            Pass in the Network Group obj to modify.
+               /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
+
+            Pass in topoType(topology type) to configure require network with topology type
+                Ex: 'Custom','Fat Tree','Grid','Hub-And-Spoke','Linear','Mesh','Ring','Tree'
+
+        Syntax
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup
+            POST: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/networkTopology/
+
+        Example:
+               Device Group object sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
+               configNetworkGroupWithTopology(topoType='Linear',create=deviceGroupObj
+                                  name='networkGroup1',
+                                  multiplier = 100
+                                  )
+
+
+               To modify a Network Group:
+               NetworkGroup obj sample: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/networkGroup/1
+               configNetworkGroupWithTopology(topoType='Linear',modify=networkGroupObj,
+                                  name='networkGroup-ospf',
+                                  multiplier = 100,
+                                  )
+
+        Return
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}
+            /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/networkTopology/netTopologyLinear
+        """
+        # In case it is modify, we still need to return self.prefixPoolObj
+        self.topoTypeDict = {'Custom' 	    : 'netTopologyCustom',
+                            'Fat Tree'	    : 'netTopologyFatTree',
+                            'Grid'     	    : 'netTopologyGrid',
+                            'Hub-And-Spoke' : 'netTopologyHubNSpoke',
+                            'Linear'        : 'netTopologyLinear',
+                            'Mesh'	    : 'netTopologyMesh',
+                            'Ring'	    : 'netTopologyRing',
+                            'Tree'	    : 'netTopologyTree',
+                        }
+
+        self.networkTopologyObj = None
+
+        if 'create' not in kwargs and 'modify' not in kwargs:
+            raise IxNetRestApiException('configNetworkGroup requires either a create or modify parameter.')
+
+        if 'create' in kwargs:
+            deviceGroupObj = kwargs['create']
+            self.ixnObj.logInfo('Creating new Network Group')
+            response = self.ixnObj.post(self.ixnObj.httpHeader + deviceGroupObj + '/networkGroup')
+            networkGroupObj = response.json()['links'][0]['href']
+
+        if 'modify' in kwargs:
+            networkGroupObj = kwargs['modify']
+
+        if 'name' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader + networkGroupObj, data={'name': kwargs['name']})
+
+        if 'multiplier' in kwargs:
+            self.ixnObj.patch(self.ixnObj.httpHeader + networkGroupObj, data={'multiplier': kwargs['multiplier']})
+
+        if 'create' in kwargs:
+            self.ixnObj.logInfo('Create new Network Group network topology')
+            response = self.ixnObj.post(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology')
+            response = self.ixnObj.post(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology/'+self.topoTypeDict[topoType])
+            networkTopologyObj = response.json()['links'][0]['href']
+        else:
+            networkTopologyObj = networkGroupObj + '/networkTopology/'+self.topoTypeDict[topoType]
+
+        return networkGroupObj, networkTopologyObj
+
+
+    def configNetworkTopologyProperty(self, networkGroupObj, pseudoRouter, **kwargs):
+        """
+        Description
+            Configure Network Group Topology properties.
+            Supports all networkTopology.
+            For networkTopologyRange attributes, use the IxNetwork API browser.
+
+        Parameters
+            networkGroupObj: <str>: Example:
+                             /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}
+
+            pseudoRouter: <str> : Example: ospfv3PseudoRouter
+
+            data: The protocol properties.  Make your configuration and get from IxNetwork API Browser.
+
+        Syntax
+            PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/networkTopology/simRouter/1{id}
+        """
+        response = self.ixnObj.get(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology/simRouter/1')
+        self.ixnObj.logInfo('Config Network Group advertising routes')
+        multivalue = response.json()['routerId']
+
+        if 'routerId' in kwargs:
+            data = {'start': kwargs['routerId']['start'],
+                    'step': kwargs['routerId']['step'],
+                    'direction': kwargs['routerId']['direction']}
+        else:
+            data = {}
+
+        self.ixnObj.configMultivalue(multivalue, 'counter', data)
+
+        if 'routerLsaBit' in kwargs:
+            self.ixnObj.logInfo('Config router lsa type')
+            response = self.ixnObj.get(
+                self.ixnObj.httpHeader + networkGroupObj + '/networkTopology/simRouter/1'+ '/{0}/1'.format(pseudoRouter))
+
+            if kwargs['routerLsaBit'] == 'B':
+                multivalue = response.json()['bBit']
+                data = {'value': 'True'}
+                self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
+
+            elif kwargs['routerLsaBit'] == 'E':
+                multivalue = response.json()['eBit']
+                data = {'value': 'True'}
+                self.ixnObj.configMultivalue(multivalue, 'singleValue', data)
+
+    def prefixPoolsConnector(self, prefixPoolsObj, protocolObj):
+        """
+        Description
+           To attach prefixPoolsObj to required protocolobj stack
+
+        :param prefixPoolsObj: Prefix Pools Object which should be connected to given protocol object
+        :param protocolObj: Protocol object for which prefixpool object should be connected
+        """
+        response = self.ixnObj.patch(self.ixnObj.httpHeader + prefixPoolsObj + '/connector',
+                                     data={"connectedTo": protocolObj})
+
+    def networkGroupWithTopologyConnector(self, networkGroupObj, protocolObj):
+        """
+        Description
+           To attach networkgroupobj to required protocolobj stack
+
+        :param networkGroupObj: networkgroup object with topology which should be connected to protocol object
+        :param protocolObj:  protocol object for which networkgroup with topology object should be connected
+        """
+        response = self.ixnObj.patch(self.ixnObj.httpHeader + networkGroupObj + '/networkTopology/simRouter/1/connector',
+                                     data={"connectedTo": protocolObj})
+
+
 
     def configBgpRouteRangeProperty(self, prefixPoolsObj, protocolRouteRange, data, asPath):
         """
@@ -1409,11 +1763,22 @@ class Protocol(object):
         Syntax
             PATCH: /api/v1/sessions/{id}/ixnetwork/topology/{id}/deviceGroup/{id}/networkGroup/{id}/ipv4PrefixPools/{id}/protocolRouterRange/{id}
         """
+        '''
         response = self.ixnObj.get(self.ixnObj.httpHeader + prefixPoolsObj + '/{0}/1'.format(protocolRouteRange))
         for attribute, value in data.items():
             multivalue = response.json()[attribute]
             self.ixnObj.logInfo('Configuring PrefixPools {0} Route Property multivalue attribute: {1}'.format(protocolRouteRange, attribute))
             self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
+        '''
+        response = self.ixnObj.get(self.ixnObj.httpHeader + prefixPoolsObj + '/{0}/1'.format(protocolRouteRange))
+        for attribute, value in data.items():
+            multivalue = response.json()[attribute]
+            self.ixnObj.logInfo('Configuring PrefixPools {0} Route Property multivalue attribute: {1}'.format(protocolRouteRange, attribute))
+            if type(value) == dict:
+                if 'direction' in value:
+                    self.ixnObj.patch(self.ixnObj.httpHeader + multivalue + "/counter", data=value)
+            else:
+                self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+"/singleValue", data={'value': data[attribute]})
 
     def configMultivalue(self, multivalueUrl, multivalueType, data):
         """
@@ -5362,7 +5727,6 @@ class Protocol(object):
                 self.configMultivalue(multivalue, multivalueType, data=kwargs['ipv6Address'])
 
             # Config IPv6 port step
-            # disabled|0.0.0.1
             if 'ipv6AddressPortStep' in kwargs:
                 portStepMultivalue = self.ixnObj.httpHeader+multivalue+'/nest/1'
                 self.ixnObj.logInfo('Configure IPv6 address port step')

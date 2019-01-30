@@ -109,7 +109,7 @@ try:
     
     # If config file is in local Linux filesystem, localFile=False.
     # If config file is in Windows API server, localFile=True.  configFile format: c:\\path\\bgp.ixncfg
-    fileMgmtObj.loadConfigFile(configFile, localFile=True)
+    fileMgmtObj.loadConfigFile(configFile, localFile=False)
 
     portObj = PortMgmt(mainObj)
     portObj.assignPorts(portList, forceTakePortOwnership)

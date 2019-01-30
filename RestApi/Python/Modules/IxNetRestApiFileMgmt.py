@@ -22,22 +22,25 @@ class FileMgmt(object):
         """
         self.ixnObj = mainObject
 
-    def loadConfigFile(self, configFile, localFile=False):
+    def loadConfigFile(self, configFile):
         """
         Description
             Load a saved config file.
 
         Parameters
             configFile: (str): The full path including the saved config filename.
-            localFile: (bool): Set to True if the config file is located in the API server filesystem.
-  
-        Example
-            If the config file is located in the Windows API server and if you are executing the script
-            remotely, set localFile=True and configFile='c:\\path\\bgp.ixncfg'
-
-            If you are executing the script from Linux, then localFile=False and configFile='/path/bgp.ixncfg'
+                               If the path is in a Windows filesystem, the format is c:\\path\\bgp.ixncfg
+                               If you are executing the script from Linux, the format is /path/bgp.ixncfg
         """
-        if localFile:
+        # Verify if the config file is a letter drive: c:\\path\\
+        # If it is, get the config file from Windows path to the IxNetwork API server common path.
+        if bool(re.match('^[a-zA-Z]+:', configFile)):
+            localFile = True
+        else:
+            localFile = False
+
+        if localFile == True:
+            print('----- WINDOWS ----')
             fileName = configFile.split('\\')[-1]
             copyFileUrl = self.ixnObj.sessionUrl+'/operations/copyfile'            
             destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
@@ -45,6 +48,7 @@ class FileMgmt(object):
             self.ixnObj.waitForComplete(response, copyFileUrl+'/'+response.json()['id'], silentMode=False, timeout=30)
 
         if localFile == False:
+            print('----- Linux ----')
             if os.path.exists(configFile) is False:
                 raise IxNetRestApiException("Config file doesn't exists: %s" % configFile)
 

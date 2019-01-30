@@ -29,8 +29,9 @@ class FileMgmt(object):
 
         Parameters
             configFile: (str): The full path including the saved config filename.
-                               If the path is in a Windows filesystem, the format is c:\\path\\bgp.ixncfg
-                               If you are executing the script from Linux, the format is /path/bgp.ixncfg
+                               If the config file is in a Windows API server filesystem, the format is c:\\path\\bgp.ixncfg
+                               If you are executing the script from Linux and the config file is in local Linux filesystem,
+                               the format is /path/bgp.ixncfg
         """
         # Verify if the config file is a letter drive: c:\\path\\
         # If it is, get the config file from Windows path to the IxNetwork API server common path.
@@ -40,7 +41,6 @@ class FileMgmt(object):
             localFile = False
 
         if localFile == True:
-            print('----- WINDOWS ----')
             fileName = configFile.split('\\')[-1]
             copyFileUrl = self.ixnObj.sessionUrl+'/operations/copyfile'            
             destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
@@ -48,7 +48,6 @@ class FileMgmt(object):
             self.ixnObj.waitForComplete(response, copyFileUrl+'/'+response.json()['id'], silentMode=False, timeout=30)
 
         if localFile == False:
-            print('----- Linux ----')
             if os.path.exists(configFile) is False:
                 raise IxNetRestApiException("Config file doesn't exists: %s" % configFile)
 

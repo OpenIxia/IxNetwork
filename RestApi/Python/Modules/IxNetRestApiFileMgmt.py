@@ -22,41 +22,62 @@ class FileMgmt(object):
         """
         self.ixnObj = mainObject
 
-    def loadConfigFile(self, configFile):
+    def loadConfigFile(self, configFile, localFile=False):
         """
         Description
             Load a saved config file.
 
-        Parameter
+        Parameters
             configFile: (str): The full path including the saved config filename.
+            localFile: (bool): Set to True if the config file is located in the API server filesystem.
+  
+        Example
+            If the config file is located in the Windows API server and if you are executing the script
+            remotely, set localFile=True and configFile='c:\\path\\bgp.ixncfg'
+
+            If you are executing the script from Linux, then localFile=False and configFile='/path/bgp.ixncfg'
         """
-        if os.path.exists(configFile) is False:
-            raise IxNetRestApiException("Config file doesn't exists: %s" % configFile)
+        if localFile:
+            fileName = configFile.split('\\')[-1]
+            copyFileUrl = self.ixnObj.sessionUrl+'/operations/copyfile'            
+            destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
+            response = self.ixnObj.post(copyFileUrl,data={"arg1": configFile, "arg2": destinationPath})
+            self.ixnObj.waitForComplete(response, copyFileUrl+'/'+response.json()['id'], silentMode=False, timeout=30)
 
-        if self.ixnObj.serverOs == 'linux':
-            octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
-        else:
-            octetStreamHeader = {'content-type': 'application/octet-stream'}
+        if localFile == False:
+            if os.path.exists(configFile) is False:
+                raise IxNetRestApiException("Config file doesn't exists: %s" % configFile)
 
-        fileName = configFile.split('/')[-1]
+            if self.ixnObj.serverOs == 'linux':
+                octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
+            else:
+                octetStreamHeader = {'content-type': 'application/octet-stream'}
+
+            fileName = configFile.split('/')[-1]
+
+            # Read the config file
+            self.ixnObj.logInfo('\nReading saved config file')
+            with open(configFile, mode='rb') as file:
+                configContents = file.read()
+                configContents = io.BytesIO(configContents)
+
+                # Upload it to the server and give it any name you want for the filename
+                uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
+                self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
+                response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
+
         loadConfigUrl = self.ixnObj.sessionUrl+'/operations/loadconfig'
 
-        # 1> Read the config file
-        self.ixnObj.logInfo('\nReading saved config file')
-        with open(configFile, mode='rb') as file:
-            configContents = file.read()
-            configContents = io.BytesIO(configContents)
-
-            # 2> Upload it to the server and give it any name you want for the filename
-            uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
-            self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
-            response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
-
-        # 3> Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
+        # Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
         payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.headlessSessionId, fileName)}
 
-        # 4> Tell the server to load the config file
-        response = self.ixnObj.post(loadConfigUrl, data=payload, headers=octetStreamHeader)
+        # Tell the server to load the config file
+        if localFile == False:
+            response = self.ixnObj.post(loadConfigUrl, data=payload, headers=octetStreamHeader)
+
+        if localFile == True:
+            response = self.ixnObj.post(loadConfigUrl, data=payload)
+
         self.ixnObj.waitForComplete(response, loadConfigUrl+'/'+response.json()['id'], silentMode=False, timeout=140)
 
     def copyFileWindowsToRemoteWindows(self, windowsPathAndFileName, localPath, renameDestinationFile=None, includeTimestamp=False):

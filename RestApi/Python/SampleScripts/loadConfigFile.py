@@ -18,6 +18,9 @@
 #
 #    - Connects to the chassis and verify port availability.
 #    - Load a saved BGP config file.
+#         If the config file is in local Linux filesystem where you are running the script, set localFile=False.
+#         If the config file is in Windows API server, set localFile=True.  configFile format: c:\\path\\bgp.ixncfg
+#
 #    - Optional: Reassign Ports
 #    - Verify port states.
 #    - Example to show how to modify BGP configurations.
@@ -103,7 +106,10 @@ try:
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
         
     fileMgmtObj = FileMgmt(mainObj)
-    fileMgmtObj.loadConfigFile(configFile)
+    
+    # If config file is in local Linux filesystem, localFile=False.
+    # If config file is in Windows API server, localFile=True.  configFile format: c:\\path\\bgp.ixncfg
+    fileMgmtObj.loadConfigFile(configFile, localFile=True)
 
     portObj = PortMgmt(mainObj)
     portObj.assignPorts(portList, forceTakePortOwnership)

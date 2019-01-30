@@ -37,7 +37,7 @@ class QueueProperty(Base):
 
 	@property
 	def MinimumDataRateGuaranteed(self):
-		"""
+		"""If true, indicates that a minimum data rate is guaranteed.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class QueueProperty(Base):
 
 	@property
 	def None(self):
-		"""
+		"""If true, indicates that no property is defined for the queue.
 
 		Returns:
 			bool

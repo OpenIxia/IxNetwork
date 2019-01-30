@@ -38,7 +38,7 @@ class CustomTlv(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTlv(Base):
 
 	@property
 	def IncludeInHello(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class CustomTlv(Base):
 
 	@property
 	def IncludeInLsp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class CustomTlv(Base):
 
 	@property
 	def IncludeInNetworkRange(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class CustomTlv(Base):
 
 	@property
 	def Length(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class CustomTlv(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class CustomTlv(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -124,13 +124,13 @@ class CustomTlv(Base):
 		"""Adds a new customTlv node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			IncludeInHello (bool): 
-			IncludeInLsp (bool): 
-			IncludeInNetworkRange (bool): 
-			Length (number): 
-			Type (number): 
-			Value (str): 
+			Enabled (bool): NOT DEFINED
+			IncludeInHello (bool): NOT DEFINED
+			IncludeInLsp (bool): NOT DEFINED
+			IncludeInNetworkRange (bool): NOT DEFINED
+			Length (number): NOT DEFINED
+			Type (number): NOT DEFINED
+			Value (str): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTlv data using find and the newly added customTlv data available through an iterator or index
@@ -156,13 +156,13 @@ class CustomTlv(Base):
 		By default the find method takes no parameters and will retrieve all customTlv data from the server.
 
 		Args:
-			Enabled (bool): 
-			IncludeInHello (bool): 
-			IncludeInLsp (bool): 
-			IncludeInNetworkRange (bool): 
-			Length (number): 
-			Type (number): 
-			Value (str): 
+			Enabled (bool): NOT DEFINED
+			IncludeInHello (bool): NOT DEFINED
+			IncludeInLsp (bool): NOT DEFINED
+			IncludeInNetworkRange (bool): NOT DEFINED
+			Length (number): NOT DEFINED
+			Type (number): NOT DEFINED
+			Value (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTlv data retrieved from the server available through an iterator or index

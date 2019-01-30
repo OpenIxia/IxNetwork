@@ -37,7 +37,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def CopyTtlIn(self):
-		"""
+		"""If selected, Copy TTL In Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def CopyTtlOut(self):
-		"""
+		"""If selected, Copy TTL Out Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def DecrementMplsTtl(self):
-		"""
+		"""If selected, Decrement MPLS TTL Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def DecrementNetworkTtl(self):
-		"""
+		"""If selected, Decrement Network TTL Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""If selected, Experimenter Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def Group(self):
-		"""
+		"""If selected, Group Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def Output(self):
-		"""
+		"""If selected, Output Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def PopMpls(self):
-		"""
+		"""If selected, Pop MPLS Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def PopPbb(self):
-		"""
+		"""If selected, Pop PBB Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def PopVlan(self):
-		"""
+		"""If selected, Pop VLAN Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def PushMpls(self):
-		"""
+		"""If selected, Pop MPLS Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def PushPbb(self):
-		"""
+		"""If selected, Push PBB Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def PushVlan(self):
-		"""
+		"""If selected, Push VLAN Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def SetField(self):
-		"""
+		"""If selected, Set Field Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def SetMplsTtl(self):
-		"""
+		"""If selected, Set MPLS TTL Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def SetNetworkTtl(self):
-		"""
+		"""If selected, Set Network TTL Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class ApplyActionsMiss(Base):
 
 	@property
 	def SetQueue(self):
-		"""
+		"""If selected, Set Queue Apply Actions is supported for table miss flow entries.
 
 		Returns:
 			bool

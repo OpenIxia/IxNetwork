@@ -65,7 +65,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""
+		"""The auto instrumentation mode.
 
 		Returns:
 			str(endOfFrame|floating)
@@ -77,7 +77,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def BadBlocksNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -89,7 +89,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def EnableAutoNegotiation(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -101,7 +101,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def EnablePPM(self):
-		"""
+		"""If true, enables the portsppm.
 
 		Returns:
 			bool
@@ -113,7 +113,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def EnableRsFec(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -125,7 +125,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def EnableRsFecStats(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -137,7 +137,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -149,7 +149,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def FirecodeAdvertise(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -161,7 +161,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def FirecodeForceOff(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -173,7 +173,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def FirecodeForceOn(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -185,7 +185,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def FirecodeRequest(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -197,7 +197,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""
+		"""The 48-bit MAC address that the port listens on for a directed pause.
 
 		Returns:
 			str
@@ -209,7 +209,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def ForceDisableFEC(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -221,7 +221,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def GoodBlocksNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -233,7 +233,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def IeeeL1Defaults(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -245,7 +245,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def LaserOn(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -257,7 +257,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def LinkTraining(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -269,7 +269,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def LoopContinuously(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -281,7 +281,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def LoopCountNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -293,7 +293,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def Loopback(self):
-		"""
+		"""If enabled, the port is set to internally loopback from transmit to receive.
 
 		Returns:
 			bool
@@ -305,7 +305,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def LoopbackMode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(internalLoopback|lineLoopback|none)
@@ -317,7 +317,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def Ppm(self):
-		"""
+		"""Indicates the value that needs to be adjusted for the line transmit frequency.
 
 		Returns:
 			number
@@ -329,7 +329,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def RsFecAdvertise(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -341,7 +341,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def RsFecForceOn(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -353,7 +353,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def RsFecRequest(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -365,7 +365,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def SendSetsMode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(alternate|typeAOnly|typeBOnly)
@@ -377,7 +377,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def Speed(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(speed100g|speed10g|speed25g|speed40g|speed50g)
@@ -389,7 +389,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def StartErrorInsertion(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -401,7 +401,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def TxIgnoreRxLinkFaults(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -413,7 +413,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def TypeAOrderedSets(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(localFault|remoteFault)
@@ -425,7 +425,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def TypeBOrderedSets(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(localFault|remoteFault)
@@ -437,7 +437,7 @@ class NovusHundredGigLan(Base):
 
 	@property
 	def UseANResults(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool

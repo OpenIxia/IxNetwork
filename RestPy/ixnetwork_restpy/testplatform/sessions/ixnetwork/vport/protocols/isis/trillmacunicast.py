@@ -37,7 +37,7 @@ class TrillMacUnicast(Base):
 
 	@property
 	def Age(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class TrillMacUnicast(Base):
 
 	@property
 	def HostName(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class TrillMacUnicast(Base):
 
 	@property
 	def LspId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class TrillMacUnicast(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class TrillMacUnicast(Base):
 
 	@property
 	def UnicastMacAddress(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class TrillMacUnicast(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -96,12 +96,12 @@ class TrillMacUnicast(Base):
 		By default the find method takes no parameters and will retrieve all trillMacUnicast data from the server.
 
 		Args:
-			Age (number): 
-			HostName (str): 
-			LspId (str): 
-			SequenceNumber (number): 
-			UnicastMacAddress (str): 
-			VlanId (number): 
+			Age (number): NOT DEFINED
+			HostName (str): NOT DEFINED
+			LspId (str): NOT DEFINED
+			SequenceNumber (number): NOT DEFINED
+			UnicastMacAddress (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching trillMacUnicast data retrieved from the server available through an iterator or index

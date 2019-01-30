@@ -37,7 +37,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def AllRmepDead(self):
-		"""
+		"""(read only) If true, indicates this MEP is receiving none of the remote MEPs' CCMs.
 
 		Returns:
 			bool
@@ -46,7 +46,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""
+		"""(read only) The stacked VLAN identifier.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def CciInterval(self):
-		"""
+		"""(read only) The Continuity Check interval.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ErrCcmDefect(self):
-		"""
+		"""(read only) If true, a CCM defect error has been detected.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ErrCcmDefectCount(self):
-		"""
+		"""The total number of CCM defect error that has been detected.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def IfaceTlvDefectCount(self):
-		"""
+		"""The total number of iface Tlv defect error that has been detected.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The MD level for the CCM message.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def MdName(self):
-		"""
+		"""(read only) The MD name associated with the CCM message.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def MdNameFormat(self):
-		"""
+		"""(read only) The MD Name Format of the CCM message.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def MepId(self):
-		"""
+		"""(read only) The MEP identifier of the CCM message.
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def MepMacAddress(self):
-		"""
+		"""(read only) The MEP MAC address of the CCM message.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def OutOfSequenceCcmCount(self):
-		"""
+		"""(read only) The number of Out of Sequence CCM messages received.
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def PortTlvDefectCount(self):
-		"""
+		"""The total number of Port Tlv defect error that has been detected.
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def RdiRxCount(self):
-		"""
+		"""(read only) The rdi rx count.
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def RdiRxState(self):
-		"""
+		"""(read only) The rdi rx state.
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ReceivedAis(self):
-		"""
+		"""(read only) If true, AIS messages have been detected.
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ReceivedIfaceTlvDefect(self):
-		"""
+		"""(read only) If true, interface TLV defect messages have been detected.
 
 		Returns:
 			bool
@@ -190,7 +190,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ReceivedPortTlvDefect(self):
-		"""
+		"""(read only) If true, port TLV defect messages have been detected.
 
 		Returns:
 			bool
@@ -199,7 +199,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ReceivedRdi(self):
-		"""
+		"""(read only) If true, RDI messages have been detected.
 
 		Returns:
 			bool
@@ -208,7 +208,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def RemoteMepDefectCount(self):
-		"""
+		"""The total number of remote Mep defect error that has been detected.
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def RmepCcmDefect(self):
-		"""
+		"""(read only) If true, remote MEP CCM defect messages have been detected.
 
 		Returns:
 			bool
@@ -226,7 +226,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""
+		"""(read only) The single VLAN associated with the CCM message.
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ShortMaName(self):
-		"""
+		"""(read only) The Short MA Name associated with the CCM message.
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def ShortMaNameFormat(self):
-		"""
+		"""(read only) The Short MA Name format associated with the CCM message.
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class CcmLearnedInfo(Base):
 
 	@property
 	def SomeRmepDefect(self):
-		"""
+		"""(read only) Indicates the aggregate state of the Remote MEP State Machines. If true, at least one of the Remote MEP State Machines is not receiving valid CCMs from its remote MEPs. If false, all Remote MEP State Machines are receiving valid CCMs.
 
 		Returns:
 			bool
@@ -267,31 +267,31 @@ class CcmLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all ccmLearnedInfo data from the server.
 
 		Args:
-			AllRmepDead (bool): 
-			CVlan (str): 
-			CciInterval (str): 
-			ErrCcmDefect (bool): 
-			ErrCcmDefectCount (number): 
-			IfaceTlvDefectCount (number): 
-			MdLevel (number): 
-			MdName (str): 
-			MdNameFormat (number): 
-			MepId (number): 
-			MepMacAddress (str): 
-			OutOfSequenceCcmCount (number): 
-			PortTlvDefectCount (number): 
-			RdiRxCount (number): 
-			RdiRxState (str): 
-			ReceivedAis (bool): 
-			ReceivedIfaceTlvDefect (bool): 
-			ReceivedPortTlvDefect (bool): 
-			ReceivedRdi (bool): 
-			RemoteMepDefectCount (number): 
-			RmepCcmDefect (bool): 
-			SVlan (str): 
-			ShortMaName (str): 
-			ShortMaNameFormat (number): 
-			SomeRmepDefect (bool): 
+			AllRmepDead (bool): (read only) If true, indicates this MEP is receiving none of the remote MEPs' CCMs.
+			CVlan (str): (read only) The stacked VLAN identifier.
+			CciInterval (str): (read only) The Continuity Check interval.
+			ErrCcmDefect (bool): (read only) If true, a CCM defect error has been detected.
+			ErrCcmDefectCount (number): The total number of CCM defect error that has been detected.
+			IfaceTlvDefectCount (number): The total number of iface Tlv defect error that has been detected.
+			MdLevel (number): (read only) The MD level for the CCM message.
+			MdName (str): (read only) The MD name associated with the CCM message.
+			MdNameFormat (number): (read only) The MD Name Format of the CCM message.
+			MepId (number): (read only) The MEP identifier of the CCM message.
+			MepMacAddress (str): (read only) The MEP MAC address of the CCM message.
+			OutOfSequenceCcmCount (number): (read only) The number of Out of Sequence CCM messages received.
+			PortTlvDefectCount (number): The total number of Port Tlv defect error that has been detected.
+			RdiRxCount (number): (read only) The rdi rx count.
+			RdiRxState (str): (read only) The rdi rx state.
+			ReceivedAis (bool): (read only) If true, AIS messages have been detected.
+			ReceivedIfaceTlvDefect (bool): (read only) If true, interface TLV defect messages have been detected.
+			ReceivedPortTlvDefect (bool): (read only) If true, port TLV defect messages have been detected.
+			ReceivedRdi (bool): (read only) If true, RDI messages have been detected.
+			RemoteMepDefectCount (number): The total number of remote Mep defect error that has been detected.
+			RmepCcmDefect (bool): (read only) If true, remote MEP CCM defect messages have been detected.
+			SVlan (str): (read only) The single VLAN associated with the CCM message.
+			ShortMaName (str): (read only) The Short MA Name associated with the CCM message.
+			ShortMaNameFormat (number): (read only) The Short MA Name format associated with the CCM message.
+			SomeRmepDefect (bool): (read only) Indicates the aggregate state of the Remote MEP State Machines. If true, at least one of the Remote MEP State Machines is not receiving valid CCMs from its remote MEPs. If false, all Remote MEP State Machines are receiving valid CCMs.
 
 		Returns:
 			self: This instance with matching ccmLearnedInfo data retrieved from the server available through an iterator or index

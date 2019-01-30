@@ -37,7 +37,7 @@ class Checksums(Base):
 
 	@property
 	def AlwaysCorrectWhenModifying(self):
-		"""
+		"""If true, and one or more field modifiers are enabled on this profile, then always correct the L2 FCS, IPv4 header checksum, and checksums for protocols over IPv4/IPv6.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Checksums(Base):
 
 	@property
 	def CorrectTxChecksumOverIp(self):
-		"""
+		"""If true, correct the checksum for the following protocols over IPv4/IPv6: TCP, UDP, ICMP, IGMP, ICMPv6, MLD, PIM, OSPF, RSVP.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Checksums(Base):
 
 	@property
 	def CorrectTxIpv4Checksum(self):
-		"""
+		"""If true, correct the IPv4 header checksum in outgoing IPv4 packets.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Checksums(Base):
 
 	@property
 	def CorrectTxL2FcsErrors(self):
-		"""
+		"""If true, correct the L2 frame check sequence in outgoing packets.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Checksums(Base):
 
 	@property
 	def DropRxL2FcsErrors(self):
-		"""
+		"""If true, drop incoming packets with L2 frame check sequence errors.
 
 		Returns:
 			bool

@@ -37,7 +37,7 @@ class Ipv4(Base):
 
 	@property
 	def AvailableWidths(self):
-		"""
+		"""Species all the possible widths available for a UDF in particular Type.
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class Ipv4(Base):
 
 	@property
 	def BitmaskCount(self):
-		"""
+		"""Specifies the number of bits to be masked to any integer value between 2 to 32.
 
 		Returns:
 			number
@@ -58,7 +58,7 @@ class Ipv4(Base):
 
 	@property
 	def InnerLoopIncrementBy(self):
-		"""
+		"""Specifies the Step Value by which the Inner Loop will be incremented.
 
 		Returns:
 			number
@@ -70,7 +70,7 @@ class Ipv4(Base):
 
 	@property
 	def InnerLoopLoopCount(self):
-		"""
+		"""Specifies the no. of times the inner loop will occur.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class Ipv4(Base):
 
 	@property
 	def OuterLoopLoopCount(self):
-		"""
+		"""Specifies the no. of times the outer loop will occur.
 
 		Returns:
 			number
@@ -94,7 +94,7 @@ class Ipv4(Base):
 
 	@property
 	def SkipValues(self):
-		"""
+		"""If true, Skip Values option is enabled.
 
 		Returns:
 			bool
@@ -106,7 +106,7 @@ class Ipv4(Base):
 
 	@property
 	def StartValue(self):
-		"""
+		"""Specifies the start value of the UDF.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class Ipv4(Base):
 
 	@property
 	def Width(self):
-		"""
+		"""Specifies the width of the UDF.
 
 		Returns:
 			str(32)
@@ -135,14 +135,14 @@ class Ipv4(Base):
 		By default the find method takes no parameters and will retrieve all ipv4 data from the server.
 
 		Args:
-			AvailableWidths (list(str)): 
-			BitmaskCount (number): 
-			InnerLoopIncrementBy (number): 
-			InnerLoopLoopCount (number): 
-			OuterLoopLoopCount (number): 
-			SkipValues (bool): 
-			StartValue (number): 
-			Width (str(32)): 
+			AvailableWidths (list(str)): Species all the possible widths available for a UDF in particular Type.
+			BitmaskCount (number): Specifies the number of bits to be masked to any integer value between 2 to 32.
+			InnerLoopIncrementBy (number): Specifies the Step Value by which the Inner Loop will be incremented.
+			InnerLoopLoopCount (number): Specifies the no. of times the inner loop will occur.
+			OuterLoopLoopCount (number): Specifies the no. of times the outer loop will occur.
+			SkipValues (bool): If true, Skip Values option is enabled.
+			StartValue (number): Specifies the start value of the UDF.
+			Width (str(32)): Specifies the width of the UDF.
 
 		Returns:
 			self: This instance with matching ipv4 data retrieved from the server available through an iterator or index

@@ -38,7 +38,7 @@ class Ipv6(Base):
 
 	@property
 	def Gateway(self):
-		"""
+		"""The IPv6 address of the Gateway to the network,typically an interface on the DUT.
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class Ipv6(Base):
 
 	@property
 	def Ip(self):
-		"""
+		"""The 128-bit IPv6 address assigned to this unconnected interface.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class Ipv6(Base):
 
 	@property
 	def PrefixLength(self):
-		"""
+		"""A learned/allocated IPv4 address prefix length (mask) for this interface.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class Ipv6(Base):
 
 	@property
 	def TargetLinkLayerAddressOption(self):
-		"""
+		"""Tentative Source Link-Layer Address Options for IPv6 Neighbour Discovery. Upon reception of a Tentative Source Link-Layer Address Option in a Neighbour Solicitation for which the receiver has the Target Address configured, a node checks to see if there is a neighbour cache entry with conflicting link-layer address.
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class Ipv6(Base):
 
 	@property
 	def TrafficClass(self):
-		"""
+		"""This value ,1 byte long, configures the Traffic Class in the IPv6 header for our IPv6 Neighbour Discovery messages. The default value is 0x00 but the user can modify it to any value.
 
 		Returns:
 			str
@@ -100,11 +100,11 @@ class Ipv6(Base):
 		"""Adds a new ipv6 node on the server and retrieves it in this instance.
 
 		Args:
-			Gateway (str): 
-			Ip (str): 
-			PrefixLength (number): 
-			TargetLinkLayerAddressOption (bool): 
-			TrafficClass (str): 
+			Gateway (str): The IPv6 address of the Gateway to the network,typically an interface on the DUT.
+			Ip (str): The 128-bit IPv6 address assigned to this unconnected interface.
+			PrefixLength (number): A learned/allocated IPv4 address prefix length (mask) for this interface.
+			TargetLinkLayerAddressOption (bool): Tentative Source Link-Layer Address Options for IPv6 Neighbour Discovery. Upon reception of a Tentative Source Link-Layer Address Option in a Neighbour Solicitation for which the receiver has the Target Address configured, a node checks to see if there is a neighbour cache entry with conflicting link-layer address.
+			TrafficClass (str): This value ,1 byte long, configures the Traffic Class in the IPv6 header for our IPv6 Neighbour Discovery messages. The default value is 0x00 but the user can modify it to any value.
 
 		Returns:
 			self: This instance with all currently retrieved ipv6 data using find and the newly added ipv6 data available through an iterator or index
@@ -130,11 +130,11 @@ class Ipv6(Base):
 		By default the find method takes no parameters and will retrieve all ipv6 data from the server.
 
 		Args:
-			Gateway (str): 
-			Ip (str): 
-			PrefixLength (number): 
-			TargetLinkLayerAddressOption (bool): 
-			TrafficClass (str): 
+			Gateway (str): The IPv6 address of the Gateway to the network,typically an interface on the DUT.
+			Ip (str): The 128-bit IPv6 address assigned to this unconnected interface.
+			PrefixLength (number): A learned/allocated IPv4 address prefix length (mask) for this interface.
+			TargetLinkLayerAddressOption (bool): Tentative Source Link-Layer Address Options for IPv6 Neighbour Discovery. Upon reception of a Tentative Source Link-Layer Address Option in a Neighbour Solicitation for which the receiver has the Target Address configured, a node checks to see if there is a neighbour cache entry with conflicting link-layer address.
+			TrafficClass (str): This value ,1 byte long, configures the Traffic Class in the IPv6 header for our IPv6 Neighbour Discovery messages. The default value is 0x00 but the user can modify it to any value.
 
 		Returns:
 			self: This instance with matching ipv6 data retrieved from the server available through an iterator or index

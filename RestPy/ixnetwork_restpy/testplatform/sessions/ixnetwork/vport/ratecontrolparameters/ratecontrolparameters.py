@@ -37,7 +37,7 @@ class RateControlParameters(Base):
 
 	@property
 	def ArpRefreshInterval(self):
-		"""
+		"""Indicates the Arp Refresh Interval per Port. Set this to override the defaul value of 60 seconds
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class RateControlParameters(Base):
 
 	@property
 	def MaxRequestsPerBurst(self):
-		"""
+		"""Indicates the flow pattern of the ARP/NS request for each port. Enable this, to send the ARP/NS requests in bursts of size defined by 'Max requests per Bursts'.
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class RateControlParameters(Base):
 
 	@property
 	def MaxRequestsPerSec(self):
-		"""
+		"""The maximum requests per second.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class RateControlParameters(Base):
 
 	@property
 	def MinRetryInterval(self):
-		"""
+		"""Indicates the minimum wait time for re-sending the ARP/NS requests for a particular interface.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class RateControlParameters(Base):
 
 	@property
 	def RetryCount(self):
-		"""
+		"""Indicates the number of times the ARP/NS requests will be resent for a particular interface, if there is an ARP issue.
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class RateControlParameters(Base):
 
 	@property
 	def SendInBursts(self):
-		"""
+		"""Indicates the flow pattern of the ARP/NS request for each port. Enable this, to send the ARP/NS requests in bursts of size defined by 'Max requests per Bursts'.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class RateControlParameters(Base):
 
 	@property
 	def SendRequestsAsFastAsPossible(self):
-		"""
+		"""If enabled, allows to send ARP/NS requests immediately without any rate control.
 
 		Returns:
 			bool

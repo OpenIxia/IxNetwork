@@ -37,7 +37,7 @@ class AdVpls(Base):
 
 	@property
 	def NeighborAddress(self):
-		"""
+		"""(Read Only) The descriptive identifier for the BGP neighbor.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class AdVpls(Base):
 
 	@property
 	def NextHopAddress(self):
-		"""
+		"""(Read Only) A 4-octet IP address which indicates the next hop.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class AdVpls(Base):
 
 	@property
 	def RemotePeAddress(self):
-		"""
+		"""(Read Only) The descriptive identifier for the remote PE.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class AdVpls(Base):
 
 	@property
 	def RemoteVplsId(self):
-		"""
+		"""(Read Only) The remote VPLS ID indicated by an IP or AS.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class AdVpls(Base):
 
 	@property
 	def RemoteVsiId(self):
-		"""
+		"""(Read Only) The remote VSI Id indicated by 4 bytes unsigned number.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class AdVpls(Base):
 
 	@property
 	def RouteDistinguisher(self):
-		"""
+		"""(Read Only) The route distinguisher indicated by the IP or AS number.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class AdVpls(Base):
 
 	@property
 	def RouteTarget(self):
-		"""
+		"""(Read Only) The route target indicated by the IP or AS number.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class AdVpls(Base):
 
 	@property
 	def SupportedLocally(self):
-		"""
+		"""(Read Only) The boolean value indicating whether it is supported locally.
 
 		Returns:
 			bool
@@ -114,14 +114,14 @@ class AdVpls(Base):
 		By default the find method takes no parameters and will retrieve all adVpls data from the server.
 
 		Args:
-			NeighborAddress (str): 
-			NextHopAddress (str): 
-			RemotePeAddress (str): 
-			RemoteVplsId (str): 
-			RemoteVsiId (number): 
-			RouteDistinguisher (str): 
-			RouteTarget (str): 
-			SupportedLocally (bool): 
+			NeighborAddress (str): (Read Only) The descriptive identifier for the BGP neighbor.
+			NextHopAddress (str): (Read Only) A 4-octet IP address which indicates the next hop.
+			RemotePeAddress (str): (Read Only) The descriptive identifier for the remote PE.
+			RemoteVplsId (str): (Read Only) The remote VPLS ID indicated by an IP or AS.
+			RemoteVsiId (number): (Read Only) The remote VSI Id indicated by 4 bytes unsigned number.
+			RouteDistinguisher (str): (Read Only) The route distinguisher indicated by the IP or AS number.
+			RouteTarget (str): (Read Only) The route target indicated by the IP or AS number.
+			SupportedLocally (bool): (Read Only) The boolean value indicating whether it is supported locally.
 
 		Returns:
 			self: This instance with matching adVpls data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class FrameRate(Base):
 
 	@property
 	def BitRateUnitsType(self):
-		"""
+		"""The rate units for transmitting packet.
 
 		Returns:
 			str(bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec)
@@ -49,7 +49,7 @@ class FrameRate(Base):
 
 	@property
 	def EnforceMinimumInterPacketGap(self):
-		"""
+		"""Sets the minimum inter-packet gap allowed for Ethernet ports only. The default is 12 bytes.
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class FrameRate(Base):
 
 	@property
 	def InterPacketGapUnitsType(self):
-		"""
+		"""The inter-packet gap expressed in units.
 
 		Returns:
 			str(bytes|nanoseconds)
@@ -73,7 +73,7 @@ class FrameRate(Base):
 
 	@property
 	def Rate(self):
-		"""
+		"""The rate at which packet is transmitted.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class FrameRate(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""Sets the frame rate types.
 
 		Returns:
 			str(bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate)

@@ -94,7 +94,7 @@ class LispInstance(Base):
 
 	@property
 	def Act(self):
-		"""
+		"""It gives details about the action
 
 		Returns:
 			str(noAction|nativelyForward|sendMapRequest|drop)
@@ -106,7 +106,7 @@ class LispInstance(Base):
 
 	@property
 	def AllowAllEids(self):
-		"""
+		"""It allows all the eids
 
 		Returns:
 			bool
@@ -118,7 +118,7 @@ class LispInstance(Base):
 
 	@property
 	def AuthenticationAlgorithm(self):
-		"""
+		"""It gives details about the authentication algorithm
 
 		Returns:
 			str(sha-1-96|sha-128-256)
@@ -130,7 +130,7 @@ class LispInstance(Base):
 
 	@property
 	def AuthoritativeBit(self):
-		"""
+		"""If true, it enables the authoritative bit
 
 		Returns:
 			bool
@@ -142,7 +142,7 @@ class LispInstance(Base):
 
 	@property
 	def AutoComposeNegativeMapReply(self):
-		"""
+		"""If true, it enables the auto compose negative map reply
 
 		Returns:
 			bool
@@ -154,7 +154,7 @@ class LispInstance(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, it enables the protocol
 
 		Returns:
 			bool
@@ -166,7 +166,7 @@ class LispInstance(Base):
 
 	@property
 	def EtrRegistrationTimeout(self):
-		"""
+		"""It gives the etr registration timeout
 
 		Returns:
 			number
@@ -178,7 +178,7 @@ class LispInstance(Base):
 
 	@property
 	def InstanceId(self):
-		"""
+		"""It gives the instance id
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class LispInstance(Base):
 
 	@property
 	def InternalMsmrSelectionMode(self):
-		"""
+		"""it gives the details about the internal Msmr selection mode
 
 		Returns:
 			str(allMsmrInSameIxiaPort|custom|none)
@@ -202,7 +202,7 @@ class LispInstance(Base):
 
 	@property
 	def Key(self):
-		"""
+		"""It gives details about the key
 
 		Returns:
 			str
@@ -214,7 +214,7 @@ class LispInstance(Base):
 
 	@property
 	def MapVersionNumber(self):
-		"""
+		"""It gives details about the map version number
 
 		Returns:
 			number
@@ -226,7 +226,7 @@ class LispInstance(Base):
 
 	@property
 	def Reserved(self):
-		"""
+		"""It gives details about the reserved protocols
 
 		Returns:
 			number
@@ -238,7 +238,7 @@ class LispInstance(Base):
 
 	@property
 	def Rsvd(self):
-		"""
+		"""It gives details about the rsvd
 
 		Returns:
 			number
@@ -250,7 +250,7 @@ class LispInstance(Base):
 
 	@property
 	def Ttl(self):
-		"""
+		"""It gives details about the ttl
 
 		Returns:
 			number
@@ -264,20 +264,20 @@ class LispInstance(Base):
 		"""Adds a new lispInstance node on the server and retrieves it in this instance.
 
 		Args:
-			Act (str(noAction|nativelyForward|sendMapRequest|drop)): 
-			AllowAllEids (bool): 
-			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): 
-			AuthoritativeBit (bool): 
-			AutoComposeNegativeMapReply (bool): 
-			Enabled (bool): 
-			EtrRegistrationTimeout (number): 
-			InstanceId (str): 
-			InternalMsmrSelectionMode (str(allMsmrInSameIxiaPort|custom|none)): 
-			Key (str): 
-			MapVersionNumber (number): 
-			Reserved (number): 
-			Rsvd (number): 
-			Ttl (number): 
+			Act (str(noAction|nativelyForward|sendMapRequest|drop)): It gives details about the action
+			AllowAllEids (bool): It allows all the eids
+			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): It gives details about the authentication algorithm
+			AuthoritativeBit (bool): If true, it enables the authoritative bit
+			AutoComposeNegativeMapReply (bool): If true, it enables the auto compose negative map reply
+			Enabled (bool): If true, it enables the protocol
+			EtrRegistrationTimeout (number): It gives the etr registration timeout
+			InstanceId (str): It gives the instance id
+			InternalMsmrSelectionMode (str(allMsmrInSameIxiaPort|custom|none)): it gives the details about the internal Msmr selection mode
+			Key (str): It gives details about the key
+			MapVersionNumber (number): It gives details about the map version number
+			Reserved (number): It gives details about the reserved protocols
+			Rsvd (number): It gives details about the rsvd
+			Ttl (number): It gives details about the ttl
 
 		Returns:
 			self: This instance with all currently retrieved lispInstance data using find and the newly added lispInstance data available through an iterator or index
@@ -303,20 +303,20 @@ class LispInstance(Base):
 		By default the find method takes no parameters and will retrieve all lispInstance data from the server.
 
 		Args:
-			Act (str(noAction|nativelyForward|sendMapRequest|drop)): 
-			AllowAllEids (bool): 
-			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): 
-			AuthoritativeBit (bool): 
-			AutoComposeNegativeMapReply (bool): 
-			Enabled (bool): 
-			EtrRegistrationTimeout (number): 
-			InstanceId (str): 
-			InternalMsmrSelectionMode (str(allMsmrInSameIxiaPort|custom|none)): 
-			Key (str): 
-			MapVersionNumber (number): 
-			Reserved (number): 
-			Rsvd (number): 
-			Ttl (number): 
+			Act (str(noAction|nativelyForward|sendMapRequest|drop)): It gives details about the action
+			AllowAllEids (bool): It allows all the eids
+			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): It gives details about the authentication algorithm
+			AuthoritativeBit (bool): If true, it enables the authoritative bit
+			AutoComposeNegativeMapReply (bool): If true, it enables the auto compose negative map reply
+			Enabled (bool): If true, it enables the protocol
+			EtrRegistrationTimeout (number): It gives the etr registration timeout
+			InstanceId (str): It gives the instance id
+			InternalMsmrSelectionMode (str(allMsmrInSameIxiaPort|custom|none)): it gives the details about the internal Msmr selection mode
+			Key (str): It gives details about the key
+			MapVersionNumber (number): It gives details about the map version number
+			Reserved (number): It gives details about the reserved protocols
+			Rsvd (number): It gives details about the rsvd
+			Ttl (number): It gives details about the ttl
 
 		Returns:
 			self: This instance with matching lispInstance data retrieved from the server available through an iterator or index

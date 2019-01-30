@@ -37,7 +37,7 @@ class AvailableAdvancedFilterOptions(Base):
 
 	@property
 	def Operators(self):
-		"""
+		"""Returns the operators list for a filter option.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class AvailableAdvancedFilterOptions(Base):
 
 	@property
 	def Stat(self):
-		"""
+		"""Returns the statistic name for a filter option.
 
 		Returns:
 			str
@@ -60,8 +60,8 @@ class AvailableAdvancedFilterOptions(Base):
 		By default the find method takes no parameters and will retrieve all availableAdvancedFilterOptions data from the server.
 
 		Args:
-			Operators (str): 
-			Stat (str): 
+			Operators (str): Returns the operators list for a filter option.
+			Stat (str): Returns the statistic name for a filter option.
 
 		Returns:
 			self: This instance with matching availableAdvancedFilterOptions data retrieved from the server available through an iterator or index

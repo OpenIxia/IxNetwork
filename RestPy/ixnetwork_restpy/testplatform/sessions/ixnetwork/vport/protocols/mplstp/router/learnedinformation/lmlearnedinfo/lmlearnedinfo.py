@@ -37,7 +37,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def IncomingLabelOuterInner(self):
-		"""
+		"""This signifies the incoming label information.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def LastLmResponseDutRx(self):
-		"""
+		"""This signifies the value of the DUT Rx counter in the last LM Response received.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def LastLmResponseDutTx(self):
-		"""
+		"""This signifies the value of the DUT Tx counter in the last LM Response received.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def LastLmResponseMyTx(self):
-		"""
+		"""This signifies the value of the My Tx counter in the last LM Response received.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def LmQueriesSent(self):
-		"""
+		"""This signifies the number of LM queries sent.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def LmRemoteUsing64Bit(self):
-		"""
+		"""This specifies whether the remote end is using 64bit counter or not.
 
 		Returns:
 			bool
@@ -91,7 +91,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def LmResponsesReceived(self):
-		"""
+		"""This signifies the number of LM responses received.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelOuterInner(self):
-		"""
+		"""This signifies the Outgoing Label information.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class LmLearnedInfo(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""This signifies the Selection of this option to filter according to the following types LSP and PW.
 
 		Returns:
 			str
@@ -123,15 +123,15 @@ class LmLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all lmLearnedInfo data from the server.
 
 		Args:
-			IncomingLabelOuterInner (str): 
-			LastLmResponseDutRx (number): 
-			LastLmResponseDutTx (number): 
-			LastLmResponseMyTx (number): 
-			LmQueriesSent (number): 
-			LmRemoteUsing64Bit (bool): 
-			LmResponsesReceived (number): 
-			OutgoingLabelOuterInner (str): 
-			Type (str): 
+			IncomingLabelOuterInner (str): This signifies the incoming label information.
+			LastLmResponseDutRx (number): This signifies the value of the DUT Rx counter in the last LM Response received.
+			LastLmResponseDutTx (number): This signifies the value of the DUT Tx counter in the last LM Response received.
+			LastLmResponseMyTx (number): This signifies the value of the My Tx counter in the last LM Response received.
+			LmQueriesSent (number): This signifies the number of LM queries sent.
+			LmRemoteUsing64Bit (bool): This specifies whether the remote end is using 64bit counter or not.
+			LmResponsesReceived (number): This signifies the number of LM responses received.
+			OutgoingLabelOuterInner (str): This signifies the Outgoing Label information.
+			Type (str): This signifies the Selection of this option to filter according to the following types LSP and PW.
 
 		Returns:
 			self: This instance with matching lmLearnedInfo data retrieved from the server available through an iterator or index

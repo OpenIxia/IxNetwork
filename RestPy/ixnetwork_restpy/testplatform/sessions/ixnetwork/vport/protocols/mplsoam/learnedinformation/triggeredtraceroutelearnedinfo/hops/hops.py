@@ -37,7 +37,7 @@ class Hops(Base):
 
 	@property
 	def ReturnCode(self):
-		"""
+		"""This signifies the return code to be specified in the trace route hop.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class Hops(Base):
 
 	@property
 	def ReturnSubCode(self):
-		"""
+		"""This signifies the return sub-code to be specified in the trace route hop.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class Hops(Base):
 
 	@property
 	def SrcIp(self):
-		"""
+		"""This signifies the source IP address.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Hops(Base):
 
 	@property
 	def Ttl(self):
-		"""
+		"""This signifies the MPLS time to live value.
 
 		Returns:
 			number
@@ -78,10 +78,10 @@ class Hops(Base):
 		By default the find method takes no parameters and will retrieve all hops data from the server.
 
 		Args:
-			ReturnCode (str): 
-			ReturnSubCode (number): 
-			SrcIp (str): 
-			Ttl (number): 
+			ReturnCode (str): This signifies the return code to be specified in the trace route hop.
+			ReturnSubCode (number): This signifies the return sub-code to be specified in the trace route hop.
+			SrcIp (str): This signifies the source IP address.
+			Ttl (number): This signifies the MPLS time to live value.
 
 		Returns:
 			self: This instance with matching hops data retrieved from the server available through an iterator or index

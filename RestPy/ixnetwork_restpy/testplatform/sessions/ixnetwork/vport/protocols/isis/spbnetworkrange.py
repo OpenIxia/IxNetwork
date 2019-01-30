@@ -66,7 +66,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def EnableAdvertiseNetworkRange(self):
-		"""
+		"""If true, this SPB ISIS Network Range is advertised.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def EnableHostName(self):
-		"""
+		"""If true, the host name of the router is activated.
 
 		Returns:
 			bool
@@ -90,7 +90,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def EntryColumn(self):
-		"""
+		"""The value is used in combination to specify which virtual router in the Network Range is connected to the current ISIS L2/L3 Router.
 
 		Returns:
 			number
@@ -102,7 +102,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def EntryRow(self):
-		"""
+		"""The value is used in combination to specify which virtual router in the Network Range is connected to the current ISIS L2/L3 Router.
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def HostNamePrefix(self):
-		"""
+		"""The host name prefix information.
 
 		Returns:
 			str
@@ -126,7 +126,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def InterfaceMetric(self):
-		"""
+		"""The metric cost associated with this emulated SPB ISIS router.
 
 		Returns:
 			number
@@ -138,7 +138,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def NoOfColumns(self):
-		"""
+		"""The value is used in combination to create a matrix (grid) for an emulated network range of the following size: The # Rows multiplied the # Cols = Number of routers in this Network Range. (For example, 3 Rows x 3 Columns = 9 Routers).
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def NoOfRows(self):
-		"""
+		"""The value is used in combination to create a matrix (grid) for an emulated network range of the following size: The # Rows multiplied the # Cols = Number of routers in this Network Range. (For example, 3 Rows x 3 Columns = 9 Routers).
 
 		Returns:
 			number
@@ -162,7 +162,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def StartSystemId(self):
-		"""
+		"""The System ID assigned to the starting SPB ISIS router in this network range. The default is 00 00 00 00 00 00.
 
 		Returns:
 			str
@@ -174,7 +174,7 @@ class SpbNetworkRange(Base):
 
 	@property
 	def SystemIdIncrementBy(self):
-		"""
+		"""This is used when more than one router is to be emulated. The increment value is added to the previous System ID for each additional emulated router in this network range.
 
 		Returns:
 			str
@@ -188,16 +188,16 @@ class SpbNetworkRange(Base):
 		"""Adds a new spbNetworkRange node on the server and retrieves it in this instance.
 
 		Args:
-			EnableAdvertiseNetworkRange (bool): 
-			EnableHostName (bool): 
-			EntryColumn (number): 
-			EntryRow (number): 
-			HostNamePrefix (str): 
-			InterfaceMetric (number): 
-			NoOfColumns (number): 
-			NoOfRows (number): 
-			StartSystemId (str): 
-			SystemIdIncrementBy (str): 
+			EnableAdvertiseNetworkRange (bool): If true, this SPB ISIS Network Range is advertised.
+			EnableHostName (bool): If true, the host name of the router is activated.
+			EntryColumn (number): The value is used in combination to specify which virtual router in the Network Range is connected to the current ISIS L2/L3 Router.
+			EntryRow (number): The value is used in combination to specify which virtual router in the Network Range is connected to the current ISIS L2/L3 Router.
+			HostNamePrefix (str): The host name prefix information.
+			InterfaceMetric (number): The metric cost associated with this emulated SPB ISIS router.
+			NoOfColumns (number): The value is used in combination to create a matrix (grid) for an emulated network range of the following size: The # Rows multiplied the # Cols = Number of routers in this Network Range. (For example, 3 Rows x 3 Columns = 9 Routers).
+			NoOfRows (number): The value is used in combination to create a matrix (grid) for an emulated network range of the following size: The # Rows multiplied the # Cols = Number of routers in this Network Range. (For example, 3 Rows x 3 Columns = 9 Routers).
+			StartSystemId (str): The System ID assigned to the starting SPB ISIS router in this network range. The default is 00 00 00 00 00 00.
+			SystemIdIncrementBy (str): This is used when more than one router is to be emulated. The increment value is added to the previous System ID for each additional emulated router in this network range.
 
 		Returns:
 			self: This instance with all currently retrieved spbNetworkRange data using find and the newly added spbNetworkRange data available through an iterator or index
@@ -223,16 +223,16 @@ class SpbNetworkRange(Base):
 		By default the find method takes no parameters and will retrieve all spbNetworkRange data from the server.
 
 		Args:
-			EnableAdvertiseNetworkRange (bool): 
-			EnableHostName (bool): 
-			EntryColumn (number): 
-			EntryRow (number): 
-			HostNamePrefix (str): 
-			InterfaceMetric (number): 
-			NoOfColumns (number): 
-			NoOfRows (number): 
-			StartSystemId (str): 
-			SystemIdIncrementBy (str): 
+			EnableAdvertiseNetworkRange (bool): If true, this SPB ISIS Network Range is advertised.
+			EnableHostName (bool): If true, the host name of the router is activated.
+			EntryColumn (number): The value is used in combination to specify which virtual router in the Network Range is connected to the current ISIS L2/L3 Router.
+			EntryRow (number): The value is used in combination to specify which virtual router in the Network Range is connected to the current ISIS L2/L3 Router.
+			HostNamePrefix (str): The host name prefix information.
+			InterfaceMetric (number): The metric cost associated with this emulated SPB ISIS router.
+			NoOfColumns (number): The value is used in combination to create a matrix (grid) for an emulated network range of the following size: The # Rows multiplied the # Cols = Number of routers in this Network Range. (For example, 3 Rows x 3 Columns = 9 Routers).
+			NoOfRows (number): The value is used in combination to create a matrix (grid) for an emulated network range of the following size: The # Rows multiplied the # Cols = Number of routers in this Network Range. (For example, 3 Rows x 3 Columns = 9 Routers).
+			StartSystemId (str): The System ID assigned to the starting SPB ISIS router in this network range. The default is 00 00 00 00 00 00.
+			SystemIdIncrementBy (str): This is used when more than one router is to be emulated. The increment value is added to the previous System ID for each additional emulated router in this network range.
 
 		Returns:
 			self: This instance with matching spbNetworkRange data retrieved from the server available through an iterator or index

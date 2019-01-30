@@ -37,7 +37,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def AverageRtt(self):
-		"""
+		"""(read only) The learned average periodic OAM Round-Trip-Time.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""
+		"""(read only) The learned periodic OAM B-VLAN identifier.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""
+		"""(read only) The learned periodic OAM destination MAC address.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def LbmSentCount(self):
-		"""
+		"""(read only) The learned number of periodic OAM loopback messages sent.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The learned MD level for the periodic OAM.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def NoReplyCount(self):
-		"""
+		"""(read only) The learned number of periodic OAM no replies.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def RecentReachability(self):
-		"""
+		"""(read only) Indicates the status of the Ping.
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def RecentRtt(self):
-		"""
+		"""(read only) Indicates the status of the round-trip-time
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The learned periodic OAM source MAC address.
 
 		Returns:
 			str
@@ -123,15 +123,15 @@ class PbbTePeriodicOamLbLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pbbTePeriodicOamLbLearnedInfo data from the server.
 
 		Args:
-			AverageRtt (number): 
-			BVlan (str): 
-			DstMacAddress (str): 
-			LbmSentCount (number): 
-			MdLevel (number): 
-			NoReplyCount (number): 
-			RecentReachability (bool): 
-			RecentRtt (number): 
-			SrcMacAddress (str): 
+			AverageRtt (number): (read only) The learned average periodic OAM Round-Trip-Time.
+			BVlan (str): (read only) The learned periodic OAM B-VLAN identifier.
+			DstMacAddress (str): (read only) The learned periodic OAM destination MAC address.
+			LbmSentCount (number): (read only) The learned number of periodic OAM loopback messages sent.
+			MdLevel (number): (read only) The learned MD level for the periodic OAM.
+			NoReplyCount (number): (read only) The learned number of periodic OAM no replies.
+			RecentReachability (bool): (read only) Indicates the status of the Ping.
+			RecentRtt (number): (read only) Indicates the status of the round-trip-time
+			SrcMacAddress (str): (read only) The learned periodic OAM source MAC address.
 
 		Returns:
 			self: This instance with matching pbbTePeriodicOamLbLearnedInfo data retrieved from the server available through an iterator or index

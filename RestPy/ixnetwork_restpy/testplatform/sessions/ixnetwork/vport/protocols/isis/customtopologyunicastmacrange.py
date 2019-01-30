@@ -38,7 +38,7 @@ class CustomTopologyUnicastMacRange(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class CustomTopologyUnicastMacRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class CustomTopologyUnicastMacRange(Base):
 
 	@property
 	def InterNodeMacIncrement(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class CustomTopologyUnicastMacRange(Base):
 
 	@property
 	def MacIncrement(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class CustomTopologyUnicastMacRange(Base):
 
 	@property
 	def StartMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class CustomTopologyUnicastMacRange(Base):
 
 	@property
 	def StartVlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -112,12 +112,12 @@ class CustomTopologyUnicastMacRange(Base):
 		"""Adds a new customTopologyUnicastMacRange node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): 
-			Enabled (bool): 
-			InterNodeMacIncrement (str): 
-			MacIncrement (str): 
-			StartMac (str): 
-			StartVlanId (number): 
+			Count (number): NOT DEFINED
+			Enabled (bool): NOT DEFINED
+			InterNodeMacIncrement (str): NOT DEFINED
+			MacIncrement (str): NOT DEFINED
+			StartMac (str): NOT DEFINED
+			StartVlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyUnicastMacRange data using find and the newly added customTopologyUnicastMacRange data available through an iterator or index
@@ -143,12 +143,12 @@ class CustomTopologyUnicastMacRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyUnicastMacRange data from the server.
 
 		Args:
-			Count (number): 
-			Enabled (bool): 
-			InterNodeMacIncrement (str): 
-			MacIncrement (str): 
-			StartMac (str): 
-			StartVlanId (number): 
+			Count (number): NOT DEFINED
+			Enabled (bool): NOT DEFINED
+			InterNodeMacIncrement (str): NOT DEFINED
+			MacIncrement (str): NOT DEFINED
+			StartMac (str): NOT DEFINED
+			StartVlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTopologyUnicastMacRange data retrieved from the server available through an iterator or index

@@ -509,72 +509,6 @@ class NetconfClient(Base):
 		"""
 		return self._get_ngpf_device_ids(locals())
 
-	def ClearAllLearnedSchemaInfo(self):
-		"""Executes the clearAllLearnedSchemaInfo operation on the server.
-
-		Clear All Learned Schema Info.
-
-		Args:
-			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self
-		return self._execute('ClearAllLearnedSchemaInfo', payload=locals(), response_object=None)
-
-	def ClearAllLearnedSchemaInfo(self, SessionIndices):
-		"""Executes the clearAllLearnedSchemaInfo operation on the server.
-
-		Clear All Learned Schema Info.
-
-		Args:
-			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
-			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self
-		return self._execute('ClearAllLearnedSchemaInfo', payload=locals(), response_object=None)
-
-	def ClearAllLearnedSchemaInfo(self, SessionIndices):
-		"""Executes the clearAllLearnedSchemaInfo operation on the server.
-
-		Clear All Learned Schema Info.
-
-		Args:
-			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
-			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self
-		return self._execute('ClearAllLearnedSchemaInfo', payload=locals(), response_object=None)
-
-	def ClearAllLearnedSchemaInfoInClient(self, Arg2):
-		"""Executes the clearAllLearnedSchemaInfoInClient operation on the server.
-
-		Clears ALL learned info.
-
-		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(number)): List of indices into the protocol plugin. An empty list indicates all instances in the plugin.
-
-		Returns:
-			list(str): ID to associate each async action invocation
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self.href
-		return self._execute('ClearAllLearnedSchemaInfoInClient', payload=locals(), response_object=None)
-
 	def ExecuteCommandGet(self):
 		"""Executes the executeCommandGet operation on the server.
 
@@ -641,6 +575,20 @@ class NetconfClient(Base):
 		Arg1 = self.href
 		return self._execute('ExecuteCommandGet', payload=locals(), response_object=None)
 
+	def FetchAndUpdateConfigFromCloud(self, Mode):
+		"""Executes the fetchAndUpdateConfigFromCloud operation on the server.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): The method internally sets Arg1 to the current href for this instance
+			Mode (str): 
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('FetchAndUpdateConfigFromCloud', payload=locals(), response_object=None)
+
 	def GetDecryptedCapture(self, Arg2):
 		"""Executes the getDecryptedCapture operation on the server.
 
@@ -659,72 +607,6 @@ class NetconfClient(Base):
 		"""
 		Arg1 = self.href
 		return self._execute('GetDecryptedCapture', payload=locals(), response_object=None)
-
-	def GetLearnedSchemaInfo(self):
-		"""Executes the getLearnedSchemaInfo operation on the server.
-
-		Get Learned Schema Info.
-
-		Args:
-			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self
-		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
-
-	def GetLearnedSchemaInfo(self, SessionIndices):
-		"""Executes the getLearnedSchemaInfo operation on the server.
-
-		Get Learned Schema Info.
-
-		Args:
-			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
-			SessionIndices (list(number)): This parameter requires an array of session numbers 0 1 2 3
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self
-		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
-
-	def GetLearnedSchemaInfo(self, SessionIndices):
-		"""Executes the getLearnedSchemaInfo operation on the server.
-
-		Get Learned Schema Info.
-
-		Args:
-			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/topology])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
-			SessionIndices (str): This parameter requires a string of session numbers 1-4;6;7-12
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self
-		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
-
-	def GetLearnedSchemaInfo(self, Arg2):
-		"""Executes the getLearnedSchemaInfo operation on the server.
-
-		Gets learned info.
-
-		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(number)): List of indices into the protocol plugin. An empty list indicates all instances in the plugin.
-
-		Returns:
-			list(str): ID to associate each async action invocation
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self.href
-		return self._execute('GetLearnedSchemaInfo', payload=locals(), response_object=None)
 
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.

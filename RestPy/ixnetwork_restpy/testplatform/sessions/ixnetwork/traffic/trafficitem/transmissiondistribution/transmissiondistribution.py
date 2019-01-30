@@ -37,7 +37,7 @@ class TransmissionDistribution(Base):
 
 	@property
 	def AvailableDistributions(self):
-		"""
+		"""Indicates the available transmission distributions for the traffic streams.
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class TransmissionDistribution(Base):
 
 	@property
 	def Distributions(self):
-		"""
+		"""Indicates the predefined size distribution based on size and weight.
 
 		Returns:
 			list(str)
@@ -72,8 +72,8 @@ class TransmissionDistribution(Base):
 		By default the find method takes no parameters and will retrieve all transmissionDistribution data from the server.
 
 		Args:
-			AvailableDistributions (list(str)): 
-			Distributions (list(str)): 
+			AvailableDistributions (list(str)): Indicates the available transmission distributions for the traffic streams.
+			Distributions (list(str)): Indicates the predefined size distribution based on size and weight.
 			DistributionsDisplayNames (list(str)): Returns user friendly list of distribution fields
 
 		Returns:

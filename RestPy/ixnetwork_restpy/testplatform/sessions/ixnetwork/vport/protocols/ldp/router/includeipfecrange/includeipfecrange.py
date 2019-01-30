@@ -38,7 +38,7 @@ class IncludeIpFecRange(Base):
 
 	@property
 	def EnableExactPrefixMatch(self):
-		"""
+		"""Matching for FEC address ranges, for the purpose of filtering.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class IncludeIpFecRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables this explicit include FEC range.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class IncludeIpFecRange(Base):
 
 	@property
 	def FirstNetwork(self):
-		"""
+		"""The first FEC network address in the range (in IP address format).
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class IncludeIpFecRange(Base):
 
 	@property
 	def MaskWidth(self):
-		"""
+		"""The number of bits in the FEC mask applied to the FEC network address. The masked bits in the First Network address form the FEC address prefix.
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class IncludeIpFecRange(Base):
 
 	@property
 	def NumberOfNetworks(self):
-		"""
+		"""The number of FEC network addresses to be included in the FEC range. The maximum number of valid possible addresses depends on the values for the first network and the network mask.
 
 		Returns:
 			number
@@ -100,11 +100,11 @@ class IncludeIpFecRange(Base):
 		"""Adds a new includeIpFecRange node on the server and retrieves it in this instance.
 
 		Args:
-			EnableExactPrefixMatch (bool): 
-			Enabled (bool): 
-			FirstNetwork (str): 
-			MaskWidth (number): 
-			NumberOfNetworks (number): 
+			EnableExactPrefixMatch (bool): Matching for FEC address ranges, for the purpose of filtering.
+			Enabled (bool): Enables this explicit include FEC range.
+			FirstNetwork (str): The first FEC network address in the range (in IP address format).
+			MaskWidth (number): The number of bits in the FEC mask applied to the FEC network address. The masked bits in the First Network address form the FEC address prefix.
+			NumberOfNetworks (number): The number of FEC network addresses to be included in the FEC range. The maximum number of valid possible addresses depends on the values for the first network and the network mask.
 
 		Returns:
 			self: This instance with all currently retrieved includeIpFecRange data using find and the newly added includeIpFecRange data available through an iterator or index
@@ -130,11 +130,11 @@ class IncludeIpFecRange(Base):
 		By default the find method takes no parameters and will retrieve all includeIpFecRange data from the server.
 
 		Args:
-			EnableExactPrefixMatch (bool): 
-			Enabled (bool): 
-			FirstNetwork (str): 
-			MaskWidth (number): 
-			NumberOfNetworks (number): 
+			EnableExactPrefixMatch (bool): Matching for FEC address ranges, for the purpose of filtering.
+			Enabled (bool): Enables this explicit include FEC range.
+			FirstNetwork (str): The first FEC network address in the range (in IP address format).
+			MaskWidth (number): The number of bits in the FEC mask applied to the FEC network address. The masked bits in the First Network address form the FEC address prefix.
+			NumberOfNetworks (number): The number of FEC network addresses to be included in the FEC range. The maximum number of valid possible addresses depends on the values for the first network and the network mask.
 
 		Returns:
 			self: This instance with matching includeIpFecRange data retrieved from the server available through an iterator or index

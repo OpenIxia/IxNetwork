@@ -725,11 +725,12 @@ class Ipv4(Base):
 		"""
 		return self._get_ngpf_device_ids(locals())
 
-	def FetchAndUpdateConfigFromCloud(self):
+	def FetchAndUpdateConfigFromCloud(self, Mode):
 		"""Executes the fetchAndUpdateConfigFromCloud operation on the server.
 
 		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=topology|/api/v1/sessions/1/ixnetwork/topology|/api/v1/sessions/1/ixnetwork/topology|/api/v1/sessions/1/ixnetwork/topology?deepchild=deviceGroup|/api/v1/sessions/1/ixnetwork/topology?deepchild=deviceGroup|/api/v1/sessions/1/ixnetwork/topology?deepchild=deviceGroup)): The method internally sets Arg1 to the current href for this instance
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): The method internally sets Arg1 to the current href for this instance
+			Mode (str): 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

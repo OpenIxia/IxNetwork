@@ -38,7 +38,7 @@ class MapServerResolver(Base):
 
 	@property
 	def AuthenticationAlgorithm(self):
-		"""
+		"""It gives details about the authentication algorithm
 
 		Returns:
 			str(sha-1-96|sha-128-256)
@@ -50,7 +50,7 @@ class MapServerResolver(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, it enables the protocol
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class MapServerResolver(Base):
 
 	@property
 	def ExternalMsmrAddress(self):
-		"""
+		"""It gives details about the external Msmr address
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class MapServerResolver(Base):
 
 	@property
 	def Family(self):
-		"""
+		"""It gives details about the ip family it represents
 
 		Returns:
 			str(ipv4|ipv6)
@@ -86,7 +86,7 @@ class MapServerResolver(Base):
 
 	@property
 	def InternalIxiaMsmrRouter(self):
-		"""
+		"""It gives details about the internal ixia msmr router
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)
@@ -98,7 +98,7 @@ class MapServerResolver(Base):
 
 	@property
 	def Key(self):
-		"""
+		"""it gives details about the key
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class MapServerResolver(Base):
 
 	@property
 	def MsmrLocation(self):
-		"""
+		"""It details about the msmr location
 
 		Returns:
 			str(internal|external)
@@ -122,7 +122,7 @@ class MapServerResolver(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""It gives details about the type
 
 		Returns:
 			str(ms|mr|msmr)
@@ -136,14 +136,14 @@ class MapServerResolver(Base):
 		"""Adds a new mapServerResolver node on the server and retrieves it in this instance.
 
 		Args:
-			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): 
-			Enabled (bool): 
-			ExternalMsmrAddress (str): 
-			Family (str(ipv4|ipv6)): 
-			InternalIxiaMsmrRouter (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): 
-			Key (str): 
-			MsmrLocation (str(internal|external)): 
-			Type (str(ms|mr|msmr)): 
+			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): It gives details about the authentication algorithm
+			Enabled (bool): If true, it enables the protocol
+			ExternalMsmrAddress (str): It gives details about the external Msmr address
+			Family (str(ipv4|ipv6)): It gives details about the ip family it represents
+			InternalIxiaMsmrRouter (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): It gives details about the internal ixia msmr router
+			Key (str): it gives details about the key
+			MsmrLocation (str(internal|external)): It details about the msmr location
+			Type (str(ms|mr|msmr)): It gives details about the type
 
 		Returns:
 			self: This instance with all currently retrieved mapServerResolver data using find and the newly added mapServerResolver data available through an iterator or index
@@ -169,14 +169,14 @@ class MapServerResolver(Base):
 		By default the find method takes no parameters and will retrieve all mapServerResolver data from the server.
 
 		Args:
-			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): 
-			Enabled (bool): 
-			ExternalMsmrAddress (str): 
-			Family (str(ipv4|ipv6)): 
-			InternalIxiaMsmrRouter (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): 
-			Key (str): 
-			MsmrLocation (str(internal|external)): 
-			Type (str(ms|mr|msmr)): 
+			AuthenticationAlgorithm (str(sha-1-96|sha-128-256)): It gives details about the authentication algorithm
+			Enabled (bool): If true, it enables the protocol
+			ExternalMsmrAddress (str): It gives details about the external Msmr address
+			Family (str(ipv4|ipv6)): It gives details about the ip family it represents
+			InternalIxiaMsmrRouter (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): It gives details about the internal ixia msmr router
+			Key (str): it gives details about the key
+			MsmrLocation (str(internal|external)): It details about the msmr location
+			Type (str(ms|mr|msmr)): It gives details about the type
 
 		Returns:
 			self: This instance with matching mapServerResolver data retrieved from the server available through an iterator or index

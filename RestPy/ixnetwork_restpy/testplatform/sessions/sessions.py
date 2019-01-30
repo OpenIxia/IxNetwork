@@ -149,3 +149,34 @@ class Sessions(Base):
         except IxNetworkError as e:
             if e._status_code not in [404, 405]:
                 raise e
+    
+    def GetObjectFromHref(self, href):
+        """Get an object using an href.
+        References are used to establish relationships between disaparate nodes.
+        This allows a user to get an object using a reference from a node.
+        For example:
+            A /vport node has a ConnectedTo property that is a reference to a /availableHardware/chassis/card/port node.
+            A user can get a vport and use this method to get the port node in order to clear ownership
+        
+        Args:
+            href (str): A valid href reference
+
+        Returns:
+            obj | None: If the reference is valid an object or None
+        """
+        try:
+            node = self
+            for piece in href[href.find('ixnetwork'):].split('/'):
+                if piece.isdigit():
+                    for item in node:
+                        if item.href.split('/').pop() == piece:
+                            node = node._read(item.href)
+                            break
+                else:
+                    class_name = '%s%s' % (piece[0].upper(), piece[1:])
+                    node = getattr(node, class_name)
+                    if hasattr(node, 'find') is True:
+                        node.find()
+            return node
+        except:
+            return None

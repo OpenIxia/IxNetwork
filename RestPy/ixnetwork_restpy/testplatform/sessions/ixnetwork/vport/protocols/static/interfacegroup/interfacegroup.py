@@ -52,7 +52,7 @@ class InterfaceGroup(Base):
 
 	@property
 	def AtmEncapsulation(self):
-		"""
+		"""The type of ATM encapsulation used for the Protocol Interfaces in this Group.
 
 		Returns:
 			str(vcMuxIpv4Routed|vcMuxIpv6Routed|vcMuxBridgedEth802p3WithFcs|vcMuxBridgedEth802p3WithOutFcs|llcRoutedAal5Snap|llcBridgedEthernetWithFcs|llcBridgedEthernetWithoutFcs)
@@ -64,7 +64,7 @@ class InterfaceGroup(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""A brief description of the Interface Group.
 
 		Returns:
 			str
@@ -76,7 +76,7 @@ class InterfaceGroup(Base):
 
 	@property
 	def EnableVlan(self):
-		"""
+		"""Enables the use of VLANs.
 
 		Returns:
 			bool
@@ -88,7 +88,7 @@ class InterfaceGroup(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables this Interface Group.
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class InterfaceGroup(Base):
 
 	@property
 	def Ip(self):
-		"""
+		"""The IP version being used for the Protocol Interfaces in this Group.
 
 		Returns:
 			str(ipv4|ipv6)
@@ -112,7 +112,7 @@ class InterfaceGroup(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -126,12 +126,12 @@ class InterfaceGroup(Base):
 		"""Adds a new interfaceGroup node on the server and retrieves it in this instance.
 
 		Args:
-			AtmEncapsulation (str(vcMuxIpv4Routed|vcMuxIpv6Routed|vcMuxBridgedEth802p3WithFcs|vcMuxBridgedEth802p3WithOutFcs|llcRoutedAal5Snap|llcBridgedEthernetWithFcs|llcBridgedEthernetWithoutFcs)): 
-			Description (str): 
-			EnableVlan (bool): 
-			Enabled (bool): 
-			Ip (str(ipv4|ipv6)): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			AtmEncapsulation (str(vcMuxIpv4Routed|vcMuxIpv6Routed|vcMuxBridgedEth802p3WithFcs|vcMuxBridgedEth802p3WithOutFcs|llcRoutedAal5Snap|llcBridgedEthernetWithFcs|llcBridgedEthernetWithoutFcs)): The type of ATM encapsulation used for the Protocol Interfaces in this Group.
+			Description (str): A brief description of the Interface Group.
+			EnableVlan (bool): Enables the use of VLANs.
+			Enabled (bool): Enables this Interface Group.
+			Ip (str(ipv4|ipv6)): The IP version being used for the Protocol Interfaces in this Group.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with all currently retrieved interfaceGroup data using find and the newly added interfaceGroup data available through an iterator or index
@@ -157,12 +157,12 @@ class InterfaceGroup(Base):
 		By default the find method takes no parameters and will retrieve all interfaceGroup data from the server.
 
 		Args:
-			AtmEncapsulation (str(vcMuxIpv4Routed|vcMuxIpv6Routed|vcMuxBridgedEth802p3WithFcs|vcMuxBridgedEth802p3WithOutFcs|llcRoutedAal5Snap|llcBridgedEthernetWithFcs|llcBridgedEthernetWithoutFcs)): 
-			Description (str): 
-			EnableVlan (bool): 
-			Enabled (bool): 
-			Ip (str(ipv4|ipv6)): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			AtmEncapsulation (str(vcMuxIpv4Routed|vcMuxIpv6Routed|vcMuxBridgedEth802p3WithFcs|vcMuxBridgedEth802p3WithOutFcs|llcRoutedAal5Snap|llcBridgedEthernetWithFcs|llcBridgedEthernetWithoutFcs)): The type of ATM encapsulation used for the Protocol Interfaces in this Group.
+			Description (str): A brief description of the Interface Group.
+			EnableVlan (bool): Enables the use of VLANs.
+			Enabled (bool): Enables this Interface Group.
+			Ip (str(ipv4|ipv6)): The IP version being used for the Protocol Interfaces in this Group.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with matching interfaceGroup data retrieved from the server available through an iterator or index

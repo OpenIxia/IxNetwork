@@ -37,7 +37,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def ActiveCount(self):
-		"""
+		"""Indicates the number of active entries.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""Indicates the Datapath ID of the switch.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""Indicates the Datapath ID, in hexadecimal format, of the switch.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""Signifies the error code of the error received
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""Signifies the type of the error received.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""Indicates the duration elapsed (in microsecond) between the learned info request and response.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Indicates the local IP of the Controller.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def LookupCount(self):
-		"""
+		"""Indicates the number of packets looked up in table.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def MatchedCount(self):
-		"""
+		"""Indicates the number of packets that hit table.
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def MaxEntries(self):
-		"""
+		"""Indicates the maximum number of entries supported.
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""Indicates the IP of the remote end of the OF Channel.
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""Indicates the reply state of the switch.
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""Indicates the Identifier of table.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def TableName(self):
-		"""
+		"""Indicates a name of the table.
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class TableStatLearnedInformation(Base):
 
 	@property
 	def Wildcards(self):
-		"""
+		"""Indicates the Wildcards that are supported by the table.
 
 		Returns:
 			str
@@ -186,22 +186,22 @@ class TableStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all tableStatLearnedInformation data from the server.
 
 		Args:
-			ActiveCount (number): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			Latency (number): 
-			LocalIp (str): 
-			LookupCount (str): 
-			MatchedCount (str): 
-			MaxEntries (number): 
-			NegotiatedVersion (str): 
-			RemoteIp (str): 
-			ReplyState (str): 
-			TableId (str): 
-			TableName (str): 
-			Wildcards (str): 
+			ActiveCount (number): Indicates the number of active entries.
+			DataPathId (str): Indicates the Datapath ID of the switch.
+			DataPathIdAsHex (str): Indicates the Datapath ID, in hexadecimal format, of the switch.
+			ErrorCode (str): Signifies the error code of the error received
+			ErrorType (str): Signifies the type of the error received.
+			Latency (number): Indicates the duration elapsed (in microsecond) between the learned info request and response.
+			LocalIp (str): Indicates the local IP of the Controller.
+			LookupCount (str): Indicates the number of packets looked up in table.
+			MatchedCount (str): Indicates the number of packets that hit table.
+			MaxEntries (number): Indicates the maximum number of entries supported.
+			NegotiatedVersion (str): Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
+			RemoteIp (str): Indicates the IP of the remote end of the OF Channel.
+			ReplyState (str): Indicates the reply state of the switch.
+			TableId (str): Indicates the Identifier of table.
+			TableName (str): Indicates a name of the table.
+			Wildcards (str): Indicates the Wildcards that are supported by the table.
 
 		Returns:
 			self: This instance with matching tableStatLearnedInformation data retrieved from the server available through an iterator or index

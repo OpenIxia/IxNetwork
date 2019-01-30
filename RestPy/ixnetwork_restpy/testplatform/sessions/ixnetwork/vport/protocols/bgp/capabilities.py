@@ -37,7 +37,7 @@ class Capabilities(Base):
 
 	@property
 	def AdVpls(self):
-		"""
+		"""If true, enables the BGP autodiscovery VPLS tunnels.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Capabilities(Base):
 
 	@property
 	def Evpn(self):
-		"""
+		"""If enabled, then this BGP peer range supports BGP MPLS Based Ethernet VPN per draft-ietf-l2vpn-evpn-03. Default value is false.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Capabilities(Base):
 
 	@property
 	def FetchDetailedIpV4UnicastInfo(self):
-		"""
+		"""If enabled, this BGP router displays complete information about the Ipv4UnicastInfo.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Capabilities(Base):
 
 	@property
 	def FetchDetailedIpV6UnicastInfo(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV4Mpls(self):
-		"""
+		"""If true, learns IPv4 MPLS routes.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV4MplsVpn(self):
-		"""
+		"""If true, learns MPLS VPN routes.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV4Multicast(self):
-		"""
+		"""If true, learns IPv4 Multicast routes.
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV4MulticastMplsVpn(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV4MulticastVpn(self):
-		"""
+		"""If enabled, this BGP router/peer supports the IPv4 Multicast/VPN address family.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV4Unicast(self):
-		"""
+		"""If true, learns IPv4 Unicast routes.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV6Mpls(self):
-		"""
+		"""If true, learns IPv6 MPLS routes.
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV6MplsVpn(self):
-		"""
+		"""If true, learns IPv6 MPLS VPN routes.
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV6Multicast(self):
-		"""
+		"""If true, learns IPv6 Multicast routes.
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV6MulticastMplsVpn(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV6MulticastVpn(self):
-		"""
+		"""If enabled, this BGP router/peer supports the IPv6 Multicast/VPN address family.
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class Capabilities(Base):
 
 	@property
 	def IpV6Unicast(self):
-		"""
+		"""If true, learns IPv6 Unicast routes.
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class Capabilities(Base):
 
 	@property
 	def Vpls(self):
-		"""
+		"""If true, learns VPLS routes.
 
 		Returns:
 			bool

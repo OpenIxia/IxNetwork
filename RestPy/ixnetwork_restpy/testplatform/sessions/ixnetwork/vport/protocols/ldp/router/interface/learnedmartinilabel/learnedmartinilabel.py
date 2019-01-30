@@ -37,7 +37,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def CBit(self):
-		"""
+		"""If enabled, sets the C-Bit (flag). It is the highest order bit in the VC Type field. If the bit is set, it indicates the presence of a control word on this VC.
 
 		Returns:
 			bool
@@ -46,7 +46,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Cas(self):
-		"""
+		"""Indicates the CAS value.
 
 		Returns:
 			str(e1Trunk|t1EsfTrunk|t1SfTrunk)
@@ -55,7 +55,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def CemOption(self):
-		"""
+		"""The value of the CEM option.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def CemPayloadBytes(self):
-		"""
+		"""(For Circuit Emulation Service over MPLS/CEM). The length of the CEM payload (in bytes).
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def DisCeAddress(self):
-		"""
+		"""If the L2 interface type for the VC whose learned information is seen is IP, this field indicates the learned IP address of the remote end CE of the IP vrtual circuit.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Frequency(self):
-		"""
+		"""Indicates the frequency.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def GroupId(self):
-		"""
+		"""An arbitrary 32-bit value used to identify a group of VCs.
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def IncludeRtpHeader(self):
-		"""
+		"""If enables, includes the RTP information in the header.
 
 		Returns:
 			bool
@@ -118,7 +118,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Label(self):
-		"""
+		"""The label value added to the packet(s) by the upstream LDP peer.
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def LabelSpaceId(self):
-		"""
+		"""(2 octets) Identifies the set of labels that will be used. Part of the LDP identifier.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def LocalPwSubStatus(self):
-		"""
+		"""It reflects the status carried in the PW status notification received from the peer.
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def MaxAtmCell(self):
-		"""
+		"""The maximum number of ATM Cells which may be concatenated and sent in a single MPLS frame. This parameter is part of the FEC element.
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Mtu(self):
-		"""
+		"""(in octets) The 2-octet value for the maximum Transmission Unit (MTU).
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def PayloadSize(self):
-		"""
+		"""Indicates the payload size.
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def PayloadType(self):
-		"""
+		"""The payload type.
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Peer(self):
-		"""
+		"""The RID of the upstream LDP peer. Part of the LSR ID. It must be globally unique. It forms the first 4 octets of the 6-octet LDP identifier.
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def PeerPwSubStatus(self):
-		"""
+		"""It reflects the status carried in the PW status last sent to the peer.
 
 		Returns:
 			number
@@ -199,7 +199,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def PwState(self):
-		"""
+		"""The PseudoWire State - either Up or Down. For the PseudoWire to be Up (Up status), the VC ID, VC Type, and Peer must match.If the Enable VC Group Matching (on PseudoWire Status) option is enabled for the router, the VC Group ID must also be matched for the PseudoWire State to be Up.
 
 		Returns:
 			bool
@@ -208,7 +208,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Sp(self):
-		"""
+		"""Indicates the SP value.
 
 		Returns:
 			str(hexVal1|hexVal2|hexVal3|hexVal4)
@@ -217,7 +217,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def Ssrc(self):
-		"""
+		"""Indicates the SSRC value.
 
 		Returns:
 			number
@@ -226,7 +226,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def TdmBitrate(self):
-		"""
+		"""The tdm bit rate.
 
 		Returns:
 			number
@@ -235,7 +235,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def TimestampMode(self):
-		"""
+		"""Indicates the timestamp mode.
 
 		Returns:
 			str(absolute|differential)
@@ -244,7 +244,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def VcId(self):
-		"""
+		"""The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class LearnedMartiniLabel(Base):
 
 	@property
 	def VcType(self):
-		"""
+		"""The type of L2 VC depends on the Layer 2 protocol types.
 
 		Returns:
 			str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)
@@ -267,31 +267,31 @@ class LearnedMartiniLabel(Base):
 		By default the find method takes no parameters and will retrieve all learnedMartiniLabel data from the server.
 
 		Args:
-			CBit (bool): 
-			Cas (str(e1Trunk|t1EsfTrunk|t1SfTrunk)): 
-			CemOption (number): 
-			CemPayloadBytes (number): 
-			Description (str): 
-			DisCeAddress (str): 
-			Frequency (number): 
-			GroupId (number): 
-			IncludeRtpHeader (bool): 
-			Label (number): 
-			LabelSpaceId (number): 
-			LocalPwSubStatus (number): 
-			MaxAtmCell (number): 
-			Mtu (number): 
-			PayloadSize (number): 
-			PayloadType (number): 
-			Peer (str): 
-			PeerPwSubStatus (number): 
-			PwState (bool): 
-			Sp (str(hexVal1|hexVal2|hexVal3|hexVal4)): 
-			Ssrc (number): 
-			TdmBitrate (number): 
-			TimestampMode (str(absolute|differential)): 
-			VcId (number): 
-			VcType (str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)): 
+			CBit (bool): If enabled, sets the C-Bit (flag). It is the highest order bit in the VC Type field. If the bit is set, it indicates the presence of a control word on this VC.
+			Cas (str(e1Trunk|t1EsfTrunk|t1SfTrunk)): Indicates the CAS value.
+			CemOption (number): The value of the CEM option.
+			CemPayloadBytes (number): (For Circuit Emulation Service over MPLS/CEM). The length of the CEM payload (in bytes).
+			Description (str): An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
+			DisCeAddress (str): If the L2 interface type for the VC whose learned information is seen is IP, this field indicates the learned IP address of the remote end CE of the IP vrtual circuit.
+			Frequency (number): Indicates the frequency.
+			GroupId (number): An arbitrary 32-bit value used to identify a group of VCs.
+			IncludeRtpHeader (bool): If enables, includes the RTP information in the header.
+			Label (number): The label value added to the packet(s) by the upstream LDP peer.
+			LabelSpaceId (number): (2 octets) Identifies the set of labels that will be used. Part of the LDP identifier.
+			LocalPwSubStatus (number): It reflects the status carried in the PW status notification received from the peer.
+			MaxAtmCell (number): The maximum number of ATM Cells which may be concatenated and sent in a single MPLS frame. This parameter is part of the FEC element.
+			Mtu (number): (in octets) The 2-octet value for the maximum Transmission Unit (MTU).
+			PayloadSize (number): Indicates the payload size.
+			PayloadType (number): The payload type.
+			Peer (str): The RID of the upstream LDP peer. Part of the LSR ID. It must be globally unique. It forms the first 4 octets of the 6-octet LDP identifier.
+			PeerPwSubStatus (number): It reflects the status carried in the PW status last sent to the peer.
+			PwState (bool): The PseudoWire State - either Up or Down. For the PseudoWire to be Up (Up status), the VC ID, VC Type, and Peer must match.If the Enable VC Group Matching (on PseudoWire Status) option is enabled for the router, the VC Group ID must also be matched for the PseudoWire State to be Up.
+			Sp (str(hexVal1|hexVal2|hexVal3|hexVal4)): Indicates the SP value.
+			Ssrc (number): Indicates the SSRC value.
+			TdmBitrate (number): The tdm bit rate.
+			TimestampMode (str(absolute|differential)): Indicates the timestamp mode.
+			VcId (number): The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
+			VcType (str(frameRelay|atmaal5|atmxCell|vlan|ethernet|hdlc|ppp|cem|atmvcc|atmvpc|ip|satopE1|satopT1|satopE3|satopT3|cesoPsnBasic|cesoPsnCas|frameRelayRfc4619)): The type of L2 VC depends on the Layer 2 protocol types.
 
 		Returns:
 			self: This instance with matching learnedMartiniLabel data retrieved from the server available through an iterator or index

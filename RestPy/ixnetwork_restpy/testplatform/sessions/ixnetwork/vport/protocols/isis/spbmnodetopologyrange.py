@@ -52,7 +52,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def BridgePriority(self):
-		"""
+		"""The value assigned as the priority of the bridge. The default value is 32768. The maximum value is 65535. The minimum value is 0.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def CistExternalRootCost(self):
-		"""
+		"""The Common and Internal Spanning Tree calculated cost to reach the root bridge from the bridge where the command is entered.
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def CistRootIdentifier(self):
-		"""
+		"""Bridge identifier of the CIST root bridge.
 
 		Returns:
 			str
@@ -88,7 +88,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def EnableVbit(self):
-		"""
+		"""If true, activates the V bit.
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the topology range will be part of the simulated network.
 
 		Returns:
 			bool
@@ -112,7 +112,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def InterNodeLinkMetricIncrement(self):
-		"""
+		"""The incremental value of the Inter Node link metric.
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def InterNodeSpSourceIdIncrement(self):
-		"""
+		"""The inter node Shortest Path source identifier.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def LinkMetric(self):
-		"""
+		"""The LSP metric related to the network. The default value is 10. The maximum value is 16777215. The minimum value is 0.
 
 		Returns:
 			number
@@ -148,7 +148,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def NoOfPorts(self):
-		"""
+		"""The number of configured ports for the protocol. The default value is 1. The maximum value is 255. The minimum value is 0.
 
 		Returns:
 			number
@@ -160,7 +160,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def PortIdentifier(self):
-		"""
+		"""The identifier for the configured port. The default value is 1. The maximum value is 65535. The minimum value is 0.
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class SpbmNodeTopologyRange(Base):
 
 	@property
 	def SpSourceId(self):
-		"""
+		"""The Shortest Path source identifier. The default value is 0. The maximum value is 1048575. The minimum value is 0.
 
 		Returns:
 			number
@@ -186,17 +186,17 @@ class SpbmNodeTopologyRange(Base):
 		"""Adds a new spbmNodeTopologyRange node on the server and retrieves it in this instance.
 
 		Args:
-			BridgePriority (number): 
-			CistExternalRootCost (number): 
-			CistRootIdentifier (str): 
-			EnableVbit (bool): 
-			Enabled (bool): 
-			InterNodeLinkMetricIncrement (number): 
-			InterNodeSpSourceIdIncrement (number): 
-			LinkMetric (number): 
-			NoOfPorts (number): 
-			PortIdentifier (number): 
-			SpSourceId (number): 
+			BridgePriority (number): The value assigned as the priority of the bridge. The default value is 32768. The maximum value is 65535. The minimum value is 0.
+			CistExternalRootCost (number): The Common and Internal Spanning Tree calculated cost to reach the root bridge from the bridge where the command is entered.
+			CistRootIdentifier (str): Bridge identifier of the CIST root bridge.
+			EnableVbit (bool): If true, activates the V bit.
+			Enabled (bool): If true, the topology range will be part of the simulated network.
+			InterNodeLinkMetricIncrement (number): The incremental value of the Inter Node link metric.
+			InterNodeSpSourceIdIncrement (number): The inter node Shortest Path source identifier.
+			LinkMetric (number): The LSP metric related to the network. The default value is 10. The maximum value is 16777215. The minimum value is 0.
+			NoOfPorts (number): The number of configured ports for the protocol. The default value is 1. The maximum value is 255. The minimum value is 0.
+			PortIdentifier (number): The identifier for the configured port. The default value is 1. The maximum value is 65535. The minimum value is 0.
+			SpSourceId (number): The Shortest Path source identifier. The default value is 0. The maximum value is 1048575. The minimum value is 0.
 
 		Returns:
 			self: This instance with all currently retrieved spbmNodeTopologyRange data using find and the newly added spbmNodeTopologyRange data available through an iterator or index
@@ -222,17 +222,17 @@ class SpbmNodeTopologyRange(Base):
 		By default the find method takes no parameters and will retrieve all spbmNodeTopologyRange data from the server.
 
 		Args:
-			BridgePriority (number): 
-			CistExternalRootCost (number): 
-			CistRootIdentifier (str): 
-			EnableVbit (bool): 
-			Enabled (bool): 
-			InterNodeLinkMetricIncrement (number): 
-			InterNodeSpSourceIdIncrement (number): 
-			LinkMetric (number): 
-			NoOfPorts (number): 
-			PortIdentifier (number): 
-			SpSourceId (number): 
+			BridgePriority (number): The value assigned as the priority of the bridge. The default value is 32768. The maximum value is 65535. The minimum value is 0.
+			CistExternalRootCost (number): The Common and Internal Spanning Tree calculated cost to reach the root bridge from the bridge where the command is entered.
+			CistRootIdentifier (str): Bridge identifier of the CIST root bridge.
+			EnableVbit (bool): If true, activates the V bit.
+			Enabled (bool): If true, the topology range will be part of the simulated network.
+			InterNodeLinkMetricIncrement (number): The incremental value of the Inter Node link metric.
+			InterNodeSpSourceIdIncrement (number): The inter node Shortest Path source identifier.
+			LinkMetric (number): The LSP metric related to the network. The default value is 10. The maximum value is 16777215. The minimum value is 0.
+			NoOfPorts (number): The number of configured ports for the protocol. The default value is 1. The maximum value is 255. The minimum value is 0.
+			PortIdentifier (number): The identifier for the configured port. The default value is 1. The maximum value is 65535. The minimum value is 0.
+			SpSourceId (number): The Shortest Path source identifier. The default value is 0. The maximum value is 1048575. The minimum value is 0.
 
 		Returns:
 			self: This instance with matching spbmNodeTopologyRange data retrieved from the server available through an iterator or index

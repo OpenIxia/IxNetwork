@@ -52,7 +52,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpDstHwAddr(self):
-		"""
+		"""The target hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpDstHwAddrMask(self):
-		"""
+		"""The mask value of the target hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -76,7 +76,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpDstIpv4Addr(self):
-		"""
+		"""The ARP destination IPv4 address field value.
 
 		Returns:
 			str
@@ -88,7 +88,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpDstIpv4AddrMask(self):
-		"""
+		"""The mask value of the target IPv4 address in the ARP payload.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""
+		"""Value of the ARP opcode field.
 
 		Returns:
 			str
@@ -112,7 +112,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpSrcHwAddr(self):
-		"""
+		"""Value of the ARP source hardware address.
 
 		Returns:
 			str
@@ -124,7 +124,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpSrcHwAddrMask(self):
-		"""
+		"""The mask value of the source hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpSrcIpv4Addr(self):
-		"""
+		"""The ARP source IPv4 address field value.
 
 		Returns:
 			str
@@ -148,7 +148,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ArpSrcIpv4AddrMask(self):
-		"""
+		"""The mask value of the source IPv4 address in the ARP payload.
 
 		Returns:
 			str
@@ -160,7 +160,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def CheckOverlapFlags(self):
-		"""
+		"""If selected, the configuration checks for flow range overlaps.
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Cookie(self):
-		"""
+		"""The Cookie field value.
 
 		Returns:
 			str
@@ -184,7 +184,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def CookieMask(self):
-		"""
+		"""Value of the cookie mask field.
 
 		Returns:
 			str
@@ -196,7 +196,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""Description of flow.
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables flow.
 
 		Returns:
 			bool
@@ -220,7 +220,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""
+		"""The Ethernet destination address.
 
 		Returns:
 			str
@@ -232,7 +232,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def EthernetDestinationMask(self):
-		"""
+		"""The ethernet destination mask field.
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def EthernetSource(self):
-		"""
+		"""Specify the Ethernet source address for the flow range.
 
 		Returns:
 			str
@@ -256,7 +256,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def EthernetSourceMask(self):
-		"""
+		"""Specify the Ethernet Source mask value.
 
 		Returns:
 			str
@@ -268,7 +268,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def EthernetType(self):
-		"""
+		"""The type of Ethernet port used.
 
 		Returns:
 			str
@@ -280,7 +280,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""The experimenter data field value.
 
 		Returns:
 			str
@@ -292,7 +292,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ExperimenterDatalength(self):
-		"""
+		"""Value of the Experimenter data length field.
 
 		Returns:
 			number
@@ -304,7 +304,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ExperimenterField(self):
-		"""
+		"""Value of the Experimenter Field field.
 
 		Returns:
 			number
@@ -316,7 +316,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ExperimenterHasMask(self):
-		"""
+		"""The experimenter hash mask value.
 
 		Returns:
 			bool
@@ -328,7 +328,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""
+		"""The experimenter ID field value.
 
 		Returns:
 			str
@@ -340,7 +340,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def FlowAdvertise(self):
-		"""
+		"""If selected, the flows are advertised by the OF Channel.
 
 		Returns:
 			bool
@@ -352,7 +352,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def FlowModStatus(self):
-		"""
+		"""Reflects the status of the selected flow range which is modified at runtime.
 
 		Returns:
 			str
@@ -361,7 +361,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def HardTimeout(self):
-		"""
+		"""The inactive time in seconds after which the Flow range will hard timeout and close.
 
 		Returns:
 			number
@@ -373,7 +373,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""
+		"""The code of ICMPv4 port used.
 
 		Returns:
 			str
@@ -385,7 +385,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""
+		"""The type of ICMPv4 port used.
 
 		Returns:
 			str
@@ -397,7 +397,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""
+		"""The ICMPv6 code field value.
 
 		Returns:
 			str
@@ -409,7 +409,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""
+		"""Value of the ICMPv6 type field.
 
 		Returns:
 			str
@@ -421,7 +421,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def IdleTimeout(self):
-		"""
+		"""The inactive time in seconds after which the Flow range will timeout and become idle.
 
 		Returns:
 			number
@@ -433,7 +433,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def InPhyPort(self):
-		"""
+		"""Specify the physical In port value for this flow range. It is the underlying physical port when packet is received on a logical port.
 
 		Returns:
 			str
@@ -445,7 +445,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def InPort(self):
-		"""
+		"""Specify the Ingress port. It is the numerical representation of incoming port, starting at 1. This may be a physical or switch-defined logical port.
 
 		Returns:
 			str
@@ -457,7 +457,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def IpDscp(self):
-		"""
+		"""The IP DSCP value for advertising.
 
 		Returns:
 			str
@@ -469,7 +469,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def IpEcn(self):
-		"""
+		"""The IP ECN field value.
 
 		Returns:
 			str
@@ -481,7 +481,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""The IP protocol used.
 
 		Returns:
 			str
@@ -493,7 +493,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""
+		"""The IPv4 destination address.
 
 		Returns:
 			str
@@ -505,7 +505,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv4DestinationMask(self):
-		"""
+		"""The IPv4 destination address mask value.
 
 		Returns:
 			str
@@ -517,7 +517,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""
+		"""The IPv4 source address.
 
 		Returns:
 			str
@@ -529,7 +529,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv4SourceMask(self):
-		"""
+		"""The IP source address mask value.
 
 		Returns:
 			str
@@ -541,7 +541,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""
+		"""Value of the IPv6 destination field.
 
 		Returns:
 			str
@@ -553,7 +553,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6DestinationMask(self):
-		"""
+		"""Value of the IPv6 destination mask field.
 
 		Returns:
 			str
@@ -565,7 +565,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""
+		"""The Ipv6 extension header field value.
 
 		Returns:
 			str
@@ -577,7 +577,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6ExtHeaderMask(self):
-		"""
+		"""The mask value of the IPv6 Extension Header.
 
 		Returns:
 			str
@@ -589,7 +589,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""
+		"""Value of the IPv6 flow label field.
 
 		Returns:
 			str
@@ -601,7 +601,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6FlowLabelMask(self):
-		"""
+		"""Value of the IPv6 flow label mask field.
 
 		Returns:
 			str
@@ -613,7 +613,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6NdDll(self):
-		"""
+		"""The IPv6 ND DLL field value.
 
 		Returns:
 			str
@@ -625,7 +625,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""
+		"""The source link-layer address option in an IPv6 Neighbor Discovery message.
 
 		Returns:
 			str
@@ -637,7 +637,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""
+		"""The IPv6 ND target field value.
 
 		Returns:
 			str
@@ -649,7 +649,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""
+		"""Value of the IPv6 source field.
 
 		Returns:
 			str
@@ -661,7 +661,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Ipv6SourceMask(self):
-		"""
+		"""The mask value of IPv6 source address.
 
 		Returns:
 			str
@@ -673,7 +673,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def MatchType(self):
-		"""
+		"""The type of match to be configured.
 
 		Returns:
 			str(loose|strict)
@@ -685,7 +685,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Metadata(self):
-		"""
+		"""Specify the table metadata value used to pass information between tables.
 
 		Returns:
 			str
@@ -697,7 +697,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def MetadataMask(self):
-		"""
+		"""Specify the metadata bitmask value.
 
 		Returns:
 			str
@@ -709,7 +709,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def MplsBos(self):
-		"""
+		"""Value of the MPLS BoS field.
 
 		Returns:
 			str
@@ -721,7 +721,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def MplsLabel(self):
-		"""
+		"""Value of the MPLS label field.
 
 		Returns:
 			str
@@ -733,7 +733,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def MplsTc(self):
-		"""
+		"""The MPLS TC field value.
 
 		Returns:
 			str
@@ -745,7 +745,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def NoByteCounts(self):
-		"""
+		"""If selected, the byte count is not tracked anymore.
 
 		Returns:
 			bool
@@ -757,7 +757,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def NoPacketCounts(self):
-		"""
+		"""If selected, the packet count is not tracked anymore.
 
 		Returns:
 			bool
@@ -769,7 +769,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def NumberOfFlows(self):
-		"""
+		"""Total number of flows in a flow range.
 
 		Returns:
 			number
@@ -781,7 +781,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def PbbIsId(self):
-		"""
+		"""Value of the PBB I-SID field.
 
 		Returns:
 			str
@@ -793,7 +793,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def PbbIsIdMask(self):
-		"""
+		"""Value of the PBB I-SID mask field.
 
 		Returns:
 			str
@@ -805,7 +805,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def Priority(self):
-		"""
+		"""The priority level for the Flow Range.
 
 		Returns:
 			number
@@ -817,7 +817,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def ResetCounts(self):
-		"""
+		"""If selected, flow packet and byte counts are reset.
 
 		Returns:
 			bool
@@ -829,7 +829,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def SctpDestination(self):
-		"""
+		"""The SCTP destination field value.
 
 		Returns:
 			str
@@ -841,7 +841,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def SctpSource(self):
-		"""
+		"""Value of the SCTP source field.
 
 		Returns:
 			str
@@ -853,7 +853,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def SendFlowRemoved(self):
-		"""
+		"""If selected, Flow Remove message is sent to the controller, when the Flow entry is deleted from the Flow table.
 
 		Returns:
 			bool
@@ -865,7 +865,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def TcpDestination(self):
-		"""
+		"""The Transport destination address.
 
 		Returns:
 			str
@@ -877,7 +877,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def TcpSource(self):
-		"""
+		"""Value of the TCP source field.
 
 		Returns:
 			str
@@ -889,7 +889,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""Value of the tunnel ID field.
 
 		Returns:
 			str
@@ -901,7 +901,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def TunnelIdMask(self):
-		"""
+		"""Value of the tunnel ID mask field.
 
 		Returns:
 			str
@@ -913,7 +913,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def UdpDestination(self):
-		"""
+		"""Value of the UDP destination field.
 
 		Returns:
 			str
@@ -925,7 +925,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def UdpSource(self):
-		"""
+		"""Value of the UDP source field.
 
 		Returns:
 			str
@@ -937,7 +937,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""The unique VLAN Identifier.
 
 		Returns:
 			str
@@ -949,7 +949,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def VlanIdMask(self):
-		"""
+		"""The VLAN mask value.
 
 		Returns:
 			str
@@ -961,7 +961,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def VlanMatchType(self):
-		"""
+		"""The type of VLAN match to be configured.
 
 		Returns:
 			str(anyVlanTag|withoutVlanTag|withVlanTag|specificVlanTag)
@@ -973,7 +973,7 @@ class ControllerTableFlowRanges(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""The User Priority for this VLAN.
 
 		Returns:
 			str
@@ -987,83 +987,83 @@ class ControllerTableFlowRanges(Base):
 		"""Adds a new controllerTableFlowRanges node on the server and retrieves it in this instance.
 
 		Args:
-			ArpDstHwAddr (str): 
-			ArpDstHwAddrMask (str): 
-			ArpDstIpv4Addr (str): 
-			ArpDstIpv4AddrMask (str): 
-			ArpOpcode (str): 
-			ArpSrcHwAddr (str): 
-			ArpSrcHwAddrMask (str): 
-			ArpSrcIpv4Addr (str): 
-			ArpSrcIpv4AddrMask (str): 
-			CheckOverlapFlags (bool): 
-			Cookie (str): 
-			CookieMask (str): 
-			Description (str): 
-			Enabled (bool): 
-			EthernetDestination (str): 
-			EthernetDestinationMask (str): 
-			EthernetSource (str): 
-			EthernetSourceMask (str): 
-			EthernetType (str): 
-			ExperimenterData (str): 
-			ExperimenterDatalength (number): 
-			ExperimenterField (number): 
-			ExperimenterHasMask (bool): 
-			ExperimenterId (str): 
-			FlowAdvertise (bool): 
-			HardTimeout (number): 
-			Icmpv4Code (str): 
-			Icmpv4Type (str): 
-			Icmpv6Code (str): 
-			Icmpv6Type (str): 
-			IdleTimeout (number): 
-			InPhyPort (str): 
-			InPort (str): 
-			IpDscp (str): 
-			IpEcn (str): 
-			IpProtocol (str): 
-			Ipv4Destination (str): 
-			Ipv4DestinationMask (str): 
-			Ipv4Source (str): 
-			Ipv4SourceMask (str): 
-			Ipv6Destination (str): 
-			Ipv6DestinationMask (str): 
-			Ipv6ExtHeader (str): 
-			Ipv6ExtHeaderMask (str): 
-			Ipv6FlowLabel (str): 
-			Ipv6FlowLabelMask (str): 
-			Ipv6NdDll (str): 
-			Ipv6NdSll (str): 
-			Ipv6NdTarget (str): 
-			Ipv6Source (str): 
-			Ipv6SourceMask (str): 
-			MatchType (str(loose|strict)): 
-			Metadata (str): 
-			MetadataMask (str): 
-			MplsBos (str): 
-			MplsLabel (str): 
-			MplsTc (str): 
-			NoByteCounts (bool): 
-			NoPacketCounts (bool): 
-			NumberOfFlows (number): 
-			PbbIsId (str): 
-			PbbIsIdMask (str): 
-			Priority (number): 
-			ResetCounts (bool): 
-			SctpDestination (str): 
-			SctpSource (str): 
-			SendFlowRemoved (bool): 
-			TcpDestination (str): 
-			TcpSource (str): 
-			TunnelId (str): 
-			TunnelIdMask (str): 
-			UdpDestination (str): 
-			UdpSource (str): 
-			VlanId (str): 
-			VlanIdMask (str): 
-			VlanMatchType (str(anyVlanTag|withoutVlanTag|withVlanTag|specificVlanTag)): 
-			VlanPriority (str): 
+			ArpDstHwAddr (str): The target hardware address in the ARP payload.
+			ArpDstHwAddrMask (str): The mask value of the target hardware address in the ARP payload.
+			ArpDstIpv4Addr (str): The ARP destination IPv4 address field value.
+			ArpDstIpv4AddrMask (str): The mask value of the target IPv4 address in the ARP payload.
+			ArpOpcode (str): Value of the ARP opcode field.
+			ArpSrcHwAddr (str): Value of the ARP source hardware address.
+			ArpSrcHwAddrMask (str): The mask value of the source hardware address in the ARP payload.
+			ArpSrcIpv4Addr (str): The ARP source IPv4 address field value.
+			ArpSrcIpv4AddrMask (str): The mask value of the source IPv4 address in the ARP payload.
+			CheckOverlapFlags (bool): If selected, the configuration checks for flow range overlaps.
+			Cookie (str): The Cookie field value.
+			CookieMask (str): Value of the cookie mask field.
+			Description (str): Description of flow.
+			Enabled (bool): Enables flow.
+			EthernetDestination (str): The Ethernet destination address.
+			EthernetDestinationMask (str): The ethernet destination mask field.
+			EthernetSource (str): Specify the Ethernet source address for the flow range.
+			EthernetSourceMask (str): Specify the Ethernet Source mask value.
+			EthernetType (str): The type of Ethernet port used.
+			ExperimenterData (str): The experimenter data field value.
+			ExperimenterDatalength (number): Value of the Experimenter data length field.
+			ExperimenterField (number): Value of the Experimenter Field field.
+			ExperimenterHasMask (bool): The experimenter hash mask value.
+			ExperimenterId (str): The experimenter ID field value.
+			FlowAdvertise (bool): If selected, the flows are advertised by the OF Channel.
+			HardTimeout (number): The inactive time in seconds after which the Flow range will hard timeout and close.
+			Icmpv4Code (str): The code of ICMPv4 port used.
+			Icmpv4Type (str): The type of ICMPv4 port used.
+			Icmpv6Code (str): The ICMPv6 code field value.
+			Icmpv6Type (str): Value of the ICMPv6 type field.
+			IdleTimeout (number): The inactive time in seconds after which the Flow range will timeout and become idle.
+			InPhyPort (str): Specify the physical In port value for this flow range. It is the underlying physical port when packet is received on a logical port.
+			InPort (str): Specify the Ingress port. It is the numerical representation of incoming port, starting at 1. This may be a physical or switch-defined logical port.
+			IpDscp (str): The IP DSCP value for advertising.
+			IpEcn (str): The IP ECN field value.
+			IpProtocol (str): The IP protocol used.
+			Ipv4Destination (str): The IPv4 destination address.
+			Ipv4DestinationMask (str): The IPv4 destination address mask value.
+			Ipv4Source (str): The IPv4 source address.
+			Ipv4SourceMask (str): The IP source address mask value.
+			Ipv6Destination (str): Value of the IPv6 destination field.
+			Ipv6DestinationMask (str): Value of the IPv6 destination mask field.
+			Ipv6ExtHeader (str): The Ipv6 extension header field value.
+			Ipv6ExtHeaderMask (str): The mask value of the IPv6 Extension Header.
+			Ipv6FlowLabel (str): Value of the IPv6 flow label field.
+			Ipv6FlowLabelMask (str): Value of the IPv6 flow label mask field.
+			Ipv6NdDll (str): The IPv6 ND DLL field value.
+			Ipv6NdSll (str): The source link-layer address option in an IPv6 Neighbor Discovery message.
+			Ipv6NdTarget (str): The IPv6 ND target field value.
+			Ipv6Source (str): Value of the IPv6 source field.
+			Ipv6SourceMask (str): The mask value of IPv6 source address.
+			MatchType (str(loose|strict)): The type of match to be configured.
+			Metadata (str): Specify the table metadata value used to pass information between tables.
+			MetadataMask (str): Specify the metadata bitmask value.
+			MplsBos (str): Value of the MPLS BoS field.
+			MplsLabel (str): Value of the MPLS label field.
+			MplsTc (str): The MPLS TC field value.
+			NoByteCounts (bool): If selected, the byte count is not tracked anymore.
+			NoPacketCounts (bool): If selected, the packet count is not tracked anymore.
+			NumberOfFlows (number): Total number of flows in a flow range.
+			PbbIsId (str): Value of the PBB I-SID field.
+			PbbIsIdMask (str): Value of the PBB I-SID mask field.
+			Priority (number): The priority level for the Flow Range.
+			ResetCounts (bool): If selected, flow packet and byte counts are reset.
+			SctpDestination (str): The SCTP destination field value.
+			SctpSource (str): Value of the SCTP source field.
+			SendFlowRemoved (bool): If selected, Flow Remove message is sent to the controller, when the Flow entry is deleted from the Flow table.
+			TcpDestination (str): The Transport destination address.
+			TcpSource (str): Value of the TCP source field.
+			TunnelId (str): Value of the tunnel ID field.
+			TunnelIdMask (str): Value of the tunnel ID mask field.
+			UdpDestination (str): Value of the UDP destination field.
+			UdpSource (str): Value of the UDP source field.
+			VlanId (str): The unique VLAN Identifier.
+			VlanIdMask (str): The VLAN mask value.
+			VlanMatchType (str(anyVlanTag|withoutVlanTag|withVlanTag|specificVlanTag)): The type of VLAN match to be configured.
+			VlanPriority (str): The User Priority for this VLAN.
 
 		Returns:
 			self: This instance with all currently retrieved controllerTableFlowRanges data using find and the newly added controllerTableFlowRanges data available through an iterator or index
@@ -1089,84 +1089,84 @@ class ControllerTableFlowRanges(Base):
 		By default the find method takes no parameters and will retrieve all controllerTableFlowRanges data from the server.
 
 		Args:
-			ArpDstHwAddr (str): 
-			ArpDstHwAddrMask (str): 
-			ArpDstIpv4Addr (str): 
-			ArpDstIpv4AddrMask (str): 
-			ArpOpcode (str): 
-			ArpSrcHwAddr (str): 
-			ArpSrcHwAddrMask (str): 
-			ArpSrcIpv4Addr (str): 
-			ArpSrcIpv4AddrMask (str): 
-			CheckOverlapFlags (bool): 
-			Cookie (str): 
-			CookieMask (str): 
-			Description (str): 
-			Enabled (bool): 
-			EthernetDestination (str): 
-			EthernetDestinationMask (str): 
-			EthernetSource (str): 
-			EthernetSourceMask (str): 
-			EthernetType (str): 
-			ExperimenterData (str): 
-			ExperimenterDatalength (number): 
-			ExperimenterField (number): 
-			ExperimenterHasMask (bool): 
-			ExperimenterId (str): 
-			FlowAdvertise (bool): 
-			FlowModStatus (str): 
-			HardTimeout (number): 
-			Icmpv4Code (str): 
-			Icmpv4Type (str): 
-			Icmpv6Code (str): 
-			Icmpv6Type (str): 
-			IdleTimeout (number): 
-			InPhyPort (str): 
-			InPort (str): 
-			IpDscp (str): 
-			IpEcn (str): 
-			IpProtocol (str): 
-			Ipv4Destination (str): 
-			Ipv4DestinationMask (str): 
-			Ipv4Source (str): 
-			Ipv4SourceMask (str): 
-			Ipv6Destination (str): 
-			Ipv6DestinationMask (str): 
-			Ipv6ExtHeader (str): 
-			Ipv6ExtHeaderMask (str): 
-			Ipv6FlowLabel (str): 
-			Ipv6FlowLabelMask (str): 
-			Ipv6NdDll (str): 
-			Ipv6NdSll (str): 
-			Ipv6NdTarget (str): 
-			Ipv6Source (str): 
-			Ipv6SourceMask (str): 
-			MatchType (str(loose|strict)): 
-			Metadata (str): 
-			MetadataMask (str): 
-			MplsBos (str): 
-			MplsLabel (str): 
-			MplsTc (str): 
-			NoByteCounts (bool): 
-			NoPacketCounts (bool): 
-			NumberOfFlows (number): 
-			PbbIsId (str): 
-			PbbIsIdMask (str): 
-			Priority (number): 
-			ResetCounts (bool): 
-			SctpDestination (str): 
-			SctpSource (str): 
-			SendFlowRemoved (bool): 
-			TcpDestination (str): 
-			TcpSource (str): 
-			TunnelId (str): 
-			TunnelIdMask (str): 
-			UdpDestination (str): 
-			UdpSource (str): 
-			VlanId (str): 
-			VlanIdMask (str): 
-			VlanMatchType (str(anyVlanTag|withoutVlanTag|withVlanTag|specificVlanTag)): 
-			VlanPriority (str): 
+			ArpDstHwAddr (str): The target hardware address in the ARP payload.
+			ArpDstHwAddrMask (str): The mask value of the target hardware address in the ARP payload.
+			ArpDstIpv4Addr (str): The ARP destination IPv4 address field value.
+			ArpDstIpv4AddrMask (str): The mask value of the target IPv4 address in the ARP payload.
+			ArpOpcode (str): Value of the ARP opcode field.
+			ArpSrcHwAddr (str): Value of the ARP source hardware address.
+			ArpSrcHwAddrMask (str): The mask value of the source hardware address in the ARP payload.
+			ArpSrcIpv4Addr (str): The ARP source IPv4 address field value.
+			ArpSrcIpv4AddrMask (str): The mask value of the source IPv4 address in the ARP payload.
+			CheckOverlapFlags (bool): If selected, the configuration checks for flow range overlaps.
+			Cookie (str): The Cookie field value.
+			CookieMask (str): Value of the cookie mask field.
+			Description (str): Description of flow.
+			Enabled (bool): Enables flow.
+			EthernetDestination (str): The Ethernet destination address.
+			EthernetDestinationMask (str): The ethernet destination mask field.
+			EthernetSource (str): Specify the Ethernet source address for the flow range.
+			EthernetSourceMask (str): Specify the Ethernet Source mask value.
+			EthernetType (str): The type of Ethernet port used.
+			ExperimenterData (str): The experimenter data field value.
+			ExperimenterDatalength (number): Value of the Experimenter data length field.
+			ExperimenterField (number): Value of the Experimenter Field field.
+			ExperimenterHasMask (bool): The experimenter hash mask value.
+			ExperimenterId (str): The experimenter ID field value.
+			FlowAdvertise (bool): If selected, the flows are advertised by the OF Channel.
+			FlowModStatus (str): Reflects the status of the selected flow range which is modified at runtime.
+			HardTimeout (number): The inactive time in seconds after which the Flow range will hard timeout and close.
+			Icmpv4Code (str): The code of ICMPv4 port used.
+			Icmpv4Type (str): The type of ICMPv4 port used.
+			Icmpv6Code (str): The ICMPv6 code field value.
+			Icmpv6Type (str): Value of the ICMPv6 type field.
+			IdleTimeout (number): The inactive time in seconds after which the Flow range will timeout and become idle.
+			InPhyPort (str): Specify the physical In port value for this flow range. It is the underlying physical port when packet is received on a logical port.
+			InPort (str): Specify the Ingress port. It is the numerical representation of incoming port, starting at 1. This may be a physical or switch-defined logical port.
+			IpDscp (str): The IP DSCP value for advertising.
+			IpEcn (str): The IP ECN field value.
+			IpProtocol (str): The IP protocol used.
+			Ipv4Destination (str): The IPv4 destination address.
+			Ipv4DestinationMask (str): The IPv4 destination address mask value.
+			Ipv4Source (str): The IPv4 source address.
+			Ipv4SourceMask (str): The IP source address mask value.
+			Ipv6Destination (str): Value of the IPv6 destination field.
+			Ipv6DestinationMask (str): Value of the IPv6 destination mask field.
+			Ipv6ExtHeader (str): The Ipv6 extension header field value.
+			Ipv6ExtHeaderMask (str): The mask value of the IPv6 Extension Header.
+			Ipv6FlowLabel (str): Value of the IPv6 flow label field.
+			Ipv6FlowLabelMask (str): Value of the IPv6 flow label mask field.
+			Ipv6NdDll (str): The IPv6 ND DLL field value.
+			Ipv6NdSll (str): The source link-layer address option in an IPv6 Neighbor Discovery message.
+			Ipv6NdTarget (str): The IPv6 ND target field value.
+			Ipv6Source (str): Value of the IPv6 source field.
+			Ipv6SourceMask (str): The mask value of IPv6 source address.
+			MatchType (str(loose|strict)): The type of match to be configured.
+			Metadata (str): Specify the table metadata value used to pass information between tables.
+			MetadataMask (str): Specify the metadata bitmask value.
+			MplsBos (str): Value of the MPLS BoS field.
+			MplsLabel (str): Value of the MPLS label field.
+			MplsTc (str): The MPLS TC field value.
+			NoByteCounts (bool): If selected, the byte count is not tracked anymore.
+			NoPacketCounts (bool): If selected, the packet count is not tracked anymore.
+			NumberOfFlows (number): Total number of flows in a flow range.
+			PbbIsId (str): Value of the PBB I-SID field.
+			PbbIsIdMask (str): Value of the PBB I-SID mask field.
+			Priority (number): The priority level for the Flow Range.
+			ResetCounts (bool): If selected, flow packet and byte counts are reset.
+			SctpDestination (str): The SCTP destination field value.
+			SctpSource (str): Value of the SCTP source field.
+			SendFlowRemoved (bool): If selected, Flow Remove message is sent to the controller, when the Flow entry is deleted from the Flow table.
+			TcpDestination (str): The Transport destination address.
+			TcpSource (str): Value of the TCP source field.
+			TunnelId (str): Value of the tunnel ID field.
+			TunnelIdMask (str): Value of the tunnel ID mask field.
+			UdpDestination (str): Value of the UDP destination field.
+			UdpSource (str): Value of the UDP source field.
+			VlanId (str): The unique VLAN Identifier.
+			VlanIdMask (str): The VLAN mask value.
+			VlanMatchType (str(anyVlanTag|withoutVlanTag|withVlanTag|specificVlanTag)): The type of VLAN match to be configured.
+			VlanPriority (str): The User Priority for this VLAN.
 
 		Returns:
 			self: This instance with matching controllerTableFlowRanges data retrieved from the server available through an iterator or index
@@ -1194,12 +1194,14 @@ class ControllerTableFlowRanges(Base):
 	def UpdateFlowMod(self, Arg2):
 		"""Executes the updateFlowMod operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=controllerTableFlowRanges)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(sendFlowAdd|sendFlowModify|sendFlowRemove)): 
+			Arg2 (str(sendFlowAdd|sendFlowModify|sendFlowRemove)): NOT DEFINED
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

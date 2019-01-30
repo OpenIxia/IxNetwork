@@ -37,7 +37,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def ActionCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The Data Path ID of the OpenFlow switch.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""The Data Path ID of the OpenFlow switch in hexadecimal format.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def GroupId(self):
-		"""
+		"""A 32-bit integer uniquely identifying the group.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""The Data Path ID of the OpenFlow switch.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""The Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def WatchGroup(self):
-		"""
+		"""A group whose state determines whether this bucket is live or not. Default value OFPG_ANY(4,294,967,295) indicates that Watch Group is not specified in ofp_group_mod packets.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def WatchPort(self):
-		"""
+		"""A Port whose state determines whether this bucket is live or not. Default value OFPP_ANY(4,294,967,295) indicates that Watch Port is not specified in ofp_group_mod packets.
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class GroupBucketDescStatLearnedInformation(Base):
 
 	@property
 	def Weight(self):
-		"""
+		"""Specify the weight of buckets. The range allowed is 0-65535.
 
 		Returns:
 			number
@@ -123,15 +123,15 @@ class GroupBucketDescStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all groupBucketDescStatLearnedInformation data from the server.
 
 		Args:
-			ActionCount (number): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			GroupId (number): 
-			LocalIp (str): 
-			RemoteIp (str): 
-			WatchGroup (number): 
-			WatchPort (number): 
-			Weight (number): 
+			ActionCount (number): NOT DEFINED
+			DataPathId (str): The Data Path ID of the OpenFlow switch.
+			DataPathIdAsHex (str): The Data Path ID of the OpenFlow switch in hexadecimal format.
+			GroupId (number): A 32-bit integer uniquely identifying the group.
+			LocalIp (str): The Data Path ID of the OpenFlow switch.
+			RemoteIp (str): The Remote IP address of the selected interface.
+			WatchGroup (number): A group whose state determines whether this bucket is live or not. Default value OFPG_ANY(4,294,967,295) indicates that Watch Group is not specified in ofp_group_mod packets.
+			WatchPort (number): A Port whose state determines whether this bucket is live or not. Default value OFPP_ANY(4,294,967,295) indicates that Watch Port is not specified in ofp_group_mod packets.
+			Weight (number): Specify the weight of buckets. The range allowed is 0-65535.
 
 		Returns:
 			self: This instance with matching groupBucketDescStatLearnedInformation data retrieved from the server available through an iterator or index

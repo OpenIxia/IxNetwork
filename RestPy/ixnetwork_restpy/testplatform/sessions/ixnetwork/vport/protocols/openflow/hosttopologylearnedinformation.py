@@ -66,11 +66,13 @@ class HostTopologyLearnedInformation(Base):
 	def RefreshHostRangeLearnedInformation(self):
 		"""Executes the refreshHostRangeLearnedInformation operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=hostTopologyLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

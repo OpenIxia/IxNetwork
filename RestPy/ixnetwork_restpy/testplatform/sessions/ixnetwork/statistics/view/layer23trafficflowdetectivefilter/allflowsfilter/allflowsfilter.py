@@ -38,7 +38,7 @@ class AllFlowsFilter(Base):
 
 	@property
 	def NumberOfResults(self):
-		"""
+		"""Number of traffic flows to be displayed.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class AllFlowsFilter(Base):
 
 	@property
 	def SortByStatisticId(self):
-		"""
+		"""The reference statistic by which the data will be sorted in created SV.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)
@@ -62,7 +62,7 @@ class AllFlowsFilter(Base):
 
 	@property
 	def SortingCondition(self):
-		"""
+		"""Sets the display order of the view.
 
 		Returns:
 			str(bestPerformers|worstPerformers)
@@ -76,9 +76,9 @@ class AllFlowsFilter(Base):
 		"""Adds a new allFlowsFilter node on the server and retrieves it in this instance.
 
 		Args:
-			NumberOfResults (number): 
-			SortByStatisticId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): 
-			SortingCondition (str(bestPerformers|worstPerformers)): 
+			NumberOfResults (number): Number of traffic flows to be displayed.
+			SortByStatisticId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): The reference statistic by which the data will be sorted in created SV.
+			SortingCondition (str(bestPerformers|worstPerformers)): Sets the display order of the view.
 
 		Returns:
 			self: This instance with all currently retrieved allFlowsFilter data using find and the newly added allFlowsFilter data available through an iterator or index
@@ -104,9 +104,9 @@ class AllFlowsFilter(Base):
 		By default the find method takes no parameters and will retrieve all allFlowsFilter data from the server.
 
 		Args:
-			NumberOfResults (number): 
-			SortByStatisticId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): 
-			SortingCondition (str(bestPerformers|worstPerformers)): 
+			NumberOfResults (number): Number of traffic flows to be displayed.
+			SortByStatisticId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): The reference statistic by which the data will be sorted in created SV.
+			SortingCondition (str(bestPerformers|worstPerformers)): Sets the display order of the view.
 
 		Returns:
 			self: This instance with matching allFlowsFilter data retrieved from the server available through an iterator or index

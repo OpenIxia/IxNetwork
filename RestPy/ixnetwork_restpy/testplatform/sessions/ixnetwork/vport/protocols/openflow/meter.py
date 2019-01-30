@@ -66,7 +66,7 @@ class Meter(Base):
 
 	@property
 	def __id__(self):
-		"""
+		"""The value by which a meter is uniquely identified within a switch. The default value is 1.
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class Meter(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""A description of the meter.
 
 		Returns:
 			str
@@ -90,7 +90,7 @@ class Meter(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If selected, this meter is used in this controller configuration.
 
 		Returns:
 			bool
@@ -102,7 +102,7 @@ class Meter(Base):
 
 	@property
 	def MeterAdvertise(self):
-		"""
+		"""If this check box is selected, the following happens: Meter ADD message is sent automatically after OpenFlow channel comes up. Meter ADD or DEL message is sent out when the Enable is checked or cleared respectively.When this check box is not selected, no meter is advertised when the OpenFlow channel comes up or when the Enable check box is disabled/enabled. This field is useful to send meter ADD/MOD/DEL messages on demand, or doing negative testing. The on-demand ADD/MOD/DEL messages can be sent by choosing the appropriate option from the right-click menu or from the ribbon option of Update Meter Mod.
 
 		Returns:
 			bool
@@ -114,7 +114,7 @@ class Meter(Base):
 
 	@property
 	def UpdateMeterModStatus(self):
-		"""
+		"""It is a read-only field which indicates if any meter or associated band value is changed in the GUI. If any meter/band is changed then this status indicates to the user to send a Meter MOD request to the switch so that the changed value is updated in switch.
 
 		Returns:
 			str
@@ -125,10 +125,10 @@ class Meter(Base):
 		"""Adds a new meter node on the server and retrieves it in this instance.
 
 		Args:
-			__id__ (number): 
-			Description (str): 
-			Enabled (bool): 
-			MeterAdvertise (bool): 
+			__id__ (number): The value by which a meter is uniquely identified within a switch. The default value is 1.
+			Description (str): A description of the meter.
+			Enabled (bool): If selected, this meter is used in this controller configuration.
+			MeterAdvertise (bool): If this check box is selected, the following happens: Meter ADD message is sent automatically after OpenFlow channel comes up. Meter ADD or DEL message is sent out when the Enable is checked or cleared respectively.When this check box is not selected, no meter is advertised when the OpenFlow channel comes up or when the Enable check box is disabled/enabled. This field is useful to send meter ADD/MOD/DEL messages on demand, or doing negative testing. The on-demand ADD/MOD/DEL messages can be sent by choosing the appropriate option from the right-click menu or from the ribbon option of Update Meter Mod.
 
 		Returns:
 			self: This instance with all currently retrieved meter data using find and the newly added meter data available through an iterator or index
@@ -154,11 +154,11 @@ class Meter(Base):
 		By default the find method takes no parameters and will retrieve all meter data from the server.
 
 		Args:
-			__id__ (number): 
-			Description (str): 
-			Enabled (bool): 
-			MeterAdvertise (bool): 
-			UpdateMeterModStatus (str): 
+			__id__ (number): The value by which a meter is uniquely identified within a switch. The default value is 1.
+			Description (str): A description of the meter.
+			Enabled (bool): If selected, this meter is used in this controller configuration.
+			MeterAdvertise (bool): If this check box is selected, the following happens: Meter ADD message is sent automatically after OpenFlow channel comes up. Meter ADD or DEL message is sent out when the Enable is checked or cleared respectively.When this check box is not selected, no meter is advertised when the OpenFlow channel comes up or when the Enable check box is disabled/enabled. This field is useful to send meter ADD/MOD/DEL messages on demand, or doing negative testing. The on-demand ADD/MOD/DEL messages can be sent by choosing the appropriate option from the right-click menu or from the ribbon option of Update Meter Mod.
+			UpdateMeterModStatus (str): It is a read-only field which indicates if any meter or associated band value is changed in the GUI. If any meter/band is changed then this status indicates to the user to send a Meter MOD request to the switch so that the changed value is updated in switch.
 
 		Returns:
 			self: This instance with matching meter data retrieved from the server available through an iterator or index
@@ -186,12 +186,14 @@ class Meter(Base):
 	def UpdateMeterMod(self, Arg2):
 		"""Executes the updateMeterMod operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=meter)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(sendMeterAdd|sendMeterModify|sendMeterRemove)): 
+			Arg2 (str(sendMeterAdd|sendMeterModify|sendMeterRemove)): NOT DEFINED
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

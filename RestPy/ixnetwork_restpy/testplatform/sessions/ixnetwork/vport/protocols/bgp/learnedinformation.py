@@ -289,7 +289,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EvpnEthernetAdRouteCount(self):
-		"""
+		"""(read only) Number of AD-Routes learned and shown in A-D route learned info table.
 
 		Returns:
 			number
@@ -298,7 +298,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EvpnEthernetSegmentRouteCount(self):
-		"""
+		"""(read only) Number of Ethernet Segment routes learned and shown in ethernet segment route learned info table.
 
 		Returns:
 			number
@@ -307,7 +307,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EvpnMacRouteCount(self):
-		"""
+		"""(read only) Number of Macs learned and shown in mac learned info table.
 
 		Returns:
 			number
@@ -316,7 +316,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EvpnMulticastRouteCount(self):
-		"""
+		"""(read only) Number of RDs learned and shown in evpn multicast learned info table.
 
 		Returns:
 			number

@@ -38,7 +38,7 @@ class BwProfile(Base):
 
 	@property
 	def CbsMagnitude(self):
-		"""
+		"""It signifies one octet field. Default is 1.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class BwProfile(Base):
 
 	@property
 	def CbsMultiplier(self):
-		"""
+		"""It signifies one octet field. Default is 1.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class BwProfile(Base):
 
 	@property
 	def Cf(self):
-		"""
+		"""If enabled, Coupling Flag is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class BwProfile(Base):
 
 	@property
 	def CirMagnitude(self):
-		"""
+		"""It signifies one octet field. Default is 1.
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class BwProfile(Base):
 
 	@property
 	def CirMultiplier(self):
-		"""
+		"""It signifies two octet field. Default is 1.
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class BwProfile(Base):
 
 	@property
 	def Cm(self):
-		"""
+		"""If enabled, Colored Mode Flag is 1. Default is false.
 
 		Returns:
 			bool
@@ -110,7 +110,7 @@ class BwProfile(Base):
 
 	@property
 	def EbsMagnitude(self):
-		"""
+		"""It signifies one octet field. Default is 1.
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class BwProfile(Base):
 
 	@property
 	def EbsMultiplier(self):
-		"""
+		"""It signifies one octet field. Default is 1.
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class BwProfile(Base):
 
 	@property
 	def EirMagnitude(self):
-		"""
+		"""It signifies one octet field. Default is 1.
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class BwProfile(Base):
 
 	@property
 	def EirMultiplier(self):
-		"""
+		"""It signifies two octet field. Default is 1.
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class BwProfile(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If enabled, bandwidth profile is in effect for the EVC.
 
 		Returns:
 			bool
@@ -170,7 +170,7 @@ class BwProfile(Base):
 
 	@property
 	def PerCos(self):
-		"""
+		"""If enabled, Per CoS Flag shows user_priority bit values as significant and the value is set to 1. If the value is set to 0, the user_priority bit values as ignored and not processed. Default is 0.
 
 		Returns:
 			bool
@@ -182,7 +182,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits000(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 000 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -194,7 +194,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits001(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 001 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -206,7 +206,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits010(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 010 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -218,7 +218,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits011(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 011 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -230,7 +230,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits100(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 100 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -242,7 +242,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits101(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 101 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -254,7 +254,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits110(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 110 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -266,7 +266,7 @@ class BwProfile(Base):
 
 	@property
 	def UserPriorityBits111(self):
-		"""
+		"""If enabled, Bandwidth Profile applies to frames with user_priority as 111 and the value is set to 1. Default is 0.
 
 		Returns:
 			bool
@@ -280,26 +280,26 @@ class BwProfile(Base):
 		"""Adds a new bwProfile node on the server and retrieves it in this instance.
 
 		Args:
-			CbsMagnitude (number): 
-			CbsMultiplier (number): 
-			Cf (bool): 
-			CirMagnitude (number): 
-			CirMultiplier (number): 
-			Cm (bool): 
-			EbsMagnitude (number): 
-			EbsMultiplier (number): 
-			EirMagnitude (number): 
-			EirMultiplier (number): 
-			Enabled (bool): 
-			PerCos (bool): 
-			UserPriorityBits000 (bool): 
-			UserPriorityBits001 (bool): 
-			UserPriorityBits010 (bool): 
-			UserPriorityBits011 (bool): 
-			UserPriorityBits100 (bool): 
-			UserPriorityBits101 (bool): 
-			UserPriorityBits110 (bool): 
-			UserPriorityBits111 (bool): 
+			CbsMagnitude (number): It signifies one octet field. Default is 1.
+			CbsMultiplier (number): It signifies one octet field. Default is 1.
+			Cf (bool): If enabled, Coupling Flag is set to 1. Default is 0.
+			CirMagnitude (number): It signifies one octet field. Default is 1.
+			CirMultiplier (number): It signifies two octet field. Default is 1.
+			Cm (bool): If enabled, Colored Mode Flag is 1. Default is false.
+			EbsMagnitude (number): It signifies one octet field. Default is 1.
+			EbsMultiplier (number): It signifies one octet field. Default is 1.
+			EirMagnitude (number): It signifies one octet field. Default is 1.
+			EirMultiplier (number): It signifies two octet field. Default is 1.
+			Enabled (bool): If enabled, bandwidth profile is in effect for the EVC.
+			PerCos (bool): If enabled, Per CoS Flag shows user_priority bit values as significant and the value is set to 1. If the value is set to 0, the user_priority bit values as ignored and not processed. Default is 0.
+			UserPriorityBits000 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 000 and the value is set to 1. Default is 0.
+			UserPriorityBits001 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 001 and the value is set to 1. Default is 0.
+			UserPriorityBits010 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 010 and the value is set to 1. Default is 0.
+			UserPriorityBits011 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 011 and the value is set to 1. Default is 0.
+			UserPriorityBits100 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 100 and the value is set to 1. Default is 0.
+			UserPriorityBits101 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 101 and the value is set to 1. Default is 0.
+			UserPriorityBits110 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 110 and the value is set to 1. Default is 0.
+			UserPriorityBits111 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 111 and the value is set to 1. Default is 0.
 
 		Returns:
 			self: This instance with all currently retrieved bwProfile data using find and the newly added bwProfile data available through an iterator or index
@@ -325,26 +325,26 @@ class BwProfile(Base):
 		By default the find method takes no parameters and will retrieve all bwProfile data from the server.
 
 		Args:
-			CbsMagnitude (number): 
-			CbsMultiplier (number): 
-			Cf (bool): 
-			CirMagnitude (number): 
-			CirMultiplier (number): 
-			Cm (bool): 
-			EbsMagnitude (number): 
-			EbsMultiplier (number): 
-			EirMagnitude (number): 
-			EirMultiplier (number): 
-			Enabled (bool): 
-			PerCos (bool): 
-			UserPriorityBits000 (bool): 
-			UserPriorityBits001 (bool): 
-			UserPriorityBits010 (bool): 
-			UserPriorityBits011 (bool): 
-			UserPriorityBits100 (bool): 
-			UserPriorityBits101 (bool): 
-			UserPriorityBits110 (bool): 
-			UserPriorityBits111 (bool): 
+			CbsMagnitude (number): It signifies one octet field. Default is 1.
+			CbsMultiplier (number): It signifies one octet field. Default is 1.
+			Cf (bool): If enabled, Coupling Flag is set to 1. Default is 0.
+			CirMagnitude (number): It signifies one octet field. Default is 1.
+			CirMultiplier (number): It signifies two octet field. Default is 1.
+			Cm (bool): If enabled, Colored Mode Flag is 1. Default is false.
+			EbsMagnitude (number): It signifies one octet field. Default is 1.
+			EbsMultiplier (number): It signifies one octet field. Default is 1.
+			EirMagnitude (number): It signifies one octet field. Default is 1.
+			EirMultiplier (number): It signifies two octet field. Default is 1.
+			Enabled (bool): If enabled, bandwidth profile is in effect for the EVC.
+			PerCos (bool): If enabled, Per CoS Flag shows user_priority bit values as significant and the value is set to 1. If the value is set to 0, the user_priority bit values as ignored and not processed. Default is 0.
+			UserPriorityBits000 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 000 and the value is set to 1. Default is 0.
+			UserPriorityBits001 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 001 and the value is set to 1. Default is 0.
+			UserPriorityBits010 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 010 and the value is set to 1. Default is 0.
+			UserPriorityBits011 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 011 and the value is set to 1. Default is 0.
+			UserPriorityBits100 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 100 and the value is set to 1. Default is 0.
+			UserPriorityBits101 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 101 and the value is set to 1. Default is 0.
+			UserPriorityBits110 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 110 and the value is set to 1. Default is 0.
+			UserPriorityBits111 (bool): If enabled, Bandwidth Profile applies to frames with user_priority as 111 and the value is set to 1. Default is 0.
 
 		Returns:
 			self: This instance with matching bwProfile data retrieved from the server available through an iterator or index

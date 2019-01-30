@@ -136,7 +136,7 @@ class SwitchPorts(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the ports in the selected port range are added to the switch.
 
 		Returns:
 			bool
@@ -148,7 +148,7 @@ class SwitchPorts(Base):
 
 	@property
 	def EthernetAddress(self):
-		"""
+		"""Indicates the hardware address of the ports in the port range.
 
 		Returns:
 			str
@@ -160,7 +160,7 @@ class SwitchPorts(Base):
 
 	@property
 	def NumberOfPorts(self):
-		"""
+		"""Specifies the number of ports in a port range.
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class SwitchPorts(Base):
 
 	@property
 	def PortName(self):
-		"""
+		"""Indicates the name for the switch port interface.
 
 		Returns:
 			str
@@ -184,7 +184,7 @@ class SwitchPorts(Base):
 
 	@property
 	def PortNumber(self):
-		"""
+		"""Indicates a value that the datapath associates with a physical port.
 
 		Returns:
 			str
@@ -198,11 +198,11 @@ class SwitchPorts(Base):
 		"""Adds a new switchPorts node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			EthernetAddress (str): 
-			NumberOfPorts (number): 
-			PortName (str): 
-			PortNumber (str): 
+			Enabled (bool): If true, the ports in the selected port range are added to the switch.
+			EthernetAddress (str): Indicates the hardware address of the ports in the port range.
+			NumberOfPorts (number): Specifies the number of ports in a port range.
+			PortName (str): Indicates the name for the switch port interface.
+			PortNumber (str): Indicates a value that the datapath associates with a physical port.
 
 		Returns:
 			self: This instance with all currently retrieved switchPorts data using find and the newly added switchPorts data available through an iterator or index
@@ -228,11 +228,11 @@ class SwitchPorts(Base):
 		By default the find method takes no parameters and will retrieve all switchPorts data from the server.
 
 		Args:
-			Enabled (bool): 
-			EthernetAddress (str): 
-			NumberOfPorts (number): 
-			PortName (str): 
-			PortNumber (str): 
+			Enabled (bool): If true, the ports in the selected port range are added to the switch.
+			EthernetAddress (str): Indicates the hardware address of the ports in the port range.
+			NumberOfPorts (number): Specifies the number of ports in a port range.
+			PortName (str): Indicates the name for the switch port interface.
+			PortNumber (str): Indicates a value that the datapath associates with a physical port.
 
 		Returns:
 			self: This instance with matching switchPorts data retrieved from the server available through an iterator or index
@@ -260,11 +260,13 @@ class SwitchPorts(Base):
 	def SimulatePortUpDown(self):
 		"""Executes the simulatePortUpDown operation on the server.
 
+		Exec to simulate port up and down.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchPorts)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

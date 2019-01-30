@@ -37,7 +37,7 @@ class UnicastMacItem(Base):
 
 	@property
 	def UnicastSourceMacAddress(self):
-		"""
+		"""This indicates the MAC Source, if any, associated with the MAC Multicast Group Address.
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class UnicastMacItem(Base):
 		By default the find method takes no parameters and will retrieve all unicastMacItem data from the server.
 
 		Args:
-			UnicastSourceMacAddress (str): 
+			UnicastSourceMacAddress (str): This indicates the MAC Source, if any, associated with the MAC Multicast Group Address.
 
 		Returns:
 			self: This instance with matching unicastMacItem data retrieved from the server available through an iterator or index

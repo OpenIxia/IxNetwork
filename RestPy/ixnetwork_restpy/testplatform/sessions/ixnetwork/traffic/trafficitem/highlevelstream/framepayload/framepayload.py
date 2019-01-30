@@ -37,7 +37,7 @@ class FramePayload(Base):
 
 	@property
 	def CustomPattern(self):
-		"""
+		"""If Frame Payload type is Custom, then this attribute specifies a string in hex format.
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class FramePayload(Base):
 
 	@property
 	def CustomRepeat(self):
-		"""
+		"""If true, Custom Pattern is repeated.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class FramePayload(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""The types of Frame Payload.
 
 		Returns:
 			str(CJPAT|CRPAT|custom|decrementByte|decrementWord|incrementByte|incrementWord|random)

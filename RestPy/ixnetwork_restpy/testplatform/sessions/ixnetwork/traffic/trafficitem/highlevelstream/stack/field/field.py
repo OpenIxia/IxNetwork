@@ -37,7 +37,7 @@ class Field(Base):
 
 	@property
 	def __id__(self):
-		"""
+		"""An alphanumeric string that defines the internal field ID.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class Field(Base):
 
 	@property
 	def ActiveFieldChoice(self):
-		"""
+		"""It is used to select a particular option out of multiple field choice options. The activeFieldChoice will be true only for the fields of the option which is active in GUI.
 
 		Returns:
 			bool
@@ -58,7 +58,7 @@ class Field(Base):
 
 	@property
 	def Auto(self):
-		"""
+		"""If true, value for the particular field is considered automatically. If false, user can set values for the particular field.
 
 		Returns:
 			bool
@@ -70,7 +70,7 @@ class Field(Base):
 
 	@property
 	def CountValue(self):
-		"""
+		"""It is used to get the count value of the field.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class Field(Base):
 
 	@property
 	def DefaultValue(self):
-		"""
+		"""It is used to get the default value of the field.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class Field(Base):
 
 	@property
 	def DisplayName(self):
-		"""
+		"""It is used to get the name of the particular field as available in Packet/Qos
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class Field(Base):
 
 	@property
 	def EnumValues(self):
-		"""
+		"""If the field has string options, then each string is associated with a particular integer value. This attribute is used to get the mapping of integer value with the corresponding string option.
 
 		Returns:
 			list(str)
@@ -109,7 +109,7 @@ class Field(Base):
 
 	@property
 	def FieldChoice(self):
-		"""
+		"""It is true for all the field options active in the GUI.
 
 		Returns:
 			bool
@@ -127,7 +127,7 @@ class Field(Base):
 
 	@property
 	def FieldValue(self):
-		"""
+		"""An alphanumeric string that returns the value of the field.
 
 		Returns:
 			str
@@ -139,7 +139,7 @@ class Field(Base):
 
 	@property
 	def FixedBits(self):
-		"""
+		"""Sets all the fields to a constant specified size.
 
 		Returns:
 			str
@@ -151,7 +151,7 @@ class Field(Base):
 
 	@property
 	def FullMesh(self):
-		"""
+		"""If true, Full Mesh is enabled.
 
 		Returns:
 			bool
@@ -163,7 +163,7 @@ class Field(Base):
 
 	@property
 	def Length(self):
-		"""
+		"""It is used to get the length of the field in bits.
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class Field(Base):
 
 	@property
 	def Level(self):
-		"""
+		"""It is used to get the level of the field in bits.
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class Field(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""An alphanumeric string that returns the name of the field.
 
 		Returns:
 			str
@@ -214,7 +214,7 @@ class Field(Base):
 
 	@property
 	def Offset(self):
-		"""
+		"""It is used to get the position of the field in terms of number of bits.
 
 		Returns:
 			number
@@ -223,7 +223,7 @@ class Field(Base):
 
 	@property
 	def OffsetFromRoot(self):
-		"""
+		"""It is used to get the position of the field in terms of number of bits from the root packet.
 
 		Returns:
 			number
@@ -244,7 +244,7 @@ class Field(Base):
 
 	@property
 	def Optional(self):
-		"""
+		"""A read-only field that accepts true/false to make the field optional.
 
 		Returns:
 			bool
@@ -253,7 +253,7 @@ class Field(Base):
 
 	@property
 	def OptionalEnabled(self):
-		"""
+		"""If true, the optional field can accept values.
 
 		Returns:
 			bool
@@ -265,7 +265,7 @@ class Field(Base):
 
 	@property
 	def RandomMask(self):
-		"""
+		"""Select to use random mask bit values.
 
 		Returns:
 			str
@@ -277,7 +277,7 @@ class Field(Base):
 
 	@property
 	def RateVaried(self):
-		"""
+		"""It is used to get the varied rate of packet field.
 
 		Returns:
 			bool
@@ -286,7 +286,7 @@ class Field(Base):
 
 	@property
 	def ReadOnly(self):
-		"""
+		"""It is used to check whether particular field is readOnly or otherwise.
 
 		Returns:
 			bool
@@ -295,7 +295,7 @@ class Field(Base):
 
 	@property
 	def RequiresUdf(self):
-		"""
+		"""It is used to check whether UDF is required.
 
 		Returns:
 			bool
@@ -304,7 +304,7 @@ class Field(Base):
 
 	@property
 	def Seed(self):
-		"""
+		"""Select to use seed.
 
 		Returns:
 			str
@@ -316,7 +316,7 @@ class Field(Base):
 
 	@property
 	def SingleValue(self):
-		"""
+		"""If valueType is to be set as singleValue, then after setting the valueType to singleValue, the singleValue is set to a particular value.
 
 		Returns:
 			str
@@ -328,7 +328,7 @@ class Field(Base):
 
 	@property
 	def StartValue(self):
-		"""
+		"""Specifies the initial value of increment or decrement.
 
 		Returns:
 			str
@@ -340,7 +340,7 @@ class Field(Base):
 
 	@property
 	def StepValue(self):
-		"""
+		"""Specifies the value by which value will keep incrementing or decrementing.
 
 		Returns:
 			str
@@ -352,7 +352,7 @@ class Field(Base):
 
 	@property
 	def SupportsNonRepeatableRandom(self):
-		"""
+		"""Indicates whether or not this type of stack supports non-repeatable random
 
 		Returns:
 			bool
@@ -370,7 +370,7 @@ class Field(Base):
 
 	@property
 	def TrackingEnabled(self):
-		"""
+		"""If true, tracking is enabled on the particular field in flowTracking.
 
 		Returns:
 			bool
@@ -382,7 +382,7 @@ class Field(Base):
 
 	@property
 	def ValueFormat(self):
-		"""
+		"""It is used to get the format of the field like whether format is mac, hex, integer, ipv4 and ipv6.
 
 		Returns:
 			str(aTM|bool|debug|decimal|decimalFixed2|decimalSigned8|fCID|float|floatEng|hex|hex8WithColons|hex8WithSpaces|iPv4|iPv6|mAC|mACMAC|mACSiteId|mACVLAN|mACVLANSiteId|string|unknown|varLenHex)
@@ -391,7 +391,7 @@ class Field(Base):
 
 	@property
 	def ValueList(self):
-		"""
+		"""If valueType is set as valueList, then after setting valueType to valueList a, list of values can be provided using this attribute.
 
 		Returns:
 			list(str)
@@ -403,7 +403,7 @@ class Field(Base):
 
 	@property
 	def ValueType(self):
-		"""
+		"""It is used to select a particular value type.
 
 		Returns:
 			str(decrement|increment|nonRepeatableRandom|random|repeatableRandomRange|singleValue|valueList)
@@ -420,42 +420,42 @@ class Field(Base):
 		By default the find method takes no parameters and will retrieve all field data from the server.
 
 		Args:
-			__id__ (str): 
-			ActiveFieldChoice (bool): 
-			Auto (bool): 
-			CountValue (str): 
-			DefaultValue (str): 
-			DisplayName (str): 
-			EnumValues (list(str)): 
-			FieldChoice (bool): 
+			__id__ (str): An alphanumeric string that defines the internal field ID.
+			ActiveFieldChoice (bool): It is used to select a particular option out of multiple field choice options. The activeFieldChoice will be true only for the fields of the option which is active in GUI.
+			Auto (bool): If true, value for the particular field is considered automatically. If false, user can set values for the particular field.
+			CountValue (str): It is used to get the count value of the field.
+			DefaultValue (str): It is used to get the default value of the field.
+			DisplayName (str): It is used to get the name of the particular field as available in Packet/Qos
+			EnumValues (list(str)): If the field has string options, then each string is associated with a particular integer value. This attribute is used to get the mapping of integer value with the corresponding string option.
+			FieldChoice (bool): It is true for all the field options active in the GUI.
 			FieldTypeId (str): 
-			FieldValue (str): 
-			FixedBits (str): 
-			FullMesh (bool): 
-			Length (number): 
-			Level (bool): 
+			FieldValue (str): An alphanumeric string that returns the value of the field.
+			FixedBits (str): Sets all the fields to a constant specified size.
+			FullMesh (bool): If true, Full Mesh is enabled.
+			Length (number): It is used to get the length of the field in bits.
+			Level (bool): It is used to get the level of the field in bits.
 			MaxValue (str): 
 			MinValue (str): 
-			Name (str): 
-			Offset (number): 
-			OffsetFromRoot (number): 
+			Name (str): An alphanumeric string that returns the name of the field.
+			Offset (number): It is used to get the position of the field in terms of number of bits.
+			OffsetFromRoot (number): It is used to get the position of the field in terms of number of bits from the root packet.
 			OnTheFlyMask (str): 
-			Optional (bool): 
-			OptionalEnabled (bool): 
-			RandomMask (str): 
-			RateVaried (bool): 
-			ReadOnly (bool): 
-			RequiresUdf (bool): 
-			Seed (str): 
-			SingleValue (str): 
-			StartValue (str): 
-			StepValue (str): 
-			SupportsNonRepeatableRandom (bool): 
+			Optional (bool): A read-only field that accepts true/false to make the field optional.
+			OptionalEnabled (bool): If true, the optional field can accept values.
+			RandomMask (str): Select to use random mask bit values.
+			RateVaried (bool): It is used to get the varied rate of packet field.
+			ReadOnly (bool): It is used to check whether particular field is readOnly or otherwise.
+			RequiresUdf (bool): It is used to check whether UDF is required.
+			Seed (str): Select to use seed.
+			SingleValue (str): If valueType is to be set as singleValue, then after setting the valueType to singleValue, the singleValue is set to a particular value.
+			StartValue (str): Specifies the initial value of increment or decrement.
+			StepValue (str): Specifies the value by which value will keep incrementing or decrementing.
+			SupportsNonRepeatableRandom (bool): Indicates whether or not this type of stack supports non-repeatable random
 			SupportsOnTheFlyMask (bool): 
-			TrackingEnabled (bool): 
-			ValueFormat (str(aTM|bool|debug|decimal|decimalFixed2|decimalSigned8|fCID|float|floatEng|hex|hex8WithColons|hex8WithSpaces|iPv4|iPv6|mAC|mACMAC|mACSiteId|mACVLAN|mACVLANSiteId|string|unknown|varLenHex)): 
-			ValueList (list(str)): 
-			ValueType (str(decrement|increment|nonRepeatableRandom|random|repeatableRandomRange|singleValue|valueList)): 
+			TrackingEnabled (bool): If true, tracking is enabled on the particular field in flowTracking.
+			ValueFormat (str(aTM|bool|debug|decimal|decimalFixed2|decimalSigned8|fCID|float|floatEng|hex|hex8WithColons|hex8WithSpaces|iPv4|iPv6|mAC|mACMAC|mACSiteId|mACVLAN|mACVLANSiteId|string|unknown|varLenHex)): It is used to get the format of the field like whether format is mac, hex, integer, ipv4 and ipv6.
+			ValueList (list(str)): If valueType is set as valueList, then after setting valueType to valueList a, list of values can be provided using this attribute.
+			ValueType (str(decrement|increment|nonRepeatableRandom|random|repeatableRandomRange|singleValue|valueList)): It is used to select a particular value type.
 
 		Returns:
 			self: This instance with matching field data retrieved from the server available through an iterator or index

@@ -65,7 +65,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ActiveNanoSeconds(self):
-		"""
+		"""This describes the duration (in ns) for which the flow entry is active.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ActiveSeconds(self):
-		"""
+		"""This describes the duration (in sec) for which the flow entry is active.
 
 		Returns:
 			number
@@ -83,7 +83,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpDstHwAddress(self):
-		"""
+		"""This describes the target hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -92,7 +92,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpDstHwAddressMask(self):
-		"""
+		"""This describes the mask value of the target hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -101,7 +101,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpDstIpv4Address(self):
-		"""
+		"""This describes the target IPv4 address in the ARP payload.
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpDstIpv4AddressMask(self):
-		"""
+		"""This describes the mask value of the target IPv4 address in the ARP payload.
 
 		Returns:
 			str
@@ -119,7 +119,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""
+		"""This describes the ARP opcode.
 
 		Returns:
 			str
@@ -128,7 +128,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpSrcHwAddress(self):
-		"""
+		"""This describes the source hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -137,7 +137,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpSrcHwAddressMask(self):
-		"""
+		"""This describes the mask value of the source hardware address in the ARP payload.
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpSrcIpv4Address(self):
-		"""
+		"""This describes the source IPv4 address in the ARP payload.
 
 		Returns:
 			str
@@ -155,7 +155,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ArpSrcIpv4AddressMask(self):
-		"""
+		"""This describes the mask value of the source IPv4 address in the ARP payload.
 
 		Returns:
 			str
@@ -164,7 +164,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def BytesCount(self):
-		"""
+		"""This describes the number of bytes in flow.
 
 		Returns:
 			str
@@ -173,7 +173,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Cookie(self):
-		"""
+		"""This describes the opaque controller-issued identifier.
 
 		Returns:
 			str
@@ -182,7 +182,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def CookieMask(self):
-		"""
+		"""This describes the mask used to restrict the cookie bits.
 
 		Returns:
 			str
@@ -191,7 +191,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""This describes the datapath ID of the switch.
 
 		Returns:
 			str
@@ -200,7 +200,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""This describes the datapath ID, in hexadecimal format, of the switch.
 
 		Returns:
 			str
@@ -209,7 +209,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""
+		"""This describes the ethernet destination address of the flow match.
 
 		Returns:
 			str
@@ -218,7 +218,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def EthernetDestinationMask(self):
-		"""
+		"""This describes the Ethernet destination mask value.
 
 		Returns:
 			str
@@ -227,7 +227,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def EthernetSource(self):
-		"""
+		"""This describes the ethernet source address of the flow match.
 
 		Returns:
 			str
@@ -236,7 +236,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def EthernetSourceMask(self):
-		"""
+		"""This describes the Ethernet Source mask value.
 
 		Returns:
 			str
@@ -245,7 +245,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def EthernetType(self):
-		"""
+		"""This describes the Ethernet type of the flow match.
 
 		Returns:
 			str
@@ -254,7 +254,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""This describes the data of the Experimenter.
 
 		Returns:
 			str
@@ -263,7 +263,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""
+		"""This describes the data length of the Experimenter.
 
 		Returns:
 			number
@@ -272,7 +272,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ExperimenterField(self):
-		"""
+		"""This describes the field type for experimenter match.
 
 		Returns:
 			number
@@ -281,7 +281,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ExperimenterHashMask(self):
-		"""
+		"""This describes the experimenter hash mask value.
 
 		Returns:
 			bool
@@ -290,7 +290,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""
+		"""This describes the unique identifier for the Experimenter.
 
 		Returns:
 			str
@@ -299,7 +299,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Flags(self):
-		"""
+		"""This describes the flags used for this configuration.
 
 		Returns:
 			number
@@ -308,7 +308,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def HardTimeout(self):
-		"""
+		"""This describes the duration (in sec) before expiration.
 
 		Returns:
 			number
@@ -317,7 +317,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""
+		"""This describes the ICMP code.
 
 		Returns:
 			str
@@ -326,7 +326,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""
+		"""This describes the ICMP type.
 
 		Returns:
 			str
@@ -335,7 +335,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""
+		"""This describes the ICMPv6 code.
 
 		Returns:
 			str
@@ -344,7 +344,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""
+		"""This describes the ICMPv6 type.
 
 		Returns:
 			str
@@ -353,7 +353,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def IdleTimeout(self):
-		"""
+		"""This describes the duration (in sec) for which the switch is idle before expiration.
 
 		Returns:
 			number
@@ -362,7 +362,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def InPort(self):
-		"""
+		"""This describes the input port of the flow match.
 
 		Returns:
 			str
@@ -371,7 +371,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def IpDscp(self):
-		"""
+		"""This describes the IP ToS of the flow match.
 
 		Returns:
 			str
@@ -380,7 +380,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def IpEcn(self):
-		"""
+		"""This describes the ECN bits of the IP header.
 
 		Returns:
 			str
@@ -389,7 +389,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""This describes the IP Protocol type of the flow match.
 
 		Returns:
 			str
@@ -398,7 +398,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""
+		"""This describes the IPv4 destination of the flow match.
 
 		Returns:
 			str
@@ -407,7 +407,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""
+		"""This describes the IPv4 source address of the flow match.
 
 		Returns:
 			str
@@ -416,7 +416,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""
+		"""This describes the IPv6 destination address.
 
 		Returns:
 			str
@@ -425,7 +425,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6DestinationMask(self):
-		"""
+		"""This describes the mask value of IPv6 destination address.
 
 		Returns:
 			str
@@ -434,7 +434,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""
+		"""The IPv6 Extension Header pseudo-field.
 
 		Returns:
 			number
@@ -443,7 +443,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6ExtHeaderMask(self):
-		"""
+		"""This describes the mask value of the IPv6 Extension Header.
 
 		Returns:
 			number
@@ -452,7 +452,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""
+		"""This describes the IPv6 Flow label.
 
 		Returns:
 			str
@@ -461,7 +461,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6FlowLabelMask(self):
-		"""
+		"""This describes the mask value of IPv6 Flow label.
 
 		Returns:
 			str
@@ -470,7 +470,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6NdDll(self):
-		"""
+		"""The target link-layer address option in an IPv6 Neighbor Discovery message.
 
 		Returns:
 			str
@@ -479,7 +479,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""
+		"""This describes the source link-layer address option in an IPv6 Neighbor Discovery message.
 
 		Returns:
 			str
@@ -488,7 +488,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""
+		"""This describes the target address in an IPv6 Neighbor Discovery message.
 
 		Returns:
 			str
@@ -497,7 +497,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""
+		"""This describes the IPv6 source address.
 
 		Returns:
 			str
@@ -506,7 +506,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Ipv6SourceMask(self):
-		"""
+		"""This describes the mask value of IPv6 source address.
 
 		Returns:
 			str
@@ -515,7 +515,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""This describes the local IP address of the switch.
 
 		Returns:
 			str
@@ -524,7 +524,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Metadata(self):
-		"""
+		"""This describes the table metadata value used to pass information between tables.
 
 		Returns:
 			str
@@ -533,7 +533,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def MetadataMask(self):
-		"""
+		"""This describes the metadata bitmask value.
 
 		Returns:
 			str
@@ -542,7 +542,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def MplsBos(self):
-		"""
+		"""This describes the BoS bit in the first MPLS shim header.
 
 		Returns:
 			str
@@ -551,7 +551,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def MplsLabel(self):
-		"""
+		"""This describes the LABEL in the first MPLS shim header.
 
 		Returns:
 			str
@@ -560,7 +560,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def MplsTc(self):
-		"""
+		"""This describes the TC in the first MPLS shim header.
 
 		Returns:
 			str
@@ -569,7 +569,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""This describes the OpenFlow version supported by this configuration.
 
 		Returns:
 			str
@@ -578,7 +578,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def NumberOfInstructions(self):
-		"""
+		"""This describes the number of instructions for this Flow range. The default value is 0. The minimum value is 0 and the maximum value is 10.
 
 		Returns:
 			str
@@ -587,7 +587,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def NumberofActions(self):
-		"""
+		"""This describes the number of actions associated with the flow entry.
 
 		Returns:
 			str
@@ -596,7 +596,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def OutGroup(self):
-		"""
+		"""This describes the out group value. It requires matching entries to include this as an output group.
 
 		Returns:
 			number
@@ -605,7 +605,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def OutPort(self):
-		"""
+		"""This describes the out port value. It requires matching entries to include this as an output port.
 
 		Returns:
 			number
@@ -614,7 +614,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def PacketsCount(self):
-		"""
+		"""This describes the number of packets in flow.
 
 		Returns:
 			str
@@ -623,7 +623,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def PbbIsid(self):
-		"""
+		"""This describes the I-SID in the first PBB service instance tag.
 
 		Returns:
 			str
@@ -632,7 +632,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def PbbIsidMask(self):
-		"""
+		"""This describes the mask value of PBB I-SID.
 
 		Returns:
 			str
@@ -641,7 +641,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def PhysicalInPort(self):
-		"""
+		"""This describes the physical In port value for this flow range. It is the underlying physical port when packet is received on a logical port.
 
 		Returns:
 			str
@@ -650,7 +650,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def Priority(self):
-		"""
+		"""This describes the Priority of the flow entry.
 
 		Returns:
 			number
@@ -659,7 +659,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""This describes the IP address of the remote end of the OF Channel.
 
 		Returns:
 			str
@@ -668,7 +668,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def SctpDestination(self):
-		"""
+		"""This describes the SCTP target port.
 
 		Returns:
 			str
@@ -677,7 +677,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def SctpSource(self):
-		"""
+		"""This describes the SCTP source port.
 
 		Returns:
 			str
@@ -686,7 +686,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""This describes the ID of the table in which the entry is stored.
 
 		Returns:
 			str
@@ -695,7 +695,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TcpDestination(self):
-		"""
+		"""This describes the TCP destination port.
 
 		Returns:
 			str
@@ -704,7 +704,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TcpSource(self):
-		"""
+		"""This describes the TCP source port.
 
 		Returns:
 			str
@@ -713,7 +713,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TransportDestination(self):
-		"""
+		"""This describes the transport destination port of the flow match.
 
 		Returns:
 			str
@@ -722,7 +722,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TransportSource(self):
-		"""
+		"""This describes the transport source port of the flow match.
 
 		Returns:
 			str
@@ -731,7 +731,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""This describes the unique identifier used for the Tunnel.
 
 		Returns:
 			str
@@ -740,7 +740,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def TunnelIdMask(self):
-		"""
+		"""This describes the Tunnel ID mask value.
 
 		Returns:
 			str
@@ -749,7 +749,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def UdpDestination(self):
-		"""
+		"""This describes the UDP destination port.
 
 		Returns:
 			str
@@ -758,7 +758,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def UdpSource(self):
-		"""
+		"""This describes the UDP source port.
 
 		Returns:
 			str
@@ -767,7 +767,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""This describes the VLAN ID of the flow match.
 
 		Returns:
 			str
@@ -776,7 +776,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def VlanMask(self):
-		"""
+		"""This describes the VLAN mask value.
 
 		Returns:
 			number
@@ -785,7 +785,7 @@ class SwitchFlowLearnedInfo(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""This describes the VLAN Priority of the flow match.
 
 		Returns:
 			str
@@ -799,87 +799,87 @@ class SwitchFlowLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchFlowLearnedInfo data from the server.
 
 		Args:
-			ActiveNanoSeconds (number): 
-			ActiveSeconds (number): 
-			ArpDstHwAddress (str): 
-			ArpDstHwAddressMask (str): 
-			ArpDstIpv4Address (str): 
-			ArpDstIpv4AddressMask (str): 
-			ArpOpcode (str): 
-			ArpSrcHwAddress (str): 
-			ArpSrcHwAddressMask (str): 
-			ArpSrcIpv4Address (str): 
-			ArpSrcIpv4AddressMask (str): 
-			BytesCount (str): 
-			Cookie (str): 
-			CookieMask (str): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			EthernetDestination (str): 
-			EthernetDestinationMask (str): 
-			EthernetSource (str): 
-			EthernetSourceMask (str): 
-			EthernetType (str): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			ExperimenterField (number): 
-			ExperimenterHashMask (bool): 
-			ExperimenterId (str): 
-			Flags (number): 
-			HardTimeout (number): 
-			Icmpv4Code (str): 
-			Icmpv4Type (str): 
-			Icmpv6Code (str): 
-			Icmpv6Type (str): 
-			IdleTimeout (number): 
-			InPort (str): 
-			IpDscp (str): 
-			IpEcn (str): 
-			IpProtocol (str): 
-			Ipv4Destination (str): 
-			Ipv4Source (str): 
-			Ipv6Destination (str): 
-			Ipv6DestinationMask (str): 
-			Ipv6ExtHeader (number): 
-			Ipv6ExtHeaderMask (number): 
-			Ipv6FlowLabel (str): 
-			Ipv6FlowLabelMask (str): 
-			Ipv6NdDll (str): 
-			Ipv6NdSll (str): 
-			Ipv6NdTarget (str): 
-			Ipv6Source (str): 
-			Ipv6SourceMask (str): 
-			LocalIp (str): 
-			Metadata (str): 
-			MetadataMask (str): 
-			MplsBos (str): 
-			MplsLabel (str): 
-			MplsTc (str): 
-			NegotiatedVersion (str): 
-			NumberOfInstructions (str): 
-			NumberofActions (str): 
-			OutGroup (number): 
-			OutPort (number): 
-			PacketsCount (str): 
-			PbbIsid (str): 
-			PbbIsidMask (str): 
-			PhysicalInPort (str): 
-			Priority (number): 
-			RemoteIp (str): 
-			SctpDestination (str): 
-			SctpSource (str): 
-			TableId (str): 
-			TcpDestination (str): 
-			TcpSource (str): 
-			TransportDestination (str): 
-			TransportSource (str): 
-			TunnelId (str): 
-			TunnelIdMask (str): 
-			UdpDestination (str): 
-			UdpSource (str): 
-			VlanId (str): 
-			VlanMask (number): 
-			VlanPriority (str): 
+			ActiveNanoSeconds (number): This describes the duration (in ns) for which the flow entry is active.
+			ActiveSeconds (number): This describes the duration (in sec) for which the flow entry is active.
+			ArpDstHwAddress (str): This describes the target hardware address in the ARP payload.
+			ArpDstHwAddressMask (str): This describes the mask value of the target hardware address in the ARP payload.
+			ArpDstIpv4Address (str): This describes the target IPv4 address in the ARP payload.
+			ArpDstIpv4AddressMask (str): This describes the mask value of the target IPv4 address in the ARP payload.
+			ArpOpcode (str): This describes the ARP opcode.
+			ArpSrcHwAddress (str): This describes the source hardware address in the ARP payload.
+			ArpSrcHwAddressMask (str): This describes the mask value of the source hardware address in the ARP payload.
+			ArpSrcIpv4Address (str): This describes the source IPv4 address in the ARP payload.
+			ArpSrcIpv4AddressMask (str): This describes the mask value of the source IPv4 address in the ARP payload.
+			BytesCount (str): This describes the number of bytes in flow.
+			Cookie (str): This describes the opaque controller-issued identifier.
+			CookieMask (str): This describes the mask used to restrict the cookie bits.
+			DataPathId (str): This describes the datapath ID of the switch.
+			DataPathIdAsHex (str): This describes the datapath ID, in hexadecimal format, of the switch.
+			EthernetDestination (str): This describes the ethernet destination address of the flow match.
+			EthernetDestinationMask (str): This describes the Ethernet destination mask value.
+			EthernetSource (str): This describes the ethernet source address of the flow match.
+			EthernetSourceMask (str): This describes the Ethernet Source mask value.
+			EthernetType (str): This describes the Ethernet type of the flow match.
+			ExperimenterData (str): This describes the data of the Experimenter.
+			ExperimenterDataLength (number): This describes the data length of the Experimenter.
+			ExperimenterField (number): This describes the field type for experimenter match.
+			ExperimenterHashMask (bool): This describes the experimenter hash mask value.
+			ExperimenterId (str): This describes the unique identifier for the Experimenter.
+			Flags (number): This describes the flags used for this configuration.
+			HardTimeout (number): This describes the duration (in sec) before expiration.
+			Icmpv4Code (str): This describes the ICMP code.
+			Icmpv4Type (str): This describes the ICMP type.
+			Icmpv6Code (str): This describes the ICMPv6 code.
+			Icmpv6Type (str): This describes the ICMPv6 type.
+			IdleTimeout (number): This describes the duration (in sec) for which the switch is idle before expiration.
+			InPort (str): This describes the input port of the flow match.
+			IpDscp (str): This describes the IP ToS of the flow match.
+			IpEcn (str): This describes the ECN bits of the IP header.
+			IpProtocol (str): This describes the IP Protocol type of the flow match.
+			Ipv4Destination (str): This describes the IPv4 destination of the flow match.
+			Ipv4Source (str): This describes the IPv4 source address of the flow match.
+			Ipv6Destination (str): This describes the IPv6 destination address.
+			Ipv6DestinationMask (str): This describes the mask value of IPv6 destination address.
+			Ipv6ExtHeader (number): The IPv6 Extension Header pseudo-field.
+			Ipv6ExtHeaderMask (number): This describes the mask value of the IPv6 Extension Header.
+			Ipv6FlowLabel (str): This describes the IPv6 Flow label.
+			Ipv6FlowLabelMask (str): This describes the mask value of IPv6 Flow label.
+			Ipv6NdDll (str): The target link-layer address option in an IPv6 Neighbor Discovery message.
+			Ipv6NdSll (str): This describes the source link-layer address option in an IPv6 Neighbor Discovery message.
+			Ipv6NdTarget (str): This describes the target address in an IPv6 Neighbor Discovery message.
+			Ipv6Source (str): This describes the IPv6 source address.
+			Ipv6SourceMask (str): This describes the mask value of IPv6 source address.
+			LocalIp (str): This describes the local IP address of the switch.
+			Metadata (str): This describes the table metadata value used to pass information between tables.
+			MetadataMask (str): This describes the metadata bitmask value.
+			MplsBos (str): This describes the BoS bit in the first MPLS shim header.
+			MplsLabel (str): This describes the LABEL in the first MPLS shim header.
+			MplsTc (str): This describes the TC in the first MPLS shim header.
+			NegotiatedVersion (str): This describes the OpenFlow version supported by this configuration.
+			NumberOfInstructions (str): This describes the number of instructions for this Flow range. The default value is 0. The minimum value is 0 and the maximum value is 10.
+			NumberofActions (str): This describes the number of actions associated with the flow entry.
+			OutGroup (number): This describes the out group value. It requires matching entries to include this as an output group.
+			OutPort (number): This describes the out port value. It requires matching entries to include this as an output port.
+			PacketsCount (str): This describes the number of packets in flow.
+			PbbIsid (str): This describes the I-SID in the first PBB service instance tag.
+			PbbIsidMask (str): This describes the mask value of PBB I-SID.
+			PhysicalInPort (str): This describes the physical In port value for this flow range. It is the underlying physical port when packet is received on a logical port.
+			Priority (number): This describes the Priority of the flow entry.
+			RemoteIp (str): This describes the IP address of the remote end of the OF Channel.
+			SctpDestination (str): This describes the SCTP target port.
+			SctpSource (str): This describes the SCTP source port.
+			TableId (str): This describes the ID of the table in which the entry is stored.
+			TcpDestination (str): This describes the TCP destination port.
+			TcpSource (str): This describes the TCP source port.
+			TransportDestination (str): This describes the transport destination port of the flow match.
+			TransportSource (str): This describes the transport source port of the flow match.
+			TunnelId (str): This describes the unique identifier used for the Tunnel.
+			TunnelIdMask (str): This describes the Tunnel ID mask value.
+			UdpDestination (str): This describes the UDP destination port.
+			UdpSource (str): This describes the UDP source port.
+			VlanId (str): This describes the VLAN ID of the flow match.
+			VlanMask (number): This describes the VLAN mask value.
+			VlanPriority (str): This describes the VLAN Priority of the flow match.
 
 		Returns:
 			self: This instance with matching switchFlowLearnedInfo data retrieved from the server available through an iterator or index

@@ -206,7 +206,7 @@ class L3Site(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the L3 site is enabled.
 
 		Returns:
 			bool
@@ -218,7 +218,7 @@ class L3Site(Base):
 
 	@property
 	def ExposeEachVrfAsTrafficEndpoint(self):
-		"""
+		"""If true, exposes each VRF as traffic endpoints.
 
 		Returns:
 			bool
@@ -230,7 +230,7 @@ class L3Site(Base):
 
 	@property
 	def IncludePmsiTunnelAttribute(self):
-		"""
+		"""If true, this will cause Ixia to include PMSI Tunnel Attribute inside the Intra-AS A-D route containing tunnel information to bind a mVPN to a particular RSVP-TE P2MP LSP. This attribute is not needed only when the user wants to setup S-PMSI only and also does not want to bind the PMSI to any particular P-Tunnel (P2MP LSP).
 
 		Returns:
 			bool
@@ -242,7 +242,7 @@ class L3Site(Base):
 
 	@property
 	def IsLearnedInfoRefreshed(self):
-		"""
+		"""If true, the L3 site learned information is refreshed.
 
 		Returns:
 			bool
@@ -251,7 +251,7 @@ class L3Site(Base):
 
 	@property
 	def MplsAssignedUpstreamLabel(self):
-		"""
+		"""This label is used when Include PMSI Tunnel Attribute inside Intra-AS A-D Route is enabled. The PMSI Tunnel Identifier will contain this label value.
 
 		Returns:
 			number
@@ -263,7 +263,7 @@ class L3Site(Base):
 
 	@property
 	def MulticastGroupAddressStep(self):
-		"""
+		"""The increment step to be added to each additional Multicast Group Address.
 
 		Returns:
 			str
@@ -275,7 +275,7 @@ class L3Site(Base):
 
 	@property
 	def RsvpP2mpId(self):
-		"""
+		"""The P2MP Id represented in IP address format.
 
 		Returns:
 			str
@@ -287,7 +287,7 @@ class L3Site(Base):
 
 	@property
 	def RsvpTunnelId(self):
-		"""
+		"""This allows to select the P2MP LSP that can be used for this particular mVPN. An LSP is uniquely identified by P2MP-Id, Tunnel Id and Extended Tunnel ID (Tunnel Head Address
 
 		Returns:
 			number
@@ -299,7 +299,7 @@ class L3Site(Base):
 
 	@property
 	def SameRtAsL3SiteRt(self):
-		"""
+		"""If enabled, this allows UMH VRF to use same RT as configured in l3 site
 
 		Returns:
 			bool
@@ -311,7 +311,7 @@ class L3Site(Base):
 
 	@property
 	def SameTargetListAsL3SiteTargetList(self):
-		"""
+		"""If enabled, this allows UMH VRF to use same target list as configured in l3 site
 
 		Returns:
 			bool
@@ -323,7 +323,7 @@ class L3Site(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -335,7 +335,7 @@ class L3Site(Base):
 
 	@property
 	def TunnelType(self):
-		"""
+		"""The tunnel type.
 
 		Returns:
 			str(tunnelTypePimGreRosenDraft|tunnelTypeRsvpP2mp|tunnelTypeMldpP2mp)
@@ -347,7 +347,7 @@ class L3Site(Base):
 
 	@property
 	def UseUpstreamAssignedLabel(self):
-		"""
+		"""This field indicates whether the configured upstream label AS needs to be used. If false, the Upstream Assigned Label field is disabled.
 
 		Returns:
 			bool
@@ -359,7 +359,7 @@ class L3Site(Base):
 
 	@property
 	def VrfCount(self):
-		"""
+		"""Number of VRFs within the VRF Range.
 
 		Returns:
 			number
@@ -373,19 +373,19 @@ class L3Site(Base):
 		"""Adds a new l3Site node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			ExposeEachVrfAsTrafficEndpoint (bool): 
-			IncludePmsiTunnelAttribute (bool): 
-			MplsAssignedUpstreamLabel (number): 
-			MulticastGroupAddressStep (str): 
-			RsvpP2mpId (str): 
-			RsvpTunnelId (number): 
-			SameRtAsL3SiteRt (bool): 
-			SameTargetListAsL3SiteTargetList (bool): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
-			TunnelType (str(tunnelTypePimGreRosenDraft|tunnelTypeRsvpP2mp|tunnelTypeMldpP2mp)): 
-			UseUpstreamAssignedLabel (bool): 
-			VrfCount (number): 
+			Enabled (bool): If true, the L3 site is enabled.
+			ExposeEachVrfAsTrafficEndpoint (bool): If true, exposes each VRF as traffic endpoints.
+			IncludePmsiTunnelAttribute (bool): If true, this will cause Ixia to include PMSI Tunnel Attribute inside the Intra-AS A-D route containing tunnel information to bind a mVPN to a particular RSVP-TE P2MP LSP. This attribute is not needed only when the user wants to setup S-PMSI only and also does not want to bind the PMSI to any particular P-Tunnel (P2MP LSP).
+			MplsAssignedUpstreamLabel (number): This label is used when Include PMSI Tunnel Attribute inside Intra-AS A-D Route is enabled. The PMSI Tunnel Identifier will contain this label value.
+			MulticastGroupAddressStep (str): The increment step to be added to each additional Multicast Group Address.
+			RsvpP2mpId (str): The P2MP Id represented in IP address format.
+			RsvpTunnelId (number): This allows to select the P2MP LSP that can be used for this particular mVPN. An LSP is uniquely identified by P2MP-Id, Tunnel Id and Extended Tunnel ID (Tunnel Head Address
+			SameRtAsL3SiteRt (bool): If enabled, this allows UMH VRF to use same RT as configured in l3 site
+			SameTargetListAsL3SiteTargetList (bool): If enabled, this allows UMH VRF to use same target list as configured in l3 site
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
+			TunnelType (str(tunnelTypePimGreRosenDraft|tunnelTypeRsvpP2mp|tunnelTypeMldpP2mp)): The tunnel type.
+			UseUpstreamAssignedLabel (bool): This field indicates whether the configured upstream label AS needs to be used. If false, the Upstream Assigned Label field is disabled.
+			VrfCount (number): Number of VRFs within the VRF Range.
 
 		Returns:
 			self: This instance with all currently retrieved l3Site data using find and the newly added l3Site data available through an iterator or index
@@ -411,20 +411,20 @@ class L3Site(Base):
 		By default the find method takes no parameters and will retrieve all l3Site data from the server.
 
 		Args:
-			Enabled (bool): 
-			ExposeEachVrfAsTrafficEndpoint (bool): 
-			IncludePmsiTunnelAttribute (bool): 
-			IsLearnedInfoRefreshed (bool): 
-			MplsAssignedUpstreamLabel (number): 
-			MulticastGroupAddressStep (str): 
-			RsvpP2mpId (str): 
-			RsvpTunnelId (number): 
-			SameRtAsL3SiteRt (bool): 
-			SameTargetListAsL3SiteTargetList (bool): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
-			TunnelType (str(tunnelTypePimGreRosenDraft|tunnelTypeRsvpP2mp|tunnelTypeMldpP2mp)): 
-			UseUpstreamAssignedLabel (bool): 
-			VrfCount (number): 
+			Enabled (bool): If true, the L3 site is enabled.
+			ExposeEachVrfAsTrafficEndpoint (bool): If true, exposes each VRF as traffic endpoints.
+			IncludePmsiTunnelAttribute (bool): If true, this will cause Ixia to include PMSI Tunnel Attribute inside the Intra-AS A-D route containing tunnel information to bind a mVPN to a particular RSVP-TE P2MP LSP. This attribute is not needed only when the user wants to setup S-PMSI only and also does not want to bind the PMSI to any particular P-Tunnel (P2MP LSP).
+			IsLearnedInfoRefreshed (bool): If true, the L3 site learned information is refreshed.
+			MplsAssignedUpstreamLabel (number): This label is used when Include PMSI Tunnel Attribute inside Intra-AS A-D Route is enabled. The PMSI Tunnel Identifier will contain this label value.
+			MulticastGroupAddressStep (str): The increment step to be added to each additional Multicast Group Address.
+			RsvpP2mpId (str): The P2MP Id represented in IP address format.
+			RsvpTunnelId (number): This allows to select the P2MP LSP that can be used for this particular mVPN. An LSP is uniquely identified by P2MP-Id, Tunnel Id and Extended Tunnel ID (Tunnel Head Address
+			SameRtAsL3SiteRt (bool): If enabled, this allows UMH VRF to use same RT as configured in l3 site
+			SameTargetListAsL3SiteTargetList (bool): If enabled, this allows UMH VRF to use same target list as configured in l3 site
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Contains the object reference to a traffic group identifier as configured with the trafficGroup object.
+			TunnelType (str(tunnelTypePimGreRosenDraft|tunnelTypeRsvpP2mp|tunnelTypeMldpP2mp)): The tunnel type.
+			UseUpstreamAssignedLabel (bool): This field indicates whether the configured upstream label AS needs to be used. If false, the Upstream Assigned Label field is disabled.
+			VrfCount (number): Number of VRFs within the VRF Range.
 
 		Returns:
 			self: This instance with matching l3Site data retrieved from the server available through an iterator or index
@@ -452,11 +452,13 @@ class L3Site(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
+		This function allows to refresh the BGP learned information from the DUT.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=l3Site)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

@@ -37,7 +37,7 @@ class AutoRefresh(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class AutoRefresh(Base):
 
 	@property
 	def MinRefreshInterval(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number

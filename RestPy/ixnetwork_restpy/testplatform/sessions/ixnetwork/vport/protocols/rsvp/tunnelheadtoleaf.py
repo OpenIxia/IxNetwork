@@ -38,7 +38,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def DutHopType(self):
-		"""
+		"""Based on the input, the corresponding L bit in the packet is set.
 
 		Returns:
 			str(strict|loose)
@@ -50,7 +50,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def DutPrefixLength(self):
-		"""
+		"""Prefix length of DUT.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""It enables or disables the ERO/SERO specific configuration.
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def HeadIpStart(self):
-		"""
+		"""It is the tunnel head IP address for which the ERO/SERO is being configured.
 
 		Returns:
 			str
@@ -83,7 +83,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def IsAppendTunnelLeaf(self):
-		"""
+		"""If enabled, this appends the tunnel leaf at the end of the ERO/SERO list in the packet.
 
 		Returns:
 			bool
@@ -95,7 +95,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def IsPrependDut(self):
-		"""
+		"""Enables prepend DUT to the ERO/SERO list.
 
 		Returns:
 			bool
@@ -107,7 +107,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def IsSendingAsEro(self):
-		"""
+		"""If enabled, the entire configuration would go as ERO.
 
 		Returns:
 			bool
@@ -119,7 +119,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def IsSendingAsSero(self):
-		"""
+		"""If enabled, the entire configuration would go as SERO.
 
 		Returns:
 			bool
@@ -131,7 +131,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def SubObjectList(self):
-		"""
+		"""The sub-object list for this ERO/SERO can be configured by typing it as a string. Input String: = NULL| [<Subobject> ;< Subobject list>] Subobject: = <AS :< 1-65535> :< S|L>| <IP :< IP Addr>/<1-32> :< S|L> IP Addr: = <0-255>.<0-255>.<0-255>.<0-255> NULL: =Example. IP:2.2.2.2/24:S;AS:100:L;IP:33.33.33.33/32:S
 
 		Returns:
 			str
@@ -143,7 +143,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def TunnelLeafCount(self):
-		"""
+		"""The count of tunnel leaf.
 
 		Returns:
 			number
@@ -155,7 +155,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def TunnelLeafHopType(self):
-		"""
+		"""It is enabled if Append Leaf is enabled. Based on the input, corresponding L bit in the packet is set.
 
 		Returns:
 			str(strict|loose)
@@ -167,7 +167,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def TunnelLeafIpStart(self):
-		"""
+		"""It contains the start IP address of leaf for which the ERO/SERO will be configured.
 
 		Returns:
 			str
@@ -179,7 +179,7 @@ class TunnelHeadToLeaf(Base):
 
 	@property
 	def TunnelLeafPrefixLength(self):
-		"""
+		"""Prefix length of tunnel leaf.
 
 		Returns:
 			number
@@ -193,18 +193,18 @@ class TunnelHeadToLeaf(Base):
 		"""Adds a new tunnelHeadToLeaf node on the server and retrieves it in this instance.
 
 		Args:
-			DutHopType (str(strict|loose)): 
-			DutPrefixLength (number): 
-			Enabled (bool): 
-			IsAppendTunnelLeaf (bool): 
-			IsPrependDut (bool): 
-			IsSendingAsEro (bool): 
-			IsSendingAsSero (bool): 
-			SubObjectList (str): 
-			TunnelLeafCount (number): 
-			TunnelLeafHopType (str(strict|loose)): 
-			TunnelLeafIpStart (str): 
-			TunnelLeafPrefixLength (number): 
+			DutHopType (str(strict|loose)): Based on the input, the corresponding L bit in the packet is set.
+			DutPrefixLength (number): Prefix length of DUT.
+			Enabled (bool): It enables or disables the ERO/SERO specific configuration.
+			IsAppendTunnelLeaf (bool): If enabled, this appends the tunnel leaf at the end of the ERO/SERO list in the packet.
+			IsPrependDut (bool): Enables prepend DUT to the ERO/SERO list.
+			IsSendingAsEro (bool): If enabled, the entire configuration would go as ERO.
+			IsSendingAsSero (bool): If enabled, the entire configuration would go as SERO.
+			SubObjectList (str): The sub-object list for this ERO/SERO can be configured by typing it as a string. Input String: = NULL| [<Subobject> ;< Subobject list>] Subobject: = <AS :< 1-65535> :< S|L>| <IP :< IP Addr>/<1-32> :< S|L> IP Addr: = <0-255>.<0-255>.<0-255>.<0-255> NULL: =Example. IP:2.2.2.2/24:S;AS:100:L;IP:33.33.33.33/32:S
+			TunnelLeafCount (number): The count of tunnel leaf.
+			TunnelLeafHopType (str(strict|loose)): It is enabled if Append Leaf is enabled. Based on the input, corresponding L bit in the packet is set.
+			TunnelLeafIpStart (str): It contains the start IP address of leaf for which the ERO/SERO will be configured.
+			TunnelLeafPrefixLength (number): Prefix length of tunnel leaf.
 
 		Returns:
 			self: This instance with all currently retrieved tunnelHeadToLeaf data using find and the newly added tunnelHeadToLeaf data available through an iterator or index
@@ -230,19 +230,19 @@ class TunnelHeadToLeaf(Base):
 		By default the find method takes no parameters and will retrieve all tunnelHeadToLeaf data from the server.
 
 		Args:
-			DutHopType (str(strict|loose)): 
-			DutPrefixLength (number): 
-			Enabled (bool): 
-			HeadIpStart (str): 
-			IsAppendTunnelLeaf (bool): 
-			IsPrependDut (bool): 
-			IsSendingAsEro (bool): 
-			IsSendingAsSero (bool): 
-			SubObjectList (str): 
-			TunnelLeafCount (number): 
-			TunnelLeafHopType (str(strict|loose)): 
-			TunnelLeafIpStart (str): 
-			TunnelLeafPrefixLength (number): 
+			DutHopType (str(strict|loose)): Based on the input, the corresponding L bit in the packet is set.
+			DutPrefixLength (number): Prefix length of DUT.
+			Enabled (bool): It enables or disables the ERO/SERO specific configuration.
+			HeadIpStart (str): It is the tunnel head IP address for which the ERO/SERO is being configured.
+			IsAppendTunnelLeaf (bool): If enabled, this appends the tunnel leaf at the end of the ERO/SERO list in the packet.
+			IsPrependDut (bool): Enables prepend DUT to the ERO/SERO list.
+			IsSendingAsEro (bool): If enabled, the entire configuration would go as ERO.
+			IsSendingAsSero (bool): If enabled, the entire configuration would go as SERO.
+			SubObjectList (str): The sub-object list for this ERO/SERO can be configured by typing it as a string. Input String: = NULL| [<Subobject> ;< Subobject list>] Subobject: = <AS :< 1-65535> :< S|L>| <IP :< IP Addr>/<1-32> :< S|L> IP Addr: = <0-255>.<0-255>.<0-255>.<0-255> NULL: =Example. IP:2.2.2.2/24:S;AS:100:L;IP:33.33.33.33/32:S
+			TunnelLeafCount (number): The count of tunnel leaf.
+			TunnelLeafHopType (str(strict|loose)): It is enabled if Append Leaf is enabled. Based on the input, corresponding L bit in the packet is set.
+			TunnelLeafIpStart (str): It contains the start IP address of leaf for which the ERO/SERO will be configured.
+			TunnelLeafPrefixLength (number): Prefix length of tunnel leaf.
 
 		Returns:
 			self: This instance with matching tunnelHeadToLeaf data retrieved from the server available through an iterator or index

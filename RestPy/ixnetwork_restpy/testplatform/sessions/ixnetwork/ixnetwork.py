@@ -231,11 +231,13 @@ class Ixnetwork(Base):
 	def ClearCardOwnershipById(self, Arg1):
 		"""Executes the clearCardOwnershipById operation on the server.
 
+		Clear ownership on all ports from the given IxVM card.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): The card ID.
 
 		Returns:
-			number: 
+			number: Returns the card ID.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -318,6 +320,8 @@ class Ixnetwork(Base):
 	def CloseAllTabs(self):
 		"""Executes the closeAllTabs operation on the server.
 
+		This command closes all the captures if no parameter is specified; or a specific list of online captures
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -327,8 +331,10 @@ class Ixnetwork(Base):
 	def CloseAllTabs(self, Arg1):
 		"""Executes the closeAllTabs operation on the server.
 
+		This command will close the specified captures.
+
 		Args:
-			Arg1 (list(str)): 
+			Arg1 (list(str)): The list of capture names to be closed.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -339,8 +345,10 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -352,9 +360,11 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1, Arg2):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (list(str[currentInstance|specificProfile])): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
+			Arg2 (list(str[currentInstance|specificProfile])): The instance to collect logs for.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -366,10 +376,12 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1, Arg2, Arg3):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (list(str[currentInstance|specificProfile])): 
-			Arg3 (str): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A valid output file handle from the ixNet writeTo command.
+			Arg2 (list(str[currentInstance|specificProfile])): A valid enum as specified by the restriction.
+			Arg3 (str): A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -381,11 +393,13 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1, Arg2, Arg3, Arg4):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (list(str[currentInstance|specificProfile])): 
-			Arg3 (str): 
-			Arg4 (str): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A string value.
+			Arg2 (list(str[currentInstance|specificProfile])): An enum value indicating the item to collect logs for.
+			Arg3 (str): A string value.
+			Arg4 (str): A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -397,12 +411,14 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1, Arg2, Arg3, Arg4, Arg5):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (list(str[currentInstance|specificProfile])): 
-			Arg3 (str): 
-			Arg4 (str): 
-			Arg5 (str): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A valid output file handle from the ixNet writeTo command.
+			Arg2 (list(str[currentInstance|specificProfile])): A valid enum as specified by the restriction.
+			Arg3 (str): A string value.
+			Arg4 (str): A string value.
+			Arg5 (str): A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -414,9 +430,11 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1, Arg2):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (str): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
+			Arg2 (str): A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -428,10 +446,12 @@ class Ixnetwork(Base):
 	def CollectLogs(self, Arg1, Arg2, Arg3):
 		"""Executes the collectLogs operation on the server.
 
+		This command collects all of the IxNetwork logs and puts them in a .zip file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (str): 
-			Arg3 (str): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
+			Arg2 (str): A string value.
+			Arg3 (str): A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -443,11 +463,13 @@ class Ixnetwork(Base):
 	def ConnectCardById(self, Arg1):
 		"""Executes the connectCardById operation on the server.
 
+		Establish connection to the IxVM card.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): Card ID to which connection is required.
 
 		Returns:
-			number: 
+			number: Returns the connected card ID or error, if any.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -458,8 +480,10 @@ class Ixnetwork(Base):
 	def ConnectToChassis(self, Arg1):
 		"""Executes the connectToChassis operation on the server.
 
+		Connect to a virtual chassis.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): The hostname or IP address of the chassis.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -487,11 +511,13 @@ class Ixnetwork(Base):
 	def DisconnectCardById(self, Arg1):
 		"""Executes the disconnectCardById operation on the server.
 
+		Close connection to the IxVM card.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): The card ID.
 
 		Returns:
-			number: 
+			number: Returns the card ID.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -651,8 +677,10 @@ class Ixnetwork(Base):
 	def GetCurrentIxiaFileFormatTypeVersion(self):
 		"""Executes the getCurrentIxiaFileFormatTypeVersion operation on the server.
 
+		This command sets the current Ixia file format type version.
+
 		Returns:
-			number: 
+			number: Returns current Ixia file format type version.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -711,11 +739,13 @@ class Ixnetwork(Base):
 	def GetIxVmCardByIp(self, Arg1):
 		"""Executes the getIxVmCardByIp operation on the server.
 
+		Obtain IxVM card ID by providing management IP address.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): Management IP address of the card.
 
 		Returns:
-			number: 
+			number: Returns the card ID which has corresponding IP address on the management interface.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -769,8 +799,10 @@ class Ixnetwork(Base):
 	def GetRbMemoryUsageInfo(self):
 		"""Executes the getRbMemoryUsageInfo operation on the server.
 
+		Fetch the memory usage information by RB protocols.
+
 		Returns:
-			str: 
+			str: Returns memory usage information by RB protocols.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -853,11 +885,13 @@ class Ixnetwork(Base):
 	def HwRebootCardByIDs(self, Arg1):
 		"""Executes the hwRebootCardByIDs operation on the server.
 
+		Perform hard reboot on virtual cards.
+
 		Args:
-			Arg1 (list(number)): 
+			Arg1 (list(number)): An array of card IDs.
 
 		Returns:
-			bool: 
+			bool: Returns whether or not the command is successful.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -868,8 +902,10 @@ class Ixnetwork(Base):
 	def IgmpJoin(self, Arg1):
 		"""Executes the igmpJoin operation on the server.
 
+		Executing this command sends IGMP join message.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpJoin.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -880,9 +916,11 @@ class Ixnetwork(Base):
 	def IgmpJoin(self, Arg1, Arg2):
 		"""Executes the igmpJoin operation on the server.
 
+		Executing this command sends IGMP join message.
+
 		Args:
-			Arg1 (str): 
-			Arg2 (number): 
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpJoin.
+			Arg2 (number): This is an integer value as an argument to igmpJoin.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -893,8 +931,10 @@ class Ixnetwork(Base):
 	def IgmpLeave(self, Arg1):
 		"""Executes the igmpLeave operation on the server.
 
+		Executing this command sends IGMP leave message.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpLeave.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -905,9 +945,11 @@ class Ixnetwork(Base):
 	def IgmpLeave(self, Arg1, Arg2):
 		"""Executes the igmpLeave operation on the server.
 
+		Executing this command sends IGMP leave message.
+
 		Args:
-			Arg1 (str): 
-			Arg2 (number): 
+			Arg1 (str): This is a multicast IPv4 address as an argument to igmpLeave.
+			Arg2 (number): This is an integer value as an argument to igmpLeave.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -932,8 +974,10 @@ class Ixnetwork(Base):
 	def LoadConfig(self, Arg1):
 		"""Executes the loadConfig operation on the server.
 
+		Load an existing configuration file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A readFrom file handle
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -945,11 +989,13 @@ class Ixnetwork(Base):
 	def LoadTopology(self, Arg1):
 		"""Executes the loadTopology operation on the server.
 
+		Load a chassis topology from file.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): Path to the CSV configuration file.
 
 		Returns:
-			str: 
+			str: Returns an array of objects containing information about each port from the loaded chassis topology.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -960,11 +1006,13 @@ class Ixnetwork(Base):
 	def MergeCapture(self, Arg1, Arg2, Arg3, Arg4):
 		"""Executes the mergeCapture operation on the server.
 
+		This command will merge one offline capture with on running capture.
+
 		Args:
-			Arg1 (str): 
-			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): 
-			Arg3 (str(control|data)): 
-			Arg4 (str): 
+			Arg1 (str): Full path to the capture file.
+			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The port capture object.
+			Arg3 (str(control|data)): The type of the capture, either data or control.
+			Arg4 (str): The full path where the resulted merged capture will be saved, the resulted capture name needs to contain extension also.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -975,10 +1023,12 @@ class Ixnetwork(Base):
 	def MergeCapture(self, Arg1, Arg2, Arg3):
 		"""Executes the mergeCapture operation on the server.
 
+		This command will merge to offline captures.
+
 		Args:
-			Arg1 (str): 
-			Arg2 (str): 
-			Arg3 (str): 
+			Arg1 (str): Full path to the first capture file.
+			Arg2 (str): Full path to the second capture file.
+			Arg3 (str): The full path where the resulted merged capture will be saved, the result capture name needs to contain extension also.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -989,6 +1039,8 @@ class Ixnetwork(Base):
 	def NewConfig(self):
 		"""Executes the newConfig operation on the server.
 
+		Clear the current configuration and create an empty configuration.
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -997,6 +1049,8 @@ class Ixnetwork(Base):
 
 	def RebootVirtualChassis(self):
 		"""Executes the rebootVirtualChassis operation on the server.
+
+		Perform hard reboot on the connected virtual chassis.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1007,10 +1061,12 @@ class Ixnetwork(Base):
 	def RebuildChassisTopology(self, Arg1, Arg2, Arg3):
 		"""Executes the rebuildChassisTopology operation on the server.
 
+		Rebuild the chassis topology using automatically discovered appliances.
+
 		Args:
-			Arg1 (str): 
-			Arg2 (bool): 
-			Arg3 (bool): 
+			Arg1 (str): IxNetwork version that should be used to filter appliances.
+			Arg2 (bool): Flag that enables reconfiguration on the same slots for the previous cards.
+			Arg3 (bool): Promiscuous mode.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1021,8 +1077,10 @@ class Ixnetwork(Base):
 	def RediscoverAppliances(self):
 		"""Executes the rediscoverAppliances operation on the server.
 
+		Return a list of discovered machines after performing rediscovery on all systems.
+
 		Returns:
-			str: 
+			str: Returns a list of discovered machines in XML format.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1033,8 +1091,10 @@ class Ixnetwork(Base):
 	def Refresh(self, Arg1):
 		"""Executes the refresh operation on the server.
 
+		NOT DEFINED
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1045,8 +1105,10 @@ class Ixnetwork(Base):
 	def RefreshChassisTopology(self):
 		"""Executes the refreshChassisTopology operation on the server.
 
+		Obtain updated configuration of the chassis topology.
+
 		Returns:
-			str: 
+			str: Returns an array of objects containing information about each port from the new chassis topology.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1057,6 +1119,8 @@ class Ixnetwork(Base):
 	def RemoveAllTclViews(self):
 		"""Executes the removeAllTclViews operation on the server.
 
+		Deletes all the views that were created from using this API.
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -1065,6 +1129,8 @@ class Ixnetwork(Base):
 
 	def SaveCapture(self, Arg1):
 		"""Executes the saveCapture operation on the server.
+
+		This command saves the current capture data to the specified directory.
 
 		Args:
 			Arg1 (str): Directory for saving the captures
@@ -1077,6 +1143,8 @@ class Ixnetwork(Base):
 
 	def SaveCapture(self, Arg1, Arg2):
 		"""Executes the saveCapture operation on the server.
+
+		This exec saves the capture data to a specified directory.
 
 		Args:
 			Arg1 (str): Directory for saving the captures
@@ -1122,8 +1190,10 @@ class Ixnetwork(Base):
 	def SaveConfig(self, Arg1):
 		"""Executes the saveConfig operation on the server.
 
+		Save the current configuration to a file.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1135,8 +1205,10 @@ class Ixnetwork(Base):
 	def Scriptgen(self):
 		"""Executes the scriptgen operation on the server.
 
+		Create a script of the current configuration.
+
 		Returns:
-			str: 
+			str: A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1147,8 +1219,10 @@ class Ixnetwork(Base):
 	def Scriptgen(self, Arg1):
 		"""Executes the scriptgen operation on the server.
 
+		The command to generate the configuration script for a configuration prepared in IxNetwork.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A valid output file handle from the ixNet writeTo command.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1160,9 +1234,11 @@ class Ixnetwork(Base):
 	def Scriptgen(self, Arg1, Arg2):
 		"""Executes the scriptgen operation on the server.
 
+		Create a script of the current configuration.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (str): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
+			Arg2 (str): A string value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1174,10 +1250,12 @@ class Ixnetwork(Base):
 	def Scriptgen(self, Arg1, Arg2, Arg3):
 		"""Executes the scriptgen operation on the server.
 
+		Create a script of the current configuration.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (str): 
-			Arg3 (list(str)): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
+			Arg2 (str): The type of script to create.
+			Arg3 (list(str)): The scriptgen options.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1189,12 +1267,14 @@ class Ixnetwork(Base):
 	def Scriptgen(self, Arg1, Arg2, Arg3, Arg4, Arg5):
 		"""Executes the scriptgen operation on the server.
 
+		Create a script of the current configuration.
+
 		Args:
-			Arg1 (obj(ixnetwork_restpy.files.Files)): 
-			Arg2 (str): 
-			Arg3 (list(str)): 
-			Arg4 (number): 
-			Arg5 (number): 
+			Arg1 (obj(ixnetwork_restpy.files.Files)): A writeTo file handle.
+			Arg2 (str): A string value.
+			Arg3 (list(str)): A list of string values.
+			Arg4 (number): An integer.
+			Arg5 (number): An integer.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1223,6 +1303,8 @@ class Ixnetwork(Base):
 	def SendArpAll(self):
 		"""Executes the sendArpAll operation on the server.
 
+		Send ARP for all interfaces.
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -1231,6 +1313,8 @@ class Ixnetwork(Base):
 
 	def SendNsAll(self):
 		"""Executes the sendNsAll operation on the server.
+
+		Send neighbor solicitation to all interfaces.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1241,6 +1325,8 @@ class Ixnetwork(Base):
 	def SendRsAll(self):
 		"""Executes the sendRsAll operation on the server.
 
+		Send router solicitation to all interfaces.
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -1250,8 +1336,10 @@ class Ixnetwork(Base):
 	def SetGuardRailVersion(self, Arg1):
 		"""Executes the setGuardRailVersion operation on the server.
 
+		Disables GuardRail for TCL.
+
 		Args:
-			Arg1 (str): 
+			Arg1 (str): Deprecated.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1338,6 +1426,8 @@ class Ixnetwork(Base):
 	def StartCapture(self):
 		"""Executes the startCapture operation on the server.
 
+		The command to start the packet capture for the selected port or group of ports.
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -1397,6 +1487,8 @@ class Ixnetwork(Base):
 	def StopCapture(self):
 		"""Executes the stopCapture operation on the server.
 
+		The command to stop the packet capture on the selected port or group of ports.
+
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
@@ -1417,8 +1509,10 @@ class Ixnetwork(Base):
 	def SyncStatisticsStartTimeWithClientClock(self, Arg1):
 		"""Executes the syncStatisticsStartTimeWithClientClock operation on the server.
 
+		Make the statistics timestamps relative to the time on the client machine or relative to the test start.
+
 		Args:
-			Arg1 (bool): 
+			Arg1 (bool): True = relative to system time, false = relative to test start.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1444,8 +1538,10 @@ class Ixnetwork(Base):
 	def WaitForLicenseBroadcast(self, Arg1):
 		"""Executes the waitForLicenseBroadcast operation on the server.
 
+		Wait for the license broadcast to be complete.
+
 		Args:
-			Arg1 (number): 
+			Arg1 (number): Seconds to wait.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

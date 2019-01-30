@@ -51,7 +51,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""This describes the unique Experimenter identifier. The default value is 1.
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""This describes the data of the Experimenter.
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""
+		"""This describes the data length of the Experimenter.
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def InstructionType(self):
-		"""
+		"""This describes the action type associated with this instruction.
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def Metadata(self):
-		"""
+		"""This describes the table metadata value used to pass information between tables.
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def MetadataMask(self):
-		"""
+		"""This describes the metadata bitmask value.
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def MeterId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class SwitchFlowInstructionLearnedInfo(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""This describes the table identifier. It indicates the next table in the packet processing pipeline.
 
 		Returns:
 			number
@@ -128,14 +128,14 @@ class SwitchFlowInstructionLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchFlowInstructionLearnedInfo data from the server.
 
 		Args:
-			Experimenter (number): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			InstructionType (str): 
-			Metadata (str): 
-			MetadataMask (str): 
-			MeterId (number): 
-			TableId (number): 
+			Experimenter (number): This describes the unique Experimenter identifier. The default value is 1.
+			ExperimenterData (str): This describes the data of the Experimenter.
+			ExperimenterDataLength (number): This describes the data length of the Experimenter.
+			InstructionType (str): This describes the action type associated with this instruction.
+			Metadata (str): This describes the table metadata value used to pass information between tables.
+			MetadataMask (str): This describes the metadata bitmask value.
+			MeterId (number): NOT DEFINED
+			TableId (number): This describes the table identifier. It indicates the next table in the packet processing pipeline.
 
 		Returns:
 			self: This instance with matching switchFlowInstructionLearnedInfo data retrieved from the server available through an iterator or index

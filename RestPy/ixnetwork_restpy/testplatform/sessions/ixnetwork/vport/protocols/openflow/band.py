@@ -38,7 +38,7 @@ class Band(Base):
 
 	@property
 	def BurstSize(self):
-		"""
+		"""This indicates the length of the packet or byte burst to consider for applying the meter. The default value is 1.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class Band(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""A description of the band.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class Band(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""The experimenter ID. The default value is 1.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class Band(Base):
 
 	@property
 	def PrecedenceLevel(self):
-		"""
+		"""This indicates the amount by which the drop precedence of the packet should be increased if the band is exceeded. The default value is 0.
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class Band(Base):
 
 	@property
 	def Rate(self):
-		"""
+		"""This indicates the rate value above which the corresponding band may apply to packets The default value is 1.
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class Band(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""Select the band type from the list.
 
 		Returns:
 			str(drop|dscpRemark|experimenter)
@@ -112,12 +112,12 @@ class Band(Base):
 		"""Adds a new band node on the server and retrieves it in this instance.
 
 		Args:
-			BurstSize (number): 
-			Description (str): 
-			Experimenter (number): 
-			PrecedenceLevel (number): 
-			Rate (number): 
-			Type (str(drop|dscpRemark|experimenter)): 
+			BurstSize (number): This indicates the length of the packet or byte burst to consider for applying the meter. The default value is 1.
+			Description (str): A description of the band.
+			Experimenter (number): The experimenter ID. The default value is 1.
+			PrecedenceLevel (number): This indicates the amount by which the drop precedence of the packet should be increased if the band is exceeded. The default value is 0.
+			Rate (number): This indicates the rate value above which the corresponding band may apply to packets The default value is 1.
+			Type (str(drop|dscpRemark|experimenter)): Select the band type from the list.
 
 		Returns:
 			self: This instance with all currently retrieved band data using find and the newly added band data available through an iterator or index
@@ -143,12 +143,12 @@ class Band(Base):
 		By default the find method takes no parameters and will retrieve all band data from the server.
 
 		Args:
-			BurstSize (number): 
-			Description (str): 
-			Experimenter (number): 
-			PrecedenceLevel (number): 
-			Rate (number): 
-			Type (str(drop|dscpRemark|experimenter)): 
+			BurstSize (number): This indicates the length of the packet or byte burst to consider for applying the meter. The default value is 1.
+			Description (str): A description of the band.
+			Experimenter (number): The experimenter ID. The default value is 1.
+			PrecedenceLevel (number): This indicates the amount by which the drop precedence of the packet should be increased if the band is exceeded. The default value is 0.
+			Rate (number): This indicates the rate value above which the corresponding band may apply to packets The default value is 1.
+			Type (str(drop|dscpRemark|experimenter)): Select the band type from the list.
 
 		Returns:
 			self: This instance with matching band data retrieved from the server available through an iterator or index

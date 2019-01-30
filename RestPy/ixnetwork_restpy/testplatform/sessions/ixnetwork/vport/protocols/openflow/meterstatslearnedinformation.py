@@ -51,7 +51,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def ByteInCount(self):
-		"""
+		"""Specifies Byte in Count
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The Data Path identifier of the OpenFlow controller.
 
 		Returns:
 			number
@@ -69,7 +69,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""The Data Path identifier of the OpenFlow controller in hexadecimal format.
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def DurationNSec(self):
-		"""
+		"""Specifies Duration Nano Second
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def DurationSec(self):
-		"""
+		"""Specifies Duration in Second
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""The error code of the received error.
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""The type of the error received.
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def FlowCount(self):
-		"""
+		"""Specifies the Flow Count
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def LastErrorCode(self):
-		"""
+		"""The Last error code of the received error.
 
 		Returns:
 			str
@@ -132,7 +132,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def LastErrorType(self):
-		"""
+		"""The type of the Last error received.
 
 		Returns:
 			str
@@ -141,7 +141,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""The latency measurement for the OpenFlow channel in microseconds.
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Indicates the local IP of the Controller.
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def MeterId(self):
-		"""
+		"""Specifies Meter ID
 
 		Returns:
 			number
@@ -168,7 +168,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
 
 		Returns:
 			str
@@ -177,7 +177,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def NumberOfBandStats(self):
-		"""
+		"""Specifies the number of band
 
 		Returns:
 			number
@@ -186,7 +186,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def PacketInCount(self):
-		"""
+		"""Specifies Packet In Count
 
 		Returns:
 			number
@@ -195,7 +195,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""The Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -204,7 +204,7 @@ class MeterStatsLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""The state of reply for the Open Flow channel.
 
 		Returns:
 			str
@@ -218,24 +218,24 @@ class MeterStatsLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all meterStatsLearnedInformation data from the server.
 
 		Args:
-			ByteInCount (number): 
-			DataPathId (number): 
-			DataPathIdAsHex (str): 
-			DurationNSec (number): 
-			DurationSec (number): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			FlowCount (number): 
-			LastErrorCode (str): 
-			LastErrorType (str): 
-			Latency (number): 
-			LocalIp (str): 
-			MeterId (number): 
-			NegotiatedVersion (str): 
-			NumberOfBandStats (number): 
-			PacketInCount (number): 
-			RemoteIp (str): 
-			ReplyState (str): 
+			ByteInCount (number): Specifies Byte in Count
+			DataPathId (number): The Data Path identifier of the OpenFlow controller.
+			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow controller in hexadecimal format.
+			DurationNSec (number): Specifies Duration Nano Second
+			DurationSec (number): Specifies Duration in Second
+			ErrorCode (str): The error code of the received error.
+			ErrorType (str): The type of the error received.
+			FlowCount (number): Specifies the Flow Count
+			LastErrorCode (str): The Last error code of the received error.
+			LastErrorType (str): The type of the Last error received.
+			Latency (number): The latency measurement for the OpenFlow channel in microseconds.
+			LocalIp (str): Indicates the local IP of the Controller.
+			MeterId (number): Specifies Meter ID
+			NegotiatedVersion (str): Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
+			NumberOfBandStats (number): Specifies the number of band
+			PacketInCount (number): Specifies Packet In Count
+			RemoteIp (str): The Remote IP address of the selected interface.
+			ReplyState (str): The state of reply for the Open Flow channel.
 
 		Returns:
 			self: This instance with matching meterStatsLearnedInformation data retrieved from the server available through an iterator or index

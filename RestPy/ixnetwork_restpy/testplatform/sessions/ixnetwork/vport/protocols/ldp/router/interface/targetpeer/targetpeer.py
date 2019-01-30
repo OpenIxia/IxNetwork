@@ -38,7 +38,7 @@ class TargetPeer(Base):
 
 	@property
 	def Authentication(self):
-		"""
+		"""The cryptographic authentication type used by the targeted peer; one of: NULL (no authentication) or MD5. When MD5 is used, an md5Key must be configured by the user.
 
 		Returns:
 			str(null|md5)
@@ -50,7 +50,7 @@ class TargetPeer(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the use of this targeted peer.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class TargetPeer(Base):
 
 	@property
 	def InitiateTargetedHello(self):
-		"""
+		"""If true, the target peer is set a hello message exclusively.
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class TargetPeer(Base):
 
 	@property
 	def IpAddress(self):
-		"""
+		"""The IP address of the targeted peer.
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class TargetPeer(Base):
 
 	@property
 	def Md5Key(self):
-		"""
+		"""Used with MD5 authentication. A user-defined string; maximum = 255 characters.
 
 		Returns:
 			str
@@ -100,11 +100,11 @@ class TargetPeer(Base):
 		"""Adds a new targetPeer node on the server and retrieves it in this instance.
 
 		Args:
-			Authentication (str(null|md5)): 
-			Enabled (bool): 
-			InitiateTargetedHello (bool): 
-			IpAddress (str): 
-			Md5Key (str): 
+			Authentication (str(null|md5)): The cryptographic authentication type used by the targeted peer; one of: NULL (no authentication) or MD5. When MD5 is used, an md5Key must be configured by the user.
+			Enabled (bool): Enables the use of this targeted peer.
+			InitiateTargetedHello (bool): If true, the target peer is set a hello message exclusively.
+			IpAddress (str): The IP address of the targeted peer.
+			Md5Key (str): Used with MD5 authentication. A user-defined string; maximum = 255 characters.
 
 		Returns:
 			self: This instance with all currently retrieved targetPeer data using find and the newly added targetPeer data available through an iterator or index
@@ -130,11 +130,11 @@ class TargetPeer(Base):
 		By default the find method takes no parameters and will retrieve all targetPeer data from the server.
 
 		Args:
-			Authentication (str(null|md5)): 
-			Enabled (bool): 
-			InitiateTargetedHello (bool): 
-			IpAddress (str): 
-			Md5Key (str): 
+			Authentication (str(null|md5)): The cryptographic authentication type used by the targeted peer; one of: NULL (no authentication) or MD5. When MD5 is used, an md5Key must be configured by the user.
+			Enabled (bool): Enables the use of this targeted peer.
+			InitiateTargetedHello (bool): If true, the target peer is set a hello message exclusively.
+			IpAddress (str): The IP address of the targeted peer.
+			Md5Key (str): Used with MD5 authentication. A user-defined string; maximum = 255 characters.
 
 		Returns:
 			self: This instance with matching targetPeer data retrieved from the server available through an iterator or index

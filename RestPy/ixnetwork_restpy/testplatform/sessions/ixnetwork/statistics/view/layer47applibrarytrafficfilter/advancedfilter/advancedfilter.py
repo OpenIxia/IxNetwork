@@ -38,7 +38,7 @@ class AdvancedFilter(Base):
 
 	@property
 	def Expression(self):
-		"""
+		"""Specifies the filter body. This is a string that must have a specific format.This can be empty (no filter). The available operations and statistics can be obtained from availableAdvancedFilterOptions.
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class AdvancedFilter(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Specifies the filter name. It must be unique per view.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class AdvancedFilter(Base):
 
 	@property
 	def SortingStats(self):
-		"""
+		"""Specifies the list of statistics by which the view will be sorted.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class AdvancedFilter(Base):
 
 	@property
 	def TrackingFilterId(self):
-		"""
+		"""Gets the id of the filter, which is used to add the filter to a view.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)
@@ -88,10 +88,10 @@ class AdvancedFilter(Base):
 		"""Adds a new advancedFilter node on the server and retrieves it in this instance.
 
 		Args:
-			Expression (str): 
-			Name (str): 
-			SortingStats (str): 
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
+			Expression (str): Specifies the filter body. This is a string that must have a specific format.This can be empty (no filter). The available operations and statistics can be obtained from availableAdvancedFilterOptions.
+			Name (str): Specifies the filter name. It must be unique per view.
+			SortingStats (str): Specifies the list of statistics by which the view will be sorted.
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Gets the id of the filter, which is used to add the filter to a view.
 
 		Returns:
 			self: This instance with all currently retrieved advancedFilter data using find and the newly added advancedFilter data available through an iterator or index
@@ -117,10 +117,10 @@ class AdvancedFilter(Base):
 		By default the find method takes no parameters and will retrieve all advancedFilter data from the server.
 
 		Args:
-			Expression (str): 
-			Name (str): 
-			SortingStats (str): 
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
+			Expression (str): Specifies the filter body. This is a string that must have a specific format.This can be empty (no filter). The available operations and statistics can be obtained from availableAdvancedFilterOptions.
+			Name (str): Specifies the filter name. It must be unique per view.
+			SortingStats (str): Specifies the list of statistics by which the view will be sorted.
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Gets the id of the filter, which is used to add the filter to a view.
 
 		Returns:
 			self: This instance with matching advancedFilter data retrieved from the server available through an iterator or index

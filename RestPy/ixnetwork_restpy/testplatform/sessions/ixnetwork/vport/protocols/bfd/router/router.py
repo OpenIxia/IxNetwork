@@ -66,7 +66,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the simulated router.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Router(Base):
 
 	@property
 	def IsLearnedInfoRefreshed(self):
-		"""
+		"""When true, indicates that the BFD router learned information is current.
 
 		Returns:
 			bool
@@ -87,7 +87,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""
+		"""The ID of the simulated router, expressed as an IP address.
 
 		Returns:
 			str
@@ -99,7 +99,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -113,9 +113,9 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			RouterId (str): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			Enabled (bool): Enables or disables the simulated router.
+			RouterId (str): The ID of the simulated router, expressed as an IP address.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -141,10 +141,10 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			Enabled (bool): 
-			IsLearnedInfoRefreshed (bool): 
-			RouterId (str): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			Enabled (bool): Enables or disables the simulated router.
+			IsLearnedInfoRefreshed (bool): When true, indicates that the BFD router learned information is current.
+			RouterId (str): The ID of the simulated router, expressed as an IP address.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index
@@ -172,11 +172,13 @@ class Router(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
+		This command refreshes the learned information for the BFD router.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=router)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

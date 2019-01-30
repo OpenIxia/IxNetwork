@@ -38,7 +38,7 @@ class LabelBlock(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables use of the L2 VPN label block.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class LabelBlock(Base):
 
 	@property
 	def LabelBlockOffsetIncrementAcrossL2Site(self):
-		"""
+		"""Signifies the increment of label block offset across L2 site
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class LabelBlock(Base):
 
 	@property
 	def LabelStartIncrementAcrossL2Site(self):
-		"""
+		"""Starts the increment of label across L2 site
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class LabelBlock(Base):
 
 	@property
 	def NumberOfLabels(self):
-		"""
+		"""The number of labels contained in the label block. (default = 0)
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class LabelBlock(Base):
 
 	@property
 	def Offset(self):
-		"""
+		"""The VPLS block offset value used to create a unique subset of the label values. (default = 0)
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class LabelBlock(Base):
 
 	@property
 	def Start(self):
-		"""
+		"""The first label in the label block. (default = 0)
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class LabelBlock(Base):
 
 	@property
 	def TotalLabelCount(self):
-		"""
+		"""Signifies the total label count
 
 		Returns:
 			number
@@ -121,12 +121,12 @@ class LabelBlock(Base):
 		"""Adds a new labelBlock node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			LabelBlockOffsetIncrementAcrossL2Site (number): 
-			LabelStartIncrementAcrossL2Site (number): 
-			NumberOfLabels (number): 
-			Offset (number): 
-			Start (number): 
+			Enabled (bool): Enables or disables use of the L2 VPN label block.
+			LabelBlockOffsetIncrementAcrossL2Site (number): Signifies the increment of label block offset across L2 site
+			LabelStartIncrementAcrossL2Site (number): Starts the increment of label across L2 site
+			NumberOfLabels (number): The number of labels contained in the label block. (default = 0)
+			Offset (number): The VPLS block offset value used to create a unique subset of the label values. (default = 0)
+			Start (number): The first label in the label block. (default = 0)
 
 		Returns:
 			self: This instance with all currently retrieved labelBlock data using find and the newly added labelBlock data available through an iterator or index
@@ -152,13 +152,13 @@ class LabelBlock(Base):
 		By default the find method takes no parameters and will retrieve all labelBlock data from the server.
 
 		Args:
-			Enabled (bool): 
-			LabelBlockOffsetIncrementAcrossL2Site (number): 
-			LabelStartIncrementAcrossL2Site (number): 
-			NumberOfLabels (number): 
-			Offset (number): 
-			Start (number): 
-			TotalLabelCount (number): 
+			Enabled (bool): Enables or disables use of the L2 VPN label block.
+			LabelBlockOffsetIncrementAcrossL2Site (number): Signifies the increment of label block offset across L2 site
+			LabelStartIncrementAcrossL2Site (number): Starts the increment of label across L2 site
+			NumberOfLabels (number): The number of labels contained in the label block. (default = 0)
+			Offset (number): The VPLS block offset value used to create a unique subset of the label values. (default = 0)
+			Start (number): The first label in the label block. (default = 0)
+			TotalLabelCount (number): Signifies the total label count
 
 		Returns:
 			self: This instance with matching labelBlock data retrieved from the server available through an iterator or index

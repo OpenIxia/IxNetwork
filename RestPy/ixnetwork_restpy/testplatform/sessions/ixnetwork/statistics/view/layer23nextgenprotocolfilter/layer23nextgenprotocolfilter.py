@@ -66,7 +66,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def AdvancedCVFilter(self):
-		"""
+		"""Sets the advanced filter for a custom view. Note: To change the filter on an existing view, you must first disable it.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=advancedCVFilters)
@@ -78,7 +78,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def AdvancedFilterName(self):
-		"""
+		"""Selects an advanced filter from the ones available in the selected drill down view.
 
 		Returns:
 			str
@@ -90,7 +90,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def AggregationType(self):
-		"""
+		"""Signifies the type of aggregation of next gen protocols
 
 		Returns:
 			str(perPort|perSession)
@@ -102,7 +102,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def AllAdvancedFilters(self):
-		"""
+		"""Returns a list with all the filters that are present in the selected drill down views. This includes filters that cannot be applied for the current drill down view.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)
@@ -111,7 +111,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def MatchingAdvancedFilters(self):
-		"""
+		"""Returns a list that contains only the filters that can be applied on the current drill down view.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)
@@ -120,7 +120,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def PortFilterIds(self):
-		"""
+		"""Filters the port IDs
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])
@@ -132,7 +132,7 @@ class Layer23NextGenProtocolFilter(Base):
 
 	@property
 	def ProtocolFilterIds(self):
-		"""
+		"""Filters the protocol IDs
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])
@@ -146,11 +146,11 @@ class Layer23NextGenProtocolFilter(Base):
 		"""Adds a new layer23NextGenProtocolFilter node on the server and retrieves it in this instance.
 
 		Args:
-			AdvancedCVFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=advancedCVFilters)): 
-			AdvancedFilterName (str): 
-			AggregationType (str(perPort|perSession)): 
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
-			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): 
+			AdvancedCVFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=advancedCVFilters)): Sets the advanced filter for a custom view. Note: To change the filter on an existing view, you must first disable it.
+			AdvancedFilterName (str): Selects an advanced filter from the ones available in the selected drill down view.
+			AggregationType (str(perPort|perSession)): Signifies the type of aggregation of next gen protocols
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Filters the port IDs
+			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): Filters the protocol IDs
 
 		Returns:
 			self: This instance with all currently retrieved layer23NextGenProtocolFilter data using find and the newly added layer23NextGenProtocolFilter data available through an iterator or index
@@ -176,13 +176,13 @@ class Layer23NextGenProtocolFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer23NextGenProtocolFilter data from the server.
 
 		Args:
-			AdvancedCVFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=advancedCVFilters)): 
-			AdvancedFilterName (str): 
-			AggregationType (str(perPort|perSession)): 
-			AllAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
-			MatchingAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
-			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): 
+			AdvancedCVFilter (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=advancedCVFilters)): Sets the advanced filter for a custom view. Note: To change the filter on an existing view, you must first disable it.
+			AdvancedFilterName (str): Selects an advanced filter from the ones available in the selected drill down view.
+			AggregationType (str(perPort|perSession)): Signifies the type of aggregation of next gen protocols
+			AllAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Returns a list with all the filters that are present in the selected drill down views. This includes filters that cannot be applied for the current drill down view.
+			MatchingAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Returns a list that contains only the filters that can be applied on the current drill down view.
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Filters the port IDs
+			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): Filters the protocol IDs
 
 		Returns:
 			self: This instance with matching layer23NextGenProtocolFilter data retrieved from the server available through an iterator or index
@@ -210,9 +210,11 @@ class Layer23NextGenProtocolFilter(Base):
 	def AddAdvancedFilter(self, Arg2):
 		"""Executes the addAdvancedFilter operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=layer23NextGenProtocolFilter)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
+			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -224,9 +226,11 @@ class Layer23NextGenProtocolFilter(Base):
 	def RemoveAdvancedFilter(self, Arg2):
 		"""Executes the removeAdvancedFilter operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=layer23NextGenProtocolFilter)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
+			Arg2 (str): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -237,6 +241,8 @@ class Layer23NextGenProtocolFilter(Base):
 
 	def RemoveAllAdvancedFilters(self):
 		"""Executes the removeAllAdvancedFilters operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=layer23NextGenProtocolFilter)): The method internally sets Arg1 to the current href for this instance

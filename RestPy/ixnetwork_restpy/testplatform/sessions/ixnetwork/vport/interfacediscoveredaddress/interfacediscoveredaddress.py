@@ -37,7 +37,7 @@ class InterfaceDiscoveredAddress(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""Shows description of the interface.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class InterfaceDiscoveredAddress(Base):
 
 	@property
 	def IpAddress(self):
-		"""
+		"""Shows IP address of the interface.
 
 		Returns:
 			str

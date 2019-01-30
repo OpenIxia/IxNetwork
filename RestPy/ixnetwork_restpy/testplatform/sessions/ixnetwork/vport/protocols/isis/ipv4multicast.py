@@ -51,7 +51,7 @@ class Ipv4Multicast(Base):
 
 	@property
 	def Age(self):
-		"""
+		"""This indicates the age in time, in seconds, since it was last refreshed.
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class Ipv4Multicast(Base):
 
 	@property
 	def HostName(self):
-		"""
+		"""The host name as retrieved from the related packets.
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class Ipv4Multicast(Base):
 
 	@property
 	def Ipv4MulticastGroupAddress(self):
-		"""
+		"""This indicates the IPv4 Multicast Group Address in the Group Record.
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class Ipv4Multicast(Base):
 
 	@property
 	def LspId(self):
-		"""
+		"""This indicates the LSP identification number.
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class Ipv4Multicast(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""
+		"""This indicates the sequence number of the LSP containing the route.
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class Ipv4Multicast(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""This indicates the VLAN ID in the Group Record.
 
 		Returns:
 			number
@@ -110,12 +110,12 @@ class Ipv4Multicast(Base):
 		By default the find method takes no parameters and will retrieve all ipv4Multicast data from the server.
 
 		Args:
-			Age (number): 
-			HostName (str): 
-			Ipv4MulticastGroupAddress (str): 
-			LspId (str): 
-			SequenceNumber (number): 
-			VlanId (number): 
+			Age (number): This indicates the age in time, in seconds, since it was last refreshed.
+			HostName (str): The host name as retrieved from the related packets.
+			Ipv4MulticastGroupAddress (str): This indicates the IPv4 Multicast Group Address in the Group Record.
+			LspId (str): This indicates the LSP identification number.
+			SequenceNumber (number): This indicates the sequence number of the LSP containing the route.
+			VlanId (number): This indicates the VLAN ID in the Group Record.
 
 		Returns:
 			self: This instance with matching ipv4Multicast data retrieved from the server available through an iterator or index

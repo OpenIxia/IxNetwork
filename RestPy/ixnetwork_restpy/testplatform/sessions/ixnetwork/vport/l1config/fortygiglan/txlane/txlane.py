@@ -37,7 +37,7 @@ class TxLane(Base):
 
 	@property
 	def IsSkewSynchronized(self):
-		"""
+		"""If true, skew value will apply for all the lanes.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class TxLane(Base):
 
 	@property
 	def LaneMappingType(self):
-		"""
+		"""Lane Mapping
 
 		Returns:
 			str(custom|decrement|default|increment|random)
@@ -79,7 +79,7 @@ class TxLane(Base):
 
 	@property
 	def NoOfLanes(self):
-		"""
+		"""Number of lanes
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class TxLane(Base):
 
 	@property
 	def PcsLane(self):
-		"""
+		"""Pcs Lane
 
 		Returns:
 			list(number)
@@ -118,7 +118,7 @@ class TxLane(Base):
 
 	@property
 	def SkewValues(self):
-		"""
+		"""Skew Values
 
 		Returns:
 			list(number)
@@ -130,7 +130,7 @@ class TxLane(Base):
 
 	@property
 	def SynchronizedSkewVal(self):
-		"""
+		"""Synchronized Skew Values
 
 		Returns:
 			number

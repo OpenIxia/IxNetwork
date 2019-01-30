@@ -65,7 +65,7 @@ class AppLibFlow(Base):
 
 	@property
 	def ConfigId(self):
-		"""
+		"""The internal config id asociated with this flow.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class AppLibFlow(Base):
 
 	@property
 	def ConnectionCount(self):
-		"""
+		"""Number of connections in this flow.
 
 		Returns:
 			number
@@ -83,7 +83,7 @@ class AppLibFlow(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""Brief description of what the flow does.
 
 		Returns:
 			str
@@ -92,7 +92,7 @@ class AppLibFlow(Base):
 
 	@property
 	def FlowId(self):
-		"""
+		"""The identifier of the flow.
 
 		Returns:
 			str
@@ -101,7 +101,7 @@ class AppLibFlow(Base):
 
 	@property
 	def FlowSize(self):
-		"""
+		"""The size of the flow in bytes.
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class AppLibFlow(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""the name of the Flow.
 
 		Returns:
 			str
@@ -119,7 +119,7 @@ class AppLibFlow(Base):
 
 	@property
 	def Parameters(self):
-		"""
+		"""Array containing configurable parameters per flow.
 
 		Returns:
 			list(str)
@@ -128,7 +128,7 @@ class AppLibFlow(Base):
 
 	@property
 	def Percentage(self):
-		"""
+		"""The amount of traffic generated for this flows.
 
 		Returns:
 			number
@@ -145,14 +145,14 @@ class AppLibFlow(Base):
 		By default the find method takes no parameters and will retrieve all appLibFlow data from the server.
 
 		Args:
-			ConfigId (number): 
-			ConnectionCount (number): 
-			Description (str): 
-			FlowId (str): 
-			FlowSize (number): 
-			Name (str): 
-			Parameters (list(str)): 
-			Percentage (number): 
+			ConfigId (number): The internal config id asociated with this flow.
+			ConnectionCount (number): Number of connections in this flow.
+			Description (str): Brief description of what the flow does.
+			FlowId (str): The identifier of the flow.
+			FlowSize (number): The size of the flow in bytes.
+			Name (str): the name of the Flow.
+			Parameters (list(str)): Array containing configurable parameters per flow.
+			Percentage (number): The amount of traffic generated for this flows.
 
 		Returns:
 			self: This instance with matching appLibFlow data retrieved from the server available through an iterator or index

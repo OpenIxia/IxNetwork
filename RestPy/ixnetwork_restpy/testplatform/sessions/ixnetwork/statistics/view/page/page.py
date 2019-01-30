@@ -65,7 +65,7 @@ class Page(Base):
 
 	@property
 	def AllowPaging(self):
-		"""
+		"""If true, statistics will be displayed in multiple pages.
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class Page(Base):
 
 	@property
 	def ColumnCaptions(self):
-		"""
+		"""The statistics column caption.
 
 		Returns:
 			list(str)
@@ -83,7 +83,7 @@ class Page(Base):
 
 	@property
 	def ColumnCount(self):
-		"""
+		"""Displays the particular column number in the view.
 
 		Returns:
 			number
@@ -92,7 +92,7 @@ class Page(Base):
 
 	@property
 	def CurrentPage(self):
-		"""
+		"""The current page number being displayed.
 
 		Returns:
 			number
@@ -104,7 +104,7 @@ class Page(Base):
 
 	@property
 	def EgressMode(self):
-		"""
+		"""Emulates conditional or paged egress tracking view based on selected mode.
 
 		Returns:
 			str(conditional|paged)
@@ -116,7 +116,7 @@ class Page(Base):
 
 	@property
 	def EgressPageSize(self):
-		"""
+		"""The current egress page size across all ingress rows. Default = 3
 
 		Returns:
 			number
@@ -128,7 +128,7 @@ class Page(Base):
 
 	@property
 	def IsBlocked(self):
-		"""
+		"""Is a flag used to fetch the status of view (returns true if the views was blocked by Guard Rail, false otherwise)
 
 		Returns:
 			bool
@@ -137,7 +137,7 @@ class Page(Base):
 
 	@property
 	def IsReady(self):
-		"""
+		"""If true, the counter is ready to record the statistics.
 
 		Returns:
 			bool
@@ -146,7 +146,7 @@ class Page(Base):
 
 	@property
 	def IsReadyTimeout(self):
-		"""
+		"""The maximum time (in seconds) for the -isReady attribute to wait before it returns false in case the page has no data.
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class Page(Base):
 
 	@property
 	def PageSize(self):
-		"""
+		"""The number of statistics per page.
 
 		Returns:
 			number
@@ -179,7 +179,7 @@ class Page(Base):
 
 	@property
 	def RowCount(self):
-		"""
+		"""Displays the particular row number in the view.
 
 		Returns:
 			number
@@ -188,7 +188,7 @@ class Page(Base):
 
 	@property
 	def RowValues(self):
-		"""
+		"""All statistics values in a row.
 
 		Returns:
 			dict(arg1:list[list[list[str]]])
@@ -197,7 +197,7 @@ class Page(Base):
 
 	@property
 	def Timestamp(self):
-		"""
+		"""Describes the date and time of the event.
 
 		Returns:
 			number
@@ -206,7 +206,7 @@ class Page(Base):
 
 	@property
 	def TotalPages(self):
-		"""
+		"""The total number of statistics pages.
 
 		Returns:
 			number
@@ -215,7 +215,7 @@ class Page(Base):
 
 	@property
 	def TotalRows(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number

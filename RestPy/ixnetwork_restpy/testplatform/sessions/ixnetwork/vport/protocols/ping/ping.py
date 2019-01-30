@@ -38,7 +38,7 @@ class Ping(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables IPv4 PING transmission and reception for this port. PING messages are IPv4 ICMP messages of type Echo Request. Responses are IPv4 ICMP message of type Echo Response.
 
 		Returns:
 			bool
@@ -52,7 +52,7 @@ class Ping(Base):
 		"""Adds a new ping node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
+			Enabled (bool): Enables IPv4 PING transmission and reception for this port. PING messages are IPv4 ICMP messages of type Echo Request. Responses are IPv4 ICMP message of type Echo Response.
 
 		Returns:
 			self: This instance with all currently retrieved ping data using find and the newly added ping data available through an iterator or index
@@ -78,7 +78,7 @@ class Ping(Base):
 		By default the find method takes no parameters and will retrieve all ping data from the server.
 
 		Args:
-			Enabled (bool): 
+			Enabled (bool): Enables IPv4 PING transmission and reception for this port. PING messages are IPv4 ICMP messages of type Echo Request. Responses are IPv4 ICMP message of type Echo Response.
 
 		Returns:
 			self: This instance with matching ping data retrieved from the server available through an iterator or index

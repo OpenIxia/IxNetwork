@@ -37,7 +37,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def BandRate(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def BandType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def BurstSize(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def ByteCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def DatapathId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def DatapathIdAsHex(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def DropPrecedenceLevel(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def MeterId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class SwitchMeterBandLearnedInfo(Base):
 
 	@property
 	def PacketCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -132,16 +132,16 @@ class SwitchMeterBandLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchMeterBandLearnedInfo data from the server.
 
 		Args:
-			BandRate (number): 
-			BandType (str): 
-			BurstSize (number): 
-			ByteCount (number): 
-			DatapathId (str): 
-			DatapathIdAsHex (str): 
-			DropPrecedenceLevel (number): 
-			LocalIp (str): 
-			MeterId (number): 
-			PacketCount (number): 
+			BandRate (number): NOT DEFINED
+			BandType (str): NOT DEFINED
+			BurstSize (number): NOT DEFINED
+			ByteCount (number): NOT DEFINED
+			DatapathId (str): NOT DEFINED
+			DatapathIdAsHex (str): NOT DEFINED
+			DropPrecedenceLevel (number): NOT DEFINED
+			LocalIp (str): NOT DEFINED
+			MeterId (number): NOT DEFINED
+			PacketCount (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching switchMeterBandLearnedInfo data retrieved from the server available through an iterator or index

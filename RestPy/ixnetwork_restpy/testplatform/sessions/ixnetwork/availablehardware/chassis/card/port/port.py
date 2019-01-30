@@ -51,7 +51,7 @@ class Port(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""The port description/mode.
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class Port(Base):
 
 	@property
 	def IsAvailable(self):
-		"""
+		"""The link is available on the port.
 
 		Returns:
 			bool
@@ -69,7 +69,7 @@ class Port(Base):
 
 	@property
 	def IsBusy(self):
-		"""
+		"""The link is unavailable on the port.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Port(Base):
 
 	@property
 	def IsLinkUp(self):
-		"""
+		"""The link is up on the port.
 
 		Returns:
 			bool
@@ -87,7 +87,7 @@ class Port(Base):
 
 	@property
 	def IsUsable(self):
-		"""
+		"""(read only) Returns true of false depending on whether the port can be used, based on the value of parent card aggregationMode. If card aggregationMode is notSupported and normal it always returns true. If card aggregationMode is tenGigAggregation, only the ports with index 1, 5, 9, and 13 returns true.
 
 		Returns:
 			bool
@@ -96,7 +96,7 @@ class Port(Base):
 
 	@property
 	def Owner(self):
-		"""
+		"""The current owner of the port.
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class Port(Base):
 
 	@property
 	def PortId(self):
-		"""
+		"""The physical port ID.
 
 		Returns:
 			number
@@ -119,13 +119,13 @@ class Port(Base):
 		By default the find method takes no parameters and will retrieve all port data from the server.
 
 		Args:
-			Description (str): 
-			IsAvailable (bool): 
-			IsBusy (bool): 
-			IsLinkUp (bool): 
-			IsUsable (bool): 
-			Owner (str): 
-			PortId (number): 
+			Description (str): The port description/mode.
+			IsAvailable (bool): The link is available on the port.
+			IsBusy (bool): The link is unavailable on the port.
+			IsLinkUp (bool): The link is up on the port.
+			IsUsable (bool): (read only) Returns true of false depending on whether the port can be used, based on the value of parent card aggregationMode. If card aggregationMode is notSupported and normal it always returns true. If card aggregationMode is tenGigAggregation, only the ports with index 1, 5, 9, and 13 returns true.
+			Owner (str): The current owner of the port.
+			PortId (number): The physical port ID.
 
 		Returns:
 			self: This instance with matching port data retrieved from the server available through an iterator or index

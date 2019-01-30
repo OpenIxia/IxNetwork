@@ -80,7 +80,7 @@ class Router(Base):
 
 	@property
 	def DiscardLearnedLsa(self):
-		"""
+		"""When this option is true, this simulated OSPF router (RID) will not learn any LSAs from the neighbor. (default = false)
 
 		Returns:
 			bool
@@ -92,7 +92,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the use of this emulated OSPF router in the emulated OSPF network. (default = disabled)
 
 		Returns:
 			bool
@@ -104,7 +104,7 @@ class Router(Base):
 
 	@property
 	def GenerateRouterLsa(self):
-		"""
+		"""If enabled, the router will automatically generate a router LSA including all of the interfaces added with the ospfRouter addInterface command. This should be turned off if you are building OSPF topologies with ospfUserLsa commands. (default = true)
 
 		Returns:
 			bool
@@ -116,7 +116,7 @@ class Router(Base):
 
 	@property
 	def GracefulRestart(self):
-		"""
+		"""Enables the graceful restart Helper Mode function, per the IETF drafts, for the emulated OSPF router. (default = false)
 
 		Returns:
 			bool
@@ -128,7 +128,7 @@ class Router(Base):
 
 	@property
 	def InterFloodLsUpdateBurstGap(self):
-		"""
+		"""The number of FloodlsUpdates sent between each Burst gap.
 
 		Returns:
 			number
@@ -140,7 +140,7 @@ class Router(Base):
 
 	@property
 	def LsaRefreshTime(self):
-		"""
+		"""The time taken for LSA refresh.
 
 		Returns:
 			number
@@ -152,7 +152,7 @@ class Router(Base):
 
 	@property
 	def LsaRetransmitTime(self):
-		"""
+		"""The time taken to retransmit LSA.
 
 		Returns:
 			number
@@ -164,7 +164,7 @@ class Router(Base):
 
 	@property
 	def MaxFloodLsUpdatesPerBurst(self):
-		"""
+		"""The maximum number of FloodLsUpdates sent for each Burst.
 
 		Returns:
 			number
@@ -176,7 +176,7 @@ class Router(Base):
 
 	@property
 	def RebuildAdjForLsdbChange(self):
-		"""
+		"""The enableGracefulRestart option must be true. If this option is true, Database Description (DBD) packets will have the R bit set - and the DBD packets will also have the LR (LSDB Resynchronization) bit set in the LLS Extended Options TLV. Out-of-Band Link State Database (OOB LSDB) resynchronization will be used instead of normal LSDB resynchronization, in order to preserve the OSPF adjacency with the neighbor router across OSPF Graceful Restart. (default = false)
 
 		Returns:
 			bool
@@ -188,7 +188,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""
+		"""The router ID for this emulated OSPF router, in IPv4 format.
 
 		Returns:
 			str
@@ -200,7 +200,7 @@ class Router(Base):
 
 	@property
 	def StrictLsaChecking(self):
-		"""
+		"""If enabled, the OSPFv2 Restart Helper will terminate Graceful Restart when there are changes to an LSA that would be flooded to, or retransmitted by, the restarting router.
 
 		Returns:
 			bool
@@ -212,7 +212,7 @@ class Router(Base):
 
 	@property
 	def SupportForRfc3623(self):
-		"""
+		"""Enables Graceful Restart Helper Mode per RFC 3623 on the emulated OSPF router. (default = false)
 
 		Returns:
 			bool
@@ -224,7 +224,7 @@ class Router(Base):
 
 	@property
 	def SupportReasonSoftReloadUpgrade(self):
-		"""
+		"""If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is a Software Reload or Upgrade on the restarting router. (Planned outage) The default is checked/enabled.
 
 		Returns:
 			bool
@@ -236,7 +236,7 @@ class Router(Base):
 
 	@property
 	def SupportReasonSoftRestart(self):
-		"""
+		"""If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is an OSPFv2 software restart (on the restarting router). (Planned or unplanned outage) The default is checked/enabled.
 
 		Returns:
 			bool
@@ -248,7 +248,7 @@ class Router(Base):
 
 	@property
 	def SupportReasonSwotchRedundantCntrlProcessor(self):
-		"""
+		"""If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is a unplanned switchover to a redundant control processor on the restarting router. (Unplanned outage)
 
 		Returns:
 			bool
@@ -260,7 +260,7 @@ class Router(Base):
 
 	@property
 	def SupportReasonUnknown(self):
-		"""
+		"""If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is unknown and unplanned. (Unplanned outage) The default is enabled.
 
 		Returns:
 			bool
@@ -272,7 +272,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""The name of the group to which this emulated OSPF router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -286,23 +286,23 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			DiscardLearnedLsa (bool): 
-			Enabled (bool): 
-			GenerateRouterLsa (bool): 
-			GracefulRestart (bool): 
-			InterFloodLsUpdateBurstGap (number): 
-			LsaRefreshTime (number): 
-			LsaRetransmitTime (number): 
-			MaxFloodLsUpdatesPerBurst (number): 
-			RebuildAdjForLsdbChange (bool): 
-			RouterId (str): 
-			StrictLsaChecking (bool): 
-			SupportForRfc3623 (bool): 
-			SupportReasonSoftReloadUpgrade (bool): 
-			SupportReasonSoftRestart (bool): 
-			SupportReasonSwotchRedundantCntrlProcessor (bool): 
-			SupportReasonUnknown (bool): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			DiscardLearnedLsa (bool): When this option is true, this simulated OSPF router (RID) will not learn any LSAs from the neighbor. (default = false)
+			Enabled (bool): Enables or disables the use of this emulated OSPF router in the emulated OSPF network. (default = disabled)
+			GenerateRouterLsa (bool): If enabled, the router will automatically generate a router LSA including all of the interfaces added with the ospfRouter addInterface command. This should be turned off if you are building OSPF topologies with ospfUserLsa commands. (default = true)
+			GracefulRestart (bool): Enables the graceful restart Helper Mode function, per the IETF drafts, for the emulated OSPF router. (default = false)
+			InterFloodLsUpdateBurstGap (number): The number of FloodlsUpdates sent between each Burst gap.
+			LsaRefreshTime (number): The time taken for LSA refresh.
+			LsaRetransmitTime (number): The time taken to retransmit LSA.
+			MaxFloodLsUpdatesPerBurst (number): The maximum number of FloodLsUpdates sent for each Burst.
+			RebuildAdjForLsdbChange (bool): The enableGracefulRestart option must be true. If this option is true, Database Description (DBD) packets will have the R bit set - and the DBD packets will also have the LR (LSDB Resynchronization) bit set in the LLS Extended Options TLV. Out-of-Band Link State Database (OOB LSDB) resynchronization will be used instead of normal LSDB resynchronization, in order to preserve the OSPF adjacency with the neighbor router across OSPF Graceful Restart. (default = false)
+			RouterId (str): The router ID for this emulated OSPF router, in IPv4 format.
+			StrictLsaChecking (bool): If enabled, the OSPFv2 Restart Helper will terminate Graceful Restart when there are changes to an LSA that would be flooded to, or retransmitted by, the restarting router.
+			SupportForRfc3623 (bool): Enables Graceful Restart Helper Mode per RFC 3623 on the emulated OSPF router. (default = false)
+			SupportReasonSoftReloadUpgrade (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is a Software Reload or Upgrade on the restarting router. (Planned outage) The default is checked/enabled.
+			SupportReasonSoftRestart (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is an OSPFv2 software restart (on the restarting router). (Planned or unplanned outage) The default is checked/enabled.
+			SupportReasonSwotchRedundantCntrlProcessor (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is a unplanned switchover to a redundant control processor on the restarting router. (Unplanned outage)
+			SupportReasonUnknown (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is unknown and unplanned. (Unplanned outage) The default is enabled.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this emulated OSPF router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -328,23 +328,23 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			DiscardLearnedLsa (bool): 
-			Enabled (bool): 
-			GenerateRouterLsa (bool): 
-			GracefulRestart (bool): 
-			InterFloodLsUpdateBurstGap (number): 
-			LsaRefreshTime (number): 
-			LsaRetransmitTime (number): 
-			MaxFloodLsUpdatesPerBurst (number): 
-			RebuildAdjForLsdbChange (bool): 
-			RouterId (str): 
-			StrictLsaChecking (bool): 
-			SupportForRfc3623 (bool): 
-			SupportReasonSoftReloadUpgrade (bool): 
-			SupportReasonSoftRestart (bool): 
-			SupportReasonSwotchRedundantCntrlProcessor (bool): 
-			SupportReasonUnknown (bool): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			DiscardLearnedLsa (bool): When this option is true, this simulated OSPF router (RID) will not learn any LSAs from the neighbor. (default = false)
+			Enabled (bool): Enables or disables the use of this emulated OSPF router in the emulated OSPF network. (default = disabled)
+			GenerateRouterLsa (bool): If enabled, the router will automatically generate a router LSA including all of the interfaces added with the ospfRouter addInterface command. This should be turned off if you are building OSPF topologies with ospfUserLsa commands. (default = true)
+			GracefulRestart (bool): Enables the graceful restart Helper Mode function, per the IETF drafts, for the emulated OSPF router. (default = false)
+			InterFloodLsUpdateBurstGap (number): The number of FloodlsUpdates sent between each Burst gap.
+			LsaRefreshTime (number): The time taken for LSA refresh.
+			LsaRetransmitTime (number): The time taken to retransmit LSA.
+			MaxFloodLsUpdatesPerBurst (number): The maximum number of FloodLsUpdates sent for each Burst.
+			RebuildAdjForLsdbChange (bool): The enableGracefulRestart option must be true. If this option is true, Database Description (DBD) packets will have the R bit set - and the DBD packets will also have the LR (LSDB Resynchronization) bit set in the LLS Extended Options TLV. Out-of-Band Link State Database (OOB LSDB) resynchronization will be used instead of normal LSDB resynchronization, in order to preserve the OSPF adjacency with the neighbor router across OSPF Graceful Restart. (default = false)
+			RouterId (str): The router ID for this emulated OSPF router, in IPv4 format.
+			StrictLsaChecking (bool): If enabled, the OSPFv2 Restart Helper will terminate Graceful Restart when there are changes to an LSA that would be flooded to, or retransmitted by, the restarting router.
+			SupportForRfc3623 (bool): Enables Graceful Restart Helper Mode per RFC 3623 on the emulated OSPF router. (default = false)
+			SupportReasonSoftReloadUpgrade (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is a Software Reload or Upgrade on the restarting router. (Planned outage) The default is checked/enabled.
+			SupportReasonSoftRestart (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is an OSPFv2 software restart (on the restarting router). (Planned or unplanned outage) The default is checked/enabled.
+			SupportReasonSwotchRedundantCntrlProcessor (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is a unplanned switchover to a redundant control processor on the restarting router. (Unplanned outage)
+			SupportReasonUnknown (bool): If enabled, Graceful Restart Helper Mode will be supported on this emulated OSPFv2 Router when the restart reason is unknown and unplanned. (Unplanned outage) The default is enabled.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this emulated OSPF router is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index

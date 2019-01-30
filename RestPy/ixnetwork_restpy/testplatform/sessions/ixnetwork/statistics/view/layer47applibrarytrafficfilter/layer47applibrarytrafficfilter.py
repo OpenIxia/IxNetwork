@@ -52,7 +52,7 @@ class Layer47AppLibraryTrafficFilter(Base):
 
 	@property
 	def AdvancedFilterName(self):
-		"""
+		"""Specifies an advanced filter from the ones available in the selected drill down view.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Layer47AppLibraryTrafficFilter(Base):
 
 	@property
 	def AllAdvancedFilters(self):
-		"""
+		"""Returns a list with all the filters that are present in the selected drill down views. This includes filters that cannot be applied for the current drill down view.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)
@@ -73,7 +73,7 @@ class Layer47AppLibraryTrafficFilter(Base):
 
 	@property
 	def MatchingAdvancedFilters(self):
-		"""
+		"""Specifies a list that contains only the filters which can be applied on the current drill down view.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)
@@ -82,7 +82,7 @@ class Layer47AppLibraryTrafficFilter(Base):
 
 	@property
 	def TopxEnabled(self):
-		"""
+		"""The view only shows the number of rows specified by TopXValue. If the view is OnDemand, it will become RealTime.
 
 		Returns:
 			bool
@@ -94,7 +94,7 @@ class Layer47AppLibraryTrafficFilter(Base):
 
 	@property
 	def TopxValue(self):
-		"""
+		"""The number of rows to be shown when TopXEnabled is set to true.
 
 		Returns:
 			number
@@ -108,9 +108,9 @@ class Layer47AppLibraryTrafficFilter(Base):
 		"""Adds a new layer47AppLibraryTrafficFilter node on the server and retrieves it in this instance.
 
 		Args:
-			AdvancedFilterName (str): 
-			TopxEnabled (bool): 
-			TopxValue (number): 
+			AdvancedFilterName (str): Specifies an advanced filter from the ones available in the selected drill down view.
+			TopxEnabled (bool): The view only shows the number of rows specified by TopXValue. If the view is OnDemand, it will become RealTime.
+			TopxValue (number): The number of rows to be shown when TopXEnabled is set to true.
 
 		Returns:
 			self: This instance with all currently retrieved layer47AppLibraryTrafficFilter data using find and the newly added layer47AppLibraryTrafficFilter data available through an iterator or index
@@ -136,11 +136,11 @@ class Layer47AppLibraryTrafficFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer47AppLibraryTrafficFilter data from the server.
 
 		Args:
-			AdvancedFilterName (str): 
-			AllAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
-			MatchingAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
-			TopxEnabled (bool): 
-			TopxValue (number): 
+			AdvancedFilterName (str): Specifies an advanced filter from the ones available in the selected drill down view.
+			AllAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Returns a list with all the filters that are present in the selected drill down views. This includes filters that cannot be applied for the current drill down view.
+			MatchingAdvancedFilters (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): Specifies a list that contains only the filters which can be applied on the current drill down view.
+			TopxEnabled (bool): The view only shows the number of rows specified by TopXValue. If the view is OnDemand, it will become RealTime.
+			TopxValue (number): The number of rows to be shown when TopXEnabled is set to true.
 
 		Returns:
 			self: This instance with matching layer47AppLibraryTrafficFilter data retrieved from the server available through an iterator or index
@@ -168,9 +168,11 @@ class Layer47AppLibraryTrafficFilter(Base):
 	def AddAdvancedFilter(self, Arg2):
 		"""Executes the addAdvancedFilter operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=layer47AppLibraryTrafficFilter)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): 
+			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableAdvancedFilters)): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -182,9 +184,11 @@ class Layer47AppLibraryTrafficFilter(Base):
 	def RemoveAdvancedFilter(self, Arg2):
 		"""Executes the removeAdvancedFilter operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=layer47AppLibraryTrafficFilter)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
+			Arg2 (str): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -195,6 +199,8 @@ class Layer47AppLibraryTrafficFilter(Base):
 
 	def RemoveAllAdvancedFilters(self):
 		"""Executes the removeAllAdvancedFilters operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=layer47AppLibraryTrafficFilter)): The method internally sets Arg1 to the current href for this instance

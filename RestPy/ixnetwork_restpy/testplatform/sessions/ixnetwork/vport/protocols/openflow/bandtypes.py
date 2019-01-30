@@ -37,7 +37,7 @@ class BandTypes(Base):
 
 	@property
 	def Drop(self):
-		"""
+		"""This indicates that packets which exceed the band rate value are dropped.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class BandTypes(Base):
 
 	@property
 	def DscpRemark(self):
-		"""
+		"""This indicates that the drop precedence of the DSCP field is remarked in the IP header of the packets that exceed the band rate value.
 
 		Returns:
 			bool

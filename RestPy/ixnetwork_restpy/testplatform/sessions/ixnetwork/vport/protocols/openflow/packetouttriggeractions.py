@@ -38,7 +38,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ActionType(self):
-		"""
+		"""The action type associated with this instruction.
 
 		Returns:
 			str(drop|output|setEthernetSource|setEthernetDestination|setEthernetType|setVlanId|setVlanPriority|setIpDscp|setIpEcn|setIpProtocol|setIpv4Source|setIpv4Destination|setTcpSource|setTcpDestination|setUdpSource|setUdpDestination|setSctpSource|setSctpDestination|setIcmpv4Type|setIcmpv4Code|setArpOpcode|setArpSourceHwAddress|setArpTargetHwAddress|setArpSourceIpv4Address|setArpTargetIpv4Address|setIpv6Source|setIpv6Destination|setIpv6FlowLabel|setIcmpv6Type|setIcmpv6Code|setIpv6NdTarget|setIpv6NdSll|setIpv6NdTll|setMplsLabel|setMplsTc|setMplsBos|setPbbIsid|setTunnelId|setIpv6ExtHeader|copyTtlOut|copyTtlIn|setMplsTtl|decrementMplsTtl|pushVlan|popVlan|pushMpls|popMpls|setQueue|group|setNetworkTtl|decrementNetworkTtl|pushPbb|popPbb|experimenter)
@@ -50,7 +50,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ArpDstHwAddr(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ArpDstIpv4Addr(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ArpSrcHwAddr(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ArpSrcIpv4Addr(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -122,7 +122,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def EthernetSource(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def EthernetType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -170,7 +170,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def ExperimenterDatalength(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def GroupId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -194,7 +194,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -206,7 +206,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -218,7 +218,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -230,7 +230,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -242,7 +242,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def IpDscp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -254,7 +254,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def IpEcn(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -266,7 +266,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -278,7 +278,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -290,7 +290,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -302,7 +302,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -314,7 +314,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -326,7 +326,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -338,7 +338,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -350,7 +350,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6NdTll(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -362,7 +362,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -374,7 +374,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def Ipv6ndTarget(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -386,7 +386,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def MaxByteLength(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -398,7 +398,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def MplsBos(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -410,7 +410,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def MplsLabel(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -422,7 +422,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def MplsTc(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -434,7 +434,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def MplsTtl(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -446,7 +446,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def NwTtl(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -458,7 +458,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def OutputPort(self):
-		"""
+		"""The Output port number to be used.
 
 		Returns:
 			number
@@ -470,7 +470,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def OutputPortType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(ofppInPort|manual|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppTable)
@@ -482,7 +482,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def PbbISid(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -494,7 +494,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def QueueId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -506,7 +506,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def SctpDestination(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -518,7 +518,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def SctpSource(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -530,7 +530,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def TcpDestination(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -542,7 +542,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def TcpSource(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -554,7 +554,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -566,7 +566,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def UdpDestination(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -578,7 +578,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def UdpSource(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -590,7 +590,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -602,7 +602,7 @@ class PacketOutTriggerActions(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -616,54 +616,54 @@ class PacketOutTriggerActions(Base):
 		"""Adds a new packetOutTriggerActions node on the server and retrieves it in this instance.
 
 		Args:
-			ActionType (str(drop|output|setEthernetSource|setEthernetDestination|setEthernetType|setVlanId|setVlanPriority|setIpDscp|setIpEcn|setIpProtocol|setIpv4Source|setIpv4Destination|setTcpSource|setTcpDestination|setUdpSource|setUdpDestination|setSctpSource|setSctpDestination|setIcmpv4Type|setIcmpv4Code|setArpOpcode|setArpSourceHwAddress|setArpTargetHwAddress|setArpSourceIpv4Address|setArpTargetIpv4Address|setIpv6Source|setIpv6Destination|setIpv6FlowLabel|setIcmpv6Type|setIcmpv6Code|setIpv6NdTarget|setIpv6NdSll|setIpv6NdTll|setMplsLabel|setMplsTc|setMplsBos|setPbbIsid|setTunnelId|setIpv6ExtHeader|copyTtlOut|copyTtlIn|setMplsTtl|decrementMplsTtl|pushVlan|popVlan|pushMpls|popMpls|setQueue|group|setNetworkTtl|decrementNetworkTtl|pushPbb|popPbb|experimenter)): 
-			ArpDstHwAddr (str): 
-			ArpDstIpv4Addr (number): 
-			ArpOpcode (number): 
-			ArpSrcHwAddr (str): 
-			ArpSrcIpv4Addr (number): 
-			EthernetDestination (str): 
-			EthernetSource (str): 
-			EthernetType (number): 
-			Experimenter (number): 
-			ExperimenterData (str): 
-			ExperimenterDatalength (number): 
-			GroupId (number): 
-			Icmpv4Code (number): 
-			Icmpv4Type (number): 
-			Icmpv6Code (number): 
-			Icmpv6Type (number): 
-			IpDscp (number): 
-			IpEcn (number): 
-			IpProtocol (number): 
-			Ipv4Destination (str): 
-			Ipv4Source (str): 
-			Ipv6Destination (str): 
-			Ipv6ExtHeader (number): 
-			Ipv6FlowLabel (number): 
-			Ipv6NdSll (str): 
-			Ipv6NdTll (str): 
-			Ipv6Source (str): 
-			Ipv6ndTarget (str): 
-			MaxByteLength (number): 
-			MplsBos (number): 
-			MplsLabel (number): 
-			MplsTc (number): 
-			MplsTtl (number): 
-			NwTtl (number): 
-			OutputPort (number): 
-			OutputPortType (str(ofppInPort|manual|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppTable)): 
-			PbbISid (number): 
-			QueueId (number): 
-			SctpDestination (number): 
-			SctpSource (number): 
-			TcpDestination (number): 
-			TcpSource (number): 
-			TunnelId (number): 
-			UdpDestination (number): 
-			UdpSource (number): 
-			VlanId (number): 
-			VlanPriority (number): 
+			ActionType (str(drop|output|setEthernetSource|setEthernetDestination|setEthernetType|setVlanId|setVlanPriority|setIpDscp|setIpEcn|setIpProtocol|setIpv4Source|setIpv4Destination|setTcpSource|setTcpDestination|setUdpSource|setUdpDestination|setSctpSource|setSctpDestination|setIcmpv4Type|setIcmpv4Code|setArpOpcode|setArpSourceHwAddress|setArpTargetHwAddress|setArpSourceIpv4Address|setArpTargetIpv4Address|setIpv6Source|setIpv6Destination|setIpv6FlowLabel|setIcmpv6Type|setIcmpv6Code|setIpv6NdTarget|setIpv6NdSll|setIpv6NdTll|setMplsLabel|setMplsTc|setMplsBos|setPbbIsid|setTunnelId|setIpv6ExtHeader|copyTtlOut|copyTtlIn|setMplsTtl|decrementMplsTtl|pushVlan|popVlan|pushMpls|popMpls|setQueue|group|setNetworkTtl|decrementNetworkTtl|pushPbb|popPbb|experimenter)): The action type associated with this instruction.
+			ArpDstHwAddr (str): NOT DEFINED
+			ArpDstIpv4Addr (number): NOT DEFINED
+			ArpOpcode (number): NOT DEFINED
+			ArpSrcHwAddr (str): NOT DEFINED
+			ArpSrcIpv4Addr (number): NOT DEFINED
+			EthernetDestination (str): NOT DEFINED
+			EthernetSource (str): NOT DEFINED
+			EthernetType (number): NOT DEFINED
+			Experimenter (number): NOT DEFINED
+			ExperimenterData (str): NOT DEFINED
+			ExperimenterDatalength (number): NOT DEFINED
+			GroupId (number): NOT DEFINED
+			Icmpv4Code (number): NOT DEFINED
+			Icmpv4Type (number): NOT DEFINED
+			Icmpv6Code (number): NOT DEFINED
+			Icmpv6Type (number): NOT DEFINED
+			IpDscp (number): NOT DEFINED
+			IpEcn (number): NOT DEFINED
+			IpProtocol (number): NOT DEFINED
+			Ipv4Destination (str): NOT DEFINED
+			Ipv4Source (str): NOT DEFINED
+			Ipv6Destination (str): NOT DEFINED
+			Ipv6ExtHeader (number): NOT DEFINED
+			Ipv6FlowLabel (number): NOT DEFINED
+			Ipv6NdSll (str): NOT DEFINED
+			Ipv6NdTll (str): NOT DEFINED
+			Ipv6Source (str): NOT DEFINED
+			Ipv6ndTarget (str): NOT DEFINED
+			MaxByteLength (number): NOT DEFINED
+			MplsBos (number): NOT DEFINED
+			MplsLabel (number): NOT DEFINED
+			MplsTc (number): NOT DEFINED
+			MplsTtl (number): NOT DEFINED
+			NwTtl (number): NOT DEFINED
+			OutputPort (number): The Output port number to be used.
+			OutputPortType (str(ofppInPort|manual|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppTable)): NOT DEFINED
+			PbbISid (number): NOT DEFINED
+			QueueId (number): NOT DEFINED
+			SctpDestination (number): NOT DEFINED
+			SctpSource (number): NOT DEFINED
+			TcpDestination (number): NOT DEFINED
+			TcpSource (number): NOT DEFINED
+			TunnelId (number): NOT DEFINED
+			UdpDestination (number): NOT DEFINED
+			UdpSource (number): NOT DEFINED
+			VlanId (number): NOT DEFINED
+			VlanPriority (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved packetOutTriggerActions data using find and the newly added packetOutTriggerActions data available through an iterator or index
@@ -689,54 +689,54 @@ class PacketOutTriggerActions(Base):
 		By default the find method takes no parameters and will retrieve all packetOutTriggerActions data from the server.
 
 		Args:
-			ActionType (str(drop|output|setEthernetSource|setEthernetDestination|setEthernetType|setVlanId|setVlanPriority|setIpDscp|setIpEcn|setIpProtocol|setIpv4Source|setIpv4Destination|setTcpSource|setTcpDestination|setUdpSource|setUdpDestination|setSctpSource|setSctpDestination|setIcmpv4Type|setIcmpv4Code|setArpOpcode|setArpSourceHwAddress|setArpTargetHwAddress|setArpSourceIpv4Address|setArpTargetIpv4Address|setIpv6Source|setIpv6Destination|setIpv6FlowLabel|setIcmpv6Type|setIcmpv6Code|setIpv6NdTarget|setIpv6NdSll|setIpv6NdTll|setMplsLabel|setMplsTc|setMplsBos|setPbbIsid|setTunnelId|setIpv6ExtHeader|copyTtlOut|copyTtlIn|setMplsTtl|decrementMplsTtl|pushVlan|popVlan|pushMpls|popMpls|setQueue|group|setNetworkTtl|decrementNetworkTtl|pushPbb|popPbb|experimenter)): 
-			ArpDstHwAddr (str): 
-			ArpDstIpv4Addr (number): 
-			ArpOpcode (number): 
-			ArpSrcHwAddr (str): 
-			ArpSrcIpv4Addr (number): 
-			EthernetDestination (str): 
-			EthernetSource (str): 
-			EthernetType (number): 
-			Experimenter (number): 
-			ExperimenterData (str): 
-			ExperimenterDatalength (number): 
-			GroupId (number): 
-			Icmpv4Code (number): 
-			Icmpv4Type (number): 
-			Icmpv6Code (number): 
-			Icmpv6Type (number): 
-			IpDscp (number): 
-			IpEcn (number): 
-			IpProtocol (number): 
-			Ipv4Destination (str): 
-			Ipv4Source (str): 
-			Ipv6Destination (str): 
-			Ipv6ExtHeader (number): 
-			Ipv6FlowLabel (number): 
-			Ipv6NdSll (str): 
-			Ipv6NdTll (str): 
-			Ipv6Source (str): 
-			Ipv6ndTarget (str): 
-			MaxByteLength (number): 
-			MplsBos (number): 
-			MplsLabel (number): 
-			MplsTc (number): 
-			MplsTtl (number): 
-			NwTtl (number): 
-			OutputPort (number): 
-			OutputPortType (str(ofppInPort|manual|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppTable)): 
-			PbbISid (number): 
-			QueueId (number): 
-			SctpDestination (number): 
-			SctpSource (number): 
-			TcpDestination (number): 
-			TcpSource (number): 
-			TunnelId (number): 
-			UdpDestination (number): 
-			UdpSource (number): 
-			VlanId (number): 
-			VlanPriority (number): 
+			ActionType (str(drop|output|setEthernetSource|setEthernetDestination|setEthernetType|setVlanId|setVlanPriority|setIpDscp|setIpEcn|setIpProtocol|setIpv4Source|setIpv4Destination|setTcpSource|setTcpDestination|setUdpSource|setUdpDestination|setSctpSource|setSctpDestination|setIcmpv4Type|setIcmpv4Code|setArpOpcode|setArpSourceHwAddress|setArpTargetHwAddress|setArpSourceIpv4Address|setArpTargetIpv4Address|setIpv6Source|setIpv6Destination|setIpv6FlowLabel|setIcmpv6Type|setIcmpv6Code|setIpv6NdTarget|setIpv6NdSll|setIpv6NdTll|setMplsLabel|setMplsTc|setMplsBos|setPbbIsid|setTunnelId|setIpv6ExtHeader|copyTtlOut|copyTtlIn|setMplsTtl|decrementMplsTtl|pushVlan|popVlan|pushMpls|popMpls|setQueue|group|setNetworkTtl|decrementNetworkTtl|pushPbb|popPbb|experimenter)): The action type associated with this instruction.
+			ArpDstHwAddr (str): NOT DEFINED
+			ArpDstIpv4Addr (number): NOT DEFINED
+			ArpOpcode (number): NOT DEFINED
+			ArpSrcHwAddr (str): NOT DEFINED
+			ArpSrcIpv4Addr (number): NOT DEFINED
+			EthernetDestination (str): NOT DEFINED
+			EthernetSource (str): NOT DEFINED
+			EthernetType (number): NOT DEFINED
+			Experimenter (number): NOT DEFINED
+			ExperimenterData (str): NOT DEFINED
+			ExperimenterDatalength (number): NOT DEFINED
+			GroupId (number): NOT DEFINED
+			Icmpv4Code (number): NOT DEFINED
+			Icmpv4Type (number): NOT DEFINED
+			Icmpv6Code (number): NOT DEFINED
+			Icmpv6Type (number): NOT DEFINED
+			IpDscp (number): NOT DEFINED
+			IpEcn (number): NOT DEFINED
+			IpProtocol (number): NOT DEFINED
+			Ipv4Destination (str): NOT DEFINED
+			Ipv4Source (str): NOT DEFINED
+			Ipv6Destination (str): NOT DEFINED
+			Ipv6ExtHeader (number): NOT DEFINED
+			Ipv6FlowLabel (number): NOT DEFINED
+			Ipv6NdSll (str): NOT DEFINED
+			Ipv6NdTll (str): NOT DEFINED
+			Ipv6Source (str): NOT DEFINED
+			Ipv6ndTarget (str): NOT DEFINED
+			MaxByteLength (number): NOT DEFINED
+			MplsBos (number): NOT DEFINED
+			MplsLabel (number): NOT DEFINED
+			MplsTc (number): NOT DEFINED
+			MplsTtl (number): NOT DEFINED
+			NwTtl (number): NOT DEFINED
+			OutputPort (number): The Output port number to be used.
+			OutputPortType (str(ofppInPort|manual|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppTable)): NOT DEFINED
+			PbbISid (number): NOT DEFINED
+			QueueId (number): NOT DEFINED
+			SctpDestination (number): NOT DEFINED
+			SctpSource (number): NOT DEFINED
+			TcpDestination (number): NOT DEFINED
+			TcpSource (number): NOT DEFINED
+			TunnelId (number): NOT DEFINED
+			UdpDestination (number): NOT DEFINED
+			UdpSource (number): NOT DEFINED
+			VlanId (number): NOT DEFINED
+			VlanPriority (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching packetOutTriggerActions data retrieved from the server available through an iterator or index

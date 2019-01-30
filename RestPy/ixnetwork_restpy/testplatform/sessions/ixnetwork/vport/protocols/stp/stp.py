@@ -65,7 +65,7 @@ class Stp(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the use of this emulated spanning-tree protocol (STP) router in the emulated STP network. (default = disabled) STP is used to resolve and eliminate loops in a network.
 
 		Returns:
 			bool
@@ -77,7 +77,7 @@ class Stp(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The current running state of the STP server.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -86,6 +86,8 @@ class Stp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		Starts STP on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=stp)): The method internally sets Arg1 to the current href for this instance
@@ -99,6 +101,8 @@ class Stp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		Stops STP on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=stp)): The method internally sets Arg1 to the current href for this instance

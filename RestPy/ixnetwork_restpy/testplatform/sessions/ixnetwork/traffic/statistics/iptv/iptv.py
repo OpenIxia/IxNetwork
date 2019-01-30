@@ -37,7 +37,7 @@ class Iptv(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables IPTV
 
 		Returns:
 			bool

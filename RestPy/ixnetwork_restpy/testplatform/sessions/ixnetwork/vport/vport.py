@@ -136,7 +136,7 @@ class Vport(Base):
 
 	@property
 	def ActualSpeed(self):
-		"""
+		"""The actual speed.
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class Vport(Base):
 
 	@property
 	def AssignedTo(self):
-		"""
+		"""(Read Only) A new port is assigned with this option.
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class Vport(Base):
 
 	@property
 	def ConnectedTo(self):
-		"""
+		"""The physical port to which the unassigned port is assigned.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/availableHardware?deepchild=port)
@@ -166,7 +166,7 @@ class Vport(Base):
 
 	@property
 	def ConnectionInfo(self):
-		"""
+		"""Detailed information about location of the physical port that is assigned to this port configuration.
 
 		Returns:
 			str
@@ -184,7 +184,7 @@ class Vport(Base):
 
 	@property
 	def ConnectionStatus(self):
-		"""
+		"""A string describing the status of the hardware connected to this vport
 
 		Returns:
 			str
@@ -193,7 +193,7 @@ class Vport(Base):
 
 	@property
 	def InternalId(self):
-		"""
+		"""For internal use.
 
 		Returns:
 			number
@@ -202,7 +202,7 @@ class Vport(Base):
 
 	@property
 	def IsAvailable(self):
-		"""
+		"""If true, this virtual port is available for assigning to a physical port.
 
 		Returns:
 			bool
@@ -211,7 +211,7 @@ class Vport(Base):
 
 	@property
 	def IsConnected(self):
-		"""
+		"""If true, indicates that the port is connected.
 
 		Returns:
 			bool
@@ -220,7 +220,7 @@ class Vport(Base):
 
 	@property
 	def IsMapped(self):
-		"""
+		"""If true, this virtual port is mapped.
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class Vport(Base):
 
 	@property
 	def IsPullOnly(self):
-		"""
+		"""(This action only affects assigned ports.) This action will temporarily set the port as an Unassigned Port. This function is used to pull the configuration set by a Tcl script or an IxExplorer port file into the IxNetwork configuration.
 
 		Returns:
 			bool
@@ -241,7 +241,7 @@ class Vport(Base):
 
 	@property
 	def IsVMPort(self):
-		"""
+		"""If true the hardware connected to this vport is a virtual machine port
 
 		Returns:
 			bool
@@ -250,7 +250,7 @@ class Vport(Base):
 
 	@property
 	def IxnChassisVersion(self):
-		"""
+		"""(Read Only) If true, the installer installs the same resources as installed by the IxNetwork Full installer/IxNetwork Chassis installer on chassis.
 
 		Returns:
 			str
@@ -259,7 +259,7 @@ class Vport(Base):
 
 	@property
 	def IxnClientVersion(self):
-		"""
+		"""(Read Only) If true, this installs full client side IxNetwork or IxNetwork-FT components.
 
 		Returns:
 			str
@@ -268,7 +268,7 @@ class Vport(Base):
 
 	@property
 	def IxosChassisVersion(self):
-		"""
+		"""(Read Only) If true, the installer installs the same resources as installed by IxOS on a chassis.
 
 		Returns:
 			str
@@ -277,7 +277,7 @@ class Vport(Base):
 
 	@property
 	def Licenses(self):
-		"""
+		"""Number of licenses.
 
 		Returns:
 			str
@@ -286,7 +286,7 @@ class Vport(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""The description of the port: (1) For an assigned port, the format is: (Port type) (card no.): (port no.) - (chassis name or IP). (2) For an (unassigned) port configuration, the format is: (Port type) Port 00x.
 
 		Returns:
 			str
@@ -298,7 +298,7 @@ class Vport(Base):
 
 	@property
 	def RxMode(self):
-		"""
+		"""The receive mode of the virtual port.
 
 		Returns:
 			str(capture|captureAndMeasure|measure|packetImpairment)
@@ -310,7 +310,7 @@ class Vport(Base):
 
 	@property
 	def State(self):
-		"""
+		"""The virtual port state.
 
 		Returns:
 			str(busy|down|unassigned|up|versionMismatch)
@@ -319,7 +319,7 @@ class Vport(Base):
 
 	@property
 	def StateDetail(self):
-		"""
+		"""This attribute describes the state of the port.
 
 		Returns:
 			str(busy|cpuNotReady|idle|inActive|l1ConfigFailed|protocolsNotSupported|versionMismatched|waitingForCPUStatus)
@@ -328,7 +328,7 @@ class Vport(Base):
 
 	@property
 	def TransmitIgnoreLinkStatus(self):
-		"""
+		"""If true, the port ingores the link status when transmitting data.
 
 		Returns:
 			bool
@@ -340,7 +340,7 @@ class Vport(Base):
 
 	@property
 	def TxGapControlMode(self):
-		"""
+		"""This object controls the Gap Control mode of the port.
 
 		Returns:
 			str(averageMode|fixedMode)
@@ -352,7 +352,7 @@ class Vport(Base):
 
 	@property
 	def TxMode(self):
-		"""
+		"""The transmit mode.
 
 		Returns:
 			str(interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse)
@@ -364,7 +364,7 @@ class Vport(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""The type of port selection.
 
 		Returns:
 			str(atlasFourHundredGigLan|atlasFourHundredGigLanFcoe|atm|ethernet|ethernetFcoe|ethernetImpairment|ethernetvm|fc|fortyGigLan|fortyGigLanFcoe|hundredGigLan|hundredGigLanFcoe|krakenFourHundredGigLan|novusHundredGigLan|novusHundredGigLanFcoe|novusTenGigLan|novusTenGigLanFcoe|pos|tenFortyHundredGigLan|tenFortyHundredGigLanFcoe|tenGigLan|tenGigLanFcoe|tenGigWan|tenGigWanFcoe)
@@ -387,14 +387,14 @@ class Vport(Base):
 		"""Adds a new vport node on the server and retrieves it in this instance.
 
 		Args:
-			ConnectedTo (str(None|/api/v1/sessions/1/ixnetwork/availableHardware?deepchild=port)): 
-			IsPullOnly (bool): 
-			Name (str): 
-			RxMode (str(capture|captureAndMeasure|measure|packetImpairment)): 
-			TransmitIgnoreLinkStatus (bool): 
-			TxGapControlMode (str(averageMode|fixedMode)): 
-			TxMode (str(interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse)): 
-			Type (str(atlasFourHundredGigLan|atlasFourHundredGigLanFcoe|atm|ethernet|ethernetFcoe|ethernetImpairment|ethernetvm|fc|fortyGigLan|fortyGigLanFcoe|hundredGigLan|hundredGigLanFcoe|krakenFourHundredGigLan|novusHundredGigLan|novusHundredGigLanFcoe|novusTenGigLan|novusTenGigLanFcoe|pos|tenFortyHundredGigLan|tenFortyHundredGigLanFcoe|tenGigLan|tenGigLanFcoe|tenGigWan|tenGigWanFcoe)): 
+			ConnectedTo (str(None|/api/v1/sessions/1/ixnetwork/availableHardware?deepchild=port)): The physical port to which the unassigned port is assigned.
+			IsPullOnly (bool): (This action only affects assigned ports.) This action will temporarily set the port as an Unassigned Port. This function is used to pull the configuration set by a Tcl script or an IxExplorer port file into the IxNetwork configuration.
+			Name (str): The description of the port: (1) For an assigned port, the format is: (Port type) (card no.): (port no.) - (chassis name or IP). (2) For an (unassigned) port configuration, the format is: (Port type) Port 00x.
+			RxMode (str(capture|captureAndMeasure|measure|packetImpairment)): The receive mode of the virtual port.
+			TransmitIgnoreLinkStatus (bool): If true, the port ingores the link status when transmitting data.
+			TxGapControlMode (str(averageMode|fixedMode)): This object controls the Gap Control mode of the port.
+			TxMode (str(interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse)): The transmit mode.
+			Type (str(atlasFourHundredGigLan|atlasFourHundredGigLanFcoe|atm|ethernet|ethernetFcoe|ethernetImpairment|ethernetvm|fc|fortyGigLan|fortyGigLanFcoe|hundredGigLan|hundredGigLanFcoe|krakenFourHundredGigLan|novusHundredGigLan|novusHundredGigLanFcoe|novusTenGigLan|novusTenGigLanFcoe|pos|tenFortyHundredGigLan|tenFortyHundredGigLanFcoe|tenGigLan|tenGigLanFcoe|tenGigWan|tenGigWanFcoe)): The type of port selection.
 
 		Returns:
 			self: This instance with all currently retrieved vport data using find and the newly added vport data available through an iterator or index
@@ -420,30 +420,30 @@ class Vport(Base):
 		By default the find method takes no parameters and will retrieve all vport data from the server.
 
 		Args:
-			ActualSpeed (number): 
-			AssignedTo (str): 
-			ConnectedTo (str(None|/api/v1/sessions/1/ixnetwork/availableHardware?deepchild=port)): 
-			ConnectionInfo (str): 
+			ActualSpeed (number): The actual speed.
+			AssignedTo (str): (Read Only) A new port is assigned with this option.
+			ConnectedTo (str(None|/api/v1/sessions/1/ixnetwork/availableHardware?deepchild=port)): The physical port to which the unassigned port is assigned.
+			ConnectionInfo (str): Detailed information about location of the physical port that is assigned to this port configuration.
 			ConnectionState (str(assignedInUseByOther|assignedUnconnected|connectedLinkDown|connectedLinkUp|connecting|unassigned)): Consolidated state of the vport. This combines the connection state with link state.
-			ConnectionStatus (str): 
-			InternalId (number): 
-			IsAvailable (bool): 
-			IsConnected (bool): 
-			IsMapped (bool): 
-			IsPullOnly (bool): 
-			IsVMPort (bool): 
-			IxnChassisVersion (str): 
-			IxnClientVersion (str): 
-			IxosChassisVersion (str): 
-			Licenses (str): 
-			Name (str): 
-			RxMode (str(capture|captureAndMeasure|measure|packetImpairment)): 
-			State (str(busy|down|unassigned|up|versionMismatch)): 
-			StateDetail (str(busy|cpuNotReady|idle|inActive|l1ConfigFailed|protocolsNotSupported|versionMismatched|waitingForCPUStatus)): 
-			TransmitIgnoreLinkStatus (bool): 
-			TxGapControlMode (str(averageMode|fixedMode)): 
-			TxMode (str(interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse)): 
-			Type (str(atlasFourHundredGigLan|atlasFourHundredGigLanFcoe|atm|ethernet|ethernetFcoe|ethernetImpairment|ethernetvm|fc|fortyGigLan|fortyGigLanFcoe|hundredGigLan|hundredGigLanFcoe|krakenFourHundredGigLan|novusHundredGigLan|novusHundredGigLanFcoe|novusTenGigLan|novusTenGigLanFcoe|pos|tenFortyHundredGigLan|tenFortyHundredGigLanFcoe|tenGigLan|tenGigLanFcoe|tenGigWan|tenGigWanFcoe)): 
+			ConnectionStatus (str): A string describing the status of the hardware connected to this vport
+			InternalId (number): For internal use.
+			IsAvailable (bool): If true, this virtual port is available for assigning to a physical port.
+			IsConnected (bool): If true, indicates that the port is connected.
+			IsMapped (bool): If true, this virtual port is mapped.
+			IsPullOnly (bool): (This action only affects assigned ports.) This action will temporarily set the port as an Unassigned Port. This function is used to pull the configuration set by a Tcl script or an IxExplorer port file into the IxNetwork configuration.
+			IsVMPort (bool): If true the hardware connected to this vport is a virtual machine port
+			IxnChassisVersion (str): (Read Only) If true, the installer installs the same resources as installed by the IxNetwork Full installer/IxNetwork Chassis installer on chassis.
+			IxnClientVersion (str): (Read Only) If true, this installs full client side IxNetwork or IxNetwork-FT components.
+			IxosChassisVersion (str): (Read Only) If true, the installer installs the same resources as installed by IxOS on a chassis.
+			Licenses (str): Number of licenses.
+			Name (str): The description of the port: (1) For an assigned port, the format is: (Port type) (card no.): (port no.) - (chassis name or IP). (2) For an (unassigned) port configuration, the format is: (Port type) Port 00x.
+			RxMode (str(capture|captureAndMeasure|measure|packetImpairment)): The receive mode of the virtual port.
+			State (str(busy|down|unassigned|up|versionMismatch)): The virtual port state.
+			StateDetail (str(busy|cpuNotReady|idle|inActive|l1ConfigFailed|protocolsNotSupported|versionMismatched|waitingForCPUStatus)): This attribute describes the state of the port.
+			TransmitIgnoreLinkStatus (bool): If true, the port ingores the link status when transmitting data.
+			TxGapControlMode (str(averageMode|fixedMode)): This object controls the Gap Control mode of the port.
+			TxMode (str(interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse)): The transmit mode.
+			Type (str(atlasFourHundredGigLan|atlasFourHundredGigLanFcoe|atm|ethernet|ethernetFcoe|ethernetImpairment|ethernetvm|fc|fortyGigLan|fortyGigLanFcoe|hundredGigLan|hundredGigLanFcoe|krakenFourHundredGigLan|novusHundredGigLan|novusHundredGigLanFcoe|novusTenGigLan|novusTenGigLanFcoe|pos|tenFortyHundredGigLan|tenFortyHundredGigLanFcoe|tenGigLan|tenGigLanFcoe|tenGigWan|tenGigWanFcoe)): The type of port selection.
 			ValidTxModes (list(str[interleaved|interleavedCoarse|packetImpairment|sequential|sequentialCoarse])): 
 
 		Returns:
@@ -488,6 +488,8 @@ class Vport(Base):
 	def ClearNeighborSolicitation(self):
 		"""Executes the clearNeighborSolicitation operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
 
@@ -501,11 +503,13 @@ class Vport(Base):
 	def ClearNeighborSolicitation(self):
 		"""Executes the clearNeighborSolicitation operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -517,11 +521,13 @@ class Vport(Base):
 	def ClearNeighborTable(self):
 		"""Executes the clearNeighborTable operation on the server.
 
+		This exec clears the learned neighbor table for the specified vport.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -594,9 +600,11 @@ class Vport(Base):
 	def IgmpJoin(self, Arg2):
 		"""Executes the igmpJoin operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
+			Arg2 (str): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -608,10 +616,12 @@ class Vport(Base):
 	def IgmpJoin(self, Arg2, Arg3):
 		"""Executes the igmpJoin operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
-			Arg3 (number): 
+			Arg2 (str): NOT DEFINED
+			Arg3 (number): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -623,9 +633,11 @@ class Vport(Base):
 	def IgmpLeave(self, Arg2):
 		"""Executes the igmpLeave operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
+			Arg2 (str): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -637,10 +649,12 @@ class Vport(Base):
 	def IgmpLeave(self, Arg2, Arg3):
 		"""Executes the igmpLeave operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
-			Arg3 (number): 
+			Arg2 (str): NOT DEFINED
+			Arg3 (number): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -700,11 +714,13 @@ class Vport(Base):
 	def RefreshUnresolvedNeighbors(self):
 		"""Executes the refreshUnresolvedNeighbors operation on the server.
 
+		Refresh unresolved neighbours.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -776,11 +792,13 @@ class Vport(Base):
 	def SendArp(self):
 		"""Executes the sendArp operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -792,12 +810,14 @@ class Vport(Base):
 	def SendArp(self, Arg2):
 		"""Executes the sendArp operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): 
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): NOT DEFINED
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -808,6 +828,8 @@ class Vport(Base):
 
 	def SendArpAll(self):
 		"""Executes the sendArpAll operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
@@ -822,11 +844,13 @@ class Vport(Base):
 	def SendNs(self):
 		"""Executes the sendNs operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -838,12 +862,14 @@ class Vport(Base):
 	def SendNs(self, Arg2):
 		"""Executes the sendNs operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): 
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): NOT DEFINED
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -854,6 +880,8 @@ class Vport(Base):
 
 	def SendNsAll(self):
 		"""Executes the sendNsAll operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance
@@ -868,11 +896,13 @@ class Vport(Base):
 	def SendRs(self):
 		"""Executes the sendRs operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -884,12 +914,14 @@ class Vport(Base):
 	def SendRs(self, Arg2):
 		"""Executes the sendRs operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): 
+			Arg2 (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface])): NOT DEFINED
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -900,6 +932,8 @@ class Vport(Base):
 
 	def SendRsAll(self):
 		"""Executes the sendRsAll operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (list(str[None|/api/v1/sessions/1/ixnetwork/vport])): The method internally sets Arg1 to the encapsulated list of hrefs for this instance

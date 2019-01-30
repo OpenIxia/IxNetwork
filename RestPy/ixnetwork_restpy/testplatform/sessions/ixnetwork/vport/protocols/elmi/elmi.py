@@ -51,7 +51,7 @@ class Elmi(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables the view that is created from the tcl script.
 
 		Returns:
 			bool
@@ -63,6 +63,8 @@ class Elmi(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=elmi)): The method internally sets Arg1 to the current href for this instance
@@ -76,6 +78,8 @@ class Elmi(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=elmi)): The method internally sets Arg1 to the current href for this instance

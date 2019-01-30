@@ -66,7 +66,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def ContinuousIncrOpaqueValuesAcrossRoot(self):
-		"""
+		"""It signifies the continuous increment of opaque values across root.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables the protocol.
 
 		Returns:
 			bool
@@ -90,7 +90,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def LabelValueStart(self):
-		"""
+		"""The first label in the range of labels.
 
 		Returns:
 			number
@@ -102,7 +102,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def LabelValueStep(self):
-		"""
+		"""The label value increment step for more than 1 range.
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def LspCountPerRoot(self):
-		"""
+		"""This is to specify how many different LSPs are created per Root.
 
 		Returns:
 			number
@@ -126,7 +126,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def LspType(self):
-		"""
+		"""The type of multicast LSP.
 
 		Returns:
 			str(p2mp)
@@ -135,7 +135,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def RootAddrCount(self):
-		"""
+		"""The root address count for this Multicast FEC range.
 
 		Returns:
 			number
@@ -147,7 +147,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def RootAddrStep(self):
-		"""
+		"""The Root Address increment step. This is applicable only if Root Address Count is greater than 1.
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class MulticastLeafRange(Base):
 
 	@property
 	def RootAddress(self):
-		"""
+		"""The root address of the multicast LSP.
 
 		Returns:
 			str
@@ -173,14 +173,14 @@ class MulticastLeafRange(Base):
 		"""Adds a new multicastLeafRange node on the server and retrieves it in this instance.
 
 		Args:
-			ContinuousIncrOpaqueValuesAcrossRoot (bool): 
-			Enabled (bool): 
-			LabelValueStart (number): 
-			LabelValueStep (number): 
-			LspCountPerRoot (number): 
-			RootAddrCount (number): 
-			RootAddrStep (str): 
-			RootAddress (str): 
+			ContinuousIncrOpaqueValuesAcrossRoot (bool): It signifies the continuous increment of opaque values across root.
+			Enabled (bool): If true, enables the protocol.
+			LabelValueStart (number): The first label in the range of labels.
+			LabelValueStep (number): The label value increment step for more than 1 range.
+			LspCountPerRoot (number): This is to specify how many different LSPs are created per Root.
+			RootAddrCount (number): The root address count for this Multicast FEC range.
+			RootAddrStep (str): The Root Address increment step. This is applicable only if Root Address Count is greater than 1.
+			RootAddress (str): The root address of the multicast LSP.
 
 		Returns:
 			self: This instance with all currently retrieved multicastLeafRange data using find and the newly added multicastLeafRange data available through an iterator or index
@@ -206,15 +206,15 @@ class MulticastLeafRange(Base):
 		By default the find method takes no parameters and will retrieve all multicastLeafRange data from the server.
 
 		Args:
-			ContinuousIncrOpaqueValuesAcrossRoot (bool): 
-			Enabled (bool): 
-			LabelValueStart (number): 
-			LabelValueStep (number): 
-			LspCountPerRoot (number): 
-			LspType (str(p2mp)): 
-			RootAddrCount (number): 
-			RootAddrStep (str): 
-			RootAddress (str): 
+			ContinuousIncrOpaqueValuesAcrossRoot (bool): It signifies the continuous increment of opaque values across root.
+			Enabled (bool): If true, enables the protocol.
+			LabelValueStart (number): The first label in the range of labels.
+			LabelValueStep (number): The label value increment step for more than 1 range.
+			LspCountPerRoot (number): This is to specify how many different LSPs are created per Root.
+			LspType (str(p2mp)): The type of multicast LSP.
+			RootAddrCount (number): The root address count for this Multicast FEC range.
+			RootAddrStep (str): The Root Address increment step. This is applicable only if Root Address Count is greater than 1.
+			RootAddress (str): The root address of the multicast LSP.
 
 		Returns:
 			self: This instance with matching multicastLeafRange data retrieved from the server available through an iterator or index

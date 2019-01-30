@@ -122,7 +122,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def AggregatorAsNumber(self):
-		"""
+		"""AS number associated with Aggregator ID in Aggregator attribute
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def AggregatorIdIncrementMode(self):
-		"""
+		"""Increment mode of aggregator ID
 
 		Returns:
 			str(fixed|increment)
@@ -146,7 +146,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def AggregatorIpAddress(self):
-		"""
+		"""IP address of the aggregator in Aggregator attribute
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherAsNumber(self):
-		"""
+		"""Distinguisher AS number
 
 		Returns:
 			number
@@ -170,7 +170,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherAsNumberStep(self):
-		"""
+		"""Increment step of Distinguisher AS number across the routes in route range
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherAsNumberStepAcrossVrfs(self):
-		"""
+		"""Increment step of Distinguisher AS number across the VRFs in VRF range
 
 		Returns:
 			number
@@ -194,7 +194,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherAssignedNumber(self):
-		"""
+		"""Distinguisher assigned number
 
 		Returns:
 			number
@@ -206,7 +206,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherAssignedNumberStep(self):
-		"""
+		"""Increment step of distinguisher assigned number across routes in route range
 
 		Returns:
 			number
@@ -218,7 +218,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherAssignedNumberStepAcrossVrfs(self):
-		"""
+		"""Increment step of distinguisher assigned number across VRFs in VRF range
 
 		Returns:
 			number
@@ -230,7 +230,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherCount(self):
-		"""
+		"""Number of times increment step will be used ( default = 1 )
 
 		Returns:
 			number
@@ -242,7 +242,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherCountPerVrf(self):
-		"""
+		"""Number of times increment step will be used per VRF
 
 		Returns:
 			number
@@ -254,7 +254,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherIpAddress(self):
-		"""
+		"""Distinguisher IP address
 
 		Returns:
 			str
@@ -266,7 +266,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherIpAddressStep(self):
-		"""
+		"""Increment step of distinguisher IP address across routes in route range
 
 		Returns:
 			str
@@ -278,7 +278,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherIpAddressStepAcrossVrfs(self):
-		"""
+		"""Increment step of distinguisher IP address across VRFs in VRF range
 
 		Returns:
 			str
@@ -290,7 +290,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherMode(self):
-		"""
+		"""Specifies which part of the route distinguisher you want to increment.
 
 		Returns:
 			str(global|local)
@@ -302,7 +302,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherStep(self):
-		"""
+		"""The size of the increment step to be used with the part of the route distinguisher which will be incremented. (default = 1)
 
 		Returns:
 			number
@@ -314,7 +314,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def DistinguisherType(self):
-		"""
+		"""Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
 
 		Returns:
 			str(as|ip|asNumber2)
@@ -326,7 +326,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableAggregator(self):
-		"""
+		"""Generates an AGGREGATOR attribute using the aggregatorIpAddress, aggregatorASNum, and aggregatorIDMode. (default = false)
 
 		Returns:
 			bool
@@ -338,7 +338,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableAsPath(self):
-		"""
+		"""Enables the generation of AS Path related items.
 
 		Returns:
 			bool
@@ -350,7 +350,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableAtomicAggregator(self):
-		"""
+		"""Sets the attribute bit that indicates that the router has aggregated two or more prefixes in the AGGREGATOR attribute. (default = false)
 
 		Returns:
 			bool
@@ -362,7 +362,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableCluster(self):
-		"""
+		"""Enables the generation of the CLUSTER attribute list based on information in clusterList. (default = false)
 
 		Returns:
 			bool
@@ -374,7 +374,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableCommunity(self):
-		"""
+		"""Enables the generation of a COMMUNITY attribute list. (default = false)
 
 		Returns:
 			bool
@@ -386,7 +386,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableGenerateUniqueRoutes(self):
-		"""
+		"""When set to 1, each router generates a different IP address range. When not enabled, each router will advertise the route range as is.
 
 		Returns:
 			bool
@@ -398,7 +398,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableLocalPref(self):
-		"""
+		"""Enables the generation of a LOCAL PREF attribute based on the information in localPref. This value should be set to true only for EBGP. (default = false)
 
 		Returns:
 			bool
@@ -410,7 +410,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableMed(self):
-		"""
+		"""Enables the generation of a MULTI EXIT DISCRIMINATOR attribute. (default = false)
 
 		Returns:
 			bool
@@ -422,7 +422,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableNextHop(self):
-		"""
+		"""Enables the generation of a NEXT HOP attribute. (default = true)
 
 		Returns:
 			bool
@@ -434,7 +434,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableOrigin(self):
-		"""
+		"""Enables the generation of an ORIGIN attribute. (default = true)
 
 		Returns:
 			bool
@@ -446,7 +446,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableOriginator(self):
-		"""
+		"""Enables the generation of an ORIGINATOR-ID attribute, based on information in originatorId. (default = false)
 
 		Returns:
 			bool
@@ -458,7 +458,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def EnableUseTraditionalNlri(self):
-		"""
+		"""If enabled, use the traditional NLRI in the UPDATE message, instead of using the MP_REACH_NLRI Multi-protocol extension to advertise the routes. (Not applicable for MPLS and MPLS VPN Route Ranges.)
 
 		Returns:
 			bool
@@ -470,7 +470,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the UMH route range.
 
 		Returns:
 			bool
@@ -482,7 +482,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def FirstRoute(self):
-		"""
+		"""First route in route range
 
 		Returns:
 			str
@@ -494,7 +494,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def IncludeSourceAsExtendedCommunityPresent(self):
-		"""
+		"""If for a given MVPN BGP is used for exchanging C-multicast routes, or if segmented
 
 		Returns:
 			bool
@@ -506,7 +506,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def IncludeVrfRouteImportExtendedCommunityPresent(self):
-		"""
+		"""Defines the route target extended community.
 
 		Returns:
 			bool
@@ -518,7 +518,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def IpType(self):
-		"""
+		"""The type of IP address in nextworkAddress.
 
 		Returns:
 			str(ipAny|ipv4|ipv6)
@@ -530,7 +530,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def LocalPref(self):
-		"""
+		"""The local preference value for the routes with the LOCAL PREF attribute. (default = 0)
 
 		Returns:
 			number
@@ -542,7 +542,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def MaskWidth(self):
-		"""
+		"""Mask width of route range
 
 		Returns:
 			number
@@ -554,7 +554,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def MaskWidthTo(self):
-		"""
+		"""mask width of last route range
 
 		Returns:
 			number
@@ -566,7 +566,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def Med(self):
-		"""
+		"""The multi-exit discriminator value in the MULTI EXIT DISCRIMINATOR attribute. (default = 0)
 
 		Returns:
 			number
@@ -578,7 +578,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def NextHopIpAddress(self):
-		"""
+		"""The IP address, in either IPv4 or IPv6 format of the next hop associated with the NEXT HOP attribute. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -590,7 +590,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def NextHopMode(self):
-		"""
+		"""Indicates that the nextHopIpAddress may be incremented for each neighbor session generated for the range of neighbor addresses.
 
 		Returns:
 			str(nextHopIncrement|fixed|incrementPerPrefix)
@@ -602,7 +602,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def NextHopSetMode(self):
-		"""
+		"""Indicates now to set the next hop IP address.
 
 		Returns:
 			str(sameAsLocalIp|setManually)
@@ -614,7 +614,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def OriginProtocol(self):
-		"""
+		"""An indication of where the route entry originated.
 
 		Returns:
 			str(igp|egp|incomplete)
@@ -626,7 +626,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def OriginatorId(self):
-		"""
+		"""The router that originated a particular route; associated with the ORIGINATOR-ID attribute. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -638,7 +638,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def PackingFrom(self):
-		"""
+		"""Initial number of route packed in one BGP update
 
 		Returns:
 			number
@@ -650,7 +650,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def PackingTo(self):
-		"""
+		"""Final number of routes packed in one BGP update
 
 		Returns:
 			number
@@ -662,7 +662,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def RouteCountPerVrfs(self):
-		"""
+		"""Number of route per VRF
 
 		Returns:
 			number
@@ -674,7 +674,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def RouteStepAcrossVrfs(self):
-		"""
+		"""The route increment value across VRFs.
 
 		Returns:
 			str
@@ -686,7 +686,7 @@ class UmhSelectionRouteRange(Base):
 
 	@property
 	def Step(self):
-		"""
+		"""step
 
 		Returns:
 			number
@@ -700,54 +700,54 @@ class UmhSelectionRouteRange(Base):
 		"""Adds a new umhSelectionRouteRange node on the server and retrieves it in this instance.
 
 		Args:
-			AggregatorAsNumber (number): 
-			AggregatorIdIncrementMode (str(fixed|increment)): 
-			AggregatorIpAddress (str): 
-			DistinguisherAsNumber (number): 
-			DistinguisherAsNumberStep (number): 
-			DistinguisherAsNumberStepAcrossVrfs (number): 
-			DistinguisherAssignedNumber (number): 
-			DistinguisherAssignedNumberStep (number): 
-			DistinguisherAssignedNumberStepAcrossVrfs (number): 
-			DistinguisherCount (number): 
-			DistinguisherCountPerVrf (number): 
-			DistinguisherIpAddress (str): 
-			DistinguisherIpAddressStep (str): 
-			DistinguisherIpAddressStepAcrossVrfs (str): 
-			DistinguisherMode (str(global|local)): 
-			DistinguisherStep (number): 
-			DistinguisherType (str(as|ip|asNumber2)): 
-			EnableAggregator (bool): 
-			EnableAsPath (bool): 
-			EnableAtomicAggregator (bool): 
-			EnableCluster (bool): 
-			EnableCommunity (bool): 
-			EnableGenerateUniqueRoutes (bool): 
-			EnableLocalPref (bool): 
-			EnableMed (bool): 
-			EnableNextHop (bool): 
-			EnableOrigin (bool): 
-			EnableOriginator (bool): 
-			EnableUseTraditionalNlri (bool): 
-			Enabled (bool): 
-			FirstRoute (str): 
-			IncludeSourceAsExtendedCommunityPresent (bool): 
-			IncludeVrfRouteImportExtendedCommunityPresent (bool): 
-			IpType (str(ipAny|ipv4|ipv6)): 
-			LocalPref (number): 
-			MaskWidth (number): 
-			MaskWidthTo (number): 
-			Med (number): 
-			NextHopIpAddress (str): 
-			NextHopMode (str(nextHopIncrement|fixed|incrementPerPrefix)): 
-			NextHopSetMode (str(sameAsLocalIp|setManually)): 
-			OriginProtocol (str(igp|egp|incomplete)): 
-			OriginatorId (str): 
-			PackingFrom (number): 
-			PackingTo (number): 
-			RouteCountPerVrfs (number): 
-			RouteStepAcrossVrfs (str): 
-			Step (number): 
+			AggregatorAsNumber (number): AS number associated with Aggregator ID in Aggregator attribute
+			AggregatorIdIncrementMode (str(fixed|increment)): Increment mode of aggregator ID
+			AggregatorIpAddress (str): IP address of the aggregator in Aggregator attribute
+			DistinguisherAsNumber (number): Distinguisher AS number
+			DistinguisherAsNumberStep (number): Increment step of Distinguisher AS number across the routes in route range
+			DistinguisherAsNumberStepAcrossVrfs (number): Increment step of Distinguisher AS number across the VRFs in VRF range
+			DistinguisherAssignedNumber (number): Distinguisher assigned number
+			DistinguisherAssignedNumberStep (number): Increment step of distinguisher assigned number across routes in route range
+			DistinguisherAssignedNumberStepAcrossVrfs (number): Increment step of distinguisher assigned number across VRFs in VRF range
+			DistinguisherCount (number): Number of times increment step will be used ( default = 1 )
+			DistinguisherCountPerVrf (number): Number of times increment step will be used per VRF
+			DistinguisherIpAddress (str): Distinguisher IP address
+			DistinguisherIpAddressStep (str): Increment step of distinguisher IP address across routes in route range
+			DistinguisherIpAddressStepAcrossVrfs (str): Increment step of distinguisher IP address across VRFs in VRF range
+			DistinguisherMode (str(global|local)): Specifies which part of the route distinguisher you want to increment.
+			DistinguisherStep (number): The size of the increment step to be used with the part of the route distinguisher which will be incremented. (default = 1)
+			DistinguisherType (str(as|ip|asNumber2)): Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
+			EnableAggregator (bool): Generates an AGGREGATOR attribute using the aggregatorIpAddress, aggregatorASNum, and aggregatorIDMode. (default = false)
+			EnableAsPath (bool): Enables the generation of AS Path related items.
+			EnableAtomicAggregator (bool): Sets the attribute bit that indicates that the router has aggregated two or more prefixes in the AGGREGATOR attribute. (default = false)
+			EnableCluster (bool): Enables the generation of the CLUSTER attribute list based on information in clusterList. (default = false)
+			EnableCommunity (bool): Enables the generation of a COMMUNITY attribute list. (default = false)
+			EnableGenerateUniqueRoutes (bool): When set to 1, each router generates a different IP address range. When not enabled, each router will advertise the route range as is.
+			EnableLocalPref (bool): Enables the generation of a LOCAL PREF attribute based on the information in localPref. This value should be set to true only for EBGP. (default = false)
+			EnableMed (bool): Enables the generation of a MULTI EXIT DISCRIMINATOR attribute. (default = false)
+			EnableNextHop (bool): Enables the generation of a NEXT HOP attribute. (default = true)
+			EnableOrigin (bool): Enables the generation of an ORIGIN attribute. (default = true)
+			EnableOriginator (bool): Enables the generation of an ORIGINATOR-ID attribute, based on information in originatorId. (default = false)
+			EnableUseTraditionalNlri (bool): If enabled, use the traditional NLRI in the UPDATE message, instead of using the MP_REACH_NLRI Multi-protocol extension to advertise the routes. (Not applicable for MPLS and MPLS VPN Route Ranges.)
+			Enabled (bool): Enables the UMH route range.
+			FirstRoute (str): First route in route range
+			IncludeSourceAsExtendedCommunityPresent (bool): If for a given MVPN BGP is used for exchanging C-multicast routes, or if segmented
+			IncludeVrfRouteImportExtendedCommunityPresent (bool): Defines the route target extended community.
+			IpType (str(ipAny|ipv4|ipv6)): The type of IP address in nextworkAddress.
+			LocalPref (number): The local preference value for the routes with the LOCAL PREF attribute. (default = 0)
+			MaskWidth (number): Mask width of route range
+			MaskWidthTo (number): mask width of last route range
+			Med (number): The multi-exit discriminator value in the MULTI EXIT DISCRIMINATOR attribute. (default = 0)
+			NextHopIpAddress (str): The IP address, in either IPv4 or IPv6 format of the next hop associated with the NEXT HOP attribute. (default = 0.0.0.0)
+			NextHopMode (str(nextHopIncrement|fixed|incrementPerPrefix)): Indicates that the nextHopIpAddress may be incremented for each neighbor session generated for the range of neighbor addresses.
+			NextHopSetMode (str(sameAsLocalIp|setManually)): Indicates now to set the next hop IP address.
+			OriginProtocol (str(igp|egp|incomplete)): An indication of where the route entry originated.
+			OriginatorId (str): The router that originated a particular route; associated with the ORIGINATOR-ID attribute. (default = 0.0.0.0)
+			PackingFrom (number): Initial number of route packed in one BGP update
+			PackingTo (number): Final number of routes packed in one BGP update
+			RouteCountPerVrfs (number): Number of route per VRF
+			RouteStepAcrossVrfs (str): The route increment value across VRFs.
+			Step (number): step
 
 		Returns:
 			self: This instance with all currently retrieved umhSelectionRouteRange data using find and the newly added umhSelectionRouteRange data available through an iterator or index
@@ -773,54 +773,54 @@ class UmhSelectionRouteRange(Base):
 		By default the find method takes no parameters and will retrieve all umhSelectionRouteRange data from the server.
 
 		Args:
-			AggregatorAsNumber (number): 
-			AggregatorIdIncrementMode (str(fixed|increment)): 
-			AggregatorIpAddress (str): 
-			DistinguisherAsNumber (number): 
-			DistinguisherAsNumberStep (number): 
-			DistinguisherAsNumberStepAcrossVrfs (number): 
-			DistinguisherAssignedNumber (number): 
-			DistinguisherAssignedNumberStep (number): 
-			DistinguisherAssignedNumberStepAcrossVrfs (number): 
-			DistinguisherCount (number): 
-			DistinguisherCountPerVrf (number): 
-			DistinguisherIpAddress (str): 
-			DistinguisherIpAddressStep (str): 
-			DistinguisherIpAddressStepAcrossVrfs (str): 
-			DistinguisherMode (str(global|local)): 
-			DistinguisherStep (number): 
-			DistinguisherType (str(as|ip|asNumber2)): 
-			EnableAggregator (bool): 
-			EnableAsPath (bool): 
-			EnableAtomicAggregator (bool): 
-			EnableCluster (bool): 
-			EnableCommunity (bool): 
-			EnableGenerateUniqueRoutes (bool): 
-			EnableLocalPref (bool): 
-			EnableMed (bool): 
-			EnableNextHop (bool): 
-			EnableOrigin (bool): 
-			EnableOriginator (bool): 
-			EnableUseTraditionalNlri (bool): 
-			Enabled (bool): 
-			FirstRoute (str): 
-			IncludeSourceAsExtendedCommunityPresent (bool): 
-			IncludeVrfRouteImportExtendedCommunityPresent (bool): 
-			IpType (str(ipAny|ipv4|ipv6)): 
-			LocalPref (number): 
-			MaskWidth (number): 
-			MaskWidthTo (number): 
-			Med (number): 
-			NextHopIpAddress (str): 
-			NextHopMode (str(nextHopIncrement|fixed|incrementPerPrefix)): 
-			NextHopSetMode (str(sameAsLocalIp|setManually)): 
-			OriginProtocol (str(igp|egp|incomplete)): 
-			OriginatorId (str): 
-			PackingFrom (number): 
-			PackingTo (number): 
-			RouteCountPerVrfs (number): 
-			RouteStepAcrossVrfs (str): 
-			Step (number): 
+			AggregatorAsNumber (number): AS number associated with Aggregator ID in Aggregator attribute
+			AggregatorIdIncrementMode (str(fixed|increment)): Increment mode of aggregator ID
+			AggregatorIpAddress (str): IP address of the aggregator in Aggregator attribute
+			DistinguisherAsNumber (number): Distinguisher AS number
+			DistinguisherAsNumberStep (number): Increment step of Distinguisher AS number across the routes in route range
+			DistinguisherAsNumberStepAcrossVrfs (number): Increment step of Distinguisher AS number across the VRFs in VRF range
+			DistinguisherAssignedNumber (number): Distinguisher assigned number
+			DistinguisherAssignedNumberStep (number): Increment step of distinguisher assigned number across routes in route range
+			DistinguisherAssignedNumberStepAcrossVrfs (number): Increment step of distinguisher assigned number across VRFs in VRF range
+			DistinguisherCount (number): Number of times increment step will be used ( default = 1 )
+			DistinguisherCountPerVrf (number): Number of times increment step will be used per VRF
+			DistinguisherIpAddress (str): Distinguisher IP address
+			DistinguisherIpAddressStep (str): Increment step of distinguisher IP address across routes in route range
+			DistinguisherIpAddressStepAcrossVrfs (str): Increment step of distinguisher IP address across VRFs in VRF range
+			DistinguisherMode (str(global|local)): Specifies which part of the route distinguisher you want to increment.
+			DistinguisherStep (number): The size of the increment step to be used with the part of the route distinguisher which will be incremented. (default = 1)
+			DistinguisherType (str(as|ip|asNumber2)): Indicates the type of administrator field used in route distinguisher that will be included in the route announcements.
+			EnableAggregator (bool): Generates an AGGREGATOR attribute using the aggregatorIpAddress, aggregatorASNum, and aggregatorIDMode. (default = false)
+			EnableAsPath (bool): Enables the generation of AS Path related items.
+			EnableAtomicAggregator (bool): Sets the attribute bit that indicates that the router has aggregated two or more prefixes in the AGGREGATOR attribute. (default = false)
+			EnableCluster (bool): Enables the generation of the CLUSTER attribute list based on information in clusterList. (default = false)
+			EnableCommunity (bool): Enables the generation of a COMMUNITY attribute list. (default = false)
+			EnableGenerateUniqueRoutes (bool): When set to 1, each router generates a different IP address range. When not enabled, each router will advertise the route range as is.
+			EnableLocalPref (bool): Enables the generation of a LOCAL PREF attribute based on the information in localPref. This value should be set to true only for EBGP. (default = false)
+			EnableMed (bool): Enables the generation of a MULTI EXIT DISCRIMINATOR attribute. (default = false)
+			EnableNextHop (bool): Enables the generation of a NEXT HOP attribute. (default = true)
+			EnableOrigin (bool): Enables the generation of an ORIGIN attribute. (default = true)
+			EnableOriginator (bool): Enables the generation of an ORIGINATOR-ID attribute, based on information in originatorId. (default = false)
+			EnableUseTraditionalNlri (bool): If enabled, use the traditional NLRI in the UPDATE message, instead of using the MP_REACH_NLRI Multi-protocol extension to advertise the routes. (Not applicable for MPLS and MPLS VPN Route Ranges.)
+			Enabled (bool): Enables the UMH route range.
+			FirstRoute (str): First route in route range
+			IncludeSourceAsExtendedCommunityPresent (bool): If for a given MVPN BGP is used for exchanging C-multicast routes, or if segmented
+			IncludeVrfRouteImportExtendedCommunityPresent (bool): Defines the route target extended community.
+			IpType (str(ipAny|ipv4|ipv6)): The type of IP address in nextworkAddress.
+			LocalPref (number): The local preference value for the routes with the LOCAL PREF attribute. (default = 0)
+			MaskWidth (number): Mask width of route range
+			MaskWidthTo (number): mask width of last route range
+			Med (number): The multi-exit discriminator value in the MULTI EXIT DISCRIMINATOR attribute. (default = 0)
+			NextHopIpAddress (str): The IP address, in either IPv4 or IPv6 format of the next hop associated with the NEXT HOP attribute. (default = 0.0.0.0)
+			NextHopMode (str(nextHopIncrement|fixed|incrementPerPrefix)): Indicates that the nextHopIpAddress may be incremented for each neighbor session generated for the range of neighbor addresses.
+			NextHopSetMode (str(sameAsLocalIp|setManually)): Indicates now to set the next hop IP address.
+			OriginProtocol (str(igp|egp|incomplete)): An indication of where the route entry originated.
+			OriginatorId (str): The router that originated a particular route; associated with the ORIGINATOR-ID attribute. (default = 0.0.0.0)
+			PackingFrom (number): Initial number of route packed in one BGP update
+			PackingTo (number): Final number of routes packed in one BGP update
+			RouteCountPerVrfs (number): Number of route per VRF
+			RouteStepAcrossVrfs (str): The route increment value across VRFs.
+			Step (number): step
 
 		Returns:
 			self: This instance with matching umhSelectionRouteRange data retrieved from the server available through an iterator or index

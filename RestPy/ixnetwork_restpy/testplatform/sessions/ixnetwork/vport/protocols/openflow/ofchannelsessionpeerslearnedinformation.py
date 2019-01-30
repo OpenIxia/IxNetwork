@@ -51,7 +51,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def AveragePacketInReplyDelay(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def ConfiguredPacketInReplyCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def ConfiguredPacketInSentCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def LocalPortNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def MasterFlowRemovedMask(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def MasterPacketInMask(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -105,7 +105,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def MasterPortStatusMask(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def PacketInTxRate(self):
-		"""
+		"""Per second transmission rate of PacketIn messages from the time of protocol start. This is calculated only if Calculate PacketOut Rx Rate is enabled for the switch otherwise it is always 0.
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def PacketOutRxRate(self):
-		"""
+		"""Per second reception rate of PacketOut messages from the time of protocol start. This is calculated only if Calculate PacketOut Rx Rate is enabled for the switch otherwise it is always 0.
 
 		Returns:
 			number
@@ -132,7 +132,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -141,7 +141,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def RemotePortNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def Role(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -168,7 +168,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def SlaveFlowRemovedMask(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -177,7 +177,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def SlavePacketInMask(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -186,7 +186,7 @@ class OfChannelSessionPeersLearnedInformation(Base):
 
 	@property
 	def SlavePortStatusMask(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -200,22 +200,22 @@ class OfChannelSessionPeersLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all ofChannelSessionPeersLearnedInformation data from the server.
 
 		Args:
-			AveragePacketInReplyDelay (str): 
-			ConfiguredPacketInReplyCount (str): 
-			ConfiguredPacketInSentCount (str): 
-			LocalPortNumber (number): 
-			MasterFlowRemovedMask (number): 
-			MasterPacketInMask (number): 
-			MasterPortStatusMask (number): 
-			PacketInTxRate (number): 
-			PacketOutRxRate (number): 
-			RemoteIp (str): 
-			RemotePortNumber (number): 
-			ReplyState (str): 
-			Role (str): 
-			SlaveFlowRemovedMask (number): 
-			SlavePacketInMask (number): 
-			SlavePortStatusMask (number): 
+			AveragePacketInReplyDelay (str): NOT DEFINED
+			ConfiguredPacketInReplyCount (str): NOT DEFINED
+			ConfiguredPacketInSentCount (str): NOT DEFINED
+			LocalPortNumber (number): NOT DEFINED
+			MasterFlowRemovedMask (number): NOT DEFINED
+			MasterPacketInMask (number): NOT DEFINED
+			MasterPortStatusMask (number): NOT DEFINED
+			PacketInTxRate (number): Per second transmission rate of PacketIn messages from the time of protocol start. This is calculated only if Calculate PacketOut Rx Rate is enabled for the switch otherwise it is always 0.
+			PacketOutRxRate (number): Per second reception rate of PacketOut messages from the time of protocol start. This is calculated only if Calculate PacketOut Rx Rate is enabled for the switch otherwise it is always 0.
+			RemoteIp (str): NOT DEFINED
+			RemotePortNumber (number): NOT DEFINED
+			ReplyState (str): NOT DEFINED
+			Role (str): NOT DEFINED
+			SlaveFlowRemovedMask (number): NOT DEFINED
+			SlavePacketInMask (number): NOT DEFINED
+			SlavePortStatusMask (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching ofChannelSessionPeersLearnedInformation data retrieved from the server available through an iterator or index

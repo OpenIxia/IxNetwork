@@ -37,7 +37,7 @@ class ReportGeneration(Base):
 
 	@property
 	def OutputFile(self):
-		"""
+		"""Signifies the output file
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class ReportGeneration(Base):
 
 	@property
 	def OutputType(self):
-		"""
+		"""Signifies the output type
 
 		Returns:
 			str(Html|Pdf)
@@ -61,7 +61,7 @@ class ReportGeneration(Base):
 
 	@property
 	def Template(self):
-		"""
+		"""Signifies the template for IxReporter
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class ReportGeneration(Base):
 
 	@property
 	def TestRunId(self):
-		"""
+		"""Signifies the identifier for the test run
 
 		Returns:
 			number
@@ -85,6 +85,8 @@ class ReportGeneration(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=reportGeneration)): The method internally sets Arg1 to the current href for this instance

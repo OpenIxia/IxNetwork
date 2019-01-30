@@ -177,7 +177,7 @@ class DefaultProfile(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""The name of the profile. Read-only.
 
 		Returns:
 			str

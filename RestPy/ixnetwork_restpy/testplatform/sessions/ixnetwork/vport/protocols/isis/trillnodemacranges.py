@@ -38,7 +38,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def EnableMacRanges(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def InterNodeMacStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def StartUnicastMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def TopologyId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -95,7 +95,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def UnicastMacStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -107,7 +107,7 @@ class TrillNodeMacRanges(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -121,12 +121,12 @@ class TrillNodeMacRanges(Base):
 		"""Adds a new trillNodeMacRanges node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): 
-			EnableMacRanges (bool): 
-			InterNodeMacStep (str): 
-			StartUnicastMac (str): 
-			UnicastMacStep (str): 
-			VlanId (number): 
+			Count (number): NOT DEFINED
+			EnableMacRanges (bool): NOT DEFINED
+			InterNodeMacStep (str): NOT DEFINED
+			StartUnicastMac (str): NOT DEFINED
+			UnicastMacStep (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved trillNodeMacRanges data using find and the newly added trillNodeMacRanges data available through an iterator or index
@@ -152,13 +152,13 @@ class TrillNodeMacRanges(Base):
 		By default the find method takes no parameters and will retrieve all trillNodeMacRanges data from the server.
 
 		Args:
-			Count (number): 
-			EnableMacRanges (bool): 
-			InterNodeMacStep (str): 
-			StartUnicastMac (str): 
-			TopologyId (number): 
-			UnicastMacStep (str): 
-			VlanId (number): 
+			Count (number): NOT DEFINED
+			EnableMacRanges (bool): NOT DEFINED
+			InterNodeMacStep (str): NOT DEFINED
+			StartUnicastMac (str): NOT DEFINED
+			TopologyId (number): NOT DEFINED
+			UnicastMacStep (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching trillNodeMacRanges data retrieved from the server available through an iterator or index

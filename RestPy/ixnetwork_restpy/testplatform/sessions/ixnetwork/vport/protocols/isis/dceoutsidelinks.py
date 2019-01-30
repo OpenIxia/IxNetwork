@@ -38,7 +38,7 @@ class DceOutsideLinks(Base):
 
 	@property
 	def ConnectionCol(self):
-		"""
+		"""Used with the Connection Row value to specify the particular network range router that is the endpoint of the Outside Link.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class DceOutsideLinks(Base):
 
 	@property
 	def ConnectionRow(self):
-		"""
+		"""Used with the Connection Col value to specify the particular network range router that is the endpoint of the Outside Link.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class DceOutsideLinks(Base):
 
 	@property
 	def LinkedRid(self):
-		"""
+		"""The Router ID of the emulated DCE ISIS router at the far end of the Outside Link.
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class DceOutsideLinks(Base):
 		"""Adds a new dceOutsideLinks node on the server and retrieves it in this instance.
 
 		Args:
-			ConnectionCol (number): 
-			ConnectionRow (number): 
-			LinkedRid (str): 
+			ConnectionCol (number): Used with the Connection Row value to specify the particular network range router that is the endpoint of the Outside Link.
+			ConnectionRow (number): Used with the Connection Col value to specify the particular network range router that is the endpoint of the Outside Link.
+			LinkedRid (str): The Router ID of the emulated DCE ISIS router at the far end of the Outside Link.
 
 		Returns:
 			self: This instance with all currently retrieved dceOutsideLinks data using find and the newly added dceOutsideLinks data available through an iterator or index
@@ -104,9 +104,9 @@ class DceOutsideLinks(Base):
 		By default the find method takes no parameters and will retrieve all dceOutsideLinks data from the server.
 
 		Args:
-			ConnectionCol (number): 
-			ConnectionRow (number): 
-			LinkedRid (str): 
+			ConnectionCol (number): Used with the Connection Row value to specify the particular network range router that is the endpoint of the Outside Link.
+			ConnectionRow (number): Used with the Connection Col value to specify the particular network range router that is the endpoint of the Outside Link.
+			LinkedRid (str): The Router ID of the emulated DCE ISIS router at the far end of the Outside Link.
 
 		Returns:
 			self: This instance with matching dceOutsideLinks data retrieved from the server available through an iterator or index

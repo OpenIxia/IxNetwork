@@ -51,7 +51,7 @@ class LearnedIpv4P2mpLables(Base):
 
 	@property
 	def Label(self):
-		"""
+		"""Indicates the label value added to the packet(s) by the upstream LDP peer.
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class LearnedIpv4P2mpLables(Base):
 
 	@property
 	def LabelSpaceId(self):
-		"""
+		"""Part of the LSR Id. It forms the last 2 octets of the 6-octet LDP Identifier.
 
 		Returns:
 			number
@@ -69,7 +69,7 @@ class LearnedIpv4P2mpLables(Base):
 
 	@property
 	def PeerIpAddress(self):
-		"""
+		"""The RID of the upstream LDP peer. Part of the LSR Id. It must be globally unique. It forms the first 4 octets of the 6-octet LDP Identifier.
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class LearnedIpv4P2mpLables(Base):
 
 	@property
 	def RootAddress(self):
-		"""
+		"""Root Address of IPv4 P2MP labels learned.
 
 		Returns:
 			str
@@ -92,10 +92,10 @@ class LearnedIpv4P2mpLables(Base):
 		By default the find method takes no parameters and will retrieve all learnedIpv4P2mpLables data from the server.
 
 		Args:
-			Label (number): 
-			LabelSpaceId (number): 
-			PeerIpAddress (str): 
-			RootAddress (str): 
+			Label (number): Indicates the label value added to the packet(s) by the upstream LDP peer.
+			LabelSpaceId (number): Part of the LSR Id. It forms the last 2 octets of the 6-octet LDP Identifier.
+			PeerIpAddress (str): The RID of the upstream LDP peer. Part of the LSR Id. It must be globally unique. It forms the first 4 octets of the 6-octet LDP Identifier.
+			RootAddress (str): Root Address of IPv4 P2MP labels learned.
 
 		Returns:
 			self: This instance with matching learnedIpv4P2mpLables data retrieved from the server available through an iterator or index

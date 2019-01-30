@@ -37,7 +37,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def AuxiliaryId(self):
-		"""
+		"""This describes the identifier for auxiliary connections.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def ConnectionType(self):
-		"""
+		"""This describes the type of OpenFlow connection.
 
 		Returns:
 			str(tcp|tls|udp)
@@ -55,7 +55,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""This describes the Data Path ID of the OpenFlow switch.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""This describes the Data Path ID of the OpenFlow switch in hexadecimal format.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""This describes the local IP address of the selected interface.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def LocalPort(self):
-		"""
+		"""This describes the local port number identifier.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""This describes the Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def RemotePort(self):
-		"""
+		"""This describes the remote port number identifier.
 
 		Returns:
 			number
@@ -114,14 +114,14 @@ class SwitchAuxiliaryConnectionLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchAuxiliaryConnectionLearnedInfo data from the server.
 
 		Args:
-			AuxiliaryId (number): 
-			ConnectionType (str(tcp|tls|udp)): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			LocalIp (str): 
-			LocalPort (number): 
-			RemoteIp (str): 
-			RemotePort (number): 
+			AuxiliaryId (number): This describes the identifier for auxiliary connections.
+			ConnectionType (str(tcp|tls|udp)): This describes the type of OpenFlow connection.
+			DataPathId (str): This describes the Data Path ID of the OpenFlow switch.
+			DataPathIdAsHex (str): This describes the Data Path ID of the OpenFlow switch in hexadecimal format.
+			LocalIp (str): This describes the local IP address of the selected interface.
+			LocalPort (number): This describes the local port number identifier.
+			RemoteIp (str): This describes the Remote IP address of the selected interface.
+			RemotePort (number): This describes the remote port number identifier.
 
 		Returns:
 			self: This instance with matching switchAuxiliaryConnectionLearnedInfo data retrieved from the server available through an iterator or index

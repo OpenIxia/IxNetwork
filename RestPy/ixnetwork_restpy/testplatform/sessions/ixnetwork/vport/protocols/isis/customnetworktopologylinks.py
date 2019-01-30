@@ -38,7 +38,7 @@ class CustomNetworkTopologyLinks(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomNetworkTopologyLinks(Base):
 
 	@property
 	def LinkMetric(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class CustomNetworkTopologyLinks(Base):
 
 	@property
 	def LinkNodeSystemId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class CustomNetworkTopologyLinks(Base):
 		"""Adds a new customNetworkTopologyLinks node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			LinkMetric (number): 
-			LinkNodeSystemId (str): 
+			Enabled (bool): NOT DEFINED
+			LinkMetric (number): NOT DEFINED
+			LinkNodeSystemId (str): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customNetworkTopologyLinks data using find and the newly added customNetworkTopologyLinks data available through an iterator or index
@@ -104,9 +104,9 @@ class CustomNetworkTopologyLinks(Base):
 		By default the find method takes no parameters and will retrieve all customNetworkTopologyLinks data from the server.
 
 		Args:
-			Enabled (bool): 
-			LinkMetric (number): 
-			LinkNodeSystemId (str): 
+			Enabled (bool): NOT DEFINED
+			LinkMetric (number): NOT DEFINED
+			LinkNodeSystemId (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customNetworkTopologyLinks data retrieved from the server available through an iterator or index

@@ -5,6 +5,9 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 
 
 # setup the connection information for a windows gui test platform that has a default session of 1
+# platform='linux' forces the scheme to https
+# if the default platform='windows' is used a ConnectionError will be raised
+# as the Linux API Server does not redirect but closes the connection
 test_platform=TestPlatform('10.36.74.17', platform='linux')
 test_platform.Trace = 'request_response'
 

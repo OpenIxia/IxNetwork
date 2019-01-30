@@ -37,7 +37,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def AggregatorAs(self):
-		"""
+		"""The AS associated with the aggregator router ID in the AGGREGATOR attribute. (default = 0)
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def AggregatorId(self):
-		"""
+		"""The IP address of the router that aggregated two or more routes in the AGGREGATOR attribute. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -61,7 +61,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def AsPath(self):
-		"""
+		"""Indicates the local IP address of the BGP router
 
 		Returns:
 			list(dict(arg1:bool,arg2:str[unknown|asSet|asSequence|asConfedSet|asConfedSequence],arg3:list[number]))
@@ -73,7 +73,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def AsSetMode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(includeAsSeq|includeAsSeqConf|includeAsSet|includeAsSetConf|noInclude|prependAs)
@@ -85,7 +85,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def Cluster(self):
-		"""
+		"""The list of BGP clusters that a particular route has passed through
 
 		Returns:
 			list(number)
@@ -97,7 +97,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def Community(self):
-		"""
+		"""The BGP Community attribute to be added to the BGP entry
 
 		Returns:
 			list(number)
@@ -109,7 +109,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableAggregator(self):
-		"""
+		"""Generates an AGGREGATOR attribute using the aggregatorIpAddress, aggregatorASNum, and aggregatorIDMode. (default = false)
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableAsPath(self):
-		"""
+		"""Indicates the local IP address of the BGP router.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableAtomicAggregate(self):
-		"""
+		"""Sets the attribute bit that indicates that the router has aggregated two or more prefixes in the AGGREGATOR attribute. (default = false)
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableCluster(self):
-		"""
+		"""Enables the generation of the CLUSTER attribute list based on information in clusterList. (default = false)
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableCommunity(self):
-		"""
+		"""Enables the generation of a COMMUNITY attribute list. (default = false)
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableLocalPref(self):
-		"""
+		"""Enables the generation of a LOCAL PREF attribute based on the information in localPref. This value should be set to true only for EBGP. (default = false)
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableMultiExit(self):
-		"""
+		"""Enables the generation of a MULTI EXIT DISCRIMINATOR attribute. (default = false)
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableNextHop(self):
-		"""
+		"""Enables the generation of a NEXT HOP attribute. (default = true)
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableOrigin(self):
-		"""
+		"""Enables the generation of an ORIGIN attribute. (default = true)
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def EnableOriginator(self):
-		"""
+		"""Enables the generation of an ORIGINATOR-ID attribute, based on information in originatorId. (default = false)
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def ExtendedCommunity(self):
-		"""
+		"""This object is used to construct an extended community attribute for a route item
 
 		Returns:
 			list(dict(arg1:str[decimal|hex|ip|ieeeFloat],arg2:str[decimal|hex|ip|ieeeFloat],arg3:str[twoOctetAs|ip|fourOctetAs|opaque|administratorAsTwoOctetLinkBw],arg4:str[routeTarget|origin|extendedBandwidthSubType],arg5:str))
@@ -241,7 +241,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def LocalPref(self):
-		"""
+		"""The local preference value for the routes with the LOCAL PREF attribute. (default = 0)
 
 		Returns:
 			number
@@ -253,7 +253,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def MultiExit(self):
-		"""
+		"""The multi-exit discriminator value in the MULTI EXIT DISCRIMINATOR attribute. (default = 0)
 
 		Returns:
 			number
@@ -265,7 +265,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def NextHop(self):
-		"""
+		"""The IP address, in either IPv4 or IPv6 format of the next hop associated with the NEXT HOP attribute. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -277,7 +277,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def NextHopIpType(self):
-		"""
+		"""IP type of Next Hop. Default is IPv4.
 
 		Returns:
 			str(ipv4|ipv6)
@@ -289,7 +289,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def NextHopMode(self):
-		"""
+		"""Indicates that the nextHopIpAddress may be incremented for each neighbor session generated for the range of neighbor addresses
 
 		Returns:
 			str(fixed|incrementPerPeer)
@@ -301,7 +301,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def Origin(self):
-		"""
+		"""An indication of where the route entry originated
 
 		Returns:
 			str(igp|egp|incomplete)
@@ -313,7 +313,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def OriginatorId(self):
-		"""
+		"""The router that originated a particular route; associated with the ORIGINATOR-ID attribute. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -325,7 +325,7 @@ class CmacRouteAttributes(Base):
 
 	@property
 	def SetNextHop(self):
-		"""
+		"""Indicates now to set the next hop IP address.
 
 		Returns:
 			str(manually|sameAsLocalIp)

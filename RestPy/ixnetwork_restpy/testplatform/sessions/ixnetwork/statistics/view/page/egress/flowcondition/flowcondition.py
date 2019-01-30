@@ -38,7 +38,7 @@ class FlowCondition(Base):
 
 	@property
 	def Operator(self):
-		"""
+		"""The logical operation to be performed.
 
 		Returns:
 			str(isBetween|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isSmaller)
@@ -50,7 +50,7 @@ class FlowCondition(Base):
 
 	@property
 	def ShowFirstMatchingSet(self):
-		"""
+		"""If true, displays the first matching set.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class FlowCondition(Base):
 
 	@property
 	def TrackingFilterId(self):
-		"""
+		"""Selected tracking filters from the availableTrackingFilter list.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)
@@ -74,7 +74,7 @@ class FlowCondition(Base):
 
 	@property
 	def Values(self):
-		"""
+		"""Value to be matched for the condition.
 
 		Returns:
 			list(number)
@@ -88,10 +88,10 @@ class FlowCondition(Base):
 		"""Adds a new flowCondition node on the server and retrieves it in this instance.
 
 		Args:
-			Operator (str(isBetween|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isSmaller)): 
-			ShowFirstMatchingSet (bool): 
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): 
-			Values (list(number)): 
+			Operator (str(isBetween|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isSmaller)): The logical operation to be performed.
+			ShowFirstMatchingSet (bool): If true, displays the first matching set.
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): Selected tracking filters from the availableTrackingFilter list.
+			Values (list(number)): Value to be matched for the condition.
 
 		Returns:
 			self: This instance with all currently retrieved flowCondition data using find and the newly added flowCondition data available through an iterator or index
@@ -117,10 +117,10 @@ class FlowCondition(Base):
 		By default the find method takes no parameters and will retrieve all flowCondition data from the server.
 
 		Args:
-			Operator (str(isBetween|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isSmaller)): 
-			ShowFirstMatchingSet (bool): 
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): 
-			Values (list(number)): 
+			Operator (str(isBetween|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isSmaller)): The logical operation to be performed.
+			ShowFirstMatchingSet (bool): If true, displays the first matching set.
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): Selected tracking filters from the availableTrackingFilter list.
+			Values (list(number)): Value to be matched for the condition.
 
 		Returns:
 			self: This instance with matching flowCondition data retrieved from the server available through an iterator or index

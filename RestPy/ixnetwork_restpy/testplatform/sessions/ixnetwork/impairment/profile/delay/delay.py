@@ -37,7 +37,7 @@ class Delay(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, delay packets.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Delay(Base):
 
 	@property
 	def Units(self):
-		"""
+		"""Specify the units for the delay value.
 
 		Returns:
 			str(kilometers|kKilometers|kMicroseconds|kMilliseconds|kSeconds|microseconds|milliseconds|seconds)
@@ -61,7 +61,7 @@ class Delay(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""Time to delay each packet.
 
 		Returns:
 			number

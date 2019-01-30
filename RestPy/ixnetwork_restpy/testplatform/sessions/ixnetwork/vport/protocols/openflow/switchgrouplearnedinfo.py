@@ -51,7 +51,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def ByteCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def DatapathId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def DatapathIdInHex(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def Duration(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def DurationInNs(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def GroupId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -105,7 +105,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def GroupType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -132,7 +132,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def NumOfBuckets(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -141,7 +141,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def PacketCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class SwitchGroupLearnedInfo(Base):
 
 	@property
 	def ReferenceCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -164,18 +164,18 @@ class SwitchGroupLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchGroupLearnedInfo data from the server.
 
 		Args:
-			ByteCount (number): 
-			DatapathId (str): 
-			DatapathIdInHex (str): 
-			Duration (number): 
-			DurationInNs (number): 
-			GroupId (number): 
-			GroupType (str): 
-			LocalIp (str): 
-			NegotiatedVersion (str): 
-			NumOfBuckets (number): 
-			PacketCount (number): 
-			ReferenceCount (number): 
+			ByteCount (number): NOT DEFINED
+			DatapathId (str): NOT DEFINED
+			DatapathIdInHex (str): NOT DEFINED
+			Duration (number): NOT DEFINED
+			DurationInNs (number): NOT DEFINED
+			GroupId (number): NOT DEFINED
+			GroupType (str): NOT DEFINED
+			LocalIp (str): NOT DEFINED
+			NegotiatedVersion (str): NOT DEFINED
+			NumOfBuckets (number): NOT DEFINED
+			PacketCount (number): NOT DEFINED
+			ReferenceCount (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching switchGroupLearnedInfo data retrieved from the server available through an iterator or index

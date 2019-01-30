@@ -52,7 +52,7 @@ class CustomTopologySpbNodeTopologyRange(Base):
 
 	@property
 	def CistExternalRootCost(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class CustomTopologySpbNodeTopologyRange(Base):
 
 	@property
 	def CistRootIdentifier(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -76,7 +76,7 @@ class CustomTopologySpbNodeTopologyRange(Base):
 
 	@property
 	def EnableVbit(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -88,7 +88,7 @@ class CustomTopologySpbNodeTopologyRange(Base):
 
 	@property
 	def NoOfPorts(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class CustomTopologySpbNodeTopologyRange(Base):
 
 	@property
 	def PortIdentifier(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -114,11 +114,11 @@ class CustomTopologySpbNodeTopologyRange(Base):
 		"""Adds a new customTopologySpbNodeTopologyRange node on the server and retrieves it in this instance.
 
 		Args:
-			CistExternalRootCost (number): 
-			CistRootIdentifier (str): 
-			EnableVbit (bool): 
-			NoOfPorts (number): 
-			PortIdentifier (number): 
+			CistExternalRootCost (number): NOT DEFINED
+			CistRootIdentifier (str): NOT DEFINED
+			EnableVbit (bool): NOT DEFINED
+			NoOfPorts (number): NOT DEFINED
+			PortIdentifier (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTopologySpbNodeTopologyRange data using find and the newly added customTopologySpbNodeTopologyRange data available through an iterator or index
@@ -144,11 +144,11 @@ class CustomTopologySpbNodeTopologyRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologySpbNodeTopologyRange data from the server.
 
 		Args:
-			CistExternalRootCost (number): 
-			CistRootIdentifier (str): 
-			EnableVbit (bool): 
-			NoOfPorts (number): 
-			PortIdentifier (number): 
+			CistExternalRootCost (number): NOT DEFINED
+			CistRootIdentifier (str): NOT DEFINED
+			EnableVbit (bool): NOT DEFINED
+			NoOfPorts (number): NOT DEFINED
+			PortIdentifier (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTopologySpbNodeTopologyRange data retrieved from the server available through an iterator or index

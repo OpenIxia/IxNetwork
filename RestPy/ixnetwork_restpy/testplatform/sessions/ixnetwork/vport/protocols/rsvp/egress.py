@@ -37,7 +37,7 @@ class Egress(Base):
 
 	@property
 	def Bandwidth(self):
-		"""
+		"""The requested bandwidth for the tunnel, expressed in kbits per second.
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Egress(Base):
 
 	@property
 	def EgressBehavior(self):
-		"""
+		"""Dictates the RSVP reservation style when the value of behavior is rsvpEgress.
 
 		Returns:
 			str(alwaysUseConfiguredStyle|useSeWhenIndicatedInSessionAttribute)
@@ -61,7 +61,7 @@ class Egress(Base):
 
 	@property
 	def EnableFixedLabelForResv(self):
-		"""
+		"""Enables the use of a fixed label in RESV messages while in Egress mode.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Egress(Base):
 
 	@property
 	def LabelValue(self):
-		"""
+		"""RSVP label for IPV4 and IPv6 RSVP related routes.
 
 		Returns:
 			str
@@ -85,7 +85,7 @@ class Egress(Base):
 
 	@property
 	def PathErrorTlv(self):
-		"""
+		"""When signaling fails in the head-end area, a path error message is sent to the head-end.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -97,7 +97,7 @@ class Egress(Base):
 
 	@property
 	def ReflectRro(self):
-		"""
+		"""Enables the reflection of a received RRO object for Egress mode destination ranges. When selected, any RRO items added with addRroItem are ignored. (default = true)
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Egress(Base):
 
 	@property
 	def RefreshInterval(self):
-		"""
+		"""When the destination range is used in Egress mode, this indicates the time, in seconds, between the simulated router's message to the DUT.
 
 		Returns:
 			number
@@ -121,7 +121,7 @@ class Egress(Base):
 
 	@property
 	def ReservationStyle(self):
-		"""
+		"""The reservation style desired. One of the following options: rsvpFF (fixed filtered mode) or rsvpSE (shared explicit mode).
 
 		Returns:
 			str(se|ff|wf)
@@ -133,7 +133,7 @@ class Egress(Base):
 
 	@property
 	def ReservationTearTlv(self):
-		"""
+		"""a set of custom TLVs to be included in RESV TEAR messages. These may only be used for egress routers.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -145,7 +145,7 @@ class Egress(Base):
 
 	@property
 	def ReservationTlv(self):
-		"""
+		"""a set of custom TLVs to be included in RESV messages. These may only be used for egress routers.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -157,7 +157,7 @@ class Egress(Base):
 
 	@property
 	def Rro(self):
-		"""
+		"""If enabled, an RRO is reflected back to the originating router.
 
 		Returns:
 			list(dict(arg1:str[ip|label],arg2:str,arg3:bool,arg4:bool,arg5:number,arg6:bool,arg7:bool,arg8:bool))
@@ -169,7 +169,7 @@ class Egress(Base):
 
 	@property
 	def SendResvConfirmation(self):
-		"""
+		"""Enables the generation of RESV Confirmation messages for received RESV messages which contain a RESV Confirmation Class object. (default = false)
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class Egress(Base):
 
 	@property
 	def TimeoutMultiplier(self):
-		"""
+		"""The number of Hellos before a router is declared dead.
 
 		Returns:
 			number

@@ -37,7 +37,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def AsPath(self):
-		"""
+		"""Indicates the local IP address of the BGP router.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def Community(self):
-		"""
+		"""The BGP Community attribute to be added to the BGP entry.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def IpPrefix(self):
-		"""
+		"""The route IP prefix.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def LocalPreference(self):
-		"""
+		"""Indicates the value of the local preference attribute.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def MultiExitDiscriminator(self):
-		"""
+		"""A metric field of the route file.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def Neighbor(self):
-		"""
+		"""The descriptive identifier for the BGP neighbor.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def NextHop(self):
-		"""
+		"""A 4-octet IP address which indicates the next hop.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def OriginType(self):
-		"""
+		"""An indication of where the route entry originated.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class Ipv6Unicast(Base):
 
 	@property
 	def PrefixLength(self):
-		"""
+		"""The length of the route IP prefix, in bytes.
 
 		Returns:
 			number
@@ -123,15 +123,15 @@ class Ipv6Unicast(Base):
 		By default the find method takes no parameters and will retrieve all ipv6Unicast data from the server.
 
 		Args:
-			AsPath (str): 
-			Community (str): 
-			IpPrefix (str): 
-			LocalPreference (number): 
-			MultiExitDiscriminator (number): 
-			Neighbor (str): 
-			NextHop (str): 
-			OriginType (str): 
-			PrefixLength (number): 
+			AsPath (str): Indicates the local IP address of the BGP router.
+			Community (str): The BGP Community attribute to be added to the BGP entry.
+			IpPrefix (str): The route IP prefix.
+			LocalPreference (number): Indicates the value of the local preference attribute.
+			MultiExitDiscriminator (number): A metric field of the route file.
+			Neighbor (str): The descriptive identifier for the BGP neighbor.
+			NextHop (str): A 4-octet IP address which indicates the next hop.
+			OriginType (str): An indication of where the route entry originated.
+			PrefixLength (number): The length of the route IP prefix, in bytes.
 
 		Returns:
 			self: This instance with matching ipv6Unicast data retrieved from the server available through an iterator or index

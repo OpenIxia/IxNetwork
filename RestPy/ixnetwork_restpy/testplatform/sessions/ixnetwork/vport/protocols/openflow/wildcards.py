@@ -37,7 +37,7 @@ class Wildcards(Base):
 
 	@property
 	def ArpDestinationHardwareAddress(self):
-		"""
+		"""If selected, Wildcards ARP Source Hardware Address is supported.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Wildcards(Base):
 
 	@property
 	def ArpDestinationIpv4Address(self):
-		"""
+		"""If selected, Wildcards ARP Destination IPv4 Address is supported.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Wildcards(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""
+		"""If selected, Wildcards ARP Opcode is supported.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Wildcards(Base):
 
 	@property
 	def ArpSourceHardwareAddress(self):
-		"""
+		"""If selected, Wildcards ARP Source Hardware Address is supported.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Wildcards(Base):
 
 	@property
 	def ArpSourceIpv4Address(self):
-		"""
+		"""If selected, Wildcards ARP Source IPv4 Address is supported.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Wildcards(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""
+		"""If selected, Wildcards Ethernet Destination is supported.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Wildcards(Base):
 
 	@property
 	def EthernetSource(self):
-		"""
+		"""If selected, Wildcards Ethernet Source is supported.
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class Wildcards(Base):
 
 	@property
 	def EthernetType(self):
-		"""
+		"""If selected, Wildcards Ethernet Type is supported.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class Wildcards(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""If selected, Wildcards Experimenter is supported.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class Wildcards(Base):
 
 	@property
 	def IcmpCode(self):
-		"""
+		"""If selected, Wildcards ICMP Code is supported.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class Wildcards(Base):
 
 	@property
 	def IcmpType(self):
-		"""
+		"""If selected, Wildcards ICMP Type is supported.
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class Wildcards(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""
+		"""If selected, Wildcards ICMPv6 Code is supported.
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class Wildcards(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""
+		"""If selected, Wildcards ICMPv6 Type is supported.
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class Wildcards(Base):
 
 	@property
 	def InPort(self):
-		"""
+		"""If selected, Wildcards In Port is supported.
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class Wildcards(Base):
 
 	@property
 	def IpDscp(self):
-		"""
+		"""If selected, Wildcards IP DSCP is supported.
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class Wildcards(Base):
 
 	@property
 	def IpEcn(self):
-		"""
+		"""If selected, Wildcards IP ECN is supported.
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class Wildcards(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""If selected, Wildcards IP Protocol is supported.
 
 		Returns:
 			bool
@@ -241,7 +241,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""
+		"""If selected, Wildcards IPv4 Destination is supported.
 
 		Returns:
 			bool
@@ -253,7 +253,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""
+		"""If selected, Wildcards IPv4 Source is supported.
 
 		Returns:
 			bool
@@ -265,7 +265,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""
+		"""If selected, Wildcards IPv6 Destination is supported.
 
 		Returns:
 			bool
@@ -277,7 +277,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""
+		"""If selected, Wildcards IPv6 Ext Header is supported.
 
 		Returns:
 			bool
@@ -289,7 +289,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""
+		"""If selected, Wildcards IPv6 Flow Label is supported.
 
 		Returns:
 			bool
@@ -301,7 +301,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""
+		"""If selected, Wildcards IPv6 ND SLL is supported.
 
 		Returns:
 			bool
@@ -313,7 +313,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""
+		"""If selected, Wildcards IPv6 ND Target is supported.
 
 		Returns:
 			bool
@@ -325,7 +325,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6NdTll(self):
-		"""
+		"""If selected, Wildcards IPv6 ND TLL is supported.
 
 		Returns:
 			bool
@@ -337,7 +337,7 @@ class Wildcards(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""
+		"""If selected, Wildcards IPv6 Source is supported.
 
 		Returns:
 			bool
@@ -349,7 +349,7 @@ class Wildcards(Base):
 
 	@property
 	def Metadata(self):
-		"""
+		"""If selected, Wildcards Metadata is supported.
 
 		Returns:
 			bool
@@ -361,7 +361,7 @@ class Wildcards(Base):
 
 	@property
 	def MplsBos(self):
-		"""
+		"""If selected, Wildcards MPLS BoS is supported.
 
 		Returns:
 			bool
@@ -373,7 +373,7 @@ class Wildcards(Base):
 
 	@property
 	def MplsLabel(self):
-		"""
+		"""If selected, Wildcards MPLS Label is supported.
 
 		Returns:
 			bool
@@ -385,7 +385,7 @@ class Wildcards(Base):
 
 	@property
 	def MplsTc(self):
-		"""
+		"""If selected, Wildcards MPLS TC is supported.
 
 		Returns:
 			bool
@@ -397,7 +397,7 @@ class Wildcards(Base):
 
 	@property
 	def PbbIsid(self):
-		"""
+		"""If selected, Wildcards PBB ISID is supported.
 
 		Returns:
 			bool
@@ -409,7 +409,7 @@ class Wildcards(Base):
 
 	@property
 	def PhysicalInPort(self):
-		"""
+		"""If selected, Wildcards Physical In Port is supported.
 
 		Returns:
 			bool
@@ -421,7 +421,7 @@ class Wildcards(Base):
 
 	@property
 	def SctpDestination(self):
-		"""
+		"""If selected, Wildcards SCTP Destination is supported.
 
 		Returns:
 			bool
@@ -433,7 +433,7 @@ class Wildcards(Base):
 
 	@property
 	def SctpSource(self):
-		"""
+		"""If selected, Wildcards SCTP Source is supported.
 
 		Returns:
 			bool
@@ -445,7 +445,7 @@ class Wildcards(Base):
 
 	@property
 	def TcpDestination(self):
-		"""
+		"""If selected, Wildcards TCP Destination is supported.
 
 		Returns:
 			bool
@@ -457,7 +457,7 @@ class Wildcards(Base):
 
 	@property
 	def TcpSource(self):
-		"""
+		"""If selected, Wildcards TCP Source is supported.
 
 		Returns:
 			bool
@@ -469,7 +469,7 @@ class Wildcards(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""If selected, Wildcards Tunnel ID is supported.
 
 		Returns:
 			bool
@@ -481,7 +481,7 @@ class Wildcards(Base):
 
 	@property
 	def UdpDestination(self):
-		"""
+		"""If selected, Wildcards UDP Destination is supported.
 
 		Returns:
 			bool
@@ -493,7 +493,7 @@ class Wildcards(Base):
 
 	@property
 	def UdpSource(self):
-		"""
+		"""If selected, Wildcards UDP Source is supported.
 
 		Returns:
 			bool
@@ -505,7 +505,7 @@ class Wildcards(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""If selected, Wildcards VLAN ID is supported.
 
 		Returns:
 			bool
@@ -517,7 +517,7 @@ class Wildcards(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""If selected, Wildcards VLAN Priority is supported.
 
 		Returns:
 			bool

@@ -697,6 +697,20 @@ class RsvpP2mpIngressLsps(Base):
 		"""
 		return self._get_ngpf_device_ids(locals())
 
+	def FetchAndUpdateConfigFromCloud(self, Mode):
+		"""Executes the fetchAndUpdateConfigFromCloud operation on the server.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): The method internally sets Arg1 to the current href for this instance
+			Mode (str): 
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('FetchAndUpdateConfigFromCloud', payload=locals(), response_object=None)
+
 	def InitiateP2mpPathReoptimization(self):
 		"""Executes the initiateP2mpPathReoptimization operation on the server.
 

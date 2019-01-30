@@ -38,7 +38,7 @@ class RouteImportOptions(Base):
 
 	@property
 	def AdverstiseBestRoutes(self):
-		"""
+		"""If checked, only the best routes are imbibed and advertised. The sub-optimal routes are ignored.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class RouteImportOptions(Base):
 
 	@property
 	def NextHopAsIs(self):
-		"""
+		"""If true, it takes the next Hop AsIs.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class RouteImportOptions(Base):
 
 	@property
 	def NumberOfRoutesPerBlock(self):
-		"""
+		"""Represents the maximum number of routes that can be forwared in a block.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class RouteImportOptions(Base):
 
 	@property
 	def RouteFileType(self):
-		"""
+		"""The route file type.
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class RouteImportOptions(Base):
 
 	@property
 	def SendMultiExitDiscValue(self):
-		"""
+		"""If enabled, the BGP router sends the MED value of the attribute.
 
 		Returns:
 			bool
@@ -100,11 +100,11 @@ class RouteImportOptions(Base):
 		"""Adds a new routeImportOptions node on the server and retrieves it in this instance.
 
 		Args:
-			AdverstiseBestRoutes (bool): 
-			NextHopAsIs (bool): 
-			NumberOfRoutesPerBlock (number): 
-			RouteFileType (str): 
-			SendMultiExitDiscValue (bool): 
+			AdverstiseBestRoutes (bool): If checked, only the best routes are imbibed and advertised. The sub-optimal routes are ignored.
+			NextHopAsIs (bool): If true, it takes the next Hop AsIs.
+			NumberOfRoutesPerBlock (number): Represents the maximum number of routes that can be forwared in a block.
+			RouteFileType (str): The route file type.
+			SendMultiExitDiscValue (bool): If enabled, the BGP router sends the MED value of the attribute.
 
 		Returns:
 			self: This instance with all currently retrieved routeImportOptions data using find and the newly added routeImportOptions data available through an iterator or index
@@ -130,11 +130,11 @@ class RouteImportOptions(Base):
 		By default the find method takes no parameters and will retrieve all routeImportOptions data from the server.
 
 		Args:
-			AdverstiseBestRoutes (bool): 
-			NextHopAsIs (bool): 
-			NumberOfRoutesPerBlock (number): 
-			RouteFileType (str): 
-			SendMultiExitDiscValue (bool): 
+			AdverstiseBestRoutes (bool): If checked, only the best routes are imbibed and advertised. The sub-optimal routes are ignored.
+			NextHopAsIs (bool): If true, it takes the next Hop AsIs.
+			NumberOfRoutesPerBlock (number): Represents the maximum number of routes that can be forwared in a block.
+			RouteFileType (str): The route file type.
+			SendMultiExitDiscValue (bool): If enabled, the BGP router sends the MED value of the attribute.
 
 		Returns:
 			self: This instance with matching routeImportOptions data retrieved from the server available through an iterator or index
@@ -162,11 +162,13 @@ class RouteImportOptions(Base):
 	def GetSupportedBGPRouteFileTypes(self):
 		"""Executes the getSupportedBGPRouteFileTypes operation on the server.
 
+		This function allows to Get supported BGP router.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=routeImportOptions)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: 
+			str: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -178,9 +180,11 @@ class RouteImportOptions(Base):
 	def ImportOpaqueRouteRangeFromFile(self, Arg2):
 		"""Executes the importOpaqueRouteRangeFromFile operation on the server.
 
+		This function allows to import opaque route range from file.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=routeImportOptions)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (obj(ixnetwork_restpy.files.Files)): 
+			Arg2 (obj(ixnetwork_restpy.files.Files)): NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

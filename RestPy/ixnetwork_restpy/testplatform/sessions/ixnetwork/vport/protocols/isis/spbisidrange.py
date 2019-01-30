@@ -38,7 +38,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def CMacAddressCount(self):
-		"""
+		"""The number of C-MAC for each C-MAC range. The default is 1. Maximum value is 4095. The minimum value is 1.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def CMacAddressStep(self):
-		"""
+		"""The amount to increment each successive C-MAC address from the starting CMAC address.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def CVlan(self):
-		"""
+		"""The number of stacked VLAN. The minimum value is 1. The maximum value is 4095. The default is 1.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the topology range will be part of the simulated network.
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def ISid(self):
-		"""
+		"""The I-component Service Instance identifier. The maximum value is 16777215. The minimum value is 0.
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def ITagEthernetType(self):
-		"""
+		"""The I-Tag Ethernet type. An I-Tag is a multiplexing tag for service instance scaling in Provider Bridged Networks.
 
 		Returns:
 			number
@@ -107,7 +107,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def RBit(self):
-		"""
+		"""The Restart State bit.
 
 		Returns:
 			bool
@@ -119,7 +119,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def SVlan(self):
-		"""
+		"""The number of single VLAN. The minimum value is 1. The maximum value is 4095. The default is 1.
 
 		Returns:
 			number
@@ -131,7 +131,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def StartCmacAddress(self):
-		"""
+		"""The starting C-MAC address for the C_MAC range.
 
 		Returns:
 			str
@@ -143,7 +143,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def TBit(self):
-		"""
+		"""The external route tag bit.
 
 		Returns:
 			bool
@@ -155,7 +155,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def TrafficDestMacAddress(self):
-		"""
+		"""The traffic-destination MAC address.
 
 		Returns:
 			str
@@ -167,7 +167,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def TransmissionType(self):
-		"""
+		"""Select the type of packet transmission. Options include Unicast and Multicast.
 
 		Returns:
 			number
@@ -179,7 +179,7 @@ class SpbIsIdRange(Base):
 
 	@property
 	def VlanType(self):
-		"""
+		"""Select the VLAN type. Options include Single VLAN and Stacked VLAN. Selecting Stacked VLAN activates the C-VLAN options. The Default option is Single VLAN.
 
 		Returns:
 			number
@@ -193,18 +193,18 @@ class SpbIsIdRange(Base):
 		"""Adds a new spbIsIdRange node on the server and retrieves it in this instance.
 
 		Args:
-			CMacAddressCount (number): 
-			CMacAddressStep (str): 
-			CVlan (number): 
-			Enabled (bool): 
-			ISid (number): 
-			RBit (bool): 
-			SVlan (number): 
-			StartCmacAddress (str): 
-			TBit (bool): 
-			TrafficDestMacAddress (str): 
-			TransmissionType (number): 
-			VlanType (number): 
+			CMacAddressCount (number): The number of C-MAC for each C-MAC range. The default is 1. Maximum value is 4095. The minimum value is 1.
+			CMacAddressStep (str): The amount to increment each successive C-MAC address from the starting CMAC address.
+			CVlan (number): The number of stacked VLAN. The minimum value is 1. The maximum value is 4095. The default is 1.
+			Enabled (bool): If true, the topology range will be part of the simulated network.
+			ISid (number): The I-component Service Instance identifier. The maximum value is 16777215. The minimum value is 0.
+			RBit (bool): The Restart State bit.
+			SVlan (number): The number of single VLAN. The minimum value is 1. The maximum value is 4095. The default is 1.
+			StartCmacAddress (str): The starting C-MAC address for the C_MAC range.
+			TBit (bool): The external route tag bit.
+			TrafficDestMacAddress (str): The traffic-destination MAC address.
+			TransmissionType (number): Select the type of packet transmission. Options include Unicast and Multicast.
+			VlanType (number): Select the VLAN type. Options include Single VLAN and Stacked VLAN. Selecting Stacked VLAN activates the C-VLAN options. The Default option is Single VLAN.
 
 		Returns:
 			self: This instance with all currently retrieved spbIsIdRange data using find and the newly added spbIsIdRange data available through an iterator or index
@@ -230,19 +230,19 @@ class SpbIsIdRange(Base):
 		By default the find method takes no parameters and will retrieve all spbIsIdRange data from the server.
 
 		Args:
-			CMacAddressCount (number): 
-			CMacAddressStep (str): 
-			CVlan (number): 
-			Enabled (bool): 
-			ISid (number): 
-			ITagEthernetType (number): 
-			RBit (bool): 
-			SVlan (number): 
-			StartCmacAddress (str): 
-			TBit (bool): 
-			TrafficDestMacAddress (str): 
-			TransmissionType (number): 
-			VlanType (number): 
+			CMacAddressCount (number): The number of C-MAC for each C-MAC range. The default is 1. Maximum value is 4095. The minimum value is 1.
+			CMacAddressStep (str): The amount to increment each successive C-MAC address from the starting CMAC address.
+			CVlan (number): The number of stacked VLAN. The minimum value is 1. The maximum value is 4095. The default is 1.
+			Enabled (bool): If true, the topology range will be part of the simulated network.
+			ISid (number): The I-component Service Instance identifier. The maximum value is 16777215. The minimum value is 0.
+			ITagEthernetType (number): The I-Tag Ethernet type. An I-Tag is a multiplexing tag for service instance scaling in Provider Bridged Networks.
+			RBit (bool): The Restart State bit.
+			SVlan (number): The number of single VLAN. The minimum value is 1. The maximum value is 4095. The default is 1.
+			StartCmacAddress (str): The starting C-MAC address for the C_MAC range.
+			TBit (bool): The external route tag bit.
+			TrafficDestMacAddress (str): The traffic-destination MAC address.
+			TransmissionType (number): Select the type of packet transmission. Options include Unicast and Multicast.
+			VlanType (number): Select the VLAN type. Options include Single VLAN and Stacked VLAN. Selecting Stacked VLAN activates the C-VLAN options. The Default option is Single VLAN.
 
 		Returns:
 			self: This instance with matching spbIsIdRange data retrieved from the server available through an iterator or index

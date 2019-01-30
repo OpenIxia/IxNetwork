@@ -51,7 +51,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def Fec(self):
-		"""
+		"""This signifies the FEC component.
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def Hops(self):
-		"""
+		"""This signifies the number of LSP hops.
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def IncomingLabelStack(self):
-		"""
+		"""This signifies the information is sent to the MPLS-OAM module which is used for validation of FEC stack received in an echo request. This is the assigned labels stack by the Ixia router and bfd/ping messages are expected to be received from DUT with this stack values. The outer value corresponds to the PSN Tunnel Label and the inner value corresponds to the PW label.
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def NumberOfReplyingHops(self):
-		"""
+		"""This signifies the total number of replying LSP hops.
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelStack(self):
-		"""
+		"""This signifies the information is sent to the MPLS-OAM module which is used for validation of FEC outgoing Label stack that is received in an echo request.
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def Reachability(self):
-		"""
+		"""This signifies whether the LSP is reachable with a proper return code or not. If the return code is not set to 3, in the received reply message or if there is no reply message that is received, then the field will show unreachable.
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class TriggeredTracerouteLearnedInfo(Base):
 
 	@property
 	def SenderHandle(self):
-		"""
+		"""This signifies the sender handle details.
 
 		Returns:
 			number
@@ -119,13 +119,13 @@ class TriggeredTracerouteLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all triggeredTracerouteLearnedInfo data from the server.
 
 		Args:
-			Fec (str): 
-			Hops (str): 
-			IncomingLabelStack (str): 
-			NumberOfReplyingHops (number): 
-			OutgoingLabelStack (str): 
-			Reachability (str): 
-			SenderHandle (number): 
+			Fec (str): This signifies the FEC component.
+			Hops (str): This signifies the number of LSP hops.
+			IncomingLabelStack (str): This signifies the information is sent to the MPLS-OAM module which is used for validation of FEC stack received in an echo request. This is the assigned labels stack by the Ixia router and bfd/ping messages are expected to be received from DUT with this stack values. The outer value corresponds to the PSN Tunnel Label and the inner value corresponds to the PW label.
+			NumberOfReplyingHops (number): This signifies the total number of replying LSP hops.
+			OutgoingLabelStack (str): This signifies the information is sent to the MPLS-OAM module which is used for validation of FEC outgoing Label stack that is received in an echo request.
+			Reachability (str): This signifies whether the LSP is reachable with a proper return code or not. If the return code is not set to 3, in the received reply message or if there is no reply message that is received, then the field will show unreachable.
+			SenderHandle (number): This signifies the sender handle details.
 
 		Returns:
 			self: This instance with matching triggeredTracerouteLearnedInfo data retrieved from the server available through an iterator or index

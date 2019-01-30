@@ -25,6 +25,7 @@ import datetime
 import time
 import json
 import logging
+import pkg_resources
 from requests import Session
 from io import BufferedReader
 from ixnetwork_restpy.errors import *
@@ -87,6 +88,12 @@ class Connection(object):
         for handler in handlers:
             handler.setFormatter(formatter)
             logging.getLogger(__name__).addHandler(handler)
+        logging.getLogger(__name__).setLevel(logging.INFO)
+        logging.getLogger(__name__).info('using python version %s' % sys.version)
+        try:
+            logging.getLogger(__name__).info('using ixnetwork-restpy version %s' % pkg_resources.get_distribution("ixnetwork-restpy").version)
+        except Exception as e:
+            logging.getLogger(__name__).warn("ixnetwork-restpy not installed using pip, unable to determine version")
 
     @property
     def trace(self):
@@ -136,14 +143,44 @@ class Connection(object):
         if self._trace == Connection.TRACE_REQUEST_RESPONSE:
             logging.getLogger(__name__).debug('%s %s %s' % (response.status_code, response.reason, response.raw.data))
     
-    def _send_recv(self, method, url, payload=None):
+    def _info(self, message):
+        logging.getLogger(__name__).info(message)
+
+    def _warn(self, message):
+        logging.getLogger(__name__).warn(message)
+
+    def _debug(self, message):
+        logging.getLogger(__name__).debug(message)
+
+    def _normalize_url(self, url):
         connection = '%s://%s:%s' % (self._scheme, self._hostname, self._rest_port)
-        headers = self._headers
         if url.startswith(self._scheme) == False:
             url = '%s/%s' % (connection, url.strip('/'))
         
         path_start = url.find('://') + 3
         url = '%s%s' % (url[0:path_start], url[path_start:].replace('//', '/'))
+        return (connection, url)
+
+    def _get_file(self, url, remote_filename, remote_directory=None, local_filename=None, local_directory=None):
+        headers = self._headers
+        connection, url = self._normalize_url(url)
+        url = '%s/files?filename=%s' % (url, remote_filename)
+        if remote_directory is not None:
+            url = '%s&absolute=%s' % (url, remote_directory)
+        response = self._session.request('GET', url)
+        if local_filename is None:
+            local_filename = remote_filename
+        if local_directory is not None:
+            local_filename = os.path.join(local_directory, local_filename)
+        local_filename = os.path.normpath(local_filename)
+        with open(local_filename, 'wb') as fid:
+            fid.write(response.content)
+        return local_filename
+
+    def _send_recv(self, method, url, payload=None):
+        headers = self._headers
+        headers['Content-Type'] = 'application/octet-stream'
+        connection, url = self._normalize_url(url)
 
         data = payload
         if payload is not None:

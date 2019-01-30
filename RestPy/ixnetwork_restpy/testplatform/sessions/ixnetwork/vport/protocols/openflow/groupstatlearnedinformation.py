@@ -51,7 +51,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def ByteCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def DurationInNSec(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def DurationInSec(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def GroupId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -132,7 +132,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -141,7 +141,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -150,7 +150,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def NumberOfBucketStats(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -159,7 +159,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def PacketCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -168,7 +168,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def ReferenceCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -177,7 +177,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -186,7 +186,7 @@ class GroupStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -200,22 +200,22 @@ class GroupStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all groupStatLearnedInformation data from the server.
 
 		Args:
-			ByteCount (str): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			DurationInNSec (str): 
-			DurationInSec (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			GroupId (str): 
-			Latency (number): 
-			LocalIp (str): 
-			NegotiatedVersion (str): 
-			NumberOfBucketStats (str): 
-			PacketCount (str): 
-			ReferenceCount (str): 
-			RemoteIp (str): 
-			ReplyState (str): 
+			ByteCount (str): NOT DEFINED
+			DataPathId (str): NOT DEFINED
+			DataPathIdAsHex (str): NOT DEFINED
+			DurationInNSec (str): NOT DEFINED
+			DurationInSec (str): NOT DEFINED
+			ErrorCode (str): NOT DEFINED
+			ErrorType (str): NOT DEFINED
+			GroupId (str): NOT DEFINED
+			Latency (number): NOT DEFINED
+			LocalIp (str): NOT DEFINED
+			NegotiatedVersion (str): NOT DEFINED
+			NumberOfBucketStats (str): NOT DEFINED
+			PacketCount (str): NOT DEFINED
+			ReferenceCount (str): NOT DEFINED
+			RemoteIp (str): NOT DEFINED
+			ReplyState (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching groupStatLearnedInformation data retrieved from the server available through an iterator or index

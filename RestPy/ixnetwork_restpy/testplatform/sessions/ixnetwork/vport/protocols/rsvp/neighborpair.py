@@ -80,7 +80,7 @@ class NeighborPair(Base):
 
 	@property
 	def ActualRestartTime(self):
-		"""
+		"""The time interval after which a hello packet is sent with a new Src Instance Id.
 
 		Returns:
 			number
@@ -92,7 +92,7 @@ class NeighborPair(Base):
 
 	@property
 	def DutIp(self):
-		"""
+		"""The IP address for the device under test. This is the RSVP router that the simulated router is directly connected to.
 
 		Returns:
 			str
@@ -104,7 +104,7 @@ class NeighborPair(Base):
 
 	@property
 	def EnableBfdRegistration(self):
-		"""
+		"""If true, enables BFD registration with RSVP-TE.
 
 		Returns:
 			bool
@@ -116,7 +116,7 @@ class NeighborPair(Base):
 
 	@property
 	def EnableBundleMessageSending(self):
-		"""
+		"""If true, enables the sending of RSVP Bundle Message.
 
 		Returns:
 			bool
@@ -128,7 +128,7 @@ class NeighborPair(Base):
 
 	@property
 	def EnableGracefulRestartHelperMode(self):
-		"""
+		"""When checked, enables the graceful restart helper mode.
 
 		Returns:
 			bool
@@ -140,7 +140,7 @@ class NeighborPair(Base):
 
 	@property
 	def EnableGracefulRestartingMode(self):
-		"""
+		"""When checked, enables the graceful restart restarting mode.
 
 		Returns:
 			bool
@@ -152,7 +152,7 @@ class NeighborPair(Base):
 
 	@property
 	def EnableHello(self):
-		"""
+		"""Enables the transmission of HELLO messages between the simulated router and the DUT.
 
 		Returns:
 			bool
@@ -164,7 +164,7 @@ class NeighborPair(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the simulated neighbor pair.
 
 		Returns:
 			bool
@@ -176,7 +176,7 @@ class NeighborPair(Base):
 
 	@property
 	def GracefulRestartStartTime(self):
-		"""
+		"""The time interval after this restart timer is fired, and the neighboring nodes are restarted. During this interval the hello messages are not being sent.
 
 		Returns:
 			number
@@ -188,7 +188,7 @@ class NeighborPair(Base):
 
 	@property
 	def GracefulRestartUpTime(self):
-		"""
+		"""The configured interval for which Ixia waits before repeating the Restart cycle, after the Restarting time is over.
 
 		Returns:
 			number
@@ -200,7 +200,7 @@ class NeighborPair(Base):
 
 	@property
 	def HelloInterval(self):
-		"""
+		"""The interval, in seconds, between HELLO messages.
 
 		Returns:
 			number
@@ -212,7 +212,7 @@ class NeighborPair(Base):
 
 	@property
 	def HelloTimeoutMultiplier(self):
-		"""
+		"""The number of Hellos sent without confirmation before the DUT is considered dead.
 
 		Returns:
 			number
@@ -224,7 +224,7 @@ class NeighborPair(Base):
 
 	@property
 	def HelloTlvs(self):
-		"""
+		"""Generalized TLV messages that are included with all HELLO messages and built with the rsvpCustomTlv command.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -236,7 +236,7 @@ class NeighborPair(Base):
 
 	@property
 	def IsAssignedInfoRefreshed(self):
-		"""
+		"""When enabled, refreshes the assigned label info automatically.
 
 		Returns:
 			bool
@@ -245,7 +245,7 @@ class NeighborPair(Base):
 
 	@property
 	def IsLearnedInfoRefreshed(self):
-		"""
+		"""When enabled, refreshes the learned label info automatically.
 
 		Returns:
 			bool
@@ -254,7 +254,7 @@ class NeighborPair(Base):
 
 	@property
 	def LabelSpaceEnd(self):
-		"""
+		"""The last label to be used for RSVP tunnels.
 
 		Returns:
 			number
@@ -266,7 +266,7 @@ class NeighborPair(Base):
 
 	@property
 	def LabelSpaceStart(self):
-		"""
+		"""The first label to be used for RSVP tunnels.
 
 		Returns:
 			number
@@ -278,7 +278,7 @@ class NeighborPair(Base):
 
 	@property
 	def NumberOfGracefulRestarts(self):
-		"""
+		"""The number of times the Ixia emulated RSVP neighbor moves to Restarting/Recovering and Up states before stopping the cycle.
 
 		Returns:
 			number
@@ -290,7 +290,7 @@ class NeighborPair(Base):
 
 	@property
 	def OurIp(self):
-		"""
+		"""The IP address of the simulated router.
 
 		Returns:
 			str
@@ -302,7 +302,7 @@ class NeighborPair(Base):
 
 	@property
 	def RecoveryTimeInterval(self):
-		"""
+		"""The configured time interval for which Ixia waits for the DUT to recover the egress LSPs.
 
 		Returns:
 			number
@@ -314,7 +314,7 @@ class NeighborPair(Base):
 
 	@property
 	def RefreshReduction(self):
-		"""
+		"""Enables or disables the feature.
 
 		Returns:
 			bool
@@ -326,7 +326,7 @@ class NeighborPair(Base):
 
 	@property
 	def RestartTimeInterval(self):
-		"""
+		"""This value along with the Recovery Time is advertised in the Hello-packets as part of a Restart-capability object.
 
 		Returns:
 			number
@@ -338,7 +338,7 @@ class NeighborPair(Base):
 
 	@property
 	def SummaryRefreshInterval(self):
-		"""
+		"""The interval between summary refresh messages.
 
 		Returns:
 			number
@@ -350,7 +350,7 @@ class NeighborPair(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -364,28 +364,28 @@ class NeighborPair(Base):
 		"""Adds a new neighborPair node on the server and retrieves it in this instance.
 
 		Args:
-			ActualRestartTime (number): 
-			DutIp (str): 
-			EnableBfdRegistration (bool): 
-			EnableBundleMessageSending (bool): 
-			EnableGracefulRestartHelperMode (bool): 
-			EnableGracefulRestartingMode (bool): 
-			EnableHello (bool): 
-			Enabled (bool): 
-			GracefulRestartStartTime (number): 
-			GracefulRestartUpTime (number): 
-			HelloInterval (number): 
-			HelloTimeoutMultiplier (number): 
-			HelloTlvs (list(dict(arg1:number,arg2:number,arg3:str))): 
-			LabelSpaceEnd (number): 
-			LabelSpaceStart (number): 
-			NumberOfGracefulRestarts (number): 
-			OurIp (str): 
-			RecoveryTimeInterval (number): 
-			RefreshReduction (bool): 
-			RestartTimeInterval (number): 
-			SummaryRefreshInterval (number): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			ActualRestartTime (number): The time interval after which a hello packet is sent with a new Src Instance Id.
+			DutIp (str): The IP address for the device under test. This is the RSVP router that the simulated router is directly connected to.
+			EnableBfdRegistration (bool): If true, enables BFD registration with RSVP-TE.
+			EnableBundleMessageSending (bool): If true, enables the sending of RSVP Bundle Message.
+			EnableGracefulRestartHelperMode (bool): When checked, enables the graceful restart helper mode.
+			EnableGracefulRestartingMode (bool): When checked, enables the graceful restart restarting mode.
+			EnableHello (bool): Enables the transmission of HELLO messages between the simulated router and the DUT.
+			Enabled (bool): Enables or disables the simulated neighbor pair.
+			GracefulRestartStartTime (number): The time interval after this restart timer is fired, and the neighboring nodes are restarted. During this interval the hello messages are not being sent.
+			GracefulRestartUpTime (number): The configured interval for which Ixia waits before repeating the Restart cycle, after the Restarting time is over.
+			HelloInterval (number): The interval, in seconds, between HELLO messages.
+			HelloTimeoutMultiplier (number): The number of Hellos sent without confirmation before the DUT is considered dead.
+			HelloTlvs (list(dict(arg1:number,arg2:number,arg3:str))): Generalized TLV messages that are included with all HELLO messages and built with the rsvpCustomTlv command.
+			LabelSpaceEnd (number): The last label to be used for RSVP tunnels.
+			LabelSpaceStart (number): The first label to be used for RSVP tunnels.
+			NumberOfGracefulRestarts (number): The number of times the Ixia emulated RSVP neighbor moves to Restarting/Recovering and Up states before stopping the cycle.
+			OurIp (str): The IP address of the simulated router.
+			RecoveryTimeInterval (number): The configured time interval for which Ixia waits for the DUT to recover the egress LSPs.
+			RefreshReduction (bool): Enables or disables the feature.
+			RestartTimeInterval (number): This value along with the Recovery Time is advertised in the Hello-packets as part of a Restart-capability object.
+			SummaryRefreshInterval (number): The interval between summary refresh messages.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with all currently retrieved neighborPair data using find and the newly added neighborPair data available through an iterator or index
@@ -411,30 +411,30 @@ class NeighborPair(Base):
 		By default the find method takes no parameters and will retrieve all neighborPair data from the server.
 
 		Args:
-			ActualRestartTime (number): 
-			DutIp (str): 
-			EnableBfdRegistration (bool): 
-			EnableBundleMessageSending (bool): 
-			EnableGracefulRestartHelperMode (bool): 
-			EnableGracefulRestartingMode (bool): 
-			EnableHello (bool): 
-			Enabled (bool): 
-			GracefulRestartStartTime (number): 
-			GracefulRestartUpTime (number): 
-			HelloInterval (number): 
-			HelloTimeoutMultiplier (number): 
-			HelloTlvs (list(dict(arg1:number,arg2:number,arg3:str))): 
-			IsAssignedInfoRefreshed (bool): 
-			IsLearnedInfoRefreshed (bool): 
-			LabelSpaceEnd (number): 
-			LabelSpaceStart (number): 
-			NumberOfGracefulRestarts (number): 
-			OurIp (str): 
-			RecoveryTimeInterval (number): 
-			RefreshReduction (bool): 
-			RestartTimeInterval (number): 
-			SummaryRefreshInterval (number): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			ActualRestartTime (number): The time interval after which a hello packet is sent with a new Src Instance Id.
+			DutIp (str): The IP address for the device under test. This is the RSVP router that the simulated router is directly connected to.
+			EnableBfdRegistration (bool): If true, enables BFD registration with RSVP-TE.
+			EnableBundleMessageSending (bool): If true, enables the sending of RSVP Bundle Message.
+			EnableGracefulRestartHelperMode (bool): When checked, enables the graceful restart helper mode.
+			EnableGracefulRestartingMode (bool): When checked, enables the graceful restart restarting mode.
+			EnableHello (bool): Enables the transmission of HELLO messages between the simulated router and the DUT.
+			Enabled (bool): Enables or disables the simulated neighbor pair.
+			GracefulRestartStartTime (number): The time interval after this restart timer is fired, and the neighboring nodes are restarted. During this interval the hello messages are not being sent.
+			GracefulRestartUpTime (number): The configured interval for which Ixia waits before repeating the Restart cycle, after the Restarting time is over.
+			HelloInterval (number): The interval, in seconds, between HELLO messages.
+			HelloTimeoutMultiplier (number): The number of Hellos sent without confirmation before the DUT is considered dead.
+			HelloTlvs (list(dict(arg1:number,arg2:number,arg3:str))): Generalized TLV messages that are included with all HELLO messages and built with the rsvpCustomTlv command.
+			IsAssignedInfoRefreshed (bool): When enabled, refreshes the assigned label info automatically.
+			IsLearnedInfoRefreshed (bool): When enabled, refreshes the learned label info automatically.
+			LabelSpaceEnd (number): The last label to be used for RSVP tunnels.
+			LabelSpaceStart (number): The first label to be used for RSVP tunnels.
+			NumberOfGracefulRestarts (number): The number of times the Ixia emulated RSVP neighbor moves to Restarting/Recovering and Up states before stopping the cycle.
+			OurIp (str): The IP address of the simulated router.
+			RecoveryTimeInterval (number): The configured time interval for which Ixia waits for the DUT to recover the egress LSPs.
+			RefreshReduction (bool): Enables or disables the feature.
+			RestartTimeInterval (number): This value along with the Recovery Time is advertised in the Hello-packets as part of a Restart-capability object.
+			SummaryRefreshInterval (number): The interval between summary refresh messages.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			self: This instance with matching neighborPair data retrieved from the server available through an iterator or index
@@ -462,11 +462,13 @@ class NeighborPair(Base):
 	def RefreshAssignedLabelInfo(self):
 		"""Executes the refreshAssignedLabelInfo operation on the server.
 
+		This exec refreshes the RSVP assigned label information from the DUT.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=neighborPair)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -478,11 +480,13 @@ class NeighborPair(Base):
 	def RefreshReceivedLabelInfo(self):
 		"""Executes the refreshReceivedLabelInfo operation on the server.
 
+		This exec refreshes the RSVP received label information from the DUT.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=neighborPair)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -494,11 +498,13 @@ class NeighborPair(Base):
 	def RestartNeighbor(self):
 		"""Executes the restartNeighbor operation on the server.
 
+		This command restarts the specifed RSVP neighbor.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=neighborPair)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

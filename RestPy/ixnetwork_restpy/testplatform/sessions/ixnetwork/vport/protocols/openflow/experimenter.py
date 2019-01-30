@@ -37,7 +37,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterDataLengthMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterDataMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -85,7 +85,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterField(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterFieldMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -121,7 +121,7 @@ class Experimenter(Base):
 
 	@property
 	def ExperimenterIdMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number

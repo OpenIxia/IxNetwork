@@ -38,7 +38,7 @@ class Layer23ProtocolPortFilter(Base):
 
 	@property
 	def PortFilterIds(self):
-		"""
+		"""Selected port filters from the availablePortFilter list.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])
@@ -52,7 +52,7 @@ class Layer23ProtocolPortFilter(Base):
 		"""Adds a new layer23ProtocolPortFilter node on the server and retrieves it in this instance.
 
 		Args:
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
 
 		Returns:
 			self: This instance with all currently retrieved layer23ProtocolPortFilter data using find and the newly added layer23ProtocolPortFilter data available through an iterator or index
@@ -78,7 +78,7 @@ class Layer23ProtocolPortFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer23ProtocolPortFilter data from the server.
 
 		Args:
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
 
 		Returns:
 			self: This instance with matching layer23ProtocolPortFilter data retrieved from the server available through an iterator or index

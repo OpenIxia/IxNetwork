@@ -38,7 +38,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the interface is enabled.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceId(self):
-		"""
+		"""The interface identifier for the interface.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -64,8 +64,8 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			Enabled (bool): If true, the interface is enabled.
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The interface identifier for the interface.
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -91,8 +91,8 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			Enabled (bool): 
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			Enabled (bool): If true, the interface is enabled.
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The interface identifier for the interface.
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index

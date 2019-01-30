@@ -66,7 +66,7 @@ class Router(Base):
 
 	@property
 	def EnableInterfaceMetric(self):
-		"""
+		"""Enables the use of the RIPng interface metric. This user-assigned metric is added to the normal routing metric.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Router(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the RIPing interface.
 
 		Returns:
 			bool
@@ -90,7 +90,7 @@ class Router(Base):
 
 	@property
 	def ReceiveType(self):
-		"""
+		"""Determines how the emulated RIPng router will handle received RIPng update messages.
 
 		Returns:
 			str(ignore|store)
@@ -102,7 +102,7 @@ class Router(Base):
 
 	@property
 	def RouterId(self):
-		"""
+		"""The assigned router ID. The default is 1.
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class Router(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -126,7 +126,7 @@ class Router(Base):
 
 	@property
 	def UpdateInterval(self):
-		"""
+		"""In seconds) Triggered events, such as sending of unsolicited response messages, are spaced at timed intervals.
 
 		Returns:
 			number
@@ -138,7 +138,7 @@ class Router(Base):
 
 	@property
 	def UpdateIntervalOffset(self):
-		"""
+		"""(In seconds) To avoid synchronization of the update messages sent by all routers, the update interval is incremented/decremented by a small random time.
 
 		Returns:
 			number
@@ -152,13 +152,13 @@ class Router(Base):
 		"""Adds a new router node on the server and retrieves it in this instance.
 
 		Args:
-			EnableInterfaceMetric (bool): 
-			Enabled (bool): 
-			ReceiveType (str(ignore|store)): 
-			RouterId (number): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
-			UpdateInterval (number): 
-			UpdateIntervalOffset (number): 
+			EnableInterfaceMetric (bool): Enables the use of the RIPng interface metric. This user-assigned metric is added to the normal routing metric.
+			Enabled (bool): Enables the RIPing interface.
+			ReceiveType (str(ignore|store)): Determines how the emulated RIPng router will handle received RIPng update messages.
+			RouterId (number): The assigned router ID. The default is 1.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			UpdateInterval (number): In seconds) Triggered events, such as sending of unsolicited response messages, are spaced at timed intervals.
+			UpdateIntervalOffset (number): (In seconds) To avoid synchronization of the update messages sent by all routers, the update interval is incremented/decremented by a small random time.
 
 		Returns:
 			self: This instance with all currently retrieved router data using find and the newly added router data available through an iterator or index
@@ -184,13 +184,13 @@ class Router(Base):
 		By default the find method takes no parameters and will retrieve all router data from the server.
 
 		Args:
-			EnableInterfaceMetric (bool): 
-			Enabled (bool): 
-			ReceiveType (str(ignore|store)): 
-			RouterId (number): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
-			UpdateInterval (number): 
-			UpdateIntervalOffset (number): 
+			EnableInterfaceMetric (bool): Enables the use of the RIPng interface metric. This user-assigned metric is added to the normal routing metric.
+			Enabled (bool): Enables the RIPing interface.
+			ReceiveType (str(ignore|store)): Determines how the emulated RIPng router will handle received RIPng update messages.
+			RouterId (number): The assigned router ID. The default is 1.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): The name of the group to which this port is assigned, for the purpose of creating traffic streams among source/destination members of the group.
+			UpdateInterval (number): In seconds) Triggered events, such as sending of unsolicited response messages, are spaced at timed intervals.
+			UpdateIntervalOffset (number): (In seconds) To avoid synchronization of the update messages sent by all routers, the update interval is incremented/decremented by a small random time.
 
 		Returns:
 			self: This instance with matching router data retrieved from the server available through an iterator or index

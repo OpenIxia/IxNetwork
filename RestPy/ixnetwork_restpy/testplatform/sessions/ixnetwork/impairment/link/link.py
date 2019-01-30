@@ -51,7 +51,7 @@ class Link(Base):
 
 	@property
 	def ForwardingInterruption(self):
-		"""
+		"""Emulate a link fault. Drop all packets received.
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Link(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""The name of the link: receiving port -> transmitting port.
 
 		Returns:
 			str
@@ -72,7 +72,7 @@ class Link(Base):
 
 	@property
 	def RxPortName(self):
-		"""
+		"""The name of the receiving port.
 
 		Returns:
 			str
@@ -81,7 +81,7 @@ class Link(Base):
 
 	@property
 	def TxPortName(self):
-		"""
+		"""The name of the transmitting port.
 
 		Returns:
 			str
@@ -95,10 +95,10 @@ class Link(Base):
 		By default the find method takes no parameters and will retrieve all link data from the server.
 
 		Args:
-			ForwardingInterruption (bool): 
-			Name (str): 
-			RxPortName (str): 
-			TxPortName (str): 
+			ForwardingInterruption (bool): Emulate a link fault. Drop all packets received.
+			Name (str): The name of the link: receiving port -> transmitting port.
+			RxPortName (str): The name of the receiving port.
+			TxPortName (str): The name of the transmitting port.
 
 		Returns:
 			self: This instance with matching link data retrieved from the server available through an iterator or index

@@ -51,7 +51,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""
+		"""(read only) The learned B-VLAN identifier.
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""
+		"""(read only) The learned destination MAC address.
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def HopCount(self):
-		"""
+		"""(read only) The learned number of hops in the link.
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def Hops(self):
-		"""
+		"""(read only) The learned list of hops to reach the particular MEP (MAC address).
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The learned MD level for the periodic OAM.
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def ReplyStatus(self):
-		"""
+		"""(read only) The learned current reply status.
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The learned source MAC address.
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class PbbTeLtLearnedInfo(Base):
 
 	@property
 	def TransactionId(self):
-		"""
+		"""(read only) The learned identifier sent with the LTM.
 
 		Returns:
 			number
@@ -128,14 +128,14 @@ class PbbTeLtLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pbbTeLtLearnedInfo data from the server.
 
 		Args:
-			BVlan (str): 
-			DstMacAddress (str): 
-			HopCount (number): 
-			Hops (str): 
-			MdLevel (number): 
-			ReplyStatus (str): 
-			SrcMacAddress (str): 
-			TransactionId (number): 
+			BVlan (str): (read only) The learned B-VLAN identifier.
+			DstMacAddress (str): (read only) The learned destination MAC address.
+			HopCount (number): (read only) The learned number of hops in the link.
+			Hops (str): (read only) The learned list of hops to reach the particular MEP (MAC address).
+			MdLevel (number): (read only) The learned MD level for the periodic OAM.
+			ReplyStatus (str): (read only) The learned current reply status.
+			SrcMacAddress (str): (read only) The learned source MAC address.
+			TransactionId (number): (read only) The learned identifier sent with the LTM.
 
 		Returns:
 			self: This instance with matching pbbTeLtLearnedInfo data retrieved from the server available through an iterator or index

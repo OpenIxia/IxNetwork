@@ -51,7 +51,7 @@ class Error(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""The description of the error
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class Error(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""The error code of the error
 
 		Returns:
 			number
@@ -69,7 +69,7 @@ class Error(Base):
 
 	@property
 	def ErrorLevel(self):
-		"""
+		"""The error level of the error
 
 		Returns:
 			str(kAnalysis|kCount|kError|kMessage|kWarning)
@@ -78,7 +78,7 @@ class Error(Base):
 
 	@property
 	def InstanceCount(self):
-		"""
+		"""The number of instances of the error
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class Error(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""The name of the error
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class Error(Base):
 
 	@property
 	def Provider(self):
-		"""
+		"""The error provider of the error
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class Error(Base):
 
 	@property
 	def SourceColumns(self):
-		"""
+		"""If the error content originated from an xml meta file, these are the source column names if any for this error.
 
 		Returns:
 			list(str)
@@ -137,14 +137,14 @@ class Error(Base):
 		By default the find method takes no parameters and will retrieve all error data from the server.
 
 		Args:
-			Description (str): 
-			ErrorCode (number): 
-			ErrorLevel (str(kAnalysis|kCount|kError|kMessage|kWarning)): 
-			InstanceCount (number): 
+			Description (str): The description of the error
+			ErrorCode (number): The error code of the error
+			ErrorLevel (str(kAnalysis|kCount|kError|kMessage|kWarning)): The error level of the error
+			InstanceCount (number): The number of instances of the error
 			LastModified (str): 
-			Name (str): 
-			Provider (str): 
-			SourceColumns (list(str)): 
+			Name (str): The name of the error
+			Provider (str): The error provider of the error
+			SourceColumns (list(str)): If the error content originated from an xml meta file, these are the source column names if any for this error.
 			SourceColumnsDisplayName (list(str)): 
 
 		Returns:

@@ -37,7 +37,7 @@ class Oam(Base):
 
 	@property
 	def EnableTlvOption(self):
-		"""
+		"""If true, enables the tlv option.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Oam(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables OAM for the Ten Gig Lan port.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Oam(Base):
 
 	@property
 	def IdleTimer(self):
-		"""
+		"""The timer used to ensure OAM sub layer adheres to maximum number of OAMPDUs per second and emits at least one OAMPDU per second. The default is 1, minimum value is 1 and maximum value is 10.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class Oam(Base):
 
 	@property
 	def LinkEvents(self):
-		"""
+		"""If true, enables link event interpreting support in Ixia port.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Oam(Base):
 
 	@property
 	def Loopback(self):
-		"""
+		"""If true, enables the loopback. when an ixia port goes to loopback mode, then all non oam packets coming to that port gets looped back.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Oam(Base):
 
 	@property
 	def MacAddress(self):
-		"""
+		"""Mac address of the local DTE. By default, the mac address is automatically generated from card, port and other related information.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class Oam(Base):
 
 	@property
 	def MaxOAMPDUSize(self):
-		"""
+		"""Indicates the maximum OAMPDU size supported by local DTE. The default is 1500, minimum is 64, and maximum is 1500 in octets.
 
 		Returns:
 			number
@@ -121,7 +121,7 @@ class Oam(Base):
 
 	@property
 	def OrganizationUniqueIdentifier(self):
-		"""
+		"""This three-octet field contains a 24-bit Organizationally Unique Identifier. The default value is 00-01-00. Any three octets hex value can be given.
 
 		Returns:
 			str
@@ -133,7 +133,7 @@ class Oam(Base):
 
 	@property
 	def TlvType(self):
-		"""
+		"""Indicates the tlv type.
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class Oam(Base):
 
 	@property
 	def TlvValue(self):
-		"""
+		"""Enters the tlv value.
 
 		Returns:
 			str
@@ -157,7 +157,7 @@ class Oam(Base):
 
 	@property
 	def VendorSpecificInformation(self):
-		"""
+		"""Contains the vendor specific information that is used to differentiate a vendor's product modes/version. Default is 00000000.
 
 		Returns:
 			str

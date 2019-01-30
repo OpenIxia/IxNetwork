@@ -37,7 +37,7 @@ class DhcpV6Properties(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the DHCPv6 client feature. DHCPv6 negotiation will be started and an IPv6 address learned from the DHCPv6 server will be assigned automatically to the protocol interface.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class DhcpV6Properties(Base):
 
 	@property
 	def IaId(self):
-		"""
+		"""The unique identifier value for the Identity Association (IA).
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class DhcpV6Properties(Base):
 
 	@property
 	def IaType(self):
-		"""
+		"""The Identity Association (IA) Type.
 
 		Returns:
 			str(permanent|temporary|prefixDelegation)
@@ -73,7 +73,7 @@ class DhcpV6Properties(Base):
 
 	@property
 	def RenewTimer(self):
-		"""
+		"""The user-specified value and the lease timer (from the DHCP Server) are compared. The lowest value is used as the release/renew timer. After this time period has elapsed, the address will be renewed.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class DhcpV6Properties(Base):
 
 	@property
 	def RequestRate(self):
-		"""
+		"""The user-specified maximum number of Request messages that can be sent per second from the client to the DHCPv6 server, requesting an IPv6 address. A value of zero (0) indicates that there will be no rate control, that is, requests will be sent as quickly as possible.
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class DhcpV6Properties(Base):
 
 	@property
 	def Tlvs(self):
-		"""
+		"""DHCP TLVs (type length value) for custom DHCP options.
 
 		Returns:
 			list(dict(arg1:number,arg2:str))

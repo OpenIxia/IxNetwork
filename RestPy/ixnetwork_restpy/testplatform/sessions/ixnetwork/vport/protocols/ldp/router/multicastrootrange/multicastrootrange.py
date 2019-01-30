@@ -66,7 +66,7 @@ class MulticastRootRange(Base):
 
 	@property
 	def ContinuousIncrOpaqueValuesAcrossRoot(self):
-		"""
+		"""Signifies the continuous incremented opaque values across root.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class MulticastRootRange(Base):
 
 	@property
 	def LspCount(self):
-		"""
+		"""Signifies the count of LSP.
 
 		Returns:
 			number
@@ -90,7 +90,7 @@ class MulticastRootRange(Base):
 
 	@property
 	def LspType(self):
-		"""
+		"""The type of multicast LSP.
 
 		Returns:
 			str()
@@ -99,7 +99,7 @@ class MulticastRootRange(Base):
 
 	@property
 	def RootAddrStep(self):
-		"""
+		"""The Root Address increment step. This is applicable only if Root Address Count is greater than 1.
 
 		Returns:
 			str
@@ -111,7 +111,7 @@ class MulticastRootRange(Base):
 
 	@property
 	def RootAddress(self):
-		"""
+		"""The root address of the multicast LSP.
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class MulticastRootRange(Base):
 
 	@property
 	def RootAddressCount(self):
-		"""
+		"""The root address count for this Multicast FEC range.
 
 		Returns:
 			number
@@ -137,11 +137,11 @@ class MulticastRootRange(Base):
 		"""Adds a new multicastRootRange node on the server and retrieves it in this instance.
 
 		Args:
-			ContinuousIncrOpaqueValuesAcrossRoot (bool): 
-			LspCount (number): 
-			RootAddrStep (str): 
-			RootAddress (str): 
-			RootAddressCount (number): 
+			ContinuousIncrOpaqueValuesAcrossRoot (bool): Signifies the continuous incremented opaque values across root.
+			LspCount (number): Signifies the count of LSP.
+			RootAddrStep (str): The Root Address increment step. This is applicable only if Root Address Count is greater than 1.
+			RootAddress (str): The root address of the multicast LSP.
+			RootAddressCount (number): The root address count for this Multicast FEC range.
 
 		Returns:
 			self: This instance with all currently retrieved multicastRootRange data using find and the newly added multicastRootRange data available through an iterator or index
@@ -167,12 +167,12 @@ class MulticastRootRange(Base):
 		By default the find method takes no parameters and will retrieve all multicastRootRange data from the server.
 
 		Args:
-			ContinuousIncrOpaqueValuesAcrossRoot (bool): 
-			LspCount (number): 
-			LspType (str()): 
-			RootAddrStep (str): 
-			RootAddress (str): 
-			RootAddressCount (number): 
+			ContinuousIncrOpaqueValuesAcrossRoot (bool): Signifies the continuous incremented opaque values across root.
+			LspCount (number): Signifies the count of LSP.
+			LspType (str()): The type of multicast LSP.
+			RootAddrStep (str): The Root Address increment step. This is applicable only if Root Address Count is greater than 1.
+			RootAddress (str): The root address of the multicast LSP.
+			RootAddressCount (number): The root address count for this Multicast FEC range.
 
 		Returns:
 			self: This instance with matching multicastRootRange data retrieved from the server available through an iterator or index

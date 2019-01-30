@@ -38,7 +38,7 @@ class CrpRange(Base):
 
 	@property
 	def AdvertisementHoldTime(self):
-		"""
+		"""The time interval (in seconds) between two consecutive Candidate RP advertisements.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class CrpRange(Base):
 
 	@property
 	def BackOffInterval(self):
-		"""
+		"""The back off time interval for the C-RP-Adv messages.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class CrpRange(Base):
 
 	@property
 	def CrpAddress(self):
-		"""
+		"""Start address of the set of candidate RPs to be simulated.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class CrpRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables/disables a Candidate RP range on the fly. The default is disabled.
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class CrpRange(Base):
 
 	@property
 	def GroupAddress(self):
-		"""
+		"""Starting group address of the group range for which the candidate RP will advertise candidacy.
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class CrpRange(Base):
 
 	@property
 	def GroupCount(self):
-		"""
+		"""Number of groups in the range.
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class CrpRange(Base):
 
 	@property
 	def GroupMaskLen(self):
-		"""
+		"""Mask width (prefix length in bits) for the group range.
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class CrpRange(Base):
 
 	@property
 	def MeshingType(self):
-		"""
+		"""It indicates if the mappings for groups and RP addresses are Fully-Meshed or One-To-One.
 
 		Returns:
 			str(fullyMeshed|oneToOne)
@@ -134,7 +134,7 @@ class CrpRange(Base):
 
 	@property
 	def PeriodicAdvertisementInterval(self):
-		"""
+		"""Rate controlling variable indicating how many C-RP-Adv messages can be sent in the specified time interval.
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class CrpRange(Base):
 
 	@property
 	def PriorityChangeInterval(self):
-		"""
+		"""Time interval after which priority of all the RPs get changed, if priority type is incremental or random.
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class CrpRange(Base):
 
 	@property
 	def PriorityType(self):
-		"""
+		"""It indicates the type of priority to be held by the candidate RPs (CRPs). The options are Same, Incremental, and Random.
 
 		Returns:
 			str(same|incremental|random)
@@ -170,7 +170,7 @@ class CrpRange(Base):
 
 	@property
 	def PriorityValue(self):
-		"""
+		"""Value of priority field sent in candidate RP advertisement messages.
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class CrpRange(Base):
 
 	@property
 	def RouterCount(self):
-		"""
+		"""Total number of candidate RPs to be simulated starting from C-RP Address. A contiguous address range is used for this RP range simulation.
 
 		Returns:
 			number
@@ -194,7 +194,7 @@ class CrpRange(Base):
 
 	@property
 	def TriggeredCrpMessageCount(self):
-		"""
+		"""The number of times CRP advertisements is sent to the newly elected Bootstrap Router.
 
 		Returns:
 			number
@@ -208,20 +208,20 @@ class CrpRange(Base):
 		"""Adds a new crpRange node on the server and retrieves it in this instance.
 
 		Args:
-			AdvertisementHoldTime (number): 
-			BackOffInterval (number): 
-			CrpAddress (str): 
-			Enabled (bool): 
-			GroupAddress (str): 
-			GroupCount (number): 
-			GroupMaskLen (number): 
-			MeshingType (str(fullyMeshed|oneToOne)): 
-			PeriodicAdvertisementInterval (number): 
-			PriorityChangeInterval (number): 
-			PriorityType (str(same|incremental|random)): 
-			PriorityValue (number): 
-			RouterCount (number): 
-			TriggeredCrpMessageCount (number): 
+			AdvertisementHoldTime (number): The time interval (in seconds) between two consecutive Candidate RP advertisements.
+			BackOffInterval (number): The back off time interval for the C-RP-Adv messages.
+			CrpAddress (str): Start address of the set of candidate RPs to be simulated.
+			Enabled (bool): Enables/disables a Candidate RP range on the fly. The default is disabled.
+			GroupAddress (str): Starting group address of the group range for which the candidate RP will advertise candidacy.
+			GroupCount (number): Number of groups in the range.
+			GroupMaskLen (number): Mask width (prefix length in bits) for the group range.
+			MeshingType (str(fullyMeshed|oneToOne)): It indicates if the mappings for groups and RP addresses are Fully-Meshed or One-To-One.
+			PeriodicAdvertisementInterval (number): Rate controlling variable indicating how many C-RP-Adv messages can be sent in the specified time interval.
+			PriorityChangeInterval (number): Time interval after which priority of all the RPs get changed, if priority type is incremental or random.
+			PriorityType (str(same|incremental|random)): It indicates the type of priority to be held by the candidate RPs (CRPs). The options are Same, Incremental, and Random.
+			PriorityValue (number): Value of priority field sent in candidate RP advertisement messages.
+			RouterCount (number): Total number of candidate RPs to be simulated starting from C-RP Address. A contiguous address range is used for this RP range simulation.
+			TriggeredCrpMessageCount (number): The number of times CRP advertisements is sent to the newly elected Bootstrap Router.
 
 		Returns:
 			self: This instance with all currently retrieved crpRange data using find and the newly added crpRange data available through an iterator or index
@@ -247,20 +247,20 @@ class CrpRange(Base):
 		By default the find method takes no parameters and will retrieve all crpRange data from the server.
 
 		Args:
-			AdvertisementHoldTime (number): 
-			BackOffInterval (number): 
-			CrpAddress (str): 
-			Enabled (bool): 
-			GroupAddress (str): 
-			GroupCount (number): 
-			GroupMaskLen (number): 
-			MeshingType (str(fullyMeshed|oneToOne)): 
-			PeriodicAdvertisementInterval (number): 
-			PriorityChangeInterval (number): 
-			PriorityType (str(same|incremental|random)): 
-			PriorityValue (number): 
-			RouterCount (number): 
-			TriggeredCrpMessageCount (number): 
+			AdvertisementHoldTime (number): The time interval (in seconds) between two consecutive Candidate RP advertisements.
+			BackOffInterval (number): The back off time interval for the C-RP-Adv messages.
+			CrpAddress (str): Start address of the set of candidate RPs to be simulated.
+			Enabled (bool): Enables/disables a Candidate RP range on the fly. The default is disabled.
+			GroupAddress (str): Starting group address of the group range for which the candidate RP will advertise candidacy.
+			GroupCount (number): Number of groups in the range.
+			GroupMaskLen (number): Mask width (prefix length in bits) for the group range.
+			MeshingType (str(fullyMeshed|oneToOne)): It indicates if the mappings for groups and RP addresses are Fully-Meshed or One-To-One.
+			PeriodicAdvertisementInterval (number): Rate controlling variable indicating how many C-RP-Adv messages can be sent in the specified time interval.
+			PriorityChangeInterval (number): Time interval after which priority of all the RPs get changed, if priority type is incremental or random.
+			PriorityType (str(same|incremental|random)): It indicates the type of priority to be held by the candidate RPs (CRPs). The options are Same, Incremental, and Random.
+			PriorityValue (number): Value of priority field sent in candidate RP advertisement messages.
+			RouterCount (number): Total number of candidate RPs to be simulated starting from C-RP Address. A contiguous address range is used for this RP range simulation.
+			TriggeredCrpMessageCount (number): The number of times CRP advertisements is sent to the newly elected Bootstrap Router.
 
 		Returns:
 			self: This instance with matching crpRange data retrieved from the server available through an iterator or index

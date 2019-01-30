@@ -38,7 +38,7 @@ class MacRanges(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""The number of times to increment in this MAC range, starting with the address set in macAddress.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class MacRanges(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the MAC range is enabled.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class MacRanges(Base):
 
 	@property
 	def MacAddress(self):
-		"""
+		"""The MAC address of the first entry in the range.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class MacRanges(Base):
 
 	@property
 	def Step(self):
-		"""
+		"""The amount to increment each MAC address in the range.
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class MacRanges(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""Assigns a traffic group to the MAC range. The traffic group must be previously configured.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -100,11 +100,11 @@ class MacRanges(Base):
 		"""Adds a new macRanges node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): 
-			Enabled (bool): 
-			MacAddress (str): 
-			Step (str): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			Count (number): The number of times to increment in this MAC range, starting with the address set in macAddress.
+			Enabled (bool): If true, the MAC range is enabled.
+			MacAddress (str): The MAC address of the first entry in the range.
+			Step (str): The amount to increment each MAC address in the range.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Assigns a traffic group to the MAC range. The traffic group must be previously configured.
 
 		Returns:
 			self: This instance with all currently retrieved macRanges data using find and the newly added macRanges data available through an iterator or index
@@ -130,11 +130,11 @@ class MacRanges(Base):
 		By default the find method takes no parameters and will retrieve all macRanges data from the server.
 
 		Args:
-			Count (number): 
-			Enabled (bool): 
-			MacAddress (str): 
-			Step (str): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
+			Count (number): The number of times to increment in this MAC range, starting with the address set in macAddress.
+			Enabled (bool): If true, the MAC range is enabled.
+			MacAddress (str): The MAC address of the first entry in the range.
+			Step (str): The amount to increment each MAC address in the range.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): Assigns a traffic group to the MAC range. The traffic group must be previously configured.
 
 		Returns:
 			self: This instance with matching macRanges data retrieved from the server available through an iterator or index

@@ -20,6 +20,7 @@
 
 import sys
 import re
+import logging
 from inspect import isclass
 from ixnetwork_restpy.connection import Connection
 from ixnetwork_restpy.errors import NotFoundError
@@ -58,14 +59,18 @@ class Base(object):
             raise StopIteration
         else:
             self._index += 1
-        return self
+        return self[self._index]
 
     def __getitem__(self, index):
         if index >= len(self._object_properties):
-            raise IndexError		
+            raise IndexError	
+        elif index < 0 and len(self._object_properties) + index in range(len(self._object_properties)):
+            self._index = len(self._object_properties) + index
         else:
             self._index = index
-        return self
+        item = self.__class__(self._parent)
+        item._set_properties(self._properties)
+        return item
 
     @property
     def index(self):
@@ -114,7 +119,7 @@ class Base(object):
         try:
             return self._properties[name]
         except Exception as e:
-            raise NotFoundError('The attribute %s is not in the internal list of object dicts. (%s)' % (name, e.message))
+            raise NotFoundError('The attribute %s is not in the internal list of object dicts. (%s)' % (name, e))
   
     def _set_attribute(self, name, value):
         """Update a property on the server and save it locally if there is no exception
@@ -125,27 +130,23 @@ class Base(object):
         except Exception as e:
             raise e
         
-    def _dump(self):
-        """Returns a dump of the current instance
+    def __str__(self):
+        """Get all the instances encapsulated by this container without changing the current index
+
+        Returns:
+            str: A string representation of the encapsulated instances
         """
-        if len(self) == 0:
-            dump = '%s:' % (self.__class__.__name__)
-        else:
-            dump = '%s[%s]: %s' % (self.__class__.__name__, self._index, self.href)
+        instances = ''
+        for i in range(len(self)):
+            instances += '\n%s[%s]: %s' % (self.__class__.__name__, i, self._object_properties[i]['href'])
             methods = dir(self)
-            for key in sorted(self._properties.keys()):
+            for key in sorted(self._object_properties[i].keys()):
                 if key in ['href']:
                     continue
                 property_name = '%s%s' % (key[0].upper(), key[1:])
                 if property_name in methods:
-                    dump += '\n\t%s: %s' % (property_name, self._properties[key])
-        return dump
-
-    def __str__(self):
-        return self._dump()
-
-    def __repr__(self):
-        return self._dump()
+                    instances += '\n\t%s: %s' % (property_name, self._object_properties[i][key])
+        return instances.strip('\n')
 
     def _build_payload(self, locals_dict, method_name=None):
         """Build and return a payload dictionary
@@ -180,6 +181,7 @@ class Base(object):
             return None
 
     def _build_value(self, key, value, method_name=None):
+        public_key = '%s%s' % (key[0].upper(), key[1:])
         if isinstance(value, Files):
             if value.is_local_file:
                 upload_url = '%s/files?filename=%s' % (self.href[0:self.href.find('ixnetwork') + len('ixnetwork')], value.file_name)
@@ -190,8 +192,8 @@ class Base(object):
             if method_name is not None:
                 method_param = getattr(self.__class__, method_name).__doc__.replace('\n', '').replace('\t', '').replace(' ', '')
                 is_list = method_param.find('%s(list(' % key) != -1
-            elif hasattr(self.__class__, key) is True:
-                returns = getattr(self.__class__, key).__doc__.replace('\n', '').replace('\t', '').replace(' ', '')
+            elif hasattr(self.__class__, public_key) is True:
+                returns = getattr(self.__class__, public_key).__doc__.replace('\n', '').replace('\t', '').replace(' ', '')
                 is_list = returns.find('Returns:list(') != -1
             if is_list is True:
                 hrefs = []
@@ -408,3 +410,13 @@ class Base(object):
                         device_ids[i] = 0
         
         return [x for x in device_ids if x != 0]
+
+    def info(self, message):
+        self._connection._info(message)
+
+    def warn(self, message):
+        self._connection._warn(message)
+    
+    def debug(self, message):
+        self._connection._debug(message)
+        

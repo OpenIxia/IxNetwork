@@ -37,7 +37,7 @@ class Ethernetvm(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(endOfFrame|floating)
@@ -49,7 +49,7 @@ class Ethernetvm(Base):
 
 	@property
 	def EnablePPM(self):
-		"""
+		"""If true, enables the portsppm.
 
 		Returns:
 			bool
@@ -58,7 +58,7 @@ class Ethernetvm(Base):
 
 	@property
 	def Loopback(self):
-		"""
+		"""If true, enables the ports ppm
 
 		Returns:
 			bool
@@ -82,7 +82,7 @@ class Ethernetvm(Base):
 
 	@property
 	def Ppm(self):
-		"""
+		"""Indicates the value that needs to be adjusted for the line transmit frequency
 
 		Returns:
 			number
@@ -103,7 +103,7 @@ class Ethernetvm(Base):
 
 	@property
 	def Speed(self):
-		"""
+		"""Select one of the enums to set the speed of the ethernet vm
 
 		Returns:
 			str(speed100|speed1000|speed10g|speed2000|speed20g|speed25g|speed3000|speed30g|speed4000|speed40g|speed5000|speed50g|speed6000|speed7000|speed8000|speed9000)

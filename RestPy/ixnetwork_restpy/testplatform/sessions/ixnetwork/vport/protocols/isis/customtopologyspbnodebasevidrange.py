@@ -52,7 +52,7 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 
 	@property
 	def BVlanPriority(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 
 	@property
 	def BVlanTpId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(33024|37120|37376|34987)
@@ -76,7 +76,7 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 
 	@property
 	def BaseVid(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 
 	@property
 	def EctAlgorithm(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(00-80-C2-01|00-80-C2-02|00-80-C2-03|00-80-C2-04|00-80-C2-05|00-80-C2-06|00-80-C2-07|00-80-C2-08|00-80-C2-09|00-80-C2-0A|00-80-C2-0B|00-80-C2-0C|00-80-C2-0D|00-80-C2-0E|00-80-C2-0F|00-80-C2-10)
@@ -100,7 +100,7 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 
 	@property
 	def UseFlag(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -114,11 +114,11 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 		"""Adds a new customTopologySpbNodeBaseVidRange node on the server and retrieves it in this instance.
 
 		Args:
-			BVlanPriority (number): 
-			BVlanTpId (str(33024|37120|37376|34987)): 
-			BaseVid (number): 
-			EctAlgorithm (str(00-80-C2-01|00-80-C2-02|00-80-C2-03|00-80-C2-04|00-80-C2-05|00-80-C2-06|00-80-C2-07|00-80-C2-08|00-80-C2-09|00-80-C2-0A|00-80-C2-0B|00-80-C2-0C|00-80-C2-0D|00-80-C2-0E|00-80-C2-0F|00-80-C2-10)): 
-			UseFlag (bool): 
+			BVlanPriority (number): NOT DEFINED
+			BVlanTpId (str(33024|37120|37376|34987)): NOT DEFINED
+			BaseVid (number): NOT DEFINED
+			EctAlgorithm (str(00-80-C2-01|00-80-C2-02|00-80-C2-03|00-80-C2-04|00-80-C2-05|00-80-C2-06|00-80-C2-07|00-80-C2-08|00-80-C2-09|00-80-C2-0A|00-80-C2-0B|00-80-C2-0C|00-80-C2-0D|00-80-C2-0E|00-80-C2-0F|00-80-C2-10)): NOT DEFINED
+			UseFlag (bool): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTopologySpbNodeBaseVidRange data using find and the newly added customTopologySpbNodeBaseVidRange data available through an iterator or index
@@ -144,11 +144,11 @@ class CustomTopologySpbNodeBaseVidRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologySpbNodeBaseVidRange data from the server.
 
 		Args:
-			BVlanPriority (number): 
-			BVlanTpId (str(33024|37120|37376|34987)): 
-			BaseVid (number): 
-			EctAlgorithm (str(00-80-C2-01|00-80-C2-02|00-80-C2-03|00-80-C2-04|00-80-C2-05|00-80-C2-06|00-80-C2-07|00-80-C2-08|00-80-C2-09|00-80-C2-0A|00-80-C2-0B|00-80-C2-0C|00-80-C2-0D|00-80-C2-0E|00-80-C2-0F|00-80-C2-10)): 
-			UseFlag (bool): 
+			BVlanPriority (number): NOT DEFINED
+			BVlanTpId (str(33024|37120|37376|34987)): NOT DEFINED
+			BaseVid (number): NOT DEFINED
+			EctAlgorithm (str(00-80-C2-01|00-80-C2-02|00-80-C2-03|00-80-C2-04|00-80-C2-05|00-80-C2-06|00-80-C2-07|00-80-C2-08|00-80-C2-09|00-80-C2-0A|00-80-C2-0B|00-80-C2-0C|00-80-C2-0D|00-80-C2-0E|00-80-C2-0F|00-80-C2-10)): NOT DEFINED
+			UseFlag (bool): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTopologySpbNodeBaseVidRange data retrieved from the server available through an iterator or index

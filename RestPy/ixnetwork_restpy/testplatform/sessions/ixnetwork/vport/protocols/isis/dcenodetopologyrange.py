@@ -52,7 +52,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def BroadcastPriority(self):
-		"""
+		"""Sets the priority in which the topology is broadcast.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def IncludeL2Topology(self):
-		"""
+		"""If true, includes the L2 topology.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def InternodeNicknameIncrement(self):
-		"""
+		"""The increment step to be used for creating the internode increment.
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def NicknameCount(self):
-		"""
+		"""The count of the nickname.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def NoOfTreesToCompute(self):
-		"""
+		"""The number of trees to compute.
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def StartNickname(self):
-		"""
+		"""If true, uses the nickname.
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def TopologyCount(self):
-		"""
+		"""The count of the topology.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class DceNodeTopologyRange(Base):
 
 	@property
 	def TopologyId(self):
-		"""
+		"""The unique identification number of the topology range.
 
 		Returns:
 			number
@@ -150,14 +150,14 @@ class DceNodeTopologyRange(Base):
 		"""Adds a new dceNodeTopologyRange node on the server and retrieves it in this instance.
 
 		Args:
-			BroadcastPriority (number): 
-			IncludeL2Topology (bool): 
-			InternodeNicknameIncrement (number): 
-			NicknameCount (number): 
-			NoOfTreesToCompute (number): 
-			StartNickname (number): 
-			TopologyCount (number): 
-			TopologyId (number): 
+			BroadcastPriority (number): Sets the priority in which the topology is broadcast.
+			IncludeL2Topology (bool): If true, includes the L2 topology.
+			InternodeNicknameIncrement (number): The increment step to be used for creating the internode increment.
+			NicknameCount (number): The count of the nickname.
+			NoOfTreesToCompute (number): The number of trees to compute.
+			StartNickname (number): If true, uses the nickname.
+			TopologyCount (number): The count of the topology.
+			TopologyId (number): The unique identification number of the topology range.
 
 		Returns:
 			self: This instance with all currently retrieved dceNodeTopologyRange data using find and the newly added dceNodeTopologyRange data available through an iterator or index
@@ -183,14 +183,14 @@ class DceNodeTopologyRange(Base):
 		By default the find method takes no parameters and will retrieve all dceNodeTopologyRange data from the server.
 
 		Args:
-			BroadcastPriority (number): 
-			IncludeL2Topology (bool): 
-			InternodeNicknameIncrement (number): 
-			NicknameCount (number): 
-			NoOfTreesToCompute (number): 
-			StartNickname (number): 
-			TopologyCount (number): 
-			TopologyId (number): 
+			BroadcastPriority (number): Sets the priority in which the topology is broadcast.
+			IncludeL2Topology (bool): If true, includes the L2 topology.
+			InternodeNicknameIncrement (number): The increment step to be used for creating the internode increment.
+			NicknameCount (number): The count of the nickname.
+			NoOfTreesToCompute (number): The number of trees to compute.
+			StartNickname (number): If true, uses the nickname.
+			TopologyCount (number): The count of the topology.
+			TopologyId (number): The unique identification number of the topology range.
 
 		Returns:
 			self: This instance with matching dceNodeTopologyRange data retrieved from the server available through an iterator or index

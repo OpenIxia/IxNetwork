@@ -52,7 +52,7 @@ class LocalEidRange(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""It gives details about the count
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LocalEidRange(Base):
 
 	@property
 	def EnableProxyMapReplyBit(self):
-		"""
+		"""If true, it enables the proxy map reply bit
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class LocalEidRange(Base):
 
 	@property
 	def EnableWantMapNotifyBit(self):
-		"""
+		"""If true, it enables the Want map Notify bit
 
 		Returns:
 			str(always|duringQuickRegistration|never)
@@ -88,7 +88,7 @@ class LocalEidRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, it enables the protocol
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class LocalEidRange(Base):
 
 	@property
 	def Family(self):
-		"""
+		"""It gives details about the family
 
 		Returns:
 			str(ipv4|ipv6)
@@ -112,7 +112,7 @@ class LocalEidRange(Base):
 
 	@property
 	def MaxRecordPerMapRegisterPacket(self):
-		"""
+		"""It gives details about the maximum record per map register packet
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class LocalEidRange(Base):
 
 	@property
 	def PeriodicRefreshInterval(self):
-		"""
+		"""It gives details about the periodic refresh interval
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class LocalEidRange(Base):
 
 	@property
 	def PrefixLength(self):
-		"""
+		"""it gives details about the prefix length
 
 		Returns:
 			number
@@ -148,7 +148,7 @@ class LocalEidRange(Base):
 
 	@property
 	def QuickRegistrationPeriod(self):
-		"""
+		"""it gives details about the quick registration period
 
 		Returns:
 			number
@@ -160,7 +160,7 @@ class LocalEidRange(Base):
 
 	@property
 	def RefreshIntervalInQuickRegistrationPeriod(self):
-		"""
+		"""It refreshs the interval in quick registration periods
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class LocalEidRange(Base):
 
 	@property
 	def StartAddress(self):
-		"""
+		"""It gives details about the start address
 
 		Returns:
 			str
@@ -184,7 +184,7 @@ class LocalEidRange(Base):
 
 	@property
 	def SupportSmrGeneration(self):
-		"""
+		"""It supports smr generation
 
 		Returns:
 			bool
@@ -196,7 +196,7 @@ class LocalEidRange(Base):
 
 	@property
 	def Ttl(self):
-		"""
+		"""It gives details about the ttl
 
 		Returns:
 			number
@@ -208,7 +208,7 @@ class LocalEidRange(Base):
 
 	@property
 	def UseAllInterfaceAddressesAsLocator(self):
-		"""
+		"""If True, it uses all interface address as locator
 
 		Returns:
 			bool
@@ -222,20 +222,20 @@ class LocalEidRange(Base):
 		"""Adds a new localEidRange node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): 
-			EnableProxyMapReplyBit (bool): 
-			EnableWantMapNotifyBit (str(always|duringQuickRegistration|never)): 
-			Enabled (bool): 
-			Family (str(ipv4|ipv6)): 
-			MaxRecordPerMapRegisterPacket (number): 
-			PeriodicRefreshInterval (number): 
-			PrefixLength (number): 
-			QuickRegistrationPeriod (number): 
-			RefreshIntervalInQuickRegistrationPeriod (number): 
-			StartAddress (str): 
-			SupportSmrGeneration (bool): 
-			Ttl (number): 
-			UseAllInterfaceAddressesAsLocator (bool): 
+			Count (number): It gives details about the count
+			EnableProxyMapReplyBit (bool): If true, it enables the proxy map reply bit
+			EnableWantMapNotifyBit (str(always|duringQuickRegistration|never)): If true, it enables the Want map Notify bit
+			Enabled (bool): If true, it enables the protocol
+			Family (str(ipv4|ipv6)): It gives details about the family
+			MaxRecordPerMapRegisterPacket (number): It gives details about the maximum record per map register packet
+			PeriodicRefreshInterval (number): It gives details about the periodic refresh interval
+			PrefixLength (number): it gives details about the prefix length
+			QuickRegistrationPeriod (number): it gives details about the quick registration period
+			RefreshIntervalInQuickRegistrationPeriod (number): It refreshs the interval in quick registration periods
+			StartAddress (str): It gives details about the start address
+			SupportSmrGeneration (bool): It supports smr generation
+			Ttl (number): It gives details about the ttl
+			UseAllInterfaceAddressesAsLocator (bool): If True, it uses all interface address as locator
 
 		Returns:
 			self: This instance with all currently retrieved localEidRange data using find and the newly added localEidRange data available through an iterator or index
@@ -261,20 +261,20 @@ class LocalEidRange(Base):
 		By default the find method takes no parameters and will retrieve all localEidRange data from the server.
 
 		Args:
-			Count (number): 
-			EnableProxyMapReplyBit (bool): 
-			EnableWantMapNotifyBit (str(always|duringQuickRegistration|never)): 
-			Enabled (bool): 
-			Family (str(ipv4|ipv6)): 
-			MaxRecordPerMapRegisterPacket (number): 
-			PeriodicRefreshInterval (number): 
-			PrefixLength (number): 
-			QuickRegistrationPeriod (number): 
-			RefreshIntervalInQuickRegistrationPeriod (number): 
-			StartAddress (str): 
-			SupportSmrGeneration (bool): 
-			Ttl (number): 
-			UseAllInterfaceAddressesAsLocator (bool): 
+			Count (number): It gives details about the count
+			EnableProxyMapReplyBit (bool): If true, it enables the proxy map reply bit
+			EnableWantMapNotifyBit (str(always|duringQuickRegistration|never)): If true, it enables the Want map Notify bit
+			Enabled (bool): If true, it enables the protocol
+			Family (str(ipv4|ipv6)): It gives details about the family
+			MaxRecordPerMapRegisterPacket (number): It gives details about the maximum record per map register packet
+			PeriodicRefreshInterval (number): It gives details about the periodic refresh interval
+			PrefixLength (number): it gives details about the prefix length
+			QuickRegistrationPeriod (number): it gives details about the quick registration period
+			RefreshIntervalInQuickRegistrationPeriod (number): It refreshs the interval in quick registration periods
+			StartAddress (str): It gives details about the start address
+			SupportSmrGeneration (bool): It supports smr generation
+			Ttl (number): It gives details about the ttl
+			UseAllInterfaceAddressesAsLocator (bool): If True, it uses all interface address as locator
 
 		Returns:
 			self: This instance with matching localEidRange data retrieved from the server available through an iterator or index

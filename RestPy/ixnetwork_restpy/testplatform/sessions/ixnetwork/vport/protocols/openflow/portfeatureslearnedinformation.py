@@ -37,7 +37,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def AdvertisedFeatures(self):
-		"""
+		"""The current features, like link modes, link types, and link features that the port advertises.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def Config(self):
-		"""
+		"""Signifies the configuration supported by the port.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def CurrentFeatures(self):
-		"""
+		"""The current features like the link modes, link types, and link features that the port supports.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def CurrentSpeed(self):
-		"""
+		"""The current speed of the port in kbps.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The Data Path identifier of the OpenFlow switch.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""The Data Path identifier of the OpenFlow switch in hexadecimal format.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""The error code of the received error.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""The type of the error received.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def EthernetAddress(self):
-		"""
+		"""The Ethernet address of the switch.
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""The latency measurement for the OpenFlow channel in microseconds.
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Indicates the local IP of the Controller.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def MaxSpeed(self):
-		"""
+		"""The maximum speed of the port in kbps.
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Signifies the name of the port.
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def PeerAdvertisedFeatures(self):
-		"""
+		"""The current features, like, link modes, link types, and link features, that the peer advertises.
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def PortNumber(self):
-		"""
+		"""The port number.
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""The Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""The state of reply for the Open Flow channel.
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def State(self):
-		"""
+		"""Signifies the states supported by the port.
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class PortFeaturesLearnedInformation(Base):
 
 	@property
 	def SupportedFeatures(self):
-		"""
+		"""The features like link modes, link types, and link features that is supported by the switch.
 
 		Returns:
 			str
@@ -222,26 +222,26 @@ class PortFeaturesLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all portFeaturesLearnedInformation data from the server.
 
 		Args:
-			AdvertisedFeatures (str): 
-			Config (str): 
-			CurrentFeatures (str): 
-			CurrentSpeed (number): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			EthernetAddress (str): 
-			Latency (number): 
-			LocalIp (str): 
-			MaxSpeed (number): 
-			Name (str): 
-			NegotiatedVersion (str): 
-			PeerAdvertisedFeatures (str): 
-			PortNumber (number): 
-			RemoteIp (str): 
-			ReplyState (str): 
-			State (str): 
-			SupportedFeatures (str): 
+			AdvertisedFeatures (str): The current features, like link modes, link types, and link features that the port advertises.
+			Config (str): Signifies the configuration supported by the port.
+			CurrentFeatures (str): The current features like the link modes, link types, and link features that the port supports.
+			CurrentSpeed (number): The current speed of the port in kbps.
+			DataPathId (str): The Data Path identifier of the OpenFlow switch.
+			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow switch in hexadecimal format.
+			ErrorCode (str): The error code of the received error.
+			ErrorType (str): The type of the error received.
+			EthernetAddress (str): The Ethernet address of the switch.
+			Latency (number): The latency measurement for the OpenFlow channel in microseconds.
+			LocalIp (str): Indicates the local IP of the Controller.
+			MaxSpeed (number): The maximum speed of the port in kbps.
+			Name (str): Signifies the name of the port.
+			NegotiatedVersion (str): Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
+			PeerAdvertisedFeatures (str): The current features, like, link modes, link types, and link features, that the peer advertises.
+			PortNumber (number): The port number.
+			RemoteIp (str): The Remote IP address of the selected interface.
+			ReplyState (str): The state of reply for the Open Flow channel.
+			State (str): Signifies the states supported by the port.
+			SupportedFeatures (str): The features like link modes, link types, and link features that is supported by the switch.
 
 		Returns:
 			self: This instance with matching portFeaturesLearnedInformation data retrieved from the server available through an iterator or index
@@ -269,11 +269,13 @@ class PortFeaturesLearnedInformation(Base):
 	def AddRecordForTrigger(self):
 		"""Executes the addRecordForTrigger operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=portFeaturesLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

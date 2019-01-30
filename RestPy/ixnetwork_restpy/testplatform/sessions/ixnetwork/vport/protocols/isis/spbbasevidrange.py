@@ -52,7 +52,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def BMacAddress(self):
-		"""
+		"""The B-MAC address. The default value is the System ID of the router.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def BVlanPriority(self):
-		"""
+		"""The user priority of the Base VLAN tag.
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def BVlanTpId(self):
-		"""
+		"""The tag priority identifier for base VLAN.
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def BaseVid(self):
-		"""
+		"""The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def EctAlgorithmType(self):
-		"""
+		"""The type of SPB Equal Cost Tree (ECT) algorithm. The default value is 01-80-C2-01.
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def EnableAutoBmacEnabled(self):
-		"""
+		"""If true, enables auto base MAC address.
 
 		Returns:
 			bool
@@ -124,7 +124,7 @@ class SpbBaseVidRange(Base):
 
 	@property
 	def EnableUseFlagBit(self):
-		"""
+		"""If set to true, allows to use flag bit.
 
 		Returns:
 			bool
@@ -138,13 +138,13 @@ class SpbBaseVidRange(Base):
 		"""Adds a new spbBaseVidRange node on the server and retrieves it in this instance.
 
 		Args:
-			BMacAddress (str): 
-			BVlanPriority (number): 
-			BVlanTpId (number): 
-			BaseVid (number): 
-			EctAlgorithmType (number): 
-			EnableAutoBmacEnabled (bool): 
-			EnableUseFlagBit (bool): 
+			BMacAddress (str): The B-MAC address. The default value is the System ID of the router.
+			BVlanPriority (number): The user priority of the Base VLAN tag.
+			BVlanTpId (number): The tag priority identifier for base VLAN.
+			BaseVid (number): The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
+			EctAlgorithmType (number): The type of SPB Equal Cost Tree (ECT) algorithm. The default value is 01-80-C2-01.
+			EnableAutoBmacEnabled (bool): If true, enables auto base MAC address.
+			EnableUseFlagBit (bool): If set to true, allows to use flag bit.
 
 		Returns:
 			self: This instance with all currently retrieved spbBaseVidRange data using find and the newly added spbBaseVidRange data available through an iterator or index
@@ -170,13 +170,13 @@ class SpbBaseVidRange(Base):
 		By default the find method takes no parameters and will retrieve all spbBaseVidRange data from the server.
 
 		Args:
-			BMacAddress (str): 
-			BVlanPriority (number): 
-			BVlanTpId (number): 
-			BaseVid (number): 
-			EctAlgorithmType (number): 
-			EnableAutoBmacEnabled (bool): 
-			EnableUseFlagBit (bool): 
+			BMacAddress (str): The B-MAC address. The default value is the System ID of the router.
+			BVlanPriority (number): The user priority of the Base VLAN tag.
+			BVlanTpId (number): The tag priority identifier for base VLAN.
+			BaseVid (number): The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
+			EctAlgorithmType (number): The type of SPB Equal Cost Tree (ECT) algorithm. The default value is 01-80-C2-01.
+			EnableAutoBmacEnabled (bool): If true, enables auto base MAC address.
+			EnableUseFlagBit (bool): If set to true, allows to use flag bit.
 
 		Returns:
 			self: This instance with matching spbBaseVidRange data retrieved from the server available through an iterator or index

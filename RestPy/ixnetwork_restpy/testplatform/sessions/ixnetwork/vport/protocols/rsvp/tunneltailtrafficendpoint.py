@@ -38,7 +38,7 @@ class TunnelTailTrafficEndPoint(Base):
 
 	@property
 	def EndPointType(self):
-		"""
+		"""Indicates the end point type. One of IPv4 or IPv6.
 
 		Returns:
 			str(ipv4|ipv6|17|18)
@@ -50,7 +50,7 @@ class TunnelTailTrafficEndPoint(Base):
 
 	@property
 	def IpCount(self):
-		"""
+		"""This indicates that the number of Destination IPs to which the traffic sent over the P2MP RSVP-TE tunnel is destined. The minimum and default value is 1.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class TunnelTailTrafficEndPoint(Base):
 
 	@property
 	def IpStart(self):
-		"""
+		"""The Start Destination IP Address for traffic that is sent over the P2MP RSVP-TE tunnel. Normally, this is an IPv4 or IPv6 Multicast address.
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class TunnelTailTrafficEndPoint(Base):
 		"""Adds a new tunnelTailTrafficEndPoint node on the server and retrieves it in this instance.
 
 		Args:
-			EndPointType (str(ipv4|ipv6|17|18)): 
-			IpCount (number): 
-			IpStart (str): 
+			EndPointType (str(ipv4|ipv6|17|18)): Indicates the end point type. One of IPv4 or IPv6.
+			IpCount (number): This indicates that the number of Destination IPs to which the traffic sent over the P2MP RSVP-TE tunnel is destined. The minimum and default value is 1.
+			IpStart (str): The Start Destination IP Address for traffic that is sent over the P2MP RSVP-TE tunnel. Normally, this is an IPv4 or IPv6 Multicast address.
 
 		Returns:
 			self: This instance with all currently retrieved tunnelTailTrafficEndPoint data using find and the newly added tunnelTailTrafficEndPoint data available through an iterator or index
@@ -104,9 +104,9 @@ class TunnelTailTrafficEndPoint(Base):
 		By default the find method takes no parameters and will retrieve all tunnelTailTrafficEndPoint data from the server.
 
 		Args:
-			EndPointType (str(ipv4|ipv6|17|18)): 
-			IpCount (number): 
-			IpStart (str): 
+			EndPointType (str(ipv4|ipv6|17|18)): Indicates the end point type. One of IPv4 or IPv6.
+			IpCount (number): This indicates that the number of Destination IPs to which the traffic sent over the P2MP RSVP-TE tunnel is destined. The minimum and default value is 1.
+			IpStart (str): The Start Destination IP Address for traffic that is sent over the P2MP RSVP-TE tunnel. Normally, this is an IPv4 or IPv6 Multicast address.
 
 		Returns:
 			self: This instance with matching tunnelTailTrafficEndPoint data retrieved from the server available through an iterator or index

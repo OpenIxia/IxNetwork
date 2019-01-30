@@ -52,7 +52,7 @@ class Device(Base):
 
 	@property
 	def CaCertificateFile(self):
-		"""
+		"""Indicates the Trusted Root certificate file for the device.
 
 		Returns:
 			str
@@ -61,7 +61,7 @@ class Device(Base):
 
 	@property
 	def CertificateFile(self):
-		"""
+		"""Indicates the certificate file for the device.
 
 		Returns:
 			str
@@ -70,7 +70,7 @@ class Device(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""A description of the device used to configure this protocol.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class Device(Base):
 
 	@property
 	def DeviceRole(self):
-		"""
+		"""Indicates the device role of the OpenFlow device.
 
 		Returns:
 			str(controller|switch)
@@ -94,7 +94,7 @@ class Device(Base):
 
 	@property
 	def EnableVersion100(self):
-		"""
+		"""Enables protocol version 1.0
 
 		Returns:
 			bool
@@ -106,7 +106,7 @@ class Device(Base):
 
 	@property
 	def EnableVersion131(self):
-		"""
+		"""Enables protocol version 1.3
 
 		Returns:
 			bool
@@ -118,7 +118,7 @@ class Device(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If set enables the open-flow device.
 
 		Returns:
 			bool
@@ -130,7 +130,7 @@ class Device(Base):
 
 	@property
 	def PrivateFile(self):
-		"""
+		"""Indicates the private key file for the device.
 
 		Returns:
 			str
@@ -139,7 +139,7 @@ class Device(Base):
 
 	@property
 	def Version(self):
-		"""
+		"""Indicates the current version of the Openflow protocol implemented.
 
 		Returns:
 			str(1.0.0)
@@ -153,12 +153,12 @@ class Device(Base):
 		"""Adds a new device node on the server and retrieves it in this instance.
 
 		Args:
-			Description (str): 
-			DeviceRole (str(controller|switch)): 
-			EnableVersion100 (bool): 
-			EnableVersion131 (bool): 
-			Enabled (bool): 
-			Version (str(1.0.0)): 
+			Description (str): A description of the device used to configure this protocol.
+			DeviceRole (str(controller|switch)): Indicates the device role of the OpenFlow device.
+			EnableVersion100 (bool): Enables protocol version 1.0
+			EnableVersion131 (bool): Enables protocol version 1.3
+			Enabled (bool): If set enables the open-flow device.
+			Version (str(1.0.0)): Indicates the current version of the Openflow protocol implemented.
 
 		Returns:
 			self: This instance with all currently retrieved device data using find and the newly added device data available through an iterator or index
@@ -184,15 +184,15 @@ class Device(Base):
 		By default the find method takes no parameters and will retrieve all device data from the server.
 
 		Args:
-			CaCertificateFile (str): 
-			CertificateFile (str): 
-			Description (str): 
-			DeviceRole (str(controller|switch)): 
-			EnableVersion100 (bool): 
-			EnableVersion131 (bool): 
-			Enabled (bool): 
-			PrivateFile (str): 
-			Version (str(1.0.0)): 
+			CaCertificateFile (str): Indicates the Trusted Root certificate file for the device.
+			CertificateFile (str): Indicates the certificate file for the device.
+			Description (str): A description of the device used to configure this protocol.
+			DeviceRole (str(controller|switch)): Indicates the device role of the OpenFlow device.
+			EnableVersion100 (bool): Enables protocol version 1.0
+			EnableVersion131 (bool): Enables protocol version 1.3
+			Enabled (bool): If set enables the open-flow device.
+			PrivateFile (str): Indicates the private key file for the device.
+			Version (str(1.0.0)): Indicates the current version of the Openflow protocol implemented.
 
 		Returns:
 			self: This instance with matching device data retrieved from the server available through an iterator or index
@@ -220,14 +220,16 @@ class Device(Base):
 	def AddTlsCertificates(self, Arg2, Arg3, Arg4):
 		"""Executes the addTlsCertificates operation on the server.
 
+		Exec to add TLS certificates.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=device)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (obj(ixnetwork_restpy.files.Files)): 
-			Arg3 (obj(ixnetwork_restpy.files.Files)): 
-			Arg4 (obj(ixnetwork_restpy.files.Files)): 
+			Arg2 (obj(ixnetwork_restpy.files.Files)): NOT DEFINED
+			Arg3 (obj(ixnetwork_restpy.files.Files)): NOT DEFINED
+			Arg4 (obj(ixnetwork_restpy.files.Files)): NOT DEFINED
 
 		Returns:
-			number: 
+			number: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

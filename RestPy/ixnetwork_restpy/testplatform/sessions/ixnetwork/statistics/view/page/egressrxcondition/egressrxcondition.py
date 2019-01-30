@@ -37,7 +37,7 @@ class EgressRxCondition(Base):
 
 	@property
 	def Operator(self):
-		"""
+		"""The logical operation to be performed.
 
 		Returns:
 			str(isBetween|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isSmaller)
@@ -49,7 +49,7 @@ class EgressRxCondition(Base):
 
 	@property
 	def Values(self):
-		"""
+		"""Value to be matched for the condition.
 
 		Returns:
 			list(number)

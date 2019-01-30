@@ -37,7 +37,7 @@ class Prbs(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables and fetches Pseudo-Random Bit Sequence (PRBS) statistics
 
 		Returns:
 			bool

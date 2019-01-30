@@ -52,7 +52,7 @@ class Bucket(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""A description of the bucket.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class Bucket(Base):
 
 	@property
 	def WatchGroup(self):
-		"""
+		"""A group whose state determines whether this bucket is live.
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class Bucket(Base):
 
 	@property
 	def WatchPort(self):
-		"""
+		"""A Port whose state determines whether this bucket is live.
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class Bucket(Base):
 
 	@property
 	def Weight(self):
-		"""
+		"""Specify the weight of buckets. The range allowed is 0-65535
 
 		Returns:
 			number
@@ -102,10 +102,10 @@ class Bucket(Base):
 		"""Adds a new bucket node on the server and retrieves it in this instance.
 
 		Args:
-			Description (str): 
-			WatchGroup (number): 
-			WatchPort (number): 
-			Weight (number): 
+			Description (str): A description of the bucket.
+			WatchGroup (number): A group whose state determines whether this bucket is live.
+			WatchPort (number): A Port whose state determines whether this bucket is live.
+			Weight (number): Specify the weight of buckets. The range allowed is 0-65535
 
 		Returns:
 			self: This instance with all currently retrieved bucket data using find and the newly added bucket data available through an iterator or index
@@ -131,10 +131,10 @@ class Bucket(Base):
 		By default the find method takes no parameters and will retrieve all bucket data from the server.
 
 		Args:
-			Description (str): 
-			WatchGroup (number): 
-			WatchPort (number): 
-			Weight (number): 
+			Description (str): A description of the bucket.
+			WatchGroup (number): A group whose state determines whether this bucket is live.
+			WatchPort (number): A Port whose state determines whether this bucket is live.
+			Weight (number): Specify the weight of buckets. The range allowed is 0-65535
 
 		Returns:
 			self: This instance with matching bucket data retrieved from the server available through an iterator or index

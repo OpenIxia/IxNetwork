@@ -38,7 +38,7 @@ class Layer23TrafficItemFilter(Base):
 
 	@property
 	def TrafficItemFilterIds(self):
-		"""
+		"""Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])
@@ -52,7 +52,7 @@ class Layer23TrafficItemFilter(Base):
 		"""Adds a new layer23TrafficItemFilter node on the server and retrieves it in this instance.
 
 		Args:
-			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): 
+			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
 			self: This instance with all currently retrieved layer23TrafficItemFilter data using find and the newly added layer23TrafficItemFilter data available through an iterator or index
@@ -78,7 +78,7 @@ class Layer23TrafficItemFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer23TrafficItemFilter data from the server.
 
 		Args:
-			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): 
+			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
 			self: This instance with matching layer23TrafficItemFilter data retrieved from the server available through an iterator or index

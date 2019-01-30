@@ -52,7 +52,7 @@ class UserDefinedAfiSafi(Base):
 
 	@property
 	def Afi(self):
-		"""
+		"""The 2 byte AFI value.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class UserDefinedAfiSafi(Base):
 
 	@property
 	def Safi(self):
-		"""
+		"""The 1 byte SAFI value.
 
 		Returns:
 			number
@@ -78,8 +78,8 @@ class UserDefinedAfiSafi(Base):
 		"""Adds a new userDefinedAfiSafi node on the server and retrieves it in this instance.
 
 		Args:
-			Afi (number): 
-			Safi (number): 
+			Afi (number): The 2 byte AFI value.
+			Safi (number): The 1 byte SAFI value.
 
 		Returns:
 			self: This instance with all currently retrieved userDefinedAfiSafi data using find and the newly added userDefinedAfiSafi data available through an iterator or index
@@ -105,8 +105,8 @@ class UserDefinedAfiSafi(Base):
 		By default the find method takes no parameters and will retrieve all userDefinedAfiSafi data from the server.
 
 		Args:
-			Afi (number): 
-			Safi (number): 
+			Afi (number): The 2 byte AFI value.
+			Safi (number): The 1 byte SAFI value.
 
 		Returns:
 			self: This instance with matching userDefinedAfiSafi data retrieved from the server available through an iterator or index

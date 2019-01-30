@@ -66,7 +66,7 @@ class Interface(Base):
 
 	@property
 	def AdvertiseNetworkRange(self):
-		"""
+		"""Enables the advertisement of the OSPF network range.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Interface(Base):
 
 	@property
 	def AreaId(self):
-		"""
+		"""The OSPF area ID associated with the interface.
 
 		Returns:
 			number
@@ -90,7 +90,7 @@ class Interface(Base):
 
 	@property
 	def AuthenticationMethods(self):
-		"""
+		"""The type of authentication to be used on this link interface.
 
 		Returns:
 			str(null|password|md5)
@@ -102,7 +102,7 @@ class Interface(Base):
 
 	@property
 	def AuthenticationPassword(self):
-		"""
+		"""Enter a clear-text 64-bit password. A password is configured at each end of the link. The password is inserted as is into the packet, and is compared upon receipt at the other end of the link. The received packet is dropped if the contained password does not match the configured password.
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class Interface(Base):
 
 	@property
 	def BBit(self):
-		"""
+		"""Indicates that this router is an Area Border Router (ABR).
 
 		Returns:
 			bool
@@ -126,7 +126,7 @@ class Interface(Base):
 
 	@property
 	def ConnectedToDut(self):
-		"""
+		"""Indicates that this OSPF interface is directly connected to the DUT.
 
 		Returns:
 			bool
@@ -138,7 +138,7 @@ class Interface(Base):
 
 	@property
 	def DeadInterval(self):
-		"""
+		"""The number of seconds allowed before declaring a silent router as being down.
 
 		Returns:
 			number
@@ -150,7 +150,7 @@ class Interface(Base):
 
 	@property
 	def EBit(self):
-		"""
+		"""External bit. Specifies how AS-external-LSAs are flooded.
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class Interface(Base):
 
 	@property
 	def EnableAdvertiseRouterLsaLoopback(self):
-		"""
+		"""If true, advertises the router's LSA loopback address. (default = false)
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class Interface(Base):
 
 	@property
 	def EnableBfdRegistration(self):
-		"""
+		"""Indicates if a BFD session is to be created to the OSPF peer IP address once the OSPF session is established. This allows OSPF to use BFD to maintain IPv4 connectivity the OSPF peer.
 
 		Returns:
 			bool
@@ -186,7 +186,7 @@ class Interface(Base):
 
 	@property
 	def EnableFastHello(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -198,7 +198,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the use of the simulated interface.
 
 		Returns:
 			bool
@@ -210,7 +210,7 @@ class Interface(Base):
 
 	@property
 	def EntryColumn(self):
-		"""
+		"""The column where the entry point router is located in the OSPFnetwork range grid.
 
 		Returns:
 			number
@@ -222,7 +222,7 @@ class Interface(Base):
 
 	@property
 	def EntryRow(self):
-		"""
+		"""The row where the entry point router is located in the OSPF network range grid.
 
 		Returns:
 			number
@@ -234,7 +234,7 @@ class Interface(Base):
 
 	@property
 	def HelloInterval(self):
-		"""
+		"""The number of seconds between Hello packets sent from an Ixia router. The Ixia state machine sends Hello packets at this interval for all of the defined interfaces.
 
 		Returns:
 			number
@@ -246,7 +246,7 @@ class Interface(Base):
 
 	@property
 	def HelloMultiplier(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -258,7 +258,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceIndex(self):
-		"""
+		"""The assigned protocol interface ID for this OSPF interface.
 
 		Returns:
 			number
@@ -270,7 +270,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceIpAddress(self):
-		"""
+		"""The IP address for this OSPF interface.
 
 		Returns:
 			str
@@ -282,7 +282,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceIpMaskAddress(self):
-		"""
+		"""The IP mask associated with the IP address for this interface. Only used if protocolInterfaceDescription is empty. (default = 255.255.255.0)
 
 		Returns:
 			str
@@ -294,7 +294,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceType(self):
-		"""
+		"""The type of interface to be selected for this OSPF interface.
 
 		Returns:
 			str
@@ -306,7 +306,7 @@ class Interface(Base):
 
 	@property
 	def Interfaces(self):
-		"""
+		"""The interfaces that are associated with the selected interface type.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)
@@ -318,7 +318,7 @@ class Interface(Base):
 
 	@property
 	def IsLearnedInfoRefreshed(self):
-		"""
+		"""If true, refreshes learned information automatically.
 
 		Returns:
 			bool
@@ -327,7 +327,7 @@ class Interface(Base):
 
 	@property
 	def LinkTypes(self):
-		"""
+		"""Indicates the type of network link for the interface.
 
 		Returns:
 			str(pointToPoint|transit|stub|virtual)
@@ -339,7 +339,7 @@ class Interface(Base):
 
 	@property
 	def Md5AuthenticationKey(self):
-		"""
+		"""If authenticationMethod is set to ospfInterfaceAuthenticationMD5, then this is MD5 key ID used for authentication. (default = 1)
 
 		Returns:
 			str
@@ -351,7 +351,7 @@ class Interface(Base):
 
 	@property
 	def Md5AuthenticationKeyId(self):
-		"""
+		"""A value to be used as a key ID associated with the MD5 key.
 
 		Returns:
 			number
@@ -363,7 +363,7 @@ class Interface(Base):
 
 	@property
 	def Metric(self):
-		"""
+		"""A user-assigned routing metric associated with the interface.
 
 		Returns:
 			number
@@ -375,7 +375,7 @@ class Interface(Base):
 
 	@property
 	def Mtu(self):
-		"""
+		"""The maximum transmission unit (MTU) that is allowed on this link.
 
 		Returns:
 			number
@@ -387,7 +387,7 @@ class Interface(Base):
 
 	@property
 	def NeighborIpAddress(self):
-		"""
+		"""If the link type is a point to point network, this is the address of the other end of the link.
 
 		Returns:
 			str
@@ -399,7 +399,7 @@ class Interface(Base):
 
 	@property
 	def NeighborRouterId(self):
-		"""
+		"""When the linkType option is set to ospfInterfaceLinkPointToPoint, then this option should be set to the ID of the router on the other end of the point-to-point connection. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -411,7 +411,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeIp(self):
-		"""
+		"""The IP address for the first OSPFv2 network to be advertised in the range.
 
 		Returns:
 			str
@@ -423,7 +423,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeIpByMask(self):
-		"""
+		"""The number of bits in the network mask used with the IP address of the first network, in creating a range of addresses.
 
 		Returns:
 			bool
@@ -435,7 +435,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeIpIncrementBy(self):
-		"""
+		"""The step size by which to automatically increment the IP addresses in the range.
 
 		Returns:
 			str
@@ -447,7 +447,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeIpMask(self):
-		"""
+		"""The number of bits in the network mask used with the IP address of the first network, in creating a range of addresses.
 
 		Returns:
 			number
@@ -459,7 +459,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeLinkType(self):
-		"""
+		"""The attribute for the network range link type.
 
 		Returns:
 			str(broadcast|pointToPoint)
@@ -471,7 +471,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeRouterId(self):
-		"""
+		"""The unique identifier for the network range router.
 
 		Returns:
 			str
@@ -483,7 +483,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeRouterIdIncrementBy(self):
-		"""
+		"""The step size by which to automatically increment the IP addresses in the range.
 
 		Returns:
 			str
@@ -495,7 +495,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeTeEnable(self):
-		"""
+		"""Enables network range TEs.
 
 		Returns:
 			bool
@@ -507,7 +507,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeTeMaxBandwidth(self):
-		"""
+		"""The maximum bandwidth for the network range TEs.
 
 		Returns:
 			number
@@ -519,7 +519,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeTeMetric(self):
-		"""
+		"""The metrics for network range TEs.
 
 		Returns:
 			number
@@ -531,7 +531,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeTeResMaxBandwidth(self):
-		"""
+		"""The maximum bandwidth for reserved network range TEs.
 
 		Returns:
 			number
@@ -543,7 +543,7 @@ class Interface(Base):
 
 	@property
 	def NetworkRangeTeUnreservedBwPriority(self):
-		"""
+		"""The maximum bandwidth for unreserved network range TEs.
 
 		Returns:
 			dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)
@@ -555,7 +555,7 @@ class Interface(Base):
 
 	@property
 	def NetworkType(self):
-		"""
+		"""The type of network attached to the link.
 
 		Returns:
 			str(pointToPoint|broadcast|pointToMultipoint)
@@ -567,7 +567,7 @@ class Interface(Base):
 
 	@property
 	def NoOfCols(self):
-		"""
+		"""The number of columns in a grid.
 
 		Returns:
 			number
@@ -579,7 +579,7 @@ class Interface(Base):
 
 	@property
 	def NoOfRows(self):
-		"""
+		"""The number or rows in a grid.
 
 		Returns:
 			number
@@ -591,7 +591,7 @@ class Interface(Base):
 
 	@property
 	def Options(self):
-		"""
+		"""Options related to the interface. Multiple options may be or'd together.
 
 		Returns:
 			number
@@ -603,7 +603,7 @@ class Interface(Base):
 
 	@property
 	def Priority(self):
-		"""
+		"""The priority of the interface, for use in election of the designated or backup master.
 
 		Returns:
 			number
@@ -615,7 +615,7 @@ class Interface(Base):
 
 	@property
 	def ProtocolInterface(self):
-		"""
+		"""The name of the defined interface entry from which IP address and mask are extracted for this interface.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -627,7 +627,7 @@ class Interface(Base):
 
 	@property
 	def ShowExternal(self):
-		"""
+		"""Enables the use of External routes on this interface.
 
 		Returns:
 			bool
@@ -639,7 +639,7 @@ class Interface(Base):
 
 	@property
 	def ShowNssa(self):
-		"""
+		"""Enables the use of Not So Stubby Area routes on this interface.
 
 		Returns:
 			bool
@@ -651,7 +651,7 @@ class Interface(Base):
 
 	@property
 	def TeAdminGroup(self):
-		"""
+		"""Assignment of traffic engineering administrative group numbers to the interface.
 
 		Returns:
 			str
@@ -663,7 +663,7 @@ class Interface(Base):
 
 	@property
 	def TeEnable(self):
-		"""
+		"""Enables the generation of the Traffic Engineering opaque LSA with the remainder of the options in this class.
 
 		Returns:
 			bool
@@ -675,7 +675,7 @@ class Interface(Base):
 
 	@property
 	def TeMaxBandwidth(self):
-		"""
+		"""The maximum bandwidth that can possibly be used on this link in this direction.
 
 		Returns:
 			number
@@ -687,7 +687,7 @@ class Interface(Base):
 
 	@property
 	def TeMetricLevel(self):
-		"""
+		"""The user-assigned link metric for traffic engineering.
 
 		Returns:
 			number
@@ -699,7 +699,7 @@ class Interface(Base):
 
 	@property
 	def TeResMaxBandwidth(self):
-		"""
+		"""If enableTrafficEngineering is 1, then this indicates the maximum bandwidth, in bytes per second, that can be reserved on the link between this interface and its neighbors in the outbound direction. (default = 0.0)
 
 		Returns:
 			number
@@ -711,7 +711,7 @@ class Interface(Base):
 
 	@property
 	def TeUnreservedBwPriority(self):
-		"""
+		"""The amount of bandwidth not yet reserved at each of the eight priority levels.
 
 		Returns:
 			dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)
@@ -723,7 +723,7 @@ class Interface(Base):
 
 	@property
 	def ValidateReceivedMtuSize(self):
-		"""
+		"""If enabled (the default setting), the MTU will be verified during the Database (DB) exchange. If disabled, the advertised MTU size is set to 0, and the received MTU size is ignored during the DB exchange. NOTE: This option is only available for OSPFv2 interfaces that are directly connected to the DUT.
 
 		Returns:
 			bool
@@ -737,61 +737,61 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			AdvertiseNetworkRange (bool): 
-			AreaId (number): 
-			AuthenticationMethods (str(null|password|md5)): 
-			AuthenticationPassword (str): 
-			BBit (bool): 
-			ConnectedToDut (bool): 
-			DeadInterval (number): 
-			EBit (bool): 
-			EnableAdvertiseRouterLsaLoopback (bool): 
-			EnableBfdRegistration (bool): 
-			EnableFastHello (bool): 
-			Enabled (bool): 
-			EntryColumn (number): 
-			EntryRow (number): 
-			HelloInterval (number): 
-			HelloMultiplier (number): 
-			InterfaceIndex (number): 
-			InterfaceIpAddress (str): 
-			InterfaceIpMaskAddress (str): 
-			InterfaceType (str): 
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): 
-			LinkTypes (str(pointToPoint|transit|stub|virtual)): 
-			Md5AuthenticationKey (str): 
-			Md5AuthenticationKeyId (number): 
-			Metric (number): 
-			Mtu (number): 
-			NeighborIpAddress (str): 
-			NeighborRouterId (str): 
-			NetworkRangeIp (str): 
-			NetworkRangeIpByMask (bool): 
-			NetworkRangeIpIncrementBy (str): 
-			NetworkRangeIpMask (number): 
-			NetworkRangeLinkType (str(broadcast|pointToPoint)): 
-			NetworkRangeRouterId (str): 
-			NetworkRangeRouterIdIncrementBy (str): 
-			NetworkRangeTeEnable (bool): 
-			NetworkRangeTeMaxBandwidth (number): 
-			NetworkRangeTeMetric (number): 
-			NetworkRangeTeResMaxBandwidth (number): 
-			NetworkRangeTeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): 
-			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): 
-			NoOfCols (number): 
-			NoOfRows (number): 
-			Options (number): 
-			Priority (number): 
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			ShowExternal (bool): 
-			ShowNssa (bool): 
-			TeAdminGroup (str): 
-			TeEnable (bool): 
-			TeMaxBandwidth (number): 
-			TeMetricLevel (number): 
-			TeResMaxBandwidth (number): 
-			TeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): 
-			ValidateReceivedMtuSize (bool): 
+			AdvertiseNetworkRange (bool): Enables the advertisement of the OSPF network range.
+			AreaId (number): The OSPF area ID associated with the interface.
+			AuthenticationMethods (str(null|password|md5)): The type of authentication to be used on this link interface.
+			AuthenticationPassword (str): Enter a clear-text 64-bit password. A password is configured at each end of the link. The password is inserted as is into the packet, and is compared upon receipt at the other end of the link. The received packet is dropped if the contained password does not match the configured password.
+			BBit (bool): Indicates that this router is an Area Border Router (ABR).
+			ConnectedToDut (bool): Indicates that this OSPF interface is directly connected to the DUT.
+			DeadInterval (number): The number of seconds allowed before declaring a silent router as being down.
+			EBit (bool): External bit. Specifies how AS-external-LSAs are flooded.
+			EnableAdvertiseRouterLsaLoopback (bool): If true, advertises the router's LSA loopback address. (default = false)
+			EnableBfdRegistration (bool): Indicates if a BFD session is to be created to the OSPF peer IP address once the OSPF session is established. This allows OSPF to use BFD to maintain IPv4 connectivity the OSPF peer.
+			EnableFastHello (bool): NOT DEFINED
+			Enabled (bool): Enables the use of the simulated interface.
+			EntryColumn (number): The column where the entry point router is located in the OSPFnetwork range grid.
+			EntryRow (number): The row where the entry point router is located in the OSPF network range grid.
+			HelloInterval (number): The number of seconds between Hello packets sent from an Ixia router. The Ixia state machine sends Hello packets at this interval for all of the defined interfaces.
+			HelloMultiplier (number): NOT DEFINED
+			InterfaceIndex (number): The assigned protocol interface ID for this OSPF interface.
+			InterfaceIpAddress (str): The IP address for this OSPF interface.
+			InterfaceIpMaskAddress (str): The IP mask associated with the IP address for this interface. Only used if protocolInterfaceDescription is empty. (default = 255.255.255.0)
+			InterfaceType (str): The type of interface to be selected for this OSPF interface.
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): The interfaces that are associated with the selected interface type.
+			LinkTypes (str(pointToPoint|transit|stub|virtual)): Indicates the type of network link for the interface.
+			Md5AuthenticationKey (str): If authenticationMethod is set to ospfInterfaceAuthenticationMD5, then this is MD5 key ID used for authentication. (default = 1)
+			Md5AuthenticationKeyId (number): A value to be used as a key ID associated with the MD5 key.
+			Metric (number): A user-assigned routing metric associated with the interface.
+			Mtu (number): The maximum transmission unit (MTU) that is allowed on this link.
+			NeighborIpAddress (str): If the link type is a point to point network, this is the address of the other end of the link.
+			NeighborRouterId (str): When the linkType option is set to ospfInterfaceLinkPointToPoint, then this option should be set to the ID of the router on the other end of the point-to-point connection. (default = 0.0.0.0)
+			NetworkRangeIp (str): The IP address for the first OSPFv2 network to be advertised in the range.
+			NetworkRangeIpByMask (bool): The number of bits in the network mask used with the IP address of the first network, in creating a range of addresses.
+			NetworkRangeIpIncrementBy (str): The step size by which to automatically increment the IP addresses in the range.
+			NetworkRangeIpMask (number): The number of bits in the network mask used with the IP address of the first network, in creating a range of addresses.
+			NetworkRangeLinkType (str(broadcast|pointToPoint)): The attribute for the network range link type.
+			NetworkRangeRouterId (str): The unique identifier for the network range router.
+			NetworkRangeRouterIdIncrementBy (str): The step size by which to automatically increment the IP addresses in the range.
+			NetworkRangeTeEnable (bool): Enables network range TEs.
+			NetworkRangeTeMaxBandwidth (number): The maximum bandwidth for the network range TEs.
+			NetworkRangeTeMetric (number): The metrics for network range TEs.
+			NetworkRangeTeResMaxBandwidth (number): The maximum bandwidth for reserved network range TEs.
+			NetworkRangeTeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): The maximum bandwidth for unreserved network range TEs.
+			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): The type of network attached to the link.
+			NoOfCols (number): The number of columns in a grid.
+			NoOfRows (number): The number or rows in a grid.
+			Options (number): Options related to the interface. Multiple options may be or'd together.
+			Priority (number): The priority of the interface, for use in election of the designated or backup master.
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The name of the defined interface entry from which IP address and mask are extracted for this interface.
+			ShowExternal (bool): Enables the use of External routes on this interface.
+			ShowNssa (bool): Enables the use of Not So Stubby Area routes on this interface.
+			TeAdminGroup (str): Assignment of traffic engineering administrative group numbers to the interface.
+			TeEnable (bool): Enables the generation of the Traffic Engineering opaque LSA with the remainder of the options in this class.
+			TeMaxBandwidth (number): The maximum bandwidth that can possibly be used on this link in this direction.
+			TeMetricLevel (number): The user-assigned link metric for traffic engineering.
+			TeResMaxBandwidth (number): If enableTrafficEngineering is 1, then this indicates the maximum bandwidth, in bytes per second, that can be reserved on the link between this interface and its neighbors in the outbound direction. (default = 0.0)
+			TeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): The amount of bandwidth not yet reserved at each of the eight priority levels.
+			ValidateReceivedMtuSize (bool): If enabled (the default setting), the MTU will be verified during the Database (DB) exchange. If disabled, the advertised MTU size is set to 0, and the received MTU size is ignored during the DB exchange. NOTE: This option is only available for OSPFv2 interfaces that are directly connected to the DUT.
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -817,62 +817,62 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			AdvertiseNetworkRange (bool): 
-			AreaId (number): 
-			AuthenticationMethods (str(null|password|md5)): 
-			AuthenticationPassword (str): 
-			BBit (bool): 
-			ConnectedToDut (bool): 
-			DeadInterval (number): 
-			EBit (bool): 
-			EnableAdvertiseRouterLsaLoopback (bool): 
-			EnableBfdRegistration (bool): 
-			EnableFastHello (bool): 
-			Enabled (bool): 
-			EntryColumn (number): 
-			EntryRow (number): 
-			HelloInterval (number): 
-			HelloMultiplier (number): 
-			InterfaceIndex (number): 
-			InterfaceIpAddress (str): 
-			InterfaceIpMaskAddress (str): 
-			InterfaceType (str): 
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): 
-			IsLearnedInfoRefreshed (bool): 
-			LinkTypes (str(pointToPoint|transit|stub|virtual)): 
-			Md5AuthenticationKey (str): 
-			Md5AuthenticationKeyId (number): 
-			Metric (number): 
-			Mtu (number): 
-			NeighborIpAddress (str): 
-			NeighborRouterId (str): 
-			NetworkRangeIp (str): 
-			NetworkRangeIpByMask (bool): 
-			NetworkRangeIpIncrementBy (str): 
-			NetworkRangeIpMask (number): 
-			NetworkRangeLinkType (str(broadcast|pointToPoint)): 
-			NetworkRangeRouterId (str): 
-			NetworkRangeRouterIdIncrementBy (str): 
-			NetworkRangeTeEnable (bool): 
-			NetworkRangeTeMaxBandwidth (number): 
-			NetworkRangeTeMetric (number): 
-			NetworkRangeTeResMaxBandwidth (number): 
-			NetworkRangeTeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): 
-			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): 
-			NoOfCols (number): 
-			NoOfRows (number): 
-			Options (number): 
-			Priority (number): 
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			ShowExternal (bool): 
-			ShowNssa (bool): 
-			TeAdminGroup (str): 
-			TeEnable (bool): 
-			TeMaxBandwidth (number): 
-			TeMetricLevel (number): 
-			TeResMaxBandwidth (number): 
-			TeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): 
-			ValidateReceivedMtuSize (bool): 
+			AdvertiseNetworkRange (bool): Enables the advertisement of the OSPF network range.
+			AreaId (number): The OSPF area ID associated with the interface.
+			AuthenticationMethods (str(null|password|md5)): The type of authentication to be used on this link interface.
+			AuthenticationPassword (str): Enter a clear-text 64-bit password. A password is configured at each end of the link. The password is inserted as is into the packet, and is compared upon receipt at the other end of the link. The received packet is dropped if the contained password does not match the configured password.
+			BBit (bool): Indicates that this router is an Area Border Router (ABR).
+			ConnectedToDut (bool): Indicates that this OSPF interface is directly connected to the DUT.
+			DeadInterval (number): The number of seconds allowed before declaring a silent router as being down.
+			EBit (bool): External bit. Specifies how AS-external-LSAs are flooded.
+			EnableAdvertiseRouterLsaLoopback (bool): If true, advertises the router's LSA loopback address. (default = false)
+			EnableBfdRegistration (bool): Indicates if a BFD session is to be created to the OSPF peer IP address once the OSPF session is established. This allows OSPF to use BFD to maintain IPv4 connectivity the OSPF peer.
+			EnableFastHello (bool): NOT DEFINED
+			Enabled (bool): Enables the use of the simulated interface.
+			EntryColumn (number): The column where the entry point router is located in the OSPFnetwork range grid.
+			EntryRow (number): The row where the entry point router is located in the OSPF network range grid.
+			HelloInterval (number): The number of seconds between Hello packets sent from an Ixia router. The Ixia state machine sends Hello packets at this interval for all of the defined interfaces.
+			HelloMultiplier (number): NOT DEFINED
+			InterfaceIndex (number): The assigned protocol interface ID for this OSPF interface.
+			InterfaceIpAddress (str): The IP address for this OSPF interface.
+			InterfaceIpMaskAddress (str): The IP mask associated with the IP address for this interface. Only used if protocolInterfaceDescription is empty. (default = 255.255.255.0)
+			InterfaceType (str): The type of interface to be selected for this OSPF interface.
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): The interfaces that are associated with the selected interface type.
+			IsLearnedInfoRefreshed (bool): If true, refreshes learned information automatically.
+			LinkTypes (str(pointToPoint|transit|stub|virtual)): Indicates the type of network link for the interface.
+			Md5AuthenticationKey (str): If authenticationMethod is set to ospfInterfaceAuthenticationMD5, then this is MD5 key ID used for authentication. (default = 1)
+			Md5AuthenticationKeyId (number): A value to be used as a key ID associated with the MD5 key.
+			Metric (number): A user-assigned routing metric associated with the interface.
+			Mtu (number): The maximum transmission unit (MTU) that is allowed on this link.
+			NeighborIpAddress (str): If the link type is a point to point network, this is the address of the other end of the link.
+			NeighborRouterId (str): When the linkType option is set to ospfInterfaceLinkPointToPoint, then this option should be set to the ID of the router on the other end of the point-to-point connection. (default = 0.0.0.0)
+			NetworkRangeIp (str): The IP address for the first OSPFv2 network to be advertised in the range.
+			NetworkRangeIpByMask (bool): The number of bits in the network mask used with the IP address of the first network, in creating a range of addresses.
+			NetworkRangeIpIncrementBy (str): The step size by which to automatically increment the IP addresses in the range.
+			NetworkRangeIpMask (number): The number of bits in the network mask used with the IP address of the first network, in creating a range of addresses.
+			NetworkRangeLinkType (str(broadcast|pointToPoint)): The attribute for the network range link type.
+			NetworkRangeRouterId (str): The unique identifier for the network range router.
+			NetworkRangeRouterIdIncrementBy (str): The step size by which to automatically increment the IP addresses in the range.
+			NetworkRangeTeEnable (bool): Enables network range TEs.
+			NetworkRangeTeMaxBandwidth (number): The maximum bandwidth for the network range TEs.
+			NetworkRangeTeMetric (number): The metrics for network range TEs.
+			NetworkRangeTeResMaxBandwidth (number): The maximum bandwidth for reserved network range TEs.
+			NetworkRangeTeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): The maximum bandwidth for unreserved network range TEs.
+			NetworkType (str(pointToPoint|broadcast|pointToMultipoint)): The type of network attached to the link.
+			NoOfCols (number): The number of columns in a grid.
+			NoOfRows (number): The number or rows in a grid.
+			Options (number): Options related to the interface. Multiple options may be or'd together.
+			Priority (number): The priority of the interface, for use in election of the designated or backup master.
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The name of the defined interface entry from which IP address and mask are extracted for this interface.
+			ShowExternal (bool): Enables the use of External routes on this interface.
+			ShowNssa (bool): Enables the use of Not So Stubby Area routes on this interface.
+			TeAdminGroup (str): Assignment of traffic engineering administrative group numbers to the interface.
+			TeEnable (bool): Enables the generation of the Traffic Engineering opaque LSA with the remainder of the options in this class.
+			TeMaxBandwidth (number): The maximum bandwidth that can possibly be used on this link in this direction.
+			TeMetricLevel (number): The user-assigned link metric for traffic engineering.
+			TeResMaxBandwidth (number): If enableTrafficEngineering is 1, then this indicates the maximum bandwidth, in bytes per second, that can be reserved on the link between this interface and its neighbors in the outbound direction. (default = 0.0)
+			TeUnreservedBwPriority (dict(arg1:number,arg2:number,arg3:number,arg4:number,arg5:number,arg6:number,arg7:number,arg8:number)): The amount of bandwidth not yet reserved at each of the eight priority levels.
+			ValidateReceivedMtuSize (bool): If enabled (the default setting), the MTU will be verified during the Database (DB) exchange. If disabled, the advertised MTU size is set to 0, and the received MTU size is ignored during the DB exchange. NOTE: This option is only available for OSPFv2 interfaces that are directly connected to the DUT.
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index
@@ -900,11 +900,13 @@ class Interface(Base):
 	def GetInterfaceAccessorIfaceList(self):
 		"""Executes the getInterfaceAccessorIfaceList operation on the server.
 
+		Fetches interfaces accessor Iface list.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: 
+			str: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -916,11 +918,13 @@ class Interface(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
+		A list of objects on which this exec can be used. This exec requires an object reference as an argument.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

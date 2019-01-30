@@ -37,7 +37,7 @@ class EthernetTagInfo(Base):
 
 	@property
 	def EsiLabel(self):
-		"""
+		"""(Read Only) ESI label learned.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class EthernetTagInfo(Base):
 
 	@property
 	def EthernetTag(self):
-		"""
+		"""(Read Only) Ethernet Tag id in hex format.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class EthernetTagInfo(Base):
 
 	@property
 	def Labels(self):
-		"""
+		"""(Read Only) Per EVI/EthernetTag A-D label learned for an EVI or an Ethernet Tag.
 
 		Returns:
 			str
@@ -69,9 +69,9 @@ class EthernetTagInfo(Base):
 		By default the find method takes no parameters and will retrieve all ethernetTagInfo data from the server.
 
 		Args:
-			EsiLabel (str): 
-			EthernetTag (str): 
-			Labels (str): 
+			EsiLabel (str): (Read Only) ESI label learned.
+			EthernetTag (str): (Read Only) Ethernet Tag id in hex format.
+			Labels (str): (Read Only) Per EVI/EthernetTag A-D label learned for an EVI or an Ethernet Tag.
 
 		Returns:
 			self: This instance with matching ethernetTagInfo data retrieved from the server available through an iterator or index

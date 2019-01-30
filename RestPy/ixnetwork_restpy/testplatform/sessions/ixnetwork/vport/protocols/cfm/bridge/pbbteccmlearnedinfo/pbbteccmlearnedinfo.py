@@ -37,7 +37,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""
+		"""(read only) The VLAN identifier for the CCM message.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def CciInterval(self):
-		"""
+		"""(read only) The continuity check message interval, in seconds.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ErrCcmDefect(self):
-		"""
+		"""(read only) If true, CCM defect errors have been detected.
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ErrCcmDefectCount(self):
-		"""
+		"""(read only) The number of CCM defect errors received.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def IfaceTlvDefectCount(self):
-		"""
+		"""(read only) The number of interface TLV defects received.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The MD level for the CCM message.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def MdName(self):
-		"""
+		"""(read only) The MD name for the CCM message.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def MdNameFormat(self):
-		"""
+		"""(read only) The MD name format for the CCM message.
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def OutOfSequenceCcmCount(self):
-		"""
+		"""(read only) The number of out of sequence CCM messages received.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def PortTlvDefectCount(self):
-		"""
+		"""(read only) The number of port TLV defect errors received.
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RdiRxCount(self):
-		"""
+		"""(read only) The rdi rx count.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RdiRxState(self):
-		"""
+		"""(read only) The rdi rx state.
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RdiTxCount(self):
-		"""
+		"""(read only) The rdi tx count.
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RdiTxState(self):
-		"""
+		"""(read only) The rdi tx state.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ReceivedIfaceTlvDefect(self):
-		"""
+		"""(read only) If true, interface TLV defect errors have been received.
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ReceivedPortTlvDefect(self):
-		"""
+		"""(read only) If true, port TLV defect errors have been received.
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ReceivedRdi(self):
-		"""
+		"""(read only) If true, RDI defect error messages have been receved.
 
 		Returns:
 			bool
@@ -190,7 +190,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RemoteMacAddress(self):
-		"""
+		"""(read only) The remote MAC address for the CCM message.
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RemoteMepDefectCount(self):
-		"""
+		"""(read only) The number of RMEP defect errors received.
 
 		Returns:
 			number
@@ -208,7 +208,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RemoteMepId(self):
-		"""
+		"""(read only) The RMEP identifier for the CCM.
 
 		Returns:
 			str
@@ -217,7 +217,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def RmepCcmDefect(self):
-		"""
+		"""(read only) If true, RMEP CCM defect errors have been received.
 
 		Returns:
 			bool
@@ -226,7 +226,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ShortMaName(self):
-		"""
+		"""(read only) The Short MA name for the CCM.
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def ShortMaNameFormat(self):
-		"""
+		"""(read only) The Short MA name format for the CCM.
 
 		Returns:
 			number
@@ -244,7 +244,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The source MAC address for the CCM.
 
 		Returns:
 			str
@@ -253,7 +253,7 @@ class PbbTeCcmLearnedInfo(Base):
 
 	@property
 	def SrcMepId(self):
-		"""
+		"""(read only) The source MEP identifier for the CCM.
 
 		Returns:
 			number
@@ -267,31 +267,31 @@ class PbbTeCcmLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pbbTeCcmLearnedInfo data from the server.
 
 		Args:
-			BVlan (str): 
-			CciInterval (str): 
-			ErrCcmDefect (bool): 
-			ErrCcmDefectCount (number): 
-			IfaceTlvDefectCount (number): 
-			MdLevel (number): 
-			MdName (str): 
-			MdNameFormat (number): 
-			OutOfSequenceCcmCount (number): 
-			PortTlvDefectCount (number): 
-			RdiRxCount (number): 
-			RdiRxState (str): 
-			RdiTxCount (number): 
-			RdiTxState (str): 
-			ReceivedIfaceTlvDefect (bool): 
-			ReceivedPortTlvDefect (bool): 
-			ReceivedRdi (bool): 
-			RemoteMacAddress (str): 
-			RemoteMepDefectCount (number): 
-			RemoteMepId (str): 
-			RmepCcmDefect (bool): 
-			ShortMaName (str): 
-			ShortMaNameFormat (number): 
-			SrcMacAddress (str): 
-			SrcMepId (number): 
+			BVlan (str): (read only) The VLAN identifier for the CCM message.
+			CciInterval (str): (read only) The continuity check message interval, in seconds.
+			ErrCcmDefect (bool): (read only) If true, CCM defect errors have been detected.
+			ErrCcmDefectCount (number): (read only) The number of CCM defect errors received.
+			IfaceTlvDefectCount (number): (read only) The number of interface TLV defects received.
+			MdLevel (number): (read only) The MD level for the CCM message.
+			MdName (str): (read only) The MD name for the CCM message.
+			MdNameFormat (number): (read only) The MD name format for the CCM message.
+			OutOfSequenceCcmCount (number): (read only) The number of out of sequence CCM messages received.
+			PortTlvDefectCount (number): (read only) The number of port TLV defect errors received.
+			RdiRxCount (number): (read only) The rdi rx count.
+			RdiRxState (str): (read only) The rdi rx state.
+			RdiTxCount (number): (read only) The rdi tx count.
+			RdiTxState (str): (read only) The rdi tx state.
+			ReceivedIfaceTlvDefect (bool): (read only) If true, interface TLV defect errors have been received.
+			ReceivedPortTlvDefect (bool): (read only) If true, port TLV defect errors have been received.
+			ReceivedRdi (bool): (read only) If true, RDI defect error messages have been receved.
+			RemoteMacAddress (str): (read only) The remote MAC address for the CCM message.
+			RemoteMepDefectCount (number): (read only) The number of RMEP defect errors received.
+			RemoteMepId (str): (read only) The RMEP identifier for the CCM.
+			RmepCcmDefect (bool): (read only) If true, RMEP CCM defect errors have been received.
+			ShortMaName (str): (read only) The Short MA name for the CCM.
+			ShortMaNameFormat (number): (read only) The Short MA name format for the CCM.
+			SrcMacAddress (str): (read only) The source MAC address for the CCM.
+			SrcMepId (number): (read only) The source MEP identifier for the CCM.
 
 		Returns:
 			self: This instance with matching pbbTeCcmLearnedInfo data retrieved from the server available through an iterator or index

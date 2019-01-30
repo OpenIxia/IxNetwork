@@ -38,7 +38,7 @@ class Source(Base):
 
 	@property
 	def SourceRangeCount(self):
-		"""
+		"""The number of IP addresses in the source range.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class Source(Base):
 
 	@property
 	def SourceRangeStart(self):
-		"""
+		"""The first IP address in the source range.
 
 		Returns:
 			str
@@ -64,8 +64,8 @@ class Source(Base):
 		"""Adds a new source node on the server and retrieves it in this instance.
 
 		Args:
-			SourceRangeCount (number): 
-			SourceRangeStart (str): 
+			SourceRangeCount (number): The number of IP addresses in the source range.
+			SourceRangeStart (str): The first IP address in the source range.
 
 		Returns:
 			self: This instance with all currently retrieved source data using find and the newly added source data available through an iterator or index
@@ -91,8 +91,8 @@ class Source(Base):
 		By default the find method takes no parameters and will retrieve all source data from the server.
 
 		Args:
-			SourceRangeCount (number): 
-			SourceRangeStart (str): 
+			SourceRangeCount (number): The number of IP addresses in the source range.
+			SourceRangeStart (str): The first IP address in the source range.
 
 		Returns:
 			self: This instance with matching source data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class Config(Base):
 
 	@property
 	def NoFlood(self):
-		"""
+		"""Indicates that the port is not included when flooding.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Config(Base):
 
 	@property
 	def NoForward(self):
-		"""
+		"""Indicates that the port drop all packets forwarded to it.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Config(Base):
 
 	@property
 	def NoPacketIn(self):
-		"""
+		"""Indicates that the port does not send packet-in messages.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Config(Base):
 
 	@property
 	def NoReceive(self):
-		"""
+		"""Indicates that the port drops all packets except 802.1D spanning tree packets.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class Config(Base):
 
 	@property
 	def NoReceiveStp(self):
-		"""
+		"""Indicates that the port drops received 802.1D STP packets.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class Config(Base):
 
 	@property
 	def NoStp(self):
-		"""
+		"""Indicates that 802.1D spanning tree on port is disable.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Config(Base):
 
 	@property
 	def PortDown(self):
-		"""
+		"""Indicates that the port is administratively down.
 
 		Returns:
 			bool

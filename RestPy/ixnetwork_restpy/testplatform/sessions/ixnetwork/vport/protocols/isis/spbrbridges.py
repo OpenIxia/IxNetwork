@@ -37,7 +37,7 @@ class SpbRbridges(Base):
 
 	@property
 	def Age(self):
-		"""
+		"""(read only) This indicates the age in time in seconds, since it was last refreshed.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class SpbRbridges(Base):
 
 	@property
 	def AuxillaryMcidConfigName(self):
-		"""
+		"""The auxiliary MCID configuration name.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class SpbRbridges(Base):
 
 	@property
 	def BaseVid(self):
-		"""
+		"""The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class SpbRbridges(Base):
 
 	@property
 	def BridgeMacAddress(self):
-		"""
+		"""The 6-byte MAC address assigned to this bridge. Part of the bridge identifier (bridge ID).
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class SpbRbridges(Base):
 
 	@property
 	def BridgePriority(self):
-		"""
+		"""The Bridge Priority for this bridge.The valid range is 0 to 61,440, in multiples of 4,096. (default = 32,768).
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class SpbRbridges(Base):
 
 	@property
 	def EctAlgorithm(self):
-		"""
+		"""The SPB Equal Cost Tree (ECT) algorithm. The default algorithm is 01-80-C2-01.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class SpbRbridges(Base):
 
 	@property
 	def HostName(self):
-		"""
+		"""(read only) The host name as retrieved from the related packets.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SpbRbridges(Base):
 
 	@property
 	def IsId(self):
-		"""
+		"""The I-component service identifier. The maximum value is 16777215. The minimum value is 0.
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class SpbRbridges(Base):
 
 	@property
 	def LinkMetric(self):
-		"""
+		"""The LSP metric related to the network. The default value is 10. The maximum value is 16777215. The minimum value is 0.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class SpbRbridges(Base):
 
 	@property
 	def MBit(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -127,7 +127,7 @@ class SpbRbridges(Base):
 
 	@property
 	def McidConfigName(self):
-		"""
+		"""The MCID configuration name.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class SpbRbridges(Base):
 
 	@property
 	def RBit(self):
-		"""
+		"""The Restart State bit.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class SpbRbridges(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""
+		"""(read only) This indicates the sequence number of the LSP containing the route.
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class SpbRbridges(Base):
 
 	@property
 	def SystemId(self):
-		"""
+		"""(read only) This indicates the ISIS System ID.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class SpbRbridges(Base):
 
 	@property
 	def TBit(self):
-		"""
+		"""The external route tag bit.
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class SpbRbridges(Base):
 
 	@property
 	def UseFlagBit(self):
-		"""
+		"""Allows to use flag bit.
 
 		Returns:
 			bool
@@ -186,22 +186,22 @@ class SpbRbridges(Base):
 		By default the find method takes no parameters and will retrieve all spbRbridges data from the server.
 
 		Args:
-			Age (number): 
-			AuxillaryMcidConfigName (str): 
-			BaseVid (number): 
-			BridgeMacAddress (str): 
-			BridgePriority (number): 
-			EctAlgorithm (number): 
-			HostName (str): 
-			IsId (number): 
-			LinkMetric (number): 
-			MBit (bool): 
-			McidConfigName (str): 
-			RBit (bool): 
-			SequenceNumber (number): 
-			SystemId (str): 
-			TBit (bool): 
-			UseFlagBit (bool): 
+			Age (number): (read only) This indicates the age in time in seconds, since it was last refreshed.
+			AuxillaryMcidConfigName (str): The auxiliary MCID configuration name.
+			BaseVid (number): The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
+			BridgeMacAddress (str): The 6-byte MAC address assigned to this bridge. Part of the bridge identifier (bridge ID).
+			BridgePriority (number): The Bridge Priority for this bridge.The valid range is 0 to 61,440, in multiples of 4,096. (default = 32,768).
+			EctAlgorithm (number): The SPB Equal Cost Tree (ECT) algorithm. The default algorithm is 01-80-C2-01.
+			HostName (str): (read only) The host name as retrieved from the related packets.
+			IsId (number): The I-component service identifier. The maximum value is 16777215. The minimum value is 0.
+			LinkMetric (number): The LSP metric related to the network. The default value is 10. The maximum value is 16777215. The minimum value is 0.
+			MBit (bool): NOT DEFINED
+			McidConfigName (str): The MCID configuration name.
+			RBit (bool): The Restart State bit.
+			SequenceNumber (number): (read only) This indicates the sequence number of the LSP containing the route.
+			SystemId (str): (read only) This indicates the ISIS System ID.
+			TBit (bool): The external route tag bit.
+			UseFlagBit (bool): Allows to use flag bit.
 
 		Returns:
 			self: This instance with matching spbRbridges data retrieved from the server available through an iterator or index

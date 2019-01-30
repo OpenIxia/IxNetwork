@@ -38,7 +38,7 @@ class Layer23ProtocolRoutingFilter(Base):
 
 	@property
 	def PortFilterIds(self):
-		"""
+		"""Ports that have been filtered.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])
@@ -50,7 +50,7 @@ class Layer23ProtocolRoutingFilter(Base):
 
 	@property
 	def ProtocolFilterIds(self):
-		"""
+		"""Protocols that have been filtered.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])
@@ -64,8 +64,8 @@ class Layer23ProtocolRoutingFilter(Base):
 		"""Adds a new layer23ProtocolRoutingFilter node on the server and retrieves it in this instance.
 
 		Args:
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
-			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): 
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Ports that have been filtered.
+			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): Protocols that have been filtered.
 
 		Returns:
 			self: This instance with all currently retrieved layer23ProtocolRoutingFilter data using find and the newly added layer23ProtocolRoutingFilter data available through an iterator or index
@@ -91,8 +91,8 @@ class Layer23ProtocolRoutingFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer23ProtocolRoutingFilter data from the server.
 
 		Args:
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
-			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): 
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Ports that have been filtered.
+			ProtocolFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableProtocolFilter])): Protocols that have been filtered.
 
 		Returns:
 			self: This instance with matching layer23ProtocolRoutingFilter data retrieved from the server available through an iterator or index

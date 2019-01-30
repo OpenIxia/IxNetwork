@@ -80,7 +80,7 @@ class EthernetSegments(Base):
 
 	@property
 	def AutoConfigureEsImport(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -92,7 +92,7 @@ class EthernetSegments(Base):
 
 	@property
 	def BMacPrefix(self):
-		"""
+		"""B-MAC address as a prefix where the MAC address length field is set to the length of the prefix. This provides the ability to aggregate MAC addresses if the deployment environment supports that. By default a unique B-MAC is constructed per ethernet segment. it can be changed to any value but multicast and broadcast addresses are not used.
 
 		Returns:
 			str
@@ -104,7 +104,7 @@ class EthernetSegments(Base):
 
 	@property
 	def BMacPrefixLength(self):
-		"""
+		"""The MAC address length field is typically set to 48. However this length value can be changed to specify the MAC address as a prefix; in which case, the MAC address length field is set to the length of the prefix. This provides the ability to aggregate MAC addresses if the deployment environment supports that. Default value is 48. Minimum value is 0 and maximum value is 48.
 
 		Returns:
 			number
@@ -116,7 +116,7 @@ class EthernetSegments(Base):
 
 	@property
 	def DfElectionMethod(self):
-		"""
+		"""This is a read only field. user can not change the value of this field. This is just to show that IxNetwork is using Service Carving method for DF election.
 
 		Returns:
 			str(serviceCarving)
@@ -128,7 +128,7 @@ class EthernetSegments(Base):
 
 	@property
 	def DfElectionTimer(self):
-		"""
+		"""Time interval in second to wait for DF election process to complete. Default value is 3 seconds. Minimum value is 1 second and maximum value is 300 seconds.
 
 		Returns:
 			number
@@ -140,7 +140,7 @@ class EthernetSegments(Base):
 
 	@property
 	def EnableActiveStandby(self):
-		"""
+		"""If true then this ethernet segment operates in active-standby mode. If false then this ethernet segment operates in all-active mode. Default value is false.
 
 		Returns:
 			bool
@@ -152,7 +152,7 @@ class EthernetSegments(Base):
 
 	@property
 	def EnableRootLeaf(self):
-		"""
+		"""If true then ESI label is associated with a leaf side. If false then ESI label is associated with a root side. Default value is true.
 
 		Returns:
 			bool
@@ -164,7 +164,7 @@ class EthernetSegments(Base):
 
 	@property
 	def EnableSecondLabel(self):
-		"""
+		"""If true then second EVPN label is inserted in label stack for ES route, AD per segment route.
 
 		Returns:
 			bool
@@ -176,7 +176,7 @@ class EthernetSegments(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, ethernet segment is enabled and is used in evpn. Default value is false.
 
 		Returns:
 			bool
@@ -188,7 +188,7 @@ class EthernetSegments(Base):
 
 	@property
 	def EsImport(self):
-		"""
+		"""When Auto Configure ES-Import is false then user has to put ES-Import here. Default value is 0x00 00 00 00 00 00.
 
 		Returns:
 			str
@@ -200,7 +200,7 @@ class EthernetSegments(Base):
 
 	@property
 	def Esi(self):
-		"""
+		"""Ethernet Segment Identifier (ESI) which is encoded as a ten octets integer. Default value is 0x00 00 00 00 00 00 00 00 00 00.
 
 		Returns:
 			str
@@ -212,7 +212,7 @@ class EthernetSegments(Base):
 
 	@property
 	def EsiLabel(self):
-		"""
+		"""Label value carried in ESI Label Extended Community in AD route per segment. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
 
 		Returns:
 			number
@@ -224,7 +224,7 @@ class EthernetSegments(Base):
 
 	@property
 	def FirstLabel(self):
-		"""
+		"""First EVPN label in label stack for ES route, AD per segment route. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
 
 		Returns:
 			number
@@ -236,7 +236,7 @@ class EthernetSegments(Base):
 
 	@property
 	def IncludeMacMobilityExtendedCommunity(self):
-		"""
+		"""If true then MAC mobility is performed in EVPN mode. If false then MAC mobility is not performed even if duplicate MAC address is found from remote PE.
 
 		Returns:
 			bool
@@ -248,7 +248,7 @@ class EthernetSegments(Base):
 
 	@property
 	def SecondLabel(self):
-		"""
+		"""Second EVPN label in label stack for ES route, AD per segment route. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
 
 		Returns:
 			number
@@ -260,7 +260,7 @@ class EthernetSegments(Base):
 
 	@property
 	def SupportFastConvergence(self):
-		"""
+		"""If true then fast convergence is performed. Default value is true.
 
 		Returns:
 			bool
@@ -272,7 +272,7 @@ class EthernetSegments(Base):
 
 	@property
 	def SupportMultiHomedEsAutoDiscovery(self):
-		"""
+		"""If true then auto discovery between multihomed PEs is performed.
 
 		Returns:
 			bool
@@ -284,7 +284,7 @@ class EthernetSegments(Base):
 
 	@property
 	def TypeOfEthernetVpn(self):
-		"""
+		"""Type of ethernet vpn. It can be either EVPN or PBB-EVPN. Default mode is PBB-EVPN.
 
 		Returns:
 			str(evpn|pbbEvpn)
@@ -296,7 +296,7 @@ class EthernetSegments(Base):
 
 	@property
 	def UseSameSequenceNumber(self):
-		"""
+		"""If true then same sequence number is used in MAC Mobility Extended Community for all MAC route to flush the remote C-MAC forwarding table. If false then subsequent C-MAC route uses unique sequence number in MAC Mobility Extended Community.
 
 		Returns:
 			bool
@@ -310,25 +310,25 @@ class EthernetSegments(Base):
 		"""Adds a new ethernetSegments node on the server and retrieves it in this instance.
 
 		Args:
-			AutoConfigureEsImport (bool): 
-			BMacPrefix (str): 
-			BMacPrefixLength (number): 
-			DfElectionMethod (str(serviceCarving)): 
-			DfElectionTimer (number): 
-			EnableActiveStandby (bool): 
-			EnableRootLeaf (bool): 
-			EnableSecondLabel (bool): 
-			Enabled (bool): 
-			EsImport (str): 
-			Esi (str): 
-			EsiLabel (number): 
-			FirstLabel (number): 
-			IncludeMacMobilityExtendedCommunity (bool): 
-			SecondLabel (number): 
-			SupportFastConvergence (bool): 
-			SupportMultiHomedEsAutoDiscovery (bool): 
-			TypeOfEthernetVpn (str(evpn|pbbEvpn)): 
-			UseSameSequenceNumber (bool): 
+			AutoConfigureEsImport (bool): NOT DEFINED
+			BMacPrefix (str): B-MAC address as a prefix where the MAC address length field is set to the length of the prefix. This provides the ability to aggregate MAC addresses if the deployment environment supports that. By default a unique B-MAC is constructed per ethernet segment. it can be changed to any value but multicast and broadcast addresses are not used.
+			BMacPrefixLength (number): The MAC address length field is typically set to 48. However this length value can be changed to specify the MAC address as a prefix; in which case, the MAC address length field is set to the length of the prefix. This provides the ability to aggregate MAC addresses if the deployment environment supports that. Default value is 48. Minimum value is 0 and maximum value is 48.
+			DfElectionMethod (str(serviceCarving)): This is a read only field. user can not change the value of this field. This is just to show that IxNetwork is using Service Carving method for DF election.
+			DfElectionTimer (number): Time interval in second to wait for DF election process to complete. Default value is 3 seconds. Minimum value is 1 second and maximum value is 300 seconds.
+			EnableActiveStandby (bool): If true then this ethernet segment operates in active-standby mode. If false then this ethernet segment operates in all-active mode. Default value is false.
+			EnableRootLeaf (bool): If true then ESI label is associated with a leaf side. If false then ESI label is associated with a root side. Default value is true.
+			EnableSecondLabel (bool): If true then second EVPN label is inserted in label stack for ES route, AD per segment route.
+			Enabled (bool): If true, ethernet segment is enabled and is used in evpn. Default value is false.
+			EsImport (str): When Auto Configure ES-Import is false then user has to put ES-Import here. Default value is 0x00 00 00 00 00 00.
+			Esi (str): Ethernet Segment Identifier (ESI) which is encoded as a ten octets integer. Default value is 0x00 00 00 00 00 00 00 00 00 00.
+			EsiLabel (number): Label value carried in ESI Label Extended Community in AD route per segment. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+			FirstLabel (number): First EVPN label in label stack for ES route, AD per segment route. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+			IncludeMacMobilityExtendedCommunity (bool): If true then MAC mobility is performed in EVPN mode. If false then MAC mobility is not performed even if duplicate MAC address is found from remote PE.
+			SecondLabel (number): Second EVPN label in label stack for ES route, AD per segment route. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+			SupportFastConvergence (bool): If true then fast convergence is performed. Default value is true.
+			SupportMultiHomedEsAutoDiscovery (bool): If true then auto discovery between multihomed PEs is performed.
+			TypeOfEthernetVpn (str(evpn|pbbEvpn)): Type of ethernet vpn. It can be either EVPN or PBB-EVPN. Default mode is PBB-EVPN.
+			UseSameSequenceNumber (bool): If true then same sequence number is used in MAC Mobility Extended Community for all MAC route to flush the remote C-MAC forwarding table. If false then subsequent C-MAC route uses unique sequence number in MAC Mobility Extended Community.
 
 		Returns:
 			self: This instance with all currently retrieved ethernetSegments data using find and the newly added ethernetSegments data available through an iterator or index
@@ -354,25 +354,25 @@ class EthernetSegments(Base):
 		By default the find method takes no parameters and will retrieve all ethernetSegments data from the server.
 
 		Args:
-			AutoConfigureEsImport (bool): 
-			BMacPrefix (str): 
-			BMacPrefixLength (number): 
-			DfElectionMethod (str(serviceCarving)): 
-			DfElectionTimer (number): 
-			EnableActiveStandby (bool): 
-			EnableRootLeaf (bool): 
-			EnableSecondLabel (bool): 
-			Enabled (bool): 
-			EsImport (str): 
-			Esi (str): 
-			EsiLabel (number): 
-			FirstLabel (number): 
-			IncludeMacMobilityExtendedCommunity (bool): 
-			SecondLabel (number): 
-			SupportFastConvergence (bool): 
-			SupportMultiHomedEsAutoDiscovery (bool): 
-			TypeOfEthernetVpn (str(evpn|pbbEvpn)): 
-			UseSameSequenceNumber (bool): 
+			AutoConfigureEsImport (bool): NOT DEFINED
+			BMacPrefix (str): B-MAC address as a prefix where the MAC address length field is set to the length of the prefix. This provides the ability to aggregate MAC addresses if the deployment environment supports that. By default a unique B-MAC is constructed per ethernet segment. it can be changed to any value but multicast and broadcast addresses are not used.
+			BMacPrefixLength (number): The MAC address length field is typically set to 48. However this length value can be changed to specify the MAC address as a prefix; in which case, the MAC address length field is set to the length of the prefix. This provides the ability to aggregate MAC addresses if the deployment environment supports that. Default value is 48. Minimum value is 0 and maximum value is 48.
+			DfElectionMethod (str(serviceCarving)): This is a read only field. user can not change the value of this field. This is just to show that IxNetwork is using Service Carving method for DF election.
+			DfElectionTimer (number): Time interval in second to wait for DF election process to complete. Default value is 3 seconds. Minimum value is 1 second and maximum value is 300 seconds.
+			EnableActiveStandby (bool): If true then this ethernet segment operates in active-standby mode. If false then this ethernet segment operates in all-active mode. Default value is false.
+			EnableRootLeaf (bool): If true then ESI label is associated with a leaf side. If false then ESI label is associated with a root side. Default value is true.
+			EnableSecondLabel (bool): If true then second EVPN label is inserted in label stack for ES route, AD per segment route.
+			Enabled (bool): If true, ethernet segment is enabled and is used in evpn. Default value is false.
+			EsImport (str): When Auto Configure ES-Import is false then user has to put ES-Import here. Default value is 0x00 00 00 00 00 00.
+			Esi (str): Ethernet Segment Identifier (ESI) which is encoded as a ten octets integer. Default value is 0x00 00 00 00 00 00 00 00 00 00.
+			EsiLabel (number): Label value carried in ESI Label Extended Community in AD route per segment. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+			FirstLabel (number): First EVPN label in label stack for ES route, AD per segment route. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+			IncludeMacMobilityExtendedCommunity (bool): If true then MAC mobility is performed in EVPN mode. If false then MAC mobility is not performed even if duplicate MAC address is found from remote PE.
+			SecondLabel (number): Second EVPN label in label stack for ES route, AD per segment route. Default value is 16. Minimum value is 16 and maximum value is 0xFFFFF.
+			SupportFastConvergence (bool): If true then fast convergence is performed. Default value is true.
+			SupportMultiHomedEsAutoDiscovery (bool): If true then auto discovery between multihomed PEs is performed.
+			TypeOfEthernetVpn (str(evpn|pbbEvpn)): Type of ethernet vpn. It can be either EVPN or PBB-EVPN. Default mode is PBB-EVPN.
+			UseSameSequenceNumber (bool): If true then same sequence number is used in MAC Mobility Extended Community for all MAC route to flush the remote C-MAC forwarding table. If false then subsequent C-MAC route uses unique sequence number in MAC Mobility Extended Community.
 
 		Returns:
 			self: This instance with matching ethernetSegments data retrieved from the server available through an iterator or index
@@ -400,11 +400,13 @@ class EthernetSegments(Base):
 	def FlushRemoteCmacForwardingTable(self):
 		"""Executes the flushRemoteCmacForwardingTable operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ethernetSegments)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: 
+			str: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

@@ -37,7 +37,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def AisRx(self):
-		"""
+		"""This signifies the number of AIS frames received.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def AisState(self):
-		"""
+		"""This signifies the state of AIS, either Clear or Fault.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def AisTx(self):
-		"""
+		"""This signifies the number of AIS frames transmitted.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def AlarmTypeAis(self):
-		"""
+		"""This signifies the type of the AIS alarm, either ietf or y1731.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def AlarmTypeLck(self):
-		"""
+		"""This signifies the type of the LCK alarm, either ietf or y1731.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ApsLocalDataPath(self):
-		"""
+		"""This signifies the path of the APS local data.
 
 		Returns:
 			str(working|protect|na)
@@ -91,7 +91,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ApsLocalFaultPath(self):
-		"""
+		"""This signifies the path of the APS local fault.
 
 		Returns:
 			str(working|protect|both|none|na)
@@ -100,7 +100,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ApsLocalState(self):
-		"""
+		"""This signifies the APS local state information.
 
 		Returns:
 			str(na|apsNoRequest|apsLockoutOfProtection|apsSignalFailOnWorking|apsManualSwitch|apsWaitToRestore|apsDoNotRevert|apsExercise|apsReverseRequest|pscNormal|pscUnavailable|pscProtectingAdmin|pscProtectingFailure|pscWaitToRevert|pscDoNotRevert|apsSignalFailOnProtection|apsForceSwitch)
@@ -109,7 +109,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ApsRemoteDataPath(self):
-		"""
+		"""This signifies the path of the APS remote data.
 
 		Returns:
 			str(protect|na|working)
@@ -118,7 +118,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ApsRemoteFaultPath(self):
-		"""
+		"""This signifies the path of the APS remote fault.
 
 		Returns:
 			str(na|working|protect|both|none)
@@ -127,7 +127,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ApsRemoteRequestState(self):
-		"""
+		"""This signifies the APS remote request state information.
 
 		Returns:
 			str(na|apsNoRequest|apsLockoutOfProtection|apsSignalFailOnWorking|apsManualSwitch|apsWaitToRestore|apsDoNotRevert|apsExercise|apsReverseRequest|pscNormal|pscUnavailable|pscProtectingAdmin|pscProtectingFailure|pscWaitToRevert|pscDoNotRevert|apsSignalFailOnProtection|apsForceSwitch)
@@ -136,7 +136,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ContinuityCheckLocalState(self):
-		"""
+		"""This signifies the status of the Continuity Check Local State.
 
 		Returns:
 			str(na|bfdDown|bfdInit|bfdUp|y1731Down|y1731Init|y1731Up)
@@ -145,7 +145,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ContinuityCheckRemoteState(self):
-		"""
+		"""This signifies the status of the Continuity Check Remote State.
 
 		Returns:
 			str(na|bfdDown|bfdInit|bfdUp|y1731Down|y1731Init|y1731Up)
@@ -154,7 +154,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ContinuityCheckRxInterval(self):
-		"""
+		"""This Signifies the CC Rx Interval configured on the source side.
 
 		Returns:
 			number
@@ -163,7 +163,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def ContinuityCheckTxInterval(self):
-		"""
+		"""This Signifies the Negotiated CC Tx Interval on the source side.
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def IncomingLabelOuterInner(self):
-		"""
+		"""This signifies the incoming label information.
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def LastAlarmDuration(self):
-		"""
+		"""This signifies the duration for how long the LSP/PW was in fault state.
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def LckRx(self):
-		"""
+		"""This signifies the number of LCK frames received.
 
 		Returns:
 			number
@@ -199,7 +199,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def LckState(self):
-		"""
+		"""This signifies the state of LCK, either Clear or Fault.
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def LckTx(self):
-		"""
+		"""This signifies the number of LCK frames transmitted.
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def Ldi(self):
-		"""
+		"""This signifies the state of the LDI bit, either NA or Set.
 
 		Returns:
 			str
@@ -226,7 +226,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def LocalPwStatus(self):
-		"""
+		"""This signifies the local PW status.
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelOuterInner(self):
-		"""
+		"""This signifies the Outgoing Label information.
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def RemoteDefectIndication(self):
-		"""
+		"""This Signifies the Defect Indication received in the cc message from remote port if any.
 
 		Returns:
 			str
@@ -253,7 +253,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def RemotePwStatus(self):
-		"""
+		"""This signifies the remote PW status.
 
 		Returns:
 			str
@@ -262,7 +262,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def Role(self):
-		"""
+		"""This signifies the selection of this option to filter according to the following roles None,Protect and Working.
 
 		Returns:
 			str
@@ -271,7 +271,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def TimeSinceLastAlarm(self):
-		"""
+		"""This signifies the time elapsed since the LSP/PW has recovered from the last fault state.
 
 		Returns:
 			str
@@ -280,7 +280,7 @@ class GeneralLearnedInfo(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""This signifies the selection of this option to filter according to the following types LSP and PW.
 
 		Returns:
 			str
@@ -294,34 +294,34 @@ class GeneralLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all generalLearnedInfo data from the server.
 
 		Args:
-			AisRx (number): 
-			AisState (str): 
-			AisTx (number): 
-			AlarmTypeAis (str): 
-			AlarmTypeLck (str): 
-			ApsLocalDataPath (str(working|protect|na)): 
-			ApsLocalFaultPath (str(working|protect|both|none|na)): 
-			ApsLocalState (str(na|apsNoRequest|apsLockoutOfProtection|apsSignalFailOnWorking|apsManualSwitch|apsWaitToRestore|apsDoNotRevert|apsExercise|apsReverseRequest|pscNormal|pscUnavailable|pscProtectingAdmin|pscProtectingFailure|pscWaitToRevert|pscDoNotRevert|apsSignalFailOnProtection|apsForceSwitch)): 
-			ApsRemoteDataPath (str(protect|na|working)): 
-			ApsRemoteFaultPath (str(na|working|protect|both|none)): 
-			ApsRemoteRequestState (str(na|apsNoRequest|apsLockoutOfProtection|apsSignalFailOnWorking|apsManualSwitch|apsWaitToRestore|apsDoNotRevert|apsExercise|apsReverseRequest|pscNormal|pscUnavailable|pscProtectingAdmin|pscProtectingFailure|pscWaitToRevert|pscDoNotRevert|apsSignalFailOnProtection|apsForceSwitch)): 
-			ContinuityCheckLocalState (str(na|bfdDown|bfdInit|bfdUp|y1731Down|y1731Init|y1731Up)): 
-			ContinuityCheckRemoteState (str(na|bfdDown|bfdInit|bfdUp|y1731Down|y1731Init|y1731Up)): 
-			ContinuityCheckRxInterval (number): 
-			ContinuityCheckTxInterval (number): 
-			IncomingLabelOuterInner (str): 
-			LastAlarmDuration (str): 
-			LckRx (number): 
-			LckState (str): 
-			LckTx (number): 
-			Ldi (str): 
-			LocalPwStatus (str): 
-			OutgoingLabelOuterInner (str): 
-			RemoteDefectIndication (str): 
-			RemotePwStatus (str): 
-			Role (str): 
-			TimeSinceLastAlarm (str): 
-			Type (str): 
+			AisRx (number): This signifies the number of AIS frames received.
+			AisState (str): This signifies the state of AIS, either Clear or Fault.
+			AisTx (number): This signifies the number of AIS frames transmitted.
+			AlarmTypeAis (str): This signifies the type of the AIS alarm, either ietf or y1731.
+			AlarmTypeLck (str): This signifies the type of the LCK alarm, either ietf or y1731.
+			ApsLocalDataPath (str(working|protect|na)): This signifies the path of the APS local data.
+			ApsLocalFaultPath (str(working|protect|both|none|na)): This signifies the path of the APS local fault.
+			ApsLocalState (str(na|apsNoRequest|apsLockoutOfProtection|apsSignalFailOnWorking|apsManualSwitch|apsWaitToRestore|apsDoNotRevert|apsExercise|apsReverseRequest|pscNormal|pscUnavailable|pscProtectingAdmin|pscProtectingFailure|pscWaitToRevert|pscDoNotRevert|apsSignalFailOnProtection|apsForceSwitch)): This signifies the APS local state information.
+			ApsRemoteDataPath (str(protect|na|working)): This signifies the path of the APS remote data.
+			ApsRemoteFaultPath (str(na|working|protect|both|none)): This signifies the path of the APS remote fault.
+			ApsRemoteRequestState (str(na|apsNoRequest|apsLockoutOfProtection|apsSignalFailOnWorking|apsManualSwitch|apsWaitToRestore|apsDoNotRevert|apsExercise|apsReverseRequest|pscNormal|pscUnavailable|pscProtectingAdmin|pscProtectingFailure|pscWaitToRevert|pscDoNotRevert|apsSignalFailOnProtection|apsForceSwitch)): This signifies the APS remote request state information.
+			ContinuityCheckLocalState (str(na|bfdDown|bfdInit|bfdUp|y1731Down|y1731Init|y1731Up)): This signifies the status of the Continuity Check Local State.
+			ContinuityCheckRemoteState (str(na|bfdDown|bfdInit|bfdUp|y1731Down|y1731Init|y1731Up)): This signifies the status of the Continuity Check Remote State.
+			ContinuityCheckRxInterval (number): This Signifies the CC Rx Interval configured on the source side.
+			ContinuityCheckTxInterval (number): This Signifies the Negotiated CC Tx Interval on the source side.
+			IncomingLabelOuterInner (str): This signifies the incoming label information.
+			LastAlarmDuration (str): This signifies the duration for how long the LSP/PW was in fault state.
+			LckRx (number): This signifies the number of LCK frames received.
+			LckState (str): This signifies the state of LCK, either Clear or Fault.
+			LckTx (number): This signifies the number of LCK frames transmitted.
+			Ldi (str): This signifies the state of the LDI bit, either NA or Set.
+			LocalPwStatus (str): This signifies the local PW status.
+			OutgoingLabelOuterInner (str): This signifies the Outgoing Label information.
+			RemoteDefectIndication (str): This Signifies the Defect Indication received in the cc message from remote port if any.
+			RemotePwStatus (str): This signifies the remote PW status.
+			Role (str): This signifies the selection of this option to filter according to the following roles None,Protect and Working.
+			TimeSinceLastAlarm (str): This signifies the time elapsed since the LSP/PW has recovered from the last fault state.
+			Type (str): This signifies the selection of this option to filter according to the following types LSP and PW.
 
 		Returns:
 			self: This instance with matching generalLearnedInfo data retrieved from the server available through an iterator or index
@@ -349,11 +349,13 @@ class GeneralLearnedInfo(Base):
 	def AddRecordForTrigger(self):
 		"""Executes the addRecordForTrigger operation on the server.
 
+		This signifies the record added for trigger settings.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=generalLearnedInfo)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

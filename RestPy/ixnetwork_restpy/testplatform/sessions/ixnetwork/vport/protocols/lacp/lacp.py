@@ -65,7 +65,7 @@ class Lacp(Base):
 
 	@property
 	def EnablePreservePartnerInfo(self):
-		"""
+		"""If true, the fields of previous link are updatedw
 
 		Returns:
 			bool
@@ -77,7 +77,7 @@ class Lacp(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the Link Aggregation Control Protocol (LACP) is enabled.
 
 		Returns:
 			bool
@@ -89,7 +89,7 @@ class Lacp(Base):
 
 	@property
 	def IsLacpPortLearnedInfoRefreshed(self):
-		"""
+		"""(read only) If true, the learned port information is up to date.
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class Lacp(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The current running state of LACP.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -107,6 +107,8 @@ class Lacp(Base):
 
 	def RefreshLacpPortLearnedInfo(self):
 		"""Executes the refreshLacpPortLearnedInfo operation on the server.
+
+		This exec refreshes the LACP port learned information.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance
@@ -121,6 +123,8 @@ class Lacp(Base):
 	def SendMarkerRequest(self):
 		"""Executes the sendMarkerRequest operation on the server.
 
+		This sends a marker request. The contents of the marker PDU contain the current view of partner (which can be defaulted if no partner is present). The marker will be sent regardless of which state the link is in.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance
 
@@ -133,6 +137,8 @@ class Lacp(Base):
 
 	def SendUpdate(self):
 		"""Executes the sendUpdate operation on the server.
+
+		This exec sends an update to the actor's partners after a change has been made to the link's parameters.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance
@@ -147,6 +153,8 @@ class Lacp(Base):
 	def Start(self):
 		"""Executes the start operation on the server.
 
+		This exec starts the LACP protocol.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance
 
@@ -159,6 +167,8 @@ class Lacp(Base):
 
 	def StartPdu(self):
 		"""Executes the startPdu operation on the server.
+
+		This exec starts PDUs related to LACP (for example, LACPDU, Marker Request PDU, Marker Response PDU) while the protocol is running on the port.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance
@@ -173,6 +183,8 @@ class Lacp(Base):
 	def Stop(self):
 		"""Executes the stop operation on the server.
 
+		This exec stops the LACP protocol.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance
 
@@ -185,6 +197,8 @@ class Lacp(Base):
 
 	def StopPdu(self):
 		"""Executes the stopPdu operation on the server.
+
+		This exec stops PDUs related to LACP (for example, LACPDU, Marker Request PDU, Marker Response PDU) while the protocol is running on the port.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=lacp)): The method internally sets Arg1 to the current href for this instance

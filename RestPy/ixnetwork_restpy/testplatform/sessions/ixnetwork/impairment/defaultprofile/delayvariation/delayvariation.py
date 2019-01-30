@@ -37,7 +37,7 @@ class DelayVariation(Base):
 
 	@property
 	def Distribution(self):
-		"""
+		"""Specify the distribution of the random variation.
 
 		Returns:
 			str(exponential|gaussian|kExponential|kGaussian|kUniform|uniform)
@@ -49,7 +49,7 @@ class DelayVariation(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, randomly vary the packet delay.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class DelayVariation(Base):
 
 	@property
 	def ExponentialMeanArrival(self):
-		"""
+		"""Mean arrival time for the exponential distribution.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class DelayVariation(Base):
 
 	@property
 	def GaussianStandardDeviation(self):
-		"""
+		"""Standard deviation for the Gaussian distribution.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class DelayVariation(Base):
 
 	@property
 	def UniformSpread(self):
-		"""
+		"""Spread for the uniform distribution.
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class DelayVariation(Base):
 
 	@property
 	def Units(self):
-		"""
+		"""Specify the units for the value of the spread, standard deviation, or mean arrival time.
 
 		Returns:
 			str(kilometers|kKilometers|kMicroseconds|kMilliseconds|kSeconds|microseconds|milliseconds|seconds)

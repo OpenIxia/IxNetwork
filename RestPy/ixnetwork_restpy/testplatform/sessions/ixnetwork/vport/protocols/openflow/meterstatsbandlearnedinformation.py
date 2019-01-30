@@ -37,7 +37,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The Data Path identifier of the OpenFlow controller.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""The Data Path identifier of the OpenFlow controller in hexadecimal format.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def InBandByteCount(self):
-		"""
+		"""Specifies Byte Band Count
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def InBandPacketCount(self):
-		"""
+		"""Specifies Packet Band Count
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Indicates the local IP of the Controller.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def MeterId(self):
-		"""
+		"""Specifies Meter ID
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class MeterStatsBandLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""The Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -105,13 +105,13 @@ class MeterStatsBandLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all meterStatsBandLearnedInformation data from the server.
 
 		Args:
-			DataPathId (number): 
-			DataPathIdAsHex (str): 
-			InBandByteCount (number): 
-			InBandPacketCount (number): 
-			LocalIp (str): 
-			MeterId (number): 
-			RemoteIp (str): 
+			DataPathId (number): The Data Path identifier of the OpenFlow controller.
+			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow controller in hexadecimal format.
+			InBandByteCount (number): Specifies Byte Band Count
+			InBandPacketCount (number): Specifies Packet Band Count
+			LocalIp (str): Indicates the local IP of the Controller.
+			MeterId (number): Specifies Meter ID
+			RemoteIp (str): The Remote IP address of the selected interface.
 
 		Returns:
 			self: This instance with matching meterStatsBandLearnedInformation data retrieved from the server available through an iterator or index

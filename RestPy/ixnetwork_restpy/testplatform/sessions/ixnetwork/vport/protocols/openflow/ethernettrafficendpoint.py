@@ -38,7 +38,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def ArpViaInterface(self):
-		"""
+		"""If selected, ARP request is conveyed through an Interface.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def CustomEtherHeaderLength(self):
-		"""
+		"""Specify the Custom Header length in bytes. The default length is 46 bytes.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def CustomEtherHeaderValue(self):
-		"""
+		"""Specify the Custom Header value.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def CustomEtherType(self):
-		"""
+		"""Specify the Custom Ether type.
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def EnableMacInMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def EnableVlan(self):
-		"""
+		"""Select this check box to make VLAN available.
 
 		Returns:
 			bool
@@ -110,7 +110,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def GatewayMac(self):
-		"""
+		"""The Gateway MAC address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
 
 		Returns:
 			str
@@ -122,7 +122,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def MacAddress(self):
-		"""
+		"""The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""The name of the Traffic Source Endpoint.
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def PbbDestinamtionMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def PbbEtherType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(bEtherType8100|bEtherType88A8|bEtherType88E7|bEtherType9100|bEtherType9200)
@@ -170,7 +170,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def PbbIsId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -182,7 +182,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def PbbSourceMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def PbbVlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -206,7 +206,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def PbbVlanPcp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -218,7 +218,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def ProtocolInterface(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -230,7 +230,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def RangeSize(self):
-		"""
+		"""Specify the size of the Range.
 
 		Returns:
 			number
@@ -242,7 +242,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def VlanCount(self):
-		"""
+		"""Specify the VLAN count. The default value is 1.
 
 		Returns:
 			number
@@ -254,7 +254,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""Specify the VLAN ID (Outer and Inner).
 
 		Returns:
 			str
@@ -266,7 +266,7 @@ class EthernetTrafficEndPoint(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""Specify the VLAN Priority (Outer and Inner).
 
 		Returns:
 			str
@@ -280,26 +280,26 @@ class EthernetTrafficEndPoint(Base):
 		"""Adds a new ethernetTrafficEndPoint node on the server and retrieves it in this instance.
 
 		Args:
-			ArpViaInterface (bool): 
-			CustomEtherHeaderLength (number): 
-			CustomEtherHeaderValue (str): 
-			CustomEtherType (str): 
-			EnableMacInMac (bool): 
-			EnableVlan (bool): 
-			GatewayMac (str): 
-			MacAddress (str): 
-			Name (str): 
-			PbbDestinamtionMac (str): 
-			PbbEtherType (str(bEtherType8100|bEtherType88A8|bEtherType88E7|bEtherType9100|bEtherType9200)): 
-			PbbIsId (str): 
-			PbbSourceMac (str): 
-			PbbVlanId (str): 
-			PbbVlanPcp (str): 
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			RangeSize (number): 
-			VlanCount (number): 
-			VlanId (str): 
-			VlanPriority (str): 
+			ArpViaInterface (bool): If selected, ARP request is conveyed through an Interface.
+			CustomEtherHeaderLength (number): Specify the Custom Header length in bytes. The default length is 46 bytes.
+			CustomEtherHeaderValue (str): Specify the Custom Header value.
+			CustomEtherType (str): Specify the Custom Ether type.
+			EnableMacInMac (bool): NOT DEFINED
+			EnableVlan (bool): Select this check box to make VLAN available.
+			GatewayMac (str): The Gateway MAC address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+			MacAddress (str): The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+			Name (str): The name of the Traffic Source Endpoint.
+			PbbDestinamtionMac (str): NOT DEFINED
+			PbbEtherType (str(bEtherType8100|bEtherType88A8|bEtherType88E7|bEtherType9100|bEtherType9200)): NOT DEFINED
+			PbbIsId (str): NOT DEFINED
+			PbbSourceMac (str): NOT DEFINED
+			PbbVlanId (str): NOT DEFINED
+			PbbVlanPcp (str): NOT DEFINED
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): NOT DEFINED
+			RangeSize (number): Specify the size of the Range.
+			VlanCount (number): Specify the VLAN count. The default value is 1.
+			VlanId (str): Specify the VLAN ID (Outer and Inner).
+			VlanPriority (str): Specify the VLAN Priority (Outer and Inner).
 
 		Returns:
 			self: This instance with all currently retrieved ethernetTrafficEndPoint data using find and the newly added ethernetTrafficEndPoint data available through an iterator or index
@@ -325,26 +325,26 @@ class EthernetTrafficEndPoint(Base):
 		By default the find method takes no parameters and will retrieve all ethernetTrafficEndPoint data from the server.
 
 		Args:
-			ArpViaInterface (bool): 
-			CustomEtherHeaderLength (number): 
-			CustomEtherHeaderValue (str): 
-			CustomEtherType (str): 
-			EnableMacInMac (bool): 
-			EnableVlan (bool): 
-			GatewayMac (str): 
-			MacAddress (str): 
-			Name (str): 
-			PbbDestinamtionMac (str): 
-			PbbEtherType (str(bEtherType8100|bEtherType88A8|bEtherType88E7|bEtherType9100|bEtherType9200)): 
-			PbbIsId (str): 
-			PbbSourceMac (str): 
-			PbbVlanId (str): 
-			PbbVlanPcp (str): 
-			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			RangeSize (number): 
-			VlanCount (number): 
-			VlanId (str): 
-			VlanPriority (str): 
+			ArpViaInterface (bool): If selected, ARP request is conveyed through an Interface.
+			CustomEtherHeaderLength (number): Specify the Custom Header length in bytes. The default length is 46 bytes.
+			CustomEtherHeaderValue (str): Specify the Custom Header value.
+			CustomEtherType (str): Specify the Custom Ether type.
+			EnableMacInMac (bool): NOT DEFINED
+			EnableVlan (bool): Select this check box to make VLAN available.
+			GatewayMac (str): The Gateway MAC address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+			MacAddress (str): The MAC Address of the source traffic endpoint. The default value is 00 00 00 00 00 00.
+			Name (str): The name of the Traffic Source Endpoint.
+			PbbDestinamtionMac (str): NOT DEFINED
+			PbbEtherType (str(bEtherType8100|bEtherType88A8|bEtherType88E7|bEtherType9100|bEtherType9200)): NOT DEFINED
+			PbbIsId (str): NOT DEFINED
+			PbbSourceMac (str): NOT DEFINED
+			PbbVlanId (str): NOT DEFINED
+			PbbVlanPcp (str): NOT DEFINED
+			ProtocolInterface (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): NOT DEFINED
+			RangeSize (number): Specify the size of the Range.
+			VlanCount (number): Specify the VLAN count. The default value is 1.
+			VlanId (str): Specify the VLAN ID (Outer and Inner).
+			VlanPriority (str): Specify the VLAN Priority (Outer and Inner).
 
 		Returns:
 			self: This instance with matching ethernetTrafficEndPoint data retrieved from the server available through an iterator or index

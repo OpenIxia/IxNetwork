@@ -35,21 +35,16 @@ class DefaultStacks(Base):
 	def __init__(self, parent):
 		super(DefaultStacks, self).__init__(parent)
 
-	def Create(self, Arg2):
-		"""Executes the create operation on the server.
-
-		Creates an NGPF default stack
+	def FetchAndUpdateConfigFromCloud(self, Mode):
+		"""Executes the fetchAndUpdateConfigFromCloud operation on the server.
 
 		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=defaultStacks)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(None|/api/v1/sessions/1/ixnetwork/topology|/api/v1/sessions/1/ixnetwork/topology)): host for the stack to be created: a) ref to a /topology, b) ref to /topology/deviceGroup, c) null to create a new Topology
-
-		Returns:
-			str(None|/api/v1/sessions/1/ixnetwork/topology?deepchild=*): 
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): The method internally sets Arg1 to the current href for this instance
+			Mode (str): 
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
 			ServerError: The server has encountered an uncategorized error condition
 		"""
 		Arg1 = self.href
-		return self._execute('Create', payload=locals(), response_object=None)
+		return self._execute('FetchAndUpdateConfigFromCloud', payload=locals(), response_object=None)

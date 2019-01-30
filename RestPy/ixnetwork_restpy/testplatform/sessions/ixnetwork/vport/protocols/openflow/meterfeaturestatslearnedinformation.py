@@ -37,7 +37,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def BandTypes(self):
-		"""
+		"""Specifies Band Types in Meter Feature
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def Capabilities(self):
-		"""
+		"""Specifies the Capabilities Value
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The Data Path identifier of the OpenFlow Controller.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""The Data Path identifier of the OpenFlow Controller in hexadecimal format.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""The error code of the received error.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""The type of the error received.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""The latency measurement for the OpenFlow channel in microseconds.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Indicates the local IP of the Controller.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def MaxBands(self):
-		"""
+		"""Specifies Maximum Band Value
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def MaxColor(self):
-		"""
+		"""Specifies Maximum Color Value
 
 		Returns:
 			number
@@ -127,7 +127,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def MaxMeters(self):
-		"""
+		"""Specifies the Value of Maximum Meter
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""The Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class MeterFeatureStatsLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -159,19 +159,19 @@ class MeterFeatureStatsLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all meterFeatureStatsLearnedInformation data from the server.
 
 		Args:
-			BandTypes (str): 
-			Capabilities (str): 
-			DataPathId (number): 
-			DataPathIdAsHex (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			Latency (number): 
-			LocalIp (str): 
-			MaxBands (number): 
-			MaxColor (number): 
-			MaxMeters (number): 
-			RemoteIp (str): 
-			ReplyState (str): 
+			BandTypes (str): Specifies Band Types in Meter Feature
+			Capabilities (str): Specifies the Capabilities Value
+			DataPathId (number): The Data Path identifier of the OpenFlow Controller.
+			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow Controller in hexadecimal format.
+			ErrorCode (str): The error code of the received error.
+			ErrorType (str): The type of the error received.
+			Latency (number): The latency measurement for the OpenFlow channel in microseconds.
+			LocalIp (str): Indicates the local IP of the Controller.
+			MaxBands (number): Specifies Maximum Band Value
+			MaxColor (number): Specifies Maximum Color Value
+			MaxMeters (number): Specifies the Value of Maximum Meter
+			RemoteIp (str): The Remote IP address of the selected interface.
+			ReplyState (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching meterFeatureStatsLearnedInformation data retrieved from the server available through an iterator or index

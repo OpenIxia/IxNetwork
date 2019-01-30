@@ -248,7 +248,7 @@ class ControllerTables(Base):
 
 	@property
 	def ApplyActionExperimenterData(self):
-		"""
+		"""The data of the Apply Action Experimenter.
 
 		Returns:
 			str
@@ -260,7 +260,7 @@ class ControllerTables(Base):
 
 	@property
 	def ApplyActionExperimenterDataLength(self):
-		"""
+		"""The data length of the Apply Action Experimenter.
 
 		Returns:
 			number
@@ -272,7 +272,7 @@ class ControllerTables(Base):
 
 	@property
 	def ApplyActionExperimenterId(self):
-		"""
+		"""The unique identifier for Apply Action Experimenter.
 
 		Returns:
 			number
@@ -284,7 +284,7 @@ class ControllerTables(Base):
 
 	@property
 	def ApplyActionMissExperimenterData(self):
-		"""
+		"""Experimenter Data The data of the apply action for table-miss of Controller Table Experimenter.
 
 		Returns:
 			str
@@ -296,7 +296,7 @@ class ControllerTables(Base):
 
 	@property
 	def ApplyActionMissExperimenterDataLength(self):
-		"""
+		"""The data length of the Apply Action Miss Experimenter.
 
 		Returns:
 			number
@@ -308,7 +308,7 @@ class ControllerTables(Base):
 
 	@property
 	def ApplyActionMissExperimenterId(self):
-		"""
+		"""The unique identifier for Apply Action Miss Experimenter.
 
 		Returns:
 			number
@@ -320,7 +320,7 @@ class ControllerTables(Base):
 
 	@property
 	def Config(self):
-		"""
+		"""Specify the bitmap of OFPTC_* values. The default value is 0.
 
 		Returns:
 			number
@@ -332,7 +332,7 @@ class ControllerTables(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If selected, this table is used in this controller configuration.
 
 		Returns:
 			bool
@@ -344,7 +344,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""The data of the Experimenter.
 
 		Returns:
 			str
@@ -356,7 +356,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""
+		"""The data length of the Experimenter for table-miss.
 
 		Returns:
 			number
@@ -368,7 +368,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""
+		"""The unique identifier for the Experimenter.
 
 		Returns:
 			number
@@ -380,7 +380,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterMissData(self):
-		"""
+		"""The data of the Experimenter for table-miss.
 
 		Returns:
 			str
@@ -392,7 +392,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterMissDataLength(self):
-		"""
+		"""The data length of the Experimenter for table-miss.
 
 		Returns:
 			number
@@ -404,7 +404,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterMissId(self):
-		"""
+		"""The unique identifier for the Experimenter for table-miss.
 
 		Returns:
 			number
@@ -416,7 +416,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterMissType(self):
-		"""
+		"""The type of experimenter for table-miss.
 
 		Returns:
 			number
@@ -428,7 +428,7 @@ class ControllerTables(Base):
 
 	@property
 	def ExperimenterType(self):
-		"""
+		"""The type of experimenter.
 
 		Returns:
 			number
@@ -440,7 +440,7 @@ class ControllerTables(Base):
 
 	@property
 	def InstructionExperimenterData(self):
-		"""
+		"""The data of the Instruction Experimenter.
 
 		Returns:
 			str
@@ -452,7 +452,7 @@ class ControllerTables(Base):
 
 	@property
 	def InstructionExperimenterDataLength(self):
-		"""
+		"""The data length of the experimental instruction of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -464,7 +464,7 @@ class ControllerTables(Base):
 
 	@property
 	def InstructionExperimenterId(self):
-		"""
+		"""The unique identifier for the Experimenter.
 
 		Returns:
 			number
@@ -476,7 +476,7 @@ class ControllerTables(Base):
 
 	@property
 	def InstructionMissExperimenterData(self):
-		"""
+		"""The data of the Instruction Miss Experimenter.
 
 		Returns:
 			str
@@ -488,7 +488,7 @@ class ControllerTables(Base):
 
 	@property
 	def InstructionMissExperimenterDataLength(self):
-		"""
+		"""It indicates the data length of the Instruction Miss Experimenter
 
 		Returns:
 			number
@@ -500,7 +500,7 @@ class ControllerTables(Base):
 
 	@property
 	def InstructionMissExperimenterId(self):
-		"""
+		"""The unique identifier of Instruction Miss Experimenter.
 
 		Returns:
 			number
@@ -512,7 +512,7 @@ class ControllerTables(Base):
 
 	@property
 	def MatchExperimenterData(self):
-		"""
+		"""The match data of the Controller Table Experimenter.
 
 		Returns:
 			str
@@ -524,7 +524,7 @@ class ControllerTables(Base):
 
 	@property
 	def MatchExperimenterDataLength(self):
-		"""
+		"""The data length of the wildcard experimenter of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -536,7 +536,7 @@ class ControllerTables(Base):
 
 	@property
 	def MatchExperimenterField(self):
-		"""
+		"""The identifier for match experimenter of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -548,7 +548,7 @@ class ControllerTables(Base):
 
 	@property
 	def MatchExperimenterHasMask(self):
-		"""
+		"""Mask If selected, the match experimenter hash mask field of Controller Table Experimenter is available.
 
 		Returns:
 			bool
@@ -560,7 +560,7 @@ class ControllerTables(Base):
 
 	@property
 	def MatchExperimenterId(self):
-		"""
+		"""The unique identifier for wildcard experimenter of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -572,7 +572,7 @@ class ControllerTables(Base):
 
 	@property
 	def MaxEntries(self):
-		"""
+		"""Specify the maximum number of entries supported. The default value is 0.
 
 		Returns:
 			number
@@ -584,7 +584,7 @@ class ControllerTables(Base):
 
 	@property
 	def MetadataMatch(self):
-		"""
+		"""Specify the bits of metadata table that can match. The default value is 0.
 
 		Returns:
 			str
@@ -596,7 +596,7 @@ class ControllerTables(Base):
 
 	@property
 	def MetadataWrite(self):
-		"""
+		"""Specify the bits of metadata table that can write. The default value is 0.
 
 		Returns:
 			str
@@ -608,7 +608,7 @@ class ControllerTables(Base):
 
 	@property
 	def NextTable(self):
-		"""
+		"""Next table property.
 
 		Returns:
 			str
@@ -620,7 +620,7 @@ class ControllerTables(Base):
 
 	@property
 	def NextTableMiss(self):
-		"""
+		"""Next table for table-miss.
 
 		Returns:
 			str
@@ -632,7 +632,7 @@ class ControllerTables(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""Specify the controller table identifier. Lower numbered tables are consulted first.
 
 		Returns:
 			number
@@ -644,7 +644,7 @@ class ControllerTables(Base):
 
 	@property
 	def TableName(self):
-		"""
+		"""Specify the name of the controller table.
 
 		Returns:
 			str
@@ -656,7 +656,7 @@ class ControllerTables(Base):
 
 	@property
 	def WildcardExperimenterData(self):
-		"""
+		"""The data of the wildcard experimenter of Controller Table Experimenter.
 
 		Returns:
 			str
@@ -668,7 +668,7 @@ class ControllerTables(Base):
 
 	@property
 	def WildcardExperimenterDataLength(self):
-		"""
+		"""The data length of the wildcard experimenter of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -680,7 +680,7 @@ class ControllerTables(Base):
 
 	@property
 	def WildcardExperimenterField(self):
-		"""
+		"""The identifier for wildcard experimenter of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -692,7 +692,7 @@ class ControllerTables(Base):
 
 	@property
 	def WildcardExperimenterHasMask(self):
-		"""
+		"""Mask If selected, the wildcard experimenter hash mask field of Controller Table Experimenter is available.
 
 		Returns:
 			bool
@@ -704,7 +704,7 @@ class ControllerTables(Base):
 
 	@property
 	def WildcardExperimenterId(self):
-		"""
+		"""The unique identifier for wildcard experimenter of Controller Table Experimenter.
 
 		Returns:
 			number
@@ -716,7 +716,7 @@ class ControllerTables(Base):
 
 	@property
 	def WriteActionExperimenterData(self):
-		"""
+		"""The data of the Write Action Experimenter.
 
 		Returns:
 			str
@@ -728,7 +728,7 @@ class ControllerTables(Base):
 
 	@property
 	def WriteActionExperimenterDataLength(self):
-		"""
+		"""The data length of the Write Action Miss Experimenter.
 
 		Returns:
 			number
@@ -740,7 +740,7 @@ class ControllerTables(Base):
 
 	@property
 	def WriteActionExperimenterId(self):
-		"""
+		"""The unique identifier for Write Action Experimenter.
 
 		Returns:
 			number
@@ -752,7 +752,7 @@ class ControllerTables(Base):
 
 	@property
 	def WriteActionMissExperimenterData(self):
-		"""
+		"""The data of the Write Action Miss Experimenter.
 
 		Returns:
 			str
@@ -764,7 +764,7 @@ class ControllerTables(Base):
 
 	@property
 	def WriteActionMissExperimenterDataLength(self):
-		"""
+		"""The data length of the Write Action Miss Experimenter.
 
 		Returns:
 			number
@@ -776,7 +776,7 @@ class ControllerTables(Base):
 
 	@property
 	def WriteActionMissExperimenterId(self):
-		"""
+		"""The unique identifier of Write Action Miss Experimenter.
 
 		Returns:
 			number
@@ -790,51 +790,51 @@ class ControllerTables(Base):
 		"""Adds a new controllerTables node on the server and retrieves it in this instance.
 
 		Args:
-			ApplyActionExperimenterData (str): 
-			ApplyActionExperimenterDataLength (number): 
-			ApplyActionExperimenterId (number): 
-			ApplyActionMissExperimenterData (str): 
-			ApplyActionMissExperimenterDataLength (number): 
-			ApplyActionMissExperimenterId (number): 
-			Config (number): 
-			Enabled (bool): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			ExperimenterId (number): 
-			ExperimenterMissData (str): 
-			ExperimenterMissDataLength (number): 
-			ExperimenterMissId (number): 
-			ExperimenterMissType (number): 
-			ExperimenterType (number): 
-			InstructionExperimenterData (str): 
-			InstructionExperimenterDataLength (number): 
-			InstructionExperimenterId (number): 
-			InstructionMissExperimenterData (str): 
-			InstructionMissExperimenterDataLength (number): 
-			InstructionMissExperimenterId (number): 
-			MatchExperimenterData (str): 
-			MatchExperimenterDataLength (number): 
-			MatchExperimenterField (number): 
-			MatchExperimenterHasMask (bool): 
-			MatchExperimenterId (number): 
-			MaxEntries (number): 
-			MetadataMatch (str): 
-			MetadataWrite (str): 
-			NextTable (str): 
-			NextTableMiss (str): 
-			TableId (number): 
-			TableName (str): 
-			WildcardExperimenterData (str): 
-			WildcardExperimenterDataLength (number): 
-			WildcardExperimenterField (number): 
-			WildcardExperimenterHasMask (bool): 
-			WildcardExperimenterId (number): 
-			WriteActionExperimenterData (str): 
-			WriteActionExperimenterDataLength (number): 
-			WriteActionExperimenterId (number): 
-			WriteActionMissExperimenterData (str): 
-			WriteActionMissExperimenterDataLength (number): 
-			WriteActionMissExperimenterId (number): 
+			ApplyActionExperimenterData (str): The data of the Apply Action Experimenter.
+			ApplyActionExperimenterDataLength (number): The data length of the Apply Action Experimenter.
+			ApplyActionExperimenterId (number): The unique identifier for Apply Action Experimenter.
+			ApplyActionMissExperimenterData (str): Experimenter Data The data of the apply action for table-miss of Controller Table Experimenter.
+			ApplyActionMissExperimenterDataLength (number): The data length of the Apply Action Miss Experimenter.
+			ApplyActionMissExperimenterId (number): The unique identifier for Apply Action Miss Experimenter.
+			Config (number): Specify the bitmap of OFPTC_* values. The default value is 0.
+			Enabled (bool): If selected, this table is used in this controller configuration.
+			ExperimenterData (str): The data of the Experimenter.
+			ExperimenterDataLength (number): The data length of the Experimenter for table-miss.
+			ExperimenterId (number): The unique identifier for the Experimenter.
+			ExperimenterMissData (str): The data of the Experimenter for table-miss.
+			ExperimenterMissDataLength (number): The data length of the Experimenter for table-miss.
+			ExperimenterMissId (number): The unique identifier for the Experimenter for table-miss.
+			ExperimenterMissType (number): The type of experimenter for table-miss.
+			ExperimenterType (number): The type of experimenter.
+			InstructionExperimenterData (str): The data of the Instruction Experimenter.
+			InstructionExperimenterDataLength (number): The data length of the experimental instruction of Controller Table Experimenter.
+			InstructionExperimenterId (number): The unique identifier for the Experimenter.
+			InstructionMissExperimenterData (str): The data of the Instruction Miss Experimenter.
+			InstructionMissExperimenterDataLength (number): It indicates the data length of the Instruction Miss Experimenter
+			InstructionMissExperimenterId (number): The unique identifier of Instruction Miss Experimenter.
+			MatchExperimenterData (str): The match data of the Controller Table Experimenter.
+			MatchExperimenterDataLength (number): The data length of the wildcard experimenter of Controller Table Experimenter.
+			MatchExperimenterField (number): The identifier for match experimenter of Controller Table Experimenter.
+			MatchExperimenterHasMask (bool): Mask If selected, the match experimenter hash mask field of Controller Table Experimenter is available.
+			MatchExperimenterId (number): The unique identifier for wildcard experimenter of Controller Table Experimenter.
+			MaxEntries (number): Specify the maximum number of entries supported. The default value is 0.
+			MetadataMatch (str): Specify the bits of metadata table that can match. The default value is 0.
+			MetadataWrite (str): Specify the bits of metadata table that can write. The default value is 0.
+			NextTable (str): Next table property.
+			NextTableMiss (str): Next table for table-miss.
+			TableId (number): Specify the controller table identifier. Lower numbered tables are consulted first.
+			TableName (str): Specify the name of the controller table.
+			WildcardExperimenterData (str): The data of the wildcard experimenter of Controller Table Experimenter.
+			WildcardExperimenterDataLength (number): The data length of the wildcard experimenter of Controller Table Experimenter.
+			WildcardExperimenterField (number): The identifier for wildcard experimenter of Controller Table Experimenter.
+			WildcardExperimenterHasMask (bool): Mask If selected, the wildcard experimenter hash mask field of Controller Table Experimenter is available.
+			WildcardExperimenterId (number): The unique identifier for wildcard experimenter of Controller Table Experimenter.
+			WriteActionExperimenterData (str): The data of the Write Action Experimenter.
+			WriteActionExperimenterDataLength (number): The data length of the Write Action Miss Experimenter.
+			WriteActionExperimenterId (number): The unique identifier for Write Action Experimenter.
+			WriteActionMissExperimenterData (str): The data of the Write Action Miss Experimenter.
+			WriteActionMissExperimenterDataLength (number): The data length of the Write Action Miss Experimenter.
+			WriteActionMissExperimenterId (number): The unique identifier of Write Action Miss Experimenter.
 
 		Returns:
 			self: This instance with all currently retrieved controllerTables data using find and the newly added controllerTables data available through an iterator or index
@@ -860,51 +860,51 @@ class ControllerTables(Base):
 		By default the find method takes no parameters and will retrieve all controllerTables data from the server.
 
 		Args:
-			ApplyActionExperimenterData (str): 
-			ApplyActionExperimenterDataLength (number): 
-			ApplyActionExperimenterId (number): 
-			ApplyActionMissExperimenterData (str): 
-			ApplyActionMissExperimenterDataLength (number): 
-			ApplyActionMissExperimenterId (number): 
-			Config (number): 
-			Enabled (bool): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			ExperimenterId (number): 
-			ExperimenterMissData (str): 
-			ExperimenterMissDataLength (number): 
-			ExperimenterMissId (number): 
-			ExperimenterMissType (number): 
-			ExperimenterType (number): 
-			InstructionExperimenterData (str): 
-			InstructionExperimenterDataLength (number): 
-			InstructionExperimenterId (number): 
-			InstructionMissExperimenterData (str): 
-			InstructionMissExperimenterDataLength (number): 
-			InstructionMissExperimenterId (number): 
-			MatchExperimenterData (str): 
-			MatchExperimenterDataLength (number): 
-			MatchExperimenterField (number): 
-			MatchExperimenterHasMask (bool): 
-			MatchExperimenterId (number): 
-			MaxEntries (number): 
-			MetadataMatch (str): 
-			MetadataWrite (str): 
-			NextTable (str): 
-			NextTableMiss (str): 
-			TableId (number): 
-			TableName (str): 
-			WildcardExperimenterData (str): 
-			WildcardExperimenterDataLength (number): 
-			WildcardExperimenterField (number): 
-			WildcardExperimenterHasMask (bool): 
-			WildcardExperimenterId (number): 
-			WriteActionExperimenterData (str): 
-			WriteActionExperimenterDataLength (number): 
-			WriteActionExperimenterId (number): 
-			WriteActionMissExperimenterData (str): 
-			WriteActionMissExperimenterDataLength (number): 
-			WriteActionMissExperimenterId (number): 
+			ApplyActionExperimenterData (str): The data of the Apply Action Experimenter.
+			ApplyActionExperimenterDataLength (number): The data length of the Apply Action Experimenter.
+			ApplyActionExperimenterId (number): The unique identifier for Apply Action Experimenter.
+			ApplyActionMissExperimenterData (str): Experimenter Data The data of the apply action for table-miss of Controller Table Experimenter.
+			ApplyActionMissExperimenterDataLength (number): The data length of the Apply Action Miss Experimenter.
+			ApplyActionMissExperimenterId (number): The unique identifier for Apply Action Miss Experimenter.
+			Config (number): Specify the bitmap of OFPTC_* values. The default value is 0.
+			Enabled (bool): If selected, this table is used in this controller configuration.
+			ExperimenterData (str): The data of the Experimenter.
+			ExperimenterDataLength (number): The data length of the Experimenter for table-miss.
+			ExperimenterId (number): The unique identifier for the Experimenter.
+			ExperimenterMissData (str): The data of the Experimenter for table-miss.
+			ExperimenterMissDataLength (number): The data length of the Experimenter for table-miss.
+			ExperimenterMissId (number): The unique identifier for the Experimenter for table-miss.
+			ExperimenterMissType (number): The type of experimenter for table-miss.
+			ExperimenterType (number): The type of experimenter.
+			InstructionExperimenterData (str): The data of the Instruction Experimenter.
+			InstructionExperimenterDataLength (number): The data length of the experimental instruction of Controller Table Experimenter.
+			InstructionExperimenterId (number): The unique identifier for the Experimenter.
+			InstructionMissExperimenterData (str): The data of the Instruction Miss Experimenter.
+			InstructionMissExperimenterDataLength (number): It indicates the data length of the Instruction Miss Experimenter
+			InstructionMissExperimenterId (number): The unique identifier of Instruction Miss Experimenter.
+			MatchExperimenterData (str): The match data of the Controller Table Experimenter.
+			MatchExperimenterDataLength (number): The data length of the wildcard experimenter of Controller Table Experimenter.
+			MatchExperimenterField (number): The identifier for match experimenter of Controller Table Experimenter.
+			MatchExperimenterHasMask (bool): Mask If selected, the match experimenter hash mask field of Controller Table Experimenter is available.
+			MatchExperimenterId (number): The unique identifier for wildcard experimenter of Controller Table Experimenter.
+			MaxEntries (number): Specify the maximum number of entries supported. The default value is 0.
+			MetadataMatch (str): Specify the bits of metadata table that can match. The default value is 0.
+			MetadataWrite (str): Specify the bits of metadata table that can write. The default value is 0.
+			NextTable (str): Next table property.
+			NextTableMiss (str): Next table for table-miss.
+			TableId (number): Specify the controller table identifier. Lower numbered tables are consulted first.
+			TableName (str): Specify the name of the controller table.
+			WildcardExperimenterData (str): The data of the wildcard experimenter of Controller Table Experimenter.
+			WildcardExperimenterDataLength (number): The data length of the wildcard experimenter of Controller Table Experimenter.
+			WildcardExperimenterField (number): The identifier for wildcard experimenter of Controller Table Experimenter.
+			WildcardExperimenterHasMask (bool): Mask If selected, the wildcard experimenter hash mask field of Controller Table Experimenter is available.
+			WildcardExperimenterId (number): The unique identifier for wildcard experimenter of Controller Table Experimenter.
+			WriteActionExperimenterData (str): The data of the Write Action Experimenter.
+			WriteActionExperimenterDataLength (number): The data length of the Write Action Miss Experimenter.
+			WriteActionExperimenterId (number): The unique identifier for Write Action Experimenter.
+			WriteActionMissExperimenterData (str): The data of the Write Action Miss Experimenter.
+			WriteActionMissExperimenterDataLength (number): The data length of the Write Action Miss Experimenter.
+			WriteActionMissExperimenterId (number): The unique identifier of Write Action Miss Experimenter.
 
 		Returns:
 			self: This instance with matching controllerTables data retrieved from the server available through an iterator or index
@@ -932,11 +932,13 @@ class ControllerTables(Base):
 	def TableModificationTrigger(self):
 		"""Executes the tableModificationTrigger operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=controllerTables)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

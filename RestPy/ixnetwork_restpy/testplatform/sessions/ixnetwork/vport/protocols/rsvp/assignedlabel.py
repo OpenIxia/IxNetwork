@@ -37,7 +37,7 @@ class AssignedLabel(Base):
 
 	@property
 	def CurrentLspOrSubLspUpTime(self):
-		"""
+		"""Indicates the re-optimization time per LSP/Sub LSP in port level.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class AssignedLabel(Base):
 
 	@property
 	def DestinationIp(self):
-		"""
+		"""The destination router's IP address.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class AssignedLabel(Base):
 
 	@property
 	def Label(self):
-		"""
+		"""Label value assigned to the LSP/tunnel (by the Ixia-emulated router) in response to a label request from the DUT.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class AssignedLabel(Base):
 
 	@property
 	def LeafIp(self):
-		"""
+		"""The IP of the leaf range.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class AssignedLabel(Base):
 
 	@property
 	def LspId(self):
-		"""
+		"""A unique LSP tunnel ID.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class AssignedLabel(Base):
 
 	@property
 	def LspOrSubLspSetupTime(self):
-		"""
+		"""Indicates the set up time per LSP/Sub LSP in port level.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class AssignedLabel(Base):
 
 	@property
 	def ReservationState(self):
-		"""
+		"""The reservation state, once there is a graceful restart. The values are None, Stale, Recovered, Restarting.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class AssignedLabel(Base):
 
 	@property
 	def SourceIp(self):
-		"""
+		"""The source router's IP address.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class AssignedLabel(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""A unique tunnel ID.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class AssignedLabel(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""Tunnel type, one of P2P or P2MP.
 
 		Returns:
 			str
@@ -132,16 +132,16 @@ class AssignedLabel(Base):
 		By default the find method takes no parameters and will retrieve all assignedLabel data from the server.
 
 		Args:
-			CurrentLspOrSubLspUpTime (number): 
-			DestinationIp (str): 
-			Label (number): 
-			LeafIp (str): 
-			LspId (number): 
-			LspOrSubLspSetupTime (number): 
-			ReservationState (str): 
-			SourceIp (str): 
-			TunnelId (number): 
-			Type (str): 
+			CurrentLspOrSubLspUpTime (number): Indicates the re-optimization time per LSP/Sub LSP in port level.
+			DestinationIp (str): The destination router's IP address.
+			Label (number): Label value assigned to the LSP/tunnel (by the Ixia-emulated router) in response to a label request from the DUT.
+			LeafIp (str): The IP of the leaf range.
+			LspId (number): A unique LSP tunnel ID.
+			LspOrSubLspSetupTime (number): Indicates the set up time per LSP/Sub LSP in port level.
+			ReservationState (str): The reservation state, once there is a graceful restart. The values are None, Stale, Recovered, Restarting.
+			SourceIp (str): The source router's IP address.
+			TunnelId (number): A unique tunnel ID.
+			Type (str): Tunnel type, one of P2P or P2MP.
 
 		Returns:
 			self: This instance with matching assignedLabel data retrieved from the server available through an iterator or index

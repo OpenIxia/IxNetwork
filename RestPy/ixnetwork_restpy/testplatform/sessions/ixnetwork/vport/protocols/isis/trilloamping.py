@@ -37,7 +37,7 @@ class TrillOamPing(Base):
 
 	@property
 	def DestinationNickname(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class TrillOamPing(Base):
 
 	@property
 	def IncomingPort(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class TrillOamPing(Base):
 
 	@property
 	def NextHop(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class TrillOamPing(Base):
 
 	@property
 	def OutgoingPort(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class TrillOamPing(Base):
 
 	@property
 	def OutgoingPortMtu(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class TrillOamPing(Base):
 
 	@property
 	def PreviousHop(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class TrillOamPing(Base):
 
 	@property
 	def ResponseTime(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class TrillOamPing(Base):
 
 	@property
 	def SequenceNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class TrillOamPing(Base):
 
 	@property
 	def SourceNickname(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class TrillOamPing(Base):
 
 	@property
 	def Status(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(Failure|Success)
@@ -132,16 +132,16 @@ class TrillOamPing(Base):
 		By default the find method takes no parameters and will retrieve all trillOamPing data from the server.
 
 		Args:
-			DestinationNickname (number): 
-			IncomingPort (number): 
-			NextHop (number): 
-			OutgoingPort (number): 
-			OutgoingPortMtu (number): 
-			PreviousHop (number): 
-			ResponseTime (number): 
-			SequenceNumber (number): 
-			SourceNickname (number): 
-			Status (str(Failure|Success)): 
+			DestinationNickname (number): NOT DEFINED
+			IncomingPort (number): NOT DEFINED
+			NextHop (number): NOT DEFINED
+			OutgoingPort (number): NOT DEFINED
+			OutgoingPortMtu (number): NOT DEFINED
+			PreviousHop (number): NOT DEFINED
+			ResponseTime (number): NOT DEFINED
+			SequenceNumber (number): NOT DEFINED
+			SourceNickname (number): NOT DEFINED
+			Status (str(Failure|Success)): NOT DEFINED
 
 		Returns:
 			self: This instance with matching trillOamPing data retrieved from the server available through an iterator or index

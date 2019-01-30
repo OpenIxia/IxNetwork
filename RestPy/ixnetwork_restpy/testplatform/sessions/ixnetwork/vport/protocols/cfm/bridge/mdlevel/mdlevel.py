@@ -38,7 +38,7 @@ class MdLevel(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the MD levels are enabled.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class MdLevel(Base):
 
 	@property
 	def MdLevelId(self):
-		"""
+		"""Sets the MD level identifier.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class MdLevel(Base):
 
 	@property
 	def MdName(self):
-		"""
+		"""Sets the MD name.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class MdLevel(Base):
 
 	@property
 	def MdNameFormat(self):
-		"""
+		"""Sets the MD Name format.
 
 		Returns:
 			str(noDomainName|domainNameBasedString|macAddress2OctetInteger|characterString)
@@ -88,10 +88,10 @@ class MdLevel(Base):
 		"""Adds a new mdLevel node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			MdLevelId (number): 
-			MdName (str): 
-			MdNameFormat (str(noDomainName|domainNameBasedString|macAddress2OctetInteger|characterString)): 
+			Enabled (bool): If true, the MD levels are enabled.
+			MdLevelId (number): Sets the MD level identifier.
+			MdName (str): Sets the MD name.
+			MdNameFormat (str(noDomainName|domainNameBasedString|macAddress2OctetInteger|characterString)): Sets the MD Name format.
 
 		Returns:
 			self: This instance with all currently retrieved mdLevel data using find and the newly added mdLevel data available through an iterator or index
@@ -117,10 +117,10 @@ class MdLevel(Base):
 		By default the find method takes no parameters and will retrieve all mdLevel data from the server.
 
 		Args:
-			Enabled (bool): 
-			MdLevelId (number): 
-			MdName (str): 
-			MdNameFormat (str(noDomainName|domainNameBasedString|macAddress2OctetInteger|characterString)): 
+			Enabled (bool): If true, the MD levels are enabled.
+			MdLevelId (number): Sets the MD level identifier.
+			MdName (str): Sets the MD name.
+			MdNameFormat (str(noDomainName|domainNameBasedString|macAddress2OctetInteger|characterString)): Sets the MD Name format.
 
 		Returns:
 			self: This instance with matching mdLevel data retrieved from the server available through an iterator or index

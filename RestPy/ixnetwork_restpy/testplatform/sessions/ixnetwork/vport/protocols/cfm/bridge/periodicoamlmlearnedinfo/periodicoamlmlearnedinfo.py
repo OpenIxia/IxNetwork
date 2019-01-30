@@ -37,7 +37,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def AvgFarEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def AvgNearEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CcmReceivedCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CcmSentCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CurrentFarEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CurrentFarEndLossRatio(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CurrentNearEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def CurrentNearEndLossRatio(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def DestinationMacAddress(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def LmmSentCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MaxFarEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MaxFarEndLossRatio(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MaxNearEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MaxNearEndLossRatio(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -190,7 +190,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MinFarEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -199,7 +199,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MinFarEndLossRatio(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MinNearEndLoss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -217,7 +217,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def MinNearEndLossRatio(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -226,7 +226,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def NoReplyCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -235,7 +235,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def SourceMacAddress(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -253,7 +253,7 @@ class PeriodicOamLmLearnedInfo(Base):
 
 	@property
 	def SourceMepId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -267,31 +267,31 @@ class PeriodicOamLmLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all periodicOamLmLearnedInfo data from the server.
 
 		Args:
-			AvgFarEndLoss (str): 
-			AvgNearEndLoss (str): 
-			BVlan (str): 
-			CVlan (str): 
-			CcmReceivedCount (number): 
-			CcmSentCount (number): 
-			CurrentFarEndLoss (number): 
-			CurrentFarEndLossRatio (str): 
-			CurrentNearEndLoss (number): 
-			CurrentNearEndLossRatio (str): 
-			DestinationMacAddress (str): 
-			LmmSentCount (number): 
-			MaxFarEndLoss (number): 
-			MaxFarEndLossRatio (str): 
-			MaxNearEndLoss (number): 
-			MaxNearEndLossRatio (str): 
-			MdLevel (number): 
-			MinFarEndLoss (number): 
-			MinFarEndLossRatio (str): 
-			MinNearEndLoss (number): 
-			MinNearEndLossRatio (str): 
-			NoReplyCount (number): 
-			SVlan (str): 
-			SourceMacAddress (str): 
-			SourceMepId (number): 
+			AvgFarEndLoss (str): NOT DEFINED
+			AvgNearEndLoss (str): NOT DEFINED
+			BVlan (str): NOT DEFINED
+			CVlan (str): NOT DEFINED
+			CcmReceivedCount (number): NOT DEFINED
+			CcmSentCount (number): NOT DEFINED
+			CurrentFarEndLoss (number): NOT DEFINED
+			CurrentFarEndLossRatio (str): NOT DEFINED
+			CurrentNearEndLoss (number): NOT DEFINED
+			CurrentNearEndLossRatio (str): NOT DEFINED
+			DestinationMacAddress (str): NOT DEFINED
+			LmmSentCount (number): NOT DEFINED
+			MaxFarEndLoss (number): NOT DEFINED
+			MaxFarEndLossRatio (str): NOT DEFINED
+			MaxNearEndLoss (number): NOT DEFINED
+			MaxNearEndLossRatio (str): NOT DEFINED
+			MdLevel (number): NOT DEFINED
+			MinFarEndLoss (number): NOT DEFINED
+			MinFarEndLossRatio (str): NOT DEFINED
+			MinNearEndLoss (number): NOT DEFINED
+			MinNearEndLossRatio (str): NOT DEFINED
+			NoReplyCount (number): NOT DEFINED
+			SVlan (str): NOT DEFINED
+			SourceMacAddress (str): NOT DEFINED
+			SourceMepId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching periodicOamLmLearnedInfo data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class MultipleJoinLeaveLatency(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true enables multiple join leave latency.
 
 		Returns:
 			bool

@@ -107,7 +107,7 @@ class LearnedInformation(Base):
 
 	@property
 	def AlarmTrigger(self):
-		"""
+		"""This signifies the alarm trigger. Possible values include Clear and Start.
 
 		Returns:
 			str(clear|start)
@@ -119,7 +119,7 @@ class LearnedInformation(Base):
 
 	@property
 	def AlarmType(self):
-		"""
+		"""This signifies the alarm type. Possible values include IETF and Y.1731.
 
 		Returns:
 			str(ietf|y1731)
@@ -131,7 +131,7 @@ class LearnedInformation(Base):
 
 	@property
 	def ApsTriggerType(self):
-		"""
+		"""This signifies the Trigger type. Possible values include Clear, Exercise, Forced Switch, Freeze, Lockout, Manual Switch To Protect and Manual Switch To Working.
 
 		Returns:
 			str(clear|forcedSwitch|manualSwitchToProtect|manualSwitchToWorking|lockout|exercise|freeze)
@@ -143,7 +143,7 @@ class LearnedInformation(Base):
 
 	@property
 	def CccvPauseTriggerOption(self):
-		"""
+		"""This signifies the cccv pause trigger option. Possible values include TX, RX and TXRX.
 
 		Returns:
 			str(tx|rx|txRx)
@@ -155,7 +155,7 @@ class LearnedInformation(Base):
 
 	@property
 	def CccvResumeTriggerOption(self):
-		"""
+		"""This signifies the cccv resume trigger option. Possible values include Tx, Rx and TxRx.
 
 		Returns:
 			str(tx|rx|txRx)
@@ -167,7 +167,7 @@ class LearnedInformation(Base):
 
 	@property
 	def ChangeSessionParameters(self):
-		"""
+		"""This specifies the minimum receive interval of cc messages in millisecond, at the source side that the user intends to set on the fly.
 
 		Returns:
 			bool
@@ -179,7 +179,7 @@ class LearnedInformation(Base):
 
 	@property
 	def ClearMisconnectivityDefect(self):
-		"""
+		"""If set true all the misconnectivity defects that have been triggered earlier with any type gets cleared.
 
 		Returns:
 			bool
@@ -191,7 +191,7 @@ class LearnedInformation(Base):
 
 	@property
 	def CounterType(self):
-		"""
+		"""This signifies the LM Counter Type. Possible values include 32 Bit (default) and 64 Bit.
 
 		Returns:
 			str(32Bit|64Bit)
@@ -203,7 +203,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmInterval(self):
-		"""
+		"""This signifies the DM interval in milliseconds.
 
 		Returns:
 			number
@@ -215,7 +215,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmIterations(self):
-		"""
+		"""This signifies the total number of DM queries to be sent.
 
 		Returns:
 			number
@@ -227,7 +227,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmMode(self):
-		"""
+		"""This signifies the DM mode. The possible values include Response Expected and No Response Expected.
 
 		Returns:
 			str(noResponseExpected|responseExpected)
@@ -239,7 +239,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmPadLen(self):
-		"""
+		"""This signifies the DM pad length.
 
 		Returns:
 			number
@@ -251,7 +251,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmRequestPaddedReply(self):
-		"""
+		"""This signifies the DM request as a padded reply.
 
 		Returns:
 			bool
@@ -263,7 +263,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmTimeFormat(self):
-		"""
+		"""This signifies the DM time format. The possible values include IEEE and NTP.
 
 		Returns:
 			str(ieee|ntp)
@@ -275,7 +275,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmTrafficClass(self):
-		"""
+		"""This signifies the DM traffic class value.
 
 		Returns:
 			number
@@ -287,7 +287,7 @@ class LearnedInformation(Base):
 
 	@property
 	def DmType(self):
-		"""
+		"""This signifies the DM Type. Possible values include IETF and Y.1731.
 
 		Returns:
 			str(ietf|y1731)
@@ -299,7 +299,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAlarm(self):
-		"""
+		"""This signifies the enablement of the Alarm and the fields under it.
 
 		Returns:
 			bool
@@ -311,7 +311,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAlarmAis(self):
-		"""
+		"""This signifies the enablement of the Alarm AIS.
 
 		Returns:
 			bool
@@ -323,7 +323,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAlarmFastClear(self):
-		"""
+		"""Clears the Alarm State in 10 seconds
 
 		Returns:
 			bool
@@ -335,7 +335,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAlarmLck(self):
-		"""
+		"""This signifies the enablement of the Alarm lck.
 
 		Returns:
 			bool
@@ -347,7 +347,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableAlarmSetLdi(self):
-		"""
+		"""This signifies the enablement of the Alarm Set LDI.
 
 		Returns:
 			bool
@@ -359,7 +359,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableApsTrigger(self):
-		"""
+		"""This signifies the enablement of APS trigger.
 
 		Returns:
 			bool
@@ -371,7 +371,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableCccvPause(self):
-		"""
+		"""This signifies the enabling of CCCV Pause.
 
 		Returns:
 			bool
@@ -383,7 +383,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableCccvResume(self):
-		"""
+		"""This signifies the enablement of CCCV Resume.
 
 		Returns:
 			bool
@@ -395,7 +395,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableDmTrigger(self):
-		"""
+		"""This signifies the enablement of the DM trigger.
 
 		Returns:
 			bool
@@ -407,7 +407,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableLmTrigger(self):
-		"""
+		"""This signifies the enablement of the LM trigger.
 
 		Returns:
 			bool
@@ -419,7 +419,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableLspPing(self):
-		"""
+		"""This signifies the enablement of the LSP Ping.
 
 		Returns:
 			bool
@@ -431,7 +431,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableLspPingFecStackValidation(self):
-		"""
+		"""This signifies the enablement of the FEC Stack Validation.
 
 		Returns:
 			bool
@@ -443,7 +443,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableLspPingValidateReversePath(self):
-		"""
+		"""If true validate reverse path bit is set in lsp ping message.
 
 		Returns:
 			bool
@@ -455,7 +455,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableLspTraceRoute(self):
-		"""
+		"""This signifies the enablement of the lsp traceroute.
 
 		Returns:
 			bool
@@ -467,7 +467,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnableLspTraceRouteFecStackValidation(self):
-		"""
+		"""This signifies the enablement of the FEC Stack Validation.
 
 		Returns:
 			bool
@@ -479,7 +479,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnablePwStatusClear(self):
-		"""
+		"""This signifies the enablement of the PW Status Clear and the fields under it.
 
 		Returns:
 			bool
@@ -491,7 +491,7 @@ class LearnedInformation(Base):
 
 	@property
 	def EnablePwStatusFault(self):
-		"""
+		"""This signifies the enablement of the PW Status Fault.
 
 		Returns:
 			bool
@@ -503,7 +503,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsDmLearnedInformationRefreshed(self):
-		"""
+		"""This signifies the refresheing of the DM learned information.
 
 		Returns:
 			bool
@@ -512,7 +512,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsGeneralLearnedInformationRefreshed(self):
-		"""
+		"""This signifies the refereshing of the general learned information.
 
 		Returns:
 			bool
@@ -521,7 +521,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsLmLearnedInformationRefreshed(self):
-		"""
+		"""This signifies the refresheing of the LM learned information.
 
 		Returns:
 			bool
@@ -530,7 +530,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsPingLearnedInformationRefreshed(self):
-		"""
+		"""This signifies the refresheing of the Ping learned information.
 
 		Returns:
 			bool
@@ -539,7 +539,7 @@ class LearnedInformation(Base):
 
 	@property
 	def IsTraceRouteLearnedInformationRefreshed(self):
-		"""
+		"""This signifies the refresheing of the Trace Route learned information.
 
 		Returns:
 			bool
@@ -548,7 +548,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LastDmResponseTimeout(self):
-		"""
+		"""This signifies the last DM Response Timeout.
 
 		Returns:
 			number
@@ -560,7 +560,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LastLmResponseTimeout(self):
-		"""
+		"""This signifies the last LM response timeout.
 
 		Returns:
 			number
@@ -572,7 +572,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmInitialRxValue(self):
-		"""
+		"""This signifies the LM Initial Rx value.
 
 		Returns:
 			number
@@ -584,7 +584,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmInitialTxValue(self):
-		"""
+		"""This signifies the LM Initial Tx value.
 
 		Returns:
 			number
@@ -596,7 +596,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmInterval(self):
-		"""
+		"""This signifies the LM interval in milliseconds.
 
 		Returns:
 			number
@@ -608,7 +608,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmIterations(self):
-		"""
+		"""This signifies the number of LM queries to be sent.
 
 		Returns:
 			number
@@ -620,7 +620,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmMode(self):
-		"""
+		"""This signifies the LM mode. Possible values include Response Expected and No Response Expected.
 
 		Returns:
 			str(responseExpected|noResponseExpected)
@@ -632,7 +632,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmRxStep(self):
-		"""
+		"""This signifies the LM Rx step value.
 
 		Returns:
 			number
@@ -644,7 +644,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmTrafficClass(self):
-		"""
+		"""This signifies the LM Traffic Class.
 
 		Returns:
 			number
@@ -656,7 +656,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmTxStep(self):
-		"""
+		"""This signifies the LM Tx Step value.
 
 		Returns:
 			number
@@ -668,7 +668,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LmType(self):
-		"""
+		"""This signifies the LM type. The possible values include IETF and Y.1731.
 
 		Returns:
 			str(ietf|y1731)
@@ -680,7 +680,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LspPingEncapsulationType(self):
-		"""
+		"""This signifies the encapsulation type with which the lsp ping request message will be sent out. The possible values include UDP-IP-GAch and GAch.
 
 		Returns:
 			str(GAch|UDP over IP over GAch)
@@ -692,7 +692,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LspPingResponseTimeout(self):
-		"""
+		"""This signifies the response timeout in milliseconds.
 
 		Returns:
 			number
@@ -704,7 +704,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LspPingTtlValue(self):
-		"""
+		"""This signifies the LSP Ping Ttl value.
 
 		Returns:
 			number
@@ -716,7 +716,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LspTraceRouteEncapsulationType(self):
-		"""
+		"""This signifies the encapsulation type with which the Trace route request message will be sen out. The possible values include UDP-IP-GAch and GAch.
 
 		Returns:
 			str(GAch|UDP over IP over GAch)
@@ -728,7 +728,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LspTraceRouteResponseTimeout(self):
-		"""
+		"""This signifies the response timeout in milliseconds.
 
 		Returns:
 			number
@@ -740,7 +740,7 @@ class LearnedInformation(Base):
 
 	@property
 	def LspTraceRouteTtlLimit(self):
-		"""
+		"""This signifies the max TTL till which the Echo Request will be sent out as part of trace route process.
 
 		Returns:
 			number
@@ -752,7 +752,7 @@ class LearnedInformation(Base):
 
 	@property
 	def MinRxInterval(self):
-		"""
+		"""This signifies the minimum receive interval of cc messages in millisecond, at the source side that the user intends to set on the fly.
 
 		Returns:
 			str(10|100|1000|10000|3.33|60000|600000)
@@ -764,7 +764,7 @@ class LearnedInformation(Base):
 
 	@property
 	def MinTxInterval(self):
-		"""
+		"""This signifies the learned information minimum transmit interval, in milliseconds. This specifies the minimum transmit interval of cc messages in millisecond, at the source side that the user intends to set on the fly.
 
 		Returns:
 			str(10|100|1000|10000|3.33|60000|600000)
@@ -776,7 +776,7 @@ class LearnedInformation(Base):
 
 	@property
 	def MisconnectivityDefect(self):
-		"""
+		"""To enable misconnectivity defect on the fly by changing LSP/PW MEP/MEG Id parameter or Your Discriminator on the source side.
 
 		Returns:
 			bool
@@ -788,7 +788,7 @@ class LearnedInformation(Base):
 
 	@property
 	def MisconnectivityDefectOption(self):
-		"""
+		"""To enable misconnectivity defect on the fly by changing LSP/PW MEP/MEG Id parameter or Your Discriminator on the source side.
 
 		Returns:
 			str(unexpectedMepId|unexpectedYourDiscriminator)
@@ -800,7 +800,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvDownstreamAddressType(self):
-		"""
+		"""This signifies the Address Type of the Downstream or Detailed Downstream Mapping TLV. This can be of three types.
 
 		Returns:
 			str(ipv4Numbered|ipv4Unnumbered|nonIp)
@@ -812,7 +812,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvDownstreamIpAddress(self):
-		"""
+		"""This signifies the inclusion of the IP address in Downstream or Detailed Downstream Mapping TLV. This takes input in ip address format.
 
 		Returns:
 			str
@@ -824,7 +824,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvDsIflag(self):
-		"""
+		"""This signifies the setting of I bit in the DS Flag of Downstream or Detailed Downstream Mapping TLV.
 
 		Returns:
 			bool
@@ -836,7 +836,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvDsNflag(self):
-		"""
+		"""If set true, N bit is set in the DS Flag of Downstream or Detailed Downstream Mapping TLV.
 
 		Returns:
 			bool
@@ -848,7 +848,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvEgressIfNumber(self):
-		"""
+		"""This signifies the Egress If Number, if address type of Downstream or Detailed Downstream Mapping TLV is set to nonIP.
 
 		Returns:
 			number
@@ -860,7 +860,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIncludeDestinationIdentifierTlv(self):
-		"""
+		"""If channel type is set to GAch, this signifies the inclusion of Destination Identifier TLV in the On Demand CV message. Possible values are true or false.
 
 		Returns:
 			bool
@@ -872,7 +872,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIncludeDetailedDownstreamMappingTlv(self):
-		"""
+		"""This signifies the inclusion of the Detailed Downstream Mapping TLV in on demand cv message. Possible values are true or false.
 
 		Returns:
 			bool
@@ -884,7 +884,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIncludeDownstreamMappingTlv(self):
-		"""
+		"""This signifies the inclusion of Downstream Mapping TLV in on demand cv messages.
 
 		Returns:
 			bool
@@ -896,7 +896,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIncludePadTlv(self):
-		"""
+		"""This signifies the inclusion of Pad TLV in on demand cv messages (ping or traceroute).
 
 		Returns:
 			bool
@@ -908,7 +908,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIncludeReplyTosByteTlv(self):
-		"""
+		"""This signifies the inclusion of Reply Tos Byte TLV in on demand cv messages, if channel type is configured ip-udp-gach.
 
 		Returns:
 			bool
@@ -920,7 +920,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIncludeSourceIdentifierTlv(self):
-		"""
+		"""If channel type is set to GAch, this signifies the inclusion of Source Identifier TLV in the On Demand CV message. Possible values are true or false.
 
 		Returns:
 			bool
@@ -932,7 +932,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvIngressIfNumber(self):
-		"""
+		"""This signifies the Ingress If Number, if address type of Downstream or Detailed Downstream Mapping TLV is set to nonIP.
 
 		Returns:
 			number
@@ -944,7 +944,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvNumberedDownstreamInterfaceAddress(self):
-		"""
+		"""If the address type of Downstream Address TLV is set to ipv4Numbered, it signifies the numbered Interface Address. This takes value in ip address format.
 
 		Returns:
 			str
@@ -956,7 +956,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvPadTlvFirstOctet(self):
-		"""
+		"""This signifies the value of first octet of Pad TLV. The possible values are copy or drop.
 
 		Returns:
 			str(drop|copy)
@@ -968,7 +968,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvPadTlvLength(self):
-		"""
+		"""This signifies the inclusion of Pad TLV length in On Demand CV message.
 
 		Returns:
 			number
@@ -980,7 +980,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvTosByte(self):
-		"""
+		"""If channel type is set ip-udp-Gach, this signifies the value of Tos Byte field within Reply TOS Byte TLV, included in on demand cv messages.
 
 		Returns:
 			number
@@ -992,7 +992,7 @@ class LearnedInformation(Base):
 
 	@property
 	def OnDemandCvUnnumberedDownstreamInterfaceAddress(self):
-		"""
+		"""If the address type of Downstream Address TLV is set to ipv4Unnumbered, this signifies the unnumbered Interface Address. This takes value in integer format. The max value can be 4294967295.
 
 		Returns:
 			number
@@ -1004,7 +1004,7 @@ class LearnedInformation(Base):
 
 	@property
 	def Periodicity(self):
-		"""
+		"""This signifies the periodicity of the alarm.
 
 		Returns:
 			number
@@ -1016,7 +1016,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PwStatusClearLabelTtl(self):
-		"""
+		"""This signifies the PW status clear label Ttl.
 
 		Returns:
 			number
@@ -1028,7 +1028,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PwStatusClearTransmitInterval(self):
-		"""
+		"""This signifies the transmit interval in seconds.
 
 		Returns:
 			number
@@ -1040,7 +1040,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PwStatusCode(self):
-		"""
+		"""This signifies the selecting of the relevant option from the drop-down on the right hand side.
 
 		Returns:
 			number
@@ -1052,7 +1052,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PwStatusFaultLabelTtl(self):
-		"""
+		"""This signifies the TTL value to be set in the PW label header while sending out PW Status message.
 
 		Returns:
 			number
@@ -1064,7 +1064,7 @@ class LearnedInformation(Base):
 
 	@property
 	def PwStatusFaultTransmitInterval(self):
-		"""
+		"""This signifies the PW Status Fault Transmit Interval in seconds.
 
 		Returns:
 			number
@@ -1077,11 +1077,13 @@ class LearnedInformation(Base):
 	def ClearRecordsForTrigger(self):
 		"""Executes the clearRecordsForTrigger operation on the server.
 
+		This option is used to clear the selected learned information using the command addRecordForTrigger
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1093,11 +1095,13 @@ class LearnedInformation(Base):
 	def RefreshLearnedInformation(self):
 		"""Executes the refreshLearnedInformation operation on the server.
 
+		This signifies the refreshing of the learned information of MPLSTP router.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -1109,11 +1113,13 @@ class LearnedInformation(Base):
 	def Trigger(self):
 		"""Executes the trigger operation on the server.
 
+		This signifies the learned info trigger settings.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=learnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

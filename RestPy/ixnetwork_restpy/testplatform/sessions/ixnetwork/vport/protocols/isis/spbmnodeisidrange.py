@@ -38,7 +38,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def CMacAddressCount(self):
-		"""
+		"""The number of C-MAC addresses.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def CMacAddressStep(self):
-		"""
+		"""The incremental value of C-MAC address.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def ITagEthernetType(self):
-		"""
+		"""The I-Tag Ethernet type. An I-Tag is a multiplexing tag for service instance scaling in Provider Bridged Networks.
 
 		Returns:
 			number
@@ -71,7 +71,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def InterNodeCmacAddress(self):
-		"""
+		"""The incremental value of the Inter Node C-MAC address.
 
 		Returns:
 			str
@@ -83,7 +83,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def InterNodeCvlan(self):
-		"""
+		"""The Inter Node Stacked VLAN.
 
 		Returns:
 			number
@@ -95,7 +95,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def InterNodeIsIdIncrement(self):
-		"""
+		"""The incremental value of Inter Node service identifier.
 
 		Returns:
 			number
@@ -107,7 +107,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def InterNodeSvlan(self):
-		"""
+		"""The Inter Node Single VLAN.
 
 		Returns:
 			number
@@ -119,7 +119,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def IsId(self):
-		"""
+		"""The I-component service identifier. The maximum value is 16777215. The minimum value is 0.
 
 		Returns:
 			number
@@ -131,7 +131,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def RBit(self):
-		"""
+		"""The Restart State bit.
 
 		Returns:
 			bool
@@ -143,7 +143,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def StartCmacAddress(self):
-		"""
+		"""The starting C-MAC address.
 
 		Returns:
 			str
@@ -155,7 +155,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def StartCvlan(self):
-		"""
+		"""The starting value of Stacked VLAN.
 
 		Returns:
 			number
@@ -167,7 +167,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def StartSvlan(self):
-		"""
+		"""The starting value of Single VLAN.
 
 		Returns:
 			number
@@ -179,7 +179,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def TBit(self):
-		"""
+		"""The external route tag bit.
 
 		Returns:
 			bool
@@ -191,7 +191,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def TrafficDestMacAddress(self):
-		"""
+		"""The traffic-destination MAC address.
 
 		Returns:
 			str
@@ -203,7 +203,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def TransmissionType(self):
-		"""
+		"""Select the type of packet transmission. Options include Unicast and Multicast.
 
 		Returns:
 			number
@@ -215,7 +215,7 @@ class SpbmNodeIsIdRange(Base):
 
 	@property
 	def VlanType(self):
-		"""
+		"""The type of VLAN.
 
 		Returns:
 			number
@@ -229,21 +229,21 @@ class SpbmNodeIsIdRange(Base):
 		"""Adds a new spbmNodeIsIdRange node on the server and retrieves it in this instance.
 
 		Args:
-			CMacAddressCount (number): 
-			CMacAddressStep (str): 
-			InterNodeCmacAddress (str): 
-			InterNodeCvlan (number): 
-			InterNodeIsIdIncrement (number): 
-			InterNodeSvlan (number): 
-			IsId (number): 
-			RBit (bool): 
-			StartCmacAddress (str): 
-			StartCvlan (number): 
-			StartSvlan (number): 
-			TBit (bool): 
-			TrafficDestMacAddress (str): 
-			TransmissionType (number): 
-			VlanType (number): 
+			CMacAddressCount (number): The number of C-MAC addresses.
+			CMacAddressStep (str): The incremental value of C-MAC address.
+			InterNodeCmacAddress (str): The incremental value of the Inter Node C-MAC address.
+			InterNodeCvlan (number): The Inter Node Stacked VLAN.
+			InterNodeIsIdIncrement (number): The incremental value of Inter Node service identifier.
+			InterNodeSvlan (number): The Inter Node Single VLAN.
+			IsId (number): The I-component service identifier. The maximum value is 16777215. The minimum value is 0.
+			RBit (bool): The Restart State bit.
+			StartCmacAddress (str): The starting C-MAC address.
+			StartCvlan (number): The starting value of Stacked VLAN.
+			StartSvlan (number): The starting value of Single VLAN.
+			TBit (bool): The external route tag bit.
+			TrafficDestMacAddress (str): The traffic-destination MAC address.
+			TransmissionType (number): Select the type of packet transmission. Options include Unicast and Multicast.
+			VlanType (number): The type of VLAN.
 
 		Returns:
 			self: This instance with all currently retrieved spbmNodeIsIdRange data using find and the newly added spbmNodeIsIdRange data available through an iterator or index
@@ -269,22 +269,22 @@ class SpbmNodeIsIdRange(Base):
 		By default the find method takes no parameters and will retrieve all spbmNodeIsIdRange data from the server.
 
 		Args:
-			CMacAddressCount (number): 
-			CMacAddressStep (str): 
-			ITagEthernetType (number): 
-			InterNodeCmacAddress (str): 
-			InterNodeCvlan (number): 
-			InterNodeIsIdIncrement (number): 
-			InterNodeSvlan (number): 
-			IsId (number): 
-			RBit (bool): 
-			StartCmacAddress (str): 
-			StartCvlan (number): 
-			StartSvlan (number): 
-			TBit (bool): 
-			TrafficDestMacAddress (str): 
-			TransmissionType (number): 
-			VlanType (number): 
+			CMacAddressCount (number): The number of C-MAC addresses.
+			CMacAddressStep (str): The incremental value of C-MAC address.
+			ITagEthernetType (number): The I-Tag Ethernet type. An I-Tag is a multiplexing tag for service instance scaling in Provider Bridged Networks.
+			InterNodeCmacAddress (str): The incremental value of the Inter Node C-MAC address.
+			InterNodeCvlan (number): The Inter Node Stacked VLAN.
+			InterNodeIsIdIncrement (number): The incremental value of Inter Node service identifier.
+			InterNodeSvlan (number): The Inter Node Single VLAN.
+			IsId (number): The I-component service identifier. The maximum value is 16777215. The minimum value is 0.
+			RBit (bool): The Restart State bit.
+			StartCmacAddress (str): The starting C-MAC address.
+			StartCvlan (number): The starting value of Stacked VLAN.
+			StartSvlan (number): The starting value of Single VLAN.
+			TBit (bool): The external route tag bit.
+			TrafficDestMacAddress (str): The traffic-destination MAC address.
+			TransmissionType (number): Select the type of packet transmission. Options include Unicast and Multicast.
+			VlanType (number): The type of VLAN.
 
 		Returns:
 			self: This instance with matching spbmNodeIsIdRange data retrieved from the server available through an iterator or index

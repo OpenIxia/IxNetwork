@@ -93,7 +93,7 @@ class Capture(Base):
 
 	@property
 	def AfterTriggerFilter(self):
-		"""
+		"""Controls the capture of data after triggering when operating in triggered mode.
 
 		Returns:
 			str(captureAfterTriggerAll|captureAfterTriggerConditionFilter|captureAfterTriggerFilter)
@@ -105,7 +105,7 @@ class Capture(Base):
 
 	@property
 	def BeforeTriggerFilter(self):
-		"""
+		"""Controls the capture of data prior to triggering when operating in triggered mode
 
 		Returns:
 			str(captureBeforeTriggerAll|captureBeforeTriggerFilter|captureBeforeTriggerNone)
@@ -117,7 +117,7 @@ class Capture(Base):
 
 	@property
 	def CaptureMode(self):
-		"""
+		"""Controls whether data capture is performed in a continuous or triggered mode.
 
 		Returns:
 			str(captureContinuousMode|captureTriggerMode)
@@ -129,7 +129,7 @@ class Capture(Base):
 
 	@property
 	def ContinuousFilters(self):
-		"""
+		"""Controls the circular buffer behaviour: continuous capture of all received packets or continuous capture of received packets which match the filter conditions applied.
 
 		Returns:
 			str(captureContinuousAll|captureContinuousFilter)
@@ -141,7 +141,7 @@ class Capture(Base):
 
 	@property
 	def ControlActiveCapture(self):
-		"""
+		"""The name of the active control capture (if any).The active control capture is the last one made on the port by default; but the user can change it using this attribute.
 
 		Returns:
 			str
@@ -153,7 +153,7 @@ class Capture(Base):
 
 	@property
 	def ControlBufferBehaviour(self):
-		"""
+		"""Sets the control capture buffer behavior.
 
 		Returns:
 			str(bufferAfterStopCircular|bufferAfterStopNonCircular|bufferLiveCircular|bufferLiveNonCircular)
@@ -165,7 +165,7 @@ class Capture(Base):
 
 	@property
 	def ControlBufferSize(self):
-		"""
+		"""Sets the size(%) of the ports memory used by the control capture.
 
 		Returns:
 			number
@@ -177,7 +177,7 @@ class Capture(Base):
 
 	@property
 	def ControlCaptureFilter(self):
-		"""
+		"""Controls the dividing line within the capture buffer between before trigger dataand post trigger data. This control is only useful in triggered mode.
 
 		Returns:
 			str
@@ -189,7 +189,7 @@ class Capture(Base):
 
 	@property
 	def ControlCaptureState(self):
-		"""
+		"""Current state of the control capture (if there are packets uploading in GUI or not).
 
 		Returns:
 			str(notReady|ready)
@@ -198,7 +198,7 @@ class Capture(Base):
 
 	@property
 	def ControlCaptureTrigger(self):
-		"""
+		"""This is the control Trigger string.
 
 		Returns:
 			str
@@ -219,7 +219,7 @@ class Capture(Base):
 
 	@property
 	def ControlCaptures(self):
-		"""
+		"""The list of control captures which are available for the port.
 
 		Returns:
 			str
@@ -228,7 +228,7 @@ class Capture(Base):
 
 	@property
 	def ControlDecodeAsCurrentFilter(self):
-		"""
+		"""The control capture decode as filter used by last decode as operation (if any).
 
 		Returns:
 			str
@@ -237,7 +237,7 @@ class Capture(Base):
 
 	@property
 	def ControlInterfaceType(self):
-		"""
+		"""Enables control capture on the desired interfaces.
 
 		Returns:
 			str(anyInterface|specificInterface)
@@ -249,7 +249,7 @@ class Capture(Base):
 
 	@property
 	def ControlPacketCounter(self):
-		"""
+		"""Shows the number of control capture packets.
 
 		Returns:
 			number
@@ -258,7 +258,7 @@ class Capture(Base):
 
 	@property
 	def ControlSliceSize(self):
-		"""
+		"""Sets the size of the control capture slices.
 
 		Returns:
 			number
@@ -270,7 +270,7 @@ class Capture(Base):
 
 	@property
 	def DataActiveCapture(self):
-		"""
+		"""The name of the active data capture (if any). The active data capture is the last one made on the port by default; but the user can change it using this attribute.
 
 		Returns:
 			str
@@ -282,7 +282,7 @@ class Capture(Base):
 
 	@property
 	def DataCaptureState(self):
-		"""
+		"""Current state of the data capture; ready if all packets have been uploaded on client or notReady if packet uploading is in progress.
 
 		Returns:
 			str(notReady|ready)
@@ -300,7 +300,7 @@ class Capture(Base):
 
 	@property
 	def DataCaptures(self):
-		"""
+		"""The list of data captures which are available for the port.
 
 		Returns:
 			str
@@ -309,7 +309,7 @@ class Capture(Base):
 
 	@property
 	def DataDecodeAsCurrentFilter(self):
-		"""
+		"""The data capture decode as filter used by last decode as operation (if any).
 
 		Returns:
 			str
@@ -318,7 +318,7 @@ class Capture(Base):
 
 	@property
 	def DataPacketCounter(self):
-		"""
+		"""Shows the number of data capture packets.
 
 		Returns:
 			number
@@ -327,7 +327,7 @@ class Capture(Base):
 
 	@property
 	def DataReceiveTimestamp(self):
-		"""
+		"""Controls whether the data capture packets timestamp are using the chassis UTC time or the HW timestamp.
 
 		Returns:
 			str(chassisUtcTime|hwTimestamp)
@@ -339,7 +339,7 @@ class Capture(Base):
 
 	@property
 	def DecodeAsLinkProtocols(self):
-		"""
+		"""List with link protocols available for capture decode as operation. Need to have an active capture to retrieve the property.
 
 		Returns:
 			list(str)
@@ -348,7 +348,7 @@ class Capture(Base):
 
 	@property
 	def DecodeAsNetworkProtocols(self):
-		"""
+		"""List with network protocols available for capture decode as operation. Need to have an active capture to retrieve the property.
 
 		Returns:
 			list(str)
@@ -357,7 +357,7 @@ class Capture(Base):
 
 	@property
 	def DecodeAsTransportProtocols(self):
-		"""
+		"""List with transport protocols available for capture decode as operation. Need to have an active capture to retrieve the property.
 
 		Returns:
 			list(str)
@@ -366,7 +366,7 @@ class Capture(Base):
 
 	@property
 	def DisplayFiltersControlCapture(self):
-		"""
+		"""Displays the packet filter set inside the control capture that is used to filter the already captured packets
 
 		Returns:
 			str
@@ -378,7 +378,7 @@ class Capture(Base):
 
 	@property
 	def DisplayFiltersDataCapture(self):
-		"""
+		"""Displays the packet filter set inside the data capture that is used to filter the already captured packets
 
 		Returns:
 			str
@@ -390,7 +390,7 @@ class Capture(Base):
 
 	@property
 	def HardwareEnabled(self):
-		"""
+		"""If true, enables the capture of data plane traffic. Note that in order for data traffic to be captured, the vport attritbute -rxMode must be set to capture.
 
 		Returns:
 			bool
@@ -402,7 +402,7 @@ class Capture(Base):
 
 	@property
 	def IsCaptureRunning(self):
-		"""
+		"""Indicates if the capture is running.
 
 		Returns:
 			bool
@@ -411,7 +411,7 @@ class Capture(Base):
 
 	@property
 	def IsControlCaptureRunning(self):
-		"""
+		"""Indicates if the control capture is running.
 
 		Returns:
 			bool
@@ -420,7 +420,7 @@ class Capture(Base):
 
 	@property
 	def IsDataCaptureRunning(self):
-		"""
+		"""Indicates if the data capture is running.
 
 		Returns:
 			bool
@@ -429,7 +429,7 @@ class Capture(Base):
 
 	@property
 	def SliceSize(self):
-		"""
+		"""The size of the capture slice.
 
 		Returns:
 			number
@@ -441,7 +441,7 @@ class Capture(Base):
 
 	@property
 	def SoftwareEnabled(self):
-		"""
+		"""If true, enables the capture of control plane traffic. Note that in order for data traffic to be captured, the vport attritbute -rxMode must be set to capture.
 
 		Returns:
 			bool
@@ -453,7 +453,7 @@ class Capture(Base):
 
 	@property
 	def TriggerPosition(self):
-		"""
+		"""Controls the dividing line within the capture buffer between before trigger data and post trigger data. This control is only useful in triggered mode.
 
 		Returns:
 			number
@@ -466,12 +466,14 @@ class Capture(Base):
 	def DecodeAsApply(self, Arg2, Arg3, Arg4, Arg5):
 		"""Executes the decodeAsApply operation on the server.
 
+		The command forces a re-dissection of all packets based on a filter condition. (similar with Decode As from Wireshark)
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(control|data)): 
-			Arg3 (str(link|network|transport)): 
-			Arg4 (number): 
-			Arg5 (str): 
+			Arg2 (str(control|data)): The capture type, could be either control or data.
+			Arg3 (str(link|network|transport)): Specifies the network layer at witch the command should take place.
+			Arg4 (number): Could be the TCP port for Transport layer (either source or destination), IP protocol for Network layer or Ethertype for Link layer.
+			Arg5 (str): The protocol name to re-dissect as.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -483,14 +485,16 @@ class Capture(Base):
 	def DecodeAsApply(self, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7):
 		"""Executes the decodeAsApply operation on the server.
 
+		The command forces a re-dissection of all packets based on a filter condition. (similar with Decode As from Wireshark)
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(control|data)): 
-			Arg3 (str(transport)): 
-			Arg4 (number): 
-			Arg5 (str(transport)): 
-			Arg6 (number): 
-			Arg7 (str): 
+			Arg2 (str(control|data)): The capture type, could be either control or data.
+			Arg3 (str(transport)): The transport layer.
+			Arg4 (number): The TCP source port.
+			Arg5 (str(transport)): The transport layer.
+			Arg6 (number): The TCP destination port.
+			Arg7 (str): The protocol name to re-dissect as.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -502,9 +506,11 @@ class Capture(Base):
 	def DecodeAsClear(self, Arg2):
 		"""Executes the decodeAsClear operation on the server.
 
+		The command clears the dissection filter set by DecodeAsApply command.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(control|data)): 
+			Arg2 (str(control|data)): The capture type, could be either control or data.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -516,12 +522,14 @@ class Capture(Base):
 	def MergeCapture(self, Arg2, Arg3, Arg4, Arg5):
 		"""Executes the mergeCapture operation on the server.
 
+		The command merges to online captures.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(control|data)): 
-			Arg3 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): 
-			Arg4 (str(control|data)): 
-			Arg5 (str): 
+			Arg2 (str(control|data)): The capture type, could be either control or data.
+			Arg3 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The capture object of a port.
+			Arg4 (str(control|data)): The capture type, could be either control or data.
+			Arg5 (str): The full path where the resulted merged capture will be saved, the result capture name needs to contain extension also.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -533,11 +541,13 @@ class Capture(Base):
 	def MergeCapture(self, Arg2, Arg3, Arg4):
 		"""Executes the mergeCapture operation on the server.
 
+		The command merges an online capture file with an offline one.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(control|data)): 
-			Arg3 (str): 
-			Arg4 (str): 
+			Arg2 (str(control|data)): The capture type, could be either control or data.
+			Arg3 (str): The full path of the offline capture.
+			Arg4 (str): The full path where the resulted merged capture will be saved, the result capture name needs to contain extension also.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -548,6 +558,8 @@ class Capture(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		This command starts the capture process for a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
@@ -562,9 +574,11 @@ class Capture(Base):
 	def Start(self, Arg2):
 		"""Executes the start operation on the server.
 
+		The command starts the capture porcess for the specified port.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(allTraffic|controlTraffic|dataTraffic)): 
+			Arg2 (str(allTraffic|controlTraffic|dataTraffic)): The type of the capture that should be started.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -575,6 +589,8 @@ class Capture(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		This command stops captures for the specified capture configuration.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
@@ -589,9 +605,11 @@ class Capture(Base):
 	def Stop(self, Arg2):
 		"""Executes the stop operation on the server.
 
+		The command stops the capture on a port.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=capture)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(allTraffic|controlTraffic|dataTraffic)): 
+			Arg2 (str(allTraffic|controlTraffic|dataTraffic)): The capture type.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

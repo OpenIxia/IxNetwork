@@ -51,7 +51,7 @@ class Stack(Base):
 
 	@property
 	def DisplayName(self):
-		"""
+		"""The display name of the stack.
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class Stack(Base):
 
 	@property
 	def TemplateName(self):
-		"""
+		"""Indiates the protocol template name that is added to a packet in a stack.
 
 		Returns:
 			str
@@ -83,9 +83,9 @@ class Stack(Base):
 		By default the find method takes no parameters and will retrieve all stack data from the server.
 
 		Args:
-			DisplayName (str): 
+			DisplayName (str): The display name of the stack.
 			StackTypeId (str): 
-			TemplateName (str): 
+			TemplateName (str): Indiates the protocol template name that is added to a packet in a stack.
 
 		Returns:
 			self: This instance with matching stack data retrieved from the server available through an iterator or index

@@ -65,7 +65,7 @@ class Pos(Base):
 
 	@property
 	def C2Expected(self):
-		"""
+		"""C2 Byte
 
 		Returns:
 			number
@@ -77,7 +77,7 @@ class Pos(Base):
 
 	@property
 	def C2Tx(self):
-		"""
+		"""C2 Byte
 
 		Returns:
 			number
@@ -89,7 +89,7 @@ class Pos(Base):
 
 	@property
 	def CrcSize(self):
-		"""
+		"""The type of cyclic redundancy check (CRC) to be used.
 
 		Returns:
 			str(crc16|crc32)
@@ -101,7 +101,7 @@ class Pos(Base):
 
 	@property
 	def DataScrambling(self):
-		"""
+		"""Data scrambling is enabled on this POS port.
 
 		Returns:
 			bool
@@ -113,7 +113,7 @@ class Pos(Base):
 
 	@property
 	def EnablePPM(self):
-		"""
+		"""If true, enables the portsppm
 
 		Returns:
 			bool
@@ -125,7 +125,7 @@ class Pos(Base):
 
 	@property
 	def InterfaceType(self):
-		"""
+		"""The POS interface type for the port.
 
 		Returns:
 			str(oc12|oc192|oc3|oc48|stm1|stm16|stm4|stm64)
@@ -137,7 +137,7 @@ class Pos(Base):
 
 	@property
 	def Loopback(self):
-		"""
+		"""If enabled, the port is set to internally loopback from transmit to receive.
 
 		Returns:
 			bool
@@ -149,7 +149,7 @@ class Pos(Base):
 
 	@property
 	def PayloadType(self):
-		"""
+		"""The POS payload type.
 
 		Returns:
 			str(ciscoFrameRelay|ciscoHdlc|frameRelay|ppp)
@@ -161,7 +161,7 @@ class Pos(Base):
 
 	@property
 	def Ppm(self):
-		"""
+		"""Indicates the value that needs to be adjusted for the line transmit frequency.
 
 		Returns:
 			number
@@ -173,7 +173,7 @@ class Pos(Base):
 
 	@property
 	def TrafficMapType(self):
-		"""
+		"""The POS traffic map type.
 
 		Returns:
 			str(dcc|spe)
@@ -185,7 +185,7 @@ class Pos(Base):
 
 	@property
 	def TransmitClocking(self):
-		"""
+		"""The POS transmit clocking type.
 
 		Returns:
 			str(external|internal|recovered)

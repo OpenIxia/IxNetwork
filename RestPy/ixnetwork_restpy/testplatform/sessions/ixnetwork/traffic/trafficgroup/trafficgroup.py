@@ -38,7 +38,7 @@ class TrafficGroup(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Name of the traffic item.
 
 		Returns:
 			str
@@ -52,7 +52,7 @@ class TrafficGroup(Base):
 		"""Adds a new trafficGroup node on the server and retrieves it in this instance.
 
 		Args:
-			Name (str): 
+			Name (str): Name of the traffic item.
 
 		Returns:
 			self: This instance with all currently retrieved trafficGroup data using find and the newly added trafficGroup data available through an iterator or index
@@ -78,7 +78,7 @@ class TrafficGroup(Base):
 		By default the find method takes no parameters and will retrieve all trafficGroup data from the server.
 
 		Args:
-			Name (str): 
+			Name (str): Name of the traffic item.
 
 		Returns:
 			self: This instance with matching trafficGroup data retrieved from the server available through an iterator or index

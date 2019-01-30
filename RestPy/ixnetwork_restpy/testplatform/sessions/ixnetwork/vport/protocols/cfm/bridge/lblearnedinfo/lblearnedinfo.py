@@ -37,7 +37,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""
+		"""(read only) The stacked VLAN identifier for the loopback message.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""
+		"""(read only) The destination MAC address for the loopback message.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The MD level for the loopback message.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def Reachability(self):
-		"""
+		"""(read only) Indiates the status of the Ping. If true, the ping was responded to.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def Rtt(self):
-		"""
+		"""(read only) The round trip time for the loopback message.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""
+		"""(read only) The single VLAN identifier for the loopback message.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The source MAC address for the loopback message.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class LbLearnedInfo(Base):
 
 	@property
 	def TransactionId(self):
-		"""
+		"""(read only) The transaction identifier attached to the loopback message.
 
 		Returns:
 			number
@@ -114,14 +114,14 @@ class LbLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all lbLearnedInfo data from the server.
 
 		Args:
-			CVlan (str): 
-			DstMacAddress (str): 
-			MdLevel (number): 
-			Reachability (bool): 
-			Rtt (number): 
-			SVlan (str): 
-			SrcMacAddress (str): 
-			TransactionId (number): 
+			CVlan (str): (read only) The stacked VLAN identifier for the loopback message.
+			DstMacAddress (str): (read only) The destination MAC address for the loopback message.
+			MdLevel (number): (read only) The MD level for the loopback message.
+			Reachability (bool): (read only) Indiates the status of the Ping. If true, the ping was responded to.
+			Rtt (number): (read only) The round trip time for the loopback message.
+			SVlan (str): (read only) The single VLAN identifier for the loopback message.
+			SrcMacAddress (str): (read only) The source MAC address for the loopback message.
+			TransactionId (number): (read only) The transaction identifier attached to the loopback message.
 
 		Returns:
 			self: This instance with matching lbLearnedInfo data retrieved from the server available through an iterator or index

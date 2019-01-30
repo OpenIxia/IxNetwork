@@ -108,7 +108,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def DeadFlowsCount(self):
-		"""
+		"""The number of flows declared dead. A flow is declared dead if no traffic is received for a specified number of seconds. To change this threshold use the deadFlowsThreshold attribute.
 
 		Returns:
 			number
@@ -117,7 +117,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def DeadFlowsThreshold(self):
-		"""
+		"""Threshold in seconds after which the flows are declared dead if there are no packets received for a specified number of seconds. This is a global attibute and hence the latest value entered takes precedence over previous values in all the custom views.
 
 		Returns:
 			number
@@ -129,7 +129,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def FlowFilterType(self):
-		"""
+		"""Indicates the flow detective filter settings.
 
 		Returns:
 			str(allFlows|deadFlows|liveFlows)
@@ -141,7 +141,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def PortFilterIds(self):
-		"""
+		"""Selected port filters from the availablePortFilter list.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])
@@ -153,7 +153,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def ShowEgressFlows(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -165,7 +165,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def TrafficItemFilterId(self):
-		"""
+		"""Selected traffic flow detective filter from the availableTrafficItemFilter list.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)
@@ -177,7 +177,7 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 
 	@property
 	def TrafficItemFilterIds(self):
-		"""
+		"""Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])
@@ -191,12 +191,12 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 		"""Adds a new layer23TrafficFlowDetectiveFilter node on the server and retrieves it in this instance.
 
 		Args:
-			DeadFlowsThreshold (number): 
-			FlowFilterType (str(allFlows|deadFlows|liveFlows)): 
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
-			ShowEgressFlows (bool): 
-			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): 
-			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): 
+			DeadFlowsThreshold (number): Threshold in seconds after which the flows are declared dead if there are no packets received for a specified number of seconds. This is a global attibute and hence the latest value entered takes precedence over previous values in all the custom views.
+			FlowFilterType (str(allFlows|deadFlows|liveFlows)): Indicates the flow detective filter settings.
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
+			ShowEgressFlows (bool): NOT DEFINED
+			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): Selected traffic flow detective filter from the availableTrafficItemFilter list.
+			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
 			self: This instance with all currently retrieved layer23TrafficFlowDetectiveFilter data using find and the newly added layer23TrafficFlowDetectiveFilter data available through an iterator or index
@@ -222,13 +222,13 @@ class Layer23TrafficFlowDetectiveFilter(Base):
 		By default the find method takes no parameters and will retrieve all layer23TrafficFlowDetectiveFilter data from the server.
 
 		Args:
-			DeadFlowsCount (number): 
-			DeadFlowsThreshold (number): 
-			FlowFilterType (str(allFlows|deadFlows|liveFlows)): 
-			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): 
-			ShowEgressFlows (bool): 
-			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): 
-			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): 
+			DeadFlowsCount (number): The number of flows declared dead. A flow is declared dead if no traffic is received for a specified number of seconds. To change this threshold use the deadFlowsThreshold attribute.
+			DeadFlowsThreshold (number): Threshold in seconds after which the flows are declared dead if there are no packets received for a specified number of seconds. This is a global attibute and hence the latest value entered takes precedence over previous values in all the custom views.
+			FlowFilterType (str(allFlows|deadFlows|liveFlows)): Indicates the flow detective filter settings.
+			PortFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availablePortFilter])): Selected port filters from the availablePortFilter list.
+			ShowEgressFlows (bool): NOT DEFINED
+			TrafficItemFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter)): Selected traffic flow detective filter from the availableTrafficItemFilter list.
+			TrafficItemFilterIds (list(str[None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrafficItemFilter])): Selected traffic item filters from the availableTrafficItemFilter list.
 
 		Returns:
 			self: This instance with matching layer23TrafficFlowDetectiveFilter data retrieved from the server available through an iterator or index

@@ -52,7 +52,7 @@ class Interface(Base):
 
 	@property
 	def AutoPick(self):
-		"""
+		"""If set, then the Auto-Pick Port Number feature is enabled and each STP interface configured for the same bridge will be assigned a unique port number automatically.(default = enabled)
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class Interface(Base):
 
 	@property
 	def BdpuGap(self):
-		"""
+		"""The length of time between transmissions of BPDUs, in milliseconds. The valid range is 0 msec to 60,000 msec. (default = 0)
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class Interface(Base):
 
 	@property
 	def Cost(self):
-		"""
+		"""The administrative path cost assigned to this interface. The valid range is 0 to 4294967295. (default = 1)
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the use of the interface. (default = disabled)
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class Interface(Base):
 
 	@property
 	def InterfaceId(self):
-		"""
+		"""The unique identifier for this interface.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -112,7 +112,7 @@ class Interface(Base):
 
 	@property
 	def JitterEnabled(self):
-		"""
+		"""Staggered transmit (jitter) for Hello messages. If set, then the jitter feature is enabled. (default = enabled)
 
 		Returns:
 			bool
@@ -124,7 +124,7 @@ class Interface(Base):
 
 	@property
 	def JitterPercentage(self):
-		"""
+		"""The maximum percentage of +/- variation (jitter) from the Hello message transmission interval.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class Interface(Base):
 
 	@property
 	def LinkType(self):
-		"""
+		"""The type of link attached to this interface.
 
 		Returns:
 			str(pointToPoint|shared)
@@ -148,7 +148,7 @@ class Interface(Base):
 
 	@property
 	def MstiOrVlanId(self):
-		"""
+		"""The identifier for this MSTI or the identifier for the first VLAN in the range.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=all|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)
@@ -160,7 +160,7 @@ class Interface(Base):
 
 	@property
 	def PortNo(self):
-		"""
+		"""The port number associated with this STP interface. If enableAutoPickPortNum is set, the port number will be automatically assigned (not editable by the user). If enableAutoPickPortNum is not set, the port number can be configured by the user. The valid range is 1 to 4,095. (default = 1)
 
 		Returns:
 			number
@@ -172,7 +172,7 @@ class Interface(Base):
 
 	@property
 	def Pvid(self):
-		"""
+		"""The Port VLAN ID. This value must be the same for all ports participating in the PVST+/RPVST+ protocol. The valid range is 1 to 4,094. (default = 1)
 
 		Returns:
 			number
@@ -186,17 +186,17 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			AutoPick (bool): 
-			BdpuGap (number): 
-			Cost (number): 
-			Enabled (bool): 
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			JitterEnabled (bool): 
-			JitterPercentage (number): 
-			LinkType (str(pointToPoint|shared)): 
-			MstiOrVlanId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=all|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)): 
-			PortNo (number): 
-			Pvid (number): 
+			AutoPick (bool): If set, then the Auto-Pick Port Number feature is enabled and each STP interface configured for the same bridge will be assigned a unique port number automatically.(default = enabled)
+			BdpuGap (number): The length of time between transmissions of BPDUs, in milliseconds. The valid range is 0 msec to 60,000 msec. (default = 0)
+			Cost (number): The administrative path cost assigned to this interface. The valid range is 0 to 4294967295. (default = 1)
+			Enabled (bool): Enables or disables the use of the interface. (default = disabled)
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The unique identifier for this interface.
+			JitterEnabled (bool): Staggered transmit (jitter) for Hello messages. If set, then the jitter feature is enabled. (default = enabled)
+			JitterPercentage (number): The maximum percentage of +/- variation (jitter) from the Hello message transmission interval.
+			LinkType (str(pointToPoint|shared)): The type of link attached to this interface.
+			MstiOrVlanId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=all|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)): The identifier for this MSTI or the identifier for the first VLAN in the range.
+			PortNo (number): The port number associated with this STP interface. If enableAutoPickPortNum is set, the port number will be automatically assigned (not editable by the user). If enableAutoPickPortNum is not set, the port number can be configured by the user. The valid range is 1 to 4,095. (default = 1)
+			Pvid (number): The Port VLAN ID. This value must be the same for all ports participating in the PVST+/RPVST+ protocol. The valid range is 1 to 4,094. (default = 1)
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -222,17 +222,17 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			AutoPick (bool): 
-			BdpuGap (number): 
-			Cost (number): 
-			Enabled (bool): 
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			JitterEnabled (bool): 
-			JitterPercentage (number): 
-			LinkType (str(pointToPoint|shared)): 
-			MstiOrVlanId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=all|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)): 
-			PortNo (number): 
-			Pvid (number): 
+			AutoPick (bool): If set, then the Auto-Pick Port Number feature is enabled and each STP interface configured for the same bridge will be assigned a unique port number automatically.(default = enabled)
+			BdpuGap (number): The length of time between transmissions of BPDUs, in milliseconds. The valid range is 0 msec to 60,000 msec. (default = 0)
+			Cost (number): The administrative path cost assigned to this interface. The valid range is 0 to 4294967295. (default = 1)
+			Enabled (bool): Enables or disables the use of the interface. (default = disabled)
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The unique identifier for this interface.
+			JitterEnabled (bool): Staggered transmit (jitter) for Hello messages. If set, then the jitter feature is enabled. (default = enabled)
+			JitterPercentage (number): The maximum percentage of +/- variation (jitter) from the Hello message transmission interval.
+			LinkType (str(pointToPoint|shared)): The type of link attached to this interface.
+			MstiOrVlanId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=all|/api/v1/sessions/1/ixnetwork/vport?deepchild=msti|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)): The identifier for this MSTI or the identifier for the first VLAN in the range.
+			PortNo (number): The port number associated with this STP interface. If enableAutoPickPortNum is set, the port number will be automatically assigned (not editable by the user). If enableAutoPickPortNum is not set, the port number can be configured by the user. The valid range is 1 to 4,095. (default = 1)
+			Pvid (number): The Port VLAN ID. This value must be the same for all ports participating in the PVST+/RPVST+ protocol. The valid range is 1 to 4,094. (default = 1)
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index
@@ -260,11 +260,13 @@ class Interface(Base):
 	def UpdateParameters(self):
 		"""Executes the updateParameters operation on the server.
 
+		Updates the current STP bridge interface parameters.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

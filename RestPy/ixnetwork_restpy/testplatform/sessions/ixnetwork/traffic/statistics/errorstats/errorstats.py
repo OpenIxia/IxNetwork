@@ -37,7 +37,7 @@ class ErrorStats(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables and fetches error statistics.
 
 		Returns:
 			bool

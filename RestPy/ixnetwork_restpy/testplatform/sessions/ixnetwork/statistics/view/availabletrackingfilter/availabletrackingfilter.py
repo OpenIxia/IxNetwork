@@ -37,7 +37,7 @@ class AvailableTrackingFilter(Base):
 
 	@property
 	def Constraints(self):
-		"""
+		"""Lists down the constraints associated with the available tracking filter list.
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class AvailableTrackingFilter(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Displays the name of the tracking filter.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class AvailableTrackingFilter(Base):
 
 	@property
 	def TrackingType(self):
-		"""
+		"""Indicates the tracking type.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class AvailableTrackingFilter(Base):
 
 	@property
 	def ValueType(self):
-		"""
+		"""Value of tracking to be matched based on operator.
 
 		Returns:
 			str
@@ -78,10 +78,10 @@ class AvailableTrackingFilter(Base):
 		By default the find method takes no parameters and will retrieve all availableTrackingFilter data from the server.
 
 		Args:
-			Constraints (list(str)): 
-			Name (str): 
-			TrackingType (str): 
-			ValueType (str): 
+			Constraints (list(str)): Lists down the constraints associated with the available tracking filter list.
+			Name (str): Displays the name of the tracking filter.
+			TrackingType (str): Indicates the tracking type.
+			ValueType (str): Value of tracking to be matched based on operator.
 
 		Returns:
 			self: This instance with matching availableTrackingFilter data retrieved from the server available through an iterator or index

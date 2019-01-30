@@ -66,7 +66,7 @@ class L2VcRange(Base):
 
 	@property
 	def CapableOfReassembly(self):
-		"""
+		"""If enabled, makes the interface capable of reassembly.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class L2VcRange(Base):
 
 	@property
 	def Cas(self):
-		"""
+		"""It signifies the CAS value.
 
 		Returns:
 			str(e1Trunk|t1EsfTrunk|t1SfTrunk)
@@ -90,7 +90,7 @@ class L2VcRange(Base):
 
 	@property
 	def CeIpAddress(self):
-		"""
+		"""The IP address of attached CE endpoint. If IP Type is set to Ipv4, then the default is 0.0.0.0, and if the IP type is set to Ipv6, then the default is 0:0:0:0:0:0:0:0.
 
 		Returns:
 			str
@@ -102,7 +102,7 @@ class L2VcRange(Base):
 
 	@property
 	def CemOption(self):
-		"""
+		"""The value of the CEM option.
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class L2VcRange(Base):
 
 	@property
 	def CemPayload(self):
-		"""
+		"""If enabled, indicates that there is a Circuit Emulation Service over MPLS (CEM) payload.
 
 		Returns:
 			number
@@ -126,7 +126,7 @@ class L2VcRange(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""(In octets) The 8-bit VC information Length field. It indicates the length of the (2-octet) VC ID field plus combined length of all of the parameters in the VC FEC element.
 
 		Returns:
 			number
@@ -138,7 +138,7 @@ class L2VcRange(Base):
 
 	@property
 	def Description(self):
-		"""
+		"""An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
 
 		Returns:
 			str
@@ -150,7 +150,7 @@ class L2VcRange(Base):
 
 	@property
 	def DoNotExpandIntoVcs(self):
-		"""
+		"""If true, the VC ranges do not expand into individual VCs.
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class L2VcRange(Base):
 
 	@property
 	def DownInterval(self):
-		"""
+		"""Time interval for which the PW status will remain down. (Default= 60 seconds)
 
 		Returns:
 			number
@@ -174,7 +174,7 @@ class L2VcRange(Base):
 
 	@property
 	def DownStartInterval(self):
-		"""
+		"""The duration in time after session becomes up and a notification message being sent to make the session down. (Default= 30 seconds)
 
 		Returns:
 			number
@@ -186,7 +186,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableBfdIpUdpCv(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -198,7 +198,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableBfdPwAchCv(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -210,7 +210,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableCBit(self):
-		"""
+		"""Controls generation of the control word.
 
 		Returns:
 			bool
@@ -222,7 +222,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableCccvNegotiation(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -234,7 +234,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableCemOption(self):
-		"""
+		"""Enable the Circuit Emulation over MPLS option, for encapsulation of TDM signals.
 
 		Returns:
 			bool
@@ -246,7 +246,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableCemPayload(self):
-		"""
+		"""Enable the Circuit Emulation over MPLS payload.
 
 		Returns:
 			bool
@@ -258,7 +258,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableDescriptionPresent(self):
-		"""
+		"""If enabled, indicates that an optional interface description is present.
 
 		Returns:
 			bool
@@ -270,7 +270,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableLspPingCv(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -282,7 +282,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableMaxAtmPresent(self):
-		"""
+		"""Enables the generation of an interface parameter field with the maximum number of concatenated ATM cells. (default = 0)
 
 		Returns:
 			bool
@@ -294,7 +294,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableMtuPresent(self):
-		"""
+		"""This attribute enables the generation of an MTU interface parameter field.
 
 		Returns:
 			bool
@@ -306,7 +306,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnablePacking(self):
-		"""
+		"""(For L2 VC FEC ranges and in Unsolicited Label Distribution Mode ONLY.) If enabled, L2 VC FEC ranges will be aggregated within a single LDP PDU to conserve bandwidth and processing.
 
 		Returns:
 			bool
@@ -318,7 +318,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnablePwAchCc(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -330,7 +330,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnablePwStatusTlv(self):
-		"""
+		"""If checked, this enables the use of PW status TLV in notification messages to notify the PW status.
 
 		Returns:
 			bool
@@ -342,7 +342,7 @@ class L2VcRange(Base):
 
 	@property
 	def EnableRouterAlertCc(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -354,7 +354,7 @@ class L2VcRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables use of this VC range.
 
 		Returns:
 			bool
@@ -366,7 +366,7 @@ class L2VcRange(Base):
 
 	@property
 	def FecType(self):
-		"""
+		"""The FEC type. The options are: PW Id FEC 0x80, Generalized Id FEC 0x81 VPLS.
 
 		Returns:
 			str(pwIdFec|generalizedIdFecVpls)
@@ -378,7 +378,7 @@ class L2VcRange(Base):
 
 	@property
 	def Frequency(self):
-		"""
+		"""It is the frequency.
 
 		Returns:
 			number
@@ -390,7 +390,7 @@ class L2VcRange(Base):
 
 	@property
 	def IncludeRtpHeader(self):
-		"""
+		"""If true, includes the RTP header.
 
 		Returns:
 			bool
@@ -402,7 +402,7 @@ class L2VcRange(Base):
 
 	@property
 	def IncludeSsrc(self):
-		"""
+		"""If true, enables SSRC.
 
 		Returns:
 			bool
@@ -414,7 +414,7 @@ class L2VcRange(Base):
 
 	@property
 	def IncludeTdmBitrate(self):
-		"""
+		"""If true, enables TDM bit rate.
 
 		Returns:
 			bool
@@ -426,7 +426,7 @@ class L2VcRange(Base):
 
 	@property
 	def IncludeTdmOption(self):
-		"""
+		"""If true, includes the TDM option.
 
 		Returns:
 			bool
@@ -438,7 +438,7 @@ class L2VcRange(Base):
 
 	@property
 	def IncludeTdmPayload(self):
-		"""
+		"""If true, enables TDM payload.
 
 		Returns:
 			bool
@@ -450,7 +450,7 @@ class L2VcRange(Base):
 
 	@property
 	def IpType(self):
-		"""
+		"""The type (IPv4 or IPv6) of the neighbor.
 
 		Returns:
 			number
@@ -462,7 +462,7 @@ class L2VcRange(Base):
 
 	@property
 	def LabelMode(self):
-		"""
+		"""Indicates whether the same label or incrementing labels should be used in the VC ranges.
 
 		Returns:
 			str(none|increment)
@@ -474,7 +474,7 @@ class L2VcRange(Base):
 
 	@property
 	def LabelStart(self):
-		"""
+		"""The first label in the range of labels. The default is 16.
 
 		Returns:
 			number
@@ -486,7 +486,7 @@ class L2VcRange(Base):
 
 	@property
 	def MaxNumberOfAtmCells(self):
-		"""
+		"""The maximum number of ATM cells which may be concatenated and sent in a single MPLS frame. This parameter is part of the FEC element.
 
 		Returns:
 			number
@@ -498,7 +498,7 @@ class L2VcRange(Base):
 
 	@property
 	def Mtu(self):
-		"""
+		"""(in octets) The 2-octet value for the maximum Transmission Unit (MTU).
 
 		Returns:
 			number
@@ -510,7 +510,7 @@ class L2VcRange(Base):
 
 	@property
 	def PayloadType(self):
-		"""
+		"""It is the payload type.
 
 		Returns:
 			number
@@ -522,7 +522,7 @@ class L2VcRange(Base):
 
 	@property
 	def PeerAddress(self):
-		"""
+		"""The IPv4 address of the LDP router which is the peer for this VC range.
 
 		Returns:
 			str
@@ -534,7 +534,7 @@ class L2VcRange(Base):
 
 	@property
 	def ProvisioningModel(self):
-		"""
+		"""Editable dropdown to denote the Provisioning Model.
 
 		Returns:
 			str(manualConfiguration|bgpAutoDiscovery)
@@ -546,7 +546,7 @@ class L2VcRange(Base):
 
 	@property
 	def PwStatusCode(self):
-		"""
+		"""This is an editable dropdown to denote the PW status. This field is editable. The range is from 0x00000001 - 0xFFFFFFFF.
 
 		Returns:
 			number
@@ -558,7 +558,7 @@ class L2VcRange(Base):
 
 	@property
 	def RepeatCount(self):
-		"""
+		"""The number of times to repeat the above processes. The default is 1.
 
 		Returns:
 			number
@@ -570,7 +570,7 @@ class L2VcRange(Base):
 
 	@property
 	def SendPwStatus(self):
-		"""
+		"""If checked, it signifies whether to send a notification message with a PW status for the corresponding PW.
 
 		Returns:
 			bool
@@ -582,7 +582,7 @@ class L2VcRange(Base):
 
 	@property
 	def SourceAiiAsIp(self):
-		"""
+		"""The IP address.
 
 		Returns:
 			str
@@ -594,7 +594,7 @@ class L2VcRange(Base):
 
 	@property
 	def SourceAiiAsNumber(self):
-		"""
+		"""The numerical value indicating the AS of the Source AII.
 
 		Returns:
 			number
@@ -606,7 +606,7 @@ class L2VcRange(Base):
 
 	@property
 	def SourceAiiType(self):
-		"""
+		"""Editable dropdown. The options are: AS, IP.
 
 		Returns:
 			str(number|ipAddress)
@@ -618,7 +618,7 @@ class L2VcRange(Base):
 
 	@property
 	def Sp(self):
-		"""
+		"""It signifies the SP value.
 
 		Returns:
 			str(hexVal0|hexVal1|hexVal2|hexVal3)
@@ -630,7 +630,7 @@ class L2VcRange(Base):
 
 	@property
 	def Ssrc(self):
-		"""
+		"""Indicates the SSRC value.
 
 		Returns:
 			number
@@ -642,7 +642,7 @@ class L2VcRange(Base):
 
 	@property
 	def Step(self):
-		"""
+		"""The number to increment the peer address by.
 
 		Returns:
 			number
@@ -654,7 +654,7 @@ class L2VcRange(Base):
 
 	@property
 	def TargetAiiAsIp(self):
-		"""
+		"""The IP address of the Target AII.
 
 		Returns:
 			str
@@ -666,7 +666,7 @@ class L2VcRange(Base):
 
 	@property
 	def TargetAiiAsNumber(self):
-		"""
+		"""The numerical value of the Target AII.
 
 		Returns:
 			number
@@ -678,7 +678,7 @@ class L2VcRange(Base):
 
 	@property
 	def TargetAiiType(self):
-		"""
+		"""Editable dropdown. The options are: AS, IP.
 
 		Returns:
 			str(number|ipAddress)
@@ -690,7 +690,7 @@ class L2VcRange(Base):
 
 	@property
 	def TdmBitrate(self):
-		"""
+		"""The tdm bit rate.
 
 		Returns:
 			number
@@ -702,7 +702,7 @@ class L2VcRange(Base):
 
 	@property
 	def TdmDataSize(self):
-		"""
+		"""Indicates the TDM data size.
 
 		Returns:
 			number
@@ -714,7 +714,7 @@ class L2VcRange(Base):
 
 	@property
 	def TimestampMode(self):
-		"""
+		"""The time stamp mode.
 
 		Returns:
 			str(absolute|differential)
@@ -726,7 +726,7 @@ class L2VcRange(Base):
 
 	@property
 	def UpInterval(self):
-		"""
+		"""Time interval for which the same process to be repeated. (Default = 30 sec)
 
 		Returns:
 			number
@@ -738,7 +738,7 @@ class L2VcRange(Base):
 
 	@property
 	def VcId(self):
-		"""
+		"""The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
 
 		Returns:
 			number
@@ -750,7 +750,7 @@ class L2VcRange(Base):
 
 	@property
 	def VcIdStep(self):
-		"""
+		"""The increment step to be added to each additional VC ID in the range of VC IDs.
 
 		Returns:
 			number
@@ -762,7 +762,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdAsNumber(self):
-		"""
+		"""The 2 byte unsigned integer value indicating the VPLS ID AS Number.
 
 		Returns:
 			number
@@ -774,7 +774,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdAsNumberStep(self):
-		"""
+		"""The 2 byte unsigned integer value indicating the VPLS ID AS Number Step.
 
 		Returns:
 			number
@@ -786,7 +786,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdAssignedNumber(self):
-		"""
+		"""The 2 or 4 byte unsigned integer value dependent on the vplsIdType
 
 		Returns:
 			number
@@ -798,7 +798,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdAssignedNumberStep(self):
-		"""
+		"""The 2 or 4 byte unsigned integer value dependent on the vplsIdType.
 
 		Returns:
 			number
@@ -810,7 +810,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdCount(self):
-		"""
+		"""The 4 byte unsigned integer indicating the VPLS ID Count.
 
 		Returns:
 			number
@@ -822,7 +822,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdIpAddress(self):
-		"""
+		"""The IP address of the VPLS Id.
 
 		Returns:
 			str
@@ -834,7 +834,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdIpAddressStep(self):
-		"""
+		"""The IP address of the VPLS Id.
 
 		Returns:
 			str
@@ -846,7 +846,7 @@ class L2VcRange(Base):
 
 	@property
 	def VplsIdType(self):
-		"""
+		"""Editable dropdown. The options are: AS, IP.
 
 		Returns:
 			str(asNumber|ipAddress)
@@ -860,72 +860,72 @@ class L2VcRange(Base):
 		"""Adds a new l2VcRange node on the server and retrieves it in this instance.
 
 		Args:
-			CapableOfReassembly (bool): 
-			Cas (str(e1Trunk|t1EsfTrunk|t1SfTrunk)): 
-			CeIpAddress (str): 
-			CemOption (number): 
-			CemPayload (number): 
-			Count (number): 
-			Description (str): 
-			DoNotExpandIntoVcs (bool): 
-			DownInterval (number): 
-			DownStartInterval (number): 
-			EnableBfdIpUdpCv (bool): 
-			EnableBfdPwAchCv (bool): 
-			EnableCBit (bool): 
-			EnableCccvNegotiation (bool): 
-			EnableCemOption (bool): 
-			EnableCemPayload (bool): 
-			EnableDescriptionPresent (bool): 
-			EnableLspPingCv (bool): 
-			EnableMaxAtmPresent (bool): 
-			EnableMtuPresent (bool): 
-			EnablePacking (bool): 
-			EnablePwAchCc (bool): 
-			EnablePwStatusTlv (bool): 
-			EnableRouterAlertCc (bool): 
-			Enabled (bool): 
-			FecType (str(pwIdFec|generalizedIdFecVpls)): 
-			Frequency (number): 
-			IncludeRtpHeader (bool): 
-			IncludeSsrc (bool): 
-			IncludeTdmBitrate (bool): 
-			IncludeTdmOption (bool): 
-			IncludeTdmPayload (bool): 
-			IpType (number): 
-			LabelMode (str(none|increment)): 
-			LabelStart (number): 
-			MaxNumberOfAtmCells (number): 
-			Mtu (number): 
-			PayloadType (number): 
-			PeerAddress (str): 
-			ProvisioningModel (str(manualConfiguration|bgpAutoDiscovery)): 
-			PwStatusCode (number): 
-			RepeatCount (number): 
-			SendPwStatus (bool): 
-			SourceAiiAsIp (str): 
-			SourceAiiAsNumber (number): 
-			SourceAiiType (str(number|ipAddress)): 
-			Sp (str(hexVal0|hexVal1|hexVal2|hexVal3)): 
-			Ssrc (number): 
-			Step (number): 
-			TargetAiiAsIp (str): 
-			TargetAiiAsNumber (number): 
-			TargetAiiType (str(number|ipAddress)): 
-			TdmBitrate (number): 
-			TdmDataSize (number): 
-			TimestampMode (str(absolute|differential)): 
-			UpInterval (number): 
-			VcId (number): 
-			VcIdStep (number): 
-			VplsIdAsNumber (number): 
-			VplsIdAsNumberStep (number): 
-			VplsIdAssignedNumber (number): 
-			VplsIdAssignedNumberStep (number): 
-			VplsIdCount (number): 
-			VplsIdIpAddress (str): 
-			VplsIdIpAddressStep (str): 
-			VplsIdType (str(asNumber|ipAddress)): 
+			CapableOfReassembly (bool): If enabled, makes the interface capable of reassembly.
+			Cas (str(e1Trunk|t1EsfTrunk|t1SfTrunk)): It signifies the CAS value.
+			CeIpAddress (str): The IP address of attached CE endpoint. If IP Type is set to Ipv4, then the default is 0.0.0.0, and if the IP type is set to Ipv6, then the default is 0:0:0:0:0:0:0:0.
+			CemOption (number): The value of the CEM option.
+			CemPayload (number): If enabled, indicates that there is a Circuit Emulation Service over MPLS (CEM) payload.
+			Count (number): (In octets) The 8-bit VC information Length field. It indicates the length of the (2-octet) VC ID field plus combined length of all of the parameters in the VC FEC element.
+			Description (str): An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
+			DoNotExpandIntoVcs (bool): If true, the VC ranges do not expand into individual VCs.
+			DownInterval (number): Time interval for which the PW status will remain down. (Default= 60 seconds)
+			DownStartInterval (number): The duration in time after session becomes up and a notification message being sent to make the session down. (Default= 30 seconds)
+			EnableBfdIpUdpCv (bool): NOT DEFINED
+			EnableBfdPwAchCv (bool): NOT DEFINED
+			EnableCBit (bool): Controls generation of the control word.
+			EnableCccvNegotiation (bool): NOT DEFINED
+			EnableCemOption (bool): Enable the Circuit Emulation over MPLS option, for encapsulation of TDM signals.
+			EnableCemPayload (bool): Enable the Circuit Emulation over MPLS payload.
+			EnableDescriptionPresent (bool): If enabled, indicates that an optional interface description is present.
+			EnableLspPingCv (bool): NOT DEFINED
+			EnableMaxAtmPresent (bool): Enables the generation of an interface parameter field with the maximum number of concatenated ATM cells. (default = 0)
+			EnableMtuPresent (bool): This attribute enables the generation of an MTU interface parameter field.
+			EnablePacking (bool): (For L2 VC FEC ranges and in Unsolicited Label Distribution Mode ONLY.) If enabled, L2 VC FEC ranges will be aggregated within a single LDP PDU to conserve bandwidth and processing.
+			EnablePwAchCc (bool): NOT DEFINED
+			EnablePwStatusTlv (bool): If checked, this enables the use of PW status TLV in notification messages to notify the PW status.
+			EnableRouterAlertCc (bool): NOT DEFINED
+			Enabled (bool): Enables use of this VC range.
+			FecType (str(pwIdFec|generalizedIdFecVpls)): The FEC type. The options are: PW Id FEC 0x80, Generalized Id FEC 0x81 VPLS.
+			Frequency (number): It is the frequency.
+			IncludeRtpHeader (bool): If true, includes the RTP header.
+			IncludeSsrc (bool): If true, enables SSRC.
+			IncludeTdmBitrate (bool): If true, enables TDM bit rate.
+			IncludeTdmOption (bool): If true, includes the TDM option.
+			IncludeTdmPayload (bool): If true, enables TDM payload.
+			IpType (number): The type (IPv4 or IPv6) of the neighbor.
+			LabelMode (str(none|increment)): Indicates whether the same label or incrementing labels should be used in the VC ranges.
+			LabelStart (number): The first label in the range of labels. The default is 16.
+			MaxNumberOfAtmCells (number): The maximum number of ATM cells which may be concatenated and sent in a single MPLS frame. This parameter is part of the FEC element.
+			Mtu (number): (in octets) The 2-octet value for the maximum Transmission Unit (MTU).
+			PayloadType (number): It is the payload type.
+			PeerAddress (str): The IPv4 address of the LDP router which is the peer for this VC range.
+			ProvisioningModel (str(manualConfiguration|bgpAutoDiscovery)): Editable dropdown to denote the Provisioning Model.
+			PwStatusCode (number): This is an editable dropdown to denote the PW status. This field is editable. The range is from 0x00000001 - 0xFFFFFFFF.
+			RepeatCount (number): The number of times to repeat the above processes. The default is 1.
+			SendPwStatus (bool): If checked, it signifies whether to send a notification message with a PW status for the corresponding PW.
+			SourceAiiAsIp (str): The IP address.
+			SourceAiiAsNumber (number): The numerical value indicating the AS of the Source AII.
+			SourceAiiType (str(number|ipAddress)): Editable dropdown. The options are: AS, IP.
+			Sp (str(hexVal0|hexVal1|hexVal2|hexVal3)): It signifies the SP value.
+			Ssrc (number): Indicates the SSRC value.
+			Step (number): The number to increment the peer address by.
+			TargetAiiAsIp (str): The IP address of the Target AII.
+			TargetAiiAsNumber (number): The numerical value of the Target AII.
+			TargetAiiType (str(number|ipAddress)): Editable dropdown. The options are: AS, IP.
+			TdmBitrate (number): The tdm bit rate.
+			TdmDataSize (number): Indicates the TDM data size.
+			TimestampMode (str(absolute|differential)): The time stamp mode.
+			UpInterval (number): Time interval for which the same process to be repeated. (Default = 30 sec)
+			VcId (number): The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
+			VcIdStep (number): The increment step to be added to each additional VC ID in the range of VC IDs.
+			VplsIdAsNumber (number): The 2 byte unsigned integer value indicating the VPLS ID AS Number.
+			VplsIdAsNumberStep (number): The 2 byte unsigned integer value indicating the VPLS ID AS Number Step.
+			VplsIdAssignedNumber (number): The 2 or 4 byte unsigned integer value dependent on the vplsIdType
+			VplsIdAssignedNumberStep (number): The 2 or 4 byte unsigned integer value dependent on the vplsIdType.
+			VplsIdCount (number): The 4 byte unsigned integer indicating the VPLS ID Count.
+			VplsIdIpAddress (str): The IP address of the VPLS Id.
+			VplsIdIpAddressStep (str): The IP address of the VPLS Id.
+			VplsIdType (str(asNumber|ipAddress)): Editable dropdown. The options are: AS, IP.
 
 		Returns:
 			self: This instance with all currently retrieved l2VcRange data using find and the newly added l2VcRange data available through an iterator or index
@@ -951,72 +951,72 @@ class L2VcRange(Base):
 		By default the find method takes no parameters and will retrieve all l2VcRange data from the server.
 
 		Args:
-			CapableOfReassembly (bool): 
-			Cas (str(e1Trunk|t1EsfTrunk|t1SfTrunk)): 
-			CeIpAddress (str): 
-			CemOption (number): 
-			CemPayload (number): 
-			Count (number): 
-			Description (str): 
-			DoNotExpandIntoVcs (bool): 
-			DownInterval (number): 
-			DownStartInterval (number): 
-			EnableBfdIpUdpCv (bool): 
-			EnableBfdPwAchCv (bool): 
-			EnableCBit (bool): 
-			EnableCccvNegotiation (bool): 
-			EnableCemOption (bool): 
-			EnableCemPayload (bool): 
-			EnableDescriptionPresent (bool): 
-			EnableLspPingCv (bool): 
-			EnableMaxAtmPresent (bool): 
-			EnableMtuPresent (bool): 
-			EnablePacking (bool): 
-			EnablePwAchCc (bool): 
-			EnablePwStatusTlv (bool): 
-			EnableRouterAlertCc (bool): 
-			Enabled (bool): 
-			FecType (str(pwIdFec|generalizedIdFecVpls)): 
-			Frequency (number): 
-			IncludeRtpHeader (bool): 
-			IncludeSsrc (bool): 
-			IncludeTdmBitrate (bool): 
-			IncludeTdmOption (bool): 
-			IncludeTdmPayload (bool): 
-			IpType (number): 
-			LabelMode (str(none|increment)): 
-			LabelStart (number): 
-			MaxNumberOfAtmCells (number): 
-			Mtu (number): 
-			PayloadType (number): 
-			PeerAddress (str): 
-			ProvisioningModel (str(manualConfiguration|bgpAutoDiscovery)): 
-			PwStatusCode (number): 
-			RepeatCount (number): 
-			SendPwStatus (bool): 
-			SourceAiiAsIp (str): 
-			SourceAiiAsNumber (number): 
-			SourceAiiType (str(number|ipAddress)): 
-			Sp (str(hexVal0|hexVal1|hexVal2|hexVal3)): 
-			Ssrc (number): 
-			Step (number): 
-			TargetAiiAsIp (str): 
-			TargetAiiAsNumber (number): 
-			TargetAiiType (str(number|ipAddress)): 
-			TdmBitrate (number): 
-			TdmDataSize (number): 
-			TimestampMode (str(absolute|differential)): 
-			UpInterval (number): 
-			VcId (number): 
-			VcIdStep (number): 
-			VplsIdAsNumber (number): 
-			VplsIdAsNumberStep (number): 
-			VplsIdAssignedNumber (number): 
-			VplsIdAssignedNumberStep (number): 
-			VplsIdCount (number): 
-			VplsIdIpAddress (str): 
-			VplsIdIpAddressStep (str): 
-			VplsIdType (str(asNumber|ipAddress)): 
+			CapableOfReassembly (bool): If enabled, makes the interface capable of reassembly.
+			Cas (str(e1Trunk|t1EsfTrunk|t1SfTrunk)): It signifies the CAS value.
+			CeIpAddress (str): The IP address of attached CE endpoint. If IP Type is set to Ipv4, then the default is 0.0.0.0, and if the IP type is set to Ipv6, then the default is 0:0:0:0:0:0:0:0.
+			CemOption (number): The value of the CEM option.
+			CemPayload (number): If enabled, indicates that there is a Circuit Emulation Service over MPLS (CEM) payload.
+			Count (number): (In octets) The 8-bit VC information Length field. It indicates the length of the (2-octet) VC ID field plus combined length of all of the parameters in the VC FEC element.
+			Description (str): An optional user-defined interface description. It may be used with ALL VC types. Valid length is 0 to 80 octets.
+			DoNotExpandIntoVcs (bool): If true, the VC ranges do not expand into individual VCs.
+			DownInterval (number): Time interval for which the PW status will remain down. (Default= 60 seconds)
+			DownStartInterval (number): The duration in time after session becomes up and a notification message being sent to make the session down. (Default= 30 seconds)
+			EnableBfdIpUdpCv (bool): NOT DEFINED
+			EnableBfdPwAchCv (bool): NOT DEFINED
+			EnableCBit (bool): Controls generation of the control word.
+			EnableCccvNegotiation (bool): NOT DEFINED
+			EnableCemOption (bool): Enable the Circuit Emulation over MPLS option, for encapsulation of TDM signals.
+			EnableCemPayload (bool): Enable the Circuit Emulation over MPLS payload.
+			EnableDescriptionPresent (bool): If enabled, indicates that an optional interface description is present.
+			EnableLspPingCv (bool): NOT DEFINED
+			EnableMaxAtmPresent (bool): Enables the generation of an interface parameter field with the maximum number of concatenated ATM cells. (default = 0)
+			EnableMtuPresent (bool): This attribute enables the generation of an MTU interface parameter field.
+			EnablePacking (bool): (For L2 VC FEC ranges and in Unsolicited Label Distribution Mode ONLY.) If enabled, L2 VC FEC ranges will be aggregated within a single LDP PDU to conserve bandwidth and processing.
+			EnablePwAchCc (bool): NOT DEFINED
+			EnablePwStatusTlv (bool): If checked, this enables the use of PW status TLV in notification messages to notify the PW status.
+			EnableRouterAlertCc (bool): NOT DEFINED
+			Enabled (bool): Enables use of this VC range.
+			FecType (str(pwIdFec|generalizedIdFecVpls)): The FEC type. The options are: PW Id FEC 0x80, Generalized Id FEC 0x81 VPLS.
+			Frequency (number): It is the frequency.
+			IncludeRtpHeader (bool): If true, includes the RTP header.
+			IncludeSsrc (bool): If true, enables SSRC.
+			IncludeTdmBitrate (bool): If true, enables TDM bit rate.
+			IncludeTdmOption (bool): If true, includes the TDM option.
+			IncludeTdmPayload (bool): If true, enables TDM payload.
+			IpType (number): The type (IPv4 or IPv6) of the neighbor.
+			LabelMode (str(none|increment)): Indicates whether the same label or incrementing labels should be used in the VC ranges.
+			LabelStart (number): The first label in the range of labels. The default is 16.
+			MaxNumberOfAtmCells (number): The maximum number of ATM cells which may be concatenated and sent in a single MPLS frame. This parameter is part of the FEC element.
+			Mtu (number): (in octets) The 2-octet value for the maximum Transmission Unit (MTU).
+			PayloadType (number): It is the payload type.
+			PeerAddress (str): The IPv4 address of the LDP router which is the peer for this VC range.
+			ProvisioningModel (str(manualConfiguration|bgpAutoDiscovery)): Editable dropdown to denote the Provisioning Model.
+			PwStatusCode (number): This is an editable dropdown to denote the PW status. This field is editable. The range is from 0x00000001 - 0xFFFFFFFF.
+			RepeatCount (number): The number of times to repeat the above processes. The default is 1.
+			SendPwStatus (bool): If checked, it signifies whether to send a notification message with a PW status for the corresponding PW.
+			SourceAiiAsIp (str): The IP address.
+			SourceAiiAsNumber (number): The numerical value indicating the AS of the Source AII.
+			SourceAiiType (str(number|ipAddress)): Editable dropdown. The options are: AS, IP.
+			Sp (str(hexVal0|hexVal1|hexVal2|hexVal3)): It signifies the SP value.
+			Ssrc (number): Indicates the SSRC value.
+			Step (number): The number to increment the peer address by.
+			TargetAiiAsIp (str): The IP address of the Target AII.
+			TargetAiiAsNumber (number): The numerical value of the Target AII.
+			TargetAiiType (str(number|ipAddress)): Editable dropdown. The options are: AS, IP.
+			TdmBitrate (number): The tdm bit rate.
+			TdmDataSize (number): Indicates the TDM data size.
+			TimestampMode (str(absolute|differential)): The time stamp mode.
+			UpInterval (number): Time interval for which the same process to be repeated. (Default = 30 sec)
+			VcId (number): The 32-bit VC connection identifier. Used with the VC type to identify a specific VC (for VC types 0x0001 to 0x000B).
+			VcIdStep (number): The increment step to be added to each additional VC ID in the range of VC IDs.
+			VplsIdAsNumber (number): The 2 byte unsigned integer value indicating the VPLS ID AS Number.
+			VplsIdAsNumberStep (number): The 2 byte unsigned integer value indicating the VPLS ID AS Number Step.
+			VplsIdAssignedNumber (number): The 2 or 4 byte unsigned integer value dependent on the vplsIdType
+			VplsIdAssignedNumberStep (number): The 2 or 4 byte unsigned integer value dependent on the vplsIdType.
+			VplsIdCount (number): The 4 byte unsigned integer indicating the VPLS ID Count.
+			VplsIdIpAddress (str): The IP address of the VPLS Id.
+			VplsIdIpAddressStep (str): The IP address of the VPLS Id.
+			VplsIdType (str(asNumber|ipAddress)): Editable dropdown. The options are: AS, IP.
 
 		Returns:
 			self: This instance with matching l2VcRange data retrieved from the server available through an iterator or index

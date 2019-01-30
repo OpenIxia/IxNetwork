@@ -52,7 +52,7 @@ class SwitchPacketIn(Base):
 
 	@property
 	def ConsultFlowTable(self):
-		"""
+		"""If true, consults Flow Table before sending packet-in messages. If any flow present then do not send packet-in messages.
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class SwitchPacketIn(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables Packet-In Range for the switch.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class SwitchPacketIn(Base):
 
 	@property
 	def InPort(self):
-		"""
+		"""Specifies the number of ports on which the switch receives the new packet.
 
 		Returns:
 			str
@@ -88,7 +88,7 @@ class SwitchPacketIn(Base):
 
 	@property
 	def PacketIn(self):
-		"""
+		"""Specifies the contents of the new packet that will be sent via the Packet-In message.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class SwitchPacketIn(Base):
 
 	@property
 	def PacketInName(self):
-		"""
+		"""Indicates the packet-in Range identifier name.
 
 		Returns:
 			str
@@ -112,7 +112,7 @@ class SwitchPacketIn(Base):
 
 	@property
 	def SendPacketIn(self):
-		"""
+		"""If true, packet-in messages will be sent to the controller using this Packet-In range definitions.
 
 		Returns:
 			bool
@@ -126,12 +126,12 @@ class SwitchPacketIn(Base):
 		"""Adds a new switchPacketIn node on the server and retrieves it in this instance.
 
 		Args:
-			ConsultFlowTable (bool): 
-			Enabled (bool): 
-			InPort (str): 
-			PacketIn (str): 
-			PacketInName (str): 
-			SendPacketIn (bool): 
+			ConsultFlowTable (bool): If true, consults Flow Table before sending packet-in messages. If any flow present then do not send packet-in messages.
+			Enabled (bool): If true, enables Packet-In Range for the switch.
+			InPort (str): Specifies the number of ports on which the switch receives the new packet.
+			PacketIn (str): Specifies the contents of the new packet that will be sent via the Packet-In message.
+			PacketInName (str): Indicates the packet-in Range identifier name.
+			SendPacketIn (bool): If true, packet-in messages will be sent to the controller using this Packet-In range definitions.
 
 		Returns:
 			self: This instance with all currently retrieved switchPacketIn data using find and the newly added switchPacketIn data available through an iterator or index
@@ -157,12 +157,12 @@ class SwitchPacketIn(Base):
 		By default the find method takes no parameters and will retrieve all switchPacketIn data from the server.
 
 		Args:
-			ConsultFlowTable (bool): 
-			Enabled (bool): 
-			InPort (str): 
-			PacketIn (str): 
-			PacketInName (str): 
-			SendPacketIn (bool): 
+			ConsultFlowTable (bool): If true, consults Flow Table before sending packet-in messages. If any flow present then do not send packet-in messages.
+			Enabled (bool): If true, enables Packet-In Range for the switch.
+			InPort (str): Specifies the number of ports on which the switch receives the new packet.
+			PacketIn (str): Specifies the contents of the new packet that will be sent via the Packet-In message.
+			PacketInName (str): Indicates the packet-in Range identifier name.
+			SendPacketIn (bool): If true, packet-in messages will be sent to the controller using this Packet-In range definitions.
 
 		Returns:
 			self: This instance with matching switchPacketIn data retrieved from the server available through an iterator or index
@@ -190,12 +190,14 @@ class SwitchPacketIn(Base):
 	def SendSwitchPacketInOption(self, Arg2):
 		"""Executes the sendSwitchPacketInOption operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchPacketIn)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str(sendPause|sendStart|sendStop)): 
+			Arg2 (str(sendPause|sendStart|sendStop)): NOT DEFINED
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

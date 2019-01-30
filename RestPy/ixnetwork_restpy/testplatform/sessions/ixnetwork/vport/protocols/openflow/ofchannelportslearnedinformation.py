@@ -37,7 +37,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def AdvertisedFeatures(self):
-		"""
+		"""Signifies the advertised features of the port.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def Config(self):
-		"""
+		"""Signifies the configuration name.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def CurrentFeatures(self):
-		"""
+		"""Signifies the current features of the port.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def CurrentSpeed(self):
-		"""
+		"""Indicates the current speed.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The Datapath identifier of the Open Flow channel.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""The Data Path identifier of the OpenFlow switch in hexadecimal format.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def EthernetAddress(self):
-		"""
+		"""Signifies the Ethernet IP address of the switch.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Signifies the local IP of the switch that the OF Channel is connected to.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def MaximumSpeed(self):
-		"""
+		"""Indicates the maximum speed.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Signifies the name of the port.
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def PeerAdvertisedFeatures(self):
-		"""
+		"""Signifies the features advertised by the peer port.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def PortNumber(self):
-		"""
+		"""Indicates the port number used by the corresponding switch.
 
 		Returns:
 			number
@@ -145,7 +145,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""Signifies the remote IP of the switch that the OF Channel is connected to.
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def State(self):
-		"""
+		"""Signifies the state of the port.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class OfChannelPortsLearnedInformation(Base):
 
 	@property
 	def SupportedFeatures(self):
-		"""
+		"""Signifies the features supported by the port.
 
 		Returns:
 			str
@@ -177,21 +177,21 @@ class OfChannelPortsLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all ofChannelPortsLearnedInformation data from the server.
 
 		Args:
-			AdvertisedFeatures (str): 
-			Config (str): 
-			CurrentFeatures (str): 
-			CurrentSpeed (number): 
-			DataPathId (number): 
-			DataPathIdAsHex (str): 
-			EthernetAddress (str): 
-			LocalIp (str): 
-			MaximumSpeed (number): 
-			Name (str): 
-			PeerAdvertisedFeatures (str): 
-			PortNumber (number): 
-			RemoteIp (str): 
-			State (str): 
-			SupportedFeatures (str): 
+			AdvertisedFeatures (str): Signifies the advertised features of the port.
+			Config (str): Signifies the configuration name.
+			CurrentFeatures (str): Signifies the current features of the port.
+			CurrentSpeed (number): Indicates the current speed.
+			DataPathId (number): The Datapath identifier of the Open Flow channel.
+			DataPathIdAsHex (str): The Data Path identifier of the OpenFlow switch in hexadecimal format.
+			EthernetAddress (str): Signifies the Ethernet IP address of the switch.
+			LocalIp (str): Signifies the local IP of the switch that the OF Channel is connected to.
+			MaximumSpeed (number): Indicates the maximum speed.
+			Name (str): Signifies the name of the port.
+			PeerAdvertisedFeatures (str): Signifies the features advertised by the peer port.
+			PortNumber (number): Indicates the port number used by the corresponding switch.
+			RemoteIp (str): Signifies the remote IP of the switch that the OF Channel is connected to.
+			State (str): Signifies the state of the port.
+			SupportedFeatures (str): Signifies the features supported by the port.
 
 		Returns:
 			self: This instance with matching ofChannelPortsLearnedInformation data retrieved from the server available through an iterator or index

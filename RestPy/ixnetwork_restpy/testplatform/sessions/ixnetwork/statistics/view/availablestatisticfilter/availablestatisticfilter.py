@@ -37,7 +37,7 @@ class AvailableStatisticFilter(Base):
 
 	@property
 	def Caption(self):
-		"""
+		"""Name of the statistic.
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class AvailableStatisticFilter(Base):
 		By default the find method takes no parameters and will retrieve all availableStatisticFilter data from the server.
 
 		Args:
-			Caption (str): 
+			Caption (str): Name of the statistic.
 
 		Returns:
 			self: This instance with matching availableStatisticFilter data retrieved from the server available through an iterator or index

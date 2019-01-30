@@ -37,7 +37,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def EthernetDestinationAddress(self):
-		"""
+		"""Indicates that the Ethernet destination address is supported.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def EthernetFrameType(self):
-		"""
+		"""Indicates that the Ethernet frame type is supported.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def EthernetSourceAddress(self):
-		"""
+		"""Indicates that the Ethernet source address is supported.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def IpDestinationAddress(self):
-		"""
+		"""Indicates that the IP destination address is supported.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""Indicates that the IP protocol is supported.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def IpSourceAddress(self):
-		"""
+		"""Indicates that the IP source address is supported.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def IpTos(self):
-		"""
+		"""Indicates that the IP ToS (DSCP field, 6 bits) is supported.
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def SwitchInputPort(self):
-		"""
+		"""Indicates that the Switch input port is supported.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def TcpUdpDestinationPort(self):
-		"""
+		"""Indicates that the TCP/UDP destination port is supported.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def TcpUdpSourcePort(self):
-		"""
+		"""Indicates that the TCP/UDP source port is supported.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""Indicates that the VLAN id is supported.
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class WildcardsSupported(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""Indicates that the VLAN priority is supported.
 
 		Returns:
 			bool

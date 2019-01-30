@@ -37,7 +37,7 @@ class Uds(Base):
 
 	@property
 	def CustomFrameSizeFrom(self):
-		"""
+		"""Frame size customized from.
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class Uds(Base):
 
 	@property
 	def CustomFrameSizeTo(self):
-		"""
+		"""Customized frame size.
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class Uds(Base):
 
 	@property
 	def DestinationAddressSelector(self):
-		"""
+		"""Destination address selector.
 
 		Returns:
 			str(addr1|addr2|anyAddr|notAddr1|notAddr2)
@@ -73,7 +73,7 @@ class Uds(Base):
 
 	@property
 	def Error(self):
-		"""
+		"""Indicates error.
 
 		Returns:
 			str(errAnyFrame|errBadCRC|errBadFrame|errGoodFrame)
@@ -85,7 +85,7 @@ class Uds(Base):
 
 	@property
 	def FrameSizeType(self):
-		"""
+		"""The type of frame size.
 
 		Returns:
 			str(any|custom|jumbo|oversized|undersized)
@@ -97,7 +97,7 @@ class Uds(Base):
 
 	@property
 	def IsEnabled(self):
-		"""
+		"""If true, UDS is enabled.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class Uds(Base):
 
 	@property
 	def PatternSelector(self):
-		"""
+		"""Pattern selector.
 
 		Returns:
 			str(anyPattern|notPattern1|notPattern2|pattern1|pattern2)
@@ -121,7 +121,7 @@ class Uds(Base):
 
 	@property
 	def SourceAddressSelector(self):
-		"""
+		"""Source address selector.
 
 		Returns:
 			str(addr1|addr2|anyAddr|notAddr1|notAddr2)
@@ -138,14 +138,14 @@ class Uds(Base):
 		By default the find method takes no parameters and will retrieve all uds data from the server.
 
 		Args:
-			CustomFrameSizeFrom (number): 
-			CustomFrameSizeTo (number): 
-			DestinationAddressSelector (str(addr1|addr2|anyAddr|notAddr1|notAddr2)): 
-			Error (str(errAnyFrame|errBadCRC|errBadFrame|errGoodFrame)): 
-			FrameSizeType (str(any|custom|jumbo|oversized|undersized)): 
-			IsEnabled (bool): 
-			PatternSelector (str(anyPattern|notPattern1|notPattern2|pattern1|pattern2)): 
-			SourceAddressSelector (str(addr1|addr2|anyAddr|notAddr1|notAddr2)): 
+			CustomFrameSizeFrom (number): Frame size customized from.
+			CustomFrameSizeTo (number): Customized frame size.
+			DestinationAddressSelector (str(addr1|addr2|anyAddr|notAddr1|notAddr2)): Destination address selector.
+			Error (str(errAnyFrame|errBadCRC|errBadFrame|errGoodFrame)): Indicates error.
+			FrameSizeType (str(any|custom|jumbo|oversized|undersized)): The type of frame size.
+			IsEnabled (bool): If true, UDS is enabled.
+			PatternSelector (str(anyPattern|notPattern1|notPattern2|pattern1|pattern2)): Pattern selector.
+			SourceAddressSelector (str(addr1|addr2|anyAddr|notAddr1|notAddr2)): Source address selector.
 
 		Returns:
 			self: This instance with matching uds data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ActiveNanoSeconds(self):
-		"""
+		"""Signifies the active time in nano seconds for the session.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ActiveSeconds(self):
-		"""
+		"""Signifies the number of active seconds for the session.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ApplyActionsInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ApplyMeterInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpDstHwAddr(self):
-		"""
+		"""The hardware address of the ARP destination.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpDstHwAddressMask(self):
-		"""
+		"""Value of the ARP destination hardware address mask field.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpDstIpv4Address(self):
-		"""
+		"""Value of the ARP destination IPv4 address field.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpDstIpv4AddressMask(self):
-		"""
+		"""Value of the ARP destination IPv4 address mask field value.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""
+		"""Value of the ARP opcode field.
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpSrcHwAddr(self):
-		"""
+		"""The hardware address of the ARP source.
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpSrcHwAddressMask(self):
-		"""
+		"""Value of the ARP source hardware address mask field.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpSrcIpv4Address(self):
-		"""
+		"""Value of the ARP source IPv4 address field.
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ArpSrcIpv4AddressMask(self):
-		"""
+		"""Value of the ARP source IPv4 address mask field.
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def BytesCount(self):
-		"""
+		"""Signifies the count of bytes.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ClearActionsInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -172,7 +172,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Cookie(self):
-		"""
+		"""Signifies the cookie value.
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def CookieMask(self):
-		"""
+		"""Value of the cookie mask field.
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""The data path identification of the switch, in decimal format.
 
 		Returns:
 			str
@@ -199,7 +199,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""Signifies the datapath ID of the OpenFlow switch in hexadecimal format.
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""The OpenFlow error code, if any error is received in reply to the statistics request.
 
 		Returns:
 			str
@@ -217,7 +217,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""Signifies the type of the error received.
 
 		Returns:
 			str
@@ -226,7 +226,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""
+		"""Signifies the destination address of the Ethernet port.
 
 		Returns:
 			str
@@ -235,7 +235,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def EthernetDestinationMask(self):
-		"""
+		"""Value of the ethernet destination mask field.
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def EthernetSource(self):
-		"""
+		"""Signifies the source address of the Ethernet port.
 
 		Returns:
 			str
@@ -253,7 +253,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def EthernetSourceMask(self):
-		"""
+		"""Value of the ethernet source mask field.
 
 		Returns:
 			str
@@ -262,7 +262,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def EthernetType(self):
-		"""
+		"""Signifies the type of Ethernet port used.
 
 		Returns:
 			str
@@ -271,7 +271,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""Value of the experimenter data field.
 
 		Returns:
 			str
@@ -280,7 +280,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""
+		"""Value of the Experimenter data length field.
 
 		Returns:
 			number
@@ -289,7 +289,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ExperimenterField(self):
-		"""
+		"""Value of the Experimenter field.
 
 		Returns:
 			number
@@ -298,7 +298,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ExperimenterHashmask(self):
-		"""
+		"""Value of the experimenter hashmask field.
 
 		Returns:
 			bool
@@ -307,7 +307,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ExperimenterId(self):
-		"""
+		"""Value of the experimenter ID field.
 
 		Returns:
 			str
@@ -316,7 +316,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ExperimenterInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -325,7 +325,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Flags(self):
-		"""
+		"""Specifies Flags configured.
 
 		Returns:
 			str
@@ -334,7 +334,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def GoToTableInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -343,7 +343,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def HardTimeout(self):
-		"""
+		"""Signifies the inactive time in seconds after which the Flow range will hard timeout and close.
 
 		Returns:
 			number
@@ -352,7 +352,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Icmpv4Code(self):
-		"""
+		"""The code of ICMPv4 port used.
 
 		Returns:
 			str
@@ -361,7 +361,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Icmpv4Type(self):
-		"""
+		"""Value of the ICMPv4 type field.
 
 		Returns:
 			str
@@ -370,7 +370,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""
+		"""Value of the ICMPv6 code field.
 
 		Returns:
 			str
@@ -379,7 +379,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""
+		"""Value of the ICMPv6 type field.
 
 		Returns:
 			str
@@ -388,7 +388,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def IdleTimeout(self):
-		"""
+		"""Signifies the inactive time in seconds after which the Flow range will timeout and become idle.
 
 		Returns:
 			number
@@ -397,7 +397,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def InPort(self):
-		"""
+		"""Signifies the input port used.
 
 		Returns:
 			str
@@ -406,7 +406,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def IpDscp(self):
-		"""
+		"""Signifies the IP DSCP value for advertising.
 
 		Returns:
 			str
@@ -415,7 +415,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def IpEcn(self):
-		"""
+		"""Value of the IP ECN field.
 
 		Returns:
 			str
@@ -424,7 +424,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""Signifies the IP Protocol used.
 
 		Returns:
 			str
@@ -433,7 +433,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""
+		"""Signifies the IPv4 Destination address for the port.
 
 		Returns:
 			str
@@ -442,7 +442,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""
+		"""Signifies the IPv4 Source address for the port.
 
 		Returns:
 			str
@@ -451,7 +451,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""
+		"""Value of the IPv6 destination field.
 
 		Returns:
 			str
@@ -460,7 +460,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6DestinationMask(self):
-		"""
+		"""Value of the IPv6 destination mask field.
 
 		Returns:
 			str
@@ -469,7 +469,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""
+		"""Value of the Ipv6 extension header field.
 
 		Returns:
 			number
@@ -478,7 +478,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6ExtHeaderMask(self):
-		"""
+		"""Value of the IPv6 external header mask field.
 
 		Returns:
 			number
@@ -487,7 +487,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""
+		"""Value of the IPv6 flow label field.
 
 		Returns:
 			str
@@ -496,7 +496,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6FlowLabelMask(self):
-		"""
+		"""Value of the IPv6 flow label mask field.
 
 		Returns:
 			str
@@ -505,7 +505,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6NdDll(self):
-		"""
+		"""The IPv6 ND DLL field value.
 
 		Returns:
 			str
@@ -514,7 +514,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""
+		"""Value of the Ipv6 ND SLL field.
 
 		Returns:
 			str
@@ -523,7 +523,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""
+		"""Value of the IPv6 ND target field.
 
 		Returns:
 			str
@@ -532,7 +532,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""
+		"""Value of the IPv6 source field.
 
 		Returns:
 			str
@@ -541,7 +541,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Ipv6SourceMask(self):
-		"""
+		"""Value of the IPv6 source mask field.
 
 		Returns:
 			str
@@ -550,7 +550,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""The latency measured in microseconds. This shows the timethat is needed to receive a reply to the statistics request sent.
 
 		Returns:
 			number
@@ -559,7 +559,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""The local interface IP address through which the OpenFlow session is connected.
 
 		Returns:
 			str
@@ -568,7 +568,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Metadata(self):
-		"""
+		"""Value of the metadata field.
 
 		Returns:
 			str
@@ -577,7 +577,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def MetadataMask(self):
-		"""
+		"""Value of the metadata mask field.
 
 		Returns:
 			str
@@ -586,7 +586,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def MplsBos(self):
-		"""
+		"""Value of the MPLS BoS field.
 
 		Returns:
 			str
@@ -595,7 +595,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def MplsLabel(self):
-		"""
+		"""Value of the MPLS label field.
 
 		Returns:
 			str
@@ -604,7 +604,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def MplsTc(self):
-		"""
+		"""Value of the MPLS TC field.
 
 		Returns:
 			str
@@ -613,7 +613,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""The OpenFlow version supported by this configuration.
 
 		Returns:
 			str
@@ -622,7 +622,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def NoOfApplyActions(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -631,7 +631,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def NoOfWriteActions(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -640,7 +640,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def NumberOfActions(self):
-		"""
+		"""Signifies the number of actions configured for this OpenFlow channel.
 
 		Returns:
 			str
@@ -649,7 +649,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def OutGroup(self):
-		"""
+		"""Value of the out group field.
 
 		Returns:
 			number
@@ -658,7 +658,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def OutPort(self):
-		"""
+		"""Specifies Output port number.
 
 		Returns:
 			number
@@ -667,7 +667,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def PacketsCount(self):
-		"""
+		"""Signifies the count of packets transmitted.
 
 		Returns:
 			str
@@ -676,7 +676,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def PbbISid(self):
-		"""
+		"""Value of the PBB I-SID field.
 
 		Returns:
 			str
@@ -685,7 +685,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def PbbISidMask(self):
-		"""
+		"""Value of the PBB I-SID mask field.
 
 		Returns:
 			str
@@ -694,7 +694,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def PhysicalInPort(self):
-		"""
+		"""Value of the Physical IN port field.
 
 		Returns:
 			str
@@ -703,7 +703,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def Priority(self):
-		"""
+		"""Signifies the level of priority.
 
 		Returns:
 			number
@@ -712,7 +712,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""The IP address of the switch that is used to connect to controller.
 
 		Returns:
 			str
@@ -721,7 +721,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""This displays the status of the statistics request. It displays the following values: Reply Received Session Not Established Empty Reply Received No Reply Received.
 
 		Returns:
 			str
@@ -730,7 +730,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def SctpDestination(self):
-		"""
+		"""Value of the SCTP destination field.
 
 		Returns:
 			str
@@ -739,7 +739,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def SctpSource(self):
-		"""
+		"""Value of the SCTP source field.
 
 		Returns:
 			str
@@ -748,7 +748,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""Signifies the identifier value for the table.
 
 		Returns:
 			str
@@ -757,7 +757,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TcpDestination(self):
-		"""
+		"""Value of the TCP destination field.
 
 		Returns:
 			str
@@ -766,7 +766,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TcpSource(self):
-		"""
+		"""Value of the TCP source field.
 
 		Returns:
 			str
@@ -775,7 +775,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TransportDestinationIcmpCode(self):
-		"""
+		"""Signifies the Transport destination address.
 
 		Returns:
 			str
@@ -784,7 +784,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TransportSourceIcmpType(self):
-		"""
+		"""Signifies the Transport source address.
 
 		Returns:
 			str
@@ -793,7 +793,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""Value of the tunnel ID field.
 
 		Returns:
 			str
@@ -802,7 +802,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def TunnelIdMask(self):
-		"""
+		"""Value of the tunnel ID mask field.
 
 		Returns:
 			str
@@ -811,7 +811,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def UdpDestination(self):
-		"""
+		"""Value of the UDP destination field.
 
 		Returns:
 			str
@@ -820,7 +820,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def UdpSource(self):
-		"""
+		"""Value of the UDP source field.
 
 		Returns:
 			str
@@ -829,7 +829,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""Signifies the unique VLAN Identifier.
 
 		Returns:
 			str
@@ -838,7 +838,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def VlanMask(self):
-		"""
+		"""Value of the VLAN mask field.
 
 		Returns:
 			number
@@ -847,7 +847,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""Signifies the User Priority for this VLAN.
 
 		Returns:
 			str
@@ -856,7 +856,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def WriteActionsInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -865,7 +865,7 @@ class FlowStatLearnedInformation(Base):
 
 	@property
 	def WriteMetadataInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -879,99 +879,99 @@ class FlowStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all flowStatLearnedInformation data from the server.
 
 		Args:
-			ActiveNanoSeconds (number): 
-			ActiveSeconds (number): 
-			ApplyActionsInstruction (str): 
-			ApplyMeterInstruction (str): 
-			ArpDstHwAddr (str): 
-			ArpDstHwAddressMask (str): 
-			ArpDstIpv4Address (str): 
-			ArpDstIpv4AddressMask (str): 
-			ArpOpcode (str): 
-			ArpSrcHwAddr (str): 
-			ArpSrcHwAddressMask (str): 
-			ArpSrcIpv4Address (str): 
-			ArpSrcIpv4AddressMask (str): 
-			BytesCount (str): 
-			ClearActionsInstruction (str): 
-			Cookie (str): 
-			CookieMask (str): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			EthernetDestination (str): 
-			EthernetDestinationMask (str): 
-			EthernetSource (str): 
-			EthernetSourceMask (str): 
-			EthernetType (str): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			ExperimenterField (number): 
-			ExperimenterHashmask (bool): 
-			ExperimenterId (str): 
-			ExperimenterInstruction (str): 
-			Flags (str): 
-			GoToTableInstruction (str): 
-			HardTimeout (number): 
-			Icmpv4Code (str): 
-			Icmpv4Type (str): 
-			Icmpv6Code (str): 
-			Icmpv6Type (str): 
-			IdleTimeout (number): 
-			InPort (str): 
-			IpDscp (str): 
-			IpEcn (str): 
-			IpProtocol (str): 
-			Ipv4Destination (str): 
-			Ipv4Source (str): 
-			Ipv6Destination (str): 
-			Ipv6DestinationMask (str): 
-			Ipv6ExtHeader (number): 
-			Ipv6ExtHeaderMask (number): 
-			Ipv6FlowLabel (str): 
-			Ipv6FlowLabelMask (str): 
-			Ipv6NdDll (str): 
-			Ipv6NdSll (str): 
-			Ipv6NdTarget (str): 
-			Ipv6Source (str): 
-			Ipv6SourceMask (str): 
-			Latency (number): 
-			LocalIp (str): 
-			Metadata (str): 
-			MetadataMask (str): 
-			MplsBos (str): 
-			MplsLabel (str): 
-			MplsTc (str): 
-			NegotiatedVersion (str): 
-			NoOfApplyActions (str): 
-			NoOfWriteActions (str): 
-			NumberOfActions (str): 
-			OutGroup (number): 
-			OutPort (number): 
-			PacketsCount (str): 
-			PbbISid (str): 
-			PbbISidMask (str): 
-			PhysicalInPort (str): 
-			Priority (number): 
-			RemoteIp (str): 
-			ReplyState (str): 
-			SctpDestination (str): 
-			SctpSource (str): 
-			TableId (str): 
-			TcpDestination (str): 
-			TcpSource (str): 
-			TransportDestinationIcmpCode (str): 
-			TransportSourceIcmpType (str): 
-			TunnelId (str): 
-			TunnelIdMask (str): 
-			UdpDestination (str): 
-			UdpSource (str): 
-			VlanId (str): 
-			VlanMask (number): 
-			VlanPriority (str): 
-			WriteActionsInstruction (str): 
-			WriteMetadataInstruction (str): 
+			ActiveNanoSeconds (number): Signifies the active time in nano seconds for the session.
+			ActiveSeconds (number): Signifies the number of active seconds for the session.
+			ApplyActionsInstruction (str): NOT DEFINED
+			ApplyMeterInstruction (str): NOT DEFINED
+			ArpDstHwAddr (str): The hardware address of the ARP destination.
+			ArpDstHwAddressMask (str): Value of the ARP destination hardware address mask field.
+			ArpDstIpv4Address (str): Value of the ARP destination IPv4 address field.
+			ArpDstIpv4AddressMask (str): Value of the ARP destination IPv4 address mask field value.
+			ArpOpcode (str): Value of the ARP opcode field.
+			ArpSrcHwAddr (str): The hardware address of the ARP source.
+			ArpSrcHwAddressMask (str): Value of the ARP source hardware address mask field.
+			ArpSrcIpv4Address (str): Value of the ARP source IPv4 address field.
+			ArpSrcIpv4AddressMask (str): Value of the ARP source IPv4 address mask field.
+			BytesCount (str): Signifies the count of bytes.
+			ClearActionsInstruction (str): NOT DEFINED
+			Cookie (str): Signifies the cookie value.
+			CookieMask (str): Value of the cookie mask field.
+			DataPathId (str): The data path identification of the switch, in decimal format.
+			DataPathIdAsHex (str): Signifies the datapath ID of the OpenFlow switch in hexadecimal format.
+			ErrorCode (str): The OpenFlow error code, if any error is received in reply to the statistics request.
+			ErrorType (str): Signifies the type of the error received.
+			EthernetDestination (str): Signifies the destination address of the Ethernet port.
+			EthernetDestinationMask (str): Value of the ethernet destination mask field.
+			EthernetSource (str): Signifies the source address of the Ethernet port.
+			EthernetSourceMask (str): Value of the ethernet source mask field.
+			EthernetType (str): Signifies the type of Ethernet port used.
+			ExperimenterData (str): Value of the experimenter data field.
+			ExperimenterDataLength (number): Value of the Experimenter data length field.
+			ExperimenterField (number): Value of the Experimenter field.
+			ExperimenterHashmask (bool): Value of the experimenter hashmask field.
+			ExperimenterId (str): Value of the experimenter ID field.
+			ExperimenterInstruction (str): NOT DEFINED
+			Flags (str): Specifies Flags configured.
+			GoToTableInstruction (str): NOT DEFINED
+			HardTimeout (number): Signifies the inactive time in seconds after which the Flow range will hard timeout and close.
+			Icmpv4Code (str): The code of ICMPv4 port used.
+			Icmpv4Type (str): Value of the ICMPv4 type field.
+			Icmpv6Code (str): Value of the ICMPv6 code field.
+			Icmpv6Type (str): Value of the ICMPv6 type field.
+			IdleTimeout (number): Signifies the inactive time in seconds after which the Flow range will timeout and become idle.
+			InPort (str): Signifies the input port used.
+			IpDscp (str): Signifies the IP DSCP value for advertising.
+			IpEcn (str): Value of the IP ECN field.
+			IpProtocol (str): Signifies the IP Protocol used.
+			Ipv4Destination (str): Signifies the IPv4 Destination address for the port.
+			Ipv4Source (str): Signifies the IPv4 Source address for the port.
+			Ipv6Destination (str): Value of the IPv6 destination field.
+			Ipv6DestinationMask (str): Value of the IPv6 destination mask field.
+			Ipv6ExtHeader (number): Value of the Ipv6 extension header field.
+			Ipv6ExtHeaderMask (number): Value of the IPv6 external header mask field.
+			Ipv6FlowLabel (str): Value of the IPv6 flow label field.
+			Ipv6FlowLabelMask (str): Value of the IPv6 flow label mask field.
+			Ipv6NdDll (str): The IPv6 ND DLL field value.
+			Ipv6NdSll (str): Value of the Ipv6 ND SLL field.
+			Ipv6NdTarget (str): Value of the IPv6 ND target field.
+			Ipv6Source (str): Value of the IPv6 source field.
+			Ipv6SourceMask (str): Value of the IPv6 source mask field.
+			Latency (number): The latency measured in microseconds. This shows the timethat is needed to receive a reply to the statistics request sent.
+			LocalIp (str): The local interface IP address through which the OpenFlow session is connected.
+			Metadata (str): Value of the metadata field.
+			MetadataMask (str): Value of the metadata mask field.
+			MplsBos (str): Value of the MPLS BoS field.
+			MplsLabel (str): Value of the MPLS label field.
+			MplsTc (str): Value of the MPLS TC field.
+			NegotiatedVersion (str): The OpenFlow version supported by this configuration.
+			NoOfApplyActions (str): NOT DEFINED
+			NoOfWriteActions (str): NOT DEFINED
+			NumberOfActions (str): Signifies the number of actions configured for this OpenFlow channel.
+			OutGroup (number): Value of the out group field.
+			OutPort (number): Specifies Output port number.
+			PacketsCount (str): Signifies the count of packets transmitted.
+			PbbISid (str): Value of the PBB I-SID field.
+			PbbISidMask (str): Value of the PBB I-SID mask field.
+			PhysicalInPort (str): Value of the Physical IN port field.
+			Priority (number): Signifies the level of priority.
+			RemoteIp (str): The IP address of the switch that is used to connect to controller.
+			ReplyState (str): This displays the status of the statistics request. It displays the following values: Reply Received Session Not Established Empty Reply Received No Reply Received.
+			SctpDestination (str): Value of the SCTP destination field.
+			SctpSource (str): Value of the SCTP source field.
+			TableId (str): Signifies the identifier value for the table.
+			TcpDestination (str): Value of the TCP destination field.
+			TcpSource (str): Value of the TCP source field.
+			TransportDestinationIcmpCode (str): Signifies the Transport destination address.
+			TransportSourceIcmpType (str): Signifies the Transport source address.
+			TunnelId (str): Value of the tunnel ID field.
+			TunnelIdMask (str): Value of the tunnel ID mask field.
+			UdpDestination (str): Value of the UDP destination field.
+			UdpSource (str): Value of the UDP source field.
+			VlanId (str): Signifies the unique VLAN Identifier.
+			VlanMask (number): Value of the VLAN mask field.
+			VlanPriority (str): Signifies the User Priority for this VLAN.
+			WriteActionsInstruction (str): NOT DEFINED
+			WriteMetadataInstruction (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching flowStatLearnedInformation data retrieved from the server available through an iterator or index

@@ -38,7 +38,7 @@ class Interface(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If True, it gives details about the interface
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Interface(Base):
 
 	@property
 	def MapRegisterOrRequestTxInterface(self):
-		"""
+		"""If true, it maps register or requests Tx interface
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class Interface(Base):
 
 	@property
 	def ProtocolInterfaces(self):
-		"""
+		"""It gives the protocol interfaces
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -76,9 +76,9 @@ class Interface(Base):
 		"""Adds a new interface node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			MapRegisterOrRequestTxInterface (bool): 
-			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			Enabled (bool): If True, it gives details about the interface
+			MapRegisterOrRequestTxInterface (bool): If true, it maps register or requests Tx interface
+			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): It gives the protocol interfaces
 
 		Returns:
 			self: This instance with all currently retrieved interface data using find and the newly added interface data available through an iterator or index
@@ -104,9 +104,9 @@ class Interface(Base):
 		By default the find method takes no parameters and will retrieve all interface data from the server.
 
 		Args:
-			Enabled (bool): 
-			MapRegisterOrRequestTxInterface (bool): 
-			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
+			Enabled (bool): If True, it gives details about the interface
+			MapRegisterOrRequestTxInterface (bool): If true, it maps register or requests Tx interface
+			ProtocolInterfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): It gives the protocol interfaces
 
 		Returns:
 			self: This instance with matching interface data retrieved from the server available through an iterator or index

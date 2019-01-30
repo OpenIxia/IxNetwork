@@ -52,7 +52,7 @@ class JoinPrune(Base):
 
 	@property
 	def DiscardRegisterStates(self):
-		"""
+		"""If checked, the Learned Join States sent by the RP (DUT) in response to this specific Register Message will be discarded - and will not be displayed in the table of the Register Range window.
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class JoinPrune(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the use of this join/prune.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class JoinPrune(Base):
 
 	@property
 	def EnabledDataMdt(self):
-		"""
+		"""If enabled, pimsmLearnedDataMdt will be available. (default = disabled)
 
 		Returns:
 			bool
@@ -88,7 +88,7 @@ class JoinPrune(Base):
 
 	@property
 	def FlapEnabled(self):
-		"""
+		"""Enables emulated flapping of this multicast group range. NOTE: Flapping is not supported for the Switchover (*, G) -> (S, G) range type.
 
 		Returns:
 			bool
@@ -100,7 +100,7 @@ class JoinPrune(Base):
 
 	@property
 	def FlapInterval(self):
-		"""
+		"""Defines the join/prune flapping interval.
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class JoinPrune(Base):
 
 	@property
 	def GroupAddress(self):
-		"""
+		"""An IPv4 or IPv6 address used with the group mask to create a range of multicast addresses.
 
 		Returns:
 			str
@@ -124,7 +124,7 @@ class JoinPrune(Base):
 
 	@property
 	def GroupCount(self):
-		"""
+		"""The number of multicast group addresses to be included in the multicast group range. The maximum number of valid possible addresses depends on the values for the group address and the group mask width.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class JoinPrune(Base):
 
 	@property
 	def GroupMappingMode(self):
-		"""
+		"""Sets the type of mapping that occurs when routes are advertised. This only applies for (S, G) and switchover types for MGR and is meaningful for RR.
 
 		Returns:
 			str(fullyMeshed|oneToOne)
@@ -148,7 +148,7 @@ class JoinPrune(Base):
 
 	@property
 	def GroupMaskWidth(self):
-		"""
+		"""The number of bits in the mask applied to the group address. (The masked bits in the group address form the address prefix.)The default value is 32. The valid range is 1 to 128, depending on address family type.
 
 		Returns:
 			number
@@ -160,7 +160,7 @@ class JoinPrune(Base):
 
 	@property
 	def GroupRange(self):
-		"""
+		"""The multicast group range type.
 
 		Returns:
 			str(rp|g|sg|sptSwitchOver|registerTriggeredSg)
@@ -172,7 +172,7 @@ class JoinPrune(Base):
 
 	@property
 	def NumRegToReceivePerSg(self):
-		"""
+		"""If rangeType is set to pimsmJoinsPrunesTypeRegisterTriggeredSG, then this is the count of register messages received that will trigger transmission of a (S,G) message. (default = 10)
 
 		Returns:
 			number
@@ -184,7 +184,7 @@ class JoinPrune(Base):
 
 	@property
 	def PackGroupsEnabled(self):
-		"""
+		"""If enabled, multiple groups can be included within a single packet.
 
 		Returns:
 			bool
@@ -196,7 +196,7 @@ class JoinPrune(Base):
 
 	@property
 	def PruneSourceAddress(self):
-		"""
+		"""ONLY used for (*,G) Type to send (S,G,rpt) Prune Messages. (Multicast addresses are invalid.)
 
 		Returns:
 			str
@@ -208,7 +208,7 @@ class JoinPrune(Base):
 
 	@property
 	def PruneSourceCount(self):
-		"""
+		"""The number of prune source addresses to be included. The maximum number of valid possible addresses depends on the values for the source address and the source mask width. The default value is 0. ONLY used for (*,G) type to send (S,G,rpt) prune messages.
 
 		Returns:
 			number
@@ -220,7 +220,7 @@ class JoinPrune(Base):
 
 	@property
 	def PruneSourceMaskWidth(self):
-		"""
+		"""The number of bits in the mask applied to the prune source address. (The masked bits in the prune source address form the address prefix.)
 
 		Returns:
 			number
@@ -232,7 +232,7 @@ class JoinPrune(Base):
 
 	@property
 	def RpAddress(self):
-		"""
+		"""The IP address of the Rendezvous Point (RP) router.
 
 		Returns:
 			str
@@ -244,7 +244,7 @@ class JoinPrune(Base):
 
 	@property
 	def SourceAddress(self):
-		"""
+		"""The Multicast Source Address. Used for (S,G) Type and (S,G, rpt) only. (Multicast addresses are invalid.)
 
 		Returns:
 			str
@@ -256,7 +256,7 @@ class JoinPrune(Base):
 
 	@property
 	def SourceCount(self):
-		"""
+		"""The number of multicast source addresses to be included. The maximum number of valid possible addresses depends on the values for the source address and the source mask width.
 
 		Returns:
 			number
@@ -268,7 +268,7 @@ class JoinPrune(Base):
 
 	@property
 	def SourceMaskWidth(self):
-		"""
+		"""The number of bits in the mask applied to the source address. (The masked bits in the source address form the address prefix.)The default value is 32. The valid range is 1 to 128, depending on address family type. Used for (S,G) Type and (S,G, rpt) only.
 
 		Returns:
 			number
@@ -280,7 +280,7 @@ class JoinPrune(Base):
 
 	@property
 	def SptSwitchoverInterval(self):
-		"""
+		"""The time interval (in seconds) allowed for the switch from using the RP tree to using a Source-specific tree - from (*,G) to (S,G). The default value is 0.
 
 		Returns:
 			number
@@ -294,26 +294,26 @@ class JoinPrune(Base):
 		"""Adds a new joinPrune node on the server and retrieves it in this instance.
 
 		Args:
-			DiscardRegisterStates (bool): 
-			Enabled (bool): 
-			EnabledDataMdt (bool): 
-			FlapEnabled (bool): 
-			FlapInterval (number): 
-			GroupAddress (str): 
-			GroupCount (number): 
-			GroupMappingMode (str(fullyMeshed|oneToOne)): 
-			GroupMaskWidth (number): 
-			GroupRange (str(rp|g|sg|sptSwitchOver|registerTriggeredSg)): 
-			NumRegToReceivePerSg (number): 
-			PackGroupsEnabled (bool): 
-			PruneSourceAddress (str): 
-			PruneSourceCount (number): 
-			PruneSourceMaskWidth (number): 
-			RpAddress (str): 
-			SourceAddress (str): 
-			SourceCount (number): 
-			SourceMaskWidth (number): 
-			SptSwitchoverInterval (number): 
+			DiscardRegisterStates (bool): If checked, the Learned Join States sent by the RP (DUT) in response to this specific Register Message will be discarded - and will not be displayed in the table of the Register Range window.
+			Enabled (bool): Enables the use of this join/prune.
+			EnabledDataMdt (bool): If enabled, pimsmLearnedDataMdt will be available. (default = disabled)
+			FlapEnabled (bool): Enables emulated flapping of this multicast group range. NOTE: Flapping is not supported for the Switchover (*, G) -> (S, G) range type.
+			FlapInterval (number): Defines the join/prune flapping interval.
+			GroupAddress (str): An IPv4 or IPv6 address used with the group mask to create a range of multicast addresses.
+			GroupCount (number): The number of multicast group addresses to be included in the multicast group range. The maximum number of valid possible addresses depends on the values for the group address and the group mask width.
+			GroupMappingMode (str(fullyMeshed|oneToOne)): Sets the type of mapping that occurs when routes are advertised. This only applies for (S, G) and switchover types for MGR and is meaningful for RR.
+			GroupMaskWidth (number): The number of bits in the mask applied to the group address. (The masked bits in the group address form the address prefix.)The default value is 32. The valid range is 1 to 128, depending on address family type.
+			GroupRange (str(rp|g|sg|sptSwitchOver|registerTriggeredSg)): The multicast group range type.
+			NumRegToReceivePerSg (number): If rangeType is set to pimsmJoinsPrunesTypeRegisterTriggeredSG, then this is the count of register messages received that will trigger transmission of a (S,G) message. (default = 10)
+			PackGroupsEnabled (bool): If enabled, multiple groups can be included within a single packet.
+			PruneSourceAddress (str): ONLY used for (*,G) Type to send (S,G,rpt) Prune Messages. (Multicast addresses are invalid.)
+			PruneSourceCount (number): The number of prune source addresses to be included. The maximum number of valid possible addresses depends on the values for the source address and the source mask width. The default value is 0. ONLY used for (*,G) type to send (S,G,rpt) prune messages.
+			PruneSourceMaskWidth (number): The number of bits in the mask applied to the prune source address. (The masked bits in the prune source address form the address prefix.)
+			RpAddress (str): The IP address of the Rendezvous Point (RP) router.
+			SourceAddress (str): The Multicast Source Address. Used for (S,G) Type and (S,G, rpt) only. (Multicast addresses are invalid.)
+			SourceCount (number): The number of multicast source addresses to be included. The maximum number of valid possible addresses depends on the values for the source address and the source mask width.
+			SourceMaskWidth (number): The number of bits in the mask applied to the source address. (The masked bits in the source address form the address prefix.)The default value is 32. The valid range is 1 to 128, depending on address family type. Used for (S,G) Type and (S,G, rpt) only.
+			SptSwitchoverInterval (number): The time interval (in seconds) allowed for the switch from using the RP tree to using a Source-specific tree - from (*,G) to (S,G). The default value is 0.
 
 		Returns:
 			self: This instance with all currently retrieved joinPrune data using find and the newly added joinPrune data available through an iterator or index
@@ -339,26 +339,26 @@ class JoinPrune(Base):
 		By default the find method takes no parameters and will retrieve all joinPrune data from the server.
 
 		Args:
-			DiscardRegisterStates (bool): 
-			Enabled (bool): 
-			EnabledDataMdt (bool): 
-			FlapEnabled (bool): 
-			FlapInterval (number): 
-			GroupAddress (str): 
-			GroupCount (number): 
-			GroupMappingMode (str(fullyMeshed|oneToOne)): 
-			GroupMaskWidth (number): 
-			GroupRange (str(rp|g|sg|sptSwitchOver|registerTriggeredSg)): 
-			NumRegToReceivePerSg (number): 
-			PackGroupsEnabled (bool): 
-			PruneSourceAddress (str): 
-			PruneSourceCount (number): 
-			PruneSourceMaskWidth (number): 
-			RpAddress (str): 
-			SourceAddress (str): 
-			SourceCount (number): 
-			SourceMaskWidth (number): 
-			SptSwitchoverInterval (number): 
+			DiscardRegisterStates (bool): If checked, the Learned Join States sent by the RP (DUT) in response to this specific Register Message will be discarded - and will not be displayed in the table of the Register Range window.
+			Enabled (bool): Enables the use of this join/prune.
+			EnabledDataMdt (bool): If enabled, pimsmLearnedDataMdt will be available. (default = disabled)
+			FlapEnabled (bool): Enables emulated flapping of this multicast group range. NOTE: Flapping is not supported for the Switchover (*, G) -> (S, G) range type.
+			FlapInterval (number): Defines the join/prune flapping interval.
+			GroupAddress (str): An IPv4 or IPv6 address used with the group mask to create a range of multicast addresses.
+			GroupCount (number): The number of multicast group addresses to be included in the multicast group range. The maximum number of valid possible addresses depends on the values for the group address and the group mask width.
+			GroupMappingMode (str(fullyMeshed|oneToOne)): Sets the type of mapping that occurs when routes are advertised. This only applies for (S, G) and switchover types for MGR and is meaningful for RR.
+			GroupMaskWidth (number): The number of bits in the mask applied to the group address. (The masked bits in the group address form the address prefix.)The default value is 32. The valid range is 1 to 128, depending on address family type.
+			GroupRange (str(rp|g|sg|sptSwitchOver|registerTriggeredSg)): The multicast group range type.
+			NumRegToReceivePerSg (number): If rangeType is set to pimsmJoinsPrunesTypeRegisterTriggeredSG, then this is the count of register messages received that will trigger transmission of a (S,G) message. (default = 10)
+			PackGroupsEnabled (bool): If enabled, multiple groups can be included within a single packet.
+			PruneSourceAddress (str): ONLY used for (*,G) Type to send (S,G,rpt) Prune Messages. (Multicast addresses are invalid.)
+			PruneSourceCount (number): The number of prune source addresses to be included. The maximum number of valid possible addresses depends on the values for the source address and the source mask width. The default value is 0. ONLY used for (*,G) type to send (S,G,rpt) prune messages.
+			PruneSourceMaskWidth (number): The number of bits in the mask applied to the prune source address. (The masked bits in the prune source address form the address prefix.)
+			RpAddress (str): The IP address of the Rendezvous Point (RP) router.
+			SourceAddress (str): The Multicast Source Address. Used for (S,G) Type and (S,G, rpt) only. (Multicast addresses are invalid.)
+			SourceCount (number): The number of multicast source addresses to be included. The maximum number of valid possible addresses depends on the values for the source address and the source mask width.
+			SourceMaskWidth (number): The number of bits in the mask applied to the source address. (The masked bits in the source address form the address prefix.)The default value is 32. The valid range is 1 to 128, depending on address family type. Used for (S,G) Type and (S,G, rpt) only.
+			SptSwitchoverInterval (number): The time interval (in seconds) allowed for the switch from using the RP tree to using a Source-specific tree - from (*,G) to (S,G). The default value is 0.
 
 		Returns:
 			self: This instance with matching joinPrune data retrieved from the server available through an iterator or index

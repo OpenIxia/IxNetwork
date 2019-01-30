@@ -79,7 +79,7 @@ class VirtualChassis(Base):
 
 	@property
 	def EnableLicenseCheck(self):
-		"""
+		"""Enables license check on port connect
 
 		Returns:
 			bool
@@ -91,7 +91,7 @@ class VirtualChassis(Base):
 
 	@property
 	def Hostname(self):
-		"""
+		"""Virtual Chassis hostname or IP
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class VirtualChassis(Base):
 
 	@property
 	def LicenseServer(self):
-		"""
+		"""The address of the license server
 
 		Returns:
 			str
@@ -112,7 +112,7 @@ class VirtualChassis(Base):
 
 	@property
 	def NtpServer(self):
-		"""
+		"""The address of the NTP server
 
 		Returns:
 			str
@@ -124,7 +124,7 @@ class VirtualChassis(Base):
 
 	@property
 	def StartTxDelay(self):
-		"""
+		"""The delay amount for transmit
 
 		Returns:
 			str

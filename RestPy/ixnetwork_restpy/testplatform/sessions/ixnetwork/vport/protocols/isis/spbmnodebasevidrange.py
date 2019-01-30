@@ -52,7 +52,7 @@ class SpbmNodeBaseVidRange(Base):
 
 	@property
 	def BVlanPriority(self):
-		"""
+		"""The user priority of the Base VLAN.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class SpbmNodeBaseVidRange(Base):
 
 	@property
 	def BVlanTpId(self):
-		"""
+		"""The tag priority identifier for base VLAN.
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class SpbmNodeBaseVidRange(Base):
 
 	@property
 	def BaseVid(self):
-		"""
+		"""The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class SpbmNodeBaseVidRange(Base):
 
 	@property
 	def EctAlgorithm(self):
-		"""
+		"""The SPB Equal Cost Tree (ECT) algorithm. The default algorithm is 01-80-C2-01.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class SpbmNodeBaseVidRange(Base):
 
 	@property
 	def UseFlag(self):
-		"""
+		"""Set to true to activate the user flag.
 
 		Returns:
 			bool
@@ -114,11 +114,11 @@ class SpbmNodeBaseVidRange(Base):
 		"""Adds a new spbmNodeBaseVidRange node on the server and retrieves it in this instance.
 
 		Args:
-			BVlanPriority (number): 
-			BVlanTpId (number): 
-			BaseVid (number): 
-			EctAlgorithm (number): 
-			UseFlag (bool): 
+			BVlanPriority (number): The user priority of the Base VLAN.
+			BVlanTpId (number): The tag priority identifier for base VLAN.
+			BaseVid (number): The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
+			EctAlgorithm (number): The SPB Equal Cost Tree (ECT) algorithm. The default algorithm is 01-80-C2-01.
+			UseFlag (bool): Set to true to activate the user flag.
 
 		Returns:
 			self: This instance with all currently retrieved spbmNodeBaseVidRange data using find and the newly added spbmNodeBaseVidRange data available through an iterator or index
@@ -144,11 +144,11 @@ class SpbmNodeBaseVidRange(Base):
 		By default the find method takes no parameters and will retrieve all spbmNodeBaseVidRange data from the server.
 
 		Args:
-			BVlanPriority (number): 
-			BVlanTpId (number): 
-			BaseVid (number): 
-			EctAlgorithm (number): 
-			UseFlag (bool): 
+			BVlanPriority (number): The user priority of the Base VLAN.
+			BVlanTpId (number): The tag priority identifier for base VLAN.
+			BaseVid (number): The Base VLAN ID. The default value is 1. The maximum value is 4095. The minimum value is 0.
+			EctAlgorithm (number): The SPB Equal Cost Tree (ECT) algorithm. The default algorithm is 01-80-C2-01.
+			UseFlag (bool): Set to true to activate the user flag.
 
 		Returns:
 			self: This instance with matching spbmNodeBaseVidRange data retrieved from the server available through an iterator or index

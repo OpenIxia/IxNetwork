@@ -52,7 +52,7 @@ class SwitchPortQueues(Base):
 
 	@property
 	def MinRate(self):
-		"""
+		"""Indicates the minimum-rate, in 1/10 of a percent, applicable when queue property is OFPQT_MIN.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class SwitchPortQueues(Base):
 
 	@property
 	def NumberOfQueues(self):
-		"""
+		"""Specifies the number of entries in the queue range.
 
 		Returns:
 			number
@@ -76,7 +76,7 @@ class SwitchPortQueues(Base):
 
 	@property
 	def QueueId(self):
-		"""
+		"""Indicates the ID for the specific queue.
 
 		Returns:
 			str
@@ -90,9 +90,9 @@ class SwitchPortQueues(Base):
 		"""Adds a new switchPortQueues node on the server and retrieves it in this instance.
 
 		Args:
-			MinRate (str): 
-			NumberOfQueues (number): 
-			QueueId (str): 
+			MinRate (str): Indicates the minimum-rate, in 1/10 of a percent, applicable when queue property is OFPQT_MIN.
+			NumberOfQueues (number): Specifies the number of entries in the queue range.
+			QueueId (str): Indicates the ID for the specific queue.
 
 		Returns:
 			self: This instance with all currently retrieved switchPortQueues data using find and the newly added switchPortQueues data available through an iterator or index
@@ -118,9 +118,9 @@ class SwitchPortQueues(Base):
 		By default the find method takes no parameters and will retrieve all switchPortQueues data from the server.
 
 		Args:
-			MinRate (str): 
-			NumberOfQueues (number): 
-			QueueId (str): 
+			MinRate (str): Indicates the minimum-rate, in 1/10 of a percent, applicable when queue property is OFPQT_MIN.
+			NumberOfQueues (number): Specifies the number of entries in the queue range.
+			QueueId (str): Indicates the ID for the specific queue.
 
 		Returns:
 			self: This instance with matching switchPortQueues data retrieved from the server available through an iterator or index

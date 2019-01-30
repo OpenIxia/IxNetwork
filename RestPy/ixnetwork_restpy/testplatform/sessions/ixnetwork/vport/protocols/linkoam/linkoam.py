@@ -51,7 +51,7 @@ class LinkOam(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the Link OAM protocol is enabled.
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class LinkOam(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The current runnings state of Link OAM.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -72,6 +72,8 @@ class LinkOam(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		Starts the Link OAM protocol.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=linkOam)): The method internally sets Arg1 to the current href for this instance
@@ -85,6 +87,8 @@ class LinkOam(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		Stops the Link OAM protocol
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=linkOam)): The method internally sets Arg1 to the current href for this instance

@@ -38,7 +38,7 @@ class TrackingFilter(Base):
 
 	@property
 	def Operator(self):
-		"""
+		"""The logical operation to be performed.
 
 		Returns:
 			str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isInAnyRange|isNoneOf|isSmaller)
@@ -50,7 +50,7 @@ class TrackingFilter(Base):
 
 	@property
 	def TrackingFilterId(self):
-		"""
+		"""Selected tracking filters from the availableTrackingFilter list.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)
@@ -62,7 +62,7 @@ class TrackingFilter(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""Value of the object
 
 		Returns:
 			list(str)
@@ -76,9 +76,9 @@ class TrackingFilter(Base):
 		"""Adds a new trackingFilter node on the server and retrieves it in this instance.
 
 		Args:
-			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isInAnyRange|isNoneOf|isSmaller)): 
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): 
-			Value (list(str)): 
+			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isInAnyRange|isNoneOf|isSmaller)): The logical operation to be performed.
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): Selected tracking filters from the availableTrackingFilter list.
+			Value (list(str)): Value of the object
 
 		Returns:
 			self: This instance with all currently retrieved trackingFilter data using find and the newly added trackingFilter data available through an iterator or index
@@ -104,9 +104,9 @@ class TrackingFilter(Base):
 		By default the find method takes no parameters and will retrieve all trackingFilter data from the server.
 
 		Args:
-			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isInAnyRange|isNoneOf|isSmaller)): 
-			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): 
-			Value (list(str)): 
+			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isInAnyRange|isNoneOf|isSmaller)): The logical operation to be performed.
+			TrackingFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableTrackingFilter)): Selected tracking filters from the availableTrackingFilter list.
+			Value (list(str)): Value of the object
 
 		Returns:
 			self: This instance with matching trackingFilter data retrieved from the server available through an iterator or index

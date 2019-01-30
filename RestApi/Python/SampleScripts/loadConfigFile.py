@@ -18,6 +18,8 @@
 #
 #    - Connects to the chassis and verify port availability.
 #    - Load a saved BGP config file.
+#         If the config file is in Windows API server, the config file path format is c:\\path\\bgp.ixncfg
+#
 #    - Optional: Reassign Ports
 #    - Verify port states.
 #    - Example to show how to modify BGP configurations.
@@ -56,7 +58,7 @@ try:
     #---------- Preference Settings --------------
     forceTakePortOwnership = True
     releasePortsWhenDone = False
-    enableDebugTracing = False
+    enableDebugTracing = True
     deleteSessionAfterTest = True
 
     licenseServerIp = '192.168.70.3'
@@ -102,7 +104,7 @@ try:
     portObj.releasePorts(portList)
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
         
-    fileMgmtObj = FileMgmt(mainObj)
+    fileMgmtObj = FileMgmt(mainObj)    
     fileMgmtObj.loadConfigFile(configFile)
 
     portObj = PortMgmt(mainObj)

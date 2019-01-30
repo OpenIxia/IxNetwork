@@ -38,7 +38,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def IncludeInterestedVlan(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def InterNodeVlanStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def M4BitEnabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def M6BitEnabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def NumberOfSpanningTreeRoots(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def StartSpanningTreeRootBridgeId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def StartVlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def VlanCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class CustomTopologyInterestedVlanRange(Base):
 
 	@property
 	def VlanIdStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -148,15 +148,15 @@ class CustomTopologyInterestedVlanRange(Base):
 		"""Adds a new customTopologyInterestedVlanRange node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeInterestedVlan (bool): 
-			InterNodeVlanStep (number): 
-			M4BitEnabled (bool): 
-			M6BitEnabled (bool): 
-			NumberOfSpanningTreeRoots (number): 
-			StartSpanningTreeRootBridgeId (str): 
-			StartVlanId (number): 
-			VlanCount (number): 
-			VlanIdStep (number): 
+			IncludeInterestedVlan (bool): NOT DEFINED
+			InterNodeVlanStep (number): NOT DEFINED
+			M4BitEnabled (bool): NOT DEFINED
+			M6BitEnabled (bool): NOT DEFINED
+			NumberOfSpanningTreeRoots (number): NOT DEFINED
+			StartSpanningTreeRootBridgeId (str): NOT DEFINED
+			StartVlanId (number): NOT DEFINED
+			VlanCount (number): NOT DEFINED
+			VlanIdStep (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyInterestedVlanRange data using find and the newly added customTopologyInterestedVlanRange data available through an iterator or index
@@ -182,15 +182,15 @@ class CustomTopologyInterestedVlanRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyInterestedVlanRange data from the server.
 
 		Args:
-			IncludeInterestedVlan (bool): 
-			InterNodeVlanStep (number): 
-			M4BitEnabled (bool): 
-			M6BitEnabled (bool): 
-			NumberOfSpanningTreeRoots (number): 
-			StartSpanningTreeRootBridgeId (str): 
-			StartVlanId (number): 
-			VlanCount (number): 
-			VlanIdStep (number): 
+			IncludeInterestedVlan (bool): NOT DEFINED
+			InterNodeVlanStep (number): NOT DEFINED
+			M4BitEnabled (bool): NOT DEFINED
+			M6BitEnabled (bool): NOT DEFINED
+			NumberOfSpanningTreeRoots (number): NOT DEFINED
+			StartSpanningTreeRootBridgeId (str): NOT DEFINED
+			StartVlanId (number): NOT DEFINED
+			VlanCount (number): NOT DEFINED
+			VlanIdStep (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTopologyInterestedVlanRange data retrieved from the server available through an iterator or index

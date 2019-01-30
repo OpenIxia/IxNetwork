@@ -37,7 +37,7 @@ class InterfaceLearnedInfo(Base):
 
 	@property
 	def GatewayIp(self):
-		"""
+		"""The IP address of the Gateway to the network, typically an interface on the DUT.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class InterfaceLearnedInfo(Base):
 
 	@property
 	def IpType(self):
-		"""
+		"""The IP version used with this option set: IPv4 or IPv6.
 
 		Returns:
 			str(kIpv4|kIpv6)
@@ -55,7 +55,7 @@ class InterfaceLearnedInfo(Base):
 
 	@property
 	def OwnIp(self):
-		"""
+		"""The own ip type.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class InterfaceLearnedInfo(Base):
 
 	@property
 	def PrefixLength(self):
-		"""
+		"""A learned/allocated IPv4 address prefix length (mask) for this interface.
 
 		Returns:
 			number

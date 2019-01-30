@@ -38,7 +38,7 @@ class Pattern(Base):
 
 	@property
 	def BitOffset(self):
-		"""
+		"""Bit offset within a byte. Starting point of the mask.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class Pattern(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, match incoming packets against this pattern.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class Pattern(Base):
 
 	@property
 	def Mask(self):
-		"""
+		"""Bitmask to match against. Same format as value.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class Pattern(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Name of pattern.
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class Pattern(Base):
 
 	@property
 	def Offset(self):
-		"""
+		"""Byte offset from start of L2 frame.
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class Pattern(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""The field value to match. For MAC, IPv4, and IPv6 addresses, the value is a formatted address. For all other fields, the value is encoded as a string of hex bytes, most significant byte first, and most significant bit first within each byte. Each hex byte must be exactly two hex digits; A-F and a-f are both accepted. The hex bytes must be separated by a single white space. Example: 00 01 02 FF.
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class Pattern(Base):
 
 	@property
 	def Width(self):
-		"""
+		"""Width of field, in bits.
 
 		Returns:
 			number
@@ -124,13 +124,13 @@ class Pattern(Base):
 		"""Adds a new pattern node on the server and retrieves it in this instance.
 
 		Args:
-			BitOffset (number): 
-			Enabled (bool): 
-			Mask (str): 
-			Name (str): 
-			Offset (number): 
-			Value (str): 
-			Width (number): 
+			BitOffset (number): Bit offset within a byte. Starting point of the mask.
+			Enabled (bool): If true, match incoming packets against this pattern.
+			Mask (str): Bitmask to match against. Same format as value.
+			Name (str): Name of pattern.
+			Offset (number): Byte offset from start of L2 frame.
+			Value (str): The field value to match. For MAC, IPv4, and IPv6 addresses, the value is a formatted address. For all other fields, the value is encoded as a string of hex bytes, most significant byte first, and most significant bit first within each byte. Each hex byte must be exactly two hex digits; A-F and a-f are both accepted. The hex bytes must be separated by a single white space. Example: 00 01 02 FF.
+			Width (number): Width of field, in bits.
 
 		Returns:
 			self: This instance with all currently retrieved pattern data using find and the newly added pattern data available through an iterator or index
@@ -156,13 +156,13 @@ class Pattern(Base):
 		By default the find method takes no parameters and will retrieve all pattern data from the server.
 
 		Args:
-			BitOffset (number): 
-			Enabled (bool): 
-			Mask (str): 
-			Name (str): 
-			Offset (number): 
-			Value (str): 
-			Width (number): 
+			BitOffset (number): Bit offset within a byte. Starting point of the mask.
+			Enabled (bool): If true, match incoming packets against this pattern.
+			Mask (str): Bitmask to match against. Same format as value.
+			Name (str): Name of pattern.
+			Offset (number): Byte offset from start of L2 frame.
+			Value (str): The field value to match. For MAC, IPv4, and IPv6 addresses, the value is a formatted address. For all other fields, the value is encoded as a string of hex bytes, most significant byte first, and most significant bit first within each byte. Each hex byte must be exactly two hex digits; A-F and a-f are both accepted. The hex bytes must be separated by a single white space. Example: 00 01 02 FF.
+			Width (number): Width of field, in bits.
 
 		Returns:
 			self: This instance with matching pattern data retrieved from the server available through an iterator or index

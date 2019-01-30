@@ -49,7 +49,7 @@ class EgressRxCondition(Base):
 
 	@property
 	def Values(self):
-		"""
+		"""Value to be matched for the condition.
 
 		Returns:
 			list(number)

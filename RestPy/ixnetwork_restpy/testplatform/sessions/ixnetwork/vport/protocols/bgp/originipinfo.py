@@ -51,7 +51,7 @@ class OriginIpInfo(Base):
 
 	@property
 	def OriginIp(self):
-		"""
+		"""(Read Only) Origin IP.
 
 		Returns:
 			str
@@ -65,7 +65,7 @@ class OriginIpInfo(Base):
 		By default the find method takes no parameters and will retrieve all originIpInfo data from the server.
 
 		Args:
-			OriginIp (str): 
+			OriginIp (str): (Read Only) Origin IP.
 
 		Returns:
 			self: This instance with matching originIpInfo data retrieved from the server available through an iterator or index

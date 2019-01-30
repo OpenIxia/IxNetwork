@@ -51,7 +51,7 @@ class CustomDelayVariation(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, vary the packet delay.
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class CustomDelayVariation(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""Descriptive name of custom value list.
 
 		Returns:
 			str

@@ -37,7 +37,7 @@ class L2VcIpRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the Layer 2 IP address range.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class L2VcIpRange(Base):
 
 	@property
 	def IncrementBy(self):
-		"""
+		"""The value to be added for creating each additional L2 VC IP route range.
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class L2VcIpRange(Base):
 
 	@property
 	def Mask(self):
-		"""
+		"""The number of bits in the mask applied to the network address. The masked bits in the first network address form the address prefix.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class L2VcIpRange(Base):
 
 	@property
 	def NumHosts(self):
-		"""
+		"""The number of emulated LDP hosts to be created on this port.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class L2VcIpRange(Base):
 
 	@property
 	def PeerAddress(self):
-		"""
+		"""The 32-bit IPv4 address of the LDP peer.
 
 		Returns:
 			str
@@ -94,7 +94,7 @@ class L2VcIpRange(Base):
 
 	@property
 	def StartAddress(self):
-		"""
+		"""The IP address that starts the L2 VC IP range.
 
 		Returns:
 			str

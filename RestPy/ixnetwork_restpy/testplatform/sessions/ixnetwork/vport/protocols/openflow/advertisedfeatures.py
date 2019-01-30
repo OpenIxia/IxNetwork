@@ -37,7 +37,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 100MbFd(self):
-		"""
+		"""Indicates that the advertized features include 100 Mb full-duplex rate support.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 100MbHd(self):
-		"""
+		"""Indicates that the advertized features include 100 Mb half-duplex rate support.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 10GbFd(self):
-		"""
+		"""Indicates that the advertized features include 10 Gb full-duplex rate support.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 10MbFd(self):
-		"""
+		"""Indicates that the advertized features include 10 Mb full-duplex rate support.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 10MbHd(self):
-		"""
+		"""Indicates that the advertized features include 10 Mb half-duplex rate support.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 1GbFd(self):
-		"""
+		"""Indicates that the advertized features include 1 Gb full-duplex rate support.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def 1GbHd(self):
-		"""
+		"""Indicates that the advertized features include 1 Gb half-duplex rate support.
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def AsymmetricPause(self):
-		"""
+		"""Indicates that the advertized features include Asymmetric pause.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def AutoNegotiation(self):
-		"""
+		"""Indicates that the advertized features include Auto-negotiation.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def CopperMedium(self):
-		"""
+		"""Indicates that the advertized features include Copper medium.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def FiberMedium(self):
-		"""
+		"""Indicates that the advertized features include Fiber medium.
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class AdvertisedFeatures(Base):
 
 	@property
 	def Pause(self):
-		"""
+		"""Indicates that the advertized features include Pause.
 
 		Returns:
 			bool

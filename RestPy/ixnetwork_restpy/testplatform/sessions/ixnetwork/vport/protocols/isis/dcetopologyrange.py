@@ -52,7 +52,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def EnableFtag(self):
-		"""
+		"""If true, the F tag is enabled.
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Signifies if DCE Topology is enabled or disabled.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def NicknameList(self):
-		"""
+		"""The list of nicknames.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:number))
@@ -88,7 +88,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def NoOfTreesToCompute(self):
-		"""
+		"""The number of trees to compute.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def StartFtagValue(self):
-		"""
+		"""If true, the Ftag value is started.
 
 		Returns:
 			number
@@ -112,7 +112,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def TopologyCount(self):
-		"""
+		"""The count of the topology.
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def TopologyId(self):
-		"""
+		"""The unique identification number of the topology range.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class DceTopologyRange(Base):
 
 	@property
 	def TopologyIdStep(self):
-		"""
+		"""It shows the Increment Step of the ID of DCE Topology Range. Default is 1.
 
 		Returns:
 			number
@@ -150,14 +150,14 @@ class DceTopologyRange(Base):
 		"""Adds a new dceTopologyRange node on the server and retrieves it in this instance.
 
 		Args:
-			EnableFtag (bool): 
-			Enabled (bool): 
-			NicknameList (list(dict(arg1:number,arg2:number,arg3:number))): 
-			NoOfTreesToCompute (number): 
-			StartFtagValue (number): 
-			TopologyCount (number): 
-			TopologyId (number): 
-			TopologyIdStep (number): 
+			EnableFtag (bool): If true, the F tag is enabled.
+			Enabled (bool): Signifies if DCE Topology is enabled or disabled.
+			NicknameList (list(dict(arg1:number,arg2:number,arg3:number))): The list of nicknames.
+			NoOfTreesToCompute (number): The number of trees to compute.
+			StartFtagValue (number): If true, the Ftag value is started.
+			TopologyCount (number): The count of the topology.
+			TopologyId (number): The unique identification number of the topology range.
+			TopologyIdStep (number): It shows the Increment Step of the ID of DCE Topology Range. Default is 1.
 
 		Returns:
 			self: This instance with all currently retrieved dceTopologyRange data using find and the newly added dceTopologyRange data available through an iterator or index
@@ -183,14 +183,14 @@ class DceTopologyRange(Base):
 		By default the find method takes no parameters and will retrieve all dceTopologyRange data from the server.
 
 		Args:
-			EnableFtag (bool): 
-			Enabled (bool): 
-			NicknameList (list(dict(arg1:number,arg2:number,arg3:number))): 
-			NoOfTreesToCompute (number): 
-			StartFtagValue (number): 
-			TopologyCount (number): 
-			TopologyId (number): 
-			TopologyIdStep (number): 
+			EnableFtag (bool): If true, the F tag is enabled.
+			Enabled (bool): Signifies if DCE Topology is enabled or disabled.
+			NicknameList (list(dict(arg1:number,arg2:number,arg3:number))): The list of nicknames.
+			NoOfTreesToCompute (number): The number of trees to compute.
+			StartFtagValue (number): If true, the Ftag value is started.
+			TopologyCount (number): The count of the topology.
+			TopologyId (number): The unique identification number of the topology range.
+			TopologyIdStep (number): It shows the Increment Step of the ID of DCE Topology Range. Default is 1.
 
 		Returns:
 			self: This instance with matching dceTopologyRange data retrieved from the server available through an iterator or index

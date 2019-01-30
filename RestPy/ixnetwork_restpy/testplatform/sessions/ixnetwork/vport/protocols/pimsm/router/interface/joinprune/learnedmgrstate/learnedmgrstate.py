@@ -37,7 +37,7 @@ class LearnedMgrState(Base):
 
 	@property
 	def Group(self):
-		"""
+		"""An IPv4 address used with the groupMaskWidth to create a range of multicast addresses. Not used with rangeType = pimsmJoinPruneTypeG. (default = 225.0.0.0)
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedMgrState(Base):
 
 	@property
 	def Source(self):
-		"""
+		"""The source address that generates multicast traffic. It must be a unicast address.
 
 		Returns:
 			str
@@ -60,8 +60,8 @@ class LearnedMgrState(Base):
 		By default the find method takes no parameters and will retrieve all learnedMgrState data from the server.
 
 		Args:
-			Group (str): 
-			Source (str): 
+			Group (str): An IPv4 address used with the groupMaskWidth to create a range of multicast addresses. Not used with rangeType = pimsmJoinPruneTypeG. (default = 225.0.0.0)
+			Source (str): The source address that generates multicast traffic. It must be a unicast address.
 
 		Returns:
 			self: This instance with matching learnedMgrState data retrieved from the server available through an iterator or index

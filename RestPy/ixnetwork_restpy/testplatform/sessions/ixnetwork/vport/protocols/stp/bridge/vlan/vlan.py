@@ -66,7 +66,7 @@ class Vlan(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the use of this STP VLAN. (default = disabled)
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class Vlan(Base):
 
 	@property
 	def InternalRootPathCost(self):
-		"""
+		"""Administrative path cost to the root bridge. The default is 0.
 
 		Returns:
 			number
@@ -90,7 +90,7 @@ class Vlan(Base):
 
 	@property
 	def Mac(self):
-		"""
+		"""The 6-byte MAC address of the port. (default = 00:00 :00:00:00:00)
 
 		Returns:
 			str
@@ -102,7 +102,7 @@ class Vlan(Base):
 
 	@property
 	def PortPriority(self):
-		"""
+		"""The root priority for this port. The valid range is 0 to 61,440, in increments of 4,096. (default = 32,768)
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class Vlan(Base):
 
 	@property
 	def Priority(self):
-		"""
+		"""The port priority for the emulated port on this PVST+ or RPVST+ bridge that is connected to the VLAN.
 
 		Returns:
 			str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)
@@ -126,7 +126,7 @@ class Vlan(Base):
 
 	@property
 	def UpdateRequired(self):
-		"""
+		"""If true, cause the VLAN to update.
 
 		Returns:
 			bool
@@ -138,7 +138,7 @@ class Vlan(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""The identifier for this VLAN. The valid range is 2 to 4,094. (default = 2)
 
 		Returns:
 			number
@@ -152,13 +152,13 @@ class Vlan(Base):
 		"""Adds a new vlan node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			InternalRootPathCost (number): 
-			Mac (str): 
-			PortPriority (number): 
-			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
-			UpdateRequired (bool): 
-			VlanId (number): 
+			Enabled (bool): Enables the use of this STP VLAN. (default = disabled)
+			InternalRootPathCost (number): Administrative path cost to the root bridge. The default is 0.
+			Mac (str): The 6-byte MAC address of the port. (default = 00:00 :00:00:00:00)
+			PortPriority (number): The root priority for this port. The valid range is 0 to 61,440, in increments of 4,096. (default = 32,768)
+			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The port priority for the emulated port on this PVST+ or RPVST+ bridge that is connected to the VLAN.
+			UpdateRequired (bool): If true, cause the VLAN to update.
+			VlanId (number): The identifier for this VLAN. The valid range is 2 to 4,094. (default = 2)
 
 		Returns:
 			self: This instance with all currently retrieved vlan data using find and the newly added vlan data available through an iterator or index
@@ -184,13 +184,13 @@ class Vlan(Base):
 		By default the find method takes no parameters and will retrieve all vlan data from the server.
 
 		Args:
-			Enabled (bool): 
-			InternalRootPathCost (number): 
-			Mac (str): 
-			PortPriority (number): 
-			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): 
-			UpdateRequired (bool): 
-			VlanId (number): 
+			Enabled (bool): Enables the use of this STP VLAN. (default = disabled)
+			InternalRootPathCost (number): Administrative path cost to the root bridge. The default is 0.
+			Mac (str): The 6-byte MAC address of the port. (default = 00:00 :00:00:00:00)
+			PortPriority (number): The root priority for this port. The valid range is 0 to 61,440, in increments of 4,096. (default = 32,768)
+			Priority (str(0|4096|8192|12288|16384|20480|24576|28672|32768|36864|40960|45056|49152|53248|57344|61440)): The port priority for the emulated port on this PVST+ or RPVST+ bridge that is connected to the VLAN.
+			UpdateRequired (bool): If true, cause the VLAN to update.
+			VlanId (number): The identifier for this VLAN. The valid range is 2 to 4,094. (default = 2)
 
 		Returns:
 			self: This instance with matching vlan data retrieved from the server available through an iterator or index
@@ -218,11 +218,13 @@ class Vlan(Base):
 	def TopologyChange(self):
 		"""Executes the topologyChange operation on the server.
 
+		This commands checks to see if there has been a topology change for the specified STP VLAN.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -234,11 +236,13 @@ class Vlan(Base):
 	def UpdateParameters(self):
 		"""Executes the updateParameters operation on the server.
 
+		Updates the current STP VLAN parameters.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=vlan)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

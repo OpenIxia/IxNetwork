@@ -38,7 +38,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def EnableIncludeInLsp(self):
-		"""
+		"""If true, enable a custom VLAN in the LSP.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def EnableIncludeInMgroupPdu(self):
-		"""
+		"""If true, enable and include VLAN in Mgroup PDU
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def EnableM4Bit(self):
-		"""
+		"""If true, the M4 bit is enabled.
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def EnableM6Bit(self):
-		"""
+		"""If true, the M6 bit is enabled.
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Signifies if DCE Interested Vlan range is enabled or disabled.
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def Nickname(self):
-		"""
+		"""The nickname of the VLAN range.
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def NoOfSpanningTreeRoots(self):
-		"""
+		"""The number of spanning tree roots for the VLAN.
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def StartSpanningTreeRootBridgeId(self):
-		"""
+		"""If true, starts the spanning tree root Bridge Id.
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def StartVlanId(self):
-		"""
+		"""The VLAN Id of first VLAN. Default is 1.
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def VlanCount(self):
-		"""
+		"""The count of the VLAN.
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class DceInterestedVlanRange(Base):
 
 	@property
 	def VlanIdStep(self):
-		"""
+		"""It shows the increment step of the VLAN. the default is 1.
 
 		Returns:
 			number
@@ -172,17 +172,17 @@ class DceInterestedVlanRange(Base):
 		"""Adds a new dceInterestedVlanRange node on the server and retrieves it in this instance.
 
 		Args:
-			EnableIncludeInLsp (bool): 
-			EnableIncludeInMgroupPdu (bool): 
-			EnableM4Bit (bool): 
-			EnableM6Bit (bool): 
-			Enabled (bool): 
-			Nickname (number): 
-			NoOfSpanningTreeRoots (number): 
-			StartSpanningTreeRootBridgeId (str): 
-			StartVlanId (number): 
-			VlanCount (number): 
-			VlanIdStep (number): 
+			EnableIncludeInLsp (bool): If true, enable a custom VLAN in the LSP.
+			EnableIncludeInMgroupPdu (bool): If true, enable and include VLAN in Mgroup PDU
+			EnableM4Bit (bool): If true, the M4 bit is enabled.
+			EnableM6Bit (bool): If true, the M6 bit is enabled.
+			Enabled (bool): Signifies if DCE Interested Vlan range is enabled or disabled.
+			Nickname (number): The nickname of the VLAN range.
+			NoOfSpanningTreeRoots (number): The number of spanning tree roots for the VLAN.
+			StartSpanningTreeRootBridgeId (str): If true, starts the spanning tree root Bridge Id.
+			StartVlanId (number): The VLAN Id of first VLAN. Default is 1.
+			VlanCount (number): The count of the VLAN.
+			VlanIdStep (number): It shows the increment step of the VLAN. the default is 1.
 
 		Returns:
 			self: This instance with all currently retrieved dceInterestedVlanRange data using find and the newly added dceInterestedVlanRange data available through an iterator or index
@@ -208,17 +208,17 @@ class DceInterestedVlanRange(Base):
 		By default the find method takes no parameters and will retrieve all dceInterestedVlanRange data from the server.
 
 		Args:
-			EnableIncludeInLsp (bool): 
-			EnableIncludeInMgroupPdu (bool): 
-			EnableM4Bit (bool): 
-			EnableM6Bit (bool): 
-			Enabled (bool): 
-			Nickname (number): 
-			NoOfSpanningTreeRoots (number): 
-			StartSpanningTreeRootBridgeId (str): 
-			StartVlanId (number): 
-			VlanCount (number): 
-			VlanIdStep (number): 
+			EnableIncludeInLsp (bool): If true, enable a custom VLAN in the LSP.
+			EnableIncludeInMgroupPdu (bool): If true, enable and include VLAN in Mgroup PDU
+			EnableM4Bit (bool): If true, the M4 bit is enabled.
+			EnableM6Bit (bool): If true, the M6 bit is enabled.
+			Enabled (bool): Signifies if DCE Interested Vlan range is enabled or disabled.
+			Nickname (number): The nickname of the VLAN range.
+			NoOfSpanningTreeRoots (number): The number of spanning tree roots for the VLAN.
+			StartSpanningTreeRootBridgeId (str): If true, starts the spanning tree root Bridge Id.
+			StartVlanId (number): The VLAN Id of first VLAN. Default is 1.
+			VlanCount (number): The count of the VLAN.
+			VlanIdStep (number): It shows the increment step of the VLAN. the default is 1.
 
 		Returns:
 			self: This instance with matching dceInterestedVlanRange data retrieved from the server available through an iterator or index

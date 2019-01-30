@@ -37,7 +37,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def FlowRemovedMaskMaster(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def FlowRemovedMaskSlave(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def PacketInMaskMaster(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def PacketInMaskSlave(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def PortStatusMaskMaster(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def PortStatusMaskSlave(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -154,7 +154,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class AsyncConfStatLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -177,21 +177,21 @@ class AsyncConfStatLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all asyncConfStatLearnedInformation data from the server.
 
 		Args:
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			FlowRemovedMaskMaster (str): 
-			FlowRemovedMaskSlave (str): 
-			Latency (number): 
-			LocalIp (str): 
-			NegotiatedVersion (str): 
-			PacketInMaskMaster (str): 
-			PacketInMaskSlave (str): 
-			PortStatusMaskMaster (str): 
-			PortStatusMaskSlave (str): 
-			RemoteIp (str): 
-			ReplyState (str): 
+			DataPathId (str): NOT DEFINED
+			DataPathIdAsHex (str): NOT DEFINED
+			ErrorCode (str): NOT DEFINED
+			ErrorType (str): NOT DEFINED
+			FlowRemovedMaskMaster (str): NOT DEFINED
+			FlowRemovedMaskSlave (str): NOT DEFINED
+			Latency (number): NOT DEFINED
+			LocalIp (str): NOT DEFINED
+			NegotiatedVersion (str): NOT DEFINED
+			PacketInMaskMaster (str): NOT DEFINED
+			PacketInMaskSlave (str): NOT DEFINED
+			PortStatusMaskMaster (str): NOT DEFINED
+			PortStatusMaskSlave (str): NOT DEFINED
+			RemoteIp (str): NOT DEFINED
+			ReplyState (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching asyncConfStatLearnedInformation data retrieved from the server available through an iterator or index

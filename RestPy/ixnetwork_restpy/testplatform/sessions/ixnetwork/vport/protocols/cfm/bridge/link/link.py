@@ -38,7 +38,7 @@ class Link(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the link is enabled.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Link(Base):
 
 	@property
 	def LinkType(self):
-		"""
+		"""Sets the link type.
 
 		Returns:
 			str(broadcast|pointToPoint)
@@ -62,7 +62,7 @@ class Link(Base):
 
 	@property
 	def MoreMps(self):
-		"""
+		"""Attaches multiple MPs to the link. MPs must be previously configured.
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp])
@@ -74,7 +74,7 @@ class Link(Base):
 
 	@property
 	def MpOutwardsIxia(self):
-		"""
+		"""Sets the link MP to be facing away from the Ixia chassis. The MP must be previous configued.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)
@@ -86,7 +86,7 @@ class Link(Base):
 
 	@property
 	def MpTowardsIxia(self):
-		"""
+		"""Sets the link MP to be facing towards from the Ixia chassis. The MP must be previous configued.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)
@@ -100,11 +100,11 @@ class Link(Base):
 		"""Adds a new link node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			LinkType (str(broadcast|pointToPoint)): 
-			MoreMps (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp])): 
-			MpOutwardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): 
-			MpTowardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): 
+			Enabled (bool): If true, the link is enabled.
+			LinkType (str(broadcast|pointToPoint)): Sets the link type.
+			MoreMps (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp])): Attaches multiple MPs to the link. MPs must be previously configured.
+			MpOutwardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): Sets the link MP to be facing away from the Ixia chassis. The MP must be previous configued.
+			MpTowardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): Sets the link MP to be facing towards from the Ixia chassis. The MP must be previous configued.
 
 		Returns:
 			self: This instance with all currently retrieved link data using find and the newly added link data available through an iterator or index
@@ -130,11 +130,11 @@ class Link(Base):
 		By default the find method takes no parameters and will retrieve all link data from the server.
 
 		Args:
-			Enabled (bool): 
-			LinkType (str(broadcast|pointToPoint)): 
-			MoreMps (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp])): 
-			MpOutwardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): 
-			MpTowardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): 
+			Enabled (bool): If true, the link is enabled.
+			LinkType (str(broadcast|pointToPoint)): Sets the link type.
+			MoreMps (list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp])): Attaches multiple MPs to the link. MPs must be previously configured.
+			MpOutwardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): Sets the link MP to be facing away from the Ixia chassis. The MP must be previous configued.
+			MpTowardsIxia (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=mp)): Sets the link MP to be facing towards from the Ixia chassis. The MP must be previous configued.
 
 		Returns:
 			self: This instance with matching link data retrieved from the server available through an iterator or index

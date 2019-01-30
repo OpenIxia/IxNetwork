@@ -37,7 +37,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def AuxiliaryId(self):
-		"""
+		"""This describes the identifier for auxiliary connections.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def ConnectionType(self):
-		"""
+		"""Specifies how this controllerPort is connected to another controller (internal/external) or host or there is no connection (noConnection)
 
 		Returns:
 			str(tcp|tls|udp)
@@ -55,7 +55,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""Indicates the datapath ID of the OpenFlow controller.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""Indicates the datapath ID of the OpenFlow controller in hexadecimal format.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Signifies the local IP address of the selected interface.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def LocalPort(self):
-		"""
+		"""This describes the local port number identifier.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""This describes the IP address of the remote end of the OF Channel.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 
 	@property
 	def RemotePort(self):
-		"""
+		"""This describes the remote port number identifier.
 
 		Returns:
 			number
@@ -114,14 +114,14 @@ class ControllerAuxiliaryConnectionLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all controllerAuxiliaryConnectionLearnedInfo data from the server.
 
 		Args:
-			AuxiliaryId (number): 
-			ConnectionType (str(tcp|tls|udp)): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			LocalIp (str): 
-			LocalPort (number): 
-			RemoteIp (str): 
-			RemotePort (number): 
+			AuxiliaryId (number): This describes the identifier for auxiliary connections.
+			ConnectionType (str(tcp|tls|udp)): Specifies how this controllerPort is connected to another controller (internal/external) or host or there is no connection (noConnection)
+			DataPathId (str): Indicates the datapath ID of the OpenFlow controller.
+			DataPathIdAsHex (str): Indicates the datapath ID of the OpenFlow controller in hexadecimal format.
+			LocalIp (str): Signifies the local IP address of the selected interface.
+			LocalPort (number): This describes the local port number identifier.
+			RemoteIp (str): This describes the IP address of the remote end of the OF Channel.
+			RemotePort (number): This describes the remote port number identifier.
 
 		Returns:
 			self: This instance with matching controllerAuxiliaryConnectionLearnedInfo data retrieved from the server available through an iterator or index

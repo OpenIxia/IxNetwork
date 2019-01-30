@@ -37,7 +37,7 @@ class RxRateLimit(Base):
 
 	@property
 	def BufferSizeEnabled(self):
-		"""
+		"""Allows user to specify a custom buffer size. Default false
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class RxRateLimit(Base):
 
 	@property
 	def BufferSizeUnits(self):
-		"""
+		"""Units (Kilobytes, Megabytes). Default: Kilobytes
 
 		Returns:
 			str(kilobytes|kKilobytes|kMegabytes|megabytes)
@@ -61,7 +61,7 @@ class RxRateLimit(Base):
 
 	@property
 	def BufferSizeValue(self):
-		"""
+		"""Burst tolerance buffer size. Default value is 32 KB
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class RxRateLimit(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enable or disable the receive rate limit impairment.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class RxRateLimit(Base):
 
 	@property
 	def Units(self):
-		"""
+		"""Specify the units for the receive rate limit value.
 
 		Returns:
 			str(kilobitsPerSecond|kKilobitsPerSecond|kMegabitsPerSecond|megabitsPerSecond)
@@ -97,7 +97,7 @@ class RxRateLimit(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""Specify the value of the receive rate limit.
 
 		Returns:
 			number

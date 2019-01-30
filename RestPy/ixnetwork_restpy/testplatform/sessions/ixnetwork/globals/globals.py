@@ -149,7 +149,7 @@ class Globals(Base):
 
 	@property
 	def BuildNumber(self):
-		"""
+		"""The IxNetwork software build number.
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class Globals(Base):
 
 	@property
 	def ConfigFileName(self):
-		"""
+		"""The name of the configuration file.
 
 		Returns:
 			str
@@ -167,7 +167,7 @@ class Globals(Base):
 
 	@property
 	def ConfigSummary(self):
-		"""
+		"""A high level summary description of the currently loaded configuration
 
 		Returns:
 			list(dict(arg1:str,arg2:str,arg3:list[dict(arg1:str,arg2:str)]))
@@ -176,7 +176,7 @@ class Globals(Base):
 
 	@property
 	def IsConfigDifferent(self):
-		"""
+		"""(Read only) If true, then the current IxNetwork configuration is different than the configuration that was previously loaded.
 
 		Returns:
 			bool
@@ -185,7 +185,7 @@ class Globals(Base):
 
 	@property
 	def IxosBuildNumber(self):
-		"""
+		"""The IxOS software build number.
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class Globals(Base):
 
 	@property
 	def PersistencePath(self):
-		"""
+		"""This attribute returns a directory of the IxNetwork API server machine, where users can drop their files from the client scripts using IxNetwork APIs. To Put files in this directory, users do not require to run IxNetwork API server in administrative mode
 
 		Returns:
 			str
@@ -203,7 +203,7 @@ class Globals(Base):
 
 	@property
 	def ProtocolbuildNumber(self):
-		"""
+		"""The build number of the protocol.
 
 		Returns:
 			str
@@ -212,7 +212,7 @@ class Globals(Base):
 
 	@property
 	def Username(self):
-		"""
+		"""The name of the user.
 
 		Returns:
 			str

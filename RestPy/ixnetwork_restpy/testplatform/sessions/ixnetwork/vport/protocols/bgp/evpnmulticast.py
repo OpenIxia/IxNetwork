@@ -51,7 +51,7 @@ class EvpnMulticast(Base):
 
 	@property
 	def Neighbor(self):
-		"""
+		"""(Read Only) Neighbr IP.
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class EvpnMulticast(Base):
 
 	@property
 	def OriginatorsIp(self):
-		"""
+		"""(Read Only) Learned Originator's IP.
 
 		Returns:
 			str
@@ -74,8 +74,8 @@ class EvpnMulticast(Base):
 		By default the find method takes no parameters and will retrieve all evpnMulticast data from the server.
 
 		Args:
-			Neighbor (str): 
-			OriginatorsIp (str): 
+			Neighbor (str): (Read Only) Neighbr IP.
+			OriginatorsIp (str): (Read Only) Learned Originator's IP.
 
 		Returns:
 			self: This instance with matching evpnMulticast data retrieved from the server available through an iterator or index

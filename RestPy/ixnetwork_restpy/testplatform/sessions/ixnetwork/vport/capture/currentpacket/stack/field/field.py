@@ -37,7 +37,7 @@ class Field(Base):
 
 	@property
 	def DisplayName(self):
-		"""
+		"""Refers to the name of the field.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class Field(Base):
 
 	@property
 	def FieldValue(self):
-		"""
+		"""Refers to the value displayed in the field.
 
 		Returns:
 			str
@@ -60,8 +60,8 @@ class Field(Base):
 		By default the find method takes no parameters and will retrieve all field data from the server.
 
 		Args:
-			DisplayName (str): 
-			FieldValue (str): 
+			DisplayName (str): Refers to the name of the field.
+			FieldValue (str): Refers to the value displayed in the field.
 
 		Returns:
 			self: This instance with matching field data retrieved from the server available through an iterator or index

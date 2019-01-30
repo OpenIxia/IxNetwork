@@ -38,7 +38,7 @@ class SourceTrafficRange(Base):
 
 	@property
 	def AddrFamily(self):
-		"""
+		"""The address familyt value.
 
 		Returns:
 			str(ipv4|ipv6)
@@ -50,7 +50,7 @@ class SourceTrafficRange(Base):
 
 	@property
 	def FilterOnGroupAddress(self):
-		"""
+		"""The available filters on group address.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class SourceTrafficRange(Base):
 
 	@property
 	def GroupAddress(self):
-		"""
+		"""The group address.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class SourceTrafficRange(Base):
 
 	@property
 	def GrpCountPerLsp(self):
-		"""
+		"""The total group count per LSP.
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class SourceTrafficRange(Base):
 
 	@property
 	def SourceAddress(self):
-		"""
+		"""The source address.
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class SourceTrafficRange(Base):
 
 	@property
 	def SrcCountPerLsp(self):
-		"""
+		"""The total source count per LSP.
 
 		Returns:
 			number
@@ -112,12 +112,12 @@ class SourceTrafficRange(Base):
 		"""Adds a new sourceTrafficRange node on the server and retrieves it in this instance.
 
 		Args:
-			AddrFamily (str(ipv4|ipv6)): 
-			FilterOnGroupAddress (bool): 
-			GroupAddress (str): 
-			GrpCountPerLsp (number): 
-			SourceAddress (str): 
-			SrcCountPerLsp (number): 
+			AddrFamily (str(ipv4|ipv6)): The address familyt value.
+			FilterOnGroupAddress (bool): The available filters on group address.
+			GroupAddress (str): The group address.
+			GrpCountPerLsp (number): The total group count per LSP.
+			SourceAddress (str): The source address.
+			SrcCountPerLsp (number): The total source count per LSP.
 
 		Returns:
 			self: This instance with all currently retrieved sourceTrafficRange data using find and the newly added sourceTrafficRange data available through an iterator or index
@@ -143,12 +143,12 @@ class SourceTrafficRange(Base):
 		By default the find method takes no parameters and will retrieve all sourceTrafficRange data from the server.
 
 		Args:
-			AddrFamily (str(ipv4|ipv6)): 
-			FilterOnGroupAddress (bool): 
-			GroupAddress (str): 
-			GrpCountPerLsp (number): 
-			SourceAddress (str): 
-			SrcCountPerLsp (number): 
+			AddrFamily (str(ipv4|ipv6)): The address familyt value.
+			FilterOnGroupAddress (bool): The available filters on group address.
+			GroupAddress (str): The group address.
+			GrpCountPerLsp (number): The total group count per LSP.
+			SourceAddress (str): The source address.
+			SrcCountPerLsp (number): The total source count per LSP.
 
 		Returns:
 			self: This instance with matching sourceTrafficRange data retrieved from the server available through an iterator or index

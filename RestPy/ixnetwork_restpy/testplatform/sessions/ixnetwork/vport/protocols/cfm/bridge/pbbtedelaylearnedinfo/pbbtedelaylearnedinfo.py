@@ -37,7 +37,7 @@ class PbbTeDelayLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""
+		"""(read only) The learned B-VLAN identifier for the bridge.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class PbbTeDelayLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""
+		"""(read only) The learned destination MAC address for the bridge.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class PbbTeDelayLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The learned MD level for the bridge.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class PbbTeDelayLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The learned source MAC address for the bridge.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class PbbTeDelayLearnedInfo(Base):
 
 	@property
 	def ValueInNanoSec(self):
-		"""
+		"""(read only) The delay measurement in nanoseconds.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class PbbTeDelayLearnedInfo(Base):
 
 	@property
 	def ValueInSec(self):
-		"""
+		"""(read only) The delay measurement in seconds.
 
 		Returns:
 			number
@@ -96,12 +96,12 @@ class PbbTeDelayLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pbbTeDelayLearnedInfo data from the server.
 
 		Args:
-			BVlan (str): 
-			DstMacAddress (str): 
-			MdLevel (number): 
-			SrcMacAddress (str): 
-			ValueInNanoSec (number): 
-			ValueInSec (number): 
+			BVlan (str): (read only) The learned B-VLAN identifier for the bridge.
+			DstMacAddress (str): (read only) The learned destination MAC address for the bridge.
+			MdLevel (number): (read only) The learned MD level for the bridge.
+			SrcMacAddress (str): (read only) The learned source MAC address for the bridge.
+			ValueInNanoSec (number): (read only) The delay measurement in nanoseconds.
+			ValueInSec (number): (read only) The delay measurement in seconds.
 
 		Returns:
 			self: This instance with matching pbbTeDelayLearnedInfo data retrieved from the server available through an iterator or index

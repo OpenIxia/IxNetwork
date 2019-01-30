@@ -37,7 +37,7 @@ class ValueList(Base):
 
 	@property
 	def AvailableWidths(self):
-		"""
+		"""Species all the possible widths available for a UDF in particular Type.
 
 		Returns:
 			list(str)
@@ -46,7 +46,7 @@ class ValueList(Base):
 
 	@property
 	def StartValueList(self):
-		"""
+		"""Specifies the starting value for a particular UDF.
 
 		Returns:
 			list(number)
@@ -58,7 +58,7 @@ class ValueList(Base):
 
 	@property
 	def Width(self):
-		"""
+		"""Specifies the width of the UDF.
 
 		Returns:
 			str(16|24|32|8)
@@ -75,9 +75,9 @@ class ValueList(Base):
 		By default the find method takes no parameters and will retrieve all valueList data from the server.
 
 		Args:
-			AvailableWidths (list(str)): 
-			StartValueList (list(number)): 
-			Width (str(16|24|32|8)): 
+			AvailableWidths (list(str)): Species all the possible widths available for a UDF in particular Type.
+			StartValueList (list(number)): Specifies the starting value for a particular UDF.
+			Width (str(16|24|32|8)): Specifies the width of the UDF.
 
 		Returns:
 			self: This instance with matching valueList data retrieved from the server available through an iterator or index

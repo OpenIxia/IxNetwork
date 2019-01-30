@@ -38,7 +38,7 @@ class EviOpaqueTlv(Base):
 
 	@property
 	def Length(self):
-		"""
+		"""The length of the TLV.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class EviOpaqueTlv(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""The type of TLV.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class EviOpaqueTlv(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""The value of the TLV.
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class EviOpaqueTlv(Base):
 		"""Adds a new eviOpaqueTlv node on the server and retrieves it in this instance.
 
 		Args:
-			Length (number): 
-			Type (number): 
-			Value (str): 
+			Length (number): The length of the TLV.
+			Type (number): The type of TLV.
+			Value (str): The value of the TLV.
 
 		Returns:
 			self: This instance with all currently retrieved eviOpaqueTlv data using find and the newly added eviOpaqueTlv data available through an iterator or index
@@ -104,9 +104,9 @@ class EviOpaqueTlv(Base):
 		By default the find method takes no parameters and will retrieve all eviOpaqueTlv data from the server.
 
 		Args:
-			Length (number): 
-			Type (number): 
-			Value (str): 
+			Length (number): The length of the TLV.
+			Type (number): The type of TLV.
+			Value (str): The value of the TLV.
 
 		Returns:
 			self: This instance with matching eviOpaqueTlv data retrieved from the server available through an iterator or index

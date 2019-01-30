@@ -51,7 +51,7 @@ class Bgp(Base):
 
 	@property
 	def AutoFillUpDutIp(self):
-		"""
+		"""If true, automatically fills up the IP of the DUT
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Bgp(Base):
 
 	@property
 	def DisableReceivedUpdateValidation(self):
-		"""
+		"""If true, disables any update validation request from the DUT.
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class Bgp(Base):
 
 	@property
 	def EVpnAfi(self):
-		"""
+		"""AFI to support EVPN. Default value is 25. Minimum valus is 0 and maximum value is 0xFFFF
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class Bgp(Base):
 
 	@property
 	def EVpnSafi(self):
-		"""
+		"""SAFI to support EVPN. Default value is 70. Minimum valus is 0 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -99,7 +99,7 @@ class Bgp(Base):
 
 	@property
 	def EnableAdVplsPrefixLengthInBits(self):
-		"""
+		"""If true, enables the AdVpls length in bits.
 
 		Returns:
 			bool
@@ -111,7 +111,7 @@ class Bgp(Base):
 
 	@property
 	def EnableExternalActiveConnect(self):
-		"""
+		"""Causes a HELLO message to be actively sent when BGP testing starts.
 
 		Returns:
 			bool
@@ -123,7 +123,7 @@ class Bgp(Base):
 
 	@property
 	def EnableInternalActiveConnect(self):
-		"""
+		"""Causes a HELLO message to be actively sent when BGP testing starts.
 
 		Returns:
 			bool
@@ -135,7 +135,7 @@ class Bgp(Base):
 
 	@property
 	def EnableLabelExchangeOverLsp(self):
-		"""
+		"""Enables the ability to exchange labels over LSP for VPNs.
 
 		Returns:
 			bool
@@ -147,7 +147,7 @@ class Bgp(Base):
 
 	@property
 	def EnableVpnLabelExchangeOverLsp(self):
-		"""
+		"""If true, enables the exchange of VPN exchange over LSP
 
 		Returns:
 			bool
@@ -159,7 +159,7 @@ class Bgp(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the use of this emulated BGP router in the emulated BGP network. (default = disabled)
 
 		Returns:
 			bool
@@ -171,7 +171,7 @@ class Bgp(Base):
 
 	@property
 	def EsImportRouteTargetSubType(self):
-		"""
+		"""This is a new transitive Route Target extended community carried with the Ethernet Segment route in EVPN. When used, it enables all the PEs connected to the same multi-homed site to import the Ethernet Segment routes. Default value is 2. Minimum value is 1 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -183,7 +183,7 @@ class Bgp(Base):
 
 	@property
 	def EsImportRouteTargetType(self):
-		"""
+		"""This is a new transitive Route Target extended community carried with the Ethernet Segment route in EVPN. When used, it enables all the PEs connected to the same multi-homed site to import the Ethernet Segment routes. Default value is 6. Minimum value is 1 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -195,7 +195,7 @@ class Bgp(Base):
 
 	@property
 	def EsiLabelExtendedCommunitySubType(self):
-		"""
+		"""This is a new transitive extended community in EVPN. It may be advertised along with Ethernet Auto-Discovery routes and it enables split-horizon procedures for multi-homed sites. Default value is 1. Minimum value is 1 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -207,7 +207,7 @@ class Bgp(Base):
 
 	@property
 	def EsiLabelExtendedCommunityType(self):
-		"""
+		"""This is a new transitive extended community in EVPN. It may be advertised along with Ethernet Auto-Discovery routes and it enables split-horizon procedures for multi-homed sites. Default value is 6. Minimum value is 1 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -219,7 +219,7 @@ class Bgp(Base):
 
 	@property
 	def EvpnIpAddressLengthUnit(self):
-		"""
+		"""The unit of the IP address length field in MAC Advertisement route packet, can be bits or bytes
 
 		Returns:
 			str(bit|byte)
@@ -231,7 +231,7 @@ class Bgp(Base):
 
 	@property
 	def ExternalRetries(self):
-		"""
+		"""The number of times to attempt an OPEN connection with the DUT router(s) before giving up.
 
 		Returns:
 			number
@@ -243,7 +243,7 @@ class Bgp(Base):
 
 	@property
 	def ExternalRetryDelay(self):
-		"""
+		"""When retries are necessary, the delay between retries.
 
 		Returns:
 			number
@@ -255,7 +255,7 @@ class Bgp(Base):
 
 	@property
 	def InternalRetries(self):
-		"""
+		"""The number of times to attempt an OPEN connection with the DUT router(s) before giving up.
 
 		Returns:
 			number
@@ -267,7 +267,7 @@ class Bgp(Base):
 
 	@property
 	def InternalRetryDelay(self):
-		"""
+		"""When retries are necessary, the delay between retries.
 
 		Returns:
 			number
@@ -279,7 +279,7 @@ class Bgp(Base):
 
 	@property
 	def MacMobilityExtendedCommunitySubType(self):
-		"""
+		"""This is a new transitive extended community used in EVPN. It may be advertised along with MAC Advertisement routes to support MAC mobility. Default value is 0. Minimum value is 0 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -291,7 +291,7 @@ class Bgp(Base):
 
 	@property
 	def MacMobilityExtendedCommunityType(self):
-		"""
+		"""This is a new transitive extended community used in EVPN. It may be advertised along with MAC Advertisement routes to support MAC mobility. Default value is 6. Minimum value is 1 and maximum value is 0xFF.
 
 		Returns:
 			number
@@ -303,7 +303,7 @@ class Bgp(Base):
 
 	@property
 	def MldpP2mpFecType(self):
-		"""
+		"""The MLDP P2MP FEC type value in hexadecimal.LOCAL EXECS
 
 		Returns:
 			number
@@ -315,7 +315,7 @@ class Bgp(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The current running state of the BGP server.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -324,7 +324,7 @@ class Bgp(Base):
 
 	@property
 	def Tester4ByteAsForIbgp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -336,7 +336,7 @@ class Bgp(Base):
 
 	@property
 	def TesterAsForIbgp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -348,7 +348,7 @@ class Bgp(Base):
 
 	@property
 	def TriggerVplsPwInitiation(self):
-		"""
+		"""Enable to initiate a trigger a VPLS PW initation that is a BGP-LDP communication.
 
 		Returns:
 			bool
@@ -360,7 +360,7 @@ class Bgp(Base):
 
 	@property
 	def VrfRouteImportExtendedCommunitySubType(self):
-		"""
+		"""Extended Community Sub Type to be used in VRF Route Import Extended Community.
 
 		Returns:
 			number
@@ -372,6 +372,8 @@ class Bgp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		This function allows to Start BGP on a group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bgp)): The method internally sets Arg1 to the current href for this instance
@@ -385,6 +387,8 @@ class Bgp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		This function allows to Stop BGP on a group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=bgp)): The method internally sets Arg1 to the current href for this instance

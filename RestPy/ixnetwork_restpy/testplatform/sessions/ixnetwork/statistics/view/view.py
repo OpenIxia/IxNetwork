@@ -374,7 +374,7 @@ class View(Base):
 
 	@property
 	def AutoRefresh(self):
-		"""
+		"""If true, automatically refreshes the statistics values. Default = true
 
 		Returns:
 			bool
@@ -386,7 +386,7 @@ class View(Base):
 
 	@property
 	def AutoUpdate(self):
-		"""
+		"""If true, automatically refreshes the statistics values. Default = true
 
 		Returns:
 			bool
@@ -398,7 +398,7 @@ class View(Base):
 
 	@property
 	def AvailableStatsSelectorColumns(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			list(str)
@@ -407,7 +407,7 @@ class View(Base):
 
 	@property
 	def Caption(self):
-		"""
+		"""This is the name that will appear in the GUI stats view window header or in the added view tree from tcl. The caption must be unique.
 
 		Returns:
 			str
@@ -419,7 +419,7 @@ class View(Base):
 
 	@property
 	def CsvFileName(self):
-		"""
+		"""Specifies the file name which is used by the CSV Logging feature. The default value is the caption of the view.
 
 		Returns:
 			str
@@ -431,7 +431,7 @@ class View(Base):
 
 	@property
 	def EnableCsvLogging(self):
-		"""
+		"""If the CSV Logging feature is enabled the statistics values from a view will be written in a comma separated value format.
 
 		Returns:
 			bool
@@ -443,7 +443,7 @@ class View(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables the view that is created from the tcl script.
 
 		Returns:
 			bool
@@ -455,7 +455,7 @@ class View(Base):
 
 	@property
 	def EnabledStatsSelectorColumns(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			list(str)
@@ -467,7 +467,7 @@ class View(Base):
 
 	@property
 	def PageTimeout(self):
-		"""
+		"""The statistics view page is timed out based on the time specified. default = 25,000 ms
 
 		Returns:
 			number
@@ -479,7 +479,7 @@ class View(Base):
 
 	@property
 	def ReadOnly(self):
-		"""
+		"""The default views created by the application will have this attribute set to false. Tcl SV created by user has this value set to true. Based on this attribute value, the user is allowed to modify the SV attributes.
 
 		Returns:
 			bool
@@ -488,7 +488,7 @@ class View(Base):
 
 	@property
 	def TimeSeries(self):
-		"""
+		"""If false, then it displays non-timeseries grid views. If true, displays, timeseries line chart view. default = false (non-timeseries)
 
 		Returns:
 			bool
@@ -500,7 +500,7 @@ class View(Base):
 
 	@property
 	def TreeViewNodeName(self):
-		"""
+		"""Displays the name of the tree view node.
 
 		Returns:
 			str
@@ -512,7 +512,7 @@ class View(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""The type of view the user wants to create from tcl.
 
 		Returns:
 			str(layer23NextGenProtocol|layer23ProtocolAuthAccess|layer23ProtocolPort|layer23ProtocolRouting|layer23ProtocolStack|layer23TrafficFlow|layer23TrafficFlowDetective|layer23TrafficItem|layer23TrafficPort|layer47AppLibraryTraffic|sVReadOnly)
@@ -524,7 +524,7 @@ class View(Base):
 
 	@property
 	def TypeDescription(self):
-		"""
+		"""If true, desribes the type
 
 		Returns:
 			str
@@ -533,7 +533,7 @@ class View(Base):
 
 	@property
 	def ViewCategory(self):
-		"""
+		"""Returns the category of the view based on the type of statistics displayed by the view.
 
 		Returns:
 			str(ClassicProtocol|L23Traffic|L47Traffic|Mixed|NextGenProtocol|PerSession|Unknown)
@@ -542,7 +542,7 @@ class View(Base):
 
 	@property
 	def Visible(self):
-		"""
+		"""If true, displays the custom created tcl SVs in the SV tree under TCL Views node.
 
 		Returns:
 			bool
@@ -556,18 +556,18 @@ class View(Base):
 		"""Adds a new view node on the server and retrieves it in this instance.
 
 		Args:
-			AutoRefresh (bool): 
-			AutoUpdate (bool): 
-			Caption (str): 
-			CsvFileName (str): 
-			EnableCsvLogging (bool): 
-			Enabled (bool): 
-			EnabledStatsSelectorColumns (list(str)): 
-			PageTimeout (number): 
-			TimeSeries (bool): 
-			TreeViewNodeName (str): 
-			Type (str(layer23NextGenProtocol|layer23ProtocolAuthAccess|layer23ProtocolPort|layer23ProtocolRouting|layer23ProtocolStack|layer23TrafficFlow|layer23TrafficFlowDetective|layer23TrafficItem|layer23TrafficPort|layer47AppLibraryTraffic|sVReadOnly)): 
-			Visible (bool): 
+			AutoRefresh (bool): If true, automatically refreshes the statistics values. Default = true
+			AutoUpdate (bool): If true, automatically refreshes the statistics values. Default = true
+			Caption (str): This is the name that will appear in the GUI stats view window header or in the added view tree from tcl. The caption must be unique.
+			CsvFileName (str): Specifies the file name which is used by the CSV Logging feature. The default value is the caption of the view.
+			EnableCsvLogging (bool): If the CSV Logging feature is enabled the statistics values from a view will be written in a comma separated value format.
+			Enabled (bool): If true, enables the view that is created from the tcl script.
+			EnabledStatsSelectorColumns (list(str)): NOT DEFINED
+			PageTimeout (number): The statistics view page is timed out based on the time specified. default = 25,000 ms
+			TimeSeries (bool): If false, then it displays non-timeseries grid views. If true, displays, timeseries line chart view. default = false (non-timeseries)
+			TreeViewNodeName (str): Displays the name of the tree view node.
+			Type (str(layer23NextGenProtocol|layer23ProtocolAuthAccess|layer23ProtocolPort|layer23ProtocolRouting|layer23ProtocolStack|layer23TrafficFlow|layer23TrafficFlowDetective|layer23TrafficItem|layer23TrafficPort|layer47AppLibraryTraffic|sVReadOnly)): The type of view the user wants to create from tcl.
+			Visible (bool): If true, displays the custom created tcl SVs in the SV tree under TCL Views node.
 
 		Returns:
 			self: This instance with all currently retrieved view data using find and the newly added view data available through an iterator or index
@@ -593,22 +593,22 @@ class View(Base):
 		By default the find method takes no parameters and will retrieve all view data from the server.
 
 		Args:
-			AutoRefresh (bool): 
-			AutoUpdate (bool): 
-			AvailableStatsSelectorColumns (list(str)): 
-			Caption (str): 
-			CsvFileName (str): 
-			EnableCsvLogging (bool): 
-			Enabled (bool): 
-			EnabledStatsSelectorColumns (list(str)): 
-			PageTimeout (number): 
-			ReadOnly (bool): 
-			TimeSeries (bool): 
-			TreeViewNodeName (str): 
-			Type (str(layer23NextGenProtocol|layer23ProtocolAuthAccess|layer23ProtocolPort|layer23ProtocolRouting|layer23ProtocolStack|layer23TrafficFlow|layer23TrafficFlowDetective|layer23TrafficItem|layer23TrafficPort|layer47AppLibraryTraffic|sVReadOnly)): 
-			TypeDescription (str): 
-			ViewCategory (str(ClassicProtocol|L23Traffic|L47Traffic|Mixed|NextGenProtocol|PerSession|Unknown)): 
-			Visible (bool): 
+			AutoRefresh (bool): If true, automatically refreshes the statistics values. Default = true
+			AutoUpdate (bool): If true, automatically refreshes the statistics values. Default = true
+			AvailableStatsSelectorColumns (list(str)): NOT DEFINED
+			Caption (str): This is the name that will appear in the GUI stats view window header or in the added view tree from tcl. The caption must be unique.
+			CsvFileName (str): Specifies the file name which is used by the CSV Logging feature. The default value is the caption of the view.
+			EnableCsvLogging (bool): If the CSV Logging feature is enabled the statistics values from a view will be written in a comma separated value format.
+			Enabled (bool): If true, enables the view that is created from the tcl script.
+			EnabledStatsSelectorColumns (list(str)): NOT DEFINED
+			PageTimeout (number): The statistics view page is timed out based on the time specified. default = 25,000 ms
+			ReadOnly (bool): The default views created by the application will have this attribute set to false. Tcl SV created by user has this value set to true. Based on this attribute value, the user is allowed to modify the SV attributes.
+			TimeSeries (bool): If false, then it displays non-timeseries grid views. If true, displays, timeseries line chart view. default = false (non-timeseries)
+			TreeViewNodeName (str): Displays the name of the tree view node.
+			Type (str(layer23NextGenProtocol|layer23ProtocolAuthAccess|layer23ProtocolPort|layer23ProtocolRouting|layer23ProtocolStack|layer23TrafficFlow|layer23TrafficFlowDetective|layer23TrafficItem|layer23TrafficPort|layer47AppLibraryTraffic|sVReadOnly)): The type of view the user wants to create from tcl.
+			TypeDescription (str): If true, desribes the type
+			ViewCategory (str(ClassicProtocol|L23Traffic|L47Traffic|Mixed|NextGenProtocol|PerSession|Unknown)): Returns the category of the view based on the type of statistics displayed by the view.
+			Visible (bool): If true, displays the custom created tcl SVs in the SV tree under TCL Views node.
 
 		Returns:
 			self: This instance with matching view data retrieved from the server available through an iterator or index
@@ -636,12 +636,14 @@ class View(Base):
 	def ExportData(self, FilePathName):
 		"""Executes the exportData operation on the server.
 
+		Exports the data seen in a view to a file. Supported formats are .html, .xml, .xls and .txt.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance
-			FilePathName (str): 
+			FilePathName (str): The path where the exported file should be written.
 
 		Returns:
-			str: 
+			str: This can be either a success message or a description of the problem if any error occurred.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -653,12 +655,14 @@ class View(Base):
 	def GetColumnValues(self, Arg2):
 		"""Executes the getColumnValues operation on the server.
 
+		Retrieves the requested column values.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
+			Arg2 (str): The name of the column for which to retrieve statistics.
 
 		Returns:
-			dict(arg1:list[str],arg2:str): 
+			dict(arg1:list[str],arg2:str): An array with the values retrieved.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -670,11 +674,13 @@ class View(Base):
 	def GetResultsPath(self):
 		"""Executes the getResultsPath operation on the server.
 
+		Gets the path where the results for the current tests are stored.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: 
+			str: The results path.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -686,12 +692,14 @@ class View(Base):
 	def GetRowValues(self, Arg2):
 		"""Executes the getRowValues operation on the server.
 
+		Retrieves the requested row values.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
+			Arg2 (str): The label identifying the row for which to retrieve statistics. It is formed from the values of the row label columns concatenated using | delimiter. Row label columns appear with orange or yellow names in the view.
 
 		Returns:
-			dict(arg1:list[str],arg2:str): 
+			dict(arg1:list[str],arg2:str): An array with the values retrieved.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -703,13 +711,15 @@ class View(Base):
 	def GetValue(self, Arg2, Arg3):
 		"""Executes the getValue operation on the server.
 
+		Retrieves the requested statistical data.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (str): 
-			Arg3 (str): 
+			Arg2 (str): The label identifying the row for which to retrieve statistics. It is formed from the values of the row label columns concatenated using | delimiter. Row label columns appear with orange or yellow names in the view.
+			Arg3 (str): The name of the column for which to retrieve statistics.
 
 		Returns:
-			str: 
+			str: The retrieved value.
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -720,6 +730,8 @@ class View(Base):
 
 	def Refresh(self):
 		"""Executes the refresh operation on the server.
+
+		Refreshes the existing values in the view with the new values. If the view is NGPF on demand, the refresh will get new values for all NGPF on demand views.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance
@@ -733,6 +745,8 @@ class View(Base):
 
 	def RestoreToDefaults(self):
 		"""Executes the restoreToDefaults operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=view)): The method internally sets Arg1 to the current href for this instance

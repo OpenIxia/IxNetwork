@@ -352,6 +352,20 @@ class CfmBridge(Base):
 		Arg1 = self.href
 		return self._execute('ClearAllLearnedInfo', payload=locals(), response_object=None)
 
+	def FetchAndUpdateConfigFromCloud(self, Mode):
+		"""Executes the fetchAndUpdateConfigFromCloud operation on the server.
+
+		Args:
+			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/globals?deepchild=*|/api/v1/sessions/1/ixnetwork/topology?deepchild=*)): The method internally sets Arg1 to the current href for this instance
+			Mode (str): 
+
+		Raises:
+			NotFoundError: The requested resource does not exist on the server
+			ServerError: The server has encountered an uncategorized error condition
+		"""
+		Arg1 = self.href
+		return self._execute('FetchAndUpdateConfigFromCloud', payload=locals(), response_object=None)
+
 	def GetAllLearnedInfo(self, Arg2):
 		"""Executes the getAllLearnedInfo operation on the server.
 
@@ -389,63 +403,6 @@ class CfmBridge(Base):
 		"""
 		Arg1 = self.href
 		return self._execute('GetCfmCcmLearnedInformation', payload=locals(), response_object=None)
-
-	def GetCfmLinkTraceDbLearnedInformation(self, Arg2):
-		"""Executes the getCfmLinkTraceDbLearnedInformation operation on the server.
-
-		Please provide a proper help text here.
-
-		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(number)): List of indices into the protocol plugin.An empty list indicates all instances in the plugin.
-
-		Returns:
-			list(str): Please provide a proper description here.
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self.href
-		return self._execute('GetCfmLinkTraceDbLearnedInformation', payload=locals(), response_object=None)
-
-	def GetCfmLoopbackDbLearnedInformation(self, Arg2):
-		"""Executes the getCfmLoopbackDbLearnedInformation operation on the server.
-
-		Please provide a proper help text here.
-
-		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(number)): List of indices into the protocol plugin.An empty list indicates all instances in the plugin.
-
-		Returns:
-			list(str): Please provide a proper description here.
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self.href
-		return self._execute('GetCfmLoopbackDbLearnedInformation', payload=locals(), response_object=None)
-
-	def GetPeriodicOAMLearnedInformation(self, Arg2):
-		"""Executes the getPeriodicOAMLearnedInformation operation on the server.
-
-		Please provide a proper help text here.
-
-		Args:
-			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/topology)): The method internally sets Arg1 to the current href for this instance
-			Arg2 (list(number)): List of indices into the protocol plugin.An empty list indicates all instances in the plugin.
-
-		Returns:
-			list(str): Please provide a proper description here.
-
-		Raises:
-			NotFoundError: The requested resource does not exist on the server
-			ServerError: The server has encountered an uncategorized error condition
-		"""
-		Arg1 = self.href
-		return self._execute('GetPeriodicOAMLearnedInformation', payload=locals(), response_object=None)
 
 	def RestartDown(self):
 		"""Executes the restartDown operation on the server.

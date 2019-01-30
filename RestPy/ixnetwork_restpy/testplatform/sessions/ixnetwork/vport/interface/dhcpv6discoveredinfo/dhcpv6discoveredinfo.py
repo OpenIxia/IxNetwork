@@ -37,7 +37,7 @@ class DhcpV6DiscoveredInfo(Base):
 
 	@property
 	def IaRebindTime(self):
-		"""
+		"""(Read Only) The rebind timer value (in seconds) specified by the DHCPv6 Server.
 
 		Returns:
 			number
@@ -46,7 +46,7 @@ class DhcpV6DiscoveredInfo(Base):
 
 	@property
 	def IaRenewTime(self):
-		"""
+		"""(Read Only) The renew timer value (in seconds) specified by the DHCPv6 Server.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class DhcpV6DiscoveredInfo(Base):
 
 	@property
 	def Ipv6Address(self):
-		"""
+		"""(Read Only) A learned/allocated IPv6 address for this interface.
 
 		Returns:
 			list(str)
@@ -64,7 +64,7 @@ class DhcpV6DiscoveredInfo(Base):
 
 	@property
 	def IsDhcpV6LearnedInfoRefreshed(self):
-		"""
+		"""(Read Only) When true, the DHCPv6 discovered information is refreshed automatically.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class DhcpV6DiscoveredInfo(Base):
 
 	@property
 	def ProtocolInterface(self):
-		"""
+		"""(Read Only) An Ixia protocol interface that is negotiating with the DHCPv6 Server.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -82,7 +82,7 @@ class DhcpV6DiscoveredInfo(Base):
 
 	@property
 	def Tlvs(self):
-		"""
+		"""(Read Only) The identifier or 'tag' for this DHCPv6 option. The DHCPv6 option value field may contain data for configuration parameter information.
 
 		Returns:
 			list(dict(arg1:number,arg2:str))

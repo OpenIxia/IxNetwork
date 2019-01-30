@@ -38,7 +38,7 @@ class RouteRange(Base):
 
 	@property
 	def Bandwidth(self):
-		"""
+		"""The minimum amount of bandwidth available on this link, in Kbps. The valid range is 1 to 4294967295. (default = 10,000 Kbps)
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class RouteRange(Base):
 
 	@property
 	def Delay(self):
-		"""
+		"""The total of delays on the path to the route/network, in microseconds. The valid range is 0 to 4294967295. (default = 0)
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class RouteRange(Base):
 
 	@property
 	def DestCount(self):
-		"""
+		"""(Available only if Packing is enabled.) If packing is enabled, it indicates the maximum number of destinations that can be packed into a single Internal/External TLV. A value of 0 means that maximum possible packing will be used, which depends on the MTU of the link. The valid range is 0 to 255. (default = 90)
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class RouteRange(Base):
 
 	@property
 	def EnablePacking(self):
-		"""
+		"""Enables packing of multiple destinations into a single Internal/External TLV. If disabled, only one destination will be packed into a single Internal/External TLV. (default = enabled)
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class RouteRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the route range. (default = disabled)
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class RouteRange(Base):
 
 	@property
 	def FirstRoute(self):
-		"""
+		"""The first route of the route range, in IPv4/IPv6 dotted decimal format. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class RouteRange(Base):
 
 	@property
 	def Flag(self):
-		"""
+		"""(Available only for External route ranges.) The origin of the advertised route.
 
 		Returns:
 			str(externalRoute|candidateDefault)
@@ -122,7 +122,7 @@ class RouteRange(Base):
 
 	@property
 	def HopCount(self):
-		"""
+		"""The number of hops on the way to the destination address. The valid range is 0 to 255. (default = 0)
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class RouteRange(Base):
 
 	@property
 	def Load(self):
-		"""
+		"""The amount of load on the link. The valid range is 0 to 255. (default = 0)
 
 		Returns:
 			number
@@ -146,7 +146,7 @@ class RouteRange(Base):
 
 	@property
 	def Mask(self):
-		"""
+		"""The network mask width for the route range (in bits). The valid range is from 0 to 32 bits. (default = 24)
 
 		Returns:
 			number
@@ -158,7 +158,7 @@ class RouteRange(Base):
 
 	@property
 	def Metric(self):
-		"""
+		"""(Available only for External route ranges.) The EIGRP vector metric for the cost of the path to this route/network. The valid range is 1 to 4294967295. (default = 1)
 
 		Returns:
 			number
@@ -170,7 +170,7 @@ class RouteRange(Base):
 
 	@property
 	def Mtu(self):
-		"""
+		"""The Maximum Transmission Unit (MTU) allowed on this link, in bytes. The valid range is 0 to 16777215. (default = 1,500 bytes)
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class RouteRange(Base):
 
 	@property
 	def NextHop(self):
-		"""
+		"""The immediate next hop IP address on the way to the destination address, in IPv4/IPv6 dotted decimal format. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class RouteRange(Base):
 
 	@property
 	def NomberOfRoutes(self):
-		"""
+		"""The number of routes to be generated for this route range, based on the network address plus the network mask. The valid range is 1 to 16777215. (default = 1)
 
 		Returns:
 			number
@@ -206,7 +206,7 @@ class RouteRange(Base):
 
 	@property
 	def NumberOfRoutes(self):
-		"""
+		"""The number of routes to be generated for this route range, based on the network address plus the network mask. The valid range is 1 to 16777215. (default = 1)
 
 		Returns:
 			number
@@ -218,7 +218,7 @@ class RouteRange(Base):
 
 	@property
 	def OriginatingAs(self):
-		"""
+		"""(Available only for External route ranges.) The external AS where this route was originated. The valid range is 1 to 4294967295. (default = 1)
 
 		Returns:
 			number
@@ -230,7 +230,7 @@ class RouteRange(Base):
 
 	@property
 	def ProtocolId(self):
-		"""
+		"""(Available only for External route ranges.) The external protocol where the route was originated, if applicable.
 
 		Returns:
 			str(igrp|enhancedIgrp|static|rip|hello|ospf|isis|egp|bgp|idrp|connected)
@@ -242,7 +242,7 @@ class RouteRange(Base):
 
 	@property
 	def Reliability(self):
-		"""
+		"""The reliability factor. The valid range is 0 to 255 (100% reliable). (default = 255)
 
 		Returns:
 			number
@@ -254,7 +254,7 @@ class RouteRange(Base):
 
 	@property
 	def RouteTag(self):
-		"""
+		"""(Available only for External route ranges.) An administrative tag applied to the route when it is redistributed between EIGRP and an external protocol, to prevent routing loops. Used as a route mapping filter. The valid range is 0 to 4294967295. (default = 0)
 
 		Returns:
 			number
@@ -266,7 +266,7 @@ class RouteRange(Base):
 
 	@property
 	def Source(self):
-		"""
+		"""(Available only for External route ranges.) The IPv4 address for the external source of the route information, in dotted decimal format. (default = 0.0.0.0)
 
 		Returns:
 			str
@@ -278,7 +278,7 @@ class RouteRange(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""The type of route range: internal or external to the AS.
 
 		Returns:
 			str(external|internal)
@@ -292,27 +292,27 @@ class RouteRange(Base):
 		"""Adds a new routeRange node on the server and retrieves it in this instance.
 
 		Args:
-			Bandwidth (number): 
-			Delay (number): 
-			DestCount (number): 
-			EnablePacking (bool): 
-			Enabled (bool): 
-			FirstRoute (str): 
-			Flag (str(externalRoute|candidateDefault)): 
-			HopCount (number): 
-			Load (number): 
-			Mask (number): 
-			Metric (number): 
-			Mtu (number): 
-			NextHop (str): 
-			NomberOfRoutes (number): 
-			NumberOfRoutes (number): 
-			OriginatingAs (number): 
-			ProtocolId (str(igrp|enhancedIgrp|static|rip|hello|ospf|isis|egp|bgp|idrp|connected)): 
-			Reliability (number): 
-			RouteTag (number): 
-			Source (str): 
-			Type (str(external|internal)): 
+			Bandwidth (number): The minimum amount of bandwidth available on this link, in Kbps. The valid range is 1 to 4294967295. (default = 10,000 Kbps)
+			Delay (number): The total of delays on the path to the route/network, in microseconds. The valid range is 0 to 4294967295. (default = 0)
+			DestCount (number): (Available only if Packing is enabled.) If packing is enabled, it indicates the maximum number of destinations that can be packed into a single Internal/External TLV. A value of 0 means that maximum possible packing will be used, which depends on the MTU of the link. The valid range is 0 to 255. (default = 90)
+			EnablePacking (bool): Enables packing of multiple destinations into a single Internal/External TLV. If disabled, only one destination will be packed into a single Internal/External TLV. (default = enabled)
+			Enabled (bool): Enables the route range. (default = disabled)
+			FirstRoute (str): The first route of the route range, in IPv4/IPv6 dotted decimal format. (default = 0.0.0.0)
+			Flag (str(externalRoute|candidateDefault)): (Available only for External route ranges.) The origin of the advertised route.
+			HopCount (number): The number of hops on the way to the destination address. The valid range is 0 to 255. (default = 0)
+			Load (number): The amount of load on the link. The valid range is 0 to 255. (default = 0)
+			Mask (number): The network mask width for the route range (in bits). The valid range is from 0 to 32 bits. (default = 24)
+			Metric (number): (Available only for External route ranges.) The EIGRP vector metric for the cost of the path to this route/network. The valid range is 1 to 4294967295. (default = 1)
+			Mtu (number): The Maximum Transmission Unit (MTU) allowed on this link, in bytes. The valid range is 0 to 16777215. (default = 1,500 bytes)
+			NextHop (str): The immediate next hop IP address on the way to the destination address, in IPv4/IPv6 dotted decimal format. (default = 0.0.0.0)
+			NomberOfRoutes (number): The number of routes to be generated for this route range, based on the network address plus the network mask. The valid range is 1 to 16777215. (default = 1)
+			NumberOfRoutes (number): The number of routes to be generated for this route range, based on the network address plus the network mask. The valid range is 1 to 16777215. (default = 1)
+			OriginatingAs (number): (Available only for External route ranges.) The external AS where this route was originated. The valid range is 1 to 4294967295. (default = 1)
+			ProtocolId (str(igrp|enhancedIgrp|static|rip|hello|ospf|isis|egp|bgp|idrp|connected)): (Available only for External route ranges.) The external protocol where the route was originated, if applicable.
+			Reliability (number): The reliability factor. The valid range is 0 to 255 (100% reliable). (default = 255)
+			RouteTag (number): (Available only for External route ranges.) An administrative tag applied to the route when it is redistributed between EIGRP and an external protocol, to prevent routing loops. Used as a route mapping filter. The valid range is 0 to 4294967295. (default = 0)
+			Source (str): (Available only for External route ranges.) The IPv4 address for the external source of the route information, in dotted decimal format. (default = 0.0.0.0)
+			Type (str(external|internal)): The type of route range: internal or external to the AS.
 
 		Returns:
 			self: This instance with all currently retrieved routeRange data using find and the newly added routeRange data available through an iterator or index
@@ -338,27 +338,27 @@ class RouteRange(Base):
 		By default the find method takes no parameters and will retrieve all routeRange data from the server.
 
 		Args:
-			Bandwidth (number): 
-			Delay (number): 
-			DestCount (number): 
-			EnablePacking (bool): 
-			Enabled (bool): 
-			FirstRoute (str): 
-			Flag (str(externalRoute|candidateDefault)): 
-			HopCount (number): 
-			Load (number): 
-			Mask (number): 
-			Metric (number): 
-			Mtu (number): 
-			NextHop (str): 
-			NomberOfRoutes (number): 
-			NumberOfRoutes (number): 
-			OriginatingAs (number): 
-			ProtocolId (str(igrp|enhancedIgrp|static|rip|hello|ospf|isis|egp|bgp|idrp|connected)): 
-			Reliability (number): 
-			RouteTag (number): 
-			Source (str): 
-			Type (str(external|internal)): 
+			Bandwidth (number): The minimum amount of bandwidth available on this link, in Kbps. The valid range is 1 to 4294967295. (default = 10,000 Kbps)
+			Delay (number): The total of delays on the path to the route/network, in microseconds. The valid range is 0 to 4294967295. (default = 0)
+			DestCount (number): (Available only if Packing is enabled.) If packing is enabled, it indicates the maximum number of destinations that can be packed into a single Internal/External TLV. A value of 0 means that maximum possible packing will be used, which depends on the MTU of the link. The valid range is 0 to 255. (default = 90)
+			EnablePacking (bool): Enables packing of multiple destinations into a single Internal/External TLV. If disabled, only one destination will be packed into a single Internal/External TLV. (default = enabled)
+			Enabled (bool): Enables the route range. (default = disabled)
+			FirstRoute (str): The first route of the route range, in IPv4/IPv6 dotted decimal format. (default = 0.0.0.0)
+			Flag (str(externalRoute|candidateDefault)): (Available only for External route ranges.) The origin of the advertised route.
+			HopCount (number): The number of hops on the way to the destination address. The valid range is 0 to 255. (default = 0)
+			Load (number): The amount of load on the link. The valid range is 0 to 255. (default = 0)
+			Mask (number): The network mask width for the route range (in bits). The valid range is from 0 to 32 bits. (default = 24)
+			Metric (number): (Available only for External route ranges.) The EIGRP vector metric for the cost of the path to this route/network. The valid range is 1 to 4294967295. (default = 1)
+			Mtu (number): The Maximum Transmission Unit (MTU) allowed on this link, in bytes. The valid range is 0 to 16777215. (default = 1,500 bytes)
+			NextHop (str): The immediate next hop IP address on the way to the destination address, in IPv4/IPv6 dotted decimal format. (default = 0.0.0.0)
+			NomberOfRoutes (number): The number of routes to be generated for this route range, based on the network address plus the network mask. The valid range is 1 to 16777215. (default = 1)
+			NumberOfRoutes (number): The number of routes to be generated for this route range, based on the network address plus the network mask. The valid range is 1 to 16777215. (default = 1)
+			OriginatingAs (number): (Available only for External route ranges.) The external AS where this route was originated. The valid range is 1 to 4294967295. (default = 1)
+			ProtocolId (str(igrp|enhancedIgrp|static|rip|hello|ospf|isis|egp|bgp|idrp|connected)): (Available only for External route ranges.) The external protocol where the route was originated, if applicable.
+			Reliability (number): The reliability factor. The valid range is 0 to 255 (100% reliable). (default = 255)
+			RouteTag (number): (Available only for External route ranges.) An administrative tag applied to the route when it is redistributed between EIGRP and an external protocol, to prevent routing loops. Used as a route mapping filter. The valid range is 0 to 4294967295. (default = 0)
+			Source (str): (Available only for External route ranges.) The IPv4 address for the external source of the route information, in dotted decimal format. (default = 0.0.0.0)
+			Type (str(external|internal)): The type of route range: internal or external to the AS.
 
 		Returns:
 			self: This instance with matching routeRange data retrieved from the server available through an iterator or index

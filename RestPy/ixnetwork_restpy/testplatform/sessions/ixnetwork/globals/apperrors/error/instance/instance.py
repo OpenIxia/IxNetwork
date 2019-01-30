@@ -37,7 +37,7 @@ class Instance(Base):
 
 	@property
 	def SourceValues(self):
-		"""
+		"""The source values of the error instance
 
 		Returns:
 			list(str)
@@ -51,7 +51,7 @@ class Instance(Base):
 		By default the find method takes no parameters and will retrieve all instance data from the server.
 
 		Args:
-			SourceValues (list(str)): 
+			SourceValues (list(str)): The source values of the error instance
 
 		Returns:
 			self: This instance with matching instance data retrieved from the server available through an iterator or index

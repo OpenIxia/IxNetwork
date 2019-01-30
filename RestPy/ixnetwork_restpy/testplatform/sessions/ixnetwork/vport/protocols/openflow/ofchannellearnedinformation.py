@@ -65,7 +65,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def ActionsSupported(self):
-		"""
+		"""Signifies the types of actions supported by the switch.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def Capabilities(self):
-		"""
+		"""Signifies the capabilities of the switch.
 
 		Returns:
 			str
@@ -83,7 +83,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""Indicates the datapath ID of the OpenFlow switch.
 
 		Returns:
 			str
@@ -92,7 +92,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""Indicates the datapath ID of the OpenFlow switch in hexadecimal format.
 
 		Returns:
 			str
@@ -101,7 +101,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def FlowRate(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def GenerationId(self):
-		"""
+		"""The generation ID number.
 
 		Returns:
 			str
@@ -119,7 +119,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def LastErrorCode(self):
-		"""
+		"""Signifies the error code of the last error received.
 
 		Returns:
 			str
@@ -128,7 +128,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def LastErrorType(self):
-		"""
+		"""Signifies the type of the last error received.
 
 		Returns:
 			str
@@ -137,7 +137,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""Signifies the local IP address of the selected interface.
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def LocalPortNumber(self):
-		"""
+		"""Signifies the local port number identifier.
 
 		Returns:
 			number
@@ -155,7 +155,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def MaxBufferSize(self):
-		"""
+		"""Signifies the maximum configurable buffer size.
 
 		Returns:
 			number
@@ -164,7 +164,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
 
 		Returns:
 			number
@@ -173,7 +173,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def NumberOfErrorsReceived(self):
-		"""
+		"""Signifies the total number of errors received from the emulation start time.
 
 		Returns:
 			number
@@ -182,7 +182,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def NumberOfPorts(self):
-		"""
+		"""Signifies the number of ports used.
 
 		Returns:
 			number
@@ -191,7 +191,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def NumberOfTables(self):
-		"""
+		"""Signifies the number of tables supported.
 
 		Returns:
 			number
@@ -200,7 +200,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""Signifies the Remote IP address of the selected interface.
 
 		Returns:
 			str
@@ -209,7 +209,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def RemotePortNumber(self):
-		"""
+		"""Signifies the remote port number identifier.
 
 		Returns:
 			number
@@ -218,7 +218,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""Signifies the reply state of the OF Channel.
 
 		Returns:
 			str
@@ -227,7 +227,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def Role(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -236,7 +236,7 @@ class OfChannelLearnedInformation(Base):
 
 	@property
 	def SessionType(self):
-		"""
+		"""Signifies the type of OpenFlow session supported by the switch.
 
 		Returns:
 			str
@@ -250,26 +250,26 @@ class OfChannelLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all ofChannelLearnedInformation data from the server.
 
 		Args:
-			ActionsSupported (str): 
-			Capabilities (str): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			FlowRate (number): 
-			GenerationId (str): 
-			LastErrorCode (str): 
-			LastErrorType (str): 
-			LocalIp (str): 
-			LocalPortNumber (number): 
-			MaxBufferSize (number): 
-			NegotiatedVersion (number): 
-			NumberOfErrorsReceived (number): 
-			NumberOfPorts (number): 
-			NumberOfTables (number): 
-			RemoteIp (str): 
-			RemotePortNumber (number): 
-			ReplyState (str): 
-			Role (str): 
-			SessionType (str): 
+			ActionsSupported (str): Signifies the types of actions supported by the switch.
+			Capabilities (str): Signifies the capabilities of the switch.
+			DataPathId (str): Indicates the datapath ID of the OpenFlow switch.
+			DataPathIdAsHex (str): Indicates the datapath ID of the OpenFlow switch in hexadecimal format.
+			FlowRate (number): NOT DEFINED
+			GenerationId (str): The generation ID number.
+			LastErrorCode (str): Signifies the error code of the last error received.
+			LastErrorType (str): Signifies the type of the last error received.
+			LocalIp (str): Signifies the local IP address of the selected interface.
+			LocalPortNumber (number): Signifies the local port number identifier.
+			MaxBufferSize (number): Signifies the maximum configurable buffer size.
+			NegotiatedVersion (number): Version of the protocol that has been negotiated between OpenFLow Controller and Switch.
+			NumberOfErrorsReceived (number): Signifies the total number of errors received from the emulation start time.
+			NumberOfPorts (number): Signifies the number of ports used.
+			NumberOfTables (number): Signifies the number of tables supported.
+			RemoteIp (str): Signifies the Remote IP address of the selected interface.
+			RemotePortNumber (number): Signifies the remote port number identifier.
+			ReplyState (str): Signifies the reply state of the OF Channel.
+			Role (str): NOT DEFINED
+			SessionType (str): Signifies the type of OpenFlow session supported by the switch.
 
 		Returns:
 			self: This instance with matching ofChannelLearnedInformation data retrieved from the server available through an iterator or index
@@ -297,11 +297,13 @@ class OfChannelLearnedInformation(Base):
 	def AddRecordForTrigger(self):
 		"""Executes the addRecordForTrigger operation on the server.
 
+		This describes the record added for trigger settings.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ofChannelLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -313,11 +315,13 @@ class OfChannelLearnedInformation(Base):
 	def ConfigureOfChannel(self):
 		"""Executes the configureOfChannel operation on the server.
 
+		It is a command that will configure controller OF channel from controller OF channel learned information.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ofChannelLearnedInformation)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

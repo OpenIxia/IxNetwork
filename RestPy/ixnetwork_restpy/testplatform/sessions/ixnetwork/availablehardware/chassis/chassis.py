@@ -52,7 +52,7 @@ class Chassis(Base):
 
 	@property
 	def CableLength(self):
-		"""
+		"""Specifies the length of the cable between two adjacent chassis. Must be set only after the chassis hostname has been set and committed on the current chassis.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class Chassis(Base):
 
 	@property
 	def ChainTopology(self):
-		"""
+		"""The chain topology type. This must be defined on the master chassis. It must be defined only after the chassis host name has been specified and applied on the current chassis. For legacy chassis chains, the daisy chainTopology should be indicated.
 
 		Returns:
 			str(daisy|none|star)
@@ -76,7 +76,7 @@ class Chassis(Base):
 
 	@property
 	def ChassisType(self):
-		"""
+		"""The type of chassis.
 
 		Returns:
 			str
@@ -85,7 +85,7 @@ class Chassis(Base):
 
 	@property
 	def ChassisVersion(self):
-		"""
+		"""The version of the Chassis in use.
 
 		Returns:
 			str
@@ -94,7 +94,7 @@ class Chassis(Base):
 
 	@property
 	def ConnectRetries(self):
-		"""
+		"""The number of time the client attempted to re-connect with the chassis. (read only)
 
 		Returns:
 			number
@@ -103,7 +103,7 @@ class Chassis(Base):
 
 	@property
 	def Hostname(self):
-		"""
+		"""The IP address associated with the chassis.
 
 		Returns:
 			str
@@ -115,7 +115,7 @@ class Chassis(Base):
 
 	@property
 	def Ip(self):
-		"""
+		"""The IP address associated with the chassis.
 
 		Returns:
 			str
@@ -124,7 +124,7 @@ class Chassis(Base):
 
 	@property
 	def IsLicensesRetrieved(self):
-		"""
+		"""Retrieves the licenses in the chassis.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class Chassis(Base):
 
 	@property
 	def IsMaster(self):
-		"""
+		"""Specifies whether this chassis is a master of a slave in a chain. There can be only one master chassis in a chain. NOTE: The master is automatically assigned based on cable connections.
 
 		Returns:
 			bool
@@ -142,7 +142,7 @@ class Chassis(Base):
 
 	@property
 	def IxnBuildNumber(self):
-		"""
+		"""IxNetwork build number.
 
 		Returns:
 			str
@@ -151,7 +151,7 @@ class Chassis(Base):
 
 	@property
 	def IxosBuildNumber(self):
-		"""
+		"""The IxOS version of the Chassis in use.
 
 		Returns:
 			str
@@ -160,7 +160,7 @@ class Chassis(Base):
 
 	@property
 	def LicenseErrors(self):
-		"""
+		"""Shows the licening errors that occurred due to licensing problems.
 
 		Returns:
 			list(str)
@@ -169,7 +169,7 @@ class Chassis(Base):
 
 	@property
 	def MasterChassis(self):
-		"""
+		"""Specify the hostname of the master chassis on a slave chassis. Must be left blank on master. Must be set only after the chassis hostname has been set and committed on the current chassis.
 
 		Returns:
 			str
@@ -181,7 +181,7 @@ class Chassis(Base):
 
 	@property
 	def ProtocolBuildNumber(self):
-		"""
+		"""The Protocols version of the Chassis in use.
 
 		Returns:
 			str
@@ -190,7 +190,7 @@ class Chassis(Base):
 
 	@property
 	def SequenceId(self):
-		"""
+		"""Indicates the order at which the chassis in a chassis chain are pulsed by IxOS. Star topology chains are automatically setting this value. Must be set only after the chassis hostname has been set and committed on the current chassis.
 
 		Returns:
 			number
@@ -202,7 +202,7 @@ class Chassis(Base):
 
 	@property
 	def State(self):
-		"""
+		"""The following states can be read from the port: polling, ready, and down.
 
 		Returns:
 			str(down|down|polling|polling|polling|ready)
@@ -213,11 +213,11 @@ class Chassis(Base):
 		"""Adds a new chassis node on the server and retrieves it in this instance.
 
 		Args:
-			CableLength (number): 
-			ChainTopology (str(daisy|none|star)): 
-			Hostname (str): 
-			MasterChassis (str): 
-			SequenceId (number): 
+			CableLength (number): Specifies the length of the cable between two adjacent chassis. Must be set only after the chassis hostname has been set and committed on the current chassis.
+			ChainTopology (str(daisy|none|star)): The chain topology type. This must be defined on the master chassis. It must be defined only after the chassis host name has been specified and applied on the current chassis. For legacy chassis chains, the daisy chainTopology should be indicated.
+			Hostname (str): The IP address associated with the chassis.
+			MasterChassis (str): Specify the hostname of the master chassis on a slave chassis. Must be left blank on master. Must be set only after the chassis hostname has been set and committed on the current chassis.
+			SequenceId (number): Indicates the order at which the chassis in a chassis chain are pulsed by IxOS. Star topology chains are automatically setting this value. Must be set only after the chassis hostname has been set and committed on the current chassis.
 
 		Returns:
 			self: This instance with all currently retrieved chassis data using find and the newly added chassis data available through an iterator or index
@@ -243,22 +243,22 @@ class Chassis(Base):
 		By default the find method takes no parameters and will retrieve all chassis data from the server.
 
 		Args:
-			CableLength (number): 
-			ChainTopology (str(daisy|none|star)): 
-			ChassisType (str): 
-			ChassisVersion (str): 
-			ConnectRetries (number): 
-			Hostname (str): 
-			Ip (str): 
-			IsLicensesRetrieved (bool): 
-			IsMaster (bool): 
-			IxnBuildNumber (str): 
-			IxosBuildNumber (str): 
-			LicenseErrors (list(str)): 
-			MasterChassis (str): 
-			ProtocolBuildNumber (str): 
-			SequenceId (number): 
-			State (str(down|down|polling|polling|polling|ready)): 
+			CableLength (number): Specifies the length of the cable between two adjacent chassis. Must be set only after the chassis hostname has been set and committed on the current chassis.
+			ChainTopology (str(daisy|none|star)): The chain topology type. This must be defined on the master chassis. It must be defined only after the chassis host name has been specified and applied on the current chassis. For legacy chassis chains, the daisy chainTopology should be indicated.
+			ChassisType (str): The type of chassis.
+			ChassisVersion (str): The version of the Chassis in use.
+			ConnectRetries (number): The number of time the client attempted to re-connect with the chassis. (read only)
+			Hostname (str): The IP address associated with the chassis.
+			Ip (str): The IP address associated with the chassis.
+			IsLicensesRetrieved (bool): Retrieves the licenses in the chassis.
+			IsMaster (bool): Specifies whether this chassis is a master of a slave in a chain. There can be only one master chassis in a chain. NOTE: The master is automatically assigned based on cable connections.
+			IxnBuildNumber (str): IxNetwork build number.
+			IxosBuildNumber (str): The IxOS version of the Chassis in use.
+			LicenseErrors (list(str)): Shows the licening errors that occurred due to licensing problems.
+			MasterChassis (str): Specify the hostname of the master chassis on a slave chassis. Must be left blank on master. Must be set only after the chassis hostname has been set and committed on the current chassis.
+			ProtocolBuildNumber (str): The Protocols version of the Chassis in use.
+			SequenceId (number): Indicates the order at which the chassis in a chassis chain are pulsed by IxOS. Star topology chains are automatically setting this value. Must be set only after the chassis hostname has been set and committed on the current chassis.
+			State (str(down|down|polling|polling|polling|ready)): The following states can be read from the port: polling, ready, and down.
 
 		Returns:
 			self: This instance with matching chassis data retrieved from the server available through an iterator or index

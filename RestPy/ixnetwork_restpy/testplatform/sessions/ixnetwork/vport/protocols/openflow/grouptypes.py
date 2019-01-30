@@ -37,7 +37,7 @@ class GroupTypes(Base):
 
 	@property
 	def All(self):
-		"""
+		"""If selected, all buckets in the group are forwarded. This group is used for multicast or broadcast forwarding. The packet is effectively cloned for each bucket. One packet is processed for each bucket of the group.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class GroupTypes(Base):
 
 	@property
 	def FastFailover(self):
-		"""
+		"""If selected, the first active bucket is forwarded. Each action bucket is associated with a specific port and/or group that controls its liveness. The buckets are evaluated in the order defined by the group, and the first bucket which is associated with a live port/group is selected. This group type allows the switch to change forwarding without requiring a round trip to the controller. If no buckets are live, packets are dropped.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class GroupTypes(Base):
 
 	@property
 	def Indirect(self):
-		"""
+		"""If selected, the one defined bucket in this group is forwarded. This group supports only a single bucket. It allows multiple flow entries or groups to point to a common group identifier, supporting faster, more efficient convergence. For instance, next hops for IP forwarding.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class GroupTypes(Base):
 
 	@property
 	def Select(self):
-		"""
+		"""If selected, a single bucket in the group is forwarded.
 
 		Returns:
 			bool

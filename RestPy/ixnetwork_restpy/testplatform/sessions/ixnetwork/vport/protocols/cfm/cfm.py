@@ -51,7 +51,7 @@ class Cfm(Base):
 
 	@property
 	def EnableOptionalLmFunctionality(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Cfm(Base):
 
 	@property
 	def EnableOptionalTlvValidation(self):
-		"""
+		"""If true, the CFM protocol will validate optional TLVs present in CFM packets.
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class Cfm(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the CFM protcol is enabled.
 
 		Returns:
 			bool
@@ -87,7 +87,7 @@ class Cfm(Base):
 
 	@property
 	def ReceiveCcm(self):
-		"""
+		"""If true, the CFM protocol can receive CFM CCMs on this port.
 
 		Returns:
 			bool
@@ -99,7 +99,7 @@ class Cfm(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The current running state of the CFM protocol.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -108,7 +108,7 @@ class Cfm(Base):
 
 	@property
 	def SendCcm(self):
-		"""
+		"""If true, the CFM protocol can send CFM CCMs from this port.
 
 		Returns:
 			bool
@@ -120,7 +120,7 @@ class Cfm(Base):
 
 	@property
 	def SuppressErrorsOnAis(self):
-		"""
+		"""If true, the errors on AIS are suopressed.
 
 		Returns:
 			bool
@@ -132,6 +132,8 @@ class Cfm(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		Starts the CFM protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=cfm)): The method internally sets Arg1 to the current href for this instance
@@ -145,6 +147,8 @@ class Cfm(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		Stops the CFM protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=cfm)): The method internally sets Arg1 to the current href for this instance

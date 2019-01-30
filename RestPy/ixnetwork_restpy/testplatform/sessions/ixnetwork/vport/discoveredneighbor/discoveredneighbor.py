@@ -38,7 +38,7 @@ class DiscoveredNeighbor(Base):
 
 	@property
 	def IsRouter(self):
-		"""
+		"""(read only) Indicates if the neighbor is a router or not.
 
 		Returns:
 			str
@@ -47,7 +47,7 @@ class DiscoveredNeighbor(Base):
 
 	@property
 	def LastUpdate(self):
-		"""
+		"""(read only) Indicates when the last update for the neighbor happened.
 
 		Returns:
 			str
@@ -56,7 +56,7 @@ class DiscoveredNeighbor(Base):
 
 	@property
 	def NeighborIp(self):
-		"""
+		"""(read only) The IP address of the neighbor.
 
 		Returns:
 			str
@@ -65,7 +65,7 @@ class DiscoveredNeighbor(Base):
 
 	@property
 	def NeighborMac(self):
-		"""
+		"""(read only) The MAC address of the neighbor.
 
 		Returns:
 			str
@@ -99,10 +99,10 @@ class DiscoveredNeighbor(Base):
 		By default the find method takes no parameters and will retrieve all discoveredNeighbor data from the server.
 
 		Args:
-			IsRouter (str): 
-			LastUpdate (str): 
-			NeighborIp (str): 
-			NeighborMac (str): 
+			IsRouter (str): (read only) Indicates if the neighbor is a router or not.
+			LastUpdate (str): (read only) Indicates when the last update for the neighbor happened.
+			NeighborIp (str): (read only) The IP address of the neighbor.
+			NeighborMac (str): (read only) The MAC address of the neighbor.
 
 		Returns:
 			self: This instance with matching discoveredNeighbor data retrieved from the server available through an iterator or index

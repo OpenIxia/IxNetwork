@@ -38,7 +38,7 @@ class TrillUnicastMacRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, enables the use of TRILL unicast MAC range.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class TrillUnicastMacRange(Base):
 
 	@property
 	def StartUnicastMac(self):
-		"""
+		"""Starts unicast MAC address.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class TrillUnicastMacRange(Base):
 
 	@property
 	def Topology(self):
-		"""
+		"""Signifies the topology range.
 
 		Returns:
 			number
@@ -71,7 +71,7 @@ class TrillUnicastMacRange(Base):
 
 	@property
 	def UnicastMacCount(self):
-		"""
+		"""Signifies the count of unicast MAC address.
 
 		Returns:
 			number
@@ -83,7 +83,7 @@ class TrillUnicastMacRange(Base):
 
 	@property
 	def UnicastMacStep(self):
-		"""
+		"""Signifies the step value of unicast MAC address.
 
 		Returns:
 			str
@@ -95,7 +95,7 @@ class TrillUnicastMacRange(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""Signifies VLAN identifier.
 
 		Returns:
 			number
@@ -109,11 +109,11 @@ class TrillUnicastMacRange(Base):
 		"""Adds a new trillUnicastMacRange node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			StartUnicastMac (str): 
-			UnicastMacCount (number): 
-			UnicastMacStep (str): 
-			VlanId (number): 
+			Enabled (bool): If true, enables the use of TRILL unicast MAC range.
+			StartUnicastMac (str): Starts unicast MAC address.
+			UnicastMacCount (number): Signifies the count of unicast MAC address.
+			UnicastMacStep (str): Signifies the step value of unicast MAC address.
+			VlanId (number): Signifies VLAN identifier.
 
 		Returns:
 			self: This instance with all currently retrieved trillUnicastMacRange data using find and the newly added trillUnicastMacRange data available through an iterator or index
@@ -139,12 +139,12 @@ class TrillUnicastMacRange(Base):
 		By default the find method takes no parameters and will retrieve all trillUnicastMacRange data from the server.
 
 		Args:
-			Enabled (bool): 
-			StartUnicastMac (str): 
-			Topology (number): 
-			UnicastMacCount (number): 
-			UnicastMacStep (str): 
-			VlanId (number): 
+			Enabled (bool): If true, enables the use of TRILL unicast MAC range.
+			StartUnicastMac (str): Starts unicast MAC address.
+			Topology (number): Signifies the topology range.
+			UnicastMacCount (number): Signifies the count of unicast MAC address.
+			UnicastMacStep (str): Signifies the step value of unicast MAC address.
+			VlanId (number): Signifies VLAN identifier.
 
 		Returns:
 			self: This instance with matching trillUnicastMacRange data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def ClientId(self):
-		"""
+		"""The user may optionally assign an identifier for the Client. This value must be unique on the subnet where the DHCP Client is located.
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If enabled, DHCP negotiation will be started and an IPv4 address learned from the DHCP server will be assigned automatically to the protocol interface.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def RenewTimer(self):
-		"""
+		"""The renew timer value specified by the DHCPv4 server.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def RequestRate(self):
-		"""
+		"""(For rate control) The user-specified maximum number of Request messages that can be sent per second from the client to the DHCP server, requesting an IPv4 address. A value of zero (0) indicates that there will be no rate control, i.e., Requests will be sent as quickly as possible.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def ServerId(self):
-		"""
+		"""This IPv4 address value is used to identify the DHCP Server and as a destination address from the client.
 
 		Returns:
 			str
@@ -97,7 +97,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def Tlvs(self):
-		"""
+		"""The type length value for DHCP.
 
 		Returns:
 			list(dict(arg1:number,arg2:str))
@@ -109,7 +109,7 @@ class DhcpV4Properties(Base):
 
 	@property
 	def VendorId(self):
-		"""
+		"""The optional, user-assigned Vendor ID (vendor class identifier).
 
 		Returns:
 			str

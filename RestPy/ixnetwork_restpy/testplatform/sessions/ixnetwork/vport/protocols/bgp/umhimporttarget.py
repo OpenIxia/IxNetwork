@@ -37,7 +37,7 @@ class UmhImportTarget(Base):
 
 	@property
 	def ImportTargetList(self):
-		"""
+		"""Configures import route target in case of UMH routes
 
 		Returns:
 			list(dict(arg1:str[as|asNumber2|ip],arg2:number,arg3:str,arg4:number,arg5:number,arg6:number,arg7:str))

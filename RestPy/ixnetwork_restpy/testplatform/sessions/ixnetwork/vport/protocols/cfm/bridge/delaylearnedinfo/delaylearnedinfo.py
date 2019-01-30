@@ -37,7 +37,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def CVlan(self):
-		"""
+		"""(read only) The learned C-VLAN identifier.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""
+		"""(read only) The learned destination MAC address for the bridge.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The learned MD level for the bridge.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def SVlan(self):
-		"""
+		"""(read only) The learned S-VLAN identifier.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The learned source MAC address for the bridge.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def ValueInNanoSec(self):
-		"""
+		"""(read only) The delay measurement in nanoseconds.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class DelayLearnedInfo(Base):
 
 	@property
 	def ValueInSec(self):
-		"""
+		"""(read only) The delay measurement in seconds.
 
 		Returns:
 			number
@@ -105,13 +105,13 @@ class DelayLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all delayLearnedInfo data from the server.
 
 		Args:
-			CVlan (str): 
-			DstMacAddress (str): 
-			MdLevel (number): 
-			SVlan (str): 
-			SrcMacAddress (str): 
-			ValueInNanoSec (number): 
-			ValueInSec (number): 
+			CVlan (str): (read only) The learned C-VLAN identifier.
+			DstMacAddress (str): (read only) The learned destination MAC address for the bridge.
+			MdLevel (number): (read only) The learned MD level for the bridge.
+			SVlan (str): (read only) The learned S-VLAN identifier.
+			SrcMacAddress (str): (read only) The learned source MAC address for the bridge.
+			ValueInNanoSec (number): (read only) The delay measurement in nanoseconds.
+			ValueInSec (number): (read only) The delay measurement in seconds.
 
 		Returns:
 			self: This instance with matching delayLearnedInfo data retrieved from the server available through an iterator or index

@@ -38,7 +38,7 @@ class Lan(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the use of the STP LAN.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class Lan(Base):
 
 	@property
 	def MacAddress(self):
-		"""
+		"""The first 6-byte MAC Address in the range. (default = 00:00:00:00:00:00)
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class Lan(Base):
 
 	@property
 	def MacCount(self):
-		"""
+		"""The number of MAC addresses in the LAN range. The valid range is 1 to 500. (default = 1)
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class Lan(Base):
 
 	@property
 	def MacIncrement(self):
-		"""
+		"""If enabled, a 6-byte increment value will be added for each additional MAC address to create a range of MAC addresses.
 
 		Returns:
 			bool
@@ -86,7 +86,7 @@ class Lan(Base):
 
 	@property
 	def TrafficGroupId(self):
-		"""
+		"""References a traffic group identifier as configured by the trafficGroup object.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)
@@ -98,7 +98,7 @@ class Lan(Base):
 
 	@property
 	def VlanEnabled(self):
-		"""
+		"""Enables the use of this STP LAN. (default = disabled)
 
 		Returns:
 			bool
@@ -110,7 +110,7 @@ class Lan(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""The identifier for the first VLAN in the range. Valid range: 1 to 4094.
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class Lan(Base):
 
 	@property
 	def VlanIncrement(self):
-		"""
+		"""If enabled, an increment value will be added for each additional VLAN to create a range of MAC addresses.
 
 		Returns:
 			bool
@@ -136,14 +136,14 @@ class Lan(Base):
 		"""Adds a new lan node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			MacAddress (str): 
-			MacCount (number): 
-			MacIncrement (bool): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
-			VlanEnabled (bool): 
-			VlanId (number): 
-			VlanIncrement (bool): 
+			Enabled (bool): Enables the use of the STP LAN.
+			MacAddress (str): The first 6-byte MAC Address in the range. (default = 00:00:00:00:00:00)
+			MacCount (number): The number of MAC addresses in the LAN range. The valid range is 1 to 500. (default = 1)
+			MacIncrement (bool): If enabled, a 6-byte increment value will be added for each additional MAC address to create a range of MAC addresses.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): References a traffic group identifier as configured by the trafficGroup object.
+			VlanEnabled (bool): Enables the use of this STP LAN. (default = disabled)
+			VlanId (number): The identifier for the first VLAN in the range. Valid range: 1 to 4094.
+			VlanIncrement (bool): If enabled, an increment value will be added for each additional VLAN to create a range of MAC addresses.
 
 		Returns:
 			self: This instance with all currently retrieved lan data using find and the newly added lan data available through an iterator or index
@@ -169,14 +169,14 @@ class Lan(Base):
 		By default the find method takes no parameters and will retrieve all lan data from the server.
 
 		Args:
-			Enabled (bool): 
-			MacAddress (str): 
-			MacCount (number): 
-			MacIncrement (bool): 
-			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): 
-			VlanEnabled (bool): 
-			VlanId (number): 
-			VlanIncrement (bool): 
+			Enabled (bool): Enables the use of the STP LAN.
+			MacAddress (str): The first 6-byte MAC Address in the range. (default = 00:00:00:00:00:00)
+			MacCount (number): The number of MAC addresses in the LAN range. The valid range is 1 to 500. (default = 1)
+			MacIncrement (bool): If enabled, a 6-byte increment value will be added for each additional MAC address to create a range of MAC addresses.
+			TrafficGroupId (str(None|/api/v1/sessions/1/ixnetwork/traffic?deepchild=trafficGroup)): References a traffic group identifier as configured by the trafficGroup object.
+			VlanEnabled (bool): Enables the use of this STP LAN. (default = disabled)
+			VlanId (number): The identifier for the first VLAN in the range. Valid range: 1 to 4094.
+			VlanIncrement (bool): If enabled, an increment value will be added for each additional VLAN to create a range of MAC addresses.
 
 		Returns:
 			self: This instance with matching lan data retrieved from the server available through an iterator or index

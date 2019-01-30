@@ -37,7 +37,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def CustomPacket(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def DestinationCustom(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def DestinationCustomIpv4Address(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def DestinationCustomIpv4AddressStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -85,7 +85,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def DestinationCustomMacAddress(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -97,7 +97,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def DestinationCustomMacAddressStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def DestinationHostList(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchHostRanges])
@@ -121,7 +121,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def MeshingType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(fullyMesh)
@@ -133,7 +133,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def PacketType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(arp|ping|custom)
@@ -145,7 +145,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def PeriodIntervalInMs(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -157,7 +157,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def Periodic(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def PeriodicIterationNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -181,7 +181,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def ResponseTimeout(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -193,7 +193,7 @@ class SwitchHostRangeLearnedInfoTriggerAttributes(Base):
 
 	@property
 	def SourceHostList(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			list(str[None|/api/v1/sessions/1/ixnetwork/vport?deepchild=switchHostRanges])

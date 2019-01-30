@@ -79,7 +79,7 @@ class Ethernet(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""
+		"""The auto instrumentation mode.
 
 		Returns:
 			str(endOfFrame|floating)
@@ -91,7 +91,7 @@ class Ethernet(Base):
 
 	@property
 	def AutoNegotiate(self):
-		"""
+		"""If enabled, allows autonegotiation between ports for speed and duplex operation based on the various choices. The selected capabilities are advertised during AutoNegotiation
 
 		Returns:
 			bool
@@ -103,7 +103,7 @@ class Ethernet(Base):
 
 	@property
 	def EnablePPM(self):
-		"""
+		"""If true, enables the portsppm.
 
 		Returns:
 			bool
@@ -115,7 +115,7 @@ class Ethernet(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""
+		"""If true, enables the port's MAC flow control and mechanisms to listen for a directed address pause message.
 
 		Returns:
 			bool
@@ -127,7 +127,7 @@ class Ethernet(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""
+		"""The 48-bit MAC address that the port listens on for a directed pause.
 
 		Returns:
 			str
@@ -139,7 +139,7 @@ class Ethernet(Base):
 
 	@property
 	def Loopback(self):
-		"""
+		"""If enabled, the port is set to internally loopback from transmit to receive.
 
 		Returns:
 			bool
@@ -151,7 +151,7 @@ class Ethernet(Base):
 
 	@property
 	def MasterSlaveMode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(master|slave)
@@ -163,7 +163,7 @@ class Ethernet(Base):
 
 	@property
 	def Media(self):
-		"""
+		"""Available only for Ethernet cards that support this dual-PHY capability.
 
 		Returns:
 			str(copper|fiber|sgmii)
@@ -175,7 +175,7 @@ class Ethernet(Base):
 
 	@property
 	def NegotiateMasterSlave(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -187,7 +187,7 @@ class Ethernet(Base):
 
 	@property
 	def Ppm(self):
-		"""
+		"""Indicates the value that needs to be adjusted for the line transmit frequency
 
 		Returns:
 			number
@@ -199,7 +199,7 @@ class Ethernet(Base):
 
 	@property
 	def Speed(self):
-		"""
+		"""The speed and duplex operation options.
 
 		Returns:
 			str(auto|speed1000|speed100fd|speed100hd|speed10fd|speed10hd)
@@ -211,7 +211,7 @@ class Ethernet(Base):
 
 	@property
 	def SpeedAuto(self):
-		"""
+		"""If selected, allows auto negotiation between ports for speed and duplex operation based on the various choices. The selected capabilities are advertised during AutoNegotiation.
 
 		Returns:
 			list(str[all|speed1000|speed100fd|speed100hd|speed10fd|speed10hd])

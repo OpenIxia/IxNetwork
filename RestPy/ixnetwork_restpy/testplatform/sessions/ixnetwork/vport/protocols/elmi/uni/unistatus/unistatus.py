@@ -52,7 +52,7 @@ class UniStatus(Base):
 
 	@property
 	def CeVlanIdEvcMapType(self):
-		"""
+		"""Possible values include:allToOneBundling 1, noBundling 2, bundling 3
 
 		Returns:
 			str(allToOneBundling|noBundling|bundling)
@@ -64,7 +64,7 @@ class UniStatus(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If enabled, it shows the UNI status. Not more than one UNI Status can be enabled per UNI-N per port.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class UniStatus(Base):
 
 	@property
 	def UniIdentifier(self):
-		"""
+		"""It signifies the content of the UNI identifier. The length is determined by UNI Identifier Length field. Default is 0.
 
 		Returns:
 			str
@@ -88,7 +88,7 @@ class UniStatus(Base):
 
 	@property
 	def UniIdentifierLength(self):
-		"""
+		"""It is a 1 octet field. It indicates the length of UNI Identifier content. Default is 1. Min is 1 and Max is 64.
 
 		Returns:
 			number
@@ -102,10 +102,10 @@ class UniStatus(Base):
 		"""Adds a new uniStatus node on the server and retrieves it in this instance.
 
 		Args:
-			CeVlanIdEvcMapType (str(allToOneBundling|noBundling|bundling)): 
-			Enabled (bool): 
-			UniIdentifier (str): 
-			UniIdentifierLength (number): 
+			CeVlanIdEvcMapType (str(allToOneBundling|noBundling|bundling)): Possible values include:allToOneBundling 1, noBundling 2, bundling 3
+			Enabled (bool): If enabled, it shows the UNI status. Not more than one UNI Status can be enabled per UNI-N per port.
+			UniIdentifier (str): It signifies the content of the UNI identifier. The length is determined by UNI Identifier Length field. Default is 0.
+			UniIdentifierLength (number): It is a 1 octet field. It indicates the length of UNI Identifier content. Default is 1. Min is 1 and Max is 64.
 
 		Returns:
 			self: This instance with all currently retrieved uniStatus data using find and the newly added uniStatus data available through an iterator or index
@@ -131,10 +131,10 @@ class UniStatus(Base):
 		By default the find method takes no parameters and will retrieve all uniStatus data from the server.
 
 		Args:
-			CeVlanIdEvcMapType (str(allToOneBundling|noBundling|bundling)): 
-			Enabled (bool): 
-			UniIdentifier (str): 
-			UniIdentifierLength (number): 
+			CeVlanIdEvcMapType (str(allToOneBundling|noBundling|bundling)): Possible values include:allToOneBundling 1, noBundling 2, bundling 3
+			Enabled (bool): If enabled, it shows the UNI status. Not more than one UNI Status can be enabled per UNI-N per port.
+			UniIdentifier (str): It signifies the content of the UNI identifier. The length is determined by UNI Identifier Length field. Default is 0.
+			UniIdentifierLength (number): It is a 1 octet field. It indicates the length of UNI Identifier content. Default is 1. Min is 1 and Max is 64.
 
 		Returns:
 			self: This instance with matching uniStatus data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class Atm(Base):
 
 	@property
 	def Encapsulation(self):
-		"""
+		"""The type of RFC 2684 ATM multiplexing encapsulation (routing) protocol to be used.
 
 		Returns:
 			str(vcMuxIpv4|vcMuxIpv6|vcMuxBridgeFcs|vcMuxBridgeNoFcs|llcClip|llcBridgeFcs|llcBridgeNoFcs)
@@ -49,7 +49,7 @@ class Atm(Base):
 
 	@property
 	def Vci(self):
-		"""
+		"""Virtual Circuit/Connection Identifier (VCI) for the ATM VC over which information is being transmitted.
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class Atm(Base):
 
 	@property
 	def Vpi(self):
-		"""
+		"""Virtual Path Identifier (VPI) for the ATM VC over which information is being transmitted.
 
 		Returns:
 			number

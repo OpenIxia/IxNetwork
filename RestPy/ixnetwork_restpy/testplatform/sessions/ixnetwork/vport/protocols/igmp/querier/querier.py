@@ -52,7 +52,7 @@ class Querier(Base):
 
 	@property
 	def DiscardLearnedInfo(self):
-		"""
+		"""If true, the Querier doesn't maintain any database and only sends periodic general queries. The specific query group/source record information isn't calculated based on any earlier received Report, but solely based on the last received report. If false, the emulated Querier maintains a complete record state for received reports and send queries (based on timer expiry for received groups and sources). Default is true.
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class Querier(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the querier is enabled.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class Querier(Base):
 
 	@property
 	def GeneralQueryInterval(self):
-		"""
+		"""The amount of time in seconds between IGMP General Query messages sent by the querier. The default query interval is 125 seconds.
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class Querier(Base):
 
 	@property
 	def GqResponseInterval(self):
-		"""
+		"""The maximum amount of time in seconds that the IGMP querier waits to receive a response to a General Query message. The default query response interval is 10000 milliseconds and must be less than the query interval.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class Querier(Base):
 
 	@property
 	def InterfaceId(self):
-		"""
+		"""The interface associated with the IGMP querier. The interface must be previously configured.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)
@@ -112,7 +112,7 @@ class Querier(Base):
 
 	@property
 	def InterfaceIndex(self):
-		"""
+		"""The assigned protocol interface ID for this SM interface.
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class Querier(Base):
 
 	@property
 	def InterfaceType(self):
-		"""
+		"""Indicates the type of network for the interface.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class Querier(Base):
 
 	@property
 	def Interfaces(self):
-		"""
+		"""The interfaces that are associated with the selected interface type.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)
@@ -148,7 +148,7 @@ class Querier(Base):
 
 	@property
 	def IsQuerier(self):
-		"""
+		"""If true, this IGMP entity is a querier.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class Querier(Base):
 
 	@property
 	def IsRefreshComplete(self):
-		"""
+		"""If true, the querier information is current.
 
 		Returns:
 			bool
@@ -166,7 +166,7 @@ class Querier(Base):
 
 	@property
 	def QuerierAddress(self):
-		"""
+		"""The querier IP address.
 
 		Returns:
 			str
@@ -175,7 +175,7 @@ class Querier(Base):
 
 	@property
 	def QuerierWorkingVersion(self):
-		"""
+		"""The querier working IGMP version.
 
 		Returns:
 			number
@@ -184,7 +184,7 @@ class Querier(Base):
 
 	@property
 	def RobustnessVariable(self):
-		"""
+		"""Defines the subnet vulnerability to lost packets. IGMP can recover from robustness variable minus 1 lost IGMP packets. The robustness variable should be set to a value of 2 or greater. The default robustness variable value is 2.
 
 		Returns:
 			number
@@ -196,7 +196,7 @@ class Querier(Base):
 
 	@property
 	def RouterAlert(self):
-		"""
+		"""If true, sets the Send Router Alert bit in the IP header.
 
 		Returns:
 			bool
@@ -208,7 +208,7 @@ class Querier(Base):
 
 	@property
 	def SqResponseInterval(self):
-		"""
+		"""The maximum amount of time in seconds that the IGMP querier waits to receive a response to a Specific Query message. The default query response interval is 1000 milliseconds and must be less than the query interval.
 
 		Returns:
 			number
@@ -220,7 +220,7 @@ class Querier(Base):
 
 	@property
 	def SqTransmissionCount(self):
-		"""
+		"""Indicates the total number of specific Query messagessent every Specific Query Response Interval seconds before assuming that there is no interested listener for the particular group/source.
 
 		Returns:
 			number
@@ -232,7 +232,7 @@ class Querier(Base):
 
 	@property
 	def StartupQueryCount(self):
-		"""
+		"""The number of general query messages sent at startup. The default startup query count is 2.
 
 		Returns:
 			number
@@ -244,7 +244,7 @@ class Querier(Base):
 
 	@property
 	def SupportElection(self):
-		"""
+		"""If true, indicates whether the Querier participates in querier election or not. If disabled, then all incoming query messages are discarded.
 
 		Returns:
 			bool
@@ -256,7 +256,7 @@ class Querier(Base):
 
 	@property
 	def SupportOlderVersionHost(self):
-		"""
+		"""If true, indicates whether the Querier will comply to RFC 3376 Section 7.3.2 and RFC 3810 Section 8.3.2. If disabled, all membership reports with version less than the current version are discarded.
 
 		Returns:
 			bool
@@ -268,7 +268,7 @@ class Querier(Base):
 
 	@property
 	def SupportOlderVersionQuerier(self):
-		"""
+		"""If true, indicates whether the Querier downgrades to the lowest version of received query messages. If disabled, all query messages with version less than the current version are discarded.
 
 		Returns:
 			bool
@@ -280,7 +280,7 @@ class Querier(Base):
 
 	@property
 	def Version(self):
-		"""
+		"""Sets the version for the IGMP querier.
 
 		Returns:
 			str(igmpv1|igmpv2|igmpv3)
@@ -294,23 +294,23 @@ class Querier(Base):
 		"""Adds a new querier node on the server and retrieves it in this instance.
 
 		Args:
-			DiscardLearnedInfo (bool): 
-			Enabled (bool): 
-			GeneralQueryInterval (number): 
-			GqResponseInterval (number): 
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			InterfaceIndex (number): 
-			InterfaceType (str): 
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): 
-			RobustnessVariable (number): 
-			RouterAlert (bool): 
-			SqResponseInterval (number): 
-			SqTransmissionCount (number): 
-			StartupQueryCount (number): 
-			SupportElection (bool): 
-			SupportOlderVersionHost (bool): 
-			SupportOlderVersionQuerier (bool): 
-			Version (str(igmpv1|igmpv2|igmpv3)): 
+			DiscardLearnedInfo (bool): If true, the Querier doesn't maintain any database and only sends periodic general queries. The specific query group/source record information isn't calculated based on any earlier received Report, but solely based on the last received report. If false, the emulated Querier maintains a complete record state for received reports and send queries (based on timer expiry for received groups and sources). Default is true.
+			Enabled (bool): If true, the querier is enabled.
+			GeneralQueryInterval (number): The amount of time in seconds between IGMP General Query messages sent by the querier. The default query interval is 125 seconds.
+			GqResponseInterval (number): The maximum amount of time in seconds that the IGMP querier waits to receive a response to a General Query message. The default query response interval is 10000 milliseconds and must be less than the query interval.
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The interface associated with the IGMP querier. The interface must be previously configured.
+			InterfaceIndex (number): The assigned protocol interface ID for this SM interface.
+			InterfaceType (str): Indicates the type of network for the interface.
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): The interfaces that are associated with the selected interface type.
+			RobustnessVariable (number): Defines the subnet vulnerability to lost packets. IGMP can recover from robustness variable minus 1 lost IGMP packets. The robustness variable should be set to a value of 2 or greater. The default robustness variable value is 2.
+			RouterAlert (bool): If true, sets the Send Router Alert bit in the IP header.
+			SqResponseInterval (number): The maximum amount of time in seconds that the IGMP querier waits to receive a response to a Specific Query message. The default query response interval is 1000 milliseconds and must be less than the query interval.
+			SqTransmissionCount (number): Indicates the total number of specific Query messagessent every Specific Query Response Interval seconds before assuming that there is no interested listener for the particular group/source.
+			StartupQueryCount (number): The number of general query messages sent at startup. The default startup query count is 2.
+			SupportElection (bool): If true, indicates whether the Querier participates in querier election or not. If disabled, then all incoming query messages are discarded.
+			SupportOlderVersionHost (bool): If true, indicates whether the Querier will comply to RFC 3376 Section 7.3.2 and RFC 3810 Section 8.3.2. If disabled, all membership reports with version less than the current version are discarded.
+			SupportOlderVersionQuerier (bool): If true, indicates whether the Querier downgrades to the lowest version of received query messages. If disabled, all query messages with version less than the current version are discarded.
+			Version (str(igmpv1|igmpv2|igmpv3)): Sets the version for the IGMP querier.
 
 		Returns:
 			self: This instance with all currently retrieved querier data using find and the newly added querier data available through an iterator or index
@@ -336,27 +336,27 @@ class Querier(Base):
 		By default the find method takes no parameters and will retrieve all querier data from the server.
 
 		Args:
-			DiscardLearnedInfo (bool): 
-			Enabled (bool): 
-			GeneralQueryInterval (number): 
-			GqResponseInterval (number): 
-			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): 
-			InterfaceIndex (number): 
-			InterfaceType (str): 
-			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): 
-			IsQuerier (bool): 
-			IsRefreshComplete (bool): 
-			QuerierAddress (str): 
-			QuerierWorkingVersion (number): 
-			RobustnessVariable (number): 
-			RouterAlert (bool): 
-			SqResponseInterval (number): 
-			SqTransmissionCount (number): 
-			StartupQueryCount (number): 
-			SupportElection (bool): 
-			SupportOlderVersionHost (bool): 
-			SupportOlderVersionQuerier (bool): 
-			Version (str(igmpv1|igmpv2|igmpv3)): 
+			DiscardLearnedInfo (bool): If true, the Querier doesn't maintain any database and only sends periodic general queries. The specific query group/source record information isn't calculated based on any earlier received Report, but solely based on the last received report. If false, the emulated Querier maintains a complete record state for received reports and send queries (based on timer expiry for received groups and sources). Default is true.
+			Enabled (bool): If true, the querier is enabled.
+			GeneralQueryInterval (number): The amount of time in seconds between IGMP General Query messages sent by the querier. The default query interval is 125 seconds.
+			GqResponseInterval (number): The maximum amount of time in seconds that the IGMP querier waits to receive a response to a General Query message. The default query response interval is 10000 milliseconds and must be less than the query interval.
+			InterfaceId (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)): The interface associated with the IGMP querier. The interface must be previously configured.
+			InterfaceIndex (number): The assigned protocol interface ID for this SM interface.
+			InterfaceType (str): Indicates the type of network for the interface.
+			Interfaces (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range|/api/v1/sessions/1/ixnetwork/vport?deepchild=range)): The interfaces that are associated with the selected interface type.
+			IsQuerier (bool): If true, this IGMP entity is a querier.
+			IsRefreshComplete (bool): If true, the querier information is current.
+			QuerierAddress (str): The querier IP address.
+			QuerierWorkingVersion (number): The querier working IGMP version.
+			RobustnessVariable (number): Defines the subnet vulnerability to lost packets. IGMP can recover from robustness variable minus 1 lost IGMP packets. The robustness variable should be set to a value of 2 or greater. The default robustness variable value is 2.
+			RouterAlert (bool): If true, sets the Send Router Alert bit in the IP header.
+			SqResponseInterval (number): The maximum amount of time in seconds that the IGMP querier waits to receive a response to a Specific Query message. The default query response interval is 1000 milliseconds and must be less than the query interval.
+			SqTransmissionCount (number): Indicates the total number of specific Query messagessent every Specific Query Response Interval seconds before assuming that there is no interested listener for the particular group/source.
+			StartupQueryCount (number): The number of general query messages sent at startup. The default startup query count is 2.
+			SupportElection (bool): If true, indicates whether the Querier participates in querier election or not. If disabled, then all incoming query messages are discarded.
+			SupportOlderVersionHost (bool): If true, indicates whether the Querier will comply to RFC 3376 Section 7.3.2 and RFC 3810 Section 8.3.2. If disabled, all membership reports with version less than the current version are discarded.
+			SupportOlderVersionQuerier (bool): If true, indicates whether the Querier downgrades to the lowest version of received query messages. If disabled, all query messages with version less than the current version are discarded.
+			Version (str(igmpv1|igmpv2|igmpv3)): Sets the version for the IGMP querier.
 
 		Returns:
 			self: This instance with matching querier data retrieved from the server available through an iterator or index
@@ -384,11 +384,13 @@ class Querier(Base):
 	def GetInterfaceAccessorIfaceList(self):
 		"""Executes the getInterfaceAccessorIfaceList operation on the server.
 
+		Fetches interface accessor Iface list.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=querier)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			str: 
+			str: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -400,11 +402,13 @@ class Querier(Base):
 	def RefreshLearnedInfo(self):
 		"""Executes the refreshLearnedInfo operation on the server.
 
+		Refreshes the IGMP learned information.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=querier)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

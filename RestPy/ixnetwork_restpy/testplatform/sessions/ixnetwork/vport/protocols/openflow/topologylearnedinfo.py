@@ -37,7 +37,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def InDataPathId(self):
-		"""
+		"""Indicates the Datapath Id of Datapath for LLDP Packet-In Port.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def InDataPathIdAshex(self):
-		"""
+		"""Indicates the Datapath Id, in hexadecimal format, of Datapath for LLDP Packet-In Port
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def InIp(self):
-		"""
+		"""Indicates the IP Address of Datapath for LLDP Packet-In Port.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def InPortEthernetAddress(self):
-		"""
+		"""Indicates the Ethernet Address for LLDP Packet-In Port
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def InPortName(self):
-		"""
+		"""Indicates the Port Name for LLDP Packet-In Port
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def InPortNumber(self):
-		"""
+		"""Indicates the Port Number for LLDP Packet-In Port.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def OutDataPathId(self):
-		"""
+		"""Indicates the Datapath Id of Datapath for LLDP Packet Out Port.
 
 		Returns:
 			str
@@ -100,7 +100,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def OutDataPathIdAsHex(self):
-		"""
+		"""Indicates the Datapath Id, in hexadecimal format, of Datapath for LLDP Packet Out Port.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def OutIp(self):
-		"""
+		"""Indicates the IP Address of Datapath for LLDP Packet Out Port.
 
 		Returns:
 			str
@@ -118,7 +118,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def OutPortEthernetAddress(self):
-		"""
+		"""Indicates the Ethernet Address for LLDP Packet Out Port.
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def OutPortName(self):
-		"""
+		"""Indicates the Port Name for LLDP Packet Out Port.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class TopologyLearnedInfo(Base):
 
 	@property
 	def OutPortNumber(self):
-		"""
+		"""Indicates the Port Number for LLDP Packet Out Port.
 
 		Returns:
 			number
@@ -150,18 +150,18 @@ class TopologyLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all topologyLearnedInfo data from the server.
 
 		Args:
-			InDataPathId (str): 
-			InDataPathIdAshex (str): 
-			InIp (str): 
-			InPortEthernetAddress (str): 
-			InPortName (str): 
-			InPortNumber (number): 
-			OutDataPathId (str): 
-			OutDataPathIdAsHex (str): 
-			OutIp (str): 
-			OutPortEthernetAddress (str): 
-			OutPortName (str): 
-			OutPortNumber (number): 
+			InDataPathId (str): Indicates the Datapath Id of Datapath for LLDP Packet-In Port.
+			InDataPathIdAshex (str): Indicates the Datapath Id, in hexadecimal format, of Datapath for LLDP Packet-In Port
+			InIp (str): Indicates the IP Address of Datapath for LLDP Packet-In Port.
+			InPortEthernetAddress (str): Indicates the Ethernet Address for LLDP Packet-In Port
+			InPortName (str): Indicates the Port Name for LLDP Packet-In Port
+			InPortNumber (number): Indicates the Port Number for LLDP Packet-In Port.
+			OutDataPathId (str): Indicates the Datapath Id of Datapath for LLDP Packet Out Port.
+			OutDataPathIdAsHex (str): Indicates the Datapath Id, in hexadecimal format, of Datapath for LLDP Packet Out Port.
+			OutIp (str): Indicates the IP Address of Datapath for LLDP Packet Out Port.
+			OutPortEthernetAddress (str): Indicates the Ethernet Address for LLDP Packet Out Port.
+			OutPortName (str): Indicates the Port Name for LLDP Packet Out Port.
+			OutPortNumber (number): Indicates the Port Number for LLDP Packet Out Port.
 
 		Returns:
 			self: This instance with matching topologyLearnedInfo data retrieved from the server available through an iterator or index

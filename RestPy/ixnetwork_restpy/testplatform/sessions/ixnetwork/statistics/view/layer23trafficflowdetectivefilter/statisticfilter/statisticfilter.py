@@ -38,7 +38,7 @@ class StatisticFilter(Base):
 
 	@property
 	def Operator(self):
-		"""
+		"""The logical operation to be performed.
 
 		Returns:
 			str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isLike|isNotLike|isSmaller)
@@ -50,7 +50,7 @@ class StatisticFilter(Base):
 
 	@property
 	def StatisticFilterId(self):
-		"""
+		"""Selected statistic filters from the availableStatisticFilter list.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)
@@ -62,7 +62,7 @@ class StatisticFilter(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""Value of statistic to be matched based on operator.
 
 		Returns:
 			str
@@ -76,9 +76,9 @@ class StatisticFilter(Base):
 		"""Adds a new statisticFilter node on the server and retrieves it in this instance.
 
 		Args:
-			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isLike|isNotLike|isSmaller)): 
-			StatisticFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): 
-			Value (str): 
+			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isLike|isNotLike|isSmaller)): The logical operation to be performed.
+			StatisticFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): Selected statistic filters from the availableStatisticFilter list.
+			Value (str): Value of statistic to be matched based on operator.
 
 		Returns:
 			self: This instance with all currently retrieved statisticFilter data using find and the newly added statisticFilter data available through an iterator or index
@@ -104,9 +104,9 @@ class StatisticFilter(Base):
 		By default the find method takes no parameters and will retrieve all statisticFilter data from the server.
 
 		Args:
-			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isLike|isNotLike|isSmaller)): 
-			StatisticFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): 
-			Value (str): 
+			Operator (str(isAnyOf|isDifferent|isEqual|isEqualOrGreater|isEqualOrSmaller|isGreater|isLike|isNotLike|isSmaller)): The logical operation to be performed.
+			StatisticFilterId (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=availableStatisticFilter)): Selected statistic filters from the availableStatisticFilter list.
+			Value (str): Value of statistic to be matched based on operator.
 
 		Returns:
 			self: This instance with matching statisticFilter data retrieved from the server available through an iterator or index

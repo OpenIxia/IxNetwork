@@ -149,7 +149,7 @@ class ConfigElement(Base):
 
 	@property
 	def Crc(self):
-		"""
+		"""The Cyclic Redundancy Check frame of the configured encapsulation set.
 
 		Returns:
 			str(badCrc|goodCrc)
@@ -161,7 +161,7 @@ class ConfigElement(Base):
 
 	@property
 	def DestinationMacMode(self):
-		"""
+		"""The destination MAC address that is to be configured.
 
 		Returns:
 			str(arp|manual)
@@ -173,7 +173,7 @@ class ConfigElement(Base):
 
 	@property
 	def EnableDisparityError(self):
-		"""
+		"""If true, enables disparity error
 
 		Returns:
 			bool
@@ -185,7 +185,7 @@ class ConfigElement(Base):
 
 	@property
 	def EncapsulationName(self):
-		"""
+		"""Indicates the name of the encapsulation set.
 
 		Returns:
 			str
@@ -194,7 +194,7 @@ class ConfigElement(Base):
 
 	@property
 	def EndpointSetId(self):
-		"""
+		"""Indicates the identification of the endpoint set.
 
 		Returns:
 			number
@@ -203,7 +203,7 @@ class ConfigElement(Base):
 
 	@property
 	def PreambleCustomSize(self):
-		"""
+		"""Indicates the customized preamble size of the frame.
 
 		Returns:
 			number
@@ -215,7 +215,7 @@ class ConfigElement(Base):
 
 	@property
 	def PreambleFrameSizeMode(self):
-		"""
+		"""The preamble size to synchronize sender and receiver of the configured encapsulation set.
 
 		Returns:
 			str(auto|custom)
@@ -232,13 +232,13 @@ class ConfigElement(Base):
 		By default the find method takes no parameters and will retrieve all configElement data from the server.
 
 		Args:
-			Crc (str(badCrc|goodCrc)): 
-			DestinationMacMode (str(arp|manual)): 
-			EnableDisparityError (bool): 
-			EncapsulationName (str): 
-			EndpointSetId (number): 
-			PreambleCustomSize (number): 
-			PreambleFrameSizeMode (str(auto|custom)): 
+			Crc (str(badCrc|goodCrc)): The Cyclic Redundancy Check frame of the configured encapsulation set.
+			DestinationMacMode (str(arp|manual)): The destination MAC address that is to be configured.
+			EnableDisparityError (bool): If true, enables disparity error
+			EncapsulationName (str): Indicates the name of the encapsulation set.
+			EndpointSetId (number): Indicates the identification of the endpoint set.
+			PreambleCustomSize (number): Indicates the customized preamble size of the frame.
+			PreambleFrameSizeMode (str(auto|custom)): The preamble size to synchronize sender and receiver of the configured encapsulation set.
 
 		Returns:
 			self: This instance with matching configElement data retrieved from the server available through an iterator or index

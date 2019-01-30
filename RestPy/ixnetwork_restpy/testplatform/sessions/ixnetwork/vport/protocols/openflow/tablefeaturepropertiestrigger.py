@@ -163,7 +163,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableApplyAction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -175,7 +175,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableApplyActionMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -187,7 +187,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableApplySetField(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -199,7 +199,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableApplySetFieldMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -211,7 +211,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableExperimenter(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -223,7 +223,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableExperimenterMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -235,7 +235,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableInstruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -247,7 +247,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableInstructionMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -259,7 +259,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableMatch(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -271,7 +271,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableNextTable(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -283,7 +283,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableNextTableMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -295,7 +295,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableWildCard(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -307,7 +307,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableWriteAction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -319,7 +319,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableWriteActionMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -331,7 +331,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableWriteSetField(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -343,7 +343,7 @@ class TableFeaturePropertiesTrigger(Base):
 
 	@property
 	def EnableWriteSetFieldMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -360,22 +360,22 @@ class TableFeaturePropertiesTrigger(Base):
 		By default the find method takes no parameters and will retrieve all tableFeaturePropertiesTrigger data from the server.
 
 		Args:
-			EnableApplyAction (bool): 
-			EnableApplyActionMiss (bool): 
-			EnableApplySetField (bool): 
-			EnableApplySetFieldMiss (bool): 
-			EnableExperimenter (bool): 
-			EnableExperimenterMiss (bool): 
-			EnableInstruction (bool): 
-			EnableInstructionMiss (bool): 
-			EnableMatch (bool): 
-			EnableNextTable (bool): 
-			EnableNextTableMiss (bool): 
-			EnableWildCard (bool): 
-			EnableWriteAction (bool): 
-			EnableWriteActionMiss (bool): 
-			EnableWriteSetField (bool): 
-			EnableWriteSetFieldMiss (bool): 
+			EnableApplyAction (bool): NOT DEFINED
+			EnableApplyActionMiss (bool): NOT DEFINED
+			EnableApplySetField (bool): NOT DEFINED
+			EnableApplySetFieldMiss (bool): NOT DEFINED
+			EnableExperimenter (bool): NOT DEFINED
+			EnableExperimenterMiss (bool): NOT DEFINED
+			EnableInstruction (bool): NOT DEFINED
+			EnableInstructionMiss (bool): NOT DEFINED
+			EnableMatch (bool): NOT DEFINED
+			EnableNextTable (bool): NOT DEFINED
+			EnableNextTableMiss (bool): NOT DEFINED
+			EnableWildCard (bool): NOT DEFINED
+			EnableWriteAction (bool): NOT DEFINED
+			EnableWriteActionMiss (bool): NOT DEFINED
+			EnableWriteSetField (bool): NOT DEFINED
+			EnableWriteSetFieldMiss (bool): NOT DEFINED
 
 		Returns:
 			self: This instance with matching tableFeaturePropertiesTrigger data retrieved from the server available through an iterator or index

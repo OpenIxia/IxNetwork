@@ -37,7 +37,7 @@ class LatencyBin(Base):
 
 	@property
 	def BinLimits(self):
-		"""
+		"""Specifies the upper limit of each Time Bins for Latency Bin Tracking.
 
 		Returns:
 			list(number)
@@ -49,7 +49,7 @@ class LatencyBin(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, Latency Bin Tracking is enabled.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class LatencyBin(Base):
 
 	@property
 	def NumberOfBins(self):
-		"""
+		"""Specifies the number of Time Bins for Latency Bin Tracking.
 
 		Returns:
 			number

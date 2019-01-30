@@ -51,7 +51,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def DestinationHostIpv4Address(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def DestinationHostMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def PacketType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def Path(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def SourceHostIpv4Address(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -96,7 +96,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def SourceHostMac(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -105,7 +105,7 @@ class SwitchHostRangeLearnedInfo(Base):
 
 	@property
 	def Status(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -119,13 +119,13 @@ class SwitchHostRangeLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchHostRangeLearnedInfo data from the server.
 
 		Args:
-			DestinationHostIpv4Address (str): 
-			DestinationHostMac (str): 
-			PacketType (str): 
-			Path (str): 
-			SourceHostIpv4Address (str): 
-			SourceHostMac (str): 
-			Status (str): 
+			DestinationHostIpv4Address (str): NOT DEFINED
+			DestinationHostMac (str): NOT DEFINED
+			PacketType (str): NOT DEFINED
+			Path (str): NOT DEFINED
+			SourceHostIpv4Address (str): NOT DEFINED
+			SourceHostMac (str): NOT DEFINED
+			Status (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching switchHostRangeLearnedInfo data retrieved from the server available through an iterator or index

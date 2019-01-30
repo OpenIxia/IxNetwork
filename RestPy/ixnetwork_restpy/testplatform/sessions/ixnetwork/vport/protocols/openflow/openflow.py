@@ -177,7 +177,7 @@ class OpenFlow(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, the openFlow object is enabled.
 
 		Returns:
 			bool
@@ -189,7 +189,7 @@ class OpenFlow(Base):
 
 	@property
 	def PortRole(self):
-		"""
+		"""Indicates the role of the port in the protocol configuration.
 
 		Returns:
 			str(control|traffic|controlAndTraffic)
@@ -201,7 +201,7 @@ class OpenFlow(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""Indicates the state of the OpenFlow protocol on the port.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -210,6 +210,8 @@ class OpenFlow(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		This describes the start value of the trigger settings.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=openFlow)): The method internally sets Arg1 to the current href for this instance
@@ -223,6 +225,8 @@ class OpenFlow(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		This describes the stop value of the trigger settings.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=openFlow)): The method internally sets Arg1 to the current href for this instance

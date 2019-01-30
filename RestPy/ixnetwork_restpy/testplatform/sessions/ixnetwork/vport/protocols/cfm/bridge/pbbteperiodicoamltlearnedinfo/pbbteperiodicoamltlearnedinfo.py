@@ -51,7 +51,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def AverageHopCount(self):
-		"""
+		"""(read only) The learned average hop count.
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def BVlan(self):
-		"""
+		"""(read only) The learned B-VLAN identifier.
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def CompleteReplyCount(self):
-		"""
+		"""(read only) The learned number of complete replies.
 
 		Returns:
 			number
@@ -78,7 +78,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def DstMacAddress(self):
-		"""
+		"""(read only) The learned destination MAC address.
 
 		Returns:
 			str
@@ -87,7 +87,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def LtmSentCount(self):
-		"""
+		"""(read only) The learned number of Link Trace messages sent.
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def MdLevel(self):
-		"""
+		"""(read only) The learned MD level.
 
 		Returns:
 			number
@@ -105,7 +105,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def NoReplyCount(self):
-		"""
+		"""(read only) The learned number of no replies.
 
 		Returns:
 			number
@@ -114,7 +114,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def PartialReplyCount(self):
-		"""
+		"""(read only) The learned number of partial replies.
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def RecentHopCount(self):
-		"""
+		"""(read only) The learned recent hop count.
 
 		Returns:
 			number
@@ -132,7 +132,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def RecentHops(self):
-		"""
+		"""(read only) The learned recent hops.
 
 		Returns:
 			str
@@ -141,7 +141,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def RecentReplyStatus(self):
-		"""
+		"""(read only) The learned recent replies.
 
 		Returns:
 			str
@@ -150,7 +150,7 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 
 	@property
 	def SrcMacAddress(self):
-		"""
+		"""(read only) The learned source MAC address.
 
 		Returns:
 			str
@@ -164,18 +164,18 @@ class PbbTePeriodicOamLtLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all pbbTePeriodicOamLtLearnedInfo data from the server.
 
 		Args:
-			AverageHopCount (number): 
-			BVlan (str): 
-			CompleteReplyCount (number): 
-			DstMacAddress (str): 
-			LtmSentCount (number): 
-			MdLevel (number): 
-			NoReplyCount (number): 
-			PartialReplyCount (number): 
-			RecentHopCount (number): 
-			RecentHops (str): 
-			RecentReplyStatus (str): 
-			SrcMacAddress (str): 
+			AverageHopCount (number): (read only) The learned average hop count.
+			BVlan (str): (read only) The learned B-VLAN identifier.
+			CompleteReplyCount (number): (read only) The learned number of complete replies.
+			DstMacAddress (str): (read only) The learned destination MAC address.
+			LtmSentCount (number): (read only) The learned number of Link Trace messages sent.
+			MdLevel (number): (read only) The learned MD level.
+			NoReplyCount (number): (read only) The learned number of no replies.
+			PartialReplyCount (number): (read only) The learned number of partial replies.
+			RecentHopCount (number): (read only) The learned recent hop count.
+			RecentHops (str): (read only) The learned recent hops.
+			RecentReplyStatus (str): (read only) The learned recent replies.
+			SrcMacAddress (str): (read only) The learned source MAC address.
 
 		Returns:
 			self: This instance with matching pbbTePeriodicOamLtLearnedInfo data retrieved from the server available through an iterator or index

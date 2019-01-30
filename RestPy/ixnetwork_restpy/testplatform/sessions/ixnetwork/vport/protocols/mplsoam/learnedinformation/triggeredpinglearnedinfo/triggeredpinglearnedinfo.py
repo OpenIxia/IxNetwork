@@ -37,7 +37,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def Fec(self):
-		"""
+		"""This signifies the Forwarding Equivalence Class component.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def IncomingLabelStack(self):
-		"""
+		"""This signifies the incoming label stack value.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def OutgoingLabelStack(self):
-		"""
+		"""This signifies the outgoing label stack value.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def PeerIpAddress(self):
-		"""
+		"""This signifies the learnt IP address for the session.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def Reachability(self):
-		"""
+		"""This signifies the specification of whether the queried MEP could be reached or not, Failure/Partial/Complete.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def ReturnCode(self):
-		"""
+		"""This signifies the return code value.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def ReturnSubCode(self):
-		"""
+		"""This signifies the return subcode value.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class TriggeredPingLearnedInfo(Base):
 
 	@property
 	def Rtt(self):
-		"""
+		"""This signifies the Round Trip Time.
 
 		Returns:
 			str
@@ -114,14 +114,14 @@ class TriggeredPingLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all triggeredPingLearnedInfo data from the server.
 
 		Args:
-			Fec (str): 
-			IncomingLabelStack (str): 
-			OutgoingLabelStack (str): 
-			PeerIpAddress (str): 
-			Reachability (str): 
-			ReturnCode (str): 
-			ReturnSubCode (number): 
-			Rtt (str): 
+			Fec (str): This signifies the Forwarding Equivalence Class component.
+			IncomingLabelStack (str): This signifies the incoming label stack value.
+			OutgoingLabelStack (str): This signifies the outgoing label stack value.
+			PeerIpAddress (str): This signifies the learnt IP address for the session.
+			Reachability (str): This signifies the specification of whether the queried MEP could be reached or not, Failure/Partial/Complete.
+			ReturnCode (str): This signifies the return code value.
+			ReturnSubCode (number): This signifies the return subcode value.
+			Rtt (str): This signifies the Round Trip Time.
 
 		Returns:
 			self: This instance with matching triggeredPingLearnedInfo data retrieved from the server available through an iterator or index

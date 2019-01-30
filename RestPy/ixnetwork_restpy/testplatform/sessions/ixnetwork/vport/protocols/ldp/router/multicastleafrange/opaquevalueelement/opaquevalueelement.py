@@ -38,7 +38,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Increment(self):
-		"""
+		"""It signifies the incremented value.
 
 		Returns:
 			str
@@ -50,7 +50,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Length(self):
-		"""
+		"""It signifies the length.
 
 		Returns:
 			number
@@ -62,7 +62,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Type(self):
-		"""
+		"""It signifies the type.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class OpaqueValueElement(Base):
 
 	@property
 	def Value(self):
-		"""
+		"""It signifies the value.
 
 		Returns:
 			str
@@ -88,10 +88,10 @@ class OpaqueValueElement(Base):
 		"""Adds a new opaqueValueElement node on the server and retrieves it in this instance.
 
 		Args:
-			Increment (str): 
-			Length (number): 
-			Type (number): 
-			Value (str): 
+			Increment (str): It signifies the incremented value.
+			Length (number): It signifies the length.
+			Type (number): It signifies the type.
+			Value (str): It signifies the value.
 
 		Returns:
 			self: This instance with all currently retrieved opaqueValueElement data using find and the newly added opaqueValueElement data available through an iterator or index
@@ -117,10 +117,10 @@ class OpaqueValueElement(Base):
 		By default the find method takes no parameters and will retrieve all opaqueValueElement data from the server.
 
 		Args:
-			Increment (str): 
-			Length (number): 
-			Type (number): 
-			Value (str): 
+			Increment (str): It signifies the incremented value.
+			Length (number): It signifies the length.
+			Type (number): It signifies the type.
+			Value (str): It signifies the value.
 
 		Returns:
 			self: This instance with matching opaqueValueElement data retrieved from the server available through an iterator or index

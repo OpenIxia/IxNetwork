@@ -38,7 +38,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def IncludeIpv4Groups(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def IntraGroupUnicastIpv4Increment(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def MulticastAddressNodeStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def MulticastIpv4Count(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def MulticastIpv4Step(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -98,7 +98,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def NoOfUcSrcIpv4MacsPerMcIpv4(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def SourceGroupMapping(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(fully-Meshed|one-To-One|manual-Mapping)
@@ -122,7 +122,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def StartMulticastIpv4(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -134,7 +134,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def StartUnicastSourceIpv4(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def UnicastAddressNodeStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -172,17 +172,17 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 		"""Adds a new customTopologyMulticastIpv4GroupRange node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeIpv4Groups (bool): 
-			IntraGroupUnicastIpv4Increment (str): 
-			MulticastAddressNodeStep (str): 
-			MulticastIpv4Count (number): 
-			MulticastIpv4Step (str): 
-			NoOfUcSrcIpv4MacsPerMcIpv4 (number): 
-			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): 
-			StartMulticastIpv4 (str): 
-			StartUnicastSourceIpv4 (str): 
-			UnicastAddressNodeStep (str): 
-			VlanId (number): 
+			IncludeIpv4Groups (bool): NOT DEFINED
+			IntraGroupUnicastIpv4Increment (str): NOT DEFINED
+			MulticastAddressNodeStep (str): NOT DEFINED
+			MulticastIpv4Count (number): NOT DEFINED
+			MulticastIpv4Step (str): NOT DEFINED
+			NoOfUcSrcIpv4MacsPerMcIpv4 (number): NOT DEFINED
+			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): NOT DEFINED
+			StartMulticastIpv4 (str): NOT DEFINED
+			StartUnicastSourceIpv4 (str): NOT DEFINED
+			UnicastAddressNodeStep (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyMulticastIpv4GroupRange data using find and the newly added customTopologyMulticastIpv4GroupRange data available through an iterator or index
@@ -208,17 +208,17 @@ class CustomTopologyMulticastIpv4GroupRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyMulticastIpv4GroupRange data from the server.
 
 		Args:
-			IncludeIpv4Groups (bool): 
-			IntraGroupUnicastIpv4Increment (str): 
-			MulticastAddressNodeStep (str): 
-			MulticastIpv4Count (number): 
-			MulticastIpv4Step (str): 
-			NoOfUcSrcIpv4MacsPerMcIpv4 (number): 
-			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): 
-			StartMulticastIpv4 (str): 
-			StartUnicastSourceIpv4 (str): 
-			UnicastAddressNodeStep (str): 
-			VlanId (number): 
+			IncludeIpv4Groups (bool): NOT DEFINED
+			IntraGroupUnicastIpv4Increment (str): NOT DEFINED
+			MulticastAddressNodeStep (str): NOT DEFINED
+			MulticastIpv4Count (number): NOT DEFINED
+			MulticastIpv4Step (str): NOT DEFINED
+			NoOfUcSrcIpv4MacsPerMcIpv4 (number): NOT DEFINED
+			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): NOT DEFINED
+			StartMulticastIpv4 (str): NOT DEFINED
+			StartUnicastSourceIpv4 (str): NOT DEFINED
+			UnicastAddressNodeStep (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTopologyMulticastIpv4GroupRange data retrieved from the server available through an iterator or index

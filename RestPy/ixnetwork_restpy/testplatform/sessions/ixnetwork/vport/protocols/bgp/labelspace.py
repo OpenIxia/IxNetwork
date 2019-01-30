@@ -37,7 +37,7 @@ class LabelSpace(Base):
 
 	@property
 	def End(self):
-		"""
+		"""The last label value available in the label space (range).
 
 		Returns:
 			number
@@ -49,7 +49,7 @@ class LabelSpace(Base):
 
 	@property
 	def LabelId(self):
-		"""
+		"""The identifier for the label space.
 
 		Returns:
 			number
@@ -61,7 +61,7 @@ class LabelSpace(Base):
 
 	@property
 	def Mode(self):
-		"""
+		"""Sets the Label mode.
 
 		Returns:
 			str(fixedLabel|incrementLabel)
@@ -73,7 +73,7 @@ class LabelSpace(Base):
 
 	@property
 	def Start(self):
-		"""
+		"""The first label value available in the label space (range). The default is 16.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class LabelSpace(Base):
 
 	@property
 	def Step(self):
-		"""
+		"""The value to add for creating each additional label value.
 
 		Returns:
 			number

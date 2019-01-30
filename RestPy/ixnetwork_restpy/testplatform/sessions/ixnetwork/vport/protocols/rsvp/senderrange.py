@@ -66,7 +66,7 @@ class SenderRange(Base):
 
 	@property
 	def AutoGenerateSessionName(self):
-		"""
+		"""If enabled, the session name is generated automatically. If it is not enabled, the session name field is activated and must be filled in.
 
 		Returns:
 			bool
@@ -78,7 +78,7 @@ class SenderRange(Base):
 
 	@property
 	def BackupLspIdPoolStart(self):
-		"""
+		"""It helps to set the LSP Id for the re-optimized LSP.
 
 		Returns:
 			number
@@ -90,7 +90,7 @@ class SenderRange(Base):
 
 	@property
 	def Bandwidth(self):
-		"""
+		"""The bandwidth requested for the connection, expressed in kbits/sec.
 
 		Returns:
 			number
@@ -102,7 +102,7 @@ class SenderRange(Base):
 
 	@property
 	def BandwidthProtectionDesired(self):
-		"""
+		"""Indicates that PLRs should skip at least the next node for a backup path.
 
 		Returns:
 			bool
@@ -114,7 +114,7 @@ class SenderRange(Base):
 
 	@property
 	def EnableBfdMpls(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -126,7 +126,7 @@ class SenderRange(Base):
 
 	@property
 	def EnableFastReroute(self):
-		"""
+		"""Enables the use of the fast reroute feature.
 
 		Returns:
 			bool
@@ -138,7 +138,7 @@ class SenderRange(Base):
 
 	@property
 	def EnableLspPing(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -150,7 +150,7 @@ class SenderRange(Base):
 
 	@property
 	def EnablePathReoptimization(self):
-		"""
+		"""If true, enables the Path Re-optimization option.
 
 		Returns:
 			bool
@@ -162,7 +162,7 @@ class SenderRange(Base):
 
 	@property
 	def EnablePeriodicReEvaluationRequest(self):
-		"""
+		"""If true, enables the head LSR to send periodic path re-evaluation request in every Re-Optimization Interval.
 
 		Returns:
 			bool
@@ -174,7 +174,7 @@ class SenderRange(Base):
 
 	@property
 	def EnableResourceAffinities(self):
-		"""
+		"""Enables the use of RSVP resource class affinities for LSP tunnels.
 
 		Returns:
 			bool
@@ -186,7 +186,7 @@ class SenderRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the sender range entry.
 
 		Returns:
 			bool
@@ -198,7 +198,7 @@ class SenderRange(Base):
 
 	@property
 	def ExcludeAny(self):
-		"""
+		"""Represents a set of attribute filters associated with a tunnel, any of which renders a link unacceptable.
 
 		Returns:
 			number
@@ -210,7 +210,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteBandwidth(self):
-		"""
+		"""An estimate of the bandwidth needed for the protection path.
 
 		Returns:
 			number
@@ -222,7 +222,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteDetour(self):
-		"""
+		"""Used to provide backup LSP tunnels for local repair of LSP tunnels, in the event of failure of a node or link. Contains the specifics of the detour LSPs: nodes to use and nodes to avoid.
 
 		Returns:
 			list(dict(arg1:str,arg2:str))
@@ -234,7 +234,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteExcludeAny(self):
-		"""
+		"""Capability filters used to dictate which backup paths are acceptable or unacceptable.
 
 		Returns:
 			number
@@ -246,7 +246,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteFacilityBackupDesired(self):
-		"""
+		"""If enabled, indicates that facility backup should be used. With this method, the MPLS label stack allows the creation of a bypass tunnel to protect a set of LSPs with similar characteristics/constraints. Protects both links and nodes.
 
 		Returns:
 			bool
@@ -258,7 +258,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteHoldingPriority(self):
-		"""
+		"""The priority value for the backup path, pertaining to holding resources - whether a session can be preempted BY another session.
 
 		Returns:
 			number
@@ -270,7 +270,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteHopLimit(self):
-		"""
+		"""Indicates the number of extra hops that may be added by a protection path.
 
 		Returns:
 			number
@@ -282,7 +282,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteIncludeAll(self):
-		"""
+		"""Capability filters used to dictate which backup paths are acceptable or unacceptable.
 
 		Returns:
 			number
@@ -294,7 +294,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteIncludeAny(self):
-		"""
+		"""Capability filters used to dictate which backup paths are acceptable or unacceptable.
 
 		Returns:
 			number
@@ -306,7 +306,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteOne2OneBackupDesired(self):
-		"""
+		"""If enabled, indicates that one-to-one backup should be used. With this method, one detour LSP will be created for each protected LSP for each place where the LSP could potentially be repaired locally. Protects both links and nodes.
 
 		Returns:
 			bool
@@ -318,7 +318,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteSendDetour(self):
-		"""
+		"""Enables the generation of a DETOUR object for one to one operation.
 
 		Returns:
 			bool
@@ -330,7 +330,7 @@ class SenderRange(Base):
 
 	@property
 	def FastRerouteSetupPriority(self):
-		"""
+		"""Indicate the priority for taking and holding resources along the backup path.
 
 		Returns:
 			number
@@ -342,7 +342,7 @@ class SenderRange(Base):
 
 	@property
 	def HoldingPriority(self):
-		"""
+		"""Priority in holding onto resources. Range is 0 to 7, with 0 the highest priority.
 
 		Returns:
 			number
@@ -354,7 +354,7 @@ class SenderRange(Base):
 
 	@property
 	def IncludeAll(self):
-		"""
+		"""32-bit value. Represents a set of attribute filters associated with a tunnel, all of which must be present for a link to be acceptable (with respect to this test). When all bits are set to 0 (null set), it automatically passes.
 
 		Returns:
 			number
@@ -366,7 +366,7 @@ class SenderRange(Base):
 
 	@property
 	def IncludeAny(self):
-		"""
+		"""32-bit value. Represents a set of attribute filters associated with a tunnel, any of which makes a link acceptable (with respect to this test). When all bits are set to 0 (null set), it automatically passes.
 
 		Returns:
 			number
@@ -378,7 +378,7 @@ class SenderRange(Base):
 
 	@property
 	def IpCount(self):
-		"""
+		"""The number of routers in the destination range.
 
 		Returns:
 			number
@@ -390,7 +390,7 @@ class SenderRange(Base):
 
 	@property
 	def IpStart(self):
-		"""
+		"""The IP address of the first destination router.
 
 		Returns:
 			str
@@ -402,7 +402,7 @@ class SenderRange(Base):
 
 	@property
 	def LabelRecordingDesired(self):
-		"""
+		"""If enabled, indicates that label information is to be included when doing a route record.
 
 		Returns:
 			bool
@@ -414,7 +414,7 @@ class SenderRange(Base):
 
 	@property
 	def LocalProtectionDesired(self):
-		"""
+		"""(Enabled by default) This permits transit routers to use a local traffic rerouting repair mechanism in the event of a fault on an adjacent downstream link or node. This may result in a violation of the explicit route object.
 
 		Returns:
 			bool
@@ -426,7 +426,7 @@ class SenderRange(Base):
 
 	@property
 	def LspIdCount(self):
-		"""
+		"""The number of LSP IDs in the range.
 
 		Returns:
 			number
@@ -438,7 +438,7 @@ class SenderRange(Base):
 
 	@property
 	def LspIdStart(self):
-		"""
+		"""The first label-switched path ID (LSP ID) value in the range of LSP IDs.
 
 		Returns:
 			number
@@ -450,7 +450,7 @@ class SenderRange(Base):
 
 	@property
 	def MaximumPacketSize(self):
-		"""
+		"""32-bit integer. The maximum number of bytes allowed to cross the interface in a transmitted packet.
 
 		Returns:
 			number
@@ -462,7 +462,7 @@ class SenderRange(Base):
 
 	@property
 	def MinimumPolicedUnit(self):
-		"""
+		"""32-bit integer. The minimum allowable size for a policed unit.
 
 		Returns:
 			number
@@ -474,7 +474,7 @@ class SenderRange(Base):
 
 	@property
 	def NodeProtectionDesired(self):
-		"""
+		"""For Fast Reroute - if enabled, sets the Node Protection Desired Flag in the Session_Attribute object of the RRO message. It indicates to PLRs associated with the protected LSP path, that a backup path is desired that bypasses (avoids) at least the next node on the LSP.
 
 		Returns:
 			bool
@@ -486,7 +486,7 @@ class SenderRange(Base):
 
 	@property
 	def PathTearTlv(self):
-		"""
+		"""A set of custom TLVs to be included in TEAR messages, constructed with the rsvpCustomTlv command.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -498,7 +498,7 @@ class SenderRange(Base):
 
 	@property
 	def PathTlv(self):
-		"""
+		"""A set of custom TLVs to be included in PATH messages, constructed with the rsvpCustomTlv command.
 
 		Returns:
 			list(dict(arg1:number,arg2:number,arg3:str))
@@ -510,7 +510,7 @@ class SenderRange(Base):
 
 	@property
 	def PeakDataRate(self):
-		"""
+		"""The maximum traffic rate that can be maintained. The policing mechanism allows some burstiness, but restricts it so the overall packet transmission rate is less than the rate at which tokens.
 
 		Returns:
 			number
@@ -522,7 +522,7 @@ class SenderRange(Base):
 
 	@property
 	def ReEvaluationRequestInterval(self):
-		"""
+		"""Represents the time period (in milliseconds) at which the path re-evaluation request is sent by the head LSR. The default value is: 180000 ms (3 mins).
 
 		Returns:
 			number
@@ -534,7 +534,7 @@ class SenderRange(Base):
 
 	@property
 	def RefreshInterval(self):
-		"""
+		"""The interval between summary refresh messages.
 
 		Returns:
 			number
@@ -546,7 +546,7 @@ class SenderRange(Base):
 
 	@property
 	def SeStyleDesired(self):
-		"""
+		"""This indicates that the tunnel ingress node may reroute this tunnel without tearing it down. A tunnel egress node should use the SE Style when responding with an RESV message.
 
 		Returns:
 			bool
@@ -558,7 +558,7 @@ class SenderRange(Base):
 
 	@property
 	def SessionName(self):
-		"""
+		"""If enableAutoSessionName is not set, this is the name assigned to this session.
 
 		Returns:
 			str
@@ -570,7 +570,7 @@ class SenderRange(Base):
 
 	@property
 	def SetupPriority(self):
-		"""
+		"""This is the session priority with respect to taking resources, such as preempting another session. The valid range is from 0 to 7. The highest priority is indicated by 0.
 
 		Returns:
 			number
@@ -582,7 +582,7 @@ class SenderRange(Base):
 
 	@property
 	def TimeoutMultiplier(self):
-		"""
+		"""The number of Hellos before a neighbor is declared dead.
 
 		Returns:
 			number
@@ -594,7 +594,7 @@ class SenderRange(Base):
 
 	@property
 	def TokenBucketRate(self):
-		"""
+		"""The rate of transfer for data in a flow. In this application, it is used with a traffic policing mechanism. The data tokens enter the bucket, filling the bucket. The data from a number of tokens is combined to form and send a packet. The goal is to determine a rate which will not overflow the specified token bucket size, and cause new data (tokens) to be rejected/discarded.
 
 		Returns:
 			number
@@ -606,7 +606,7 @@ class SenderRange(Base):
 
 	@property
 	def TokenBucketSize(self):
-		"""
+		"""The maximum capacity (in bytes) the token bucket can hold, and above which newly received tokens cannot be processed and are discarded.
 
 		Returns:
 			number
@@ -620,52 +620,52 @@ class SenderRange(Base):
 		"""Adds a new senderRange node on the server and retrieves it in this instance.
 
 		Args:
-			AutoGenerateSessionName (bool): 
-			BackupLspIdPoolStart (number): 
-			Bandwidth (number): 
-			BandwidthProtectionDesired (bool): 
-			EnableBfdMpls (bool): 
-			EnableFastReroute (bool): 
-			EnableLspPing (bool): 
-			EnablePathReoptimization (bool): 
-			EnablePeriodicReEvaluationRequest (bool): 
-			EnableResourceAffinities (bool): 
-			Enabled (bool): 
-			ExcludeAny (number): 
-			FastRerouteBandwidth (number): 
-			FastRerouteDetour (list(dict(arg1:str,arg2:str))): 
-			FastRerouteExcludeAny (number): 
-			FastRerouteFacilityBackupDesired (bool): 
-			FastRerouteHoldingPriority (number): 
-			FastRerouteHopLimit (number): 
-			FastRerouteIncludeAll (number): 
-			FastRerouteIncludeAny (number): 
-			FastRerouteOne2OneBackupDesired (bool): 
-			FastRerouteSendDetour (bool): 
-			FastRerouteSetupPriority (number): 
-			HoldingPriority (number): 
-			IncludeAll (number): 
-			IncludeAny (number): 
-			IpCount (number): 
-			IpStart (str): 
-			LabelRecordingDesired (bool): 
-			LocalProtectionDesired (bool): 
-			LspIdCount (number): 
-			LspIdStart (number): 
-			MaximumPacketSize (number): 
-			MinimumPolicedUnit (number): 
-			NodeProtectionDesired (bool): 
-			PathTearTlv (list(dict(arg1:number,arg2:number,arg3:str))): 
-			PathTlv (list(dict(arg1:number,arg2:number,arg3:str))): 
-			PeakDataRate (number): 
-			ReEvaluationRequestInterval (number): 
-			RefreshInterval (number): 
-			SeStyleDesired (bool): 
-			SessionName (str): 
-			SetupPriority (number): 
-			TimeoutMultiplier (number): 
-			TokenBucketRate (number): 
-			TokenBucketSize (number): 
+			AutoGenerateSessionName (bool): If enabled, the session name is generated automatically. If it is not enabled, the session name field is activated and must be filled in.
+			BackupLspIdPoolStart (number): It helps to set the LSP Id for the re-optimized LSP.
+			Bandwidth (number): The bandwidth requested for the connection, expressed in kbits/sec.
+			BandwidthProtectionDesired (bool): Indicates that PLRs should skip at least the next node for a backup path.
+			EnableBfdMpls (bool): NOT DEFINED
+			EnableFastReroute (bool): Enables the use of the fast reroute feature.
+			EnableLspPing (bool): NOT DEFINED
+			EnablePathReoptimization (bool): If true, enables the Path Re-optimization option.
+			EnablePeriodicReEvaluationRequest (bool): If true, enables the head LSR to send periodic path re-evaluation request in every Re-Optimization Interval.
+			EnableResourceAffinities (bool): Enables the use of RSVP resource class affinities for LSP tunnels.
+			Enabled (bool): Enables the sender range entry.
+			ExcludeAny (number): Represents a set of attribute filters associated with a tunnel, any of which renders a link unacceptable.
+			FastRerouteBandwidth (number): An estimate of the bandwidth needed for the protection path.
+			FastRerouteDetour (list(dict(arg1:str,arg2:str))): Used to provide backup LSP tunnels for local repair of LSP tunnels, in the event of failure of a node or link. Contains the specifics of the detour LSPs: nodes to use and nodes to avoid.
+			FastRerouteExcludeAny (number): Capability filters used to dictate which backup paths are acceptable or unacceptable.
+			FastRerouteFacilityBackupDesired (bool): If enabled, indicates that facility backup should be used. With this method, the MPLS label stack allows the creation of a bypass tunnel to protect a set of LSPs with similar characteristics/constraints. Protects both links and nodes.
+			FastRerouteHoldingPriority (number): The priority value for the backup path, pertaining to holding resources - whether a session can be preempted BY another session.
+			FastRerouteHopLimit (number): Indicates the number of extra hops that may be added by a protection path.
+			FastRerouteIncludeAll (number): Capability filters used to dictate which backup paths are acceptable or unacceptable.
+			FastRerouteIncludeAny (number): Capability filters used to dictate which backup paths are acceptable or unacceptable.
+			FastRerouteOne2OneBackupDesired (bool): If enabled, indicates that one-to-one backup should be used. With this method, one detour LSP will be created for each protected LSP for each place where the LSP could potentially be repaired locally. Protects both links and nodes.
+			FastRerouteSendDetour (bool): Enables the generation of a DETOUR object for one to one operation.
+			FastRerouteSetupPriority (number): Indicate the priority for taking and holding resources along the backup path.
+			HoldingPriority (number): Priority in holding onto resources. Range is 0 to 7, with 0 the highest priority.
+			IncludeAll (number): 32-bit value. Represents a set of attribute filters associated with a tunnel, all of which must be present for a link to be acceptable (with respect to this test). When all bits are set to 0 (null set), it automatically passes.
+			IncludeAny (number): 32-bit value. Represents a set of attribute filters associated with a tunnel, any of which makes a link acceptable (with respect to this test). When all bits are set to 0 (null set), it automatically passes.
+			IpCount (number): The number of routers in the destination range.
+			IpStart (str): The IP address of the first destination router.
+			LabelRecordingDesired (bool): If enabled, indicates that label information is to be included when doing a route record.
+			LocalProtectionDesired (bool): (Enabled by default) This permits transit routers to use a local traffic rerouting repair mechanism in the event of a fault on an adjacent downstream link or node. This may result in a violation of the explicit route object.
+			LspIdCount (number): The number of LSP IDs in the range.
+			LspIdStart (number): The first label-switched path ID (LSP ID) value in the range of LSP IDs.
+			MaximumPacketSize (number): 32-bit integer. The maximum number of bytes allowed to cross the interface in a transmitted packet.
+			MinimumPolicedUnit (number): 32-bit integer. The minimum allowable size for a policed unit.
+			NodeProtectionDesired (bool): For Fast Reroute - if enabled, sets the Node Protection Desired Flag in the Session_Attribute object of the RRO message. It indicates to PLRs associated with the protected LSP path, that a backup path is desired that bypasses (avoids) at least the next node on the LSP.
+			PathTearTlv (list(dict(arg1:number,arg2:number,arg3:str))): A set of custom TLVs to be included in TEAR messages, constructed with the rsvpCustomTlv command.
+			PathTlv (list(dict(arg1:number,arg2:number,arg3:str))): A set of custom TLVs to be included in PATH messages, constructed with the rsvpCustomTlv command.
+			PeakDataRate (number): The maximum traffic rate that can be maintained. The policing mechanism allows some burstiness, but restricts it so the overall packet transmission rate is less than the rate at which tokens.
+			ReEvaluationRequestInterval (number): Represents the time period (in milliseconds) at which the path re-evaluation request is sent by the head LSR. The default value is: 180000 ms (3 mins).
+			RefreshInterval (number): The interval between summary refresh messages.
+			SeStyleDesired (bool): This indicates that the tunnel ingress node may reroute this tunnel without tearing it down. A tunnel egress node should use the SE Style when responding with an RESV message.
+			SessionName (str): If enableAutoSessionName is not set, this is the name assigned to this session.
+			SetupPriority (number): This is the session priority with respect to taking resources, such as preempting another session. The valid range is from 0 to 7. The highest priority is indicated by 0.
+			TimeoutMultiplier (number): The number of Hellos before a neighbor is declared dead.
+			TokenBucketRate (number): The rate of transfer for data in a flow. In this application, it is used with a traffic policing mechanism. The data tokens enter the bucket, filling the bucket. The data from a number of tokens is combined to form and send a packet. The goal is to determine a rate which will not overflow the specified token bucket size, and cause new data (tokens) to be rejected/discarded.
+			TokenBucketSize (number): The maximum capacity (in bytes) the token bucket can hold, and above which newly received tokens cannot be processed and are discarded.
 
 		Returns:
 			self: This instance with all currently retrieved senderRange data using find and the newly added senderRange data available through an iterator or index
@@ -691,52 +691,52 @@ class SenderRange(Base):
 		By default the find method takes no parameters and will retrieve all senderRange data from the server.
 
 		Args:
-			AutoGenerateSessionName (bool): 
-			BackupLspIdPoolStart (number): 
-			Bandwidth (number): 
-			BandwidthProtectionDesired (bool): 
-			EnableBfdMpls (bool): 
-			EnableFastReroute (bool): 
-			EnableLspPing (bool): 
-			EnablePathReoptimization (bool): 
-			EnablePeriodicReEvaluationRequest (bool): 
-			EnableResourceAffinities (bool): 
-			Enabled (bool): 
-			ExcludeAny (number): 
-			FastRerouteBandwidth (number): 
-			FastRerouteDetour (list(dict(arg1:str,arg2:str))): 
-			FastRerouteExcludeAny (number): 
-			FastRerouteFacilityBackupDesired (bool): 
-			FastRerouteHoldingPriority (number): 
-			FastRerouteHopLimit (number): 
-			FastRerouteIncludeAll (number): 
-			FastRerouteIncludeAny (number): 
-			FastRerouteOne2OneBackupDesired (bool): 
-			FastRerouteSendDetour (bool): 
-			FastRerouteSetupPriority (number): 
-			HoldingPriority (number): 
-			IncludeAll (number): 
-			IncludeAny (number): 
-			IpCount (number): 
-			IpStart (str): 
-			LabelRecordingDesired (bool): 
-			LocalProtectionDesired (bool): 
-			LspIdCount (number): 
-			LspIdStart (number): 
-			MaximumPacketSize (number): 
-			MinimumPolicedUnit (number): 
-			NodeProtectionDesired (bool): 
-			PathTearTlv (list(dict(arg1:number,arg2:number,arg3:str))): 
-			PathTlv (list(dict(arg1:number,arg2:number,arg3:str))): 
-			PeakDataRate (number): 
-			ReEvaluationRequestInterval (number): 
-			RefreshInterval (number): 
-			SeStyleDesired (bool): 
-			SessionName (str): 
-			SetupPriority (number): 
-			TimeoutMultiplier (number): 
-			TokenBucketRate (number): 
-			TokenBucketSize (number): 
+			AutoGenerateSessionName (bool): If enabled, the session name is generated automatically. If it is not enabled, the session name field is activated and must be filled in.
+			BackupLspIdPoolStart (number): It helps to set the LSP Id for the re-optimized LSP.
+			Bandwidth (number): The bandwidth requested for the connection, expressed in kbits/sec.
+			BandwidthProtectionDesired (bool): Indicates that PLRs should skip at least the next node for a backup path.
+			EnableBfdMpls (bool): NOT DEFINED
+			EnableFastReroute (bool): Enables the use of the fast reroute feature.
+			EnableLspPing (bool): NOT DEFINED
+			EnablePathReoptimization (bool): If true, enables the Path Re-optimization option.
+			EnablePeriodicReEvaluationRequest (bool): If true, enables the head LSR to send periodic path re-evaluation request in every Re-Optimization Interval.
+			EnableResourceAffinities (bool): Enables the use of RSVP resource class affinities for LSP tunnels.
+			Enabled (bool): Enables the sender range entry.
+			ExcludeAny (number): Represents a set of attribute filters associated with a tunnel, any of which renders a link unacceptable.
+			FastRerouteBandwidth (number): An estimate of the bandwidth needed for the protection path.
+			FastRerouteDetour (list(dict(arg1:str,arg2:str))): Used to provide backup LSP tunnels for local repair of LSP tunnels, in the event of failure of a node or link. Contains the specifics of the detour LSPs: nodes to use and nodes to avoid.
+			FastRerouteExcludeAny (number): Capability filters used to dictate which backup paths are acceptable or unacceptable.
+			FastRerouteFacilityBackupDesired (bool): If enabled, indicates that facility backup should be used. With this method, the MPLS label stack allows the creation of a bypass tunnel to protect a set of LSPs with similar characteristics/constraints. Protects both links and nodes.
+			FastRerouteHoldingPriority (number): The priority value for the backup path, pertaining to holding resources - whether a session can be preempted BY another session.
+			FastRerouteHopLimit (number): Indicates the number of extra hops that may be added by a protection path.
+			FastRerouteIncludeAll (number): Capability filters used to dictate which backup paths are acceptable or unacceptable.
+			FastRerouteIncludeAny (number): Capability filters used to dictate which backup paths are acceptable or unacceptable.
+			FastRerouteOne2OneBackupDesired (bool): If enabled, indicates that one-to-one backup should be used. With this method, one detour LSP will be created for each protected LSP for each place where the LSP could potentially be repaired locally. Protects both links and nodes.
+			FastRerouteSendDetour (bool): Enables the generation of a DETOUR object for one to one operation.
+			FastRerouteSetupPriority (number): Indicate the priority for taking and holding resources along the backup path.
+			HoldingPriority (number): Priority in holding onto resources. Range is 0 to 7, with 0 the highest priority.
+			IncludeAll (number): 32-bit value. Represents a set of attribute filters associated with a tunnel, all of which must be present for a link to be acceptable (with respect to this test). When all bits are set to 0 (null set), it automatically passes.
+			IncludeAny (number): 32-bit value. Represents a set of attribute filters associated with a tunnel, any of which makes a link acceptable (with respect to this test). When all bits are set to 0 (null set), it automatically passes.
+			IpCount (number): The number of routers in the destination range.
+			IpStart (str): The IP address of the first destination router.
+			LabelRecordingDesired (bool): If enabled, indicates that label information is to be included when doing a route record.
+			LocalProtectionDesired (bool): (Enabled by default) This permits transit routers to use a local traffic rerouting repair mechanism in the event of a fault on an adjacent downstream link or node. This may result in a violation of the explicit route object.
+			LspIdCount (number): The number of LSP IDs in the range.
+			LspIdStart (number): The first label-switched path ID (LSP ID) value in the range of LSP IDs.
+			MaximumPacketSize (number): 32-bit integer. The maximum number of bytes allowed to cross the interface in a transmitted packet.
+			MinimumPolicedUnit (number): 32-bit integer. The minimum allowable size for a policed unit.
+			NodeProtectionDesired (bool): For Fast Reroute - if enabled, sets the Node Protection Desired Flag in the Session_Attribute object of the RRO message. It indicates to PLRs associated with the protected LSP path, that a backup path is desired that bypasses (avoids) at least the next node on the LSP.
+			PathTearTlv (list(dict(arg1:number,arg2:number,arg3:str))): A set of custom TLVs to be included in TEAR messages, constructed with the rsvpCustomTlv command.
+			PathTlv (list(dict(arg1:number,arg2:number,arg3:str))): A set of custom TLVs to be included in PATH messages, constructed with the rsvpCustomTlv command.
+			PeakDataRate (number): The maximum traffic rate that can be maintained. The policing mechanism allows some burstiness, but restricts it so the overall packet transmission rate is less than the rate at which tokens.
+			ReEvaluationRequestInterval (number): Represents the time period (in milliseconds) at which the path re-evaluation request is sent by the head LSR. The default value is: 180000 ms (3 mins).
+			RefreshInterval (number): The interval between summary refresh messages.
+			SeStyleDesired (bool): This indicates that the tunnel ingress node may reroute this tunnel without tearing it down. A tunnel egress node should use the SE Style when responding with an RESV message.
+			SessionName (str): If enableAutoSessionName is not set, this is the name assigned to this session.
+			SetupPriority (number): This is the session priority with respect to taking resources, such as preempting another session. The valid range is from 0 to 7. The highest priority is indicated by 0.
+			TimeoutMultiplier (number): The number of Hellos before a neighbor is declared dead.
+			TokenBucketRate (number): The rate of transfer for data in a flow. In this application, it is used with a traffic policing mechanism. The data tokens enter the bucket, filling the bucket. The data from a number of tokens is combined to form and send a packet. The goal is to determine a rate which will not overflow the specified token bucket size, and cause new data (tokens) to be rejected/discarded.
+			TokenBucketSize (number): The maximum capacity (in bytes) the token bucket can hold, and above which newly received tokens cannot be processed and are discarded.
 
 		Returns:
 			self: This instance with matching senderRange data retrieved from the server available through an iterator or index
@@ -764,11 +764,13 @@ class SenderRange(Base):
 	def DoMakeBeforeBreak(self):
 		"""Executes the doMakeBeforeBreak operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=senderRange)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server
@@ -780,11 +782,13 @@ class SenderRange(Base):
 	def SendReEvaluationRequest(self):
 		"""Executes the sendReEvaluationRequest operation on the server.
 
+		NOT DEFINED
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=senderRange)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

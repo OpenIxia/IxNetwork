@@ -34,11 +34,12 @@ class TestPlatform(Base):
     Args:  
         ip_address (str): the ip address of the test tool platform that requests will be made to
         rest_port (number): the ip port of the test tool platform that the server is listening on
-        platform (str[windows|linux]): the platform type that is being connected to
+        platform (str[windows|linux]): connecting to a windows platform will start with an http scheme, a linux platform will start with an https scheme
         log_file_name (str): the name of the log file that trace logging will be written to, if omitted it will be written to the console
         ignore_env_proxy (bool): if requests is returning a 504 error use this to bypass local environment proxy settings
-    Child classes:   
-        TestPlatform.Sessions
+    
+	Raises:
+		ConnectionError: this error will be raised if attempting to connect to a linux host with platform=`windows`
     """
     _SDM_NAME = None
 

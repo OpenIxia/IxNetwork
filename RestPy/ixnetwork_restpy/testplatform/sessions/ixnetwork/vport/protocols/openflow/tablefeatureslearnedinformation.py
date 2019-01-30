@@ -261,7 +261,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ApplyActions(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -270,7 +270,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ApplyActionsMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -279,7 +279,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ApplySetField(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -288,7 +288,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ApplySetFieldMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -297,7 +297,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def Config(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -306,7 +306,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -315,7 +315,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -324,7 +324,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ErrorCode(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -333,7 +333,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ErrorType(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -342,7 +342,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -351,7 +351,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ExperimenterMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -360,7 +360,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def Instruction(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -369,7 +369,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def InstructionMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -378,7 +378,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def Latency(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -387,7 +387,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -396,7 +396,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def Match(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -405,7 +405,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def MaxEntries(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -414,7 +414,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def MetadataMatch(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -423,7 +423,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def MetadataWrite(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -432,7 +432,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def Name(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -441,7 +441,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -450,7 +450,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def NextTable(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -459,7 +459,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def NextTableMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -468,7 +468,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -477,7 +477,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def ReplyState(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -486,7 +486,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -495,7 +495,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def WildCards(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -504,7 +504,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def WriteActions(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -513,7 +513,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def WriteActionsMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -522,7 +522,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def WriteSetField(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -531,7 +531,7 @@ class TableFeaturesLearnedInformation(Base):
 
 	@property
 	def WriteSetFieldMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -545,37 +545,37 @@ class TableFeaturesLearnedInformation(Base):
 		By default the find method takes no parameters and will retrieve all tableFeaturesLearnedInformation data from the server.
 
 		Args:
-			ApplyActions (str): 
-			ApplyActionsMiss (str): 
-			ApplySetField (str): 
-			ApplySetFieldMiss (str): 
-			Config (number): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			ErrorCode (str): 
-			ErrorType (str): 
-			Experimenter (str): 
-			ExperimenterMiss (str): 
-			Instruction (str): 
-			InstructionMiss (str): 
-			Latency (number): 
-			LocalIp (str): 
-			Match (str): 
-			MaxEntries (number): 
-			MetadataMatch (str): 
-			MetadataWrite (str): 
-			Name (str): 
-			NegotiatedVersion (str): 
-			NextTable (str): 
-			NextTableMiss (str): 
-			RemoteIp (str): 
-			ReplyState (str): 
-			TableId (str): 
-			WildCards (str): 
-			WriteActions (str): 
-			WriteActionsMiss (str): 
-			WriteSetField (str): 
-			WriteSetFieldMiss (str): 
+			ApplyActions (str): NOT DEFINED
+			ApplyActionsMiss (str): NOT DEFINED
+			ApplySetField (str): NOT DEFINED
+			ApplySetFieldMiss (str): NOT DEFINED
+			Config (number): NOT DEFINED
+			DataPathId (str): NOT DEFINED
+			DataPathIdAsHex (str): NOT DEFINED
+			ErrorCode (str): NOT DEFINED
+			ErrorType (str): NOT DEFINED
+			Experimenter (str): NOT DEFINED
+			ExperimenterMiss (str): NOT DEFINED
+			Instruction (str): NOT DEFINED
+			InstructionMiss (str): NOT DEFINED
+			Latency (number): NOT DEFINED
+			LocalIp (str): NOT DEFINED
+			Match (str): NOT DEFINED
+			MaxEntries (number): NOT DEFINED
+			MetadataMatch (str): NOT DEFINED
+			MetadataWrite (str): NOT DEFINED
+			Name (str): NOT DEFINED
+			NegotiatedVersion (str): NOT DEFINED
+			NextTable (str): NOT DEFINED
+			NextTableMiss (str): NOT DEFINED
+			RemoteIp (str): NOT DEFINED
+			ReplyState (str): NOT DEFINED
+			TableId (str): NOT DEFINED
+			WildCards (str): NOT DEFINED
+			WriteActions (str): NOT DEFINED
+			WriteActionsMiss (str): NOT DEFINED
+			WriteSetField (str): NOT DEFINED
+			WriteSetFieldMiss (str): NOT DEFINED
 
 		Returns:
 			self: This instance with matching tableFeaturesLearnedInformation data retrieved from the server available through an iterator or index

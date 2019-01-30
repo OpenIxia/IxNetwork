@@ -37,7 +37,7 @@ class LearnedRoute(Base):
 
 	@property
 	def AsPath(self):
-		"""
+		"""Indicates the local IP address of the BGP router.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedRoute(Base):
 
 	@property
 	def BlockOffset(self):
-		"""
+		"""The Label Block Offset (VBO) is the value used to help define this specific label block uniquely-as a subset of all of the possible labels.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedRoute(Base):
 
 	@property
 	def BlockSize(self):
-		"""
+		"""The size of the label block, in bytes.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LearnedRoute(Base):
 
 	@property
 	def ControlWordEnabled(self):
-		"""
+		"""Indicates if the label uses a control word.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class LearnedRoute(Base):
 
 	@property
 	def IpPrefix(self):
-		"""
+		"""The route IP address prefix.
 
 		Returns:
 			str
@@ -82,7 +82,7 @@ class LearnedRoute(Base):
 
 	@property
 	def LabelBase(self):
-		"""
+		"""The first label in the learned information.
 
 		Returns:
 			number
@@ -91,7 +91,7 @@ class LearnedRoute(Base):
 
 	@property
 	def LocalPreference(self):
-		"""
+		"""Indicates the value of the local preference attribute.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class LearnedRoute(Base):
 
 	@property
 	def MaxLabel(self):
-		"""
+		"""The last label to use.
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class LearnedRoute(Base):
 
 	@property
 	def MultiExitDiscriminator(self):
-		"""
+		"""A metric field of the route file.
 
 		Returns:
 			number
@@ -118,7 +118,7 @@ class LearnedRoute(Base):
 
 	@property
 	def Neighbor(self):
-		"""
+		"""The local IP address for this Ixia-emulated BGP neighbor/peer.
 
 		Returns:
 			str
@@ -127,7 +127,7 @@ class LearnedRoute(Base):
 
 	@property
 	def NextHop(self):
-		"""
+		"""The next hop on the path to the destination network in the learned route.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class LearnedRoute(Base):
 
 	@property
 	def OriginType(self):
-		"""
+		"""An indication of where the route entry originated.
 
 		Returns:
 			str
@@ -145,7 +145,7 @@ class LearnedRoute(Base):
 
 	@property
 	def PrefixLength(self):
-		"""
+		"""The prefix length of the route.
 
 		Returns:
 			number
@@ -154,7 +154,7 @@ class LearnedRoute(Base):
 
 	@property
 	def RouteDistinguisher(self):
-		"""
+		"""The route distinguisher for the route, for use with IPv4 and IPv6 MPLS VPN address types.
 
 		Returns:
 			str
@@ -163,7 +163,7 @@ class LearnedRoute(Base):
 
 	@property
 	def SeqDeliveryEnabled(self):
-		"""
+		"""Indicates if sequencial delivery is enabled.
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class LearnedRoute(Base):
 
 	@property
 	def SiteId(self):
-		"""
+		"""The site ID.
 
 		Returns:
 			number
@@ -186,22 +186,22 @@ class LearnedRoute(Base):
 		By default the find method takes no parameters and will retrieve all learnedRoute data from the server.
 
 		Args:
-			AsPath (str): 
-			BlockOffset (number): 
-			BlockSize (number): 
-			ControlWordEnabled (bool): 
-			IpPrefix (str): 
-			LabelBase (number): 
-			LocalPreference (number): 
-			MaxLabel (number): 
-			MultiExitDiscriminator (number): 
-			Neighbor (str): 
-			NextHop (str): 
-			OriginType (str): 
-			PrefixLength (number): 
-			RouteDistinguisher (str): 
-			SeqDeliveryEnabled (bool): 
-			SiteId (number): 
+			AsPath (str): Indicates the local IP address of the BGP router.
+			BlockOffset (number): The Label Block Offset (VBO) is the value used to help define this specific label block uniquely-as a subset of all of the possible labels.
+			BlockSize (number): The size of the label block, in bytes.
+			ControlWordEnabled (bool): Indicates if the label uses a control word.
+			IpPrefix (str): The route IP address prefix.
+			LabelBase (number): The first label in the learned information.
+			LocalPreference (number): Indicates the value of the local preference attribute.
+			MaxLabel (number): The last label to use.
+			MultiExitDiscriminator (number): A metric field of the route file.
+			Neighbor (str): The local IP address for this Ixia-emulated BGP neighbor/peer.
+			NextHop (str): The next hop on the path to the destination network in the learned route.
+			OriginType (str): An indication of where the route entry originated.
+			PrefixLength (number): The prefix length of the route.
+			RouteDistinguisher (str): The route distinguisher for the route, for use with IPv4 and IPv6 MPLS VPN address types.
+			SeqDeliveryEnabled (bool): Indicates if sequencial delivery is enabled.
+			SiteId (number): The site ID.
 
 		Returns:
 			self: This instance with matching learnedRoute data retrieved from the server available through an iterator or index

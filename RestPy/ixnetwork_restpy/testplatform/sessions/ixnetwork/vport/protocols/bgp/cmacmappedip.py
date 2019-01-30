@@ -38,7 +38,7 @@ class CMacMappedIp(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true then this IP is associated with the B-MAC of the ethernet segment. Default value is false.
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CMacMappedIp(Base):
 
 	@property
 	def IpAddress(self):
-		"""
+		"""IP address value is given here depending on the IP Type. Default value is all zero.
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class CMacMappedIp(Base):
 
 	@property
 	def IpStep(self):
-		"""
+		"""If IP address is associated with a MAC range (C-MAC Range) then this step value is used to make the IP addresses for all C-MAC of that range unique. For example if C-MAC range has no of C-MAC 3 and IP address associated with this mac range is 1.1.1.1 with step 2 then IP addresses for 3 MACs of the mac range will be 1.1.1.1, 1.1.1.3 and 1.1.1.5. Default value is 1. This is used only in EVPN mode.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class CMacMappedIp(Base):
 
 	@property
 	def IpType(self):
-		"""
+		"""Drop down of {IPv4, IPv6}. If IPv4 is selected then IPv4 address is used. If IPv6 is selected then IPv6 address is used. Default value is IPv4.
 
 		Returns:
 			str(ipv4|ipv6)
@@ -88,10 +88,10 @@ class CMacMappedIp(Base):
 		"""Adds a new cMacMappedIp node on the server and retrieves it in this instance.
 
 		Args:
-			Enabled (bool): 
-			IpAddress (str): 
-			IpStep (number): 
-			IpType (str(ipv4|ipv6)): 
+			Enabled (bool): If true then this IP is associated with the B-MAC of the ethernet segment. Default value is false.
+			IpAddress (str): IP address value is given here depending on the IP Type. Default value is all zero.
+			IpStep (number): If IP address is associated with a MAC range (C-MAC Range) then this step value is used to make the IP addresses for all C-MAC of that range unique. For example if C-MAC range has no of C-MAC 3 and IP address associated with this mac range is 1.1.1.1 with step 2 then IP addresses for 3 MACs of the mac range will be 1.1.1.1, 1.1.1.3 and 1.1.1.5. Default value is 1. This is used only in EVPN mode.
+			IpType (str(ipv4|ipv6)): Drop down of {IPv4, IPv6}. If IPv4 is selected then IPv4 address is used. If IPv6 is selected then IPv6 address is used. Default value is IPv4.
 
 		Returns:
 			self: This instance with all currently retrieved cMacMappedIp data using find and the newly added cMacMappedIp data available through an iterator or index
@@ -117,10 +117,10 @@ class CMacMappedIp(Base):
 		By default the find method takes no parameters and will retrieve all cMacMappedIp data from the server.
 
 		Args:
-			Enabled (bool): 
-			IpAddress (str): 
-			IpStep (number): 
-			IpType (str(ipv4|ipv6)): 
+			Enabled (bool): If true then this IP is associated with the B-MAC of the ethernet segment. Default value is false.
+			IpAddress (str): IP address value is given here depending on the IP Type. Default value is all zero.
+			IpStep (number): If IP address is associated with a MAC range (C-MAC Range) then this step value is used to make the IP addresses for all C-MAC of that range unique. For example if C-MAC range has no of C-MAC 3 and IP address associated with this mac range is 1.1.1.1 with step 2 then IP addresses for 3 MACs of the mac range will be 1.1.1.1, 1.1.1.3 and 1.1.1.5. Default value is 1. This is used only in EVPN mode.
+			IpType (str(ipv4|ipv6)): Drop down of {IPv4, IPv6}. If IPv4 is selected then IPv4 address is used. If IPv6 is selected then IPv6 address is used. Default value is IPv4.
 
 		Returns:
 			self: This instance with matching cMacMappedIp data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class Ipv6UnicastItem(Base):
 
 	@property
 	def Ipv6UnicastSourceAddress(self):
-		"""
+		"""This indicates the IPv6 Source, if any, associated with the IPv6 Multicast Group Address.
 
 		Returns:
 			str
@@ -51,7 +51,7 @@ class Ipv6UnicastItem(Base):
 		By default the find method takes no parameters and will retrieve all ipv6UnicastItem data from the server.
 
 		Args:
-			Ipv6UnicastSourceAddress (str): 
+			Ipv6UnicastSourceAddress (str): This indicates the IPv6 Source, if any, associated with the IPv6 Multicast Group Address.
 
 		Returns:
 			self: This instance with matching ipv6UnicastItem data retrieved from the server available through an iterator or index

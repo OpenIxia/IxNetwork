@@ -51,7 +51,7 @@ class RawData(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class RawData(Base):
 
 	@property
 	def LastRawDataFolder(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -72,7 +72,7 @@ class RawData(Base):
 
 	@property
 	def Path(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -84,6 +84,8 @@ class RawData(Base):
 
 	def StopCollection(self):
 		"""Executes the stopCollection operation on the server.
+
+		NOT DEFINED
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/statistics?deepchild=rawData)): The method internally sets Arg1 to the current href for this instance

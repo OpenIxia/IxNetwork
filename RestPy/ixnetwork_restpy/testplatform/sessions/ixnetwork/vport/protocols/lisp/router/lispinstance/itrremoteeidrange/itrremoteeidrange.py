@@ -38,7 +38,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""it gives details about the count
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def EnableMapReplyRecordSegmentMbit(self):
-		"""
+		"""If true, it enables Map reply record Segment Mbit
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If true, it gives details about then protocol
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def Family(self):
-		"""
+		"""It gives details about the IP family it represents
 
 		Returns:
 			str(ipv4|ipv6)
@@ -86,7 +86,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def KeepQueryingUnlessResolved(self):
-		"""
+		"""If true, it keeps Querying Unless resolved
 
 		Returns:
 			bool
@@ -98,7 +98,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def MapResolvingInterval(self):
-		"""
+		"""It gives the map resolving interval
 
 		Returns:
 			number
@@ -110,7 +110,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def PrefixLength(self):
-		"""
+		"""it gives the prefix length
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def QueryIntervalUnlessResolved(self):
-		"""
+		"""It gives the query regarding the interval unless resolved
 
 		Returns:
 			number
@@ -134,7 +134,7 @@ class ItrRemoteEidRange(Base):
 
 	@property
 	def StartAddress(self):
-		"""
+		"""It gives details about the start address
 
 		Returns:
 			str
@@ -148,15 +148,15 @@ class ItrRemoteEidRange(Base):
 		"""Adds a new itrRemoteEidRange node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): 
-			EnableMapReplyRecordSegmentMbit (bool): 
-			Enabled (bool): 
-			Family (str(ipv4|ipv6)): 
-			KeepQueryingUnlessResolved (bool): 
-			MapResolvingInterval (number): 
-			PrefixLength (number): 
-			QueryIntervalUnlessResolved (number): 
-			StartAddress (str): 
+			Count (number): it gives details about the count
+			EnableMapReplyRecordSegmentMbit (bool): If true, it enables Map reply record Segment Mbit
+			Enabled (bool): If true, it gives details about then protocol
+			Family (str(ipv4|ipv6)): It gives details about the IP family it represents
+			KeepQueryingUnlessResolved (bool): If true, it keeps Querying Unless resolved
+			MapResolvingInterval (number): It gives the map resolving interval
+			PrefixLength (number): it gives the prefix length
+			QueryIntervalUnlessResolved (number): It gives the query regarding the interval unless resolved
+			StartAddress (str): It gives details about the start address
 
 		Returns:
 			self: This instance with all currently retrieved itrRemoteEidRange data using find and the newly added itrRemoteEidRange data available through an iterator or index
@@ -182,15 +182,15 @@ class ItrRemoteEidRange(Base):
 		By default the find method takes no parameters and will retrieve all itrRemoteEidRange data from the server.
 
 		Args:
-			Count (number): 
-			EnableMapReplyRecordSegmentMbit (bool): 
-			Enabled (bool): 
-			Family (str(ipv4|ipv6)): 
-			KeepQueryingUnlessResolved (bool): 
-			MapResolvingInterval (number): 
-			PrefixLength (number): 
-			QueryIntervalUnlessResolved (number): 
-			StartAddress (str): 
+			Count (number): it gives details about the count
+			EnableMapReplyRecordSegmentMbit (bool): If true, it enables Map reply record Segment Mbit
+			Enabled (bool): If true, it gives details about then protocol
+			Family (str(ipv4|ipv6)): It gives details about the IP family it represents
+			KeepQueryingUnlessResolved (bool): If true, it keeps Querying Unless resolved
+			MapResolvingInterval (number): It gives the map resolving interval
+			PrefixLength (number): it gives the prefix length
+			QueryIntervalUnlessResolved (number): It gives the query regarding the interval unless resolved
+			StartAddress (str): It gives details about the start address
 
 		Returns:
 			self: This instance with matching itrRemoteEidRange data retrieved from the server available through an iterator or index

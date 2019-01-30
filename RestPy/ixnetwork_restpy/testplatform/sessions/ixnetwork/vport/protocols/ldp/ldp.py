@@ -51,7 +51,7 @@ class Ldp(Base):
 
 	@property
 	def EnableDiscardSelfAdvFecs(self):
-		"""
+		"""Discards learned labels from the DUT that match any of the enabled configured IPv4 FEC ranges.
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Ldp(Base):
 
 	@property
 	def EnableHelloJitter(self):
-		"""
+		"""Allows staggered transmission of many HELLO messages.
 
 		Returns:
 			bool
@@ -75,7 +75,7 @@ class Ldp(Base):
 
 	@property
 	def EnableLabelExchangeOverLsp(self):
-		"""
+		"""Enables the ability to exchange labels over LSP for VPNs.
 
 		Returns:
 			bool
@@ -87,7 +87,7 @@ class Ldp(Base):
 
 	@property
 	def EnableVpnLabelExchangeOverLsp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -99,7 +99,7 @@ class Ldp(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the use of this emulated LDP router in the emulated LDP network. (default = disabled)
 
 		Returns:
 			bool
@@ -111,7 +111,7 @@ class Ldp(Base):
 
 	@property
 	def HelloHoldTime(self):
-		"""
+		"""One of the timers associated with maintaining adjacencies based on hello messages.
 
 		Returns:
 			number
@@ -123,7 +123,7 @@ class Ldp(Base):
 
 	@property
 	def HelloInterval(self):
-		"""
+		"""One of the timers associated with maintaining adjacencies based on hello messages.
 
 		Returns:
 			number
@@ -135,7 +135,7 @@ class Ldp(Base):
 
 	@property
 	def KeepAliveHoldTime(self):
-		"""
+		"""One of the timers associated with maintaining adjacencies based on PDU and keep-alive messages.
 
 		Returns:
 			number
@@ -147,7 +147,7 @@ class Ldp(Base):
 
 	@property
 	def KeepAliveInterval(self):
-		"""
+		"""One of the timers associated with maintaining adjacencies based on PDU and keep-alive messages.
 
 		Returns:
 			number
@@ -159,7 +159,7 @@ class Ldp(Base):
 
 	@property
 	def P2mpCapabilityParam(self):
-		"""
+		"""The P2MP capability parameter value in hexadecimal.
 
 		Returns:
 			number
@@ -171,7 +171,7 @@ class Ldp(Base):
 
 	@property
 	def P2mpFecType(self):
-		"""
+		"""The MLDP P2MP FEC type value in hexadecimal.
 
 		Returns:
 			number
@@ -183,7 +183,7 @@ class Ldp(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The current state of the LDP server.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -192,7 +192,7 @@ class Ldp(Base):
 
 	@property
 	def TargetedHelloInterval(self):
-		"""
+		"""One of the timers associated with maintaining targeted peer adjacencies based on hello messages.
 
 		Returns:
 			number
@@ -204,7 +204,7 @@ class Ldp(Base):
 
 	@property
 	def TargetedHoldTime(self):
-		"""
+		"""One of the timers associated with maintaining targeted peer adjacencies based on hello messages.
 
 		Returns:
 			number
@@ -216,7 +216,7 @@ class Ldp(Base):
 
 	@property
 	def UseTransportLabelsForMplsOam(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -228,6 +228,8 @@ class Ldp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		Starts the LDP protocol on a port or group of ports.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ldp)): The method internally sets Arg1 to the current href for this instance
@@ -241,6 +243,8 @@ class Ldp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		Stops the LDP protocol on a port of group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ldp)): The method internally sets Arg1 to the current href for this instance

@@ -52,7 +52,7 @@ class Instructions(Base):
 
 	@property
 	def Experimenter(self):
-		"""
+		"""The unique identifier for the Experimenter.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class Instructions(Base):
 
 	@property
 	def ExperimenterData(self):
-		"""
+		"""The experimenter data field value.
 
 		Returns:
 			str
@@ -76,7 +76,7 @@ class Instructions(Base):
 
 	@property
 	def ExperimenterDataLength(self):
-		"""
+		"""The Value of the data length of the Experimenter. The default value is 1.
 
 		Returns:
 			number
@@ -88,7 +88,7 @@ class Instructions(Base):
 
 	@property
 	def InstructionType(self):
-		"""
+		"""The instruction type associated with this Flow Range.
 
 		Returns:
 			str(meter|applyActions|clearActions|experimenter|goToTable|writeActions|writeMetadata)
@@ -100,7 +100,7 @@ class Instructions(Base):
 
 	@property
 	def Metadata(self):
-		"""
+		"""Value of the metadata field.
 
 		Returns:
 			str
@@ -112,7 +112,7 @@ class Instructions(Base):
 
 	@property
 	def MetadataInHex(self):
-		"""
+		"""Specify the table metadata value in hexadecimal format.
 
 		Returns:
 			str
@@ -124,7 +124,7 @@ class Instructions(Base):
 
 	@property
 	def MetadataMask(self):
-		"""
+		"""Specify the metadata bitmask value.
 
 		Returns:
 			str
@@ -136,7 +136,7 @@ class Instructions(Base):
 
 	@property
 	def MeterId(self):
-		"""
+		"""The value by which a meter is uniquely identified within a switch. The default value is 1.
 
 		Returns:
 			number
@@ -148,7 +148,7 @@ class Instructions(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""The ID of the table to go to.
 
 		Returns:
 			number
@@ -162,15 +162,15 @@ class Instructions(Base):
 		"""Adds a new instructions node on the server and retrieves it in this instance.
 
 		Args:
-			Experimenter (number): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			InstructionType (str(meter|applyActions|clearActions|experimenter|goToTable|writeActions|writeMetadata)): 
-			Metadata (str): 
-			MetadataInHex (str): 
-			MetadataMask (str): 
-			MeterId (number): 
-			TableId (number): 
+			Experimenter (number): The unique identifier for the Experimenter.
+			ExperimenterData (str): The experimenter data field value.
+			ExperimenterDataLength (number): The Value of the data length of the Experimenter. The default value is 1.
+			InstructionType (str(meter|applyActions|clearActions|experimenter|goToTable|writeActions|writeMetadata)): The instruction type associated with this Flow Range.
+			Metadata (str): Value of the metadata field.
+			MetadataInHex (str): Specify the table metadata value in hexadecimal format.
+			MetadataMask (str): Specify the metadata bitmask value.
+			MeterId (number): The value by which a meter is uniquely identified within a switch. The default value is 1.
+			TableId (number): The ID of the table to go to.
 
 		Returns:
 			self: This instance with all currently retrieved instructions data using find and the newly added instructions data available through an iterator or index
@@ -196,15 +196,15 @@ class Instructions(Base):
 		By default the find method takes no parameters and will retrieve all instructions data from the server.
 
 		Args:
-			Experimenter (number): 
-			ExperimenterData (str): 
-			ExperimenterDataLength (number): 
-			InstructionType (str(meter|applyActions|clearActions|experimenter|goToTable|writeActions|writeMetadata)): 
-			Metadata (str): 
-			MetadataInHex (str): 
-			MetadataMask (str): 
-			MeterId (number): 
-			TableId (number): 
+			Experimenter (number): The unique identifier for the Experimenter.
+			ExperimenterData (str): The experimenter data field value.
+			ExperimenterDataLength (number): The Value of the data length of the Experimenter. The default value is 1.
+			InstructionType (str(meter|applyActions|clearActions|experimenter|goToTable|writeActions|writeMetadata)): The instruction type associated with this Flow Range.
+			Metadata (str): Value of the metadata field.
+			MetadataInHex (str): Specify the table metadata value in hexadecimal format.
+			MetadataMask (str): Specify the metadata bitmask value.
+			MeterId (number): The value by which a meter is uniquely identified within a switch. The default value is 1.
+			TableId (number): The ID of the table to go to.
 
 		Returns:
 			self: This instance with matching instructions data retrieved from the server available through an iterator or index

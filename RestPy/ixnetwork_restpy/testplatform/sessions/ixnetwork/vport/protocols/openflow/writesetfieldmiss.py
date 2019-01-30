@@ -37,7 +37,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def ArpDestinationHardwareAddress(self):
-		"""
+		"""If selected, Write Set Field Miss for ARP Destination Hardware Address is supported.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def ArpDestinationIpv4Address(self):
-		"""
+		"""If selected, Write Set Field Miss for ARP Destination IPv4 Address is supported.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def ArpOpcode(self):
-		"""
+		"""If selected, Write Set Field Miss for ARP Opcode is supported.
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def ArpSourceHardwareAddress(self):
-		"""
+		"""If selected, Write Set Field Miss for ARP Source Hardware Address is supported.
 
 		Returns:
 			bool
@@ -85,7 +85,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def ArpSourceIpv4Address(self):
-		"""
+		"""If selected, Write Set Field Miss for ARP Source IPv4 Address is supported.
 
 		Returns:
 			bool
@@ -97,7 +97,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def EthernetDestination(self):
-		"""
+		"""If selected, Write Set Field Miss for Ethernet Destination is supported.
 
 		Returns:
 			bool
@@ -109,7 +109,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def EthernetSource(self):
-		"""
+		"""If selected, Write Set Field Miss for Ethernet Source is supported.
 
 		Returns:
 			bool
@@ -121,7 +121,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def EthernetType(self):
-		"""
+		"""If selected, Write Set Field Miss for Ethernet Type is supported.
 
 		Returns:
 			bool
@@ -133,7 +133,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def IcmpCode(self):
-		"""
+		"""If selected, Write Set Field Miss for ICMP Code is supported.
 
 		Returns:
 			bool
@@ -145,7 +145,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def IcmpType(self):
-		"""
+		"""If selected, Write Set Field Miss for ICMP Type is supported.
 
 		Returns:
 			bool
@@ -157,7 +157,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Icmpv6Code(self):
-		"""
+		"""If selected, Write Set Field Miss for ICMPv6 Code is supported.
 
 		Returns:
 			bool
@@ -169,7 +169,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Icmpv6Type(self):
-		"""
+		"""If selected, Write Set Field Miss for ICMPv6 Type is supported.
 
 		Returns:
 			bool
@@ -181,7 +181,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def IpDscp(self):
-		"""
+		"""If selected, Write Set Field Miss for IP DSCP is supported.
 
 		Returns:
 			bool
@@ -193,7 +193,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def IpEcn(self):
-		"""
+		"""If selected, Write Set Field Miss for IP ECN is supported.
 
 		Returns:
 			bool
@@ -205,7 +205,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def IpProtocol(self):
-		"""
+		"""If selected, Write Set Field Miss for IP Protocol is supported.
 
 		Returns:
 			bool
@@ -217,7 +217,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv4Destination(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv4 Destination is supported.
 
 		Returns:
 			bool
@@ -229,7 +229,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv4Source(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv4 Source is supported.
 
 		Returns:
 			bool
@@ -241,7 +241,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6Destination(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 Destination is supported.
 
 		Returns:
 			bool
@@ -253,7 +253,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6ExtHeader(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 Ext Header is supported.
 
 		Returns:
 			bool
@@ -265,7 +265,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6FlowLabel(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 Flow Label is supported.
 
 		Returns:
 			bool
@@ -277,7 +277,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6NdSll(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 ND SLL is supported.
 
 		Returns:
 			bool
@@ -289,7 +289,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6NdTarget(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 ND Target is supported.
 
 		Returns:
 			bool
@@ -301,7 +301,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6NdTll(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 ND TLL is supported.
 
 		Returns:
 			bool
@@ -313,7 +313,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def Ipv6Source(self):
-		"""
+		"""If selected, Write Set Field Miss for IPv6 Source is supported.
 
 		Returns:
 			bool
@@ -325,7 +325,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def MplsBos(self):
-		"""
+		"""If selected, Write Set Field Miss for MPLS BoS is supported.
 
 		Returns:
 			bool
@@ -337,7 +337,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def MplsLabel(self):
-		"""
+		"""If selected, Write Set Field Miss for MPLS Label is supported.
 
 		Returns:
 			bool
@@ -349,7 +349,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def MplsTc(self):
-		"""
+		"""If selected, Write Set Field Miss for MPLS TC is supported.
 
 		Returns:
 			bool
@@ -361,7 +361,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def PbbIsid(self):
-		"""
+		"""If selected, Write Set Field Miss for PBB ISID is supported.
 
 		Returns:
 			bool
@@ -373,7 +373,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def SctpDestination(self):
-		"""
+		"""If selected, Write Set Field Miss for SCTP Destination is supported.
 
 		Returns:
 			bool
@@ -385,7 +385,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def SctpSource(self):
-		"""
+		"""If selected, Write Set Field Miss for SCTP Source is supported.
 
 		Returns:
 			bool
@@ -397,7 +397,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def TcpDestination(self):
-		"""
+		"""If selected, Write Set Field Miss for TCP Destination is supported.
 
 		Returns:
 			bool
@@ -409,7 +409,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def TcpSource(self):
-		"""
+		"""If selected, Write Set Field Miss for TCP Source is supported.
 
 		Returns:
 			bool
@@ -421,7 +421,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def TunnelId(self):
-		"""
+		"""If selected, Write Set Field Miss for Tunnel ID is supported.
 
 		Returns:
 			bool
@@ -433,7 +433,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def UdpDestination(self):
-		"""
+		"""If selected, Write Set Field Miss for UDP Destination is supported.
 
 		Returns:
 			bool
@@ -445,7 +445,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def UdpSource(self):
-		"""
+		"""If selected, Write Set Field Miss for UDP Source is supported.
 
 		Returns:
 			bool
@@ -457,7 +457,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""If selected, Write Set Field Miss for VLAN ID is supported.
 
 		Returns:
 			bool
@@ -469,7 +469,7 @@ class WriteSetFieldMiss(Base):
 
 	@property
 	def VlanPriority(self):
-		"""
+		"""If selected, Write Set Field Miss for VLAN Priority is supported.
 
 		Returns:
 			bool

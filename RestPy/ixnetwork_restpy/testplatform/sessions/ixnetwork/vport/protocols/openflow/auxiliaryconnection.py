@@ -38,7 +38,7 @@ class AuxiliaryConnection(Base):
 
 	@property
 	def AuxiliaryId(self):
-		"""
+		"""Indicates the Id of the auxiliary connection.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class AuxiliaryConnection(Base):
 
 	@property
 	def ConnectionType(self):
-		"""
+		"""Specifies how this switchPort is connected to another switch (internal/external) or host or there is no connection (noConnection)
 
 		Returns:
 			str(tcp|tls|udp)
@@ -62,7 +62,7 @@ class AuxiliaryConnection(Base):
 
 	@property
 	def Enable(self):
-		"""
+		"""If true, the object is enabled.
 
 		Returns:
 			bool
@@ -74,7 +74,7 @@ class AuxiliaryConnection(Base):
 
 	@property
 	def UdpSourcePortNumber(self):
-		"""
+		"""Specify the UDP source port number. The default value is 0. This field is available only if the Connection Type specified is UDP.
 
 		Returns:
 			number
@@ -88,10 +88,10 @@ class AuxiliaryConnection(Base):
 		"""Adds a new auxiliaryConnection node on the server and retrieves it in this instance.
 
 		Args:
-			AuxiliaryId (number): 
-			ConnectionType (str(tcp|tls|udp)): 
-			Enable (bool): 
-			UdpSourcePortNumber (number): 
+			AuxiliaryId (number): Indicates the Id of the auxiliary connection.
+			ConnectionType (str(tcp|tls|udp)): Specifies how this switchPort is connected to another switch (internal/external) or host or there is no connection (noConnection)
+			Enable (bool): If true, the object is enabled.
+			UdpSourcePortNumber (number): Specify the UDP source port number. The default value is 0. This field is available only if the Connection Type specified is UDP.
 
 		Returns:
 			self: This instance with all currently retrieved auxiliaryConnection data using find and the newly added auxiliaryConnection data available through an iterator or index
@@ -117,10 +117,10 @@ class AuxiliaryConnection(Base):
 		By default the find method takes no parameters and will retrieve all auxiliaryConnection data from the server.
 
 		Args:
-			AuxiliaryId (number): 
-			ConnectionType (str(tcp|tls|udp)): 
-			Enable (bool): 
-			UdpSourcePortNumber (number): 
+			AuxiliaryId (number): Indicates the Id of the auxiliary connection.
+			ConnectionType (str(tcp|tls|udp)): Specifies how this switchPort is connected to another switch (internal/external) or host or there is no connection (noConnection)
+			Enable (bool): If true, the object is enabled.
+			UdpSourcePortNumber (number): Specify the UDP source port number. The default value is 0. This field is available only if the Connection Type specified is UDP.
 
 		Returns:
 			self: This instance with matching auxiliaryConnection data retrieved from the server available through an iterator or index

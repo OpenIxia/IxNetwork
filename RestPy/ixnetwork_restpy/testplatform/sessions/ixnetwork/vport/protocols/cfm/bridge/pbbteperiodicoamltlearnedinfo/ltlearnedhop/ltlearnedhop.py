@@ -37,7 +37,7 @@ class LtLearnedHop(Base):
 
 	@property
 	def EgressMac(self):
-		"""
+		"""(read only) The link trace message egress MAC address.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LtLearnedHop(Base):
 
 	@property
 	def IngressMac(self):
-		"""
+		"""(read only) The link trace message ingress MAC address.
 
 		Returns:
 			str
@@ -55,7 +55,7 @@ class LtLearnedHop(Base):
 
 	@property
 	def ReplyTtl(self):
-		"""
+		"""(read only) The time-to-live value of the link trace hop information, in milliseconds.
 
 		Returns:
 			number
@@ -64,7 +64,7 @@ class LtLearnedHop(Base):
 
 	@property
 	def Self(self):
-		"""
+		"""(read only) If true, the next hop is the origin of the message.
 
 		Returns:
 			bool
@@ -78,10 +78,10 @@ class LtLearnedHop(Base):
 		By default the find method takes no parameters and will retrieve all ltLearnedHop data from the server.
 
 		Args:
-			EgressMac (str): 
-			IngressMac (str): 
-			ReplyTtl (number): 
-			Self (bool): 
+			EgressMac (str): (read only) The link trace message egress MAC address.
+			IngressMac (str): (read only) The link trace message ingress MAC address.
+			ReplyTtl (number): (read only) The time-to-live value of the link trace hop information, in milliseconds.
+			Self (bool): (read only) If true, the next hop is the origin of the message.
 
 		Returns:
 			self: This instance with matching ltLearnedHop data retrieved from the server available through an iterator or index

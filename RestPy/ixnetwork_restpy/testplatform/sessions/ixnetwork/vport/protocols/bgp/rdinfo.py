@@ -51,7 +51,7 @@ class RdInfo(Base):
 
 	@property
 	def Rd(self):
-		"""
+		"""RD value in X:Y format.
 
 		Returns:
 			str
@@ -65,7 +65,7 @@ class RdInfo(Base):
 		By default the find method takes no parameters and will retrieve all rdInfo data from the server.
 
 		Args:
-			Rd (str): 
+			Rd (str): RD value in X:Y format.
 
 		Returns:
 			self: This instance with matching rdInfo data retrieved from the server available through an iterator or index

@@ -37,7 +37,7 @@ class LearnedInfo(Base):
 
 	@property
 	def BridgeMac(self):
-		"""
+		"""The MAC address of the bridge advertising information on this link.
 
 		Returns:
 			str
@@ -46,7 +46,7 @@ class LearnedInfo(Base):
 
 	@property
 	def RootCost(self):
-		"""
+		"""The cost for the shortest path from this bridge to the root bridge.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedInfo(Base):
 
 	@property
 	def RootMac(self):
-		"""
+		"""The root bridge MAC address being advertised by the bridge.
 
 		Returns:
 			str
@@ -64,7 +64,7 @@ class LearnedInfo(Base):
 
 	@property
 	def RootPriority(self):
-		"""
+		"""The priority for the root bridge.
 
 		Returns:
 			number

@@ -51,7 +51,7 @@ class EvpnEthernetSegment(Base):
 
 	@property
 	def Esi(self):
-		"""
+		"""(Read Only) Learned Ethernet Segment Id.
 
 		Returns:
 			str
@@ -60,7 +60,7 @@ class EvpnEthernetSegment(Base):
 
 	@property
 	def Neighbor(self):
-		"""
+		"""(Read Only) Neighbor IP.
 
 		Returns:
 			str
@@ -74,8 +74,8 @@ class EvpnEthernetSegment(Base):
 		By default the find method takes no parameters and will retrieve all evpnEthernetSegment data from the server.
 
 		Args:
-			Esi (str): 
-			Neighbor (str): 
+			Esi (str): (Read Only) Learned Ethernet Segment Id.
+			Neighbor (str): (Read Only) Neighbor IP.
 
 		Returns:
 			self: This instance with matching evpnEthernetSegment data retrieved from the server available through an iterator or index

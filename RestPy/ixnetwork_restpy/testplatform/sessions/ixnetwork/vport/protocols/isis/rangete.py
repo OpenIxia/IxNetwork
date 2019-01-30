@@ -37,7 +37,7 @@ class RangeTe(Base):
 
 	@property
 	def EnableRangeTe(self):
-		"""
+		"""Enables the generation of Traffic Engineering data. (default = false)
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class RangeTe(Base):
 
 	@property
 	def TeAdmGroup(self):
-		"""
+		"""For setting the Administrative group sub-TLV (sub-TLV 3). It is a 4-octet user-defined bit mask used to assign administrative group numbers to the interface., for use in assigning colors and resource classes. Each set bit corresponds to a single administrative group for this interface. The settings translate into Group numbers which range from 0 to 31 (integers).
 
 		Returns:
 			str
@@ -61,7 +61,7 @@ class RangeTe(Base):
 
 	@property
 	def TeLinkMetric(self):
-		"""
+		"""The metric associated with the interface that the TE data is advertised on.
 
 		Returns:
 			number
@@ -73,7 +73,7 @@ class RangeTe(Base):
 
 	@property
 	def TeMaxBandWidth(self):
-		"""
+		"""For setting the maximum link bandwidth (sub-TLV 9) allowed for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.00.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class RangeTe(Base):
 
 	@property
 	def TeMaxReserveBandWidth(self):
-		"""
+		"""For setting the Maximum reservable link bandwidth sub-TLV 10). It is the maximum bandwidth that can be reserved for this link in this direction. It is a 32-bit IEEE floating point value, in bytes/sec. The default is 0.00.
 
 		Returns:
 			number
@@ -97,7 +97,7 @@ class RangeTe(Base):
 
 	@property
 	def TeRouterId(self):
-		"""
+		"""The 32-bit TE router ID assigned to the first emulated ISIS router in this network range used with the increment TE router ID value when more than one router is to be created.
 
 		Returns:
 			str
@@ -109,7 +109,7 @@ class RangeTe(Base):
 
 	@property
 	def TeRouterIdIncrement(self):
-		"""
+		"""The 32-bit increment value that will be added to the previous TE Router ID, for automatically creating additional TE Router IDs for the emulated routers in this network range.
 
 		Returns:
 			str
@@ -121,7 +121,7 @@ class RangeTe(Base):
 
 	@property
 	def TeUnreservedBandWidth(self):
-		"""
+		"""The traffic engineering unreserved bandwidth for each priority to be advertised. There are eight distinct options. (default = 0.0)
 
 		Returns:
 			list(number)

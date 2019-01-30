@@ -37,7 +37,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def EnableSendTriggerMeterConfigStatsLearnedInformation(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def EnableSendTriggerMeterFeatureStatsLearnedInformation(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def EnableSendTriggerMeterStatLearnedInformation(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -73,7 +73,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def FlowStatOutGroup(self):
-		"""
+		"""The out group used.
 
 		Returns:
 			number
@@ -85,7 +85,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def FlowStatOutGroupInputMode(self):
-		"""
+		"""The input mode of the out group.
 
 		Returns:
 			str(allGroups|anyGroup|outGroupCustom)
@@ -97,7 +97,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def FlowStatOutPort(self):
-		"""
+		"""Specifies the Output port number.
 
 		Returns:
 			number
@@ -109,7 +109,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def FlowStatOutPortInputMode(self):
-		"""
+		"""The output port used.
 
 		Returns:
 			str(ofppInPort|ofppNormal|ofppFlood|ofppAll|ofppController|ofppLocal|ofppAny|outPortCustom)
@@ -121,7 +121,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def FlowStatTableId(self):
-		"""
+		"""The identifier of the table.
 
 		Returns:
 			number
@@ -133,7 +133,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def FlowStatTableIdInputMode(self):
-		"""
+		"""The identifier of the table.
 
 		Returns:
 			str(allTables|emergency|custom)
@@ -145,7 +145,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def IsMeterConfigStatLearnedInformationRefreshed(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -154,7 +154,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def IsMeterFeatureStatLearnedInformationRefreshed(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -163,7 +163,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def IsMeterStatLearnedInformationRefreshed(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -172,7 +172,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterConfigStatMeterId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(ofpmController|ofpmSlowPath|ofpmAll|manual)
@@ -184,7 +184,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterConfigStatMeterNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -196,7 +196,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterConfigStatResponseTimeOut(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -208,7 +208,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterFeatureStatResponseTimeOut(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -220,7 +220,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterStatMeterId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(ofpmController|ofpmSlowPath|ofpmAll|manual)
@@ -232,7 +232,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterStatMeterNumber(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -244,7 +244,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def MeterStatResponseTimeOut(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -256,7 +256,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def PortStatPortNumber(self):
-		"""
+		"""The port number for port stat learned information.
 
 		Returns:
 			number
@@ -268,7 +268,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def PortStatPortNumberInputMode(self):
-		"""
+		"""The input mode of port number for port stat learned information.
 
 		Returns:
 			str(ofppAny|portNumberCustom)
@@ -280,7 +280,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def QueueConfigPortNumber(self):
-		"""
+		"""The port number for queue config learned information.
 
 		Returns:
 			number
@@ -292,7 +292,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def QueueConfigPortNumberInputMode(self):
-		"""
+		"""The input mode of port number for queue config learned information.
 
 		Returns:
 			str(ofppAny|portNumberCustom)
@@ -304,7 +304,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def QueueStatPortNumber(self):
-		"""
+		"""The port number for queue statistics learned information.
 
 		Returns:
 			number
@@ -316,7 +316,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def QueueStatPortNumberInputMode(self):
-		"""
+		"""The input mode of port number for queue statistics learned information.
 
 		Returns:
 			str(ofppAll|ofppAny|portNumberCustom)
@@ -328,7 +328,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def VendorMessageExperimenterType(self):
-		"""
+		"""Experimenter type for Vendor Message.
 
 		Returns:
 			number
@@ -340,7 +340,7 @@ class Controller131TriggerAttributes(Base):
 
 	@property
 	def VendorStatExperimenterType(self):
-		"""
+		"""Experimenter type for Vendor stat.
 
 		Returns:
 			number

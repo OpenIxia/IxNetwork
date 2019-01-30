@@ -38,7 +38,7 @@ class CeVlanIdRange(Base):
 
 	@property
 	def Count(self):
-		"""
+		"""It signifies the number of Vlan Ids configured for the EVC.
 
 		Returns:
 			number
@@ -50,7 +50,7 @@ class CeVlanIdRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""If enabled, CE VLAN Id range is in effect for the EVC.
 
 		Returns:
 			bool
@@ -62,7 +62,7 @@ class CeVlanIdRange(Base):
 
 	@property
 	def IncrementStep(self):
-		"""
+		"""It shows the Increment Step of Vlan ID. Default is 1.
 
 		Returns:
 			number
@@ -74,7 +74,7 @@ class CeVlanIdRange(Base):
 
 	@property
 	def StartVlanId(self):
-		"""
+		"""The VLAN Id of first VLAN. Default is 1.
 
 		Returns:
 			number
@@ -88,10 +88,10 @@ class CeVlanIdRange(Base):
 		"""Adds a new ceVlanIdRange node on the server and retrieves it in this instance.
 
 		Args:
-			Count (number): 
-			Enabled (bool): 
-			IncrementStep (number): 
-			StartVlanId (number): 
+			Count (number): It signifies the number of Vlan Ids configured for the EVC.
+			Enabled (bool): If enabled, CE VLAN Id range is in effect for the EVC.
+			IncrementStep (number): It shows the Increment Step of Vlan ID. Default is 1.
+			StartVlanId (number): The VLAN Id of first VLAN. Default is 1.
 
 		Returns:
 			self: This instance with all currently retrieved ceVlanIdRange data using find and the newly added ceVlanIdRange data available through an iterator or index
@@ -117,10 +117,10 @@ class CeVlanIdRange(Base):
 		By default the find method takes no parameters and will retrieve all ceVlanIdRange data from the server.
 
 		Args:
-			Count (number): 
-			Enabled (bool): 
-			IncrementStep (number): 
-			StartVlanId (number): 
+			Count (number): It signifies the number of Vlan Ids configured for the EVC.
+			Enabled (bool): If enabled, CE VLAN Id range is in effect for the EVC.
+			IncrementStep (number): It shows the Increment Step of Vlan ID. Default is 1.
+			StartVlanId (number): The VLAN Id of first VLAN. Default is 1.
 
 		Returns:
 			self: This instance with matching ceVlanIdRange data retrieved from the server available through an iterator or index

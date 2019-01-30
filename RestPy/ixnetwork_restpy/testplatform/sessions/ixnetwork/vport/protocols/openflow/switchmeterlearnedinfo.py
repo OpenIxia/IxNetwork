@@ -51,7 +51,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def BytesInInput(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -60,7 +60,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def DatapathId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -69,7 +69,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def DatapathIdAsHex(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -78,7 +78,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def DurationNSec(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -87,7 +87,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def DurationSec(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -96,7 +96,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def FlowCount(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -105,7 +105,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -114,7 +114,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def MeterConfigurationFlags(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -123,7 +123,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def MeterId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -132,7 +132,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def NumOfBands(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -141,7 +141,7 @@ class SwitchMeterLearnedInfo(Base):
 
 	@property
 	def PacketsInInput(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -155,17 +155,17 @@ class SwitchMeterLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all switchMeterLearnedInfo data from the server.
 
 		Args:
-			BytesInInput (number): 
-			DatapathId (str): 
-			DatapathIdAsHex (str): 
-			DurationNSec (number): 
-			DurationSec (number): 
-			FlowCount (number): 
-			LocalIp (str): 
-			MeterConfigurationFlags (str): 
-			MeterId (number): 
-			NumOfBands (number): 
-			PacketsInInput (number): 
+			BytesInInput (number): NOT DEFINED
+			DatapathId (str): NOT DEFINED
+			DatapathIdAsHex (str): NOT DEFINED
+			DurationNSec (number): NOT DEFINED
+			DurationSec (number): NOT DEFINED
+			FlowCount (number): NOT DEFINED
+			LocalIp (str): NOT DEFINED
+			MeterConfigurationFlags (str): NOT DEFINED
+			MeterId (number): NOT DEFINED
+			NumOfBands (number): NOT DEFINED
+			PacketsInInput (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching switchMeterLearnedInfo data retrieved from the server available through an iterator or index

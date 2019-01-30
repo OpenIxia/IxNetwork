@@ -65,7 +65,7 @@ class HundredGigLan(Base):
 
 	@property
 	def AutoInstrumentation(self):
-		"""
+		"""The auto instrumentation mode.
 
 		Returns:
 			str(endOfFrame|floating)
@@ -77,7 +77,7 @@ class HundredGigLan(Base):
 
 	@property
 	def EnablePPM(self):
-		"""
+		"""If true, enables the portsppm.
 
 		Returns:
 			bool
@@ -89,7 +89,7 @@ class HundredGigLan(Base):
 
 	@property
 	def EnabledFlowControl(self):
-		"""
+		"""If true, enables the ports's MAC flow control and mechanisms to listen for a directed address pause message
 
 		Returns:
 			bool
@@ -101,7 +101,7 @@ class HundredGigLan(Base):
 
 	@property
 	def FlowControlDirectedAddress(self):
-		"""
+		"""the 48 bit MAC address that the port listens on for a directed pause
 
 		Returns:
 			str
@@ -113,7 +113,7 @@ class HundredGigLan(Base):
 
 	@property
 	def Loopback(self):
-		"""
+		"""The loopback address.
 
 		Returns:
 			bool
@@ -125,7 +125,7 @@ class HundredGigLan(Base):
 
 	@property
 	def Ppm(self):
-		"""
+		"""Indicates the value that needs to be adjusted for the line transmit frequency.
 
 		Returns:
 			number
@@ -137,7 +137,7 @@ class HundredGigLan(Base):
 
 	@property
 	def Speed(self):
-		"""
+		"""The speed of the lan
 
 		Returns:
 			str(speed100g|speed40g)
@@ -149,7 +149,7 @@ class HundredGigLan(Base):
 
 	@property
 	def TxIgnoreRxLinkFaults(self):
-		"""
+		"""If enabled, will allow transmission of packets even if the receive link is down.
 
 		Returns:
 			bool

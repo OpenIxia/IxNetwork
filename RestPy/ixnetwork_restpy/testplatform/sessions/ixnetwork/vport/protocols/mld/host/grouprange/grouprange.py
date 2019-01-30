@@ -52,7 +52,7 @@ class GroupRange(Base):
 
 	@property
 	def EnablePacking(self):
-		"""
+		"""If enabled, the user can specify the number of records per frame and sources per record.
 
 		Returns:
 			bool
@@ -64,7 +64,7 @@ class GroupRange(Base):
 
 	@property
 	def EnableUpdateRequired(self):
-		"""
+		"""If true, updates the the changes to the Source IP addresses to take effect and to be displayed in the table.
 
 		Returns:
 			bool
@@ -76,7 +76,7 @@ class GroupRange(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables the use of the group range in the MLD simulation.
 
 		Returns:
 			bool
@@ -88,7 +88,7 @@ class GroupRange(Base):
 
 	@property
 	def GroupCount(self):
-		"""
+		"""The total number of IPv6 groups (Multicast Addresses) in this group range.
 
 		Returns:
 			number
@@ -100,7 +100,7 @@ class GroupRange(Base):
 
 	@property
 	def GroupIpFrom(self):
-		"""
+		"""The IPv6 address of the first member of the Group (Multicast Address).
 
 		Returns:
 			str
@@ -112,7 +112,7 @@ class GroupRange(Base):
 
 	@property
 	def IncrementStep(self):
-		"""
+		"""The value used to increment the IPv6 address for each additional member of the group.
 
 		Returns:
 			number
@@ -124,7 +124,7 @@ class GroupRange(Base):
 
 	@property
 	def RecordsPerFrame(self):
-		"""
+		"""The total number of group records to be added to each frame/message.
 
 		Returns:
 			number
@@ -136,7 +136,7 @@ class GroupRange(Base):
 
 	@property
 	def SourceMode(self):
-		"""
+		"""Indicates whether the associated source range is a set of IP addresses to be included or excluded.
 
 		Returns:
 			str(include|exclude)
@@ -148,7 +148,7 @@ class GroupRange(Base):
 
 	@property
 	def SourcesPerRecord(self):
-		"""
+		"""The total number of sources to be added to each record.
 
 		Returns:
 			number
@@ -162,15 +162,15 @@ class GroupRange(Base):
 		"""Adds a new groupRange node on the server and retrieves it in this instance.
 
 		Args:
-			EnablePacking (bool): 
-			EnableUpdateRequired (bool): 
-			Enabled (bool): 
-			GroupCount (number): 
-			GroupIpFrom (str): 
-			IncrementStep (number): 
-			RecordsPerFrame (number): 
-			SourceMode (str(include|exclude)): 
-			SourcesPerRecord (number): 
+			EnablePacking (bool): If enabled, the user can specify the number of records per frame and sources per record.
+			EnableUpdateRequired (bool): If true, updates the the changes to the Source IP addresses to take effect and to be displayed in the table.
+			Enabled (bool): Enables the use of the group range in the MLD simulation.
+			GroupCount (number): The total number of IPv6 groups (Multicast Addresses) in this group range.
+			GroupIpFrom (str): The IPv6 address of the first member of the Group (Multicast Address).
+			IncrementStep (number): The value used to increment the IPv6 address for each additional member of the group.
+			RecordsPerFrame (number): The total number of group records to be added to each frame/message.
+			SourceMode (str(include|exclude)): Indicates whether the associated source range is a set of IP addresses to be included or excluded.
+			SourcesPerRecord (number): The total number of sources to be added to each record.
 
 		Returns:
 			self: This instance with all currently retrieved groupRange data using find and the newly added groupRange data available through an iterator or index
@@ -196,15 +196,15 @@ class GroupRange(Base):
 		By default the find method takes no parameters and will retrieve all groupRange data from the server.
 
 		Args:
-			EnablePacking (bool): 
-			EnableUpdateRequired (bool): 
-			Enabled (bool): 
-			GroupCount (number): 
-			GroupIpFrom (str): 
-			IncrementStep (number): 
-			RecordsPerFrame (number): 
-			SourceMode (str(include|exclude)): 
-			SourcesPerRecord (number): 
+			EnablePacking (bool): If enabled, the user can specify the number of records per frame and sources per record.
+			EnableUpdateRequired (bool): If true, updates the the changes to the Source IP addresses to take effect and to be displayed in the table.
+			Enabled (bool): Enables the use of the group range in the MLD simulation.
+			GroupCount (number): The total number of IPv6 groups (Multicast Addresses) in this group range.
+			GroupIpFrom (str): The IPv6 address of the first member of the Group (Multicast Address).
+			IncrementStep (number): The value used to increment the IPv6 address for each additional member of the group.
+			RecordsPerFrame (number): The total number of group records to be added to each frame/message.
+			SourceMode (str(include|exclude)): Indicates whether the associated source range is a set of IP addresses to be included or excluded.
+			SourcesPerRecord (number): The total number of sources to be added to each record.
 
 		Returns:
 			self: This instance with matching groupRange data retrieved from the server available through an iterator or index
@@ -232,11 +232,13 @@ class GroupRange(Base):
 	def UpdateSource(self):
 		"""Executes the updateSource operation on the server.
 
+		Updates the source information for the group host for MLD.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=groupRange)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

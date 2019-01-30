@@ -37,7 +37,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def CompatibilityMode(self):
-		"""
+		"""(read only) The IGMP version compatibility mode of the IGMP querier.
 
 		Returns:
 			str(igmpv1|igmpv2|igmpv3)
@@ -46,7 +46,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def CompatibilityTimer(self):
-		"""
+		"""(read only) The number of seconds remaining in the compatibility timer.
 
 		Returns:
 			number
@@ -55,7 +55,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def FilterMode(self):
-		"""
+		"""(read only) Displays the filter mode of the querier.
 
 		Returns:
 			str(include|exclude)
@@ -64,7 +64,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def GroupAddress(self):
-		"""
+		"""(read only) The IPv4 address for the multicast group.
 
 		Returns:
 			str
@@ -73,7 +73,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def GroupTimer(self):
-		"""
+		"""(read only) The number of seconds remaining in the group address timer.
 
 		Returns:
 			number
@@ -82,7 +82,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def SourceAddress(self):
-		"""
+		"""(read only) The source IP addresses from which the host receives messages for this multicast group.
 
 		Returns:
 			str
@@ -91,7 +91,7 @@ class LearnedGroupInfo(Base):
 
 	@property
 	def SourceTimer(self):
-		"""
+		"""(read only) The number of seconds remaining in the source address timer.
 
 		Returns:
 			number
@@ -105,13 +105,13 @@ class LearnedGroupInfo(Base):
 		By default the find method takes no parameters and will retrieve all learnedGroupInfo data from the server.
 
 		Args:
-			CompatibilityMode (str(igmpv1|igmpv2|igmpv3)): 
-			CompatibilityTimer (number): 
-			FilterMode (str(include|exclude)): 
-			GroupAddress (str): 
-			GroupTimer (number): 
-			SourceAddress (str): 
-			SourceTimer (number): 
+			CompatibilityMode (str(igmpv1|igmpv2|igmpv3)): (read only) The IGMP version compatibility mode of the IGMP querier.
+			CompatibilityTimer (number): (read only) The number of seconds remaining in the compatibility timer.
+			FilterMode (str(include|exclude)): (read only) Displays the filter mode of the querier.
+			GroupAddress (str): (read only) The IPv4 address for the multicast group.
+			GroupTimer (number): (read only) The number of seconds remaining in the group address timer.
+			SourceAddress (str): (read only) The source IP addresses from which the host receives messages for this multicast group.
+			SourceTimer (number): (read only) The number of seconds remaining in the source address timer.
 
 		Returns:
 			self: This instance with matching learnedGroupInfo data retrieved from the server available through an iterator or index

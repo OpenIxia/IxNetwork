@@ -51,7 +51,7 @@ class Eigrp(Base):
 
 	@property
 	def Enabled(self):
-		"""
+		"""Enables or disables the use of this emulated EIGRP router in the emulated EIGRP network. (default = disabled)
 
 		Returns:
 			bool
@@ -63,7 +63,7 @@ class Eigrp(Base):
 
 	@property
 	def RunningState(self):
-		"""
+		"""The running state of the EIGRP server.
 
 		Returns:
 			str(unknown|stopped|stopping|starting|started)
@@ -72,6 +72,8 @@ class Eigrp(Base):
 
 	def Start(self):
 		"""Executes the start operation on the server.
+
+		Starts the EIGRP protocol on a group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=eigrp)): The method internally sets Arg1 to the current href for this instance
@@ -85,6 +87,8 @@ class Eigrp(Base):
 
 	def Stop(self):
 		"""Executes the stop operation on the server.
+
+		Stops the EIGRP protocol on a group of ports simultaneously.
 
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=eigrp)): The method internally sets Arg1 to the current href for this instance

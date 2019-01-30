@@ -38,7 +38,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def IncludeIpv6Groups(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			bool
@@ -50,7 +50,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def IntergroupUnicastIpv6Increment(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -62,7 +62,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def IntraGroupUnicastIpv6Increment(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def MulticastAddressNodeStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -86,7 +86,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def MulticastIpv6Count(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -98,7 +98,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def MulticastIpv6Step(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -110,7 +110,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def NumberOfUnicastSourceIpv6MacsPerMulticastIpv6(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -122,7 +122,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def SourceGroupMapping(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str(fully-Meshed|one-To-One|manual-Mapping)
@@ -134,7 +134,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def StartMulticastIpv6(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def StartUnicastSourceIpv6(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -158,7 +158,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def UnicastAddressNodeStep(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -170,7 +170,7 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 
 	@property
 	def VlanId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -184,18 +184,18 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 		"""Adds a new customTopologyMulticastIpv6GroupRange node on the server and retrieves it in this instance.
 
 		Args:
-			IncludeIpv6Groups (bool): 
-			IntergroupUnicastIpv6Increment (str): 
-			IntraGroupUnicastIpv6Increment (str): 
-			MulticastAddressNodeStep (str): 
-			MulticastIpv6Count (number): 
-			MulticastIpv6Step (str): 
-			NumberOfUnicastSourceIpv6MacsPerMulticastIpv6 (number): 
-			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): 
-			StartMulticastIpv6 (str): 
-			StartUnicastSourceIpv6 (str): 
-			UnicastAddressNodeStep (str): 
-			VlanId (number): 
+			IncludeIpv6Groups (bool): NOT DEFINED
+			IntergroupUnicastIpv6Increment (str): NOT DEFINED
+			IntraGroupUnicastIpv6Increment (str): NOT DEFINED
+			MulticastAddressNodeStep (str): NOT DEFINED
+			MulticastIpv6Count (number): NOT DEFINED
+			MulticastIpv6Step (str): NOT DEFINED
+			NumberOfUnicastSourceIpv6MacsPerMulticastIpv6 (number): NOT DEFINED
+			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): NOT DEFINED
+			StartMulticastIpv6 (str): NOT DEFINED
+			StartUnicastSourceIpv6 (str): NOT DEFINED
+			UnicastAddressNodeStep (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with all currently retrieved customTopologyMulticastIpv6GroupRange data using find and the newly added customTopologyMulticastIpv6GroupRange data available through an iterator or index
@@ -221,18 +221,18 @@ class CustomTopologyMulticastIpv6GroupRange(Base):
 		By default the find method takes no parameters and will retrieve all customTopologyMulticastIpv6GroupRange data from the server.
 
 		Args:
-			IncludeIpv6Groups (bool): 
-			IntergroupUnicastIpv6Increment (str): 
-			IntraGroupUnicastIpv6Increment (str): 
-			MulticastAddressNodeStep (str): 
-			MulticastIpv6Count (number): 
-			MulticastIpv6Step (str): 
-			NumberOfUnicastSourceIpv6MacsPerMulticastIpv6 (number): 
-			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): 
-			StartMulticastIpv6 (str): 
-			StartUnicastSourceIpv6 (str): 
-			UnicastAddressNodeStep (str): 
-			VlanId (number): 
+			IncludeIpv6Groups (bool): NOT DEFINED
+			IntergroupUnicastIpv6Increment (str): NOT DEFINED
+			IntraGroupUnicastIpv6Increment (str): NOT DEFINED
+			MulticastAddressNodeStep (str): NOT DEFINED
+			MulticastIpv6Count (number): NOT DEFINED
+			MulticastIpv6Step (str): NOT DEFINED
+			NumberOfUnicastSourceIpv6MacsPerMulticastIpv6 (number): NOT DEFINED
+			SourceGroupMapping (str(fully-Meshed|one-To-One|manual-Mapping)): NOT DEFINED
+			StartMulticastIpv6 (str): NOT DEFINED
+			StartUnicastSourceIpv6 (str): NOT DEFINED
+			UnicastAddressNodeStep (str): NOT DEFINED
+			VlanId (number): NOT DEFINED
 
 		Returns:
 			self: This instance with matching customTopologyMulticastIpv6GroupRange data retrieved from the server available through an iterator or index

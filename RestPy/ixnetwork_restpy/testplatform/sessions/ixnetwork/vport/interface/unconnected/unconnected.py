@@ -37,7 +37,7 @@ class Unconnected(Base):
 
 	@property
 	def ConnectedVia(self):
-		"""
+		"""The name of a specified connected protocol interface on the link that is directly connected to the DUT.
 
 		Returns:
 			str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=interface)

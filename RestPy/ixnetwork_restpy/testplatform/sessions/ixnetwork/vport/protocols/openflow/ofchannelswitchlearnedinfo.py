@@ -65,7 +65,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def ActionsSupported(self):
-		"""
+		"""This describes the actions supported by the switch.
 
 		Returns:
 			str
@@ -74,7 +74,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def AveragePacketInReplyDelay(self):
-		"""
+		"""This describes the average delay between Packet-In sent from Switch and reply received from Controller.
 
 		Returns:
 			number
@@ -86,7 +86,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def Capabilities(self):
-		"""
+		"""This describes the OF Channel capabilities of the switch.
 
 		Returns:
 			str
@@ -95,7 +95,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def ConfigFlags(self):
-		"""
+		"""This describes the Flags for fragmentation handling.
 
 		Returns:
 			str
@@ -104,7 +104,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def ConfiguredPacketInReplyCount(self):
-		"""
+		"""This describes the Packet-In sent from Switch from configured Packet-In Ranges.
 
 		Returns:
 			number
@@ -116,7 +116,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def ConfiguredPacketInSentCount(self):
-		"""
+		"""This describes the Packet-In reply received from Controller for Packet-In sent.
 
 		Returns:
 			number
@@ -128,7 +128,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def DataPathId(self):
-		"""
+		"""This describes the datapath ID of the switch.
 
 		Returns:
 			str
@@ -137,7 +137,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def DataPathIdAsHex(self):
-		"""
+		"""This describes the datapath ID, in hexadecimal format, of the switch.
 
 		Returns:
 			str
@@ -146,7 +146,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def FlowRate(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -155,7 +155,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def GenerationId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			number
@@ -164,7 +164,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def LastErrorCode(self):
-		"""
+		"""This describes the code for the last error received.
 
 		Returns:
 			str
@@ -173,7 +173,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def LastErrorType(self):
-		"""
+		"""This describes the type of error for the last error received.
 
 		Returns:
 			str
@@ -182,7 +182,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def LocalIp(self):
-		"""
+		"""This describes the local IP address of the switch.
 
 		Returns:
 			str
@@ -191,7 +191,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def MaxBufferSize(self):
-		"""
+		"""This describes the maximum number of packets that can be stored in the buffer of the switch at a time.
 
 		Returns:
 			number
@@ -200,7 +200,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def MaxPacketInBytes(self):
-		"""
+		"""This describes the max amount of data to be sent in the Packet-In message.
 
 		Returns:
 			number
@@ -209,7 +209,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def NegotiatedVersion(self):
-		"""
+		"""This describes the OpenFlow version supported by this configuration.
 
 		Returns:
 			number
@@ -218,7 +218,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def NumberOfAuxiliaryConnection(self):
-		"""
+		"""This describes the number of auxiliary connections.
 
 		Returns:
 			number
@@ -230,7 +230,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def NumberOfErrorsSent(self):
-		"""
+		"""This describes the number of errors received by the switch.
 
 		Returns:
 			number
@@ -239,7 +239,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def NumberOfPorts(self):
-		"""
+		"""This describes the number of ports in the switch.
 
 		Returns:
 			number
@@ -248,7 +248,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def NumberofTable(self):
-		"""
+		"""This describes the number of tables in the switch.
 
 		Returns:
 			number
@@ -257,7 +257,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def RemoteIp(self):
-		"""
+		"""This describes the IP address of the remote end of the OF Channel.
 
 		Returns:
 			str
@@ -266,7 +266,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def RemotePortNumber(self):
-		"""
+		"""This describes the TCP port number of the remote end of the OF Channel.
 
 		Returns:
 			number
@@ -278,7 +278,7 @@ class OfChannelSwitchLearnedInfo(Base):
 
 	@property
 	def SessionType(self):
-		"""
+		"""This describes the type of OpenFlow session.
 
 		Returns:
 			str
@@ -292,29 +292,29 @@ class OfChannelSwitchLearnedInfo(Base):
 		By default the find method takes no parameters and will retrieve all ofChannelSwitchLearnedInfo data from the server.
 
 		Args:
-			ActionsSupported (str): 
-			AveragePacketInReplyDelay (number): 
-			Capabilities (str): 
-			ConfigFlags (str): 
-			ConfiguredPacketInReplyCount (number): 
-			ConfiguredPacketInSentCount (number): 
-			DataPathId (str): 
-			DataPathIdAsHex (str): 
-			FlowRate (number): 
-			GenerationId (number): 
-			LastErrorCode (str): 
-			LastErrorType (str): 
-			LocalIp (str): 
-			MaxBufferSize (number): 
-			MaxPacketInBytes (number): 
-			NegotiatedVersion (number): 
-			NumberOfAuxiliaryConnection (number): 
-			NumberOfErrorsSent (number): 
-			NumberOfPorts (number): 
-			NumberofTable (number): 
-			RemoteIp (str): 
-			RemotePortNumber (number): 
-			SessionType (str): 
+			ActionsSupported (str): This describes the actions supported by the switch.
+			AveragePacketInReplyDelay (number): This describes the average delay between Packet-In sent from Switch and reply received from Controller.
+			Capabilities (str): This describes the OF Channel capabilities of the switch.
+			ConfigFlags (str): This describes the Flags for fragmentation handling.
+			ConfiguredPacketInReplyCount (number): This describes the Packet-In sent from Switch from configured Packet-In Ranges.
+			ConfiguredPacketInSentCount (number): This describes the Packet-In reply received from Controller for Packet-In sent.
+			DataPathId (str): This describes the datapath ID of the switch.
+			DataPathIdAsHex (str): This describes the datapath ID, in hexadecimal format, of the switch.
+			FlowRate (number): NOT DEFINED
+			GenerationId (number): NOT DEFINED
+			LastErrorCode (str): This describes the code for the last error received.
+			LastErrorType (str): This describes the type of error for the last error received.
+			LocalIp (str): This describes the local IP address of the switch.
+			MaxBufferSize (number): This describes the maximum number of packets that can be stored in the buffer of the switch at a time.
+			MaxPacketInBytes (number): This describes the max amount of data to be sent in the Packet-In message.
+			NegotiatedVersion (number): This describes the OpenFlow version supported by this configuration.
+			NumberOfAuxiliaryConnection (number): This describes the number of auxiliary connections.
+			NumberOfErrorsSent (number): This describes the number of errors received by the switch.
+			NumberOfPorts (number): This describes the number of ports in the switch.
+			NumberofTable (number): This describes the number of tables in the switch.
+			RemoteIp (str): This describes the IP address of the remote end of the OF Channel.
+			RemotePortNumber (number): This describes the TCP port number of the remote end of the OF Channel.
+			SessionType (str): This describes the type of OpenFlow session.
 
 		Returns:
 			self: This instance with matching ofChannelSwitchLearnedInfo data retrieved from the server available through an iterator or index
@@ -342,11 +342,13 @@ class OfChannelSwitchLearnedInfo(Base):
 	def AddRecordForTrigger(self):
 		"""Executes the addRecordForTrigger operation on the server.
 
+		API to add record for trigger to be sent.
+
 		Args:
 			Arg1 (str(None|/api/v1/sessions/1/ixnetwork/vport?deepchild=ofChannelSwitchLearnedInfo)): The method internally sets Arg1 to the current href for this instance
 
 		Returns:
-			bool: 
+			bool: NOT DEFINED
 
 		Raises:
 			NotFoundError: The requested resource does not exist on the server

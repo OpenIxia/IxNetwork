@@ -37,7 +37,7 @@ class NextTable(Base):
 
 	@property
 	def TableId(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str
@@ -49,7 +49,7 @@ class NextTable(Base):
 
 	@property
 	def TableIdMiss(self):
-		"""
+		"""NOT DEFINED
 
 		Returns:
 			str

@@ -37,7 +37,7 @@ class PortStatusMaskMaster(Base):
 
 	@property
 	def PortAdd(self):
-		"""
+		"""This indicates that a port is added.
 
 		Returns:
 			bool
@@ -49,7 +49,7 @@ class PortStatusMaskMaster(Base):
 
 	@property
 	def PortDelete(self):
-		"""
+		"""This indicates that a port is removed.
 
 		Returns:
 			bool
@@ -61,7 +61,7 @@ class PortStatusMaskMaster(Base):
 
 	@property
 	def PortModify(self):
-		"""
+		"""This indicates that some attributes of the port is changed.
 
 		Returns:
 			bool

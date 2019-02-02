@@ -547,7 +547,7 @@ class Connect:
         # Handle __import__(IxNetRestApi) to not error out
         if ixNetRestServerIp == None: return
 
-        url = 'http://{0}:{1}/api/v1/sessions'.format(ixNetRestServerIp, ixNetRestServerPort)
+        url = '{0}://{1}:{2}/api/v1/sessions'.format(self.httpScheme, ixNetRestServerIp, ixNetRestServerPort)
 
         if self.serverOs == 'windowsConnectionMgr':
             try:

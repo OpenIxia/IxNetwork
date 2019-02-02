@@ -12,8 +12,8 @@
         releasePortsWhenDone: False
         enableDebugTracing: True
         deleteSessionAfterTest: True
-        ixChassisIp: '192.168.70.11'
-        portList: [['192.168.70.11', '1', '1'], ['192.168.70.11', '2', '1']]
+        ixChassisIp: '192.168.70.128'
+        portList: [['192.168.70.128', '1', '1'], ['192.168.70.128', '1', '2']]
         linuxUsername: 'admin'
         linuxPassword: 'admin'
         configLicense: True
@@ -22,9 +22,9 @@
         licenseTier: 'tier3'
 
         topologyGroup1Name: 'Topo1'
-        topologyGroup1Ports: ['192.168.70.11', '1', '1']
+        topologyGroup1Ports: ['192.168.70.128', '1', '1']
         topologyGroup2Name: 'Topo2'
-        topologyGroup2Ports: ['192.168.70.11', '2', '1']
+        topologyGroup2Ports: ['192.168.70.128', '1', '2']
 
         deviceGroup1Name: 'DG1'
         deviceGroup1Multiplier: 1

@@ -78,6 +78,8 @@ if osPlatform == 'linux':
 licenseServerIp = ['192.168.70.3']
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+# tier1, tier2, tier3, tier3-10g
+licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
 deleteSessionWhenDone = True
@@ -109,11 +111,12 @@ try:
     if osPlatform == 'windows':
         ixNetwork.NewConfig()
 
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-
     ixNetwork.info('Loading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
+
+    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
+    ixNetwork.Globals.Licensing.Mode = licenseMode
+    ixNetwork.Globals.Licensing.Tier = licenseTier
 
     # Assign ports
     testPorts = []
@@ -122,10 +125,6 @@ try:
         testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
 
     ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
-
-    # Example: How to modify a loaded config using JSON's exported config XPATH
-    data = json.dumps([{"xpath": "/topology[1]", "name": 'Topo-BGP-1'}])
-    ixNetwork.ResourceManager.ImportConfig(Arg2=data, Arg3=False)
 
     ixNetwork.StartAllProtocols(Arg1='sync')
 

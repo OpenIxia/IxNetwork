@@ -18,7 +18,8 @@
 #
 #    - Connects to the chassis and verify port availability.
 #    - Load a saved BGP config file.
-#         If the config file is in Windows API server, the config file path format is c:\\path\\bgp.ixncfg
+#         If the config file is in the Windows API server filesystem, the configFile path format is c:\\path\\bgp.ixncfg
+#         and set parameter localFile=False. Ex: fileMgmtObj.loadConfigFile(configFile, localFile=False)
 #
 #    - Optional: Reassign Ports
 #    - Verify port states.
@@ -58,11 +59,11 @@ try:
     #---------- Preference Settings --------------
     forceTakePortOwnership = True
     releasePortsWhenDone = False
-    enableDebugTracing = True
     deleteSessionAfterTest = True
 
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
+    licenseTier = 'tier3'
 
     configFile = 'bgp_ngpf_8.30.ixncfg'
 
@@ -84,10 +85,11 @@ try:
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
-                          serverIpPort='11009',
+                          serverIpPort=11009,
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
-                          generateLogFile='ixiaDebug.log'
+                          generateLogFile='ixiaDebug.log',
+                          httpsSecured=True
                       )
 
     #---------- Preference Settings End --------------
@@ -100,12 +102,13 @@ try:
             portObj.clearPortOwnership(portList)
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
-
-    portObj.releasePorts(portList)
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
         
     fileMgmtObj = FileMgmt(mainObj)    
-    fileMgmtObj.loadConfigFile(configFile)
+    # localFile=True if config file is not located in the Windows c: drive.
+    fileMgmtObj.loadConfigFile(configFile, localFile=True)
+
+    portObj.releasePorts(portList)
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     portObj = PortMgmt(mainObj)
     portObj.assignPorts(portList, forceTakePortOwnership)
@@ -166,9 +169,8 @@ try:
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt):
-    if enableDebugTracing:
-        if not bool(re.search('ConnectionError', traceback.format_exc())):
-            print('\n%s' % traceback.format_exc())
+    if not bool(re.search('ConnectionError', traceback.format_exc())):
+        print('\n%s' % traceback.format_exc())
 
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:

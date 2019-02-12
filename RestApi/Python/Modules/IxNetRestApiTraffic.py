@@ -502,6 +502,10 @@ class Traffic(object):
         # mode    = storeForward|cutThrough|forwardDelay|mef
         self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic/statistics/latency', data={'enabled':enabled, 'mode':mode})
 
+    def configTrafficPacketLossDuration(self, enabled=False):
+        # enabled = True|False
+        self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic/statistics/packetLossDuration', data={'enabled':enabled})
+
     def showProtocolTemplates(self, configElementObj):
         """
         Description

@@ -87,6 +87,7 @@ class Traffic(object):
             
             frameRate: The rate to transmit packets
             frameRateType: bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate
+            frameRateBitRateUnitsType: bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec
             duration: Set fixedDuration
             portDistribution: applyRateToAll|splitRateEvenly.  Default=applyRateToAll
             streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
@@ -351,6 +352,7 @@ class Traffic(object):
            incrementFrom:      For frameSizeType = random.  Frame size from size. 
            incrementTo:        For frameSizeType = random. Frame size to size. 
            frameRateType:      percentLineRate|framesPerSecond
+           frameRateBitRateUnitsType:    bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec
            portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
@@ -372,6 +374,9 @@ class Traffic(object):
 
             if item == 'frameRate': 
                 frameRateData.update({'rate': float(configElements[item])})
+
+            if item == 'frameRateBitRateUnitsType': 
+                frameRateData.update({'bitRateUnitsType': str(configElements[item])})
 
             if item == 'portDistribution': 
                 frameRateDistribution.update({'portDistribution': configElements[item]})
@@ -1526,6 +1531,28 @@ class Traffic(object):
            PATCH: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}
            DATA:  {'suspend': True}
         """
+        self.ixnObj.patch(self.ixnObj.httpHeader+trafficItemObj, data={'suspend': suspend})
+
+    def stopTrafficItem(self, trafficItemObj):
+        """
+        Description
+           Suspend the Traffic Item from sending traffic.
+        
+        Parameter
+           trafficItemObj: <str>: The Traffic Item object.
+           suspend: <bool>: True=suspend traffic.
+        
+        Syntax
+           PATCH: /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}
+           DATA:  {'suspend': True}
+        """
+        self.ixnObj.logInfo('stopTrafficItem: %s' % trafficItemObj)
+        url = self.ixnObj.httpHeader+trafficItemObj+'/traffic/operations/stop'            
+        response = self.ixnObj.post(url)
+        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], timeout=120)
+
+        self.checkTrafficState(expectedState=['stopped'])
+
         self.ixnObj.patch(self.ixnObj.httpHeader+trafficItemObj, data={'suspend': suspend})
 
 

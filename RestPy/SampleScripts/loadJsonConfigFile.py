@@ -78,6 +78,8 @@ if osPlatform == 'linux':
 licenseServerIp = ['192.168.70.3']
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+# tier1, tier2, tier3, tier3-10g
+licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
 deleteSessionWhenDone = True
@@ -89,7 +91,7 @@ forceTakePortOwnership = True
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
-jsonConfigFile = 'bgp.json'
+jsonConfigFile = 'bgp_ngpf_8.50.json'
 
 try:
     testPlatform = TestPlatform(apiServerIp, apiServerPort, platform=platform, log_file_name='restpy.log')
@@ -112,11 +114,12 @@ try:
     if osPlatform == 'windows':
         ixNetwork.NewConfig()
 
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-
     ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
+
+    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
+    ixNetwork.Globals.Licensing.Mode = licenseMode
+    ixNetwork.Globals.Licensing.Tier = licenseTier
 
     # Assigning ports after loading a saved config is optional because you could use the ports that
     # are saved in the config file. Optionally, reassign ports to use other chassis/ports on different testbeds.

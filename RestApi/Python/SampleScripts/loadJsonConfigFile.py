@@ -46,12 +46,12 @@ try:
 
     forceTakePortOwnership = True
     releasePortsWhenDone = False
-    enableDebugTracing = True
     deleteSessionAfterTest = True
-    jsonConfigFile = 'bgp.json'
+    jsonConfigFile = 'bgp_ngpf_8.50.json'
 
     licenseServerIp = '192.168.70.3'
     licenseModel = 'subscription'
+    licenseTier = 'tier3'
 
     ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
@@ -94,11 +94,11 @@ try:
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    portObj.releasePorts(portList)
-    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
-
     fileMgmtObj = FileMgmt(mainObj)
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, option='newConfig')
+
+    portObj.releasePorts(portList)
+    mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     # Set configPortName=False because loading a saved config file assumes ports already have configured names. Don't overwrite them.
     portObj.assignPorts(portList, forceTakePortOwnership, configPortName=False)
@@ -163,9 +163,8 @@ try:
         mainObj.deleteSession()
 
 except (IxNetRestApiException, Exception, KeyboardInterrupt):
-    if enableDebugTracing:
-        if not bool(re.search('ConnectionError', traceback.format_exc())):
-            print('\n%s' % traceback.format_exc())
+    if not bool(re.search('ConnectionError', traceback.format_exc())):
+        print('\n%s' % traceback.format_exc())
 
     if 'mainObj' in locals() and osPlatform == 'linux':
         if deleteSessionAfterTest:

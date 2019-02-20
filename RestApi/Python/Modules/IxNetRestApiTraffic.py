@@ -350,7 +350,8 @@ class Traffic(object):
            transmissionType:   fixedFrameCount|continuous|fixedDuration
            incrementFrom:      For frameSizeType = random.  Frame size from size. 
            incrementTo:        For frameSizeType = random. Frame size to size. 
-           frameRateType:      percentLineRate|framesPerSecond
+           frameRateType:      bitsPerSecond|percentLineRate|framesPerSecond
+           frameRateBitRateUnitsType:    bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec
            portDistribution:   applyRateToAll|splitRateEvenly. Default=applyRateToAll
            streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently
         """
@@ -372,6 +373,9 @@ class Traffic(object):
 
             if item == 'frameRate': 
                 frameRateData.update({'rate': float(configElements[item])})
+
+            if item == 'frameRateBitRateUnitsType': 
+                frameRateData.update({'bitRateUnitsType': str(configElements[item])})
 
             if item == 'portDistribution': 
                 frameRateDistribution.update({'portDistribution': configElements[item]})

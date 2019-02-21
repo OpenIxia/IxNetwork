@@ -87,6 +87,7 @@ class Traffic(object):
             
             frameRate: The rate to transmit packets
             frameRateType: bitsPerSecond|framesPerSecond|interPacketGap|percentLineRate
+            frameRateBitRateUnitsType: bitsPerSec|bytesPerSec|kbitsPerSec|kbytesPerSec|mbitsPerSec|mbytesPerSec
             duration: Set fixedDuration
             portDistribution: applyRateToAll|splitRateEvenly.  Default=applyRateToAll
             streamDistribution: splitRateEvenly|applyRateToAll. Default=splitRateEvently

@@ -160,7 +160,6 @@ try:
     ipv4PrefixPool.PrefixLength.Single(32)
 
     ixNetwork.StartAllProtocols(Arg1='sync')
-    ixNetwork.StartAllProtocols()
 
     ixNetwork.info('Verify protocol sessions\n')
     protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')

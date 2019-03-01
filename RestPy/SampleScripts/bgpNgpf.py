@@ -68,7 +68,7 @@ licenseMode = 'subscription'
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
-# For linux and connection_manager only. Set to False to leave the session alive for debugging.
+# For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
@@ -119,6 +119,7 @@ try:
     ipv4 = ethernet1.Ipv4.add(Name='Ipv4')
     ipv4.Address.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
     ipv4.GatewayIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
+
     ixNetwork.info('Configuring BgpIpv4Peer 1')
     bgp1 = ipv4.BgpIpv4Peer.add(Name='Bgp1')
     bgp1.DutIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')

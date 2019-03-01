@@ -67,7 +67,7 @@ licenseMode = 'subscription'
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
-# For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
+# For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
 debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
@@ -224,7 +224,7 @@ try:
         session.remove()
 
 except Exception as errMsg:
-    ixNetwork.debug('\n%s' % traceback.format_exc())
+    print('\n%s' % traceback.format_exc())
 
     if debugMode and 'session' in locals():
         session.remove()

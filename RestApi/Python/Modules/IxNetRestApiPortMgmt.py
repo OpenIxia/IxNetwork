@@ -725,6 +725,49 @@ class PortMgmt(object):
             portType = response.json()['type']
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data={'media': mediaType})
 
+    def modifyL1Config(self, configSettings, portList='all'):
+        """
+        Description
+           Modify Layer 1 Configuration
+
+        Parameters
+           portList: <'all'|list of ports>: 
+                     <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
+                     Or if portList ='all', will modify all assigned ports to the specified configSettings.
+                     Note:  all ports must be of the same type
+
+           configSettings: <dict>: L1 Settings. The actual settings depend on the card type.
+                           example for novusHundredGigLan card:   
+                           configSettings ={'enabledFlowControl': True,
+                                            'flowControlDirectedAddress': '01 80 C2 00 00 00 CC',
+                                            'txIgnoreRxLinkFaults': False,
+                                            'laserOn': True,
+                                            'ieeeL1Defaults': False,
+                                            'enableAutoNegotiation': False,
+                                            'linkTraining': False,
+                                            'firecodeAdvertise': False,
+                                            'firecodeRequest': False,
+                                            'rsFecAdvertise': False,
+                                            'rsFecRequest': False,
+                                            'useANResults': False,
+                                            'firecodeForceOn': True,
+                                            'rsFecForceOn': False,
+                                            'forceDisableFEC': False}
+        """
+        self.ixnObj.logInfo('modifyL1Config: portList = {} configSettings = {}'.format(portList, configSettings))
+        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
+        if portList == 'all':
+            #vportList = self.getAllVportList()
+            portList = self.getPhysicalPortsFromCreatedVports()
+
+        # vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
+        vportList = self.getVportFromPortList(portList)
+        for vport in vportList:
+            response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
+            portType = response.json()['type']
+            self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data=configSettings)
+
+            
     def configLoopbackPort(self, portList='all', enabled=True):
         """
         Description

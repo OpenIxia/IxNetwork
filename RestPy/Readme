@@ -38,11 +38,11 @@ Installation:
         - pip install -U --no-cache-dir ixnetwork_restpy
     
     Github:
-        - Clone from: https://github.com/OpenIxia/IxNetwork
-        - The tool is under https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/ixnetwork_restpy
+        - Clone from: https://github.com/OpenIxia/ixnetwork_restpy
+        - The tool is under https://github.com/OpenIxia/ixnetwork_restpy
 
         - Note: You need to include this path in your system's environment PYTHONPATH:
-	        /your_path/IxNetwork/RestApi/Python/RestPy/ixnetwork_restpy
+	        /your_path/ixnetwork_restpy
 
 Sample scripts and helper class functions:
     Sample scripts:

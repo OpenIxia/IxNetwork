@@ -1260,11 +1260,15 @@ class Traffic(object):
         Description
             Return all of the Traffic Item names.
         """
-        trafficItemUrl = self.ixnObj.sessionUrl+'/traffic/trafficItem'
-        response = self.ixnObj.get(trafficItemUrl)
+        numOfTrafficItem = 0
         trafficItemNameList = []
-        for eachTrafficItemId in response.json():
-            trafficItemNameList.append(eachTrafficItemId['name'])
+        trafficItemUrl = self.ixnObj.sessionUrl+'/traffic/trafficItem'
+        response = self.ixnObj.get(trafficItemUrl+ "?skip=" + str(numOfTrafficItem) + "&take=100")
+        while numOfTrafficItem < response.json()['count']:
+            for eachTrafficItemId in response.json()['data']:
+                trafficItemNameList.append(eachTrafficItemId['name'])
+            numOfTrafficItem += 100
+            response = self.ixnObj.get(trafficItemUrl+ "?skip=" + str(numOfTrafficItem) + "&take=100")
         return trafficItemNameList
 
     def getTrafficItemObjByName(self, trafficItemName):
@@ -1308,8 +1312,14 @@ class Traffic(object):
                              ['/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1', ...]
         """
         if trafficItemList == 'all':
-            response = self.ixnObj.get(self.ixnObj.sessionUrl + "/traffic/trafficItem")
-            trafficItemList = ["%s" % (str(i["links"][0]["href"])) for i in response.json()]
+            trafficItemList = []
+            numOfTrafficItem = 0
+            response = self.ixnObj.get(self.ixnObj.sessionUrl + '/traffic/trafficItem'  + "?skip=" + str(numOfTrafficItem) + "&take=100")
+            while numOfTrafficItem < response.json()['count']:
+                for eachTrafficItem in response.json()['data']:
+                    trafficItemList.append(eachTrafficItem['links'][0]['href'])
+                numOfTrafficItem += 100
+                response = self.ixnObj.get(self.ixnObj.sessionUrl + '/traffic/trafficItem'  + "?skip=" + str(numOfTrafficItem) + "&take=100")
         else:
             if type(trafficItemList) != list:
                 trafficItemList = trafficItemList.split(' ')

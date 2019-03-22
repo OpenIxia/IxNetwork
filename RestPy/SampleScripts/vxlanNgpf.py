@@ -25,21 +25,18 @@ Requirements
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
-Script development API doc:
-   - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
-   - On a web browser:
-         - If installed in Windows: enter: file://c:/<path_to_ixnetwork_restpy>/docs/index.html
-         - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
+RestPy Doc:
+    https://www.openixia.com/userGuides/restPyDoc
 
 Usage:
    # Defaults to Windows
    - Enter: python <script>
 
    # Connect to Windows Connection Manager
-   - Enter: python <script> windowsConnectionMgr
+   - Enter: python <script> connection_manager <apiServerIp> <apiServerPort>
 
    # Connect to Linux API server
-   - Enter: python <script> linux
+   - Enter: python <script> linux <apiServerIp> <apiServerPort>
 
 """
 
@@ -49,60 +46,49 @@ import sys, os, time, traceback
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
-# your system knows where the RestPy modules are located.
-#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
-
-# Defaulting to windows
+# Set defaults
 osPlatform = 'windows'
+apiServerIp = '192.168.70.3'
+apiServerPort = 11009
+username = 'admin'
+password = 'admin'
 
+# Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input: windows, windowsConnectionMgr or linux
+    # Command line input:
+    #   osPlatform: windows, connection_manager or linux
     osPlatform = sys.argv[1]
-
-# Change API server values to use your setup
-if osPlatform in ['windows', 'windowsConnectionMgr']:
-    platform = 'windows'
-    apiServerIp = '192.168.70.3'
-    apiServerPort = 11009
-
-# Change API server values to use your setup
-if osPlatform == 'linux':
-    platform = 'linux'
-    apiServerIp = '192.168.70.12'
-    apiServerPort = 443
-    username = 'admin'
-    password = 'admin'
+    apiServerIp = sys.argv[2]
+    apiServerPort = sys.argv[3]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+# tier1, tier2, tier3, tier3-10g
+licenseTier = 'tier3'
 
-# For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
-deleteSessionWhenDone = True
+# For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
+debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
 # A list of chassis to use
 ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
 
-    # Console output verbosity: None|request|request_response
+    # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'
 
-    if osPlatform == 'linux':
-        testPlatform.Authenticate(username, password)
-
+    testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
-    ixNetwork = session.Ixnetwork
 
-    if osPlatform == 'windows':
-        ixNetwork.NewConfig()
+    ixNetwork = session.Ixnetwork
+    ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
@@ -242,16 +228,14 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
-    if deleteSessionWhenDone:
+    if debugMode:
         # For Linux and WindowsConnectionMgr only
-        if osPlatform in ['linux', 'windowsConnectionMgr']:
-            session.remove()
+        session.remove()
 
 except Exception as errMsg:
-    ixNetwork.debug('\n%s' % traceback.format_exc())
-    if deleteSessionWhenDone and 'session' in locals():
-        if osPlatform in ['linux', 'windowsConnectionMgr']:
-            session.remove()
+    print('\n%s' % traceback.format_exc())
+    if debugMode and 'session' in locals():
+        session.remove()
 
 
 

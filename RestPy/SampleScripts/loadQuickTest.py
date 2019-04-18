@@ -5,7 +5,11 @@ loadQuickTest.py:
 
    - Connect to the API server
    - Configure license server IP
-   - Loads a saved Quick Test .ixncfg config file that is in the same local directory: QuickTestNgpf_vm8.20.ixncfg
+   - Loads a saved Quick Test config file that is in the same local directory: QuickTest_rfc2544_8.50.ixncfg
+        Note: This script will run all the created Quick Tests in the saved config file one after another and
+              retrieve all of the csv result files with a timestamp on them so they don't overwrite your existing
+              result files.
+
    - Configure license server IP
    - Optional: Assign ports or use the ports that are in the saved config file.
    - Start all protocols
@@ -23,8 +27,7 @@ Requirements
    - IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - ixnetwork_restpy v1.0.29
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install -U --no-cache-dir ixnetwork_restpy (Minimum version 1.0.29)
 
 RestPy Doc:
     https://www.openixia.com/userGuides/restPyDoc
@@ -70,22 +73,31 @@ licenseMode = 'subscription'
 licenseTier = 'tier3'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = False
+debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-configFile = 'QuickTestNgpf_vm8.20.ixncfg'
+onfigFile = 'QuickTestNgpf_vm8.20.ixncfg'
+configFile = 'QuickTest_rfc2544_8.50.ixncfg'
+
+# Where to copy the csv and pdf result files.
+# If using Windows API server and if you want to copy result files into same windows filesystem
+windowsDestinationFolder = 'c:\\Results' 
+
+# For running this script on a Linux and copying the result files to the local Linux.
+linuxDestinationFolder = './' 
 
 # A list of chassis to use
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
-class timestamp:
+
+class Timestamp:
     """
     Get timestamp for the result files.
     """
-    def __init__(self):
+    def now(self):
         self._get = datetime.datetime.now().strftime('%H%M%S')
 
     @property
@@ -93,67 +105,23 @@ class timestamp:
         return self._get
 
 
-def verifyQuickTestInitialization(quickTestHandle):
+def addTimestampToFile(filename):
     """
-    quickTestHandle = /api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/{id}
+    Add a timestamp to a file to avoid overwriting existing files.
+
+    If a path is included, it will yank out the file from the path.
     """
-    for timer in range(1,20+1):
-        currentAction = getQuickTestCurrentAction(quickTestHandle)
-        ixNetwork.info('\n\nverifyQuickTestInitialization currentState: %s' % currentAction)
-        if timer < 20:
-            if currentAction == 'TestEnded' or currentAction == 'None':
-                ixNetwork.info('\n\nverifyQuickTestInitialization CurrentState = %s\n\tWaiting %s/20 seconds to change state\n\n' % (currentAction, timer))
-                time.sleep(1)
-                continue
-            else:
-                break
+    currentTimestamp = timestamp.get
+    if '\\' in filename:
+        filename = filename.split('\\')[-1]
 
-        if timer >= 20:
-            if currentAction == 'TestEnded' or currentAction == 'None':
-                raise Exception('Quick Test is stuck at TestEnded.')
+    if '/' in filename:
+        filename = filename.split('/')[-1]
 
-    ixNetworkVersion = ixNetwork.Globals.BuildNumber
-    match = re.match('([0-9]+)\.[^ ]+ *', ixNetworkVersion)
-    ixNetworkVersion = int(match.group(1))
-
-    applyQuickTestCounter = 60
-    for counter in range(1,applyQuickTestCounter+1):
-        quickTestApplyStates = ['InitializingTest', 'ApplyFlowGroups', 'SetupStatisticsCollection']
-        currentAction = getQuickTestCurrentAction(quickTestHandle)
-        if currentAction == None:
-            currentAction = 'ApplyingAndInitializing'
-
-        ixNetwork.info('\n\nverifyQuickTestInitialization: %s  Expecting: TransmittingFrames\n\tWaiting %s/%s seconds\n\n' % (currentAction, counter, applyQuickTestCounter))
-
-        if ixNetworkVersion >= 8:
-            if counter < applyQuickTestCounter and currentAction != 'TransmittingFrames':
-                time.sleep(1)
-                continue
-
-            if counter < applyQuickTestCounter and currentAction == 'TransmittingFrames':
-                ixNetwork.info('\n\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n\n')
-            break
-
-        if ixNetworkVersion < 8:
-            if counter < applyQuickTestCounter and currentAction == 'ApplyingAndInitializing':
-                time.sleep(1)
-                continue
-
-            if counter < applyQuickTestCounter and currentAction == 'ApplyingAndInitializing':
-                ixNetwork.info('\n\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n\n')
-            break
-
-        if counter == applyQuickTestCounter:
-            if ixNetworkVersion >= 8 and currentAction != 'TransmittingFrames':
-                if currentAction == 'ApplyFlowGroups':
-                    ixNetwork.info('\n\nIxNetwork is stuck on Applying Flow Groups. You need to go to the session to FORCE QUIT it.\n\n')
-
-                raise Exception('\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
-                        currentAction, counter, applyQuickTestCounter))
-
-            if ixNetworkVersion < 8 and currentAction != 'Trial':
-                raise Exception('\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
-                    currentAction, counter, applyQuickTestCounter))
+    newFilename = filename.split('.')[0]
+    newFileExtension = filename.split('.')[1]
+    newFileWithTimestamp = '{}_{}.{}'.format(newFilename, currentTimestamp,  newFileExtension)
+    return newFileWithTimestamp
 
 
 def getQuickTestCurrentAction(quickTestHandle):
@@ -414,24 +382,6 @@ def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', includeTime
                 print('copyApiServerFileToLocalLinux ERROR:', errMsg)
 
 
-def addTimestampToFile(filename):
-    """
-    Add a timestamp to a file to avoid overwriting existing files.
-
-    If a path is included, it will yank out the file from the path.
-    """
-    currentTimestamp = timestamp.get
-    if '\\' in filename:
-        filename = filename.split('\\')[-1]
-
-    if '/' in filename:
-        filename = filename.split('/')[-1]
-
-    newFilename = filename.split('.')[0]
-    newFileExtension = filename.split('.')[1]
-    newFileWithTimestamp = '{}_{}.{}'.format(newFilename, currentTimestamp,  newFileExtension)
-    return newFileWithTimestamp
-
 
 try:
     testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
@@ -458,33 +408,38 @@ try:
 
     ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
 
-    quickTestHandle = ixNetwork.QuickTest.Rfc2544throughput.find(Name='QuickTest1')
-    quickTestHandle.Apply()
-    quickTestHandle.Start()
-    verifyQuickTestInitialization(quickTestHandle)
-    monitorQuickTestRunningProgress(quickTestHandle)
-
     # Create a timestamp for test result files.
     # To append a timestamp in the CSV result files so existing result files won't get overwritten.
-    timestamp = timestamp()
+    timestamp = Timestamp()
 
-    # Copy CSV files from Windows to same windows drive
-    getQuickTestCsvFiles(quickTestHandle, copyToPath='c:\\Results', includeTimestamp=True)
+    for quickTestHandle in ixNetwork.QuickTest.Rfc2544throughput.find():
+        quickTestHandle.Apply()
+        quickTestHandle.Start()
+        verifyQuickTestInitialization(quickTestHandle)
+        monitorQuickTestRunningProgress(quickTestHandle)
 
-    # Copy CSV from either a Windows or Linux API server to local linux filesystem
-    getQuickTestCsvFiles(quickTestHandle, copyToPath='.', includeTimestamp=True)
+        timestamp.now()
 
-    pdfFile = quickTestHandle.GenerateReport()
-    
-    # Copying the PDF from Windows to local Windows.
-    copyFileWindowsToLocalWindows(pdfFile, 'c:\\Results')
+        # Copy CSV files from Windows to same windows drive
+        getQuickTestCsvFiles(quickTestHandle, copyToPath=windowsDestinationFolder, includeTimestamp=True)
 
-    # Copying PDF from either a Windows API server or from a Linux API server to local Linux filesystem.
-    destPdfTestResult = addTimestampToFile(pdfFile)
-    session.DownloadFile(pdfFile, './'+destPdfTestResult)
+        # Copy CSV from either a Windows or Linux API server to local linux filesystem
+        getQuickTestCsvFiles(quickTestHandle, copyToPath=linuxDestinationFolder, includeTimestamp=True)
 
-    quickTestHandle.Stop()
-    quickTestHandle.remove()
+        pdfFile = quickTestHandle.GenerateReport()
+        destPdfTestResult = addTimestampToFile(pdfFile)
+
+        # Copying the PDF from Windows to local Windows.
+        copyFileWindowsToLocalWindows(pdfFile, windowsDestinationFolder+'\\'+destPdfTestResult)
+
+        # Copying PDF from either a Windows API server or from a Linux API server to local Linux filesystem.
+        ixNetwork.info('Copying test result PDF to: {}'.format(linuxDestinationFolder+destPdfTestResult))
+        session.DownloadFile(pdfFile, linuxDestinationFolder+destPdfTestResult)
+
+        # Examples to show how to stop and remove a quick test.
+        # Uncomment one or both if you want to use them.
+        #quickTestHandle.Stop()
+        #quickTestHandle.remove()
 
     if debugMode == False:
         # For Linux and Windows Connection Manager only

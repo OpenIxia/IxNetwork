@@ -765,6 +765,8 @@ class PortMgmt(object):
         for vport in vportList:
             response = self.ixnObj.get(self.ixnObj.httpHeader+vport, silentMode=True)
             portType = response.json()['type']
+            # There are several portTypes that ends with 'Fcoe'.  This has to be stripped.
+            portType = portType.strip('Fcoe')
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data=configSettings)
 
             

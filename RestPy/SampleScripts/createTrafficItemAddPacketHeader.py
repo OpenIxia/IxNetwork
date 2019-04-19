@@ -6,7 +6,8 @@ Description
    This script demonstrates how to create two different types of traffic items (RAW and IPv4)
    and creating packet headers for each traffic item.
 
-   RAW traffic item means not using NGPF protocol emulations. Build every packet header in the traffic item starting with Ethernet.
+   RAW traffic item means not using NGPF protocol emulations. Build every packet header in the
+   traffic item starting at the Ethernet stack.
    Use vport as source/dst endpoints in the traffic item.
 
    IPv4traffic item  means to use configured NGPF protocols (Ethernet, VLAN, IPv4, other).
@@ -22,13 +23,8 @@ Description
 
    - Load a saved config file.
 
-   - Create 2 Traffic Items. Each Traffic Item with custom packet header added.
-
-        Traffic Item #1:
-           - Packet header: GRE
-
-        Traffic Item #2 (RAW traffic item):
-           - Packet header: Ethernet, VLAN, IPv4, UDP, GTPu, IPv4, TCP and ICMP  
+   - Create 1 Raw Traffic Items. Each Traffic Item with custom packet header added.
+        - Packet header: Ethernet, VLAN, IPv4, UDP, TCP and ICMP  
 
    - Start all protools
    - Verify all protocols
@@ -87,7 +83,7 @@ licenseMode = 'subscription'
 licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 forceTakePortOwnership = True
 
@@ -180,28 +176,7 @@ try:
     protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
     ixNetwork.info(protocolsSummary)
 
-    greTrafficItemObj = createTrafficItem(trafficItemName = 'GRE',
-                                          biDirectional = False,
-                                          trafficType = 'ipv4',
-                                          frameRate = 28,
-                                          frameSize = 64,
-                                          frameRateType = 'framesPerSecond',
-                                          frameCount = 10000,
-                                          transmissionControlType = 'fixedFrameCount',
-                                          tracking = ['flowGroup0'],
-                                          srcEndpoint = ixNetwork.Topology.find(Name='Topo1'),
-                                          dstEndpoint = ixNetwork.Topology.find(Name='Topo2')
-                                      )
-
-    # Enable/disable the traffic item
-    greTrafficItemObj.Enabled = False    
-
-    greFieldObj = createPacketHeader(greTrafficItemObj, packetHeaderToAdd='^GRE', appendToStack='IPv4')
-    greFieldObj.singleValue = 3
-
-
-    # Create GTPu traffic item
-    gtpuTrafficItemObj = createTrafficItem(trafficItemName = 'GTPu',
+    rawTrafficItemObj = createTrafficItem(trafficItemName = 'Raw Samples',
                                           biDirectional = False,
                                           trafficType = 'raw',
                                           frameRate = 28,
@@ -232,57 +207,49 @@ try:
     ethernetSrcField.StepValue = "00:00:00:00:00:01"
     ethernetSrcField.CountValue = 1
 
-    vlanFieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='^VLAN', appendToStack='Ethernet II')
-    vlanFieldObj.find(DisplayName='VLAN Priority').Auto = False
-    vlanFieldObj.find(DisplayName='VLAN Priority').SingleValue = 3
-    vlanFieldObj.find(DisplayName='VLAN-ID').Auto = False
-    vlanFieldObj.find(DisplayName='VLAN-ID').SingleValue = 1008
+    vlanFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^VLAN', appendToStack='Ethernet II')
+    vlanField = vlanFieldObj.find(DisplayName='VLAN Priority')
+    vlanField.Auto = False
+    vlanField.SingleValue = 3
 
-    outerIpv4FieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='IPv4', appendToStack='^VLAN')
-    outerIpv4FieldObj.find(DisplayName='Source Address').ValueType = 'increment'
-    outerIpv4FieldObj.find(DisplayName='Source Address').StartValue = '1.1.1.1'
-    outerIpv4FieldObj.find(DisplayName='Source Address').StepValue = '0.0.0.1'
-    outerIpv4FieldObj.find(DisplayName='Source Address').CountValue = 1
+    ipv4FieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='IPv4', appendToStack='^VLAN')
+    ipv4SrcField = ipv4FieldObj.find(DisplayName='Source Address')
+    ipv4SrcField.ValueType = 'increment'
+    ipv4SrcField.StartValue = '1.1.1.1'
+    ipv4SrcField.StepValue = '0.0.0.1'
+    ipv4SrcField.CountValue = 1
 
-    outerIpv4FieldObj.find(DisplayName='Destination Address').ValueType = 'increment'
-    outerIpv4FieldObj.find(DisplayName='Destination Address').StartValue = '1.1.1.2'
-    outerIpv4FieldObj.find(DisplayName='Destination Address').StepValue = '0.0.0.1'
-    outerIpv4FieldObj.find(DisplayName='Destination Address').CountValue = 1
+    ipv4DstField = ipv4FieldObj.find(DisplayName='Destination Address')
+    ipv4DstField.ValueType = 'increment'
+    ipv4DstField.StartValue = '1.1.1.2'
+    ipv4DstField.StepValue = '0.0.0.1'
+    ipv4DstField.CountValue = 1
 
-    udpFieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='^UDP', appendToStack='IPv4')
-    udpFieldObj.find(DisplayName='UDP-Source-Port').Auto = False
-    udpFieldObj.find(DisplayName='UDP-Source-Port').SingleValue = 1000
-    udpFieldObj.find(DisplayName='UDP-Dest-Port').Auto = False
-    udpFieldObj.find(DisplayName='UDP-Dest-Port').SingleValue = 1001
+    # 000 Routine, 001 Priority, 010 Immediate, 011 Flash, 100 Flash Override,
+    # 101 CRITIC/ECP, 110 Internetwork Control, 111 Network Control
+    ipv4PrecedenceField = ipv4FieldObj.find(DisplayName='Precedence')
+    ipv4PrecedenceField.ActiveFieldChoice = True
+    ipv4PrecedenceField.FieldValue = '011 Flash'
 
-    gtpuFieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='GTPu', appendToStack='UDP')
-    gtpuFieldObj.find(DisplayName='').Auto = False
-    gtpuFieldObj.find(DisplayName='').SingleValue = 1002
-    gtpuFieldObj.find(DisplayName='').Auto = False
-    gtpuFieldObj.find(DisplayName='').SingleValue = 1003
+    udpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^UDP', appendToStack='IPv4')
+    udpSrcField = udpFieldObj.find(DisplayName='UDP-Source-Port')
+    udpSrcField.Auto = False
+    udpSrcField.SingleValue = 1000
 
-    innerIpv4FieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='IPv4', appendToStack='^GTPu')
-    innerIpv4FieldObj.find(DisplayName='Source Address').ValueType = 'increment'
-    innerIpv4FieldObj.find(DisplayName='Source Address').StartValue = '10.1.1.1'
-    innerIpv4FieldObj.find(DisplayName='Source Address').StepValue = '0.0.0.1'
-    innerIpv4FieldObj.find(DisplayName='Source Address').CountValue = 1
+    udpDstField = udpFieldObj.find(DisplayName='UDP-Dest-Port')
+    udpDstField.Auto = False
+    udpDstField.SingleValue = 1001
 
-    innerIpv4FieldObj.find(DisplayName='Destination Address').ValueType = 'increment'
-    innerIpv4FieldObj.find(DisplayName='Destination Address').StartValue = '10.1.1.2'
-    innerIpv4FieldObj.find(DisplayName='Destination Address').StepValue = '0.0.0.1'
-    innerIpv4FieldObj.find(DisplayName='Destination Address').CountValue = 1
+    tcpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^TCP', appendToStack='UDP')
+    tcpSrcField = tcpFieldObj.find(DisplayName='TCP-Source-Port')
+    tcpSrcField.Auto = False
+    tcpSrcField.SingleValue = 1002
 
-    tcpFieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='^TCP', appendToStack='IPv4')
-    tcpFieldObj.find(DisplayName='TCP-Source-Port').Auto = False
-    tcpFieldObj.find(DisplayName='TCP-Source-Port').SingleValue = 1002
-    tcpFieldObj.find(DisplayName='TCP-Dest-Port').Auto = False
-    tcpFieldObj.find(DisplayName='TCP-Dest-Port').SingleValue = 1003
+    tcpDstField = tcpFieldObj.find(DisplayName='TCP-Dest-Port')
+    tcpDstField.Auto = False
+    tcpDstField.SingleValue = 1003
 
-    icmpFieldObj = createPacketHeader(gtpuTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='^TCP')
-    #icmpFieldObj.find(DisplayName='ICMP-Source-Port').Auto = False
-    #icmpFieldObj.find(DisplayName='ICMP-Source-Port').SingleValue = 1002
-    #icmpFieldObj.find(DisplayName='ICMP-Dest-Port').Auto = False
-    #icmpFieldObj.find(DisplayName='ICMP-Dest-Port').SingleValue = 1003
+    icmpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='^TCP')
 
     for trafficItem in ixNetwork.Traffic.TrafficItem.find():
         trafficItem.Generate()
@@ -346,13 +313,13 @@ try:
         ValueType: singleValue
     '''
 
-    if debugMode:
+    if debugMode == False:
         # For Linux and WindowsConnectionMgr only
         session.remove()
 
 except Exception as errMsg:
     ixNetwork.debug('\n%s' % traceback.format_exc())
-    if debugMode and 'session' in locals():
+    if debugMode == False and 'session' in locals():
         session.remove()
 
 

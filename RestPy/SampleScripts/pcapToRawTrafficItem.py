@@ -36,11 +36,10 @@ Usage:
    - Enter: python <script>
 
    # Connect to Windows Connection Manager
-   - Enter: python <script> windowsConnectionMgr
+   - Enter: python <script> connection_manager <apiServerIp> 443
 
    # Connect to Linux API server
-   - Enter: python <script> linux
-
+   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import sys, os, re, traceback
@@ -56,25 +55,25 @@ from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAss
 #sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 
 # Defaulting to windows
-osPlatform = 'windows'
+# Options: windows|connection_manager|linux
+osPlatform = 'windows' 
 
+apiServerIp = '192.168.70.3'
+
+# windows:11009. linux:443. connection_manager:443
+apiServerPort = 11009
+
+# For Linux API server only
+username = 'admin'
+password = 'admin'
+
+# Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input: windows, windowsConnectionMgr or linux
+    # Command line input:
+    #   osPlatform: windows, connection_manager or linux
     osPlatform = sys.argv[1]
-
-# Change API server values to use your setup
-if osPlatform in ['windows', 'windowsConnectionMgr']:
-    platform = 'windows'
-    apiServerIp = '192.168.70.3'
-    apiServerPort = 11009
-
-# Change API server values to use your setup
-if osPlatform == 'linux':
-    platform = 'linux'
-    apiServerIp = '192.168.70.12'
-    apiServerPort = 443
-    username = 'admin'
-    password = 'admin'
+    apiServerIp = sys.argv[2]
+    apiServerPort = sys.argv[3]    
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']

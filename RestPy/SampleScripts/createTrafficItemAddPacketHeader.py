@@ -45,10 +45,10 @@ Usage:
    - Enter: python <script>
 
    # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> <apiServerPort>
+   - Enter: python <script> connection_manager <apiServerIp> 443
 
    # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> <apiServerPort>
+   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import os, sys, traceback
@@ -60,9 +60,15 @@ from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 # Set defaults
-osPlatform = 'windows'
+# Options: windows|connection_manager|linux
+osPlatform = 'windows' 
+
 apiServerIp = '192.168.70.3'
+
+# windows:11009. linux:443. connection_manager:443
 apiServerPort = 11009
+
+# For Linux API server only
 username = 'admin'
 password = 'admin'
 

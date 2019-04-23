@@ -17,14 +17,9 @@ Requirements
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
-   - Helper functions: https://github.com/OpenIxia/IxNetwork/RestApi/Python/Restpy/Modules:
-                       - Statistics.py and PortMgmt.py
 
-Script development API doc:
-   - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
-   - On a web browser:
-         - If installed in Windows: enter: file://c:/<path_to_ixnetwork_restpy>/docs/index.html
-         - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
+RestPy Doc:
+    https://www.openixia.com/userGuides/restPyDoc
 """
 
 import os, sys, time, traceback
@@ -33,62 +28,46 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
-# your system knows where the RestPy modules are located.
-#sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
+# Set defaults
+# Options: windows|connection_manager|linux
+osPlatform = 'windows' 
 
-# Import modules containing helper functions
-#from StatisticsMgmt import Statistics
-#from PortMgmt import Ports
+apiServerIp = '192.168.70.3'
 
-# Defaulting to windows
-osPlatform = 'windows'
+# windows:11009. linux:443. connection_manager:443
+apiServerPort = 11009
 
+# For Linux API server only
+username = 'admin'
+password = 'admin'
+
+# Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input: windows, windowsConnectionMgr or linux
+    # Command line input:
+    #   osPlatform: windows, connection_manager or linux
     osPlatform = sys.argv[1]
-
-# Change API server values to use your setup
-if osPlatform in ['windows', 'windowsConnectionMgr']:
-    platform = 'windows'
-    apiServerIp = '192.168.70.3'
-    apiServerPort = 11009
-
-# Change API server values to use your setup
-if osPlatform == 'linux':
-    platform = 'linux'
-    apiServerIp = '192.168.70.12'
-    apiServerPort = 443
-    username = 'admin'
-    password = 'admin'
+    apiServerIp = sys.argv[2]
+    apiServerPort = sys.argv[3]    
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform)
-    testPlatform.Trace = 'request_response'
-    
-    # authenticate with username and password
-    testPlatform.Authenticate('admin', 'admin')
-
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'
 
     if osPlatform == 'linux':
         testPlatform.Authenticate(username, password)
-        session = testPlatform.Sessions.find(Id=12)
+        session = testPlatform.Sessions.find(Id=4)
         ixNetwork = session.Ixnetwork
-        ixNetwork.ApiKey = '9277fc8fe92047f6a126f54481ba07fc'
+        ixNetwork.ApiKey = 'b69dc65036924525adeb6f550a50b587'
 
-    if osPlatform == 'windows':
+    if osPlatform in ['windows', 'connection_manager']:
         # Windows support only one session. Id is always equal 1.
         session = testPlatform.Sessions.find(Id=1)
     
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
 
-    from pprint import pprint
-    import json
-
 
 except Exception as errMsg:
-    print('\n%s' % traceback.format_exc())
+    print('\nError: %s' % traceback.format_exc())
     print('\nrestPy.Exception:', errMsg)

@@ -906,7 +906,7 @@ class Connect:
 
             # 3: Start the new session
             response = self.post(self.sessionId+'/operations/start')
-            if self.linuxServerWaitForSuccess(response.json()['url'], timeout=60) == 1:
+            if self.linuxServerWaitForSuccess(response.json()['url']) == 1:
                 raise IxNetRestApiException
 
             if self.webQuickTest == True:
@@ -1083,8 +1083,10 @@ class Connect:
             self.logInfo('\tCurrentStatus: {0}:  {1}/{2} seconds'.format(currentStatus, counter, timeout), timestamp=False)
             if counter < timeout+1 and currentStatus != 'Operation successfully completed':
                 time.sleep(1)
+
             if counter == timeout+1 and currentStatus != 'Operation successfully completed':
                 return 1
+
             if counter < timeout+1 and currentStatus == 'Operation successfully completed':
                 return 0
 

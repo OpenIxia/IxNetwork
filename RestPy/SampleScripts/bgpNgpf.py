@@ -22,6 +22,7 @@ Supports IxNetwork API servers:
 
 Requirements:
    - IxNetwork 8.50
+
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
@@ -34,10 +35,10 @@ Usage:
    - Enter: python <script>
 
    # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> <apiServerPort>
+   - Enter: python <script> connection_manager <apiServerIp> 443
 
    # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> <apiServerPort>
+   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import sys, os, time, traceback
@@ -47,9 +48,15 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 # Set defaults
-osPlatform = 'windows'
+# Options: windows|connection_manager|linux
+osPlatform = 'windows' 
+
 apiServerIp = '192.168.70.3'
+
+# windows:11009. linux:443. connection_manager:443
 apiServerPort = 11009
+
+# For Linux API server only
 username = 'admin'
 password = 'admin'
 
@@ -75,7 +82,7 @@ debugMode = False
 forceTakePortOwnership = True
 
 ixChassisIpList = ['192.168.70.128']
-portList = [ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]
+portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 
 try:
     testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
@@ -85,7 +92,6 @@ try:
 
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
-
     ixNetwork = session.Ixnetwork
     ixNetwork.NewConfig()
 
@@ -207,14 +213,14 @@ try:
     flowStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
     ixNetwork.info('{}\n'.format(flowStatistics))
 
-    if debugMode:
+    if debugMode == False:
         # For linux and connection_manager only
         session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
 
-    if debugMode and 'session' in locals():
+    if debugMode == False and 'session' in locals():
         session.remove()
 
 

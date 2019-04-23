@@ -33,11 +33,10 @@ Usage:
    - Enter: python <script>
 
    # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> <apiServerPort>
+   - Enter: python <script> connection_manager <apiServerIp> 443
 
    # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> <apiServerPort>
-
+   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import sys, os, time, traceback
@@ -47,9 +46,15 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 # Set defaults
-osPlatform = 'windows'
+# Options: windows|connection_manager|linux
+osPlatform = 'windows' 
+
 apiServerIp = '192.168.70.3'
+
+# windows:11009. linux:443. connection_manager:443
 apiServerPort = 11009
+
+# For Linux API server only
 username = 'admin'
 password = 'admin'
 
@@ -69,7 +74,7 @@ licenseMode = 'subscription'
 licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -228,13 +233,13 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
-    if debugMode:
+    if debugMode == False:
         # For Linux and WindowsConnectionMgr only
         session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
-    if debugMode and 'session' in locals():
+    if debugMode == False and 'session' in locals():
         session.remove()
 
 

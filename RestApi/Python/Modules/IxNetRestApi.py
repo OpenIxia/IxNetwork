@@ -249,7 +249,15 @@ class Connect:
                 return
 
             # Connect to an existing session on the Linux API server
-            if apiKey and sessionId:
+            if sessionId:
+                if self.apiKey == None:
+                    url = 'https://{0}:{1}/api/v1/auth/session'.format(self.linuxApiServerIp, self.apiServerPort)
+                    response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)
+                    if not str(response.status_code).startswith('2'):
+                        raise IxNetRestApiException('\nLogin username/password failed\n')
+
+                    self.apiKey = response.json()['apiKey']
+
                 self.sessionId = 'https://{0}:{1}/api/v1/sessions/{2}'.format(self.linuxApiServerIp,
                                                                               self.apiServerPort, str(sessionId))
                 self.sessionUrl = self.sessionId + '/ixnetwork'

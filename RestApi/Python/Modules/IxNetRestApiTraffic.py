@@ -495,6 +495,25 @@ class Traffic(object):
             print(configElementObj)
             return configElementObj
 
+    def getAllConfigElementObj(self, trafficItemObj):
+        """
+        Description
+           Get all config element objects from a traffic item object.
+
+        Parameter
+           trafficItemObj:  /api/v1/sessions/{id}/ixnetwork/traffic/trafficItem/{id}
+
+        Return
+           A list of configElement objects
+        """
+        trafficItemUrl = self.ixnObj.httpHeader + trafficItemObj
+        response = self.ixnObj.get(trafficItemUrl + '/configElement')
+        configElementObjList = []
+        for id in response.json():
+            configElementObjList.append(id['links'][0]['href'])
+
+        return configElementObjList
+
     def getTransmissionType(self, configElement):
         # configElement: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1
         # Returns: fixedFrameCount, continuous

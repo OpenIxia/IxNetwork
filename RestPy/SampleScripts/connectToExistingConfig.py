@@ -4,10 +4,11 @@ connectToExistingConfig.py
    Connecting to an existing session.
       - For Windows, the default session ID=1.
       - For Windows Connection Mgr, session ID=?
-      - For Linux, you need to:
-          - Login
-          - Include your API-Key
-          - Session ID
+      - For Linux, there are two ways to login:
+          1> Login with username/password
+          2> Use the API-Key instead.
+
+          - Then provide the Session ID to connect into.
 
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
@@ -55,10 +56,16 @@ try:
     testPlatform.Trace = 'request_response'
 
     if osPlatform == 'linux':
+        # There are two ways to log into an existing linux session ID
+
+        # 1> Provide the login account username and password
         testPlatform.Authenticate(username, password)
         session = testPlatform.Sessions.find(Id=4)
-        ixNetwork = session.Ixnetwork
-        ixNetwork.ApiKey = 'b69dc65036924525adeb6f550a50b587'
+
+        # 2> Or use the API-Key instead. The API-Key could be retrieve from the Linux api server under 
+        #    settings, My Account.
+        #testPlatform.ApiKey = '604348999bc34d028043347f713e49ce'
+        #session = testPlatform.Sessions.find(Id=4)
 
     if osPlatform in ['windows', 'connection_manager']:
         # Windows support only one session. Id is always equal 1.

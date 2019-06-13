@@ -36,10 +36,10 @@ class Connect:
     enableDebugLogFile = False
     robotStdout = None
 
-    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', connectToLinuxChassisIp=None, manageSessionMode=False,
+    def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', linuxChassisIp=None, manageSessionMode=False,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
                  deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None, httpsSecured=False,
-                 apiKey=None, generateLogFile=True, robotFrameworkStdout=False):
+                 apiKey=None, generateLogFile=True, robotFrameworkStdout=False, linuxApiServerTimeout=120):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -56,7 +56,7 @@ class Connect:
            apiServerIp: (str): The API server IP address.
            serverIpPort: (str): The API server IP address socket port.
            serverOs: (str): windows|windowsConnectionMgr|linux
-           connectToLinuxChassis: (str): Connect to a Linux OS chassis IP address.
+           linuxChassisIp: (str): Connect to a Linux OS chassis IP address.
            webQuickTest: (bool): True: Using IxNetwork Web Quick Test. Otherwise, using IxNetwork.
            includeDebugTraceback: (bool):
                                    True: Traceback messsages are included in raised exceptions.
@@ -66,6 +66,7 @@ class Connect:
            licenseServerIp: (str): The license server IP address.
            licenseMode: (str): subscription | perpetual | mixed
            licenseTier: (str): tier1 | tier2 | tier3
+           linuxApiServerTimeout: (int): For Linux API server start operation timeout. Defaults to 120 seconds.
            deleteSessionAfterTest: (bool): True: Delete the session.
                                            False: Don't delete the session.
            verifySslCert: (str): Optional: Include your SSL certificate for added security.
@@ -173,7 +174,8 @@ class Connect:
         self.webQuickTest = webQuickTest
         self.generateLogFile = generateLogFile
         self.robotFrameworkStdout = robotFrameworkStdout
-        self.connectToLinuxChassisIp = connectToLinuxChassisIp
+        self.linuxChassisIp = linuxChassisIp
+        self.linuxApiServerTimeout = linuxApiServerTimeout
 
         if generateLogFile:
             if generateLogFile == True:
@@ -195,8 +197,8 @@ class Connect:
             self.robotStdout = _Misc()
             Connect.robotStdout = self.robotStdout
 
-        if connectToLinuxChassisIp:
-            self.connectToLinuxIxosChassis(self.connectToLinuxChassisIp, self.username, self.password)
+        if linuxChassisIp:
+            self.connectToLinuxIxosChassis(self.linuxChassisIp, self.username, self.password)
             return
 
         if serverOs == 'windows':
@@ -292,7 +294,8 @@ class Connect:
             # Create new session: connectToLinuxApiServer API knows whether to create a new session or connect to an existing
             #                     session by looking at the self.apiKey.
             if apiKey == None and sessionId == None:
-                self.connectToLinuxApiServer(self.linuxApiServerIp, self.apiServerPort, username=username, password=password, verifySslCert=verifySslCert)
+                self.connectToLinuxApiServer(self.linuxApiServerIp, self.apiServerPort, username=username, password=password,
+                                             verifySslCert=verifySslCert, timeout=self.linuxApiServerTimeout)
 
             if licenseServerIp or licenseMode or licenseTier:
                 self.configLicenseServerDetails(licenseServerIp, licenseMode, licenseTier)
@@ -321,7 +324,8 @@ class Connect:
             /api/v1/sessions/1/ixnetwork/operations
         """
         if silentMode is False:
-            self.logInfo('\n\tGET: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
+            #self.logInfo('\n\tGET: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
+            self.logInfo('\n\tGET: {0}'.format(restApi))
 
         try:
             # For binary file
@@ -375,10 +379,11 @@ class Connect:
             data = json.dumps(data)
 
         if silentMode == False:
-            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+            #self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}'.format(restApi, data))
 
         try:
-            if self.connectToLinuxChassisIp and json.loads(data) == {}:
+            if self.linuxChassisIp and json.loads(data) == {}:
                 # Interacting with LinuxOS chassis doesn't like empty data payload. So excluding it here.
                 response = self._session.request('POST', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
             else:
@@ -422,7 +427,8 @@ class Connect:
            silentMode: (bool):  To display on stdout: URL, data and header info.
         """
         if silentMode == False:
-            self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+            #self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+            self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}'.format(restApi, data))
 
         try:
             response = self._session.request('PATCH', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
@@ -459,7 +465,8 @@ class Connect:
 
         """
         if silentMode is False:
-            self.logInfo('\n\tOPTIONS: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
+            #self.logInfo('\n\tOPTIONS: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
+            self.logInfo('\n\tOPTIONS: {0}'.format(restApi))
 
         try:
             # For binary file
@@ -499,7 +506,8 @@ class Connect:
         if headers != None:
             self.jsonHeader = headers
 
-        self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+        #self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
+        self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}'.format(restApi, data))
 
         try:
             response = self._session.request('DELETE', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
@@ -784,7 +792,7 @@ class Connect:
         print()
         return errorList
 
-    def waitForComplete(self, response='', url='', silentMode=False, ignoreException=False, timeout=90):
+    def waitForComplete(self, response='', url='', silentMode=False, ignoreException=False, httpAction='get', timeout=90):
         """
         Description
            Wait for an operation progress to complete.
@@ -796,6 +804,7 @@ class Connect:
            ignoreException: (bool): ignoreException is for assignPorts.  Don't want to exit test.
                             Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
 
+           httpAction: (get|post): Defaults to GET. For chassisMgmt, it uses POST.
            timeout: (int): The time allowed to wait for success completion in seconds.
         """
         if silentMode == False:
@@ -815,7 +824,11 @@ class Connect:
             raise IxNetRestApiException('WaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
 
         for counter in range(1,timeout+1):
-            response = self.get(url, silentMode=True)
+            if httpAction == 'get':
+                response = self.get(url, silentMode=True)
+            if httpAction == 'post':
+                response = self.post(url, silentMode=True)
+
             state = response.json()["state"]
             if silentMode == False:
                 if state != 'SUCCESS':
@@ -852,11 +865,12 @@ class Connect:
         self.userSessionId = response.json()['userAccountUrl']
 
         self.ixosHeader = 'https://{0}/chassis/api/v2/ixos'.format(chassisIp)
+        self.chassisPlatformHeader = 'https://{0}/platform/api/v2'.format(chassisIp)
         self.diagnosticsHeader = 'https://{0}/chassis/api/v1/diagnostics'.format(chassisIp)
         self.authenticationHeader = 'https://{0}/chassis/api/v1/auth'.format(chassisIp)
         self.sessionUrl = self.ixosHeader
 
-    def connectToLinuxApiServer(self, linuxServerIp, linuxServerIpPort, username='admin', password='admin', verifySslCert=False):
+    def connectToLinuxApiServer(self, linuxServerIp, linuxServerIpPort, username='admin', password='admin', verifySslCert=False, timeout=120):
         """
         Description
            Connect to a Linux API server.
@@ -865,7 +879,10 @@ class Connect:
            linuxServerIp: (str): The Linux API server IP address.
            username: (str): Login username. Default = admin.
            password: (str): Login password. Default = admin.
-           verifySslCert: (str): Defalt: None.  The SSL Certificate for secure access verification.
+           verifySslCert: (str): Default: None.  The SSL Certificate for secure access verification.
+           timeout: (int): Default:120.  The timeout to wait for the Linux API server to start up.
+                           Problem: In case the linux api server is installed in a chassis and the DNS is misconfigured,
+                                    it takes longer to start up.
 
        Syntax
             POST: /api/v1/auth/session
@@ -914,7 +931,7 @@ class Connect:
 
             # 3: Start the new session
             response = self.post(self.sessionId+'/operations/start')
-            if self.linuxServerWaitForSuccess(response.json()['url']) == 1:
+            if self.linuxServerWaitForSuccess(response.json()['url'], timeout=timeout) == 1:
                 raise IxNetRestApiException
 
             if self.webQuickTest == True:

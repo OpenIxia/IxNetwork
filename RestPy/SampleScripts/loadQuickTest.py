@@ -3,14 +3,18 @@ loadQuickTest.py:
 
    Tested with two back-2-back Ixia ports
 
+   RestPy has a limitation on running Quick Test.  It could not modify Quick Test parameters.
+   If you want to be able to modify the traffic configuration, create your Quick Test using
+   NGPF and create a traffic item.  So instead of modifying Quick Test parameters, you modify
+   the traffic items.
+
    - Connect to the API server
    - Configure license server IP
-   - Loads a saved Quick Test config file that is in the same local directory: QuickTest_rfc2544_8.50.ixncfg
-        Note: This script will run all the created Quick Tests in the saved config file one after another and
-              retrieve all of the csv result files with a timestamp on them so they don't overwrite your existing
-              result files.
+   - Loads a saved Quick Test config file.
+     This script will run all the created Quick Tests in the saved config file one after another and
+     retrieve all of the csv result files with a timestamp on them so they don't overwrite your existing
+     result files.
 
-   - Configure license server IP
    - Optional: Assign ports or use the ports that are in the saved config file.
    - Start all protocols
    - Verify all protocols
@@ -47,6 +51,7 @@ import json, sys, os, re, time, datetime, traceback
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 from ixnetwork_restpy.files import Files
 
 # Set defaults
@@ -83,8 +88,7 @@ debugMode = False
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-onfigFile = 'QuickTestNgpf_vm8.20.ixncfg'
-configFile = 'QuickTest_rfc2544_8.50.ixncfg'
+configFile = 'ngpfQuickTest2ports_8.50.ixncfg'
 
 # Where to copy the csv and pdf result files.
 # If using Windows API server and if you want to copy result files into same windows filesystem
@@ -97,6 +101,8 @@ linuxDestinationFolder = './'
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
+# For novusTenGigLan card type only. Options: copper|fiber
+portMedia = 'copper'
 
 class Timestamp:
     """
@@ -131,7 +137,7 @@ def addTimestampToFile(filename):
 
 def getQuickTestCurrentAction(quickTestHandle):
     """
-    quickTestHandle = /api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/{id}
+    Get the Quick Test current progress.
     """
     ixNetworkVersion = ixNetwork.Globals.BuildNumber
     match = re.match('([0-9]+)\.[^ ]+ *', ixNetworkVersion)
@@ -141,6 +147,12 @@ def getQuickTestCurrentAction(quickTestHandle):
         timer = 10
         for counter in range(1,timer+1):
             currentActions = quickTestHandle.Results.CurrentActions
+
+            ixNetwork.info('\n\ngetQuickTestCurrentAction:\n')
+            for eachCurrentAction in quickTestHandle.Results.CurrentActions:
+                ixNetwork.info('\t{}'.format(eachCurrentAction['arg2']))
+
+            ixNetwork.info('\n')
 
             if counter < timer and currentActions == []:
                 ixNetwork.info('\n\ngetQuickTestCurrentAction is empty. Waiting %s/%s\n\n' % (counter, timer))
@@ -157,71 +169,72 @@ def getQuickTestCurrentAction(quickTestHandle):
     else:
         return quickTestHandle.Results.Progress
 
-
 def verifyQuickTestInitialization(quickTestHandle):
     """
-    quickTestHandle = /api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/{id}
+    Verify quick test initialization stages.
     """
-    for timer in range(1,20+1):
+    for timer in range(1,30+1):
         currentAction = getQuickTestCurrentAction(quickTestHandle)
-        ixNetwork.info('\n\nverifyQuickTestInitialization currentState: %s' % currentAction)
-        if timer < 20:
-            if currentAction == 'TestEnded' or currentAction == 'None':
-                ixNetwork.info('\nverifyQuickTestInitialization CurrentState = %s\n\tWaiting %s/20 seconds to change state\n\n' % (currentAction, timer))
-                time.sleep(1)
-                continue
-            else:
-                break
+        ixNetwork.info('\n\nverifyQuickTestInitialization currentAction: {}\n'.format(currentAction))
+        if currentAction == 'TestEnded':
+            raise Exception('VerifyQuickTestInitialization: QuickTest failed during initialization: {}'.format(quickTestHandle.Results.Status))
 
-        if timer >= 20:
-            if currentAction == 'TestEnded' or currentAction == 'None':
-                raise Exception('Quick Test is stuck at TestEnded.')
+        if timer < 30 and currentAction == 'None':
+            ixNetwork.info('\n\nverifyQuickTestInitialization CurrentState = %s\n\tWaiting %s/30 seconds to change state\n' % (currentAction, timer))
+            time.sleep(1)
+            continue
+        else:
+            break
 
+        if timer == 20 and currentAction == 'None':
+            raise Exception('\n\nQuick Test is stuck.')
+
+    successStatusList = ['TransmittingComplete', 'TransmittingFrames', 'WaitingForStats', 'CollectingStats', 'TestEnded']
+    quickTestApplyStates = ['InitializingTest', 'ApplyFlowGroups', 'SetupStatisticsCollection']
     ixNetworkVersion = ixNetwork.Globals.BuildNumber
     match = re.match('([0-9]+)\.[^ ]+ *', ixNetworkVersion)
     ixNetworkVersion = int(match.group(1))
 
-    applyQuickTestCounter = 60
+    applyQuickTestCounter = 120
     for counter in range(1,applyQuickTestCounter+1):
-        quickTestApplyStates = ['InitializingTest', 'ApplyFlowGroups', 'SetupStatisticsCollection']
         currentAction = getQuickTestCurrentAction(quickTestHandle)
+        ixNetwork.info('\n\nverifyQuickTestInitialization: CurrentState: %s  Expecting: TransmittingFrames\n\tWaiting %s/%s seconds\n' % (currentAction, counter, applyQuickTestCounter))
+     
+        if currentAction == 'TestEnded':
+            raise Exception('\n\nVerifyQuickTestInitialization: QuickTest failed!!: {}'.format(quickTestHandle.Results.Status))
+
         if currentAction == None:
             currentAction = 'ApplyingAndInitializing'
 
-        ixNetwork.info('\nverifyQuickTestInitialization: %s  Expecting: TransmittingFrames\n\tWaiting %s/%s seconds\n\n' % (currentAction, counter, applyQuickTestCounter))
-
         if ixNetworkVersion >= 8:
-            if counter < applyQuickTestCounter and currentAction != 'TransmittingFrames':
+            if counter < applyQuickTestCounter and currentAction not in successStatusList:
                 time.sleep(1)
                 continue
 
-            if counter < applyQuickTestCounter and currentAction == 'TransmittingFrames':
-                ixNetwork.info('\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n\n')
-
-            break
+            if counter < applyQuickTestCounter and currentAction in successStatusList:
+                ixNetwork.info('\n\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n')
+                break
 
         if ixNetworkVersion < 8:
-            if counter < applyQuickTestCounter and currentAction == 'ApplyingAndInitializing':
+            if counter < applyQuickTestCounter and currentAction != 'ApplyingAndInitializing':
                 time.sleep(1)
                 continue
 
             if counter < applyQuickTestCounter and currentAction == 'ApplyingAndInitializing':
-                ixNetwork.info('\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n\n')
-
-            break
+                ixNetwork.info('\n\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n')
+                break
 
         if counter == applyQuickTestCounter:
-            if ixNetworkVersion >= 8 and currentAction != 'TransmittingFrames':
+            if ixNetworkVersion >= 8 and currentAction not in successStatusList:
                 if currentAction == 'ApplyFlowGroups':
-                    ixNetwork.info('\nVerifyQuickTestInitialization: IxNetwork is stuck on Applying Flow Groups. You need to go to the session to FORCE QUIT it.\n\n')
+                    ixNetwork.info('\n\nVerifyQuickTestInitialization: IxNetwork is stuck on Applying Flow Groups. You need to go to the session to FORCE QUIT it.\n')
 
-                raise Exception('\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
+                raise Exception('\n\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
                         currentAction, counter, applyQuickTestCounter))
 
             if ixNetworkVersion < 8 and currentAction != 'Trial':
-                raise Exception('\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
+                raise Exception('\n\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
                         currentAction, counter, applyQuickTestCounter))
-
 
 def monitorQuickTestRunningProgress(quickTestHandle, getProgressInterval=10):
     """
@@ -235,41 +248,62 @@ def monitorQuickTestRunningProgress(quickTestHandle, getProgressInterval=10):
     trafficStartedFlag = 0
     waitForRunningProgressCounter = 0
     counter = 1
+    connectionFailureCounter = 0
+    maxRetries = 10
 
     while True:
-        isRunning = quickTestHandle.Results.IsRunning
-        if isRunning == True:
-            currentRunningProgress = quickTestHandle.Results.Progress
+        # This while loop was implemented because sometimes there could be failure to connect to the 
+        # API server.  It could be caused by many various issues not related to IxNetwork.
+        # Going to retry doing GETs up to 10 times.
+        connectedToApiServerFlag = False
 
+        while True:
+            try:
+                isRunning = quickTestHandle.Results.IsRunning
+                currentRunningProgress = quickTestHandle.Results.Progress
+                print('\nmonitorQuickTestRunningProgress: isRuning:', isRunning)
+                break
+            except:
+                ixNetwork.debug('\n\nmonitorQuickTestRunningProgress: Failed to connect to API server {}/{} times\n'.format(connectionFailureCounter, maxRetries))
+                if connectionFailureCounter == maxRetries:
+                    raise Exception('\n\nmonitorQuickTestRunningProgress: Giving up trying to connecto the the API server after {} attempts\n'.format(maxRetries))
+
+                if connectionFailureCounter <= maxRetries:
+                    connectionFailureCounter += 1
+                    time.sleep(3)
+                    continue
+
+        ixNetwork.info('\n\nmonitorQuickTestRunningProgress: isRunning: {}  CurrentRunningProgress: {}\n'.format(isRunning, currentRunningProgress))
+
+        if isRunning == True:
             if bool(re.match('^Trial.*', currentRunningProgress)) == False:
-                if waitForRunningProgressCounter < 30:
-                    ixNetwork.info('\n\nisRunning=True. Waiting for trial runs {0}/30 seconds\n\n'.format(waitForRunningProgressCounter))
+                if waitForRunningProgressCounter < 40:
+                    ixNetwork.info('\n\nmonitorQuickTestRunningProgress: Waiting for trial runs {0}/30 seconds\n'.format(waitForRunningProgressCounter))
                     waitForRunningProgressCounter += 1
                     time.sleep(1)
 
-                if waitForRunningProgressCounter == 30:
-                    raise Exception('isRunning=True. No quick test stats showing.')
+                if waitForRunningProgressCounter == 40:
+                    raise Exception('\n\nmonitorQuickTestRunningProgress: isRunning=True. QT is running, but no quick test iteration stats showing after 40 seconds.')
             else:
+                # The test is running fine.  Keep running until isRunning == False.
                 trafficStartedFlag = 1
-                ixNetwork.info(currentRunningProgress)
-                counter += 1
                 time.sleep(getProgressInterval)
                 continue
         else:
             if trafficStartedFlag == 1:
                 # We only care about traffic not running in the beginning.
                 # If traffic ran and stopped, then break out.
-                ixNetwork.info('\n\nisRunning=False. Quick Test is complete\n\n')
-                return 0
+                ixNetwork.info('\n\nmonitorQuickTestRunningProgress: isRunning=False. Quick Test ran and is complete\n\n')
+                return True
 
-            if isRunningBreakFlag < 20:
-                ixNetwork.info('\n\nisRunning=False. Wait {0}/20 seconds\n\n'.format(isRunningBreakFlag))
+            if trafficStartedFlag == 0 and isRunningBreakFlag < 40:
+                ixNetwork.info('\n\nmonitorQuickTestRunningProgress: isRunning=False. QT did not run yet. Wait {0}/40 seconds\n\n'.format(isRunningBreakFlag))
                 isRunningBreakFlag += 1
                 time.sleep(1)
                 continue
 
-            if isRunningBreakFlag == 20:
-                raise Exception('Quick Test failed to start:', response.json()['status'])
+            if trafficStartedFlag == 0 and isRunningBreakFlag == 40:
+                raise Exception('\n\nmonitorQuickTestRunningProgress: Quick Test failed to start:: {}'.format(quickTestHandle.Results.Status))
 
 
 def copyFileWindowsToLocalWindows(windowsPathAndFileName, localPath, includeTimestamp=False):
@@ -386,6 +420,25 @@ def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', includeTime
             except Exception as errMsg:
                 print('copyApiServerFileToLocalLinux ERROR:', errMsg)
 
+def verifyNgpfIsLayer3(topologyName):
+    """
+    Verify if the configuration has NGPF and if it is, verify if it is layer 3
+    in order to know whether to start all protocols or not.
+    """
+    result = ixNetwork.Topology.find(topologyName).DeviceGroup.find().Ethernet.find().Ipv4.find()
+    try:
+        print('\n\nTopology isLayer3: {}\n'.format(result.href))
+        isLayer3 = True
+    except: 
+        result = ixNetwork.Topology.find(topologyName).DeviceGroup.find().Ethernet.find().Ipv6.find()
+        try:
+            print('\n\nTopology isLayer3: {}\n'.format(result.href))
+            isLayer3 = True
+        except:
+            isLayer3 = False
+            print('\n\nTopology isLayer3: False\n')
+
+    return isLayer3
 
 
 try:
@@ -413,38 +466,74 @@ try:
 
     ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
 
+    for vport in ixNetwork.Vport.find():
+        if vport.Type == 'novusTenGigLan':
+            vport.L1Config.NovusTenGigLan.Media = portMedia
+
+    if verifyNgpfIsLayer3:
+        ixNetwork.StartAllProtocols(Arg1='sync')
+
+        ixNetwork.info('Verify protocol sessions\n')
+        protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
+        protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
+        protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
+        ixNetwork.info(protocolsSummary)
+
     # Create a timestamp for test result files.
     # To append a timestamp in the CSV result files so existing result files won't get overwritten.
     timestamp = Timestamp()
 
-    for quickTestHandle in ixNetwork.QuickTest.Rfc2544throughput.find():
-        quickTestHandle.Apply()
-        quickTestHandle.Start()
-        verifyQuickTestInitialization(quickTestHandle)
-        monitorQuickTestRunningProgress(quickTestHandle)
+    # These are all the RFC tests to search for in the saved config file.
+    for rfcTest in [ixNetwork.QuickTest.Rfc2544frameLoss.find(),
+                    ixNetwork.QuickTest.Rfc2544throughput.find(),
+                    ixNetwork.QuickTest.Rfc2544back2back.find(),
+                    ixNetwork.QuickTest.Rfc2889addressCache.find(),
+                    ixNetwork.QuickTest.Rfc2889addressRate.find(),
+                    ixNetwork.QuickTest.Rfc2889broadcastRate.find(),
+                    ixNetwork.QuickTest.Rfc2889congestionControl.find(),
+                    ixNetwork.QuickTest.Rfc2889frameErrorFiltering.find(),
+                    ixNetwork.QuickTest.Rfc2889fullyMeshed.find(),
+                    ixNetwork.QuickTest.Rfc2889manyToOne.find(),
+                    ixNetwork.QuickTest.Rfc2889oneToMany.find(),
+                    ixNetwork.QuickTest.Rfc2889partiallyMeshed.find(),
+                    ]:
 
-        timestamp.now()
+        if not rfcTest:
+            # If the loaded QT config file doesn't have rfcTest created, then skip it.
+            continue
+       
+        for quickTestHandle in rfcTest:
+            quickTestName = quickTestHandle.Name
+            ixNetwork.info('\n\nExecuting Quick Test: {}'.format(quickTestName))
 
-        # Copy CSV files from Windows to same windows drive
-        getQuickTestCsvFiles(quickTestHandle, copyToPath=windowsDestinationFolder, includeTimestamp=True)
+            quickTestHandle.Apply()
+            quickTestHandle.Start()
+            verifyQuickTestInitialization(quickTestHandle)
+            monitorQuickTestRunningProgress(quickTestHandle)
 
-        # Copy CSV from either a Windows or Linux API server to local linux filesystem
-        getQuickTestCsvFiles(quickTestHandle, copyToPath=linuxDestinationFolder, includeTimestamp=True)
+            timestamp.now()
 
-        pdfFile = quickTestHandle.GenerateReport()
-        destPdfTestResult = addTimestampToFile(pdfFile)
+            # Copy CSV files from Windows to same windows drive
+            getQuickTestCsvFiles(quickTestHandle, copyToPath=windowsDestinationFolder, includeTimestamp=True)
 
-        # Copying the PDF from Windows to local Windows.
-        copyFileWindowsToLocalWindows(pdfFile, windowsDestinationFolder+'\\'+destPdfTestResult)
+            # Copy CSV from either a Windows or Linux API server to local linux filesystem
+            getQuickTestCsvFiles(quickTestHandle, copyToPath=linuxDestinationFolder, includeTimestamp=True)
 
-        # Copying PDF from either a Windows API server or from a Linux API server to local Linux filesystem.
-        ixNetwork.info('Copying test result PDF to: {}'.format(linuxDestinationFolder+destPdfTestResult))
-        session.DownloadFile(pdfFile, linuxDestinationFolder+destPdfTestResult)
+            if osPlatform != 'linux':
+                pdfFile = quickTestHandle.GenerateReport()
+                destPdfTestResult = addTimestampToFile(pdfFile)
 
-        # Examples to show how to stop and remove a quick test.
-        # Uncomment one or both if you want to use them.
-        #quickTestHandle.Stop()
-        #quickTestHandle.remove()
+                # Copying the PDF from Windows to local Windows.
+                copyFileWindowsToLocalWindows(pdfFile, windowsDestinationFolder+'\\'+destPdfTestResult)
+
+                # Copying PDF from either a Windows API server or from a Linux API server to local Linux filesystem.
+                ixNetwork.info('Copying test result PDF to: {}'.format(linuxDestinationFolder+destPdfTestResult))
+                session.DownloadFile(pdfFile, linuxDestinationFolder+destPdfTestResult)
+
+            # Examples to show how to stop and remove a quick test.
+            # Uncomment one or both if you want to use them.
+            #quickTestHandle.Stop()
+            #quickTestHandle.remove()
 
     if debugMode == False:
         # For Linux and Windows Connection Manager only

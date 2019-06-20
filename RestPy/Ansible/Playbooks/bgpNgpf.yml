@@ -1,0 +1,23 @@
+---
+- name: Configure NGPF BGP 
+  hosts: localhost
+  gather_facts: False
+  ignore_errors: False
+
+  tasks:
+    - name: Configure two BGP topologies in IxNetwork NGPF
+      bgpNgpf:
+        apiServerIp: 192.168.70.3
+        apiServerIpPort: 11009
+        username: admin
+        password: admin
+        forceTakePortOwnership: True
+        portList: [['192.168.70.128', 1, 1], ['192.168.70.128', 2, 1]]
+        licenseServerIp: ['192.168.70.3']
+        licenseMode: subscription
+        licenseTier: tier3
+        debugMode: False
+
+      register: result
+      failed_when: result.rc == 1
+

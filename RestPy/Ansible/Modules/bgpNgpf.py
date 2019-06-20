@@ -1,11 +1,13 @@
-#!/usr/local/python3.7.0/bin/python3.7
-
 # Ansible doc style
 DOCUMENTATION = '''
 ---
 module: bgpNgpf
 
-description:
+Requirements:
+  - IxNetwork 8.50 minimum
+  - python requests module
+
+Description:
   Configure two BGP topology groups in IxNetwork NGPF with one tx port and one rx port.
 
 notes:
@@ -23,7 +25,6 @@ notes:
   - Get Traffic Item.
   - Get Flow Statistics stats.
 
-author: Hubert Gee
 '''
 
 from ansible.module_utils.basic import AnsibleModule
@@ -32,279 +33,179 @@ import os, sys, traceback, logging
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-
-# This sample script uses helper functions from the ../../RestPy/Modules directory: StatisticsMgmt.py and PortMgmt.py
-# Since sys.path.append() doesn't work in a an Ansible custom module, these two helper modules are 
-# copied to the ../Playbook/RestPyHelperModules directory, relative path from this file.
-from RestPyHelperModules.StatisticsMgmt import Statistics
-from RestPyHelperModules.PortMgmt import Ports
+from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 def main():
     logging.basicConfig(filename='../ansible.log', level=logging.DEBUG)
 
     # Define the available arguments/parameters that a user can pass to this module.
     params = {
-        'osPlatform':             {'type':'str', 'required':False, 'default':'windows',
-                                   'choices':['windows', 'windowsConnectionMgr', 'linux']},
-        'forceTakePortOwnership': {'type':'bool', 'required':False, 'default':True},
-        'deleteSessionWhenDone':  {'type':'bool', 'required':False, 'default':True},
-        'portList':               {'type':'list', 'required':True, 'default':None},
         'apiServerIp':            {'type':'str', 'required':True, 'default':None},
         'apiServerIpPort':        {'type':'int', 'required':False, 'default':11009},
-        'linuxUsername':          {'type':'str', 'required':False, 'default':'admin', 'no_log':False},
-        'linuxPassword':          {'type':'str', 'required':False, 'default':'admin', 'no_log':False},
+        'username':               {'type':'str', 'required':False, 'default':'admin', 'no_log':False},
+        'password':               {'type':'str', 'required':False, 'default':'admin', 'no_log':False},
         'licenseServerIp':        {'type':'list', 'required':True, 'default':None},
         'licenseMode':            {'type':'str', 'required':True, 'default':None},
-        'restPyLog':              {'type':'str', 'required':False, 'default':'restpy.log'},
-
-        'port1Name':              {'type':'str', 'required':False, 'default':'Port1'},
-        'port2Name':              {'type':'str', 'required':False, 'default':'Port2'},
-
-        'topologyGroup1Name':     {'type':'str', 'required':False, 'default':'Topo1'},
-        'topologyGroup1Ports':    {'type':'list', 'required':True, 'default':None},
-        'topologyGroup2Name':     {'type':'str', 'required':False, 'default':'Topo2'},
-        'topologyGroup2Ports':    {'type':'list', 'required':True, 'default':None},
-        'deviceGroup1Name':       {'type':'str', 'required':False, 'default':None},
-        'deviceGroup1Multiplier': {'type':'int', 'required':False, 'default':1},
-        'deviceGroup2Name':       {'type':'str', 'required':False, 'default':None},
-        'deviceGroup2Multiplier': {'type':'int', 'required':False, 'default':1},
-
-	'ethernet1Name':         {'type':'str', 'required':False, 'default':None},
-	'ethernet1MacAddress':   {'type':'str', 'required':False, 'default':None},
-	'ethernet1MacStep':      {'type':'str', 'required':False, 'default':'00:00:00:00:00:00'},
-	'ethernet1MacPortStep':  {'type':'str', 'required':True, 'default':None},
-        'ethernet1VlanEnabled':  {'type':'bool', 'required':False, 'default':False},
-	'ethernet1VlanId':       {'type':'int', 'required':True, 'default':None},
-	'ethernet1VlanIdStep':   {'type':'int', 'required':True, 'default':None},
-
-	'ethernet2Name':         {'type':'str', 'required':False, 'default':None},
-	'ethernet2MacAddress':   {'type':'str', 'required':False, 'default':None},
-	'ethernet2MacStep':      {'type':'str', 'required':False, 'default':'00:00:00:00:00:00'},
-	'ethernet2MacPortStep':  {'type':'str', 'required':False, 'default':None},
-        'ethernet2VlanEnabled':  {'type':'bool', 'required':False, 'default':False},
-	'ethernet2VlanId':       {'type':'int', 'required':True, 'default':None},
-	'ethernet2VlanIdStep':   {'type':'str', 'required':True, 'default':None},
-
-	'ipv41Name':             {'type':'str', 'required':False, 'default':'IPv4-1'},
-	'ipv41Address':          {'type':'str', 'required':True, 'default':None},
-	'ipv41AddressStep':      {'type':'str', 'required':True, 'default':None},
-	'ipv41AddressPortStep':  {'type':'str', 'required':True, 'default':None},
-	'ipv41Gateway':          {'type':'str', 'required':True, 'default':None},
-	'ipv41GatewayStep':      {'type':'str', 'required':True, 'default':None},
-	'ipv41GatewayPortStep':  {'type':'str', 'required':True, 'default':None},
-	'ipv41AddressPrefix':    {'type':'int', 'required':True, 'default':None},
-	'ipv41ResolveGateway':   {'type':'bool', 'required':False, 'default':True},
-
-	'ipv42Name':             {'type':'str', 'required':False, 'default':'IPv4-2'},
-	'ipv42Address':          {'type':'str', 'required':True, 'default':None},
-	'ipv42AddressStep':      {'type':'str', 'required':True, 'default':None},
-	'ipv42AddressPortStep':  {'type':'str', 'required':True, 'default':None},
-	'ipv42Gateway':          {'type':'str', 'required':True, 'default':None},
-	'ipv42GatewayStep':      {'type':'str', 'required':True, 'default':None},
-	'ipv42GatewayPortStep':  {'type':'str', 'required':True, 'default':None},
-	'ipv42AddressPrefix':    {'type':'int', 'required':True, 'default':None},
-	'ipv42ResolveGateway':   {'type':'bool', 'required':False, 'default':True},
-
-	'bgp1Name':              {'type':'str', 'required':True, 'default':None},
-	'bgp1HoldTimer':         {'type':'int', 'required':True, 'default':None},
-	'bgp1DutIp':             {'type':'str', 'required':True, 'default':None},
-	'bgp1DutIpStep':         {'type':'str', 'required':True, 'default':None},
-	'bgp1LocalAsBytes':      {'type':'int', 'required':True, 'default':None},
-	'bgp1LocalAsBytesStep':      {'type':'int', 'required':False, 'default':0},
-	'bgp1Type':                  {'type':'str', 'required':True, 'default':None},
-
-	'bgp2Name':                  {'type':'str', 'required':True, 'default':None},
-	'bgp2HoldTimer':             {'type':'str', 'required':True, 'default':None},
-	'bgp2DutIp':                 {'type':'str', 'required':True, 'default':None},
-	'bgp2DutIpStep':             {'type':'str', 'required':True, 'default':None},
-	'bgp2LocalAsBytes':          {'type':'int', 'required':True, 'default':None},
-	'bgp2LocalAsBytesStep':      {'type':'int', 'required':False, 'default':0},
-	'bgp2Type':                  {'type':'str', 'required':True, 'default':None},
-
-        'networkGroup1Name':        {'type':'str', 'required':True, 'default':None}, 
-	'networkGroup1Multiplier':  {'type':'int', 'required':False, 'default':100},
-	'networkGroup1NumberOfAddresses':  {'type':'int', 'required':False, 'default':100},
-	'networkGroup1Address':     {'type':'str', 'required':True, 'default':None},
-	'networkGroup1AddressStep': {'type':'str', 'required':True, 'default':None},
-	'networkGroup1PrefixLength':{'type':'int', 'required':True, 'default':None},
-
-        'networkGroup2Name':        {'type':'str', 'required':True, 'default':None}, 
-	'networkGroup2Multiplier':  {'type':'int', 'required':False, 'default':100},
-	'networkGroup2NumberOfAddresses':  {'type':'int', 'required':False, 'default':100},
-	'networkGroup2Address':     {'type':'str', 'required':True, 'default':None},
-	'networkGroup2AddressStep': {'type':'str', 'required':True, 'default':None},
-	'networkGroup2PrefixLength':{'type':'int', 'required':True, 'default':None},
-
-        'trafficItemName':        {'type':'str', 'required':True, 'default':None},
-	'trafficItemType':        {'type':'str', 'required':False, 'default':'ipv4',
-                                   'choices':['raw', 'ipv4', 'ethernetVlan', 'frameRelay', 'atm', 'fcoe', 'fc', 'hdlc', 'ppp']},
-	'trafficItemBiDirection': {'type':'bool', 'required':False, 'default':False},
-	'portDistribution':       {'type':'str', 'required':False, 'default':'splitRateEvenly',
-                                   'choices':['splitRateEvenly', 'applyRateToAll']},
-	'trafficItemTrackBy':     {'type':'list', 'required':False, 'default': ['flowGroup0'],
-                                   'choices':['vlanVlanId0', 'trackingenabled0', 'ethernetIiDestinationaddress0', 'ethernetIiSourceaddress0',
-                                   'sourcePort0', 'sourceDestPortPair0', 'ipv4DestIp0', 'ipv4SourceIp0', 'ipv4Precedence0',
-                                              'ethernetIiPfcQueue0', 'frameSize0', 'flowGroup0']},
-	'endpointName':     {'type':'str', 'required':True, 'default':None},
-	'transmissionType': {'type':'str', 'required':False, 'default':'fixedFrameCount',
-                             'choices':['continuous', 'fixedFrameCount', 'fixedDuration']},
-	'frameCount':       {'type':'int', 'required':False, 'default':50000},
-	'frameRate':        {'type':'int', 'required':False, 'default':100},
-	'frameRateType':    {'type':'str', 'required':False, 'default':'percentLineRate',
-                             'choices':['percentLineRate', 'bitsPerSecond', 'framesPerSecond', 'interPacketGap']},
-	'frameSize':        {'type':'int', 'required':False, 'default':64},
+        'licenseTier':            {'type':'str', 'required':False, 'default':'tier3'},
+        'portList':               {'type':'list', 'required':True, 'default':None},
+        'forceTakePortOwnership': {'type':'bool', 'required':False, 'default':True},
+        'debugMode':              {'type':'str', 'required':False, 'default':False},
     }
 
-    module = AnsibleModule(argument_spec=params, supports_check_mode=False)
+    result = dict(changed=False, message='')
+    module = AnsibleModule(argument_spec=params, supports_check_mode=True)
 
-    if module.params['osPlatform'] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        raise Exception("\nError: %s is not a known option. Choices are windows, windowsConnectionMgr or linux." % module.params['osPlatform'])
-        
-    if module.params['osPlatform'] == 'windowsConnectionMgr':
-        osPlatform = 'windows'
-    else:
-        osPlatform = module.params['osPlatform']
+    if module.check_mode:
+        module.exit_json(**result)
+
+    module.params['name'] = 'Custom Ansible module for NGPF BGP configuration'
 
     try:
+
         testPlatform = TestPlatform(ip_address=module.params['apiServerIp'],
                                     rest_port=module.params['apiServerIpPort'],
-                                    platform=osPlatform,
-                                    log_file_name=module.params['restPyLog'])
+                                    log_file_name='restpy.log')
 
         # Console output verbosity: None|request|'request response'
         testPlatform.Trace = 'request_response'
 
-        if osPlatform == 'linux':
-            testPlatform.Authenticate(module.params['linuxUsername'], module.params['linuxPassword'])
-
+        testPlatform.Authenticate(module.params['username'], module.params['password'])
         session = testPlatform.Sessions.add()
         ixNetwork = session.Ixnetwork
-
-        # Instantiate some helper class objects
-        statObj = Statistics(ixNetwork)
-        portObj = Ports(ixNetwork)
-
-        if osPlatform == 'windows':
-            ixNetwork.NewConfig()
+    
+        ixNetwork.NewConfig()
 
         ixNetwork.Globals.Licensing.LicensingServers = module.params['licenseServerIp']
         ixNetwork.Globals.Licensing.Mode = module.params['licenseMode']
+        ixNetwork.Globals.Licensing.Tier =  module.params['licenseTier']
 
         # Create vports and name them so you could get the vports by the name when creating Topology.
-        vport1 = ixNetwork.Vport.add(Name=module.params['port1Name'])
-        vport2 = ixNetwork.Vport.add(Name=module.params['port2Name'])
+        vport1 = ixNetwork.Vport.add(Name='Port1')
+        vport2 = ixNetwork.Vport.add(Name='Port2')
 
-        # getVportList=True because you already created vports.
-        # If you did not create vports, then assignPorts will create them and name them with default names.
-        portObj.assignPorts(module.params['portList'], module.params['forceTakePortOwnership'], getVportList=True)
+        # Assign ports
+        testPorts = []
+        vportList = [vport.href for vport in ixNetwork.Vport.find()]
+        for port in module.params['portList']:
+            testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+            
+        ixNetwork.AssignPorts(testPorts, [], vportList, module.params['forceTakePortOwnership'])
 
-        topology1 = ixNetwork.Topology.add(Name=module.params['topologyGroup1Name'], Ports=vport1)
-        deviceGroup1 = topology1.DeviceGroup.add(Name=module.params['deviceGroup1Name'], Multiplier=module.params['deviceGroup1Multiplier'])
-        ethernet1 = deviceGroup1.Ethernet.add(Name=module.params['ethernet1Name'])
-        ethernet1.Mac.Increment(start_value=module.params['ethernet1MacAddress'], step_value=module.params['ethernet1MacStep'])
-        ethernet1.EnableVlans.Single(module.params['ethernet1VlanEnabled'])
-
-        vlanObj = ethernet1.Vlan.find()[0].VlanId.Increment(start_value=module.params['ethernet1VlanId'],
-                                                            step_value=module.params['ethernet1VlanIdStep'])
-
-        ipv4 = ethernet1.Ipv4.add(Name=module.params['ipv41Name'])
-        ipv4.Address.Increment(start_value=module.params['ipv41Address'], step_value=module.params['ipv41AddressStep'])
-        ipv4.GatewayIp.Increment(start_value=module.params['ipv41Gateway'], step_value=module.params['ipv41GatewayStep'])
-
-        bgp1 = ipv4.BgpIpv4Peer.add(Name=module.params['bgp1Name'])
-        bgp1.DutIp.Increment(start_value=module.params['bgp1DutIp'], step_value=module.params['bgp1DutIpStep'])
-        bgp1.Type.Single(module.params['bgp1Type'])
-        bgp1.LocalAs2Bytes.Increment(start_value=module.params['bgp1LocalAsBytes'], step_value=module.params['bgp1LocalAsBytesStep'])
-
-        networkGroup1 = deviceGroup1.NetworkGroup.add(Name=module.params['networkGroup1Name'], Multiplier=module.params['networkGroup1Multiplier'])
-        ipv4PrefixPool = networkGroup1.Ipv4PrefixPools.add(NumberOfAddresses=module.params['networkGroup1NumberOfAddresses'])
-        ipv4PrefixPool.NetworkAddress.Increment(start_value=module.params['networkGroup1Address'],
-                                                step_value=module.params['networkGroup1AddressStep'])
-        ipv4PrefixPool.PrefixLength.Single(module.params['networkGroup1PrefixLength'])
-
-
-        topology2 = ixNetwork.Topology.add(Name=module.params['topologyGroup2Name'], Ports=vport2)
-        deviceGroup2 = topology2.DeviceGroup.add(Name=module.params['deviceGroup2Name'], Multiplier=module.params['deviceGroup2Multiplier'])
-        ethernet2 = deviceGroup2.Ethernet.add(Name=module.params['ethernet2Name'])
-        ethernet2.Mac.Increment(start_value=module.params['ethernet2MacAddress'], step_value=module.params['ethernet2MacStep'])
-        ethernet2.EnableVlans.Single(module.params['ethernet2VlanEnabled'])
-
-        vlanObj = ethernet2.Vlan.find()[0].VlanId.Increment(start_value=module.params['ethernet2VlanId'],
-                                                            step_value=module.params['ethernet2VlanIdStep'])
-
-        ipv4 = ethernet2.Ipv4.add(Name=module.params['ipv42Name'])
-        ipv4.Address.Increment(start_value=module.params['ipv42Address'], step_value=module.params['ipv42AddressStep'])
-        ipv4.GatewayIp.Increment(start_value=module.params['ipv42Gateway'], step_value=module.params['ipv42GatewayStep'])
-
-        bgp2 = ipv4.BgpIpv4Peer.add(Name=module.params['bgp2Name'])
-        bgp2.DutIp.Increment(start_value=module.params['bgp2DutIp'], step_value=module.params['bgp2DutIpStep'])
-        bgp2.Type.Single(module.params['bgp2Type'])
-        bgp2.LocalAs2Bytes.Increment(start_value=module.params['bgp2LocalAsBytes'], step_value=module.params['bgp2LocalAsBytesStep'])
-
-        networkGroup2 = deviceGroup2.NetworkGroup.add(Name=module.params['networkGroup2Name'], Multiplier=module.params['networkGroup2Multiplier'])
-        ipv4PrefixPool = networkGroup2.Ipv4PrefixPools.add(NumberOfAddresses=module.params['networkGroup2NumberOfAddresses'])
-        ipv4PrefixPool.NetworkAddress.Increment(start_value=module.params['networkGroup2Address'],
-                                                step_value=module.params['networkGroup2AddressStep'])
-        ipv4PrefixPool.PrefixLength.Single(module.params['networkGroup2PrefixLength'])
-
+        ixNetwork.info('Creating Topology Group 1')
+        topology1 = ixNetwork.Topology.add(Name='Topology 1', Ports=vport1)
+        deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
+        ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
+        ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
+        ethernet1.EnableVlans.Single(True)
+        
+        ixNetwork.info('Configuring vlanID')
+        vlanObj = ethernet1.Vlan.find()[0].VlanId.Increment(start_value=103, step_value=0)
+        
+        ixNetwork.info('Configuring IPv4')
+        ipv4 = ethernet1.Ipv4.add(Name='Ipv4')
+        ipv4.Address.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
+        ipv4.GatewayIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
+        
+        ixNetwork.info('Configuring BgpIpv4Peer 1')
+        bgp1 = ipv4.BgpIpv4Peer.add(Name='Bgp1')
+        bgp1.DutIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
+        bgp1.Type.Single('internal')
+        bgp1.LocalAs2Bytes.Increment(start_value=101, step_value=0)
+        
+        ixNetwork.info('Configuring Network Group 1')
+        networkGroup1 = deviceGroup1.NetworkGroup.add(Name='BGP-Routes1', Multiplier='100')
+        ipv4PrefixPool = networkGroup1.Ipv4PrefixPools.add(NumberOfAddresses='1')
+        ipv4PrefixPool.NetworkAddress.Increment(start_value='10.10.0.1', step_value='0.0.0.1')
+        ipv4PrefixPool.PrefixLength.Single(32)        
+        
+        topology2 = ixNetwork.Topology.add(Name='Topology 2', Ports=vport2)
+        deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
+        
+        ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
+        ethernet2.Mac.Increment(start_value='00:01:01:02:00:01', step_value='00:00:00:00:00:01')
+        ethernet2.EnableVlans.Single(True)
+        
+        ixNetwork.info('Configuring vlanID')
+        vlanObj = ethernet2.Vlan.find()[0].VlanId.Increment(start_value=103, step_value=0)
+        
+        ixNetwork.info('Configuring IPv4 2')
+        ipv4 = ethernet2.Ipv4.add(Name='Ipv4-2')
+        ipv4.Address.Increment(start_value='1.1.1.2', step_value='0.0.0.1')
+        ipv4.GatewayIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
+        
+        ixNetwork.info('Configuring BgpIpv4Peer 2')
+        bgp2 = ipv4.BgpIpv4Peer.add(Name='Bgp2')
+        bgp2.DutIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
+        bgp2.Type.Single('internal')
+        bgp2.LocalAs2Bytes.Increment(start_value=101, step_value=0)
+        
+        ixNetwork.info('Configuring Network Group 2')
+        networkGroup2 = deviceGroup2.NetworkGroup.add(Name='BGP-Routes2', Multiplier='100')
+        ipv4PrefixPool = networkGroup2.Ipv4PrefixPools.add(NumberOfAddresses='1')
+        ipv4PrefixPool.NetworkAddress.Increment(start_value='20.20.0.1', step_value='0.0.0.1')
+        ipv4PrefixPool.PrefixLength.Single(32)
+        
         ixNetwork.StartAllProtocols(Arg1='sync')
-        statObj.verifyAllProtocolSessions()
-
-        trafficItem = ixNetwork.Traffic.TrafficItem.add(Name=module.params['trafficItemName'],
-                                                        BiDirectional=module.params['trafficItemBiDirection'],
-                                                        TrafficType=module.params['trafficItemType'])
-
+        
+        ixNetwork.info('Verify protocol sessions\n')
+        protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
+        protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
+        protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
+        ixNetwork.info(protocolsSummary)
+        
+        ixNetwork.info('Create Traffic Item')
+        trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=False, TrafficType='ipv4')
+        
+        ixNetwork.info('Add endpoint flow group')
         trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
-
+        
         # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
         #       Therefore, ConfigElement is a list.
+        ixNetwork.info('Configuring config elements')
         configElement = trafficItem.ConfigElement.find()[0]
-        configElement.FrameRate.Rate = module.params['frameRate']
-        configElement.FrameRate.Type = module.params['frameRateType']
-        configElement.TransmissionControl.FrameCount = module.params['frameCount']
-        configElement.TransmissionControl.Type = module.params['transmissionType']
-        configElement.FrameRateDistribution.PortDistribution = module.params['portDistribution']
-        configElement.FrameSize.FixedSize = module.params['frameSize']
-        trafficItem.Tracking.find()[0].TrackBy = module.params['trafficItemTrackBy']
-
+        configElement.FrameRate.Rate = 28
+        configElement.FrameRate.Type = 'framesPerSecond'
+        configElement.TransmissionControl.FrameCount = 10000
+        configElement.TransmissionControl.Type = 'fixedFrameCount'
+        configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
+        configElement.FrameSize.FixedSize = 128
+        trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
+        
         trafficItem.Generate()
         ixNetwork.Traffic.Apply()
         ixNetwork.Traffic.Start()
 
-        stats = statObj.getTrafficItemStats()
+        # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+        # Examples:
+        #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
+        #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+        
+        flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
+        ixNetwork.info('{}\n'.format(flowStatistics))
+        
+        for rowNumber,flowStat in enumerate(flowStatistics.Rows):
+            ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
+            ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
+                rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
+                flowStat['Tx Frames'], flowStat['Rx Frames']))
 
-        # Get the statistic values with the indexes.
-        txFrames = stats[trafficItem.Name]['Tx Frames']
-        rxFrames = stats[trafficItem.Name]['Rx Frames']
+        flowStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
+        ixNetwork.info('{}\n'.format(flowStatistics))
 
-        if rxFrames != txFrames:
-            module.fail_json(msg='txFrames={}  rxFrames={}'.format(txFrames, rxFrames))
+        if module.params['debugMode'] == False:
+            # For linux and connection_manager only
+            session.remove()
 
-        # This example is for getting Flow Statistics.
-        stats = statObj.getFlowStatistics()
-
-        for row, statValues in stats.items():
-            txFrames = statValues['Tx Frames']
-            rxFrames = statValues['Rx Frames']
-
-            if txFrames != rxFrames:
-                module.fail_json(msg="FlowStatictics failed: {} != {}".format(txFrames, rxFrames))
-
-        if module.params['deleteSessionWhenDone']:
-            if osPlatform in ['linux', 'windowsConnectionMgr']:
-                session.remove()
-
-        module.exit_json(changed=True, BGP_Configuration='Passed')
+        result['result'] = 'Passed'
+        module.exit_json(**result)
 
     except Exception as errMsg:
-        #module.fail_json(msg=errMsg, **result)
-        module.fail_json(msg=errMsg)
-        module.fail_json(changed=True, meta=traceback.format_exc())
+        module.fail_json(result='Failed', msg=errMsg)
 
-        loging.ERROR('\nRestPy.Exception: {}'.format(errMsg))
-        if module.params['deleteSessionWhenDone'] and 'session' in locals():
-            if osPlatform in ['linux', 'windowsConnectionMgr']:
-                session.remove()
+        if module.params['debugMode'] == False and 'session' in locals():
+            session.remove()
 
 if __name__ == '__main__':
-    main()
+   main()
+ 
+

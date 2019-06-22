@@ -35,16 +35,16 @@ Load a saved config file that configures BGP in NGPF
 
 	Log To Console  New blank config ...
 	Call Method  ${ixNetwork}  NewConfig
- 	
-	Log To Console  Loading config file: ${configFile} ...
-        Import Library  ixnetwork_restpy.files.Files  ${configFile}  local_file=True  WITH NAME  fileObj
-	${fileTransfer} =  Get Library Instance  fileObj
-        Call Method  ${ixNetwork}  LoadConfig  ${fileTransfer}
 
 	Log To Console  Configuring license details ...
 	${ixNetwork.Globals.Licensing.LicensingServers} =  Set Variable  ${licenseServerIp}
         ${ixNetwork.Globals.Licensing.Mode} =  Set Variable  ${licenseMode}
         ${ixNetwork.Globals.Licensing.Tier} =  Set Variable  ${licenseTier}
+ 	
+	Log To Console  Loading config file: ${configFile} ...
+        Import Library  ixnetwork_restpy.files.Files  ${configFile}  local_file=True  WITH NAME  fileObj
+	${fileTransfer} =  Get Library Instance  fileObj
+        Call Method  ${ixNetwork}  LoadConfig  ${fileTransfer}
 
 	Log To Console  Assigning ports ...
         @{testPorts} =  Create List

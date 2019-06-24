@@ -66,7 +66,7 @@ Configure BGP in NGPF
 	# If you are using RestPy version < 1.0.33, uncomment this.  Backward compatibility still works, but
 	# the parameters rest_port and platform are deprecated.
 	#Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  
-	#...  ${apiServerIp}  rest_port=11009  platform=windows  log_file_name=restpy.log  WITH NAME  testPlatformObj
+	#...  ${apiServerIp}  rest_port=11009  platform=winodws  log_file_name=restpy.log  WITH NAME  testPlatformObj
 
 	# For RestPy version >= 1.0.33
 	Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  ${apiServerIp}  log_file_name=restpy.log  WITH NAME  testPlatformObj
@@ -74,7 +74,8 @@ Configure BGP in NGPF
 	${testPlatform} =  Get Library Instance  testPlatformObj
 	Call Method  ${testPlatform}  Authenticate  ${username}  ${password}
         ${session} =  Set Variable  ${testPlatform.Sessions.add()}
-	${ixNetwork} =  Set Variable  ${session.find().Ixnetwork}
+	Log To Console  sessionId ${session}
+	${ixNetwork} =  Set Variable  ${session.Ixnetwork}
 
 	Log To Console  New blank config ...
 	Call Method  ${ixNetwork}  NewConfig

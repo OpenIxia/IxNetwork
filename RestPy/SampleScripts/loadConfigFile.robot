@@ -33,7 +33,7 @@ Library  BuiltIn
 Library  Collections
 
 *** Variables ***
-${apiServerIp} =  192.168.70.12
+${apiServerIp} =  192.168.70.3
 
 # For Linux API server only
 ${username} =  admin
@@ -76,7 +76,7 @@ Load a saved config file that configures BGP in NGPF
 	${testPlatform} =  Get Library Instance  testPlatformObj
 	Call Method  ${testPlatform}  Authenticate  ${username}  ${password}
         ${session} =  Set Variable  ${testPlatform.Sessions.add()}
-	${ixNetwork} =  Set Variable  ${session.find().Ixnetwork}
+	${ixNetwork} =  Set Variable  ${session.Ixnetwork}
 
 	Log To Console  New blank config ...
 	Call Method  ${ixNetwork}  NewConfig

@@ -20,22 +20,19 @@ Supports IxNetwork API servers:
 
 Requirements
    - IxNetwork 8.50
+   - RestPy version 1.0.33
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
 RestPy Doc:
-    https://www.openixia.com/userGuides/restPyDoc
+    https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
-   # Defaults to Windows
    - Enter: python <script>
 
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
-
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
+   # Connect to a different api server.
+   - Enter: python <script>   <api server ip>
 """
 
 import json, sys, os, traceback
@@ -45,14 +42,7 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
-
 apiServerIp = '192.168.70.3'
-
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
 
 # For Linux API server only
 username = 'admin'
@@ -60,11 +50,7 @@ password = 'admin'
 
 # Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]
+    apiServerPort = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
@@ -86,22 +72,23 @@ portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 jsonConfigFile = 'bgp_ngpf_8.50.json'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: None|request|'request response'
+    # Console output verbosity: 'none'request|'request response'
     testPlatform.Trace = 'request_response'
 
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-    ixNetwork.NewConfig()
 
-    ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
-    ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
+    ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
     ixNetwork.Globals.Licensing.Tier = licenseTier
+
+    ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
+    ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
     # Assign ports
     testPorts = []
@@ -110,6 +97,9 @@ try:
         testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
 
     ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+
+    for vport in ixNetwork.Vport.find():
+        vport.L1Config.PortMedia = 'copper'
 
     # Example: How to modify a loaded json config using XPATH
     # Arg3:  True=To create a new config. False=To modify an existing config.

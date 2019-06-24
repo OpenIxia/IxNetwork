@@ -15,12 +15,13 @@ Supports IxNetwork API servers:
 
 Requirements
    - IxNetwork 8.50
+   - RestPy version 1.0.33
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
 RestPy Doc:
-    https://www.openixia.com/userGuides/restPyDoc
+    https://www.openixia.github.io/ixnetwork_restpy
 """
 
 import os, sys, time, traceback
@@ -29,14 +30,10 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
-
 apiServerIp = '192.168.70.3'
 
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
+# windows|connection_manager|linux
+osPlatform = 'windows'
 
 # For Linux API server only
 username = 'admin'
@@ -44,15 +41,12 @@ password = 'admin'
 
 # Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]    
+    apiServerPort = sys.argv[1]    
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
-    # Console output verbosity: None|request|request_response
+    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
+
+    # Console output verbosity: 'none'|request|request_response
     testPlatform.Trace = 'request_response'
 
     if osPlatform == 'linux':
@@ -73,7 +67,6 @@ try:
     
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
-
 
 except Exception as errMsg:
     print('\nError: %s' % traceback.format_exc())

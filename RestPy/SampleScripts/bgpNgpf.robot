@@ -1,25 +1,60 @@
 *** Settings ***
 Documentation  sample demonstrating traffic creation using ixnetwork_restpy and robot extended variable syntax
- 
+
+...  bgpNgpf.robot
+
+...  Tested with two back-2-back Ixia ports
+
+...   - Connect to the API server
+...   - Configure license server IP
+...   - Optional: Assign ports or use the ports that are in the saved config file.
+...   - Configure two IPv4 BGP in NGPF with network advertisements
+...   - Start all protocols
+...   - Verify all protocols
+...   - Start traffic 
+...   - Get Traffic Item
+...   - Get Flow Statistics stats
+
+...  Supports IxNetwork API servers:
+...   - Windows, Windows Connection Mgr and Linux
+
+...  Requirements
+...   - RestPy 1.0.33   
+...   - IxNetwork 8.50
+...   - Python 2.7 and 3+
+...   - pip install requests
+ ...  - pip install -U --no-cache-dir ixnetwork_restpy
+
+...  RestPy Doc:
+...    https://www.openixia.com/userGuides/restPyDoc
+
+
 Library  BuiltIn
 Library  Collections
-Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  192.168.70.3  rest_port=11009
 
 *** Variables ***
 ${apiServerIp} =  192.168.70.3
-${apiServerPort} =  11009
-${apiServerOs} =  windows
+
+# For Linux API server only
+${username} =  admin
+${password} =  admin
+
+# Forcefully take port ownership if the portList are owned by other users.
 ${forceTakePortOwnership} =  True
-${debugMode} =  True
+
 @{licenseServerIp} =  192.168.70.3
 ${licenseMode} =  subscription
 ${licenseTier} =  tier3  
-${ixChassisIp} =  192.168.70.128
 
-# Creating a list and nested list
+# For linux and connection_manager only. Set to True to leave the session alive for debugging.
+${debugMode} =  False
+
+# Create a list and nested list
+${ixChassisIp} =  192.168.70.128
 @{port_1_1} =  ${ixChassisIp}  1  1
 @{port_2_1} =  ${ixChassisIp}  2  1
 @{portList} =  ${port_1_1}  ${port_2_1}
+
 @{trackBy} =  flowGroup0  
 @{EMPTYLIST} =  
 
@@ -27,9 +62,19 @@ ${ixChassisIp} =  192.168.70.128
 Configure BGP in NGPF
 
 	Log To Console  Connecting ...
-	${testPlatform} =  Get Library Instance  ixnetwork_restpy.testplatform.testplatform.TestPlatform
-	${sessions} =   Set Variable  ${testPlatform.Sessions}
-	${ixNetwork} =  Set Variable  ${sessions.find().Ixnetwork}
+
+	# If you are using RestPy version < 1.0.33, uncomment this.  Backward compatibility still works, but
+	# the parameters rest_port and platform are deprecated.
+	#Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  
+	#...  ${apiServerIp}  rest_port=11009  platform=windows  log_file_name=restpy.log  WITH NAME  testPlatformObj
+
+	# For RestPy version >= 1.0.33
+	Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  ${apiServerIp}  log_file_name=restpy.log  WITH NAME  testPlatformObj
+
+	${testPlatform} =  Get Library Instance  testPlatformObj
+	Call Method  ${testPlatform}  Authenticate  ${username}  ${password}
+        ${session} =  Set Variable  ${testPlatform.Sessions.add()}
+	${ixNetwork} =  Set Variable  ${session.find().Ixnetwork}
 
 	Log To Console  New blank config ...
 	Call Method  ${ixNetwork}  NewConfig
@@ -168,3 +213,8 @@ Configure BGP in NGPF
 	Log To Console  ${flowStatistics}
 	Log To Console  TxFrames: ${flowStatistics.Rows[0]['Tx Frames']}
 	Log To Console  RxFrames: ${flowStatistics.Rows[0]['Rx Frames']}
+
+        # Note: Using Call Method to remove the session doesn't work.
+	${status} =  Run Keyword If  "${debugMode}"=="False"   Set Variable  ${session.remove()}  
+
+

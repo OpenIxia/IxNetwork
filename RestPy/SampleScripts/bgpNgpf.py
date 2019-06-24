@@ -22,23 +22,19 @@ Supports IxNetwork API servers:
 
 Requirements:
    - IxNetwork 8.50
-
+   - RestPy version 1.0.33
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
 RestPy Doc:
-    https://www.openixia.com/userGuides/restPyDoc
+    https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
-   # Defaults to Windows
    - Enter: python <script>
 
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
-
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
+   # Connect to a different api server.
+   - Enter: python <script>   <api server ip>
 """
 
 import sys, os, time, traceback
@@ -47,14 +43,7 @@ import sys, os, time, traceback
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
-
 apiServerIp = '192.168.70.3'
-
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
 
 # For Linux API server only
 username = 'admin'
@@ -62,11 +51,7 @@ password = 'admin'
 
 # Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]    
+    apiServerPort = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
@@ -85,14 +70,15 @@ ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(ip_address=apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: None|request|'request response'
+    # Console output verbosity: 'none'|request|'request response'
     testPlatform.Trace = 'request_response'
 
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
+    
     ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
@@ -102,7 +88,7 @@ try:
     # Create vports and name them so you could use .find() to filter vports by the name.
     vport1 = ixNetwork.Vport.add(Name='Port1')
     vport2 = ixNetwork.Vport.add(Name='Port2')
-
+    
     # Assign ports
     testPorts = []
     vportList = [vport.href for vport in ixNetwork.Vport.find()]
@@ -218,8 +204,8 @@ try:
         session.remove()
 
 except Exception as errMsg:
-    print('\n%s' % traceback.format_exc())
-
+    #print('\n%s' % traceback.format_exc(None, errMsg))
+    print(traceback.print_exception())
     if debugMode == False and 'session' in locals():
         session.remove()
 

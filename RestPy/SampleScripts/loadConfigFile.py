@@ -5,12 +5,11 @@ loadConfigFile.py:
 
    - Connect to the API server
    - Configure license server IP
-   - Loads a saved .ixncfg config file that is in the same local directory: bgp_ngpf_8.30.ixncfg
+   - Load a saved config file
    - Configure license server IP
    - Optional: Assign ports or use the ports that are in the saved config file.
    - Start all protocols
    - Verify all protocols
-   - Modify the config by using JSON XPath.
    - Start traffic 
    - Get Traffic Item
    - Get Flow Statistics stats
@@ -19,23 +18,21 @@ Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 
 Requirements
+   - RestPy version 1.0.33
    - IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
 RestPy Doc:
-    https://www.openixia.com/userGuides/restPyDoc
+    https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
-   # Defaults to Windows
    - Enter: python <script>
 
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
+   # Connect to a different api server.
+   - Enter: python <script>   <api server ip>
 
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import json, sys, os, traceback
@@ -45,14 +42,7 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
-
 apiServerIp = '192.168.70.3'
-
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
 
 # For Linux API server only
 username = 'admin'
@@ -60,11 +50,7 @@ password = 'admin'
 
 # Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]
+    apiServerIp = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
@@ -85,13 +71,10 @@ configFile = 'bgp_ngpf_8.30.ixncfg'
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
-# The traffic item name to get stats from for this sample script
-trafficItemName = 'Topo-BGP'
-
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: None|request|'request response'
+    # Console output verbosity: 'none'|request|'request response'
     testPlatform.Trace = 'request_response'
 
     testPlatform.Authenticate(username, password)
@@ -100,12 +83,12 @@ try:
     ixNetwork = session.Ixnetwork
     ixNetwork.NewConfig()
 
-    ixNetwork.info('Loading config file: {0}'.format(configFile))
-    ixNetwork.LoadConfig(Files(configFile, local_file=True))
-
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
     ixNetwork.Globals.Licensing.Tier = licenseTier
+
+    ixNetwork.info('Loading config file: {0}'.format(configFile))
+    ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     # Assign ports
     testPorts = []

@@ -452,11 +452,12 @@ try:
     ixNetwork = session.Ixnetwork
 
     ixNetwork.NewConfig()
-    ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
     ixNetwork.Globals.Licensing.Tier = licenseTier
+
+    ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     # Assign ports
     testPorts = []

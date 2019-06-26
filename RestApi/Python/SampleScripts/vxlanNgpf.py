@@ -113,7 +113,7 @@ try:
                                                               'direction': 'increment',
                                                               'step': '00:00:00:00:00:01'},
                                                   macAddressPortStep='disabled',
-                                                  vlanId=100)
+                                                   vlanId={'start': 100, 'direction': 'increment', 'step': 0})
     
     ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
@@ -121,7 +121,7 @@ try:
                                                               'direction': 'increment',
                                                               'step': '00:00:00:00:00:01'},
                                                   macAddressPortStep='disabled',
-                                                  vlanId=100)
+                                                   vlanId={'start': 100, 'direction': 'increment', 'step': 0})
     
     ipv4Obj1 = protocolObj.configIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '100.1.1.1',

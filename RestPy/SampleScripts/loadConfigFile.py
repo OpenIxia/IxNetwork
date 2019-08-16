@@ -18,11 +18,10 @@ Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 
 Requirements
-   - RestPy version 1.0.33
    - IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy

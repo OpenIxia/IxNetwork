@@ -20,13 +20,13 @@ Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 
 Requirements
-   - IxNetwork 8.50
+   - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy
 
 RestPy Doc:
-    https://www.openixia.com/userGuides/restPyDoc
+    https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
    # Defaults to Windows
@@ -51,25 +51,20 @@ osPlatform = 'windows'
 
 apiServerIp = '192.168.70.3'
 
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
-
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]
+    apiServerPort = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
@@ -84,7 +79,7 @@ ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'
@@ -125,12 +120,17 @@ try:
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
     #       Therefore, ConfigElement is a list.
     ixNetwork.info('Configuring config elements')
-    trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
-    trafficItem.ConfigElement.find()[0].FrameRate.Type = 'framesPerSecond'
-    trafficItem.ConfigElement.find()[0].TransmissionControl.FrameCount = 10000
-    trafficItem.ConfigElement.find()[0].TransmissionControl.Type = 'fixedFrameCount'
-    trafficItem.ConfigElement.find()[0].FrameRateDistribution.PortDistribution = 'splitRateEvenly'
-    trafficItem.ConfigElement.find()[0].FrameSize.FixedSize = 128
+    configElement = trafficItem.ConfigElement.find()[0]
+    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
+    configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
+
+    #trafficItem.ConfigElement.find()[0].FrameRate.Rate = 28
+    #trafficItem.ConfigElement.find()[0].FrameRate.Type = 'framesPerSecond'
+    #trafficItem.ConfigElement.find()[0].TransmissionControl.FrameCount = 10000
+    #trafficItem.ConfigElement.find()[0].TransmissionControl.Type = 'fixedFrameCount'
+
+    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
+    configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     # Show a list of current configured packet headers in the first Traffic Item and first EndpointSet.

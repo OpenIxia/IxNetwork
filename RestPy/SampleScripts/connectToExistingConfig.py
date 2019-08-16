@@ -68,6 +68,8 @@ try:
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
 
+
+
 except Exception as errMsg:
     print('\nError: %s' % traceback.format_exc())
     print('\nrestPy.Exception:', errMsg)

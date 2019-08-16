@@ -21,11 +21,10 @@ Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 
 Requirements:
-   - IxNetwork 8.50
-   - RestPy version 1.0.33
+   - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -55,8 +54,10 @@ if len(sys.argv) > 1:
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
@@ -170,10 +171,8 @@ try:
     #       Therefore, ConfigElement is a list.
     ixNetwork.info('Configuring config elements')
     configElement = trafficItem.ConfigElement.find()[0]
-    configElement.FrameRate.Rate = 28
-    configElement.FrameRate.Type = 'framesPerSecond'
-    configElement.TransmissionControl.FrameCount = 10000
-    configElement.TransmissionControl.Type = 'fixedFrameCount'
+    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
+    configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
@@ -204,8 +203,7 @@ try:
         session.remove()
 
 except Exception as errMsg:
-    #print('\n%s' % traceback.format_exc(None, errMsg))
-    print(traceback.print_exception())
+    print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
         session.remove()
 

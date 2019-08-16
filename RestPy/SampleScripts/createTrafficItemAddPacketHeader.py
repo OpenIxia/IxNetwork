@@ -32,23 +32,19 @@ Description
    - Get stats
 
 Requirements
-   - IxNetwork 8.50
+   - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy
 
 RestPy Doc:
-    https://www.openixia.com/userGuides/restPyDoc
+    https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
-   # Defaults to Windows
    - Enter: python <script>
 
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
-
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
+   # Connect to a different api server.
+   - Enter: python <script>   <api server ip>
 """
 
 import os, sys, traceback
@@ -59,14 +55,7 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
-
 apiServerIp = '192.168.70.3'
-
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
 
 # For Linux API server only
 username = 'admin'
@@ -74,17 +63,14 @@ password = 'admin'
 
 # Allow passing in some params/values from the CLI to replace the defaults
 if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]    
+    apiServerIp = sys.argv[1]
 
 configFile = 'bgp_ngpf_8.30.ixncfg'
 
 licenseServerIp = ['192.168.70.3']
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
@@ -98,24 +84,6 @@ ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 try:
-
-    def createTrafficItem(**kwargs):
-        trafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name=kwargs['trafficItemName'], BiDirectional=kwargs['biDirectional'],
-                                                           TrafficType=kwargs['trafficType'])
-
-        ixNetwork.info('Add endpoints')
-        trafficItemObj.EndpointSet.add(Sources=kwargs['srcEndpoint'], Destinations=kwargs['dstEndpoint'])           
-
-        configElement = trafficItemObj.ConfigElement.find()[0]
-        configElement.FrameRate.Rate = kwargs['frameRate']
-        configElement.FrameRate.Type = kwargs['frameRateType']
-        configElement.TransmissionControl.FrameCount = kwargs['frameCount']
-        configElement.TransmissionControl.Type = kwargs['transmissionControlType']
-        configElement.FrameSize.FixedSize = kwargs['frameSize']
-        trafficItemObj.Tracking.find()[0].TrackBy = kwargs['tracking']
-
-        return trafficItemObj
-
     def createPacketHeader(trafficItemObj, packetHeaderToAdd=None, appendToStack=None): 
         configElement = trafficItemObj.ConfigElement.find()[0]
 
@@ -149,11 +117,12 @@ try:
 
 
     # Connect
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'
 
+    # For Linux API server only
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
 
@@ -182,20 +151,18 @@ try:
     protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
     ixNetwork.info(protocolsSummary)
 
-    rawTrafficItemObj = createTrafficItem(trafficItemName = 'Raw Samples',
-                                          biDirectional = False,
-                                          trafficType = 'raw',
-                                          frameRate = 28,
-                                          frameSize = 64,
-                                          frameRateType = 'framesPerSecond',
-                                          frameCount = 10000,
-                                          transmissionControlType = 'fixedFrameCount',
-                                          tracking = ['flowGroup0'],
-                                          srcEndpoint = ixNetwork.Vport.find(Name='Port_1').Protocols.find(),
-                                          dstEndpoint = ixNetwork.Vport.find(Name='Port_2').Protocols.find()
-                                      )
+    rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet header samples', BiDirectional=False, TrafficType='raw')
 
-    # Ethernet header doesn't need to be created.  It is there by default. Just do a find for the Ethernet stack object.
+    ixNetwork.info('Add endpoints')
+    rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find(Name='Port_1').Protocols.find(), Destinations=ixNetwork.Vport.find(Name='Port_2').Protocols.find())
+
+    configElement = rawTrafficItemObj.ConfigElement.find()[0]
+    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
+    configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
+    configElement.FrameSize.FixedSize = 128
+    rawTrafficItemObj.Tracking.find()[0].TrackBy = ['flowGroup0']
+
+    # The Ethernet packet header doesn't need to be created.  It is there by default. Just do a find for the Ethernet stack object.
     ethernetStackObj = ixNetwork.Traffic.TrafficItem.find()[-1].ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
 
     # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
@@ -203,14 +170,14 @@ try:
     ixNetwork.info('Configuring Ethernet packet header')
     ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
     ethernetDstField.ValueType = 'increment'
-    ethernetDstField.StartValue = "00:0c:29:22:8f:2f"
+    ethernetDstField.StartValue = "00:0c:29:3a:8a:3a"
     ethernetDstField.StepValue = "00:00:00:00:00:00"
     ethernetDstField.CountValue = 1
 
     ethernetSrcField = ethernetStackObj.Field.find(DisplayName='Source MAC Address')
     ethernetSrcField.ValueType = 'increment'
-    ethernetSrcField.StartValue = "00:01:01:01:00:01"
-    ethernetSrcField.StepValue = "00:00:00:00:00:01"
+    ethernetSrcField.StartValue = "00:0c:29:86:ba:0e"
+    ethernetSrcField.StepValue = "00:00:00:00:00:00"
     ethernetSrcField.CountValue = 1
 
     vlanFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^VLAN', appendToStack='Ethernet II')
@@ -237,6 +204,7 @@ try:
     ipv4PrecedenceField.ActiveFieldChoice = True
     ipv4PrecedenceField.FieldValue = '011 Flash'
 
+    # Example to show appending UDP after the IPv4 header
     udpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^UDP', appendToStack='IPv4')
     udpSrcField = udpFieldObj.find(DisplayName='UDP-Source-Port')
     udpSrcField.Auto = False
@@ -246,7 +214,8 @@ try:
     udpDstField.Auto = False
     udpDstField.SingleValue = 1001
 
-    tcpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^TCP', appendToStack='UDP')
+    # Example to show appending TCP after the IPv4 header
+    tcpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^TCP', appendToStack='IPv4')
     tcpSrcField = tcpFieldObj.find(DisplayName='TCP-Source-Port')
     tcpSrcField.Auto = False
     tcpSrcField.SingleValue = 1002
@@ -255,7 +224,8 @@ try:
     tcpDstField.Auto = False
     tcpDstField.SingleValue = 1003
 
-    icmpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='^TCP')
+    # Example to show appending ICMP after the IPv4 header
+    icmpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='IPv4')
 
     for trafficItem in ixNetwork.Traffic.TrafficItem.find():
         trafficItem.Generate()

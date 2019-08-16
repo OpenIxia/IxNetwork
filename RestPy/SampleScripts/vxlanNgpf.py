@@ -20,10 +20,10 @@ Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 
 Requirements
-   - IxNetwork 8.50
+   - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy
 
 RestPy Doc:
     https://www.openixia.com/userGuides/restPyDoc
@@ -45,10 +45,6 @@ import sys, os, time, traceback
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
-
 apiServerIp = '192.168.70.3'
 
 # windows:11009. linux:443. connection_manager:443
@@ -68,12 +64,15 @@ if len(sys.argv) > 1:
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
-# For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
+# For linux and windowsConnectionMgr only.
+# Set to True to leave the session alive for debugging.
 debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
@@ -84,7 +83,7 @@ ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|'request response'
     testPlatform.Trace = 'request_response'
@@ -207,10 +206,8 @@ try:
     #       Therefore, ConfigElement is a list.
     ixNetwork.info('\tConfiguring config elements')
     configElement = trafficItem.ConfigElement.find()[0]
-    configElement.FrameRate.Rate = 28
-    configElement.FrameRate.Type = 'framesPerSecond'
-    configElement.TransmissionControl.FrameCount = 10000
-    configElement.TransmissionControl.Type = 'fixedFrameCount'
+    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
+    configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']

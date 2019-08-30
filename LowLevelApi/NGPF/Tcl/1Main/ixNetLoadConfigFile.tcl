@@ -10,7 +10,7 @@
 #    Start traffic
 #    Get stats
 #
-# Prerequisites
+# Requirements
 #    - If connecting to a Linux API server:
 #        - The Linux API server is a secured access device.
 #        - Uses SSL (HTTPS).
@@ -20,7 +20,8 @@
 #               Download from: https://sourceforge.net/projects/tls/files/tls
 #
 #    - TCL must have Tclx package
-#      If you could, install ActiveState TCL. 
+#    - ActiveState TCL doesn't work with api loadConfig.  Download and install the IxNetwork API-Dependencies<version>Linux64.bin.
+#      Use the tclsh from /opt/ixia/tcl/8.6.6.8606/bin/tclsh
 #
 # Suports Windows API server and Linux API server
 #
@@ -37,19 +38,23 @@ if {$osPlatform == "linux"} {
     set apiServerIp 192.168.70.12
 }
 
-set ixChassisIp 192.168.70.128
 set ixNetworkVersion 9.00
+set configFile bgp_ngpf_8.30.ixncfg
 
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
 set licenseMode subscription 
 set licenseTier tier3
 
+set ixChassisIp 192.168.70.128
 set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
-set configFile bgp_ngpf_8.30.ixncfg
 
 if {$osPlatform == "linux"} {
+    # Uncomment this package if you are using ixNetwork version prior to 9.0
     #package req IxTclNetworkLinuxApiServer 
+
+    # Uncomment this package if you are using IxNetwork 9.0+
     package req IxTclNetwork
+
    if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
 	exit
     }

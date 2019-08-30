@@ -106,7 +106,7 @@ proc Connect {args} {
 
     puts "\nConnecting to API server: $paramList"
     if {[catch {set connectStatus [eval ixNet connect $paramList]} errMsg]} {
-	puts "\nConnect failed $paramList"
+	puts "\nConnect failed: $errMsg"
 	return 1
     }
 
@@ -171,12 +171,11 @@ proc LoadConfigFile {configFile} {
     }
 
     puts "\nLoadConfigFile: $configFile"
-    if {[ixNet exec loadConfig [ixNet readFrom $configFile]] != "::ixNet::OK"} {
-	puts "\nError: LoadConfigFile failed: $configFile"
-	return 1
+    if {[catch {ixNet execute loadConfig [ixNet readFrom $configFile]} errMsg]} {
+    	puts "\nError: LoadConfigFile failed: $errMsg"
+    	return 1
     }
 
-    after 8000
     return 0
 }
 

@@ -3484,7 +3484,7 @@ proc CreateEthernetNgpf {args} {
 	    }
 	    -name {
 		set name [lindex $args [expr $argIndex + 1]]
-		append paramList " -name $name"
+		#append paramList " -name $name"
 		incr argIndex 2
 	    }
 	    -macAddress {
@@ -3519,12 +3519,15 @@ proc CreateEthernetNgpf {args} {
 
     puts "\nCreateEthernetNgpf: Adding new Ethernet stack"
     set ethernetObj [ixNet add $deviceGroupObj ethernet]
+    if {[info exists name]} {
+	ixNet setAttribute $ethernetObj -name $name
+    }
     ixNet commit
-
+    
     set ethernetMultivalue [ixNet getAttribute $ethernetObj -mac]
-    puts "\t$paramList"
+    puts "\n\tEtherent params: $paramList"
     if {[catch {eval ixNet setMultiAttribute $ethernetMultivalue/counter  $paramList} errMsg]} {
-	puts "\nCreateEthernetNgpf failed: $paramList"
+	puts "\nCreateEthernetNgpf failed: $errMsg \n$paramList"
 	return 1
     }
     ixNet commit
@@ -3546,7 +3549,6 @@ proc CreateEthernetNgpf {args} {
 	ixNet commit
     }
 
-    #return [lindex [ixNet remapIds $ethernetObj] 0]
     return $ethernetObj
 }
 
@@ -3588,7 +3590,7 @@ proc ConfigVlanIdNgpf {args} {
     puts "\nConfigVlanIdNgpf: start:$vlanId step:$step direction:$direction"
     set vlanMultivalue [ixNet getAttribute $ethernetObj/vlan:1 -vlanId]
     if {[catch {eval ixNet setMultiAttribute $vlanMultivalue/counter $paramList} errMsg]} {
-	puts "\nConfigVlanIdNgpf failed: start:$vlanId step:$step direction:$direction"
+	puts "\nConfigVlanIdNgpf failed: $errMsg \nstart:$vlanId step:$step direction:$direction"
 	return 1
     }
     ixNet commit
@@ -3609,7 +3611,7 @@ proc CreateIpv4Ngpf {args} {
 	    }
 	    -name {
 		set name [lindex $args [expr $argIndex + 1]]
-		append paramList " -name $name"
+		#append paramList " -name $name"
 		incr argIndex 2
 	    }
 	    -ipAddress  {
@@ -3638,15 +3640,18 @@ proc CreateIpv4Ngpf {args} {
 	}
     }
 
-    puts "\nCreateIpv4Ngpf: Adding new IPv4 stack"
+    puts "\nCreateIpv4Ngpf: Adding new IPv4 stack to ethObj: $ethernetObj"
     set ipv4Obj [ixNet add $ethernetObj ipv4]
+    if {[info exists name]} {
+	ixNet setAttribute $ipv4Obj -name $name
+    }
     ixNet commit
-
+    
     set ipv4Multivalue [ixNet getAttribute $ipv4Obj -address]
 
     puts "\t$paramList"
     if {[catch {eval ixNet setMultiAttribute $ipv4Multivalue/counter  $paramList} errMsg]} {
-	puts "\nCreateIpv4Ngpf failed: $paramList"
+	puts "\nCreateIpv4Ngpf failed: $errMsg"
 	return 1
     }
     ixNet commit
@@ -3703,7 +3708,7 @@ proc ConfigIpv4GatewayIpNgpf {args} {
 
     puts "\t$paramList"
     if {[catch {eval ixNet setMultiAttribute $gatewayMultivalue/counter $paramList} errMsg]} {
-	puts "\nConfigGatewayIpNgpf failed: $paramList"
+	puts "\nConfigGatewayIpNgpf failed: $errMsg"
 	return 1
     }
     ixNet commit
@@ -3758,7 +3763,7 @@ proc ConfigBgpNgpf {args} {
 
     puts "\t$paramList"
     if {[catch {eval ixNet setMultiAttribute $bgpMultivalue/counter $paramList} errMsg]} {
-	puts "\nConfigBgpNgpf failed: $paramList"
+	puts "\nConfigBgpNgpf failed: $errMsg"
 	return 1
     }
     ixNet commit
@@ -3820,18 +3825,6 @@ proc CreateIpv4GatewayIpObjNgpf { ipv4StackObj } {
     ixNet commit
     
     return [lindex [ixNet remapIds $ipv4GatewayIpObj] 0]
-}
-
-proc ConfigIpv4GatewayIpNgpf_backup { ipv4GatwayIpObj start {step 0.0.0.0} {direction increment} } {
-    puts "\nConfigIpv4GatewayIpNgpf: $ipv4GatwayIpObj : start=$start step=$step direction=$direction"
-    set ipv4GatewayIpObj2 [ixNet add $ipv4GatwayIpObj "counter"]
-    ixNet setMultiAttribute $ipv4GatewayIpObj2 \
-	-start $start \
-	-step $step \
-	-direction $direction
-    ixNet commit
-
-    return [lindex [ixNet remapIds $ipv4GatewayIpObj2] 0]
 }
 
 proc ConfigIpv4GatewayIpOverlayNgpf { ipv4GatewayIpObj count index indexStep valueStep value } {

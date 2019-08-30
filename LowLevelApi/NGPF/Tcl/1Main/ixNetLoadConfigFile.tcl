@@ -1,5 +1,3 @@
-#!/opt/ActiveTcl-8.5/bin/tclsh
-
 # Description
 #    Load a saved .ixncfg config file
 #       - This script could use the ports from the saved config file.
@@ -36,21 +34,22 @@ if {$osPlatform == "windows"} {
     set apiServerIp 192.168.70.3
 }
 if {$osPlatform == "linux"} {
-    set apiServerIp 192.168.70.108
+    set apiServerIp 192.168.70.12
 }
 
-set ixChassisIp 192.168.70.120
-set ixNetworkVersion 8.50
+set ixChassisIp 192.168.70.128
+set ixNetworkVersion 9.00
 
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
 set licenseMode subscription 
 set licenseTier tier3
 
-set portList [list "$ixChassisIp 1 1" "$ixChassisIp 1 2"]
+set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
 set configFile bgp_ngpf_8.30.ixncfg
 
 if {$osPlatform == "linux"} {
-    package req IxTclNetworkLinuxApiServer 
+    #package req IxTclNetworkLinuxApiServer 
+    package req IxTclNetwork
    if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
 	exit
     }

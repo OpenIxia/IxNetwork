@@ -1,5 +1,3 @@
-#!/usr/bin/tclsh
-
 # Description
 #    Connect to either a Windows API server or Linux API server
 #    Connect to chassis and ports
@@ -43,15 +41,15 @@ if {$osPlatform == "linux"} {
     set apiServerIp 192.168.70.12
 }
 
-set ixNetworkVersion 8.51
+set ixNetworkVersion 9.00
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
 set licenseMode subscription
 set licenseTier tier3
 
 set ixChassisIp 192.168.70.128
-set portList [list "$ixChassisIp 1 1" "$ixChassisIp 1 2"]
+set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
 set port1 [list $ixChassisIp 1 1]
-set port2 [list $ixChassisIp 1 2]
+set port2 [list $ixChassisIp 2 1]
 
 if {$osPlatform == "linux"} {
    if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
@@ -86,7 +84,7 @@ if {[ClearPortOwnership $portList]} {
 # this is the spot to do it.  NOte: You need to release the ports before you could configure them
 # which is done above.
 if {[ConfigLicenseServer $licenseServerIp $licenseMode $licenseTier]} {
-    exit
+   exit
 }
 
 if {[AssignPorts $ixChassisIp $portList]} {
@@ -115,8 +113,8 @@ set ethernet2Obj [CreateEthernetNgpf \
 		      -macAddress 00:01:02:01:00:01 -direction increment -step 00:00:00:00:00:01 \
 		     ]
 
-set ipv4Obj1 [CreateIpv4Ngpf -ethernetObj $ethernet1Obj -name IPv4-1 -ipAddress 1.1.1.1 -direction inrement -step 0.0.0.1]
-set ipv4Obj2 [CreateIpv4Ngpf -ethernetObj $ethernet2Obj -name IPv4-2 -ipAddress 1.1.1.4 -direction inrement -step 0.0.0.1]
+set ipv4Obj1 [CreateIpv4Ngpf -ethernetObj $ethernet1Obj -name IPv4-1 -ipAddress 1.1.1.1 -direction increment -step 0.0.0.1]
+set ipv4Obj2 [CreateIpv4Ngpf -ethernetObj $ethernet2Obj -name IPv4-2 -ipAddress 1.1.1.4 -direction increment -step 0.0.0.1]
 
 ConfigIpv4GatewayIpNgpf -ipv4Obj $ipv4Obj1 -gatewayIp 1.1.1.4 -direction increment -step 0.0.0.1
 ConfigIpv4GatewayIpNgpf -ipv4Obj $ipv4Obj2 -gatewayIp 1.1.1.1 -direction increment -step 0.0.0.1

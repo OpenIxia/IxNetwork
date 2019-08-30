@@ -1,4 +1,3 @@
-#!/opt/ActiveTcl-8.5/bin/tclsh
 
 # Description
 #    - This sample script shows how to prepare and use ixNet low level TCL API with the Linux API server.
@@ -11,7 +10,9 @@
 #    TODO: Verify protocol sessions
 #    Start traffic
 #    Get stats
-
+#
+# Requirements
+#    - TCL pacakges: tls, json, http, 
 # To support ixNet low level API against the Linux API server:
 #
 #   Get IxTclNetwork.tcl:   
@@ -55,22 +56,27 @@
 #
 #     - In the scripts, add: package req IxTclNetworkLinuxApiServer
 
-package req IxTclNetworkLinuxApiServer
-package req Tclx
+# For ixNetwork version prior to 9.0
+#package req IxTclNetworkLinuxApiServer
+#package req Tclx
 
+# For ixNetwork version 9.0+
+package req IxTclNetwork
 source api.tcl
 
-set apiServerIp 192.168.70.108
-set ixChassisIp 192.168.70.11
-set ixNetworkVersion 8.40
+set apiServerIp 192.168.70.12
+
+set ixNetworkVersion 9.00
 set username admin
 set password admin
 set licenseServerIp 192.168.70.3
 set licenseMode subscription
 set licenseTier tier3
-set portList []
 
-set configFile /home/hgee/Dropbox/MyIxiaWork/OpenIxiaGit/IxNetwork/RestApi/Python/SampleScripts/bgp_ngpf_8.30.ixncfg
+set ixChassisIp 192.168.70.128
+set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1"]
+
+set configFile bgp_ngpf_8.30.ixncfg
 
 if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
     exit
@@ -93,7 +99,7 @@ if {[ClearPortOwnership]} {
     exit
 }
 
-if {[AssignPorts $ixChassisIp]} {
+if {[AssignPorts $ixChassisIp $portList]} {
     exit
 }
 
@@ -136,6 +142,6 @@ set rxFrames [keylget stats flow.1.Rx_Frames]
 set delta [expr $txFrames - $rxFrames]
 puts "\nTxFrames: $txFrames  RxFrames: $rxFrames  Delta: $delta"
 
-ixNet disconnect
+#ixNet disconnect
 
 

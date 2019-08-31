@@ -1,4 +1,4 @@
-import sys, time
+import sys, time, re
 
 class Ports(object):
     def __init__(self, ixNetworkObject):
@@ -142,3 +142,41 @@ class Ports(object):
 
         print('\nAssignPorts: {0}'.format(portList))
         self.ixNetObj.AssignPorts(testPorts, [], vportList, takePortOwnership)
+
+    def setPortMediaType(self, portMedia='fiber', autoNegotiation=True):
+        """
+        Modify all the vport media type: copper|fiber
+
+        :param portMedia: copper|fiber
+        :param autoNegotiation: <bool>
+        """
+        self.ixNetObj.info('\nSetting Port Media and AutoNegSpeed')
+        for vport in self.ixNetObj.Vport.find():
+            portType = vport.Type
+            capitalizedCardType = re.sub('([a-zA-Z])', lambda x: x.groups()[0].upper(), portType, 1)
+            portObj = getattr(vport.L1Config, capitalizedCardType)
+            portObj.update(Media=portMedia)
+            portObj.update(AutoNegotiate=autoNegotiation)
+
+    def verifyPortState(self):
+        """
+        Verify all the vport port state for up to 90 seconds. 
+        """
+        for vport in self.ixNetObj.Vport.find():
+            if vport.AssignedTo == '':
+                continue
+
+            for counter in range(1, 91):
+                vport.refresh()
+
+                self.ixNetObj.info('\n\nVerifying port state: {}: {}  {}/{}\n'.format(
+                    vport.AssignedTo, vport.ConnectionState, counter, 90))
+
+                if counter < 90 and vport.ConnectionState != "connectedLinkUp":
+                    time.sleep(1)
+
+                if counter < 90 and vport.ConnectionState == "connectedLinkUp":
+                    break
+
+                if counter == 90 and vport.ConnectionState != "connectedLinkUp":
+                    raise Exception('Port is not linking up: {}'.format(vport.AssignedTo))

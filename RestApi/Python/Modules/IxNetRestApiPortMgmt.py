@@ -64,6 +64,7 @@ class PortMgmt(object):
                 data.update(kwargs)
 
             response = self.ixnObj.post(url, data=data)
+
             if type(response.json()) == list:
                 # 8.50 json response is a list.
                 chassisIdObj = response.json()[0]['links'][0]['href']
@@ -71,16 +72,27 @@ class PortMgmt(object):
                 chassisIdObj = response.json()['links'][0]['href']
  
             self.ixnObj.logInfo('\n', timestamp=False)
+
             # Chassis states: down, polling, ready
+
             for timer in range(1,timeout+1):
                 response = self.ixnObj.get(self.ixnObj.httpHeader + chassisIdObj, silentMode=True)
                 currentStatus = response.json()['state']
                 self.ixnObj.logInfo('connectIxChassis {0}: Status: {1}. Wait {2}/{3} seconds'.format(
                     chassisIpAddress, currentStatus, timer, timeout), timestamp=False)
+
                 if currentStatus != 'ready' and timer < timeout:
                     time.sleep(1)
+
                 if currentStatus != 'ready' and timer == timeout:
-                    raise IxNetRestApiException('connectIxChassis: Connecting to chassis {0} failed'.format(chassisIpAddress))
+                    #raise IxNetRestApiException('connectIxChassis: Connecting to chassis {0} failed'.format(chassisIpAddress))
+                    if currentStatus == 'polling':
+                        errorMsg = "Chassis could not be located."
+                    else:
+                        errorMsg = ''
+
+                    raise IxNetRestApiException('connectIxChassis failed. chassisIP:{0}.  It is in the {1} state. {2}'.format(chassisIp, currentStatus, errorMsg))
+
                 if currentStatus == 'ready' and timer < timeout:
                     chassisObjList.append(chassisIdObj)
                     break
@@ -607,11 +619,13 @@ class PortMgmt(object):
             try:
                 queryData = {"from": "/availableHardware",
                                 "nodes": [{"node": "chassis", "properties": ["ip"], "where": [{"property": "ip", "regex": chassisIp}]},
-                                        {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": cardId}]},
-                                        {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": portId}]}]}
+                                          {"node": "card", "properties": ["cardId"], "where": [{"property": "cardId", "regex": cardId}]},
+                                          {"node": "port", "properties": ["portId", "owner"], "where": [{"property": "portId", "regex": portId}]}]}
 
                 self.ixnObj.logInfo('Querying for %s/%s/%s' % (chassisIp, cardId, portId))
                 queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+                    
+                self.ixnObj.logInfo('\n--- queryResponse: {}'.format(queryResponse.json()))
                 queryResponse.json()['result'][0]['chassis'][0]['ip']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['id']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['portId']

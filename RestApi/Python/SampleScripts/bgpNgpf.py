@@ -61,7 +61,7 @@ try:
 
     ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
-    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '1', '2']]
+    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.12',
@@ -74,11 +74,14 @@ try:
                           generateLogFile='ixiaDebug.log'
                           )
 
+    # For windows: httpsSecured=False.  serverIpPort=11009
+    # For windowsConnectionMgr: httpsSecured=True. serverIpPort=443
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
                           deleteSessionAfterTest=True,
+                          httpsSecured=False,
                           generateLogFile='ixiaDebug.log'
                           )
 
@@ -91,6 +94,7 @@ try:
 
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
     portObj = PortMgmt(mainObj)
+    
     portObj.assignPorts(portList, forceTakePortOwnership)
 
     protocolObj = Protocol(mainObj)

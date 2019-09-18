@@ -504,5 +504,7 @@ class Statistics(object):
         Description
             Clear all stats and wait for API server to finish.
         """
-        url = self.ixnObj.sessionUrl + '/operations/clearStats'
+        url = self.ixnObj.sessionUrl + '/operations/clearstats'
         response = self.ixnObj.post(url, data={'arg1': ['waitForPortStatsRefresh']})
+        print('\n---- response:', response.json())
+        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])

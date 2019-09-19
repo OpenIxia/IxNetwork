@@ -393,7 +393,7 @@ class Statistics(object):
         """
         removeAllTclViewsUrl = self.ixnObj.sessionUrl+'/operations/removealltclviews'
         response = self.ixnObj.post(removeAllTclViewsUrl)
-        self.ixnObj.waitForComplete(response, removeAllTclViewsUrl+'/'+response.json()['id'])
+        self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader + response.json()['url'])
 
     def takeSnapshot(self, viewName='Flow Statistics', windowsPath=None, isLinux=False, localLinuxPath=None,
                      renameDestinationFile=None, includeTimestamp=False, mode='overwrite'):
@@ -451,7 +451,7 @@ class Statistics(object):
 
         url = self.ixnObj.sessionUrl+'/operations/takeviewcsvsnapshot'
         response = self.ixnObj.post(url, data=data)
-        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
+        self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader + response.json()['url'])
         if isLinux:
             snapshotFile = location + '/' + viewName + '.csv'
             self.fileMgmtObj.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=snapshotFile, localPath=localLinuxPath,
@@ -506,4 +506,4 @@ class Statistics(object):
         """
         url = self.ixnObj.sessionUrl + '/operations/clearstats'
         response = self.ixnObj.post(url, data={'arg1': ['waitForPortStatsRefresh']})
-        self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
+        self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader + response.json()['url'])

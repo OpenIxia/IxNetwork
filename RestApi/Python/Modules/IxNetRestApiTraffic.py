@@ -1126,6 +1126,69 @@ class Traffic(object):
     def disablePacketLossDuration(self):
         self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic/statistics/packetLossDuration', data={'enabled': 'false'})
 
+    def checkTrafficItemState(self, trafficItemList=None, expectedState=['stopped'], timeout=60, ignoreException=False):
+        """
+        Description
+            Check the traffic item expected state.
+            This is best used to verify that traffic has started before calling getting stats.
+
+        Traffic states are:
+            startedWaitingForStats, startedWaitingForStreams, started, stopped,
+            stoppedWaitingForStats, txStopWatchExpected, locked, unapplied
+
+        Parameters
+            trafficItemList: <list|objects>: A list of traffic item objects: 
+                             Ex: ['/api/v1/sessions/1/ixnetwork/traffic/trafficItem/1']
+            expectedState: <str>:  Input a list of expected traffic state.
+                            Example: ['started', startedWaitingForStats'] <-- This will wait until stats has arrived.
+
+            timeout: <int>: The amount of seconds you want to wait for the expected traffic state.
+                      Defaults to 45 seconds.
+                      In a situation where you have more than 10 pages of stats, you will
+                      need to increase the timeout time.
+
+            ignoreException: <bool>: If True, return 1 as failed, and don't raise an Exception.
+
+        Return
+            1: If failed.
+        """
+        if type(expectedState) != list:
+            expectedState.split(' ')
+
+        self.ixnObj.logInfo('checkTrafficState: Expecting state: {0}\n'.format(expectedState))
+
+        for trafficItemObj in trafficItemList:
+            for counter in range(1,timeout+1):
+                response = self.ixnObj.get(self.ixnObj.httpHeader + trafficItemObj, silentMode=True)
+                currentTrafficState = response.json()['state']
+
+                if currentTrafficState == 'unapplied':
+                    self.ixnObj.logWarning('\nCheckTrafficState: Traffic is UNAPPLIED')
+                    self.applyTraffic()
+
+                self.ixnObj.logInfo('\ncheckTrafficState: {}'.format(trafficItemObj))
+                self.ixnObj.logInfo('\t{trafficState}: Expecting: {expectedStates}.'.format(trafficState=currentTrafficState,
+                                                                                                             expectedStates=expectedState),
+                                    timestamp=False)
+
+                self.ixnObj.logInfo('\tWaited {counter}/{timeout} seconds'.format(counter=counter, timeout=timeout), timestamp=False)
+
+                if counter <= timeout and currentTrafficState not in expectedState:
+                    time.sleep(1)
+                    continue
+
+                if counter <= timeout and currentTrafficState in expectedState:
+                    #time.sleep(8)
+                    self.ixnObj.logInfo('checkTrafficState: {}: Done\n'.format(trafficItemObj))
+                    break
+
+                if counter == timeout and currentTrafficState not in expectedState:
+                    if ignoreException == False:
+                        raise IxNetRestApiException('checkTrafficState: Traffic item state did not reach the expected state(s): {0}: {1}. It is at: {2}'.format(
+                            trafficItemObj, expectedState, currentTrafficState))
+                    else:
+                        return 1
+
     def checkTrafficState(self, expectedState=['stopped'], timeout=60, ignoreException=False):
         """
         Description

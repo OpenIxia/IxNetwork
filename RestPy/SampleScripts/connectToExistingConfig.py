@@ -39,10 +39,6 @@ osPlatform = 'windows'
 username = 'admin'
 password = 'admin'
 
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerPort = sys.argv[1]    
-
 try:
     testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
@@ -64,12 +60,11 @@ try:
     if osPlatform in ['windows', 'connection_manager']:
         # Windows support only one session. Id is always equal 1.
         session = testPlatform.Sessions.find(Id=1)
-    
+
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
 
-
-
+    
 except Exception as errMsg:
     print('\nError: %s' % traceback.format_exc())
     print('\nrestPy.Exception:', errMsg)

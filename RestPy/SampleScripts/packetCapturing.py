@@ -24,6 +24,7 @@ Supports IxNetwork API servers:
 Requirements
    - IxNetwork 8.50
    - Python 2.7 and 3+
+   - If using Linux API Server: Install Linux Web UI Wireshark .waf file
 
 RestPy installation
    - pip install requests
@@ -39,10 +40,10 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.70.12'
 
 # windows|connection_manager|linux
-osPlatform = 'windows'
+osPlatform = 'linux'
 
 # For Linux API server only
 username = 'admin'

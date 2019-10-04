@@ -86,12 +86,6 @@ proc Connect {args} {
 
     # For Linux API server login to get the API key
     if {$osPlatform == "linux"} {
-	if {$username == "None"} {
-	    set username admin
-	    set password admin
-	    append paramList " -username $password -password $password"
-	}
-
 	if {$apiKey == "None"} {
 	    set apiKey [GetApiKey $apiServerIp $username $password]
 	    if {$apiKey == 1} {
@@ -104,7 +98,7 @@ proc Connect {args} {
 
     append paramList " -setAttribute strict"
 
-    puts "\nConnecting to API server: $paramList"
+    puts "\nConnecting to API server: $apiServerIp"
     if {[catch {set connectStatus [eval ixNet connect $paramList]} errMsg]} {
 	puts "\nConnect failed: $errMsg"
 	return 1
@@ -148,15 +142,14 @@ proc ConnectToIxChassis {ixChassisIpList} {
     }
 }
 
-proc GetApiKey {apiServerIp {username admin} {password admin} {apiKeyFilePath ./apiKeyFile}} {
+proc GetApiKey {apiServerIp {username admin} {password admin}} {
     # apiServerIp: The IxNetwork API server IP
     # username: The Linux API server login username
     # password: The Linux API server login password
-    # apiKeyFilePath: The file path to store the api-key.
-
-    if {[catch {set apiKey [ixNet getApiKey $apiServerIp -username $username -password $password -apiKeyFile .$apiKeyFilePath]} errMsg]} {
-	puts "\nError: Login to Linux API server $apiServerIp failed as $username/$password"
-	return 1
+    
+    if {[catch {set apiKey [ixNet getApiKey $apiServerIp -username $username -password $password]} errMsg]} {
+    	puts "\nError: Login to Linux API server $apiServerIp failed as $username/$password"
+    	return 1
     }
 
     return $apiKey

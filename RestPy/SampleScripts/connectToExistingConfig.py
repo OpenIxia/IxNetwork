@@ -50,7 +50,10 @@ try:
 
         # 1> Provide the login account username and password
         testPlatform.Authenticate(username, password)
-        session = testPlatform.Sessions.find(Id=4)
+
+        # Two ways to locate a session to connecto. Either by the session ID or by a name that you could name.
+        #session = testPlatform.Sessions.find(Id=4)
+        session = testPlatform.Sessions.find(Name='devTest')
 
         # 2> Or use the API-Key instead. The API-Key could be retrieve from the Linux api server under 
         #    settings, My Account.
@@ -64,7 +67,7 @@ try:
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
 
-    
+
 except Exception as errMsg:
     print('\nError: %s' % traceback.format_exc())
     print('\nrestPy.Exception:', errMsg)

@@ -31,9 +31,6 @@ RestPy Doc:
 
 Usage:
    - Enter: python <script>
-
-   # Connect to a different api server.
-   - Enter: python <script>   <api server ip>
 """
 
 import sys, os, time, traceback
@@ -47,10 +44,6 @@ apiServerIp = '192.168.70.3'
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerPort = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
@@ -90,6 +83,8 @@ try:
     vport1 = ixNetwork.Vport.add(Name='Port1')
     vport2 = ixNetwork.Vport.add(Name='Port2')
     
+    vportList = [vport.href for vport in ixNetwork.Vport.find()]
+
     # Assign ports
     testPorts = []
     vportList = [vport.href for vport in ixNetwork.Vport.find()]

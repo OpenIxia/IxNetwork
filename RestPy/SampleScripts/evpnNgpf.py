@@ -33,8 +33,6 @@ RestPy Doc:
 Usage:
    - Enter: python <script>
 
-   # Connect to a different api server.
-   - Enter: python <script>   <api server ip>
 """
 
 import sys, re, time, traceback
@@ -48,10 +46,6 @@ apiServerIp = '192.168.70.3'
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerIp = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
@@ -76,8 +70,8 @@ portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 igp = 'isis'
 
 # For Linux API server and Windows Connection Mgr only.
-#    debugMode=True is to not remove the session for debugging.
-#    debugMode=False is to remove the session when the script is done.
+#    debugMode=True:  Leave the session opened for debugging.
+#    debugMode=False: Remove the session when the script is done.
 debugMode = False
 
 try:

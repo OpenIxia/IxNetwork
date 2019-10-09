@@ -28,10 +28,6 @@ RestPy Doc:
 
 Usage:
    - Enter: python <script>
-
-   # Connect to a different api server.
-   - Enter: python <script>   <api server ip>
-
 """
 
 import json, sys, os, traceback
@@ -47,14 +43,12 @@ apiServerIp = '192.168.70.3'
 username = 'admin'
 password = 'admin'
 
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerIp = sys.argv[1]
-
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
@@ -125,7 +119,7 @@ try:
     rxFrames = trafficItemStatistics.Rows[0]['Rx Frames']
     ixNetwork.info('\nTraffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
 
-    if debugMode:
+    if debugMode == False:
         # For Linux and Windows Connection Manager only
         session.remove()
 

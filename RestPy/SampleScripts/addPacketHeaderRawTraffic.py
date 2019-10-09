@@ -31,12 +31,6 @@ RestPy Doc:
 Usage:
    # Defaults to Windows
    - Enter: python <script>
-
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
-
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import sys, os, re, traceback
@@ -54,10 +48,6 @@ apiServerIp = '192.168.70.3'
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerPort = sys.argv[1]
 
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']

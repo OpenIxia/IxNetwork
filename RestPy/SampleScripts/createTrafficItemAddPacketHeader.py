@@ -42,9 +42,6 @@ RestPy Doc:
 
 Usage:
    - Enter: python <script>
-
-   # Connect to a different api server.
-   - Enter: python <script>   <api server ip>
 """
 
 import os, sys, traceback
@@ -60,10 +57,6 @@ apiServerIp = '192.168.70.3'
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerIp = sys.argv[1]
 
 configFile = 'bgp_ngpf_8.30.ixncfg'
 

@@ -2,34 +2,15 @@
 createTrafficItemAddPacketHeader.py
 
 Description
-   This sample script loads a saved config file and allows you to add traffic items.
-   This script demonstrates how to create two different types of traffic items (RAW and IPv4)
-   and creating packet headers for each traffic item.
-
-   RAW traffic item means not using NGPF protocol emulations. Build every packet header in the
-   traffic item starting at the Ethernet stack.
-   Use vport as source/dst endpoints in the traffic item.
-
-   IPv4traffic item  means to use configured NGPF protocols (Ethernet, VLAN, IPv4, other).
-   And use the Topology Group as endpoints in the traffic item.
-
-   - There are two reuseable functions in this script: createTrafficItem() and createPacketHeader()
+   Selecting packet headers in raw Traffic Item. 
   
-   - You could create as many traffic items as you need and for each traffic item, you could create as little or as many
-     packet headers you need.
+   This script connects to an existing session with two vports assigned to physical ports.
 
+     - There are two reuseable functions in this script: createTrafficItem() and createPacketHeader()
+  
+     - Create 1 Raw Traffic Items. Each Traffic Item with custom packet header added.
+        - Packet header: Ethernet, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
 
-  What this script does:
-
-   - Load a saved config file.
-
-   - Create 1 Raw Traffic Items. Each Traffic Item with custom packet header added.
-        - Packet header: Ethernet, VLAN, IPv4, UDP, TCP and ICMP  
-
-   - Start all protools
-   - Verify all protocols
-   - Run traffic
-   - Get stats
 
 Requirements
    - Minimum IxNetwork 8.50
@@ -118,31 +99,7 @@ try:
     # For Linux API server only
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
-
     ixNetwork = session.Ixnetwork
-    ixNetwork.NewConfig()
-
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
-
-    ixNetwork.LoadConfig(Files(configFile, local_file=True))
-
-    # Optional: Assign ports.
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
-
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
-
-    ixNetwork.StartAllProtocols(Arg1='sync')
- 
-    ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
 
     rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet header samples', BiDirectional=False, TrafficType='raw')
 
@@ -191,11 +148,50 @@ try:
     ipv4DstField.StepValue = '0.0.0.1'
     ipv4DstField.CountValue = 1
 
-    # 000 Routine, 001 Priority, 010 Immediate, 011 Flash, 100 Flash Override,
-    # 101 CRITIC/ECP, 110 Internetwork Control, 111 Network Control
-    ipv4PrecedenceField = ipv4FieldObj.find(DisplayName='Precedence')
-    ipv4PrecedenceField.ActiveFieldChoice = True
-    ipv4PrecedenceField.FieldValue = '011 Flash'
+    # DSCP configurations
+
+    # For IPv4 TOS/Precedence:  Field/4
+    #    000 Routine, 001 Priority, 010 Immediate, 011 Flash, 100 Flash Override,
+    #    101 CRITIC/ECP, 110 Internetwork Control, 111 Network Control
+    #ipv4PrecedenceField = ipv4FieldObj.find(DisplayName='Precedence')
+    #ipv4PrecedenceField.ActiveFieldChoice = True
+    #ipv4PrecedenceField.FieldValue = '011 Flash'
+
+    # For IPv4 Raw priority: Field/3
+    #ipv4RawPriorityField = ipv4FieldObj.find(DisplayName='Raw priority')
+    #ipv4RawPriorityField.ActiveFieldChoice = True
+    #ipv4RawPriorityField.ValueType = 'increment'
+    #ipv4RawPriorityField.StartValue = 3
+    #ipv4RawPriorityField.StepValue = 1
+    #ipv4RawPriorityField.CountValue = 9
+
+    # For IPv4 Default PHB
+    #   Field/10: Default PHB
+    #   Field/12: Class selector PHB
+    #   Field/14: Assured forwarding PHB
+    #   Field/15: Expedited forwarding PHB
+    #
+    #   For Class selector, if singleValue: Goes by 8bits:
+    #       Precedence 1 = 8
+    #       Precedence 2 = 16
+    #       Precedence 3 = 24
+    #       Precedence 4 = 32
+    #       Precedence 5 = 40
+    #       Precedence 6 = 48
+    #       Precedence 7 = 56
+    # DisplayName options: 
+    #     'Default PHB' = Field/10 
+    #     'Class selector PHB' = Field/12
+    #     'Assured forwarding PHB" = Field/14
+    #     'Expedited forwarding PHB" = Field/16 
+    ipv4DefaultPHBField = ipv4FieldObj.find(DisplayName='Class selector')
+    ipv4DefaultPHBField.ActiveFieldChoice = True
+    ipv4DefaultPHBField.ValueType = 'singleVaoue' ;# singleValue, increment
+    ipv4DefaultPHBField.SingleValue = 56
+    # Below is for increment 
+    #ipv4DefaultPHBField.StartValue = 3
+    #ipv4DefaultPHBField.StepValue = 1
+    #ipv4DefaultPHBField.CountValue = 9
 
     # Example to show appending UDP after the IPv4 header
     udpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^UDP', appendToStack='IPv4')
@@ -219,27 +215,6 @@ try:
 
     # Example to show appending ICMP after the IPv4 header
     icmpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='IPv4')
-
-    for trafficItem in ixNetwork.Traffic.TrafficItem.find():
-        trafficItem.Generate()
-
-    ixNetwork.Traffic.Apply()
-    ixNetwork.Traffic.Start()
-    
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
-    # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
-
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
-
-    #flowStatistics.AddRowFilter('Loss %', StatViewAssistant.GREATER_THAN, 0)
-
-    for rowNumber,flowStat in enumerate(flowStatistics.Rows):
-        ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
-        ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
-            rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
-            flowStat['Tx Frames'], flowStat['Rx Frames']))
 
 
     '''

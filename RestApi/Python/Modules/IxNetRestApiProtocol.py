@@ -2991,6 +2991,13 @@ class Protocol(object):
                     except:
                         pass
         
+    def getInnerDeviceGroup(self, deviceGroupObj):
+            response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj + '/deviceGroup')
+            if response.json():
+                for innerDeviceGroup in response.json()[0]['links']:
+                    innerDeviceGroupObj = innerDeviceGroup['href']
+                    deviceGroupList.append(innerDeviceGroupObj)
+
     def getTopologyObjAndDeviceGroupObjByPortName(self, portName):
         """
         Description
@@ -3020,12 +3027,11 @@ class Protocol(object):
                 deviceGroupObj = eachDeviceGroup['href']
                 deviceGroupList.append(deviceGroupObj)
 
-                # Verify if there is additional device group within a device group.
+                # Verify if there are additional device groups within a device group.
                 response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj + '/deviceGroup')
                 if response.json():
-                    for innerDeviceGroup in response.json()[0]['links']:
-                        innerDeviceGroupObj = innerDeviceGroup['href']
-                        deviceGroupList.append(innerDeviceGroupObj)
+                    for response in response.json():
+                        deviceGroupList.append(response['links'][0]['href'])
                 
             for eachVport in vportList:
                 response = self.ixnObj.get(self.ixnObj.httpHeader+eachVport)

@@ -2990,13 +2990,13 @@ class Protocol(object):
                             return deviceGroup['href'],ipObj
                     except:
                         pass
-
+        
     def getTopologyObjAndDeviceGroupObjByPortName(self, portName):
         """
         Description
             Search each Topology Group vport for the portName.
             If found, return the topology object and a list of 
-            all its device groups.
+            all its device groups and inner device group within a device group.
 
         Parameter
             portName: <str>: The port name that you configured for the physical port.
@@ -3005,7 +3005,9 @@ class Protocol(object):
             None: If no portName found in any Topology Group.
 
             Topology object + Device Group list
-            Ex: ['/api/v1/sessions/1/ixnetwork/topology/2', ['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1']]
+            Ex 1: ['/api/v1/sessions/1/ixnetwork/topology/2', ['/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1']]
+            Ex 2: ('/api/v1/sessions/1/ixnetwork/topology/1', ['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1', 
+                                                               '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/deviceGroup/3'])
         """
         response = self.ixnObj.get(self.ixnObj.sessionUrl + '/topology')
         for eachTopology in response.json():
@@ -3018,6 +3020,13 @@ class Protocol(object):
                 deviceGroupObj = eachDeviceGroup['href']
                 deviceGroupList.append(deviceGroupObj)
 
+                # Verify if there is additional device group within a device group.
+                response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj + '/deviceGroup')
+                if response.json():
+                    for innerDeviceGroup in response.json()[0]['links']:
+                        innerDeviceGroupObj = innerDeviceGroup['href']
+                        deviceGroupList.append(innerDeviceGroupObj)
+                
             for eachVport in vportList:
                 response = self.ixnObj.get(self.ixnObj.httpHeader+eachVport)
                 vportName = response.json()['name']

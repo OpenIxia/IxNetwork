@@ -3019,7 +3019,7 @@ class Protocol(object):
         response = self.ixnObj.get(self.ixnObj.sessionUrl + '/topology')
         for eachTopology in response.json():
             topologyObj = eachTopology['links'][0]['href']
-            vportList = eachTopology['ports']
+            vportList = eachTopology['vports']
             response = self.ixnObj.get(self.ixnObj.httpHeader + topologyObj + '/deviceGroup')
 
             deviceGroupList = []
@@ -3902,7 +3902,7 @@ class Protocol(object):
                                 returnList.append(response.json()[0]['links'][0]['href'])
 
                             # Search IPv4/IPv6
-                            if currentChildName in ['ipv4']:
+                            if currentChildName in ['ipv4'] or currentChildName in ['ipv6']:
                                 l3Obj = currentChildName
                                 response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/'+l3Obj+'?links=true', silentMode=True)
                                 if response.json() == []:

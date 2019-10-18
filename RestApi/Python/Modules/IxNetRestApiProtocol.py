@@ -3842,24 +3842,31 @@ class Protocol(object):
         for topology in topologyList:
             response = self.ixnObj.get(topology, silentMode=False)
             topologyObj = response.json()['links'][0]['href']
-            print('topoObj:', topologyObj)
             response = self.ixnObj.get(topology+'/deviceGroup', silentMode=False)
-            deviceGroupList = ['%s/%s/%s' % (topology, 'deviceGroup', str(i["id"])) for i in response.json()]
 
-            for deviceGroup in deviceGroupList:
-                deviceGroupObj = '/api' + deviceGroup.split('/api')[1]
+            deviceGroupList = []
+            for response in response.json():
+                deviceGroupObj = response['links'][0]['href']
+                deviceGroupList.append(deviceGroupObj)
+
+                # Get inner device group objects also.  Verify if there are additional device groups within a device group.
+                response = self.ixnObj.get(self.ixnObj.httpHeader + deviceGroupObj + '/deviceGroup')
+                if response.json():
+                    for response in response.json():
+                        deviceGroupList.append(response['links'][0]['href'])
+
+            for deviceGroupObj in deviceGroupList:
                 response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj)
                 
                 if response.json()['name'] == deviceGroupName:
-
                     if endpointObj == 'topology':
                         return [topologyObj]
 
                     if endpointObj == 'deviceGroup':
                         return [deviceGroupObj]
 
-                    response = self.ixnObj.get(deviceGroup+'/ethernet', silentMode=False)
-                    ethernetList = ['%s/%s/%s' % (deviceGroup, 'ethernet', str(i["id"])) for i in response.json()]
+                    response = self.ixnObj.get(self.ixnObj.httpHeader+deviceGroupObj+'/ethernet', silentMode=False)
+                    ethernetList = ['%s/%s/%s' % (deviceGroupObj, 'ethernet', str(i["id"])) for i in response.json()]
                     if ethernetList == []:
                         continue
 
@@ -3883,7 +3890,7 @@ class Protocol(object):
 
                     for ethernet in ethernetList:
                         # Dynamically get all Ethernet child endpoints
-                        response = self.ixnObj.get(ethernet+'?links=true', silentMode=False)
+                        response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'?links=true', silentMode=False)
                         for ethernetChild in response.json()['links']:
                             print('Ethernet child:', ethernetChild['href'])
                             currentChildName = ethernetChild['href'].split('/')[-1]
@@ -3897,8 +3904,7 @@ class Protocol(object):
                             # Search IPv4/IPv6
                             if currentChildName in ['ipv4']:
                                 l3Obj = currentChildName
-                                # ethernet = http://192.168.70.3:11009/api/v1/sessions/1/ixnetwork/topology/2/deviceGroup/1/ethernet/1
-                                response = self.ixnObj.get(ethernet+'/'+l3Obj+'?links=true', silentMode=True)
+                                response = self.ixnObj.get(self.ixnObj.httpHeader+ethernet+'/'+l3Obj+'?links=true', silentMode=True)
                                 if response.json() == []:
                                     # L3 is not configured
                                     continue

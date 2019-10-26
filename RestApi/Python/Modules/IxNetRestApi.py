@@ -38,7 +38,7 @@ class Connect:
 
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', linuxChassisIp=None, manageSessionMode=False,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
-                 deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None, httpsSecured=False,
+                 deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None, httpsSecured=None,
                  apiKey=None, generateLogFile=True, robotFrameworkStdout=False, linuxApiServerTimeout=120):
         """
         Description
@@ -155,13 +155,6 @@ class Connect:
 
         self._session = requests.Session()
 
-        self.httpScheme = 'http' ;# This will change to https in createWindowsSession and connectToLinuxApiServer
-        if httpsSecured:
-            # For Windows Connection Mgr only.
-            # When creating a new session, there is no way to know by doing a POST for a new session to
-            # understand if it's for http or https.  You must enter https for the POST to create a new session.
-            self.httpScheme = 'https'
-
         self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
         self.jsonHeader = {"content-type": "application/json"}
         self.username = username
@@ -191,6 +184,46 @@ class Connect:
             with open(self.restLogFile, 'w') as restLogFile:
                 restLogFile.write('Date: {0}\nTime: {1}\n\n'.format(self.getDate, self.getTime))
 
+        if self.serverOs == 'windowsConnectionMgr':
+            if httpsSecured is False or self.apiServerPort is None:
+                raise IxNetRestApiException('If using windowsConnectionMgr, you must state httpsSecured=True|False and a serverIpPort to use.')
+
+        self.httpScheme = 'http' ;# This will dynamically change to https.
+
+        # Automatic default to https for linux
+        if self.serverOs == 'linux':
+            self.logInfo('Connecting to API server: linux')
+            self.httpScheme = 'https'
+            if self.apiServerPort is not None:
+                self.apiServerPort = serverIpPort
+            else:
+                self.apiServerPort = 443
+
+        # Windows supports only http
+        if self.serverOs == 'windows':
+            self.logInfo('Connecting to API server: windows')
+            self.httpScheme = 'http'
+
+            if self.apiServerPort is None:
+                self.apiServerPort == 11009
+            else:
+                self.apiServerPort == serverIpPort
+
+        # windowsConnectionMgr supports only https and allows users to set the SSL port.
+        # This is the only api server that requires user to state httpsSecured=True|False because 8.40 users could be using http.
+        # While 8.50+ users could be using http or https.
+        if self.serverOs == 'windowsConnectionMgr':
+            self.logInfo('Connecting to API server: windowsConnectionMgr')
+
+            if httpsSecured:
+                # For Windows Connection Mgr only because WCM allows http and https
+                # When creating a new session, there is no way to know by doing a POST for a new session to
+                # understand if it's for http or https.  You must enter https for the POST to create a new session.
+                if httpsSecured == True:
+                    self.httpScheme = 'https'
+                else:
+                    self.httpScheme = 'http'
+
         # Make Robot print to stdout
         if self.robotFrameworkStdout:
             from robot.libraries.BuiltIn import _Misc
@@ -202,7 +235,7 @@ class Connect:
             return
 
         if serverOs == 'windows':
-            self.createWindowsSession(apiServerIp, serverIpPort)
+            self.createWindowsSession(apiServerIp, self.apiServerPort)
 
         if serverOs == 'windowsConnectionMgr':
             # User connecting to existing sessionId
@@ -213,13 +246,13 @@ class Connect:
             #     - Although the serverIpPort default is 443 for https, this could change in the future.
             
             if sessionId:
-                url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+                url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, self.apiServerPort, str(sessionId))
                 try:
                     response = self._session.request('GET', url, verify=self.verifySslCert, allow_redirects=False)
                     if '3' in str(response.status_code):
                         self.httpScheme = 'https'
                         # Here, needs to set to use https.
-                        url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+                        url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, self.apiServerPort, str(sessionId))
 
                 except requests.exceptions.RequestException as errMsg:
                     errMsg = 'Connecting to existing config failed on a GET: {0}'.format(errMsg)
@@ -228,12 +261,12 @@ class Connect:
                 self.logInfo('Connecting to existing session: {}'.format(url))
                 self.sessionUrl = url + '/ixnetwork'
                 self.sessionId = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp,
-                                                                            serverIpPort, str(sessionId))
+                                                                            self.apiServerPort, str(sessionId))
                 self.apiSessionId = '/api/v1/sessions/{0}/ixnetwork'.format(str(sessionId))
                 self.httpHeader = self.sessionUrl.split('/api')[0]
             else:
                 # Create a new session
-                self.createWindowsSession(apiServerIp, serverIpPort)
+                self.createWindowsSession(apiServerIp, self.apiServerPort)
 
         if serverOs == 'linux':
             if self.apiServerPort == None:
@@ -324,6 +357,7 @@ class Connect:
         Syntax
             /api/v1/sessions/1/ixnetwork/operations
         """
+        retryInterval = 3
         serverConnectionFailures = 0
         while True:
             if silentMode is False:
@@ -354,13 +388,13 @@ class Connect:
 
                 return response
 
-            except requests.exceptions.RequestException as errMsg:
+            except (requests.exceptions.RequestException, Exception) as errMsg:
                 errMsg = 'GET Exception error {]/{} retries: {}'.format(serverConnectionFailures, maxRetries, errMsg)
 
                 if serverConnectionFailures < maxRetries:
                     self.logError(errMsg)
                     serverConnectionFailures += 1
-                    time.sleep(1)
+                    time.sleep(retryInterval)
                     continue
                 
                 if serverConnectionFailures == maxRetries:
@@ -389,6 +423,7 @@ class Connect:
         else:
             data = json.dumps(data)
 
+        retryInterval = 3
         serverConnectionFailures = 0
         while True:
             if silentMode == False:
@@ -424,13 +459,13 @@ class Connect:
 
                 return response
 
-            except requests.exceptions.RequestException as errMsg:
-                errMsg = 'POST Exception error {}/{}: {}'.format(serverConnectionFailures, maxRetries, errMsg)
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'POST Exception error {}/{} retries: {}'.format(serverConnectionFailures, maxRetries, errMsg)
 
                 if serverConnectionFailures < maxRetries:
                     self.logError(errMsg)
                     serverConnectionFailures += 1
-                    time.sleep(1)
+                    time.sleep(retryInterval)
                     continue
                 
                 if serverConnectionFailures == maxRetries:
@@ -448,7 +483,7 @@ class Connect:
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
            maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failure.
         """
-
+        retryInterval = 3
         serverConnectionFailures = 0
         while True:
             if silentMode == False:
@@ -473,13 +508,13 @@ class Connect:
 
                 return response
 
-            except requests.exceptions.RequestException as errMsg:
-                errMsg = 'PATCH Exception error {}/{}: {}\n'.format(serverConnectionFailures, maxRetries, errMsg)
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'PATCH Exception error {}/{} retries: {}\n'.format(serverConnectionFailures, maxRetries, errMsg)
 
                 if serverConnectionFailures < maxRetries:
                     self.logError(errMsg)
                     serverConnectionFailures += 1
-                    time.sleep(1)
+                    time.sleep(retryInterval)
                     continue
                 
                 if serverConnectionFailures == maxRetries:
@@ -496,6 +531,7 @@ class Connect:
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
            maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failu
         """
+        retryInterval = 3
         serverConnectionFailures = 0
         while True:
             if silentMode is False:
@@ -521,13 +557,13 @@ class Connect:
                         raise IxNetRestApiException(errMsg)
                 return response
 
-            except requests.exceptions.RequestException as errMsg:
-                errMsg = 'OPTIONS Exception error {}/{}: {}'.format(serverConnectionFailures, maxRetries, errMsg)
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'OPTIONS Exception error {}/{} retries: {}'.format(serverConnectionFailures, maxRetries, errMsg)
 
                 if serverConnectionFailures < maxRetries:
                     self.logError(errMsg)
                     serverConnectionFailures += 1
-                    time.sleep(1)
+                    time.sleep(retryInterval)
                     continue
                 
                 if serverConnectionFailures == maxRetries:
@@ -548,6 +584,7 @@ class Connect:
         if headers != None:
             self.jsonHeader = headers
             
+        retryInterval = 3
         serverConnectionFailures = 0
         while True:
             self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}'.format(restApi, data))
@@ -568,13 +605,13 @@ class Connect:
                     raise IxNetRestApiException(errMsg)
                 return response
 
-            except requests.exceptions.RequestException as errMsg:
-                errMsg = 'DELETE Exception error {}/{}: {}\n'.format(serverConnectionFailures, maxRetries, errMsg)
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'DELETE Exception error {}/{} retries: {}\n'.format(serverConnectionFailures, maxRetries, errMsg)
 
                 if serverConnectionFailures < maxRetries:
                     self.logError(errMsg)
                     serverConnectionFailures += 1
-                    time.sleep(1)
+                    time.sleep(retryInterval)
                     continue
                 
                 if serverConnectionFailures == maxRetries:

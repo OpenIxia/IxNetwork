@@ -358,7 +358,7 @@ class Connect:
             /api/v1/sessions/1/ixnetwork/operations
         """
         retryInterval = 3
-        serverConnectionFailures = 0
+        restExecutionFailures = 0
         while True:
             if silentMode is False:
                 self.logInfo('\n\tGET: {0}'.format(restApi))
@@ -389,15 +389,15 @@ class Connect:
                 return response
 
             except (requests.exceptions.RequestException, Exception) as errMsg:
-                errMsg = 'GET Exception error {]/{} retries: {}'.format(serverConnectionFailures, maxRetries, errMsg)
+                errMsg = 'GET Exception error {]/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
 
-                if serverConnectionFailures < maxRetries:
+                if restExecutionFailures < maxRetries:
                     self.logError(errMsg)
-                    serverConnectionFailures += 1
+                    restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
                 
-                if serverConnectionFailures == maxRetries:
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
     def post(self, restApi, data={}, headers=None, silentMode=False, noDataJsonDumps=False, ignoreError=False, maxRetries=5):
@@ -424,7 +424,7 @@ class Connect:
             data = json.dumps(data)
 
         retryInterval = 3
-        serverConnectionFailures = 0
+        restExecutionFailures = 0
         while True:
             if silentMode == False:
                 self.logInfo('\n\tPOST: {0}\n\tDATA: {1}'.format(restApi, data))
@@ -460,15 +460,15 @@ class Connect:
                 return response
 
             except (requests.exceptions.RequestException, Exception) as errMsg:
-                errMsg = 'POST Exception error {}/{} retries: {}'.format(serverConnectionFailures, maxRetries, errMsg)
+                errMsg = 'POST Exception error {}/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
 
-                if serverConnectionFailures < maxRetries:
+                if restExecutionFailures < maxRetries:
                     self.logError(errMsg)
-                    serverConnectionFailures += 1
+                    restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
                 
-                if serverConnectionFailures == maxRetries:
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
     def patch(self, restApi, data={}, silentMode=False, ignoreError=False, maxRetries=5):
@@ -484,7 +484,7 @@ class Connect:
            maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failure.
         """
         retryInterval = 3
-        serverConnectionFailures = 0
+        restExecutionFailures = 0
         while True:
             if silentMode == False:
                 self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}'.format(restApi, data))
@@ -509,15 +509,15 @@ class Connect:
                 return response
 
             except (requests.exceptions.RequestException, Exception) as errMsg:
-                errMsg = 'PATCH Exception error {}/{} retries: {}\n'.format(serverConnectionFailures, maxRetries, errMsg)
+                errMsg = 'PATCH Exception error {}/{} retries: {}\n'.format(restExecutionFailures, maxRetries, errMsg)
 
-                if serverConnectionFailures < maxRetries:
+                if restExecutionFailures < maxRetries:
                     self.logError(errMsg)
-                    serverConnectionFailures += 1
+                    restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
                 
-                if serverConnectionFailures == maxRetries:
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
     def options(self, restApi, data={}, silentMode=False, ignoreError=False, maxRetries=5):
@@ -532,7 +532,7 @@ class Connect:
            maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failu
         """
         retryInterval = 3
-        serverConnectionFailures = 0
+        restExecutionFailures = 0
         while True:
             if silentMode is False:
                 self.logInfo('\n\tOPTIONS: {0}'.format(restApi))
@@ -558,15 +558,15 @@ class Connect:
                 return response
 
             except (requests.exceptions.RequestException, Exception) as errMsg:
-                errMsg = 'OPTIONS Exception error {}/{} retries: {}'.format(serverConnectionFailures, maxRetries, errMsg)
+                errMsg = 'OPTIONS Exception error {}/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
 
-                if serverConnectionFailures < maxRetries:
+                if restExecutionFailures < maxRetries:
                     self.logError(errMsg)
-                    serverConnectionFailures += 1
+                    restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
                 
-                if serverConnectionFailures == maxRetries:
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
     def delete(self, restApi, data={}, headers=None, maxRetries=5):
@@ -585,7 +585,7 @@ class Connect:
             self.jsonHeader = headers
             
         retryInterval = 3
-        serverConnectionFailures = 0
+        restExecutionFailures = 0
         while True:
             self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}'.format(restApi, data))
 
@@ -606,15 +606,15 @@ class Connect:
                 return response
 
             except (requests.exceptions.RequestException, Exception) as errMsg:
-                errMsg = 'DELETE Exception error {}/{} retries: {}\n'.format(serverConnectionFailures, maxRetries, errMsg)
+                errMsg = 'DELETE Exception error {}/{} retries: {}\n'.format(restExecutionFailures, maxRetries, errMsg)
 
-                if serverConnectionFailures < maxRetries:
+                if restExecutionFailures < maxRetries:
                     self.logError(errMsg)
-                    serverConnectionFailures += 1
+                    restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
                 
-                if serverConnectionFailures == maxRetries:
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
     def getDate(self):

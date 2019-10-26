@@ -625,7 +625,6 @@ class PortMgmt(object):
                 self.ixnObj.logInfo('Querying for %s/%s/%s' % (chassisIp, cardId, portId))
                 queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
                     
-                self.ixnObj.logInfo('\n--- queryResponse: {}'.format(queryResponse.json()))
                 queryResponse.json()['result'][0]['chassis'][0]['ip']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['id']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['portId']

@@ -98,8 +98,9 @@ try:
 
     ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
 
-    for vport in ixNetwork.Vport.find():
-        vport.L1Config.PortMedia = 'copper'
+    # Example on how to change the media port type: copper|fiber
+    # for vport in ixNetwork.Vport.find():
+    #     vport.L1Config.PortMedia = 'copper'
 
     # Example: How to modify a loaded json config using XPATH
     # Arg3:  True=To create a new config. False=To modify an existing config.
@@ -119,7 +120,7 @@ try:
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
-    ixNetwork.Traffic.Start()
+    ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
     # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:

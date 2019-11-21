@@ -104,7 +104,7 @@ try:
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
-    ixNetwork.Traffic.Start()
+    ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
     # StatViewAssistant could also filter by regex, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:

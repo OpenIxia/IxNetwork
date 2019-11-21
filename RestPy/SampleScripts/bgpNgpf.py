@@ -24,7 +24,7 @@ Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version v45 for PortMapAssistant support)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -37,6 +37,7 @@ import sys, os, time, traceback
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 apiServerIp = '192.168.70.3'
@@ -72,29 +73,23 @@ try:
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-    
+
     ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
     ixNetwork.Globals.Licensing.Mode = licenseMode
     ixNetwork.Globals.Licensing.Tier = licenseTier
 
-    # Create vports and name them so you could use .find() to filter vports by the name.
-    vport1 = ixNetwork.Vport.add(Name='Port1')
-    vport2 = ixNetwork.Vport.add(Name='Port2')
-    
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-
     # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+    portMap = PortMapAssistant(ixNetwork)
+    vport = dict()
+    for index,port in enumerate(portList):
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
 
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.info('Creating Topology Group 1')
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)
+    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport[0])
     deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
     ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
@@ -121,7 +116,7 @@ try:
     ipv4PrefixPool.PrefixLength.Single(32)
 
     ixNetwork.info('Creating Topology Group 2')
-    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport2)
+    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport[1])
     deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
 
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
@@ -174,7 +169,7 @@ try:
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
-    ixNetwork.Traffic.Start()
+    ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
     # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:
@@ -201,6 +196,7 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
         session.remove()
+
 
 
 

@@ -75,6 +75,7 @@ import re, sys, os, time, traceback
 
 # Import the RestPy module
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
+from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 # Egress tracking settings
@@ -160,22 +161,16 @@ try:
     ixNetwork.Globals.Licensing.Mode = licenseMode
     ixNetwork.Globals.Licensing.Tier = licenseTier
 
-    # Create vports and name them so you could use .find() to filter vports by the name.
-    vport1 = ixNetwork.Vport.add(Name='Port1')
-    vport2 = ixNetwork.Vport.add(Name='Port2')
-    
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-
     # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+    portMap = PortMapAssistant(ixNetwork)
+    vport = dict()
+    for index,port in enumerate(portList):
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
 
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.info('Creating Topology Group 1')
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)
+    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport[0])
     deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
     ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
@@ -190,7 +185,7 @@ try:
     ipv4.GatewayIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
 
     ixNetwork.info('Creating Topology Group 2')
-    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport2)
+    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport[1])
     deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
 
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
@@ -218,6 +213,7 @@ try:
 
     ixNetwork.info('Add endpoint flow group')
     trafficItemObj.EndpointSet.add(Sources=topology1, Destinations=topology2)
+    
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
     #       Therefore, ConfigElement is a list.

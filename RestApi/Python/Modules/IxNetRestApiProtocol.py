@@ -2253,7 +2253,7 @@ class Protocol(object):
                     deviceGroupObjList.append(dgHref['href'])
 
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/operations/%s' % action
-        response = oself.ixnObj.post(url, data={'arg1': deviceGroupObjList})
+        response = self.ixnObj.post(url, data={'arg1': deviceGroupObjList})
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
         time.sleep(3)
 

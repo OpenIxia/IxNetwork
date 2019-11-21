@@ -42,7 +42,7 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.70.12'
 
 # For Linux API server only
 username = 'admin'
@@ -60,7 +60,7 @@ licenseMode = 'subscription'
 licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
-debugMode = False
+debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -135,6 +135,8 @@ try:
         ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
+
+    ixNetwork.Traffic.StopStatelessTrafficBlocking()
 
     if debugMode == False:
         # For Linux and connection_manager only

@@ -119,6 +119,8 @@ try:
     rxFrames = trafficItemStatistics.Rows[0]['Rx Frames']
     ixNetwork.info('\nTraffic Item Stats:\n\tTxFrames: {}  RxFrames: {}\n'.format(txFrames, rxFrames))
 
+    ixNetwork.Traffic.StopStatelessTrafficBlocking()
+
     if debugMode == False:
         # For Linux and Windows Connection Manager only
         session.remove()

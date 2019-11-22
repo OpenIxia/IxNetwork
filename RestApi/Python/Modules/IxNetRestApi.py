@@ -170,6 +170,12 @@ class Connect:
         self.linuxChassisIp = linuxChassisIp
         self.linuxApiServerTimeout = linuxApiServerTimeout
 
+        # Make Robot print to stdout
+        if self.robotFrameworkStdout:
+            from robot.libraries.BuiltIn import _Misc
+            self.robotStdout = _Misc()
+            Connect.robotStdout = self.robotStdout
+
         if generateLogFile:
             if generateLogFile == True:
                 # Default the log file name
@@ -225,10 +231,10 @@ class Connect:
                     self.httpScheme = 'http'
 
         # Make Robot print to stdout
-        if self.robotFrameworkStdout:
-            from robot.libraries.BuiltIn import _Misc
-            self.robotStdout = _Misc()
-            Connect.robotStdout = self.robotStdout
+        #if self.robotFrameworkStdout:
+        #    from robot.libraries.BuiltIn import _Misc
+        #    self.robotStdout = _Misc()
+        #    Connect.robotStdout = self.robotStdout
 
         if linuxChassisIp:
             self.connectToLinuxIxosChassis(self.linuxChassisIp, self.username, self.password)

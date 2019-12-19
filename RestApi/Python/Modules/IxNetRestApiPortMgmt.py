@@ -349,7 +349,7 @@ class PortMgmt(object):
                 raise IxNetRestApiException(connectionStatus)
 
     def assignPorts(self, portList, forceTakePortOwnership=True, createVports=False,
-                    rawTraffic=False, configPortName=True, timeout=600):
+                    rawTraffic=False, configPortName=True, timeout=900):
         """
         Description
             Assuming that you already connected to an ixia chassis and ports are available for usage.
@@ -415,7 +415,7 @@ class PortMgmt(object):
         [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
         url = self.ixnObj.sessionUrl+'/operations/assignports'
         response = self.ixnObj.post(url, data=data)
-        response = self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=600, ignoreException=True)
+        response = self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], silentMode=False, timeout=900, ignoreException=True)
 
         # Ignore these verifications.  Avoid trying to resolve too many issues.
         '''

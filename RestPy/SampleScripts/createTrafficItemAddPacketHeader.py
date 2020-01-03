@@ -143,10 +143,9 @@ try:
     ipv4SrcField.CountValue = 1
 
     ipv4DstField = ipv4FieldObj.find(DisplayName='Destination Address')
-    ipv4DstField.ValueType = 'increment'
-    ipv4DstField.StartValue = '1.1.1.2'
-    ipv4DstField.StepValue = '0.0.0.1'
-    ipv4DstField.CountValue = 1
+    ipv4DstField.ValueType = 'valueList'
+    ipv4DstField.ValueList = ['1.1.1.2', '1.1.1.3', '1.1.1.4', '1.1.1.5']
+
 
     # DSCP configurations
 

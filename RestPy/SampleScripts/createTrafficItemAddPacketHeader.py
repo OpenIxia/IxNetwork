@@ -104,14 +104,20 @@ try:
     rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet header samples', BiDirectional=False, TrafficType='raw')
 
     ixNetwork.info('Add endpoints')
-    rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find(Name='Port_1').Protocols.find(), Destinations=ixNetwork.Vport.find(Name='Port_2').Protocols.find())
+    rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find(Name='Port_1').Protocols.find(), 
+                                        Destinations=ixNetwork.Vport.find(Name='Port_2').Protocols.find())
 
     configElement = rawTrafficItemObj.ConfigElement.find()[0]
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
     configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameSize.FixedSize = 128
+ 
+    # Other trackings: udpUdpSrcPrt0, udpUdpDstPrt0,tcpTcpSrcPrt0, tcpTcpDstPrt0, vlanVlanId0, vlanVlanUserPriority0
+    # On an IxNetwork GUI (Windows or Web UI), add traffic item trackings. Then 
+    # go on the API browser to view the tracking wordings.
     rawTrafficItemObj.Tracking.find()[0].TrackBy = ['flowGroup0']
 
+ 
     # The Ethernet packet header doesn't need to be created.  It is there by default. Just do a find for the Ethernet stack object.
     ethernetStackObj = ixNetwork.Traffic.TrafficItem.find()[-1].ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
 

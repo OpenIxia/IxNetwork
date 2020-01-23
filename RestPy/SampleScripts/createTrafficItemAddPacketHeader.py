@@ -2,15 +2,11 @@
 createTrafficItemAddPacketHeader.py
 
 Description
-   Selecting packet headers in raw Traffic Item. 
+   Configuring packet headers in raw Traffic Item. 
   
-   This script connects to an existing session with two vports assigned to physical ports.
-
-     - There are two reuseable functions in this script: createTrafficItem() and createPacketHeader()
-  
-     - Create 1 Raw Traffic Items. Each Traffic Item with custom packet header added.
-        - Packet header: Ethernet, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
-
+   - Create a Raw Traffic Items. 
+   - Example to show how to add packet header: Ethernet, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
+   - Enable tracking to track the packet headers in Flow Statistics
 
 Requirements
    - Minimum IxNetwork 8.50
@@ -32,6 +28,7 @@ from pprint import pprint
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 
 apiServerIp = '192.168.70.3'
 
@@ -101,25 +98,28 @@ try:
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet header samples', BiDirectional=False, TrafficType='raw')
+    ixNetwork.NewConfig()
+
+    # Assign ports
+    portMap = PortMapAssistant(ixNetwork)
+    vport = dict()
+    for index,port in enumerate(portList):
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
+
+    portMap.Connect(forceTakePortOwnership)
+    
+    rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet', BiDirectional=False, TrafficType='raw')
 
     ixNetwork.info('Add endpoints')
-    rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find(Name='Port_1').Protocols.find(), 
-                                        Destinations=ixNetwork.Vport.find(Name='Port_2').Protocols.find())
-
+    rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find()[0].Protocols.find(), 
+                                      Destinations=ixNetwork.Vport.find()[1].Protocols.find())
     configElement = rawTrafficItemObj.ConfigElement.find()[0]
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
     configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameSize.FixedSize = 128
- 
-    # Other trackings: udpUdpSrcPrt0, udpUdpDstPrt0,tcpTcpSrcPrt0, tcpTcpDstPrt0, vlanVlanId0, vlanVlanUserPriority0
-    # On an IxNetwork GUI (Windows or Web UI), add traffic item trackings. Then 
-    # go on the API browser to view the tracking wordings.
-    rawTrafficItemObj.Tracking.find()[0].TrackBy = ['flowGroup0']
-
- 
+  
     # The Ethernet packet header doesn't need to be created.  It is there by default. Just do a find for the Ethernet stack object.
-    ethernetStackObj = ixNetwork.Traffic.TrafficItem.find()[-1].ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
+    ethernetStackObj = ixNetwork.Traffic.TrafficItem.find(Name='Raw packet').ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
 
     # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
     #       the IxVM port from your virtual host (ESX-i host or KVM)
@@ -212,7 +212,8 @@ try:
     tcpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^TCP', appendToStack='IPv4')
     tcpSrcField = tcpFieldObj.find(DisplayName='TCP-Source-Port')
     tcpSrcField.Auto = False
-    tcpSrcField.SingleValue = 1002
+    tcpSrcField.ValueType = 'valueList'
+    tcpSrcField.ValueList = ['1002', '1005', '1007']
 
     tcpDstField = tcpFieldObj.find(DisplayName='TCP-Dest-Port')
     tcpDstField.Auto = False
@@ -221,6 +222,12 @@ try:
     # Example to show appending ICMP after the IPv4 header
     icmpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='IPv4')
 
+    # Optional: Enable tracking to track your packet headers:
+    #    
+    #    Other trackings: udpUdpSrcPrt0, udpUdpDstPrt0,tcpTcpSrcPrt0, tcpTcpDstPrt0, vlanVlanId0, vlanVlanUserPriority0
+    #    On an IxNetwork GUI (Windows or Web UI), add traffic item trackings.
+    #    Then go on the API browser to view the tracking wordings.
+    rawTrafficItemObj.Tracking.find().TrackBy = ['udpUdpSrcPrt0', 'udpUdpDstPrt0']
 
     '''
      Field[13]: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4/field/14

@@ -1,7 +1,7 @@
 """
 bgpNgpf.py:
 
-   Tested with two back-2-back Ixia ports.
+   Tested with two back-2-back Ixia ports...
 
    - Connect to the API server
    - Configure license server IP

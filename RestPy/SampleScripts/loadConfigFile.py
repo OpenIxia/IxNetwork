@@ -84,12 +84,12 @@ try:
     ixNetwork.info('Loading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
-    # Assign ports:  Map the physical ports to the configured vport names.
-    # You must change the attribute "Name" value to match the vport name in your loaded configuration.
+    # Assign ports. Map physical ports to the configured vports.
     portMap = PortMapAssistant(ixNetwork)
     vport = dict()
     for index,port in enumerate(portList):
-        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
+                                   Name=ixNetwork.Vport.find()[index].Name)
 
     portMap.Connect(forceTakePortOwnership)
 

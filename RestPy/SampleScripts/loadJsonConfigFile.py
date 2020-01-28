@@ -89,13 +89,12 @@ try:
     ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
-    # Assign ports:  Map the physical ports to the configured vport names.
-    # You must change the attribute "Name" value to match the vport name in your loaded configuration.
+    # Assign ports. Map physical ports to the configured vports.
     portMap = PortMapAssistant(ixNetwork)
     vport = dict()
     for index,port in enumerate(portList):
         vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
-                                   Name='vport{vportIndex}-{vportIndex}'.format(vportIndex=index+1))
+                                   Name=ixNetwork.Vport.find()[index].Name)
 
     portMap.Connect(forceTakePortOwnership)
 

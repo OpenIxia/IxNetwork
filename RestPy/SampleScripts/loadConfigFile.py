@@ -36,6 +36,7 @@ import json, sys, os, traceback
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 
 apiServerIp = '192.168.70.3'
 
@@ -67,13 +68,13 @@ portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 try:
     testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: 'none'|request|'request response'
-    testPlatform.Trace = 'request_response'
+    # Console output verbosity: none|info|warning|request|request_response|all
+    testPlatform.Trace = 'all'
 
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
-
     ixNetwork = session.Ixnetwork
+
     ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
@@ -83,13 +84,14 @@ try:
     ixNetwork.info('Loading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
-    # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+    # Assign ports:  Map the physical ports to the configured vport names.
+    # You must change the attribute "Name" value to match the vport name in your loaded configuration.
+    portMap = PortMapAssistant(ixNetwork)
+    vport = dict()
+    for index,port in enumerate(portList):
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
 
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.StartAllProtocols(Arg1='sync')
 

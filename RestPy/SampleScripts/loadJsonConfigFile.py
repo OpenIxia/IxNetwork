@@ -41,26 +41,25 @@ import json, sys, os, traceback
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 
-apiServerIp = '192.168.70.12'
+apiServerIp = '192.168.70.3'
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerPort = sys.argv[1]
-
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -74,8 +73,8 @@ jsonConfigFile = 'bgp_ngpf_8.50.json'
 try:
     testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: 'none'request|'request response'
-    testPlatform.Trace = 'request_response'
+    # Console output verbosity: none|info|warning|request|request_response|all
+    testPlatform.Trace = 'all'
 
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
@@ -90,13 +89,15 @@ try:
     ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
-    # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+    # Assign ports:  Map the physical ports to the configured vport names.
+    # You must change the attribute "Name" value to match the vport name in your loaded configuration.
+    portMap = PortMapAssistant(ixNetwork)
+    vport = dict()
+    for index,port in enumerate(portList):
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
+                                   Name='vport{vportIndex}-{vportIndex}'.format(vportIndex=index+1))
 
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
     # Example on how to change the media port type: copper|fiber
     # for vport in ixNetwork.Vport.find():

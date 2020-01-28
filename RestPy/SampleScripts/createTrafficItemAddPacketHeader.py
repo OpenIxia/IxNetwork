@@ -90,8 +90,8 @@ try:
     # Connect
     testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: None|request|'request response'
-    testPlatform.Trace = 'request_response'
+    # Console output verbosity: none|info|warning|request|request_response|all
+    testPlatform.Trace = 'all'
 
     # For Linux API server only
     testPlatform.Authenticate(username, password)
@@ -108,17 +108,21 @@ try:
 
     portMap.Connect(forceTakePortOwnership)
     
+    ixNetwork.info('Create a raw traffic item')
     rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet', BiDirectional=False, TrafficType='raw')
 
-    ixNetwork.info('Add endpoints')
+    ixNetwork.info('Add source and destination endpoints')
+    # This example uses vport in the order it was created as the source and destination endpoints.
     rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find()[0].Protocols.find(), 
                                       Destinations=ixNetwork.Vport.find()[1].Protocols.find())
+
     configElement = rawTrafficItemObj.ConfigElement.find()[0]
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
     configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameSize.FixedSize = 128
   
-    # The Ethernet packet header doesn't need to be created.  It is there by default. Just do a find for the Ethernet stack object.
+    # The Ethernet packet header doesn't need to be created.
+    # It is there by default. Just do a find for the Ethernet stack object.
     ethernetStackObj = ixNetwork.Traffic.TrafficItem.find(Name='Raw packet').ConfigElement.find()[0].Stack.find(DisplayName='Ethernet II')
 
     # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
@@ -148,12 +152,13 @@ try:
     ipv4SrcField.StepValue = '0.0.0.1'
     ipv4SrcField.CountValue = 1
 
+    # Example on how to create a custom list of ip addresses
     ipv4DstField = ipv4FieldObj.find(DisplayName='Destination Address')
     ipv4DstField.ValueType = 'valueList'
     ipv4DstField.ValueList = ['1.1.1.2', '1.1.1.3', '1.1.1.4', '1.1.1.5']
 
 
-    # DSCP configurations
+    # DSCP configurations and references
 
     # For IPv4 TOS/Precedence:  Field/4
     #    000 Routine, 001 Priority, 010 Immediate, 011 Flash, 100 Flash Override,
@@ -184,6 +189,7 @@ try:
     #       Precedence 5 = 40
     #       Precedence 6 = 48
     #       Precedence 7 = 56
+    #
     # DisplayName options: 
     #     'Default PHB' = Field/10 
     #     'Class selector PHB' = Field/12
@@ -226,48 +232,8 @@ try:
     #    
     #    Other trackings: udpUdpSrcPrt0, udpUdpDstPrt0,tcpTcpSrcPrt0, tcpTcpDstPrt0, vlanVlanId0, vlanVlanUserPriority0
     #    On an IxNetwork GUI (Windows or Web UI), add traffic item trackings.
-    #    Then go on the API browser to view the tracking wordings.
+    #    Then go on the API browser to view the tracking fields.
     rawTrafficItemObj.Tracking.find().TrackBy = ['udpUdpSrcPrt0', 'udpUdpDstPrt0']
-
-    '''
-     Field[13]: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1/configElement/1/stack/4/field/14
-        __id__: a3a92ed3-fb09-47ce-aaf9-f07529127752
-        ActiveFieldChoice: True
-        Auto: False
-        CountValue: 1
-        DefaultValue: 0
-        DisplayName: No Sequence Number
-        EnumValues: []
-        FieldChoice: True
-        FieldTypeId: gre.header.sequenceHolder.noSequenceNum
-        FieldValue: 0
-        FixedBits: 0
-        FullMesh: False
-        Length: 32
-        Level: False
-        MaxValue: 0
-        MinValue: 0
-        Name: no_sequence_num
-        Offset: 32
-        OffsetFromRoot: 336
-        OnTheFlyMask: 0
-        Optional: False
-        OptionalEnabled: True
-        RandomMask: 0
-        RateVaried: False
-        ReadOnly: False
-        RequiresUdf: False
-        Seed: 1
-        SingleValue: 0
-        StartValue: 0
-        StepValue: 0
-        SupportsNonRepeatableRandom: True
-        SupportsOnTheFlyMask: True
-        TrackingEnabled: False
-        ValueFormat: hex
-        ValueList: ['0']
-        ValueType: singleValue
-    '''
 
     if debugMode == False:
         # For Linux and WindowsConnectionMgr only

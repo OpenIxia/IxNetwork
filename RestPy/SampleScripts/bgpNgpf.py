@@ -41,6 +41,7 @@ from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 apiServerIp = '192.168.70.3'
+#apiServerIp = '192.168.70.12'
 
 # For Linux API server only
 username = 'admin'
@@ -56,7 +57,7 @@ licenseMode = 'subscription'
 licenseTier = 'tier3'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = False
+debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -67,8 +68,8 @@ portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 try:
     testPlatform = TestPlatform(ip_address=apiServerIp, log_file_name='restpy.log')
 
-    # Console output verbosity: 'none'|request|'request response'
-    testPlatform.Trace = 'request_response'
+    # Console output verbosity: none|info|warning|request|request_response|all
+    testPlatform.Trace = 'all'
 
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
@@ -185,8 +186,8 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
-    ixNetwork.info('{}\n'.format(flowStatistics))
+    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
+    ixNetwork.info('{}\n'.format(trafficItemStatistics))
 
     if debugMode == False:
         # For linux and connection_manager only

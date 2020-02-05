@@ -41,14 +41,13 @@ from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 apiServerIp = '192.168.70.3'
-apiServerIp = '192.168.70.12'
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True

@@ -40,25 +40,16 @@ from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-apiServerIp = '192.168.70.3'
-
-# For Linux API server only
-username = 'admin'
-password = 'admin'
-
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
-# Forcefully take port ownership if the portList are owned by other users.
-forceTakePortOwnership = True
-
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, log_file_name='restpy.log')
+    testPlatform = TestPlatform(ip_address='192.168.70.3', log_file_name='restpy.log')
 
     # Console output verbosity: none|info|warning|request|request_response|all
     testPlatform.Trace = 'info'
 
-    testPlatform.Authenticate(username, password)
+    testPlatform.Authenticate('admin', 'admin')
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
@@ -69,7 +60,7 @@ try:
     portMap = PortMapAssistant(ixNetwork)
     vport1 = portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name='Port_1')
     vport2 = portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name='Port_2')
-    portMap.Connect(forceTakePortOwnership)
+    portMap.Connect(ForceOwnership=True)
 
     ixNetwork.info('Creating Topology Group 1')
     topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)

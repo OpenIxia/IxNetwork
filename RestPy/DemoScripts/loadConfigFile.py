@@ -38,41 +38,31 @@ from ixnetwork_restpy.files import Files
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 
-apiServerIp = '192.168.70.3'
-
-# For Linux API server only
-username = 'admin'
-password = 'admin'
-
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
-# Forcefully take port ownership if the portList are owned by other users.
-forceTakePortOwnership = True
-
-configFile = 'bgp_ngpf_8.30.ixncfg'
-
 try:
-    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
+    testPlatform = TestPlatform(ip_address='192.168.70.3', log_file_name='restpy.log')
 
     # Console output verbosity: none|info|warning|request|request_response|all
     testPlatform.Trace = 'info'
 
-    testPlatform.Authenticate(username, password)
+    testPlatform.Authenticate('admin', 'admin')
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
     ixNetwork.info('Preparing new blank config')
     ixNetwork.NewConfig()
 
-    ixNetwork.info('Loading config file: {0}'.format(configFile))
-    ixNetwork.LoadConfig(Files(configFile, local_file=True))
+    ixNetwork.info('Loading config file: bgp_ngpf_8.30.ixncfg')
+    ixNetwork.LoadConfig(Files('bgp_ngpf_8.30.ixncfg', local_file=True))
 
     # Assign ports. Map physical ports to the configured vports.
     portMap = PortMapAssistant(ixNetwork)
+    # For the portName, get it from the loaded configuration
     portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name=ixNetwork.Vport.find()[0].Name)
     portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name=ixNetwork.Vport.find()[1].Name)
-    portMap.Connect(forceTakePortOwnership)
+    portMap.Connect(ForceOwnership=True)
 
     ixNetwork.info('Starting NGPF protocols')
     ixNetwork.StartAllProtocols(Arg1='sync')

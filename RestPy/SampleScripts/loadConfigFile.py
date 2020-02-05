@@ -44,15 +44,6 @@ apiServerIp = '192.168.70.3'
 username = 'admin'
 password = 'admin'
 
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
-
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
@@ -77,10 +68,6 @@ try:
 
     ixNetwork.NewConfig()
 
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
-
     ixNetwork.info('Loading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
@@ -88,6 +75,7 @@ try:
     portMap = PortMapAssistant(ixNetwork)
     vport = dict()
     for index,port in enumerate(portList):
+        # For the port name, get the loaded configuration's port name
         vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
                                    Name=ixNetwork.Vport.find()[index].Name)
 

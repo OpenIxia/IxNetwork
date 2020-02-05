@@ -49,22 +49,12 @@ apiServerIp = '192.168.70.3'
 username = 'admin'
 password = 'admin'
 
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
-
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
 debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-# A list of chassis to use
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
@@ -79,12 +69,7 @@ try:
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-
     ixNetwork.NewConfig()
-
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
 
     ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
@@ -93,8 +78,8 @@ try:
     portMap = PortMapAssistant(ixNetwork)
     vport = dict()
     for index,port in enumerate(portList):
-        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
-                                   Name=ixNetwork.Vport.find()[index].Name)
+        portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
+                    Name=ixNetwork.Vport.find()[index].Name)
 
     portMap.Connect(forceTakePortOwnership)
 

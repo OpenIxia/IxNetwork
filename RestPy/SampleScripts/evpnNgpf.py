@@ -47,15 +47,6 @@ apiServerIp = '192.168.70.3'
 username = 'admin'
 password = 'admin'
 
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
-
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = True
 
@@ -85,10 +76,6 @@ try:
     ixNetwork = session.Ixnetwork
 
     ixNetwork.NewConfig()
-
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
 
     # Create vports and name them so you could use .find() to filter vports by the name.
     vport1 = ixNetwork.Vport.add(Name='Port1')

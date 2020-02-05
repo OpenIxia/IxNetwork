@@ -41,20 +41,11 @@ from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
 apiServerIp = '192.168.70.3'
-#apiServerIp = '192.168.70.12'
+apiServerIp = '192.168.70.12'
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = True
@@ -77,20 +68,17 @@ try:
 
     ixNetwork.NewConfig()
 
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
-
-    # Assign ports
+    ixNetwork.info('Assign ports')
     portMap = PortMapAssistant(ixNetwork)
     vport = dict()
     for index,port in enumerate(portList):
-        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
+        portName = 'Port_{}'.format(index+1)
+        vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.info('Creating Topology Group 1')
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport[0])
+    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport['Port_1'])
     deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
     ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
@@ -117,7 +105,7 @@ try:
     ipv4PrefixPool.PrefixLength.Single(32)
 
     ixNetwork.info('Creating Topology Group 2')
-    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport[1])
+    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport['Port_2'])
     deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
 
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')

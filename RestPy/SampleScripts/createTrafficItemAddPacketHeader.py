@@ -38,13 +38,6 @@ password = 'admin'
 
 configFile = 'bgp_ngpf_8.30.ixncfg'
 
-licenseServerIp = ['192.168.70.3']
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
-
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
 debugMode = False
 
@@ -100,11 +93,16 @@ try:
 
     ixNetwork.NewConfig()
 
+    ixNetwork.info('Loading config file: {0}'.format(configFile))
+    ixNetwork.LoadConfig(Files(configFile, local_file=True))
+
     # Assign ports
     portMap = PortMapAssistant(ixNetwork)
     vport = dict()
     for index,port in enumerate(portList):
-        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name='Port_{}'.format(index+1))
+        # For the port name, get the loaded configuration's port name
+        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
+                                   Name=ixNetwork.Vport.find()[index].Name)
 
     portMap.Connect(forceTakePortOwnership)
     

@@ -24,7 +24,7 @@ Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy (minimum version v45 for PortMapAssistant support)
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -36,28 +36,21 @@ Usage:
 import sys, os, time, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
 try:
-    testPlatform = TestPlatform(ip_address='192.168.70.3', log_file_name='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 
-    # Console output verbosity: none|info|warning|request|request_response|all
-    testPlatform.Trace = 'info'
-
-    testPlatform.Authenticate('admin', 'admin')
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    ixNetwork.info('Preparing new blank config')
-    ixNetwork.NewConfig()
-
     ixNetwork.info('Assign ports')
-    portMap = PortMapAssistant(ixNetwork)
+    portMap = session.PortMapAssistant()
     vport1 = portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name='Port_1')
     vport2 = portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name='Port_2')
     portMap.Connect(ForceOwnership=True)
@@ -126,9 +119,9 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
 
     ixNetwork.info('Create Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=False, TrafficType='ipv4')
@@ -147,17 +140,15 @@ try:
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     trafficItem.Generate()
+
     ixNetwork.info('Apply config')
     ixNetwork.Traffic.Apply()
+
     ixNetwork.info('Starting traffic')
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
-    # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    flowStatistics = session.StatViewAssistant('Flow Statistics')
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
     ixNetwork.info('{}\n'.format(flowStatistics))
 
     for rowNumber,flowStat in enumerate(flowStatistics.Rows):
@@ -166,17 +157,14 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
-    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
-    ixNetwork.info('{}\n'.format(trafficItemStatistics))
-
     if debugMode == False:
         # For linux and connection_manager only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

@@ -61,7 +61,7 @@ Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -74,9 +74,7 @@ Usage:
 import re, sys, os, time, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant
 
 # Egress tracking settings
 egressTrackingPort='192.168.70.128/Card2/Port1'
@@ -97,18 +95,18 @@ ingressTrackingFilterName = None
 
 apiServerIp = '192.168.70.3'
 
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
+
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
-
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 
 def configEgressCustomTracking(trafficItemObj, offsetBits, widthBits):
@@ -138,18 +136,13 @@ def configEgressCustomTracking(trafficItemObj, offsetBits, widthBits):
 
 
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, log_file_name='restpy.log')
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,  ClearConfig=True, LogLevel='all')
 
-    # Console output verbosity: 'none'|request|'request response'
-    testPlatform.Trace = 'all'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-    ixNetwork.NewConfig()
 
     # Assign ports
-    portMap = PortMapAssistant(ixNetwork)
+    portMap = session.PortMapAssistant()
     vport = dict()
     for index,port in enumerate(portList):
         portName = 'Port_{}'.format(index+1)
@@ -191,10 +184,10 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+    ixNetwork.info(protocolSummary)
 
     ixNetwork.info('Create Traffic Item')
     trafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=True, TrafficType='ipv4')
@@ -220,14 +213,15 @@ try:
 
     # Create Egress Stats
     ixNetwork.info('\n\nCreating new statview for egress stats...')
-    ixNetwork.Statistics.View.add(Caption=egressStatViewName, TreeViewNodeName='Egress Custom Views', Type='layer23TrafficFlow', Visible=True)
+    ixNetwork.Statistics.View.add(Caption=egressStatViewName, TreeViewNodeName='Egress Custom Views',
+                                  Type='layer23TrafficFlow', Visible=True)
 
     egressStatViewObj = ixNetwork.Statistics.View.find(Caption=egressStatViewName)
 
     # Dynamically get the PortFilterId
     portFilterId = None
     for eachPortFilterId in egressStatViewObj.AvailablePortFilter.find():
-        # 192.168.70.10/Card2/Port1
+        # 192.168.70.128/Card2/Port1
 
         ixNetwork.info('\n\nAvailable PortFilterId: %s\n' % eachPortFilterId.Name)
         # eachPortFilterId.Name: 192.168.70.128/Card2/Port1
@@ -280,7 +274,6 @@ try:
     if egressTrackingFilter is None:
         ixNetwork.debug('Failed to locate your defined custom offsets: {0}'.format(egressTrackingOffsetFilter))
 
-
     # # /api/v1/sessions/1/ixnetwork/statistics/view/23/availableTrackingFilter/3
     ixNetwork.info('Located egressTrackingFilter: %s' % egressTrackingFilter)
     # egressTrackingFilter: /api/v1/sessions/1/ixnetwork/statistics/view/12/availableTrackingFilter/1
@@ -299,25 +292,22 @@ try:
 
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
+    flowStatistics = session.StatViewAssistant(egressStatViewName)
+
     # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.LESS_THAN, 50000)
 
-    flowStatistics = StatViewAssistant(ixNetwork, egressStatViewName)
     ixNetwork.info('\n\n{}\n'.format(flowStatistics))
 
-    '''
-    for rowNumber,flowStat in enumerate(flowStatistics.Rows):
-        ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
-        #ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
-        #    rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
-        #    flowStat['Tx Frames'], flowStat['Rx Frames']))
-    '''
+    if debugMode == False:
+        # For linux and connection_manager only
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
     

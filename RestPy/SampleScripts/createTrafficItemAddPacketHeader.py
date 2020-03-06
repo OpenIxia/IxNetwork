@@ -2,7 +2,7 @@
 createTrafficItemAddPacketHeader.py
 
 Description
-   Configuring packet headers in raw Traffic Item. 
+   Configure custom packet headers in raw Traffic Item. 
   
    - Create a Raw Traffic Items. 
    - Example to show how to add packet header: Ethernet, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
@@ -12,7 +12,7 @@ Requirements
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -25,27 +25,23 @@ import os, sys, traceback
 from pprint import pprint
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.files import Files
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
-from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
+from ixnetwork_restpy import SessionAssistant
 
 apiServerIp = '192.168.70.3'
+
+# A list of chassis to use instead of the ones in the loaded config file
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-configFile = 'bgp_ngpf_8.30.ixncfg'
 
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
 debugMode = False
 
 forceTakePortOwnership = True
 
-# A list of chassis to use instead of the ones in the loaded config file
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 try:
     def createPacketHeader(trafficItemObj, packetHeaderToAdd=None, appendToStack=None): 
@@ -80,29 +76,19 @@ try:
         return packetHeaderFieldObj
 
 
-    # Connect
-    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
-    # Console output verbosity: none|info|warning|request|request_response|all
-    testPlatform.Trace = 'all'
-
-    # For Linux API server only
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    ixNetwork.NewConfig()
-
-    ixNetwork.info('Loading config file: {0}'.format(configFile))
-    ixNetwork.LoadConfig(Files(configFile, local_file=True))
-
     # Assign ports
-    portMap = PortMapAssistant(ixNetwork)
+    portMap = session.PortMapAssistant()
     vport = dict()
     for index,port in enumerate(portList):
-        # For the port name, get the loaded configuration's port name
-        vport[index] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
-                                   Name=ixNetwork.Vport.find()[index].Name)
+        portName = 'Port_{}'.format(index+1) 
+        vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
     
@@ -110,9 +96,7 @@ try:
     rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet', BiDirectional=False, TrafficType='raw')
 
     ixNetwork.info('Add source and destination endpoints')
-    # This example uses vport in the order it was created as the source and destination endpoints.
-    rawTrafficItemObj.EndpointSet.add(Sources=ixNetwork.Vport.find()[0].Protocols.find(), 
-                                      Destinations=ixNetwork.Vport.find()[1].Protocols.find())
+    rawTrafficItemObj.EndpointSet.add(Sources=vport['Port_1'].Protocols.find(), Destinations=vport['Port_2'].Protocols.find())
 
     configElement = rawTrafficItemObj.ConfigElement.find()[0]
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
@@ -235,11 +219,11 @@ try:
 
     if debugMode == False:
         # For Linux and WindowsConnectionMgr only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     ixNetwork.debug('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 

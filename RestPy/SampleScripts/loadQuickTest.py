@@ -34,9 +34,7 @@ Requirements
    - IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy 
-          (Minimum version 1.0.45 if using Linux Web QuickTest platform)
-          (Minimum version 1.0.29 if using Windows API server)
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.com/userGuides/restPyDoc
@@ -49,21 +47,25 @@ Usage:
 import json, sys, os, re, time, datetime, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
-from ixnetwork_restpy.files import Files
+from ixnetwork_restpy import SessionAssistant, Files
 
 # IxNetwork API server platform options: windows|linux
-osPlatform = 'windows' 
+osPlatform = 'windows'
+osPlatform = 'linux'
 
 apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.70.12'
+
+# A list of chassis to use
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # Defaults to ixnrest for windows and linux api server.  
-# Web Quick Test is a new edition in the Linux API server.
+# Web Quick Test is a new web edition in the Linux API server.
 # The type for the web QT is 'quicktest'.  
 applicationType = 'ixnrest'
 
@@ -81,11 +83,7 @@ configFile = 'ngpfQuickTest2ports_8.50.ixncfg'
 windowsDestinationFolder = 'c:\\Results' 
 
 # If running this script on a Linux, where do you want to put the csv and pdf result files
-linuxDestinationFolder = '/home/hgee/OpenIxiaGit/IxNetwork/RestPy/SampleScripts' 
-
-# A list of chassis to use
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
+linuxDestinationFolder = os.getcwd()
 
 # For novusTenGigLan card type only. Options: copper|fiber
 portMedia = 'copper'
@@ -386,7 +384,7 @@ def copyApiServerFileToLocalLinux(apiServerPathAndFileName, localPath, prependFi
         destinationPath = '{}\\{}'.format(localPath, fileName)
 
     ixNetwork.info('\nCopying file from API server:{} -> {}'.format(apiServerPathAndFileName, destinationPath))
-    session.DownloadFile(apiServerPathAndFileName, destinationPath)
+    session.Session.DownloadFile(apiServerPathAndFileName, destinationPath)
 
 
 def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', rfcTest=None, includeTimestamp=False):
@@ -460,32 +458,24 @@ def verifyNgpfIsLayer3(topologyName):
 
 
 try:
-    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
-
-    # Console output verbosity: None|request|'request response'
-    testPlatform.Trace = 'request_response'
-
-    if osPlatform == 'linux':
-        testPlatform.Authenticate(username, password)
-
-        # Allows you to switch between web QT or regular IxNetwork on linux api server.
-        session = testPlatform.Sessions.add(ApplicationType=applicationType)
-    else:
-        # For Windows or connection mgr, ixnrest is the default
-        session = testPlatform.Sessions.add(ApplicationType='ixnrest')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None, ApplicationType=applicationType,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-    ixNetwork.NewConfig()
 
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
-
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap = session.PortMapAssistant()
+    vport = dict()
+    for index,port in enumerate(portList):
+        # For the port name, get the loaded configuration's port name
+        portName = ixNetwork.Vport.find()[index].Name
+        portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
+        
+    portMap.Connect(forceTakePortOwnership)
 
     for vport in ixNetwork.Vport.find():
         if vport.Type == 'novusTenGigLan':
@@ -495,10 +485,10 @@ try:
         ixNetwork.StartAllProtocols(Arg1='sync')
 
         ixNetwork.info('Verify protocol sessions\n')
-        protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-        protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-        protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-        ixNetwork.info(protocolsSummary)
+        protocolSummary = session.StatViewAssistant('Protocols Summary')
+        protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+        protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+        ixNetwork.info(protocolSummary)
 
     # Create a timestamp for test result files.
     # To append a timestamp in the CSV result files so existing result files won't get overwritten.
@@ -546,7 +536,7 @@ try:
                     pdfFile = quickTestHandle.GenerateReport()
                     destPdfTestResult = addTimestampToFile(rfcTest=rfcTest, filename=pdfFile)
                     ixNetwork.info('Copying PDF results to: {}'.format(linuxDestinationFolder+destPdfTestResult))
-                    session.DownloadFile(pdfFile, linuxDestinationFolder+'/'+destPdfTestResult)
+                    session.Session.DownloadFile(pdfFile, linuxDestinationFolder+'/'+destPdfTestResult)
                 except:
                     # If using Linux API server, a PDF result file is not supported for all rfc tests.
                     ixNetwork.warn('\n\nPDF for {} is not supported\n'.format(rfc))
@@ -564,7 +554,7 @@ try:
                 pdfFile = quickTestHandle.GenerateReport()
                 destPdfTestResult = addTimestampToFile(rfcTest=rfcTest, filename=pdfFile)
                 ixNetwork.info('Copying PDF results to: {}'.format(linuxDestinationFolder+destPdfTestResult))
-                session.DownloadFile(pdfFile, linuxDestinationFolder+'/'+destPdfTestResult)
+                session.Session.DownloadFile(pdfFile, linuxDestinationFolder+'/'+destPdfTestResult)
 
             # Examples to show how to stop and remove a quick test.
             # Uncomment one or both if you want to use them.
@@ -573,12 +563,12 @@ try:
 
     if debugMode == False:
         # For Linux and Windows Connection Manager only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

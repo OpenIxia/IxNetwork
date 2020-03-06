@@ -20,30 +20,26 @@ Supports IxNetwork API servers:
 
 Requirements
    - IxNetwork 8.50
-   - RestPy version 1.0.33
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
    - Enter: python <script>
-
-   # Connect to a different api server.
-   - Enter: python <script>   <api server ip>
 """
 
 import json, sys, os, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.files import Files
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
-from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
+from ixnetwork_restpy import SessionAssistant, Files
 
 apiServerIp = '192.168.70.3'
+
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
@@ -55,31 +51,24 @@ debugMode = False
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
-
 jsonConfigFile = 'bgp_ngpf_8.50.json'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
-    # Console output verbosity: none|info|warning|request|request_response|all
-    testPlatform.Trace = 'all'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-    ixNetwork.NewConfig()
 
     ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
-    # Assign ports. Map physical ports to the configured vports.
-    portMap = PortMapAssistant(ixNetwork)
+    # Assign ports.
+    portMap = session.PortMapAssistant()
     vport = dict()
     for index,port in enumerate(portList):
-        portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2],
-                    Name=ixNetwork.Vport.find()[index].Name)
+        portName = ixNetwork.Vport.find()[index].Name
+        portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
 
@@ -95,10 +84,10 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+    ixNetwork.info(protocolSummary)
 
     # Get the Traffic Item name for getting Traffic Item statistics.
     trafficItem = ixNetwork.Traffic.TrafficItem.find()[0]
@@ -107,12 +96,13 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
+    flowStatistics = session.StatViewAssistant('Flow Statistics')
+
     # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.LESS_THAN, 50000)
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
     ixNetwork.info('{}\n'.format(flowStatistics))
 
     for rowNumber,flowStat in enumerate(flowStatistics.Rows):
@@ -125,12 +115,12 @@ try:
 
     if debugMode == False:
         # For Linux and connection_manager only
-            session.remove()
+            session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

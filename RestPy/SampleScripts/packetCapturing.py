@@ -35,10 +35,9 @@ RestPy Doc:
 """
 
 import os, sys, time, traceback
+
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.files import Files
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant
 
 apiServerIp = '192.168.70.12'
 
@@ -50,18 +49,10 @@ username = 'admin'
 password = 'admin'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
-
-    # Console output verbosity: 'none'|request|request_response
-    testPlatform.Trace = 'none'
-
-    if osPlatform == 'linux':
-        testPlatform.Authenticate(username, password)
-        session = testPlatform.Sessions.find(Id=1)
-
-    if osPlatform in ['windows', 'connection_manager']:
-        # Windows support only one session. Id is always equal 1.
-        session = testPlatform.Sessions.find(Id=1)
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=15, ApiKey=None,
+                               ClearConfig=False, LogLevel='info', LogFilename='restpy.log')
 
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
@@ -107,7 +98,6 @@ try:
         ixNetwork.info('Stop traffic')
         ixNetwork.Traffic.Stop()
 
-
     if captureDataPlane:
         ixNetwork.info('Total data packets captured: {}'.format(vport.Capture.DataPacketCounter))
 
@@ -118,6 +108,7 @@ try:
                 # Note: GetPacketFromDataCapture() will create the packet header fields
                 vport.Capture.CurrentPacket.GetPacketFromDataCapture(Arg2=packetNumber)
                 packetHeaderStacks = vport.Capture.CurrentPacket.Stack.find()
+
             except Exception as errMsg:
                 print('\nError: {}'.format(errMsg))
                 continue
@@ -136,11 +127,11 @@ try:
         # There could be thousands of packets captured.  State the amount of packets to 
         # inspect with a starting value and an ending value.
         for packetNumber in range(1, 2):
-
             try:
                 # Note: GetPacketFromDataCapture() will create the packet header fields
                 vport.Capture.CurrentPacket.GetPacketFromControlCapture(Arg2=packetNumber)
                 packetHeaderStacks = vport.Capture.CurrentPacket.Stack.find()
+
             except Exception as errMsg:
                 print('\nError: {}'.format(errMsg))
                 continue

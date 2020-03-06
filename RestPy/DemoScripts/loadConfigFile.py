@@ -21,7 +21,7 @@ Requirements
    - IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -33,32 +33,24 @@ Usage:
 import json, sys, os, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.files import Files
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
-from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
+from ixnetwork_restpy import SessionAssistant, Files
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
 try:
-    testPlatform = TestPlatform(ip_address='192.168.70.3', log_file_name='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 
-    # Console output verbosity: none|info|warning|request|request_response|all
-    testPlatform.Trace = 'info'
-
-    testPlatform.Authenticate('admin', 'admin')
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-
-    ixNetwork.info('Preparing new blank config')
-    ixNetwork.NewConfig()
 
     ixNetwork.info('Loading config file: bgp_ngpf_8.30.ixncfg')
     ixNetwork.LoadConfig(Files('bgp_ngpf_8.30.ixncfg', local_file=True))
 
     # Assign ports. Map physical ports to the configured vports.
-    portMap = PortMapAssistant(ixNetwork)
+    portMap = session.PortMapAssistant()
     # For the portName, get it from the loaded configuration
     portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name=ixNetwork.Vport.find()[0].Name)
     portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name=ixNetwork.Vport.find()[1].Name)
@@ -68,25 +60,22 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
 
     # Get the Traffic Item name for getting Traffic Item statistics.
     trafficItem = ixNetwork.Traffic.TrafficItem.find()[0]
 
     trafficItem.Generate()
+
     ixNetwork.info('Applying traffic')
     ixNetwork.Traffic.Apply()
+
     ixNetwork.info('Starting traffic')
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
-    # StatViewAssistant could also filter by regex, LESS_THAN, GREATER_THAN, EQUAL. 
-    # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
-
-    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
+    trafficItemStatistics = session.StatViewAssistant('Traffic Item Statistics')
     ixNetwork.info('{}\n'.format(trafficItemStatistics))
     
     # Get the statistic values
@@ -99,12 +88,12 @@ try:
 
     if debugMode == False:
         # For Linux and Windows Connection Manager only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

@@ -4,7 +4,6 @@ bgpNgpf.py:
    Tested with two back-2-back Ixia ports...
 
    - Connect to the API server
-   - Configure license server IP
    - Assign ports:
         - If variable forceTakePortOwnership is True, take over the ports if they're owned by another user.
         - If variable forceTakePortOwnership if False, abort test.
@@ -24,7 +23,7 @@ Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy (minimum version v45 for PortMapAssistant support)
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -35,12 +34,12 @@ Usage:
 
 import sys, os, time, traceback
 
-# Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.ports.portmapassistant import PortMapAssistant
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant
 
 apiServerIp = '192.168.70.3'
+
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
@@ -52,23 +51,17 @@ debugMode = False
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, log_file_name='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
-    # Console output verbosity: none|info|warning|request|request_response|all
-    testPlatform.Trace = 'all'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    ixNetwork.NewConfig()
-
     ixNetwork.info('Assign ports')
-    portMap = PortMapAssistant(ixNetwork)
+    portMap = session.PortMapAssistant()
     vport = dict()
     for index,port in enumerate(portList):
         portName = 'Port_{}'.format(index+1)
@@ -134,10 +127,10 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+    ixNetwork.info(protocolSummary)
 
     ixNetwork.info('Create Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=False, TrafficType='ipv4')
@@ -150,7 +143,6 @@ try:
     ixNetwork.info('Configuring config elements')
     configElement = trafficItem.ConfigElement.find()[0]
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
-    configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
@@ -159,12 +151,13 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
+    flowStatistics = session.StatViewAssistant('Flow Statistics')
+
     # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.GREATER_THAN, "5000")
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
     ixNetwork.info('{}\n'.format(flowStatistics))
 
     for rowNumber,flowStat in enumerate(flowStatistics.Rows):
@@ -173,18 +166,14 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
-    trafficItemStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
-    ixNetwork.info('{}\n'.format(trafficItemStatistics))
-
     if debugMode == False:
         # For linux and connection_manager only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
-        session.remove()
-
+        session.Session.remove()
 
 
 

@@ -5,7 +5,7 @@ Description
    Configure custom packet headers in raw Traffic Item. 
   
    - Create a Raw Traffic Items. 
-   - Example to show how to add packet header: Ethernet, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
+   - Example to show how to add packet header: Ethernet, PFC queue, PFC pause 802.1QBB, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
    - Enable tracking to track the packet headers in Flow Statistics
 
 Requirements
@@ -51,7 +51,7 @@ try:
 
         # Uncomment this to show a list of all the available protocol templates to create (packet headers)
         #for protocolHeader in ixNetwork.Traffic.ProtocolTemplate.find():
-        #    ixNetwork.info('Protocol header: {}'.format(protocolHeader))
+        #    ixNetwork.info('Protocol header: -- {} --'.format(protocolHeader.DisplayName))
 
         # 1> Get the <new packet header> protocol template from the ProtocolTemplate list.
         packetHeaderProtocolTemplate = ixNetwork.Traffic.ProtocolTemplate.find(DisplayName=packetHeaderToAdd)
@@ -91,7 +91,7 @@ try:
         vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
-    
+
     ixNetwork.info('Create a raw traffic item')
     rawTrafficItemObj = ixNetwork.Traffic.TrafficItem.add(Name='Raw packet', BiDirectional=False, TrafficType='raw')
 
@@ -122,11 +122,36 @@ try:
     ethernetSrcField.StepValue = "00:00:00:00:00:00"
     ethernetSrcField.CountValue = 1
 
+    # VLAN
     vlanFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^VLAN', appendToStack='Ethernet II')
     vlanField = vlanFieldObj.find(DisplayName='VLAN Priority')
     vlanField.Auto = False
     vlanField.SingleValue = 3
 
+    # PFC QUEUE
+    pfcQueueObj = ethernetStackObj.Field.find(DisplayName='PFC Queue')
+    pfcQueueObj.ValueType = 'valueList'
+    pfcQueueObj.ValueList = [1, 3, 5, 7]
+
+    # PFC PAUSE: PFC PAUSE (802.1Qbb)
+    pauseFrameObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^PFC PAUSE \(802.1Qbb\)', appendToStack='Ethernet II')
+    pauseFrameField = pauseFrameObj.find(DisplayName='Control opcode')
+    pauseFrameField.ValueType = 'singleValue'
+    pauseFrameField.SingleValue = 103
+
+    pauseFrameQueue0 = pauseFrameObj.find(DisplayName='PFC Queue 0')
+    pauseFrameQueue0.ValueType = 'singleValue'
+    pauseFrameQueue0.SingleValue = 'abcd'
+
+    pauseFrameQueue1 = pauseFrameObj.find(DisplayName='PFC Queue 1')
+    pauseFrameQueue2 = pauseFrameObj.find(DisplayName='PFC Queue 2')
+    pauseFrameQueue3 = pauseFrameObj.find(DisplayName='PFC Queue 3')
+    pauseFrameQueue4 = pauseFrameObj.find(DisplayName='PFC Queue 4')
+    pauseFrameQueue5 = pauseFrameObj.find(DisplayName='PFC Queue 5')
+    pauseFrameQueue6 = pauseFrameObj.find(DisplayName='PFC Queue 6')
+
+
+    # IPv4
     ipv4FieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='IPv4', appendToStack='^VLAN')
     ipv4SrcField = ipv4FieldObj.find(DisplayName='Source Address')
     ipv4SrcField.ValueType = 'increment'
@@ -137,17 +162,16 @@ try:
     # Example on how to create a custom list of ip addresses
     ipv4DstField = ipv4FieldObj.find(DisplayName='Destination Address')
     ipv4DstField.ValueType = 'valueList'
-    ipv4DstField.ValueList = ['1.1.1.2', '1.1.1.3', '1.1.1.4', '1.1.1.5']
-
+    ipv4DstField.ValueList = ['1.1.1.2', '1.1.1.3', '1.1.1.4', '1.1.1.5']    
 
     # DSCP configurations and references
 
     # For IPv4 TOS/Precedence:  Field/4
     #    000 Routine, 001 Priority, 010 Immediate, 011 Flash, 100 Flash Override,
     #    101 CRITIC/ECP, 110 Internetwork Control, 111 Network Control
-    #ipv4PrecedenceField = ipv4FieldObj.find(DisplayName='Precedence')
-    #ipv4PrecedenceField.ActiveFieldChoice = True
-    #ipv4PrecedenceField.FieldValue = '011 Flash'
+    ipv4PrecedenceField = ipv4FieldObj.find(DisplayName='Precedence')
+    ipv4PrecedenceField.ActiveFieldChoice = True
+    ipv4PrecedenceField.FieldValue = '011 Flash'
 
     # For IPv4 Raw priority: Field/3
     #ipv4RawPriorityField = ipv4FieldObj.find(DisplayName='Raw priority')
@@ -177,7 +201,9 @@ try:
     #     'Class selector PHB' = Field/12
     #     'Assured forwarding PHB" = Field/14
     #     'Expedited forwarding PHB" = Field/16 
-    ipv4DefaultPHBField = ipv4FieldObj.find(DisplayName='Class selector')
+    #ipv4DefaultPHBField = ipv4FieldObj.find(DisplayName='Class selector')
+    ipv4DefaultPHBField = ipv4FieldObj.find(DisplayName='Default PHB')
+
     ipv4DefaultPHBField.ActiveFieldChoice = True
     ipv4DefaultPHBField.ValueType = 'singleVaoue' ;# singleValue, increment
     ipv4DefaultPHBField.SingleValue = 56
@@ -209,6 +235,7 @@ try:
 
     # Example to show appending ICMP after the IPv4 header
     icmpFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='ICMP Msg Type: 9', appendToStack='IPv4')
+
 
     # Optional: Enable tracking to track your packet headers:
     #    

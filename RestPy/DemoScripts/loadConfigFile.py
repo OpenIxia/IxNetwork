@@ -40,7 +40,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 

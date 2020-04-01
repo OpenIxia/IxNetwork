@@ -22,7 +22,7 @@ import os, sys, time, traceback
 from ixnetwork_restpy import SessionAssistant, Files
 
 try:
-    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=1, ApiKey=None, ClearConfig=False, LogLevel='info')
 
     ixNetwork = session.Ixnetwork

@@ -136,7 +136,7 @@ def configEgressCustomTracking(trafficItemObj, offsetBits, widthBits):
 
 
 try:
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=None, ApiKey=None,  ClearConfig=True, LogLevel='all')
 
     ixNetwork = session.Ixnetwork

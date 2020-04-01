@@ -50,7 +50,7 @@ password = 'admin'
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=15, ApiKey=None,
                                ClearConfig=False, LogLevel='info', LogFilename='restpy.log')
 

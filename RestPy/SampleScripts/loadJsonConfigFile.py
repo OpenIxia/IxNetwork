@@ -54,7 +54,7 @@ forceTakePortOwnership = True
 jsonConfigFile = 'bgp_ngpf_8.50.json'
 
 try:
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 

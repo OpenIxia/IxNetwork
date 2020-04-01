@@ -43,7 +43,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress='192.168.70.12', RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 
@@ -53,15 +53,19 @@ try:
     portMap = session.PortMapAssistant()
     vport1 = portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name='Port_1')
     vport2 = portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name='Port_2')
+
     portMap.Connect(ForceOwnership=True)
 
     ixNetwork.info('Creating Topology Group 1')
     topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)
+
     ixNetwork.info('Creating Device Group 1')
     deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
+
     ixNetwork.info('Creating Ethernet stack 1')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
     ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
+
     ixNetwork.info('Enabling Vlan on Topology 1')
     ethernet1.EnableVlans.Single(True)
 
@@ -87,11 +91,14 @@ try:
 
     ixNetwork.info('Creating Topology Group 2')
     topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport2)
+
     ixNetwork.info('Creating Device Group 2')
     deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
+
     ixNetwork.info('Creating Ethernet 2')
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
     ethernet2.Mac.Increment(start_value='00:01:01:02:00:01', step_value='00:00:00:00:00:01')
+
     ixNetwork.info('Enabling Vlan on Topology 2')
     ethernet2.EnableVlans.Single(True)
 

@@ -51,10 +51,8 @@ from ixnetwork_restpy import SessionAssistant, Files
 
 # IxNetwork API server platform options: windows|linux
 osPlatform = 'windows'
-osPlatform = 'linux'
 
 apiServerIp = '192.168.70.3'
-apiServerIp = '192.168.70.12'
 
 # A list of chassis to use
 ixChassisIpList = ['192.168.70.128']
@@ -63,6 +61,15 @@ portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 # For Linux API server only
 username = 'admin'
 password = 'admin'
+
+# The IP address for your Ixia license server(s) in a list.
+licenseServerIp = ['192.168.70.6']
+
+# subscription, perpetual or mixed
+licenseMode = 'subscription'
+
+# tier1, tier2, tier3, tier3-10g
+licenseTier = 'tier3'
 
 # Defaults to ixnrest for windows and linux api server.  
 # Web Quick Test is a new web edition in the Linux API server.
@@ -459,7 +466,7 @@ def verifyNgpfIsLayer3(topologyName):
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, Username='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=None, ApiKey=None, ApplicationType=applicationType,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 

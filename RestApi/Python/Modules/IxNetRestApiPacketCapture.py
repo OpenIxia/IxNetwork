@@ -201,6 +201,67 @@ class PacketCapture(object):
                                 with open(packetCaptureFilenameControl, 'a') as packetCaptureFile:
                                     packetCaptureFile.write('\t{0}: {1}: {2}\n'.format(fieldId, fieldName, fieldValue))
 
+    def packetCaptureGetCurrentPacketsHex(self, getUpToPacketNumber=20):
+        """
+        Description
+           Returns captured packets in hex format.   
+           This API will default return 20 packet hex. You could increase the packet count.
+
+        Parameters
+            getUpToPacketNumber: None|The last packet number to get. 
+                                 Always starts at 1. If you state 10, then this function will get 1-10 packets.
+            
+        Return
+            capturedData:  dictionary.   key is 'data' and/or 'control'
+                capturedData['data']  is dictionary of packet hex data for Data Capture Buffer
+                capturedData['control']  is dictionary of packet hex data for Control Capture Buffer
+        """
+        import time
+
+        vport = self.portMgmtObj.getVports([self.captureRxPort])[0]
+        response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture')
+        totalDataCapturedPackets = response.json()['dataPacketCounter']
+        totalControlCapturedPackets = response.json()['controlPacketCounter']
+
+        if type(totalDataCapturedPackets) != int:
+            totalDataCapturedPackets = 0
+        else:
+            if getUpToPacketNumber != None:
+                totalDataCapturedPackets = getUpToPacketNumber
+
+        if type(totalControlCapturedPackets) != int:
+            totalControlCapturedPackets = 0
+        else:
+            if getUpToPacketNumber != None:
+                totalControlCapturedPackets = getUpToPacketNumber
+
+        capturedData={}
+        for eachTypeOfCaptures, totalCapturedPackets in zip(('data', 'control'), (totalDataCapturedPackets, totalControlCapturedPackets)):
+            self.ixnObj.logInfo('Getting captured packets for capture type: {0}'.format(eachTypeOfCaptures))
+
+            capturedData[eachTypeOfCaptures]={}
+            for packetIndex in range(1, int(totalCapturedPackets)):
+                self.ixnObj.logInfo('Getting captured packet index number: {}/{}'.format(packetIndex, getUpToPacketNumber))
+
+                if totalDataCapturedPackets > 0:
+                    data = {'arg1': vport+'/capture/currentPacket', 'arg2': packetIndex}
+                    response = self.ixnObj.post(self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromdatacapture',
+                                                data=data, silentMode=False)
+                    self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromdatacapture/'+response.json()['id'])
+
+                if totalControlCapturedPackets > 0:
+                    data = {'arg1': vport+'/capture/currentPacket', 'arg2': packetIndex}
+                    response = self.ixnObj.post(self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromcontrolcapture',
+                                                data=data, silentMode=False)
+
+                    self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromcontrolcapture/'+response.json()['id'])
+                
+                data = {'arg1': '-packetHex'}
+                response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture/currentPacket', data=data, silentMode=False)
+                packetHex = response.json()['packetHex']
+                capturedData[eachTypeOfCaptures][packetIndex]=packetHex
+            return capturedData
+                                    
     def getCapFile(self, port, typeOfCapture='data', saveToTempLocation='c:\\Temp', localLinuxLocation='.', appendToSavedCapturedFile=None):
         """
         Get the latest captured .cap file from ReST API server to local Linux drive.
@@ -286,7 +347,8 @@ class PacketCapture(object):
 
         response = self.ixnObj.post(self.ixnObj.sessionUrl+'/operations/savecapturefiles', data=data)
         self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+ response.json()['url'], timeout=300)
-
+        capfilePathName = response.json()['result'][0]
+        # example capfilePathName: 'c:\\Results\\1-7-2_HW.cap'
         if typeOfCapture == 'control':
             if '\\' not in saveToTempLocation:
                 # For Linux
@@ -294,7 +356,7 @@ class PacketCapture(object):
                     saveToTempLocation, vportName)
             else:
                 # For Windows
-                capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_SW.cap'
+                capFileToGet = capfilePathName
 
         if typeOfCapture == 'data':
             if '\\' not in saveToTempLocation:
@@ -302,7 +364,7 @@ class PacketCapture(object):
                 capFileToGet = '/home/ixia_apps/web/platform/apps-resources/ixnetworkweb/configs/captures/{0}/{1}_HW.cap'.format(
                     saveToTempLocation, vportName)
             else:
-                capFileToGet = saveToTempLocation+'\\'+port[1]+'-'+port[2]+'_HW.cap'
+                capFileToGet = capfilePathName
 
         fileMgmtObj = FileMgmt(self.ixnObj)
 

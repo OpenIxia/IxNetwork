@@ -211,9 +211,9 @@ class Connect:
             self.httpScheme = 'http'
 
             if self.apiServerPort is None:
-                self.apiServerPort == 11009
+                self.apiServerPort = 11009
             else:
-                self.apiServerPort == serverIpPort
+                self.apiServerPort = serverIpPort
 
         # windowsConnectionMgr supports only https and allows users to set the SSL port.
         # This is the only api server that requires user to state httpsSecured=True|False because 8.40 users could be using http.
@@ -1112,9 +1112,7 @@ class Connect:
         """
         response = self.get(self.sessionUrl)
         sessionIdDict = {}
-        from pprint import pprint
-        pprint(response.json())
-        return
+
         for session in response.json():
             href = session['links'][0]['href']
             id = session['id']

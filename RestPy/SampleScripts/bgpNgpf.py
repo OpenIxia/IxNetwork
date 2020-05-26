@@ -36,17 +36,21 @@ import sys, os, time, traceback
 
 from ixnetwork_restpy import SessionAssistant
 
-apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.70.107'
+#apiServerIp = '192.168.70.3'
 
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
+
+ixChassisIpList = ['192.168.70.106']
+portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = False
+debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -146,6 +150,22 @@ try:
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
+    ixNetwork.info('Create Traffic Item')
+    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic 2', BiDirectional=False, TrafficType='ipv4')
+
+    ixNetwork.info('Add endpoint flow group')
+    trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
+
+    # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
+    #       Therefore, ConfigElement is a list.
+    ixNetwork.info('Configuring config elements')
+    configElement = trafficItem.ConfigElement.find()[0]
+    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
+    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
+    configElement.FrameSize.FixedSize = 128
+   
+    trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
+    
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.StartStatelessTrafficBlocking()

@@ -38,7 +38,7 @@ class Connect:
 
     def __init__(self, apiServerIp=None, serverIpPort=None, serverOs='windows', linuxChassisIp=None, manageSessionMode=False,
                  webQuickTest=False, username=None, password='admin', licenseServerIp=None, licenseMode=None, licenseTier=None,
-                 deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None, httpsSecured=False,
+                 deleteSessionAfterTest=True, verifySslCert=False, includeDebugTraceback=True, sessionId=None, httpsSecured=None,
                  apiKey=None, generateLogFile=True, robotFrameworkStdout=False, linuxApiServerTimeout=120):
         """
         Description
@@ -155,13 +155,6 @@ class Connect:
 
         self._session = requests.Session()
 
-        self.httpScheme = 'http' ;# This will change to https in createWindowsSession and connectToLinuxApiServer
-        if httpsSecured:
-            # For Windows Connection Mgr only.
-            # When creating a new session, there is no way to know by doing a POST for a new session to
-            # understand if it's for http or https.  You must enter https for the POST to create a new session.
-            self.httpScheme = 'https'
-
         self.serverOs = serverOs ;# windows|windowsConnectionMgr|linux
         self.jsonHeader = {"content-type": "application/json"}
         self.username = username
@@ -177,6 +170,12 @@ class Connect:
         self.linuxChassisIp = linuxChassisIp
         self.linuxApiServerTimeout = linuxApiServerTimeout
 
+        # Make Robot print to stdout
+        if self.robotFrameworkStdout:
+            from robot.libraries.BuiltIn import _Misc
+            self.robotStdout = _Misc()
+            Connect.robotStdout = self.robotStdout
+
         if generateLogFile:
             if generateLogFile == True:
                 # Default the log file name
@@ -191,18 +190,58 @@ class Connect:
             with open(self.restLogFile, 'w') as restLogFile:
                 restLogFile.write('Date: {0}\nTime: {1}\n\n'.format(self.getDate, self.getTime))
 
+        if self.serverOs == 'windowsConnectionMgr':
+            if httpsSecured is False or self.apiServerPort is None:
+                raise IxNetRestApiException('If using windowsConnectionMgr, you must state httpsSecured=True|False and a serverIpPort to use.')
+
+        self.httpScheme = 'http' ;# This will dynamically change to https.
+
+        # Automatic default to https for linux
+        if self.serverOs == 'linux':
+            self.logInfo('Connecting to API server: linux')
+            self.httpScheme = 'https'
+            if self.apiServerPort is not None:
+                self.apiServerPort = serverIpPort
+            else:
+                self.apiServerPort = 443
+
+        # Windows supports only http
+        if self.serverOs == 'windows':
+            self.logInfo('Connecting to API server: windows')
+            self.httpScheme = 'http'
+
+            if self.apiServerPort is None:
+                self.apiServerPort = 11009
+            else:
+                self.apiServerPort = serverIpPort
+
+        # windowsConnectionMgr supports only https and allows users to set the SSL port.
+        # This is the only api server that requires user to state httpsSecured=True|False because 8.40 users could be using http.
+        # While 8.50+ users could be using http or https.
+        if self.serverOs == 'windowsConnectionMgr':
+            self.logInfo('Connecting to API server: windowsConnectionMgr')
+
+            if httpsSecured:
+                # For Windows Connection Mgr only because WCM allows http and https
+                # When creating a new session, there is no way to know by doing a POST for a new session to
+                # understand if it's for http or https.  You must enter https for the POST to create a new session.
+                if httpsSecured == True:
+                    self.httpScheme = 'https'
+                else:
+                    self.httpScheme = 'http'
+
         # Make Robot print to stdout
-        if self.robotFrameworkStdout:
-            from robot.libraries.BuiltIn import _Misc
-            self.robotStdout = _Misc()
-            Connect.robotStdout = self.robotStdout
+        #if self.robotFrameworkStdout:
+        #    from robot.libraries.BuiltIn import _Misc
+        #    self.robotStdout = _Misc()
+        #    Connect.robotStdout = self.robotStdout
 
         if linuxChassisIp:
             self.connectToLinuxIxosChassis(self.linuxChassisIp, self.username, self.password)
             return
 
         if serverOs == 'windows':
-            self.createWindowsSession(apiServerIp, serverIpPort)
+            self.createWindowsSession(apiServerIp, self.apiServerPort)
 
         if serverOs == 'windowsConnectionMgr':
             # User connecting to existing sessionId
@@ -213,13 +252,13 @@ class Connect:
             #     - Although the serverIpPort default is 443 for https, this could change in the future.
             
             if sessionId:
-                url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+                url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, self.apiServerPort, str(sessionId))
                 try:
                     response = self._session.request('GET', url, verify=self.verifySslCert, allow_redirects=False)
                     if '3' in str(response.status_code):
                         self.httpScheme = 'https'
                         # Here, needs to set to use https.
-                        url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, serverIpPort, str(sessionId))
+                        url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, self.apiServerPort, str(sessionId))
 
                 except requests.exceptions.RequestException as errMsg:
                     errMsg = 'Connecting to existing config failed on a GET: {0}'.format(errMsg)
@@ -228,12 +267,12 @@ class Connect:
                 self.logInfo('Connecting to existing session: {}'.format(url))
                 self.sessionUrl = url + '/ixnetwork'
                 self.sessionId = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp,
-                                                                            serverIpPort, str(sessionId))
+                                                                            self.apiServerPort, str(sessionId))
                 self.apiSessionId = '/api/v1/sessions/{0}/ixnetwork'.format(str(sessionId))
                 self.httpHeader = self.sessionUrl.split('/api')[0]
             else:
                 # Create a new session
-                self.createWindowsSession(apiServerIp, serverIpPort)
+                self.createWindowsSession(apiServerIp, self.apiServerPort)
 
         if serverOs == 'linux':
             if self.apiServerPort == None:
@@ -309,7 +348,7 @@ class Connect:
         if includeDebugTraceback == False:
             sys.tracebacklimit = 0
 
-    def get(self, restApi, data={}, stream=False, silentMode=False, ignoreError=False):
+    def get(self, restApi, data={}, stream=False, silentMode=False, ignoreError=False, maxRetries=5):
         """
         Description
             A HTTP GET function to send REST APIs.
@@ -319,44 +358,55 @@ class Connect:
            data: (dict): The data payload for the URL.
            silentMode: (bool):  To display on stdout: URL, data and header info.
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
+           maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failure.
 
         Syntax
             /api/v1/sessions/1/ixnetwork/operations
         """
-        if silentMode is False:
-            #self.logInfo('\n\tGET: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
-            self.logInfo('\n\tGET: {0}'.format(restApi))
-
-        try:
-            # For binary file
-            if stream:
-                response = self._session.request('GET', restApi, stream=True, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
-
-            if stream == False:
-                response = self._session.request('GET', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
-
+        retryInterval = 3
+        restExecutionFailures = 0
+        while True:
             if silentMode is False:
-                for redirectStatus in response.history:
-                    if '307' in str(response.history):
-                        self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
+                self.logInfo('\n\tGET: {0}'.format(restApi))
 
-                self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
+            try:
+                # For binary file
+                if stream:
+                    response = self._session.request('GET', restApi, stream=True, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
-            if not str(response.status_code).startswith('2'):
-                if ignoreError == False:
-                    if 'message' in response.json() and response.json()['messsage'] != None:
-                        self.logWarning('\n%s' % response.json()['message'])
+                if stream == False:
+                    response = self._session.request('GET', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
-                    errMsg = 'GET Exception error: {0}'.format(response.text)
+                if silentMode is False:
+                    for redirectStatus in response.history:
+                        if '307' in str(response.history):
+                            self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
+
+                    self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
+
+                if not str(response.status_code).startswith('2'):
+                    if ignoreError == False:
+                        if 'message' in response.json() and response.json()['messsage'] != None:
+                            self.logWarning('\n%s' % response.json()['message'])
+
+                        errMsg = 'GET Exception error: {0}'.format(response.text)
+                        raise IxNetRestApiException(errMsg)
+
+                return response
+
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'GET Exception error {]/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
+
+                if restExecutionFailures < maxRetries:
+                    self.logError(errMsg)
+                    restExecutionFailures += 1
+                    time.sleep(retryInterval)
+                    continue
+                
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
-            return response
-
-        except requests.exceptions.RequestException as errMsg:
-            errMsg = 'GET Exception error: {0}'.format(errMsg)
-            raise IxNetRestApiException(errMsg)
-
-    def post(self, restApi, data={}, headers=None, silentMode=False, noDataJsonDumps=False, ignoreError=False):
+    def post(self, restApi, data={}, headers=None, silentMode=False, noDataJsonDumps=False, ignoreError=False, maxRetries=5):
         """
         Description
            A HTTP POST function to create and start operations.
@@ -368,6 +418,7 @@ class Connect:
            silentMode: (bool):  To display on stdout: URL, data and header info.
            noDataJsonDumps: (bool): True: Use json dumps. False: Accept the data as-is.
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
+           maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failure.
         """
         if headers != None:
             originalJsonHeader = self.jsonHeader
@@ -378,45 +429,55 @@ class Connect:
         else:
             data = json.dumps(data)
 
-        if silentMode == False:
-            #self.logInfo('\n\tPOST: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
-            self.logInfo('\n\tPOST: {0}\n\tDATA: {1}'.format(restApi, data))
-
-        try:
-            if self.linuxChassisIp and json.loads(data) == {}:
-                # Interacting with LinuxOS chassis doesn't like empty data payload. So excluding it here.
-                response = self._session.request('POST', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
-            else:
-                response = self._session.request('POST', restApi, data=data, headers=self.jsonHeader, allow_redirects=True,
-                                         verify=self.verifySslCert)
-
-            # 200 or 201
+        retryInterval = 3
+        restExecutionFailures = 0
+        while True:
             if silentMode == False:
-                for redirectStatus in response.history:
-                    if '307' in str(response.history):
-                        self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
+                self.logInfo('\n\tPOST: {0}\n\tDATA: {1}'.format(restApi, data))
 
-                self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
+            try:
+                if self.linuxChassisIp and json.loads(data) == {}:
+                    # Interacting with LinuxOS chassis doesn't like empty data payload. So excluding it here.
+                    response = self._session.request('POST', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
+                else:
+                    response = self._session.request('POST', restApi, data=data, headers=self.jsonHeader, allow_redirects=True,
+                                                     verify=self.verifySslCert)
 
-            if str(response.status_code).startswith('2') == False:
-                if ignoreError == False:
-                    if 'errors' in response.json():
-                        errMsg = 'POST Exception error: {0}\n'.format(response.json()['errors'])
-                        raise IxNetRestApiException(errMsg)
+                # 200 or 201
+                if silentMode == False:
+                    for redirectStatus in response.history:
+                        if '307' in str(response.history):
+                            self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
 
-                    raise IxNetRestApiException('POST error: {0}\n'.format(response.text))
+                    self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
 
-            # Change it back to the original json header
-            if headers != None:
-                self.jsonHeader = originalJsonHeader
+                if str(response.status_code).startswith('2') == False:
+                    if ignoreError == False:
+                        if 'errors' in response.json():
+                            errMsg = 'POST Exception error: {0}\n'.format(response.json()['errors'])
+                            raise IxNetRestApiException(errMsg)
 
-            return response
+                        raise IxNetRestApiException('POST error: {0}\n'.format(response.text))
 
-        except requests.exceptions.RequestException as errMsg:
-            errMsg = 'POST Exception error: {0}'.format(errMsg)
-            raise IxNetRestApiException(errMsg)
+                # Change it back to the original json header
+                if headers != None:
+                    self.jsonHeader = originalJsonHeader
 
-    def patch(self, restApi, data={}, silentMode=False, ignoreError=False):
+                return response
+
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'POST Exception error {}/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
+
+                if restExecutionFailures < maxRetries:
+                    self.logError(errMsg)
+                    restExecutionFailures += 1
+                    time.sleep(retryInterval)
+                    continue
+                
+                if restExecutionFailures == maxRetries:
+                    raise IxNetRestApiException(errMsg)
+
+    def patch(self, restApi, data={}, silentMode=False, ignoreError=False, maxRetries=5):
         """
         Description
            A HTTP PATCH function to modify configurations.
@@ -425,35 +486,47 @@ class Connect:
            restApi: (str): The REST API URL.
            data: (dict): The data payload for the URL.
            silentMode: (bool):  To display on stdout: URL, data and header info.
+           ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
+           maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failure.
         """
-        if silentMode == False:
-            #self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
-            self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}'.format(restApi, data))
-
-        try:
-            response = self._session.request('PATCH', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
-                                      verify=self.verifySslCert)
-
+        retryInterval = 3
+        restExecutionFailures = 0
+        while True:
             if silentMode == False:
-                for redirectStatus in response.history:
-                    if '307' in str(response.history):
-                        self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
+                self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}'.format(restApi, data))
 
-                self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
+            try:
+                response = self._session.request('PATCH', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+                                          verify=self.verifySslCert)
 
-                if ignoreError == False:
-                    if not str(response.status_code).startswith('2'):
-                        if response.json() and  'errors' in response.json():
-                            errMsg = 'PATCH Exception error: {0}\n'.format(response.json()['errors'])
-                            raise IxNetRestApiException('PATCH error: {0}\n'.format(errMsg))
+                if silentMode == False:
+                    for redirectStatus in response.history:
+                        if '307' in str(response.history):
+                            self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
 
-            return response
+                    self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
 
-        except requests.exceptions.RequestException as errMsg:
-            errMsg = 'PATCH Exception error: {0}\n'.format(errMsg)
-            raise IxNetRestApiException(errMsg)
+                    if ignoreError == False:
+                        if not str(response.status_code).startswith('2'):
+                            if response.json() and  'errors' in response.json():
+                                errMsg = 'PATCH Exception error: {0}\n'.format(response.json()['errors'])
+                                raise IxNetRestApiException('PATCH error: {0}\n'.format(errMsg))
 
-    def options(self, restApi, data={}, silentMode=False, ignoreError=False):
+                return response
+
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'PATCH Exception error {}/{} retries: {}\n'.format(restExecutionFailures, maxRetries, errMsg)
+
+                if restExecutionFailures < maxRetries:
+                    self.logError(errMsg)
+                    restExecutionFailures += 1
+                    time.sleep(retryInterval)
+                    continue
+                
+                if restExecutionFailures == maxRetries:
+                    raise IxNetRestApiException(errMsg)
+
+    def options(self, restApi, data={}, silentMode=False, ignoreError=False, maxRetries=5):
         """
         Description
             A HTTP OPTIONS function to send REST APIs.
@@ -462,37 +535,47 @@ class Connect:
            restApi: (str): The REST API URL.
            silentMode: (bool):  To display on stdout: URL, data and header info.
            ignoreError: (bool): True: Don't raise an exception.  False: The response will be returned.
-
+           maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failu
         """
-        if silentMode is False:
-            #self.logInfo('\n\tOPTIONS: {0}\n\tHEADERS: {1}'.format(restApi, self.jsonHeader))
-            self.logInfo('\n\tOPTIONS: {0}'.format(restApi))
-
-        try:
-            # For binary file
-            response = self._session.request('OPTIONS', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
-
+        retryInterval = 3
+        restExecutionFailures = 0
+        while True:
             if silentMode is False:
-                for redirectStatus in response.history:
-                    if '307' in str(response.history):
-                        self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
+                self.logInfo('\n\tOPTIONS: {0}'.format(restApi))
 
-                self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
+            try:
+                # For binary file
+                response = self._session.request('OPTIONS', restApi, headers=self.jsonHeader, allow_redirects=True, verify=self.verifySslCert)
 
-            if not str(response.status_code).startswith('2'):
-                if ignoreError == False:
-                    if 'message' in response.json() and response.json()['messsage'] != None:
-                        self.logWarning('\n%s' % response.json()['message'])
+                if silentMode is False:
+                    for redirectStatus in response.history:
+                        if '307' in str(response.history):
+                            self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
 
-                    errMsg = 'OPTIONS Exception error: {0}'.format(response.text)
+                    self.logInfo('\tSTATUS CODE: {0}'.format(response.status_code), timestamp=False)
+
+                if not str(response.status_code).startswith('2'):
+                    if ignoreError == False:
+                        if 'message' in response.json() and response.json()['messsage'] != None:
+                            self.logWarning('\n%s' % response.json()['message'])
+
+                        errMsg = 'OPTIONS Exception error: {0}'.format(response.text)
+                        raise IxNetRestApiException(errMsg)
+                return response
+
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'OPTIONS Exception error {}/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
+
+                if restExecutionFailures < maxRetries:
+                    self.logError(errMsg)
+                    restExecutionFailures += 1
+                    time.sleep(retryInterval)
+                    continue
+                
+                if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
-            return response
 
-        except requests.exceptions.RequestException as errMsg:
-            errMsg = 'OPTIONS Exception error: {0}'.format(errMsg)
-            raise IxNetRestApiException(errMsg)
-
-    def delete(self, restApi, data={}, headers=None):
+    def delete(self, restApi, data={}, headers=None, maxRetries=5):
         """
         Description
            A HTTP DELETE function to delete the session.
@@ -502,33 +585,43 @@ class Connect:
            restApi: (str): The REST API URL.
            data: (dict): The data payload for the URL.
            headers: (str): The headers to use for the URL.
+           maxRetries: <int>: The maximum amount of GET retries before declaring as server connection failure.
         """
         if headers != None:
             self.jsonHeader = headers
+            
+        retryInterval = 3
+        restExecutionFailures = 0
+        while True:
+            self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}'.format(restApi, data))
 
-        #self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}\n\tHEADERS: {2}'.format(restApi, data, self.jsonHeader))
-        self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}'.format(restApi, data))
+            try:
+                response = self._session.request('DELETE', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+                                                 verify=self.verifySslCert)
 
-        try:
-            response = self._session.request('DELETE', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
-                                       verify=self.verifySslCert)
+                for redirectStatus in response.history:
+                    if '307' in str(response.history):
+                        self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
 
-            for redirectStatus in response.history:
-                if '307' in str(response.history):
-                    self.logInfo('\t{0}: {1}'.format(redirectStatus, response.url), timestamp=False)
+                self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
+                if not str(response.status_code).startswith('2'):
+                    self.showErrorMessage()
+                    errMsg = 'DELETE Exception error: {0}\n'.format(response.text)
+                    self.logError(errMsg)
+                    raise IxNetRestApiException(errMsg)
+                return response
 
-            self.logInfo('\tSTATUS CODE: %s' % response.status_code, timestamp=False)
-            if not str(response.status_code).startswith('2'):
-                self.showErrorMessage()
-                errMsg = 'DELETE Exception error: {0}\n'.format(response.text)
-                self.logError(errMsg)
-                raise IxNetRestApiException(errMsg)
-            return response
+            except (requests.exceptions.RequestException, Exception) as errMsg:
+                errMsg = 'DELETE Exception error {}/{} retries: {}\n'.format(restExecutionFailures, maxRetries, errMsg)
 
-        except requests.exceptions.RequestException as errMsg:
-            errMsg = 'DELETE Exception error: {0}\n'.format(errMsg)
-            self.logError(errMsg)
-            raise IxNetRestApiException(errMsg)
+                if restExecutionFailures < maxRetries:
+                    self.logError(errMsg)
+                    restExecutionFailures += 1
+                    time.sleep(retryInterval)
+                    continue
+                
+                if restExecutionFailures == maxRetries:
+                    raise IxNetRestApiException(errMsg)
 
     def getDate(self):
         dateAndTime = str(datetime.datetime.now()).split(' ')
@@ -1019,9 +1112,7 @@ class Connect:
         """
         response = self.get(self.sessionUrl)
         sessionIdDict = {}
-        from pprint import pprint
-        pprint(response.json())
-        return
+
         for session in response.json():
             href = session['links'][0]['href']
             id = session['id']

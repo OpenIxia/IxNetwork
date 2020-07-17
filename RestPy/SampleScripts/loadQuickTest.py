@@ -3,7 +3,8 @@ loadQuickTest.py:
 
    Tested with two back-2-back Ixia ports
 
-   RestPy has a limitation on running Quick Test.  It could not modify Quick Test parameters.
+   RestPy has a limitation on running Quick Test.  It could not modify Quick Test parameters on a 
+   Windows API server.
    If you want to be able to modify the traffic configuration, create your Quick Test using
    NGPF and create a traffic item.  So instead of modifying Quick Test parameters, you modify
    the traffic items.
@@ -27,11 +28,13 @@ loadQuickTest.py:
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 
+Supports Web Quick Test also. Set applicationType = 'quicktest'
+
 Requirements
    - IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy (Minimum version 1.0.29)
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.com/userGuides/restPyDoc
@@ -39,67 +42,55 @@ RestPy Doc:
 Usage:
    # Defaults to Windows
    - Enter: python <script>
-
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
-
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import json, sys, os, re, time, datetime, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
-from ixnetwork_restpy.files import Files
+from ixnetwork_restpy import SessionAssistant, Files
 
-# Set defaults
-# Options: windows|connection_manager|linux
-osPlatform = 'windows' 
+# IxNetwork API server platform options: windows|linux
+osPlatform = 'windows'
 
 apiServerIp = '192.168.70.3'
 
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
+# A list of chassis to use
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]
-
 # The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
+licenseServerIp = ['192.168.70.6']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
+
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
-# For linux and connection_manager only. Set to True to leave the session alive for debugging.
+# Defaults to ixnrest for windows and linux api server.  
+# Web Quick Test is a new web edition in the Linux API server.
+# The type for the web QT is 'quicktest'.  
+applicationType = 'ixnrest'
+
+# Set to True to leave the session opened for debugging. For linux and connection_manager only. 
 debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
+# The full path to the Quick Test config file
 configFile = 'ngpfQuickTest2ports_8.50.ixncfg'
 
-# Where to copy the csv and pdf result files.
+# Where to copy the csv and pdf result files in Windows.
 # If using Windows API server and if you want to copy result files into same windows filesystem
 windowsDestinationFolder = 'c:\\Results' 
 
-# For running this script on a Linux and copying the result files to the local Linux.
-linuxDestinationFolder = './' 
-
-# A list of chassis to use
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
+# If running this script on a Linux, where do you want to put the csv and pdf result files
+linuxDestinationFolder = os.getcwd()
 
 # For novusTenGigLan card type only. Options: copper|fiber
 portMedia = 'copper'
@@ -116,9 +107,10 @@ class Timestamp:
         return self._get
 
 
-def addTimestampToFile(filename):
+def addTimestampToFile(rfcTest, filename):
     """
     Add a timestamp to a file to avoid overwriting existing files.
+    Replace default PDF file name Test_Report to the Quick Test RFC test name.
 
     If a path is included, it will yank out the file from the path.
     """
@@ -131,9 +123,38 @@ def addTimestampToFile(filename):
 
     newFilename = filename.split('.')[0]
     newFileExtension = filename.split('.')[1]
-    newFileWithTimestamp = '{}_{}.{}'.format(newFilename, currentTimestamp,  newFileExtension)
+    newFileWithTimestamp = '{}_{}.{}'.format(rfcTest, currentTimestamp,  newFileExtension)
     return newFileWithTimestamp
 
+    ixNetworkVersion = ixNetwork.Globals.BuildNumber
+    match = re.match('([0-9]+)\.[^ ]+ *', ixNetworkVersion)
+    ixNetworkVersion = int(match.group(1))
+
+    if ixNetworkVersion >= 8:
+        timer = 10
+        for counter in range(1,timer+1):
+            currentActions = quickTestHandle.Results.CurrentActions
+
+            ixNetwork.info('\n\ngetQuickTestCurrentAction:\n')
+            for eachCurrentAction in quickTestHandle.Results.CurrentActions:
+                ixNetwork.info('\t{}'.format(eachCurrentAction['arg2']))
+
+            ixNetwork.info('\n')
+
+            if counter < timer and currentActions == []:
+                ixNetwork.info('\n\ngetQuickTestCurrentAction is empty. Waiting %s/%s\n\n' % (counter, timer))
+                time.sleep(1)
+                continue
+
+            if counter < timer and currentActions != []:
+                break
+
+            if counter == timer and currentActions == []:
+                raise Exception('\n\ngetQuickTestCurrentActions: Has no action')
+
+        return currentActions[-1]['arg2']
+    else:
+        return quickTestHandle.Results.Progress
 
 def getQuickTestCurrentAction(quickTestHandle):
     """
@@ -306,7 +327,7 @@ def monitorQuickTestRunningProgress(quickTestHandle, getProgressInterval=10):
                 raise Exception('\n\nmonitorQuickTestRunningProgress: Quick Test failed to start:: {}'.format(quickTestHandle.Results.Status))
 
 
-def copyFileWindowsToLocalWindows(windowsPathAndFileName, localPath, includeTimestamp=False):
+def copyFileWindowsToLocalWindows(windowsPathAndFileName, localPath, prependFilename=None, includeTimestamp=False):
     """
     Description
         Copy files from the Windows IxNetwork API Server to a local c: drive destination.
@@ -315,6 +336,7 @@ def copyFileWindowsToLocalWindows(windowsPathAndFileName, localPath, includeTime
     Parameters
         windowsPathAndFileName: (str): The full path and filename to retrieve from Windows client.
         localPath: (str): The Windows local path without the filename. Ex: C:\\Results.
+        prependFilename: (str): The rfc test name.  Ex: rfc2544throughput
         includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
 
     Example:
@@ -325,14 +347,14 @@ def copyFileWindowsToLocalWindows(windowsPathAndFileName, localPath, includeTime
     fileName = windowsPathAndFileName.split('\\')[-1]
     fileName = fileName.replace(' ', '_')
     if includeTimestamp:
-        fileName = addTimestampToFile(fileName)
+        fileName = addTimestampToFile(prependFilename, fileName)
 
-    destinationPath = localPath+'\\'+fileName
+    destinationPath = '{}\\{}'.format(localPath, fileName)
     ixNetwork.info('\nCopying from {} -> {}'.format(windowsPathAndFileName, destinationPath))
     ixNetwork.CopyFile(windowsPathAndFileName, destinationPath)
 
 
-def copyApiServerFileToLocalLinux(apiServerPathAndFileName, localPath, localPathOs='linux', includeTimestamp=False):
+def copyApiServerFileToLocalLinux(apiServerPathAndFileName, localPath, prependFilename=None, localPathOs='linux', includeTimestamp=False):
     """
     Description
         Copy files from either a Windows or Linux API Server to a local Linux filesystem.
@@ -343,6 +365,7 @@ def copyApiServerFileToLocalLinux(apiServerPathAndFileName, localPath, localPath
     Parameters
         apiServerPathAndFileName: (str): The full path and filename to retrieve from either a Windows API server or a Linux API server.
         localPath: (str): The Linux local filesystem path without the filename. Ex: /home/hgee/Results.
+        prependFilename: (str): The rfc test name.  Ex: rfc2544throughput
         localPathOs: (str): The destination's OS.  linux or windows.
         includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
 
@@ -359,19 +382,19 @@ def copyApiServerFileToLocalLinux(apiServerPathAndFileName, localPath, localPath
     fileName = fileName.replace(' ', '_')
 
     if includeTimestamp:
-        fileName = addTimestampToFile(fileName)
+        fileName = addTimestampToFile(prependFilename, fileName)
 
     if localPathOs == 'linux':
-        destinationPath = localPath+'/'+fileName
+        destinationPath = '{}/{}'.format(localPath, fileName)
 
     if localPathOs == 'windows':
-        destinationPath = localPath+'\\'+fileName
+        destinationPath = '{}\\{}'.format(localPath, fileName)
 
     ixNetwork.info('\nCopying file from API server:{} -> {}'.format(apiServerPathAndFileName, destinationPath))
-    session.DownloadFile(apiServerPathAndFileName, destinationPath)
+    session.Session.DownloadFile(apiServerPathAndFileName, destinationPath)
 
 
-def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', includeTimestamp=False):
+def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', rfcTest=None, includeTimestamp=False):
     """
     Description
         Copy Quick Test CSV result files to a specified path on either Windows or Linux.
@@ -385,10 +408,11 @@ def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', includeTime
 
     csvFile: A list of CSV files to get: 'all', one or more CSV files to get:
              AggregateResults.csv, iteration.csv, results.csv, logFile.txt, portMap.csv
+    rfcTest: Ex: rfc2544throughput
     includeTimestamp: To append a timestamp on the result file.
     """
     resultsPath = quickTestHandle.Results.ResultPath
-    ixNetwork.info('\ngetQuickTestCsvFiles: %s' % resultsPath)
+    ixNetwork.info('\n\ngetQuickTestCsvFiles: %s\n' % resultsPath)
 
     if csvFile == 'all':
         getCsvFiles = ['AggregateResults.csv', 'iteration.csv', 'results.csv', 'logFile.txt', 'portMap.csv']
@@ -404,21 +428,20 @@ def getQuickTestCsvFiles(quickTestHandle, copyToPath, csvFile='all', includeTime
             windowsSource = resultsPath+'\\{0}'.format(eachCsvFile)
 
             if bool(re.match('[a-z]:.*', copyToPath, re.I)):
-                copyFileWindowsToLocalWindows(windowsSource, copyToPath, includeTimestamp=includeTimestamp)
+                copyFileWindowsToLocalWindows(windowsSource, copyToPath, prependFilename=rfcTest, includeTimestamp=includeTimestamp)
             else:
                 # Copy From Windows API server to local Linux client filesystem
-                copyApiServerFileToLocalLinux(windowsSource, copyToPath, localPathOs='linux', includeTimestamp=includeTimestamp)
+                copyApiServerFileToLocalLinux(windowsSource, copyToPath, prependFilename=rfcTest, localPathOs='linux', includeTimestamp=includeTimestamp)
 
         else:
             linuxSource = resultsPath+'/{0}'.format(eachCsvFile)
 
             # Copy from Linux api server to Local Linux client filesystem.
             try:
-                ixNetwork.info('\nCopying file from Linux API server:{} to local Linux:{}'.format(linuxSource, eachCsvFile))
-                copyApiServerFileToLocalLinux(linuxSource, copyToPath, localPathOs='linux', includeTimestamp=includeTimestamp)
-
+                ixNetwork.info('\n\nCopying file from Linux API server:{} to local Linux: {}\n'.format(linuxSource, eachCsvFile))
+                copyApiServerFileToLocalLinux(linuxSource, copyToPath, prependFilename=rfcTest, localPathOs='linux', includeTimestamp=includeTimestamp)
             except Exception as errMsg:
-                print('copyApiServerFileToLocalLinux ERROR:', errMsg)
+                ixNetwork.warn('\n\ncopyApiServerFileToLocalLinux ERROR: {}\n'.format(errMsg))
 
 def verifyNgpfIsLayer3(topologyName):
     """
@@ -442,30 +465,24 @@ def verifyNgpfIsLayer3(topologyName):
 
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=osPlatform, log_file_name='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None, ApplicationType=applicationType,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
-    # Console output verbosity: None|request|'request response'
-    testPlatform.Trace = 'request_response'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-
-    ixNetwork.NewConfig()
-
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
 
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
 
     # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
-
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap = session.PortMapAssistant()
+    vport = dict()
+    for index,port in enumerate(portList):
+        # For the port name, get the loaded configuration's port name
+        portName = ixNetwork.Vport.find()[index].Name
+        portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
+        
+    portMap.Connect(forceTakePortOwnership)
 
     for vport in ixNetwork.Vport.find():
         if vport.Type == 'novusTenGigLan':
@@ -475,10 +492,10 @@ try:
         ixNetwork.StartAllProtocols(Arg1='sync')
 
         ixNetwork.info('Verify protocol sessions\n')
-        protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-        protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-        protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-        ixNetwork.info(protocolsSummary)
+        protocolSummary = session.StatViewAssistant('Protocols Summary')
+        protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+        protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+        ixNetwork.info(protocolSummary)
 
     # Create a timestamp for test result files.
     # To append a timestamp in the CSV result files so existing result files won't get overwritten.
@@ -505,7 +522,11 @@ try:
        
         for quickTestHandle in rfcTest:
             quickTestName = quickTestHandle.Name
-            ixNetwork.info('\n\nExecuting Quick Test: {}'.format(quickTestName))
+            ixNetwork.info('\n\nQuickTestHandle: {}\n'.format(quickTestHandle))
+            match = re.search('/api/.*/quickTest/(.*)/[0-9]+', quickTestHandle.href)
+            rfc = match.group(1)
+            rfcTest = '{}_{}'.format(rfc, quickTestName)
+            ixNetwork.info('\n\nExecuting Quick Test: {}\n'.format(rfcTest))
 
             quickTestHandle.Apply()
             quickTestHandle.Start()
@@ -514,22 +535,33 @@ try:
 
             timestamp.now()
 
-            # Copy CSV files from Windows to same windows drive
-            getQuickTestCsvFiles(quickTestHandle, copyToPath=windowsDestinationFolder, includeTimestamp=True)
+            if osPlatform == 'linux':
+                # Copy CSV from either a Windows or Linux API server to local linux filesystem
+                getQuickTestCsvFiles(quickTestHandle, copyToPath=linuxDestinationFolder, rfcTest=rfcTest, includeTimestamp=True)
 
-            # Copy CSV from either a Windows or Linux API server to local linux filesystem
-            getQuickTestCsvFiles(quickTestHandle, copyToPath=linuxDestinationFolder, includeTimestamp=True)
+                try:
+                    pdfFile = quickTestHandle.GenerateReport()
+                    destPdfTestResult = addTimestampToFile(rfcTest=rfcTest, filename=pdfFile)
+                    ixNetwork.info('Copying PDF results to: {}'.format(linuxDestinationFolder+destPdfTestResult))
+                    session.Session.DownloadFile(pdfFile, linuxDestinationFolder+'/'+destPdfTestResult)
+                except:
+                    # If using Linux API server, a PDF result file is not supported for all rfc tests.
+                    ixNetwork.warn('\n\nPDF for {} is not supported\n'.format(rfc))
 
-            if osPlatform != 'linux':
+            if osPlatform == 'windows':
+                # Uncomment to copy CSV files from Windows to local windows filesystem
+                #getQuickTestCsvFiles(quickTestHandle, copyToPath=windowsDestinationFolder, rfcTest=quickTestName, includeTimestamp=True)
+
+                # Uncomment to copy the PDF from Windows to local Windows.
+                #copyFileWindowsToLocalWindows(pdfFile, windowsDestinationFolder+'\\'+destPdfTestResult)
+
+                # Copy CSV results from either a Windows or Linux API server to local linux filesystem
+                getQuickTestCsvFiles(quickTestHandle, copyToPath=linuxDestinationFolder, rfcTest=rfcTest, includeTimestamp=True)
+
                 pdfFile = quickTestHandle.GenerateReport()
-                destPdfTestResult = addTimestampToFile(pdfFile)
-
-                # Copying the PDF from Windows to local Windows.
-                copyFileWindowsToLocalWindows(pdfFile, windowsDestinationFolder+'\\'+destPdfTestResult)
-
-                # Copying PDF from either a Windows API server or from a Linux API server to local Linux filesystem.
-                ixNetwork.info('Copying test result PDF to: {}'.format(linuxDestinationFolder+destPdfTestResult))
-                session.DownloadFile(pdfFile, linuxDestinationFolder+destPdfTestResult)
+                destPdfTestResult = addTimestampToFile(rfcTest=rfcTest, filename=pdfFile)
+                ixNetwork.info('Copying PDF results to: {}'.format(linuxDestinationFolder+destPdfTestResult))
+                session.Session.DownloadFile(pdfFile, linuxDestinationFolder+'/'+destPdfTestResult)
 
             # Examples to show how to stop and remove a quick test.
             # Uncomment one or both if you want to use them.
@@ -538,12 +570,12 @@ try:
 
     if debugMode == False:
         # For Linux and Windows Connection Manager only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

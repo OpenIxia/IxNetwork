@@ -23,7 +23,7 @@ Requirements
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.com/userGuides/restPyDoc
@@ -37,26 +37,17 @@ Usage:
 import sys, os, time, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant
 
 apiServerIp = '192.168.70.3'
 
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
+# A list of chassis to use
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only.
 # Set to True to leave the session alive for debugging.
@@ -65,39 +56,26 @@ debugMode = False
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-# A list of chassis to use
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, log_file_name='restpy.log')
-
-    # Console output verbosity: None|request|'request response'
-    testPlatform.Trace = 'request_response'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-    ixNetwork.NewConfig()
 
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
+    ixNetwork.info('Assign ports')
+    portMap = session.PortMapAssistant()
+    vport = dict()
+    for index,port in enumerate(portList):
+        portName = 'Port_{}'.format(index+1)
+        vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
-    # Create vports and name them so you could use .find() to filter vports by the name.
-    vport1 = ixNetwork.Vport.add(Name='Port1')
-    vport2 = ixNetwork.Vport.add(Name='Port2')
-
-    # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
-
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.info('Creating Topology Group 1')
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)
+    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport['Port_1'])
     deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
 
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
@@ -137,7 +115,7 @@ try:
 
     ixNetwork.info('Creating Topology Group 2')
     # assignPorts() has created a list of vports based on the amount of your portList.
-    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport2)
+    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport['Port_2'])
     deviceGroup2 = topology2.DeviceGroup.add(Name='MyDG2', Multiplier='1')
 
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
@@ -178,10 +156,10 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+    ixNetwork.info(protocolSummary)
 
     ixNetwork.info('Create Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='VxLAN traffic', BiDirectional=False, TrafficType='ipv4')
@@ -203,12 +181,13 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
+    flowStatistics = session.StatViewAssistant('Flow Statistics')
+
     # StatViewAssistant could also filter by regex, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.LESS_THAN, "50000")
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
     ixNetwork.info('{}\n'.format(flowStatistics))
 
     for rowNumber,flowStat in enumerate(flowStatistics.Rows):
@@ -219,12 +198,12 @@ try:
 
     if debugMode == False:
         # For Linux and WindowsConnectionMgr only
-        session.remove()
+        session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

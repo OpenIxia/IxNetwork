@@ -46,7 +46,7 @@ ${forceTakePortOwnership} =  True
 ${licenseMode} =  subscription
 ${licenseTier} =  tier3  
 
-${configFile} =  bgp_ngpf_8.30.ixncfg
+${configFile} =  bgp_ngpf_9.00.ixncfg
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 ${debugMode} =  False

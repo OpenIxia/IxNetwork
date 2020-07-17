@@ -25,8 +25,8 @@ Documentation  sample demonstrating traffic creation using ixnetwork_restpy and 
 ...   - pip install requests
  ...  - pip install -U --no-cache-dir ixnetwork_restpy
 
-...  RestPy Doc:
-...    https://www.openixia.com/userGuides/restPyDoc
+...  RestPy User Guide:
+...    https://openixia.com/github.io/ixnetwork_restpy/#/samples
 
 
 Library  BuiltIn

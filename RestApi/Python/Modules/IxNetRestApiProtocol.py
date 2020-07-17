@@ -2253,7 +2253,7 @@ class Protocol(object):
                     deviceGroupObjList.append(dgHref['href'])
 
         url = self.ixnObj.sessionUrl+'/topology/deviceGroup/operations/%s' % action
-        response = oself.ixnObj.post(url, data={'arg1': deviceGroupObjList})
+        response = self.ixnObj.post(url, data={'arg1': deviceGroupObjList})
         self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'])
         time.sleep(3)
 
@@ -5561,7 +5561,7 @@ class Protocol(object):
 
         Return
             - deviceGroup object handle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1
-            - Exception error if routerId is not found in any Device Group
+            - None if routerid is not found
         """
         if runQuery:
             queryData = {'from': '/',
@@ -5579,6 +5579,7 @@ class Protocol(object):
             if type(value) is list:
                 for keyValue in value:
                     print()
+
                     for deepKey,deepValue in keyValue.items():
                         if deepKey == 'routerId':
                             # deepValue = /api/v1/sessions/1/ixnetwork/multivalue/1054
@@ -5593,10 +5594,8 @@ class Protocol(object):
                                 return deviceGroupObj
 
                     object = self.getDeviceGroupByRouterId(queryDict=keyValue, routerId=routerId, runQuery=False)
-                    if object != None:
+                    if object is not None:
                         return object
-
-        raise IxNetRestApiException('\nError: No routerId found in any Device Group: {0}'.format(routerId))
 
     def getEthernetPropertyValue(self, routerId=None, ngpfEndpointName=None, property=None):
         """

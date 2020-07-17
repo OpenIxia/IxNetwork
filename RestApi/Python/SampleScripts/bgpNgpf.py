@@ -65,7 +65,6 @@ try:
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.12',
-                          serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
@@ -74,19 +73,19 @@ try:
                           generateLogFile='ixiaDebug.log'
                           )
 
-    # For windows: httpsSecured=False.  serverIpPort=11009
-    # For windowsConnectionMgr: httpsSecured=True. serverIpPort=443
+    # For windows: serverIpPort=11009
+    # For windowsConnectionMgr, must state the following params: httpsSecured=<bool>. serverIpPort=443
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
-                          serverIpPort='11009',
                           serverOs=osPlatform,
+                          serverIpPort=11009,
+                          httpsSecured=True,
                           deleteSessionAfterTest=True,
-                          httpsSecured=False,
                           generateLogFile='ixiaDebug.log'
                           )
 
     #---------- Preference Settings End --------------
-
+    
     # Only need to blank the config for Windows because osPlatforms such as Linux and
     # Windows Connection Mgr supports multiple sessions and a new session always come up as a blank config.
     if osPlatform == 'windows':

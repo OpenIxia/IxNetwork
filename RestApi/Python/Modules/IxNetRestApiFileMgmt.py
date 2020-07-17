@@ -36,20 +36,13 @@ class FileMgmt(object):
             localFile: (bool): For Windows API server and Connection Mgr running on a Windows server only.
                                Set to False if the config file is in the Windows API server filesystem.
         """
-        # Verify if the config file is a letter drive: c:\\path\\
-        # If it is, get the config file from Windows path to the IxNetwork API server common path.
-        #if bool(re.match('^[a-zA-Z]+:', configFile)):
-        #    localFile = True
-        #else:
-        #    localFile = False
-
         if localFile == False:
             # The config file is located in Windows
             fileName = configFile.split('\\')[-1]
             copyFileUrl = self.ixnObj.sessionUrl+'/operations/copyfile'            
             destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
             response = self.ixnObj.post(copyFileUrl,data={"arg1": configFile, "arg2": destinationPath})
-            self.ixnObj.waitForComplete(response, copyFileUrl+'/'+response.json()['id'], silentMode=False, timeout=30)
+            self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+'/'+response.json()['url'], silentMode=False, timeout=30)
 
         if localFile == True:
             if os.path.exists(configFile) is False:
@@ -64,14 +57,19 @@ class FileMgmt(object):
 
             # Read the config file
             self.ixnObj.logInfo('\nReading saved config file')
-            with open(configFile, mode='rb') as file:
-                configContents = file.read()
+            with open(configFile, mode='rb') as byteFile:
+                configContents = byteFile.read()
                 configContents = io.BytesIO(configContents)
 
-                # Upload it to the server and give it any name you want for the filename
-                uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
-                self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
-                response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
+            # Upload it to the server and give it any name you want for the filename
+            uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
+            self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
+
+            # Note: 
+            #    There is no status checking for this POST. This command is synchronous. The server won't return until it's done.
+            #    The response payload: {'absolute': None, 'files': [{'name': 'bgp_ngpf_8.30.ixncfg', 'length': 177791, 'modifiedUnixTime': 1572009307,
+            #                                                        'createdUnixTime': 1568302806}], 'directories': []}
+            response = self.ixnObj.post(uploadFile, data=configContents, noDataJsonDumps=True, headers=octetStreamHeader, silentMode=False)
 
         loadConfigUrl = self.ixnObj.sessionUrl+'/operations/loadconfig'
 
@@ -85,7 +83,7 @@ class FileMgmt(object):
         if localFile == False:
             response = self.ixnObj.post(loadConfigUrl, data=payload)
 
-        self.ixnObj.waitForComplete(response, loadConfigUrl+'/'+response.json()['id'], silentMode=False, timeout=140)
+        self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+response.json()['url'], silentMode=False, timeout=140)
 
     def copyFileWindowsToRemoteWindows(self, windowsPathAndFileName, localPath, renameDestinationFile=None, includeTimestamp=False):
         """

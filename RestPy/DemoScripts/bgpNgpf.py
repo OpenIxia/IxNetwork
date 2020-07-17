@@ -4,6 +4,7 @@ bgpNgpf.py:
    Tested with two back-2-back Ixia ports...
 
    - Connect to the API server
+   - Configure license server IP
    - Assign ports:
         - If variable forceTakePortOwnership is True, take over the ports if they're owned by another user.
         - If variable forceTakePortOwnership if False, abort test.
@@ -34,49 +35,38 @@ Usage:
 
 import sys, os, time, traceback
 
+# Import the RestPy module
 from ixnetwork_restpy import SessionAssistant
 
-apiServerIp = '192.168.70.107'
-#apiServerIp = '192.168.70.3'
-
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
-
-ixChassisIpList = ['192.168.70.106']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
-
-# For Linux API server only
-username = 'admin'
-password = 'admin'
-
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = True
-
-# Forcefully take port ownership if the portList are owned by other users.
-forceTakePortOwnership = True
+debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress='192.168.70.12', RestPort=None, UserName='admin', Password='admin', 
                                SessionName=None, SessionId=None, ApiKey=None,
-                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
+                               ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
 
     ixNetwork.info('Assign ports')
     portMap = session.PortMapAssistant()
-    vport = dict()
-    for index,port in enumerate(portList):
-        portName = 'Port_{}'.format(index+1)
-        vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
+    vport1 = portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name='Port_1')
+    vport2 = portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name='Port_2')
 
-    portMap.Connect(forceTakePortOwnership)
+    portMap.Connect(ForceOwnership=True)
 
     ixNetwork.info('Creating Topology Group 1')
-    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport['Port_1'])
+    topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)
+
+    ixNetwork.info('Creating Device Group 1')
     deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
+
+    ixNetwork.info('Creating Ethernet stack 1')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
     ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
+
+    ixNetwork.info('Enabling Vlan on Topology 1')
     ethernet1.EnableVlans.Single(True)
 
     ixNetwork.info('Configuring vlanID')
@@ -100,11 +90,16 @@ try:
     ipv4PrefixPool.PrefixLength.Single(32)
 
     ixNetwork.info('Creating Topology Group 2')
-    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport['Port_2'])
+    topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport2)
+
+    ixNetwork.info('Creating Device Group 2')
     deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
 
+    ixNetwork.info('Creating Ethernet 2')
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
     ethernet2.Mac.Increment(start_value='00:01:01:02:00:01', step_value='00:00:00:00:00:01')
+
+    ixNetwork.info('Enabling Vlan on Topology 2')
     ethernet2.EnableVlans.Single(True)
 
     ixNetwork.info('Configuring vlanID')
@@ -127,18 +122,18 @@ try:
     ipv4PrefixPool.NetworkAddress.Increment(start_value='20.20.0.1', step_value='0.0.0.1')
     ipv4PrefixPool.PrefixLength.Single(32)
 
+    ixNetwork.info('Starting NGPF protocols')
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
     protocolSummary = session.StatViewAssistant('Protocols Summary')
     protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
     protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
-    ixNetwork.info(protocolSummary)
 
     ixNetwork.info('Create Traffic Item')
     trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=False, TrafficType='ipv4')
 
-    ixNetwork.info('Add endpoint flow group')
+    ixNetwork.info('Add source/dest endpoints')
     trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
@@ -146,36 +141,20 @@ try:
     ixNetwork.info('Configuring config elements')
     configElement = trafficItem.ConfigElement.find()[0]
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
+    configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
 
-    ixNetwork.info('Create Traffic Item')
-    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic 2', BiDirectional=False, TrafficType='ipv4')
-
-    ixNetwork.info('Add endpoint flow group')
-    trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
-
-    # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
-    #       Therefore, ConfigElement is a list.
-    ixNetwork.info('Configuring config elements')
-    configElement = trafficItem.ConfigElement.find()[0]
-    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
-    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
-    configElement.FrameSize.FixedSize = 128
-   
-    trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
-    
     trafficItem.Generate()
+
+    ixNetwork.info('Apply config')
     ixNetwork.Traffic.Apply()
+
+    ixNetwork.info('Starting traffic')
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
     flowStatistics = session.StatViewAssistant('Flow Statistics')
-
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
-    # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.GREATER_THAN, "5000")
 
     ixNetwork.info('{}\n'.format(flowStatistics))
 
@@ -193,6 +172,7 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
         session.Session.remove()
+
 
 
 

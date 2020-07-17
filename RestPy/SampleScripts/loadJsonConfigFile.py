@@ -20,44 +20,30 @@ Supports IxNetwork API servers:
 
 Requirements
    - IxNetwork 8.50
-   - RestPy version 1.0.33
    - Python 2.7 and 3+
    - pip install requests
-   - pip install -U --no-cache-dir ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
 
 Usage:
    - Enter: python <script>
-
-   # Connect to a different api server.
-   - Enter: python <script>   <api server ip>
 """
 
 import json, sys, os, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.files import Files
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant, Files
 
 apiServerIp = '192.168.70.3'
+
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
-
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    apiServerPort = sys.argv[1]
-
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
 
 # For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
 debugMode = False
@@ -65,41 +51,30 @@ debugMode = False
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-# A list of chassis to use
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
-
 jsonConfigFile = 'bgp_ngpf_8.50.json'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
-    # Console output verbosity: 'none'request|'request response'
-    testPlatform.Trace = 'request_response'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-
-    ixNetwork.NewConfig()
-
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
 
     ixNetwork.info('\nLoading JSON config file: {0}'.format(jsonConfigFile))
     ixNetwork.ResourceManager.ImportConfigFile(Files(jsonConfigFile, local_file=True), Arg3=True)
 
-    # Assign ports
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
+    # Assign ports.
+    portMap = session.PortMapAssistant()
+    vport = dict()
+    for index,port in enumerate(portList):
+        portName = ixNetwork.Vport.find()[index].Name
+        portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
-    for vport in ixNetwork.Vport.find():
-        vport.L1Config.PortMedia = 'copper'
+    # Example on how to change the media port type: copper|fiber
+    # for vport in ixNetwork.Vport.find():
+    #     vport.L1Config.PortMedia = 'copper'
 
     # Example: How to modify a loaded json config using XPATH
     # Arg3:  True=To create a new config. False=To modify an existing config.
@@ -109,24 +84,25 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+    ixNetwork.info(protocolSummary)
 
     # Get the Traffic Item name for getting Traffic Item statistics.
     trafficItem = ixNetwork.Traffic.TrafficItem.find()[0]
 
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
-    ixNetwork.Traffic.Start()
+    ixNetwork.Traffic.StartStatelessTrafficBlocking()
+
+    flowStatistics = session.StatViewAssistant('Flow Statistics')
 
     # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
     # Examples:
-    #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
-    #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
+    #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
+    #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.LESS_THAN, 50000)
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
     ixNetwork.info('{}\n'.format(flowStatistics))
 
     for rowNumber,flowStat in enumerate(flowStatistics.Rows):
@@ -135,14 +111,16 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
+    ixNetwork.Traffic.StopStatelessTrafficBlocking()
+
     if debugMode == False:
         # For Linux and connection_manager only
-            session.remove()
+            session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.remove()
+        session.Session.remove()
 
 
 

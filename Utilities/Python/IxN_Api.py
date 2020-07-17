@@ -1206,10 +1206,19 @@ def DisableSupressArpAllPortsPy(action='', ipType='ipv4'):
                 ixNet.commit()
     return 0
 
-def TakeSnapshotPy(copyToLocalPath='', view='Flow Statistics', osPlatform='windows'):
-    # copyToLocalPath = The local Linux path
-
+def TakeSnapshotPy(copyToLocalPath=None, view='Flow Statistics', osPlatform='windows'):
+    """
+    Take a snapshot of the selected stat view and transfer the file to 
+    the local file system where the script was executed.
+        
+    Parameters
+       copyToLocalPath: The local path to save the CSV stat file.
+       view: The stat view to take snapshot of.
+       osPlatform: The IxNetwork API server OS: windows|linux
+    """
     if osPlatform == 'windows':
+        # This directory will hold the snapshot on the Windows filesystem.
+        # If the folder does not exists, it will be created.
         path = 'C:\\Results'
 
     if osPlatform == 'linux':
@@ -1222,6 +1231,8 @@ def TakeSnapshotPy(copyToLocalPath='', view='Flow Statistics', osPlatform='windo
     opts = ixNet.execute('GetDefaultSnapshotSettings')
 
     filePathToChange = 'Snapshot.View.Csv.Location: '+ path
+    print '\ntakeSnapshot src file path:%s' % (filePathToChange)
+    
     opts[1] = filePathToChange
     generatingModeToChange= 'Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"'
     opts[2] = generatingModeToChange
@@ -1230,17 +1241,18 @@ def TakeSnapshotPy(copyToLocalPath='', view='Flow Statistics', osPlatform='windo
 
     ixNet.execute('TakeViewCSVSnapshot', listOfTrafficStats, opts)
 
-    if copyToLocalPathAndFileName[-1] != '/':
-        copyToLocalPath = copyToLocalPath + '/'
+    if copyToLocalPath is None:
+        copyToLocalPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     if osPlatform == 'windows':
         readPath = path + '\\' + csvFileName + '.csv'
-        writePath = copyToLocalPath + csvFileName + '.csv'
+        writePath = '%s/%s_%s.csv' % (copyToLocalPath, csvFileName, timestamp)
         
     if osPlatform == 'linux':
-        readPath = '/home/ixia_logs/{}.csv'.format(csvFileName)
-        writePath = '{}{}.csv'.format(copyToLocalPath, csvFileName)
+        readPath = '%s/%s.csv' %s (path, csvFileName)
+        writePath = '%s/%s_%s.csv' % (copyToLocalPath, csvFileName, timestamp)
 
+     print '\ntakeSnapshot: Saving file to: %s' % (writePath)
     ixNet.execute('copyFile', ixNet.readFrom(readPath, '-ixNetRelative'), ixNet.writeTo(writePath, '-overwrite'))
 
 

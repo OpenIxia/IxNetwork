@@ -25,7 +25,7 @@ Requirements:
    - IxNetwork 9.00
    - Python 2.7 and 3+
    - pip install requests
-   - pip install ixnetwork_restpy
+   - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
@@ -38,32 +38,22 @@ Usage:
 import sys, re, time, traceback
 
 # Import the RestPy module
-from ixnetwork_restpy.testplatform.testplatform import TestPlatform
-from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
+from ixnetwork_restpy import SessionAssistant
 
 apiServerIp = '192.168.70.3'
+
+ixChassisIpList = ['192.168.70.128']
+portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
-# The IP address for your Ixia license server(s) in a list.
-licenseServerIp = ['192.168.70.3']
-
-# subscription, perpetual or mixed
-licenseMode = 'subscription'
-
-# tier1, tier2, tier3, tier3-10g
-licenseTier = 'tier3'
-
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
-
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
 
 #Test Variables
 # ospf or isis
@@ -75,35 +65,24 @@ igp = 'isis'
 debugMode = False
 
 try:
-    testPlatform = TestPlatform(ip_address=apiServerIp, log_file_name='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
-    # Console output verbosity: 'none'|request|'request_response'
-    testPlatform.Trace = 'request_response'
-
-    testPlatform.Authenticate(username, password)
-    session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    ixNetwork.NewConfig()
+    ixNetwork.info('Assign ports')
+    portMap = session.PortMapAssistant()
+    vport = dict()
+    for index,port in enumerate(portList):
+        portName = 'Port_{}'.format(index+1)
+        vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
-    ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
-    ixNetwork.Globals.Licensing.Mode = licenseMode
-    ixNetwork.Globals.Licensing.Tier = licenseTier
-
-    # Create vports and name them so you could use .find() to filter vports by the name.
-    vport1 = ixNetwork.Vport.add(Name='Port1')
-    vport2 = ixNetwork.Vport.add(Name='Port2')
-
-    testPorts = []
-    vportList = [vport.href for vport in ixNetwork.Vport.find()]
-    for port in portList:
-        testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
-
-    ixNetwork.info('Assiging the vPorts to chassis or vm ports')
-    ixNetwork.AssignPorts(testPorts, [], vportList, forceTakePortOwnership)
+    portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.info('Creating Topology PE-1')
-    topology1 = ixNetwork.Topology.add(Name='PE1 - Topo', Ports=vport1)
+    topology1 = ixNetwork.Topology.add(Name='PE1 - Topo', Ports=vport['Port_1'])
 
     deviceGroup1 = topology1.DeviceGroup.add(Name='P1 - 100.1.0.1', Multiplier='1')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth')
@@ -163,7 +142,7 @@ try:
 
     # Port 2 - PE2
     ixNetwork.info('Creating Topology PE-2')
-    topology2 = ixNetwork.Topology.add(Name='PE2 - Topo', Ports=vport2)
+    topology2 = ixNetwork.Topology.add(Name='PE2 - Topo', Ports=vport['Port_2'])
 
     deviceGroup2 = topology2.DeviceGroup.add(Name='P2 - 100.1.0.2', Multiplier='1')
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth')
@@ -225,11 +204,11 @@ try:
     ixNetwork.StartAllProtocols(Arg1='sync')
 
     ixNetwork.info('Verify protocol sessions\n')
-    protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
-    protocolsSummary.AddRowFilter('Protocol Type', StatViewAssistant.REGEX, '(?i)^BGP?')
-    protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.GREATER_THAN_OR_EQUAL, 0)
-    protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
-    ixNetwork.info(protocolsSummary)
+    protocolSummary = session.StatViewAssistant('Protocols Summary')
+    protocolSummary.AddRowFilter('Protocol Type', protocolSummary.REGEX, '(?i)^BGP?')
+    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.GREATER_THAN_OR_EQUAL, 0)
+    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
+    ixNetwork.info(protocolSummary)
 
     ixNetwork.info('Create Traffic Item')
     traffCe1ToCe2 = ixNetwork.Traffic.TrafficItem.add(Name='CE1 to CE2 Traffic', BiDirectional=False, TrafficType='ipv4')
@@ -246,21 +225,23 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
-    flowStatistics = StatViewAssistant(ixNetwork, 'Traffic Item Statistics')
-    ixNetwork.info('{}\n'.format(flowStatistics))
-    flowStatistics.AddRowFilter('Traffic Item', StatViewAssistant.REGEX, '^CE1.*')
-    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.EQUAL, 100000)
-    flowStatistics.AddRowFilter('Rx Frames', StatViewAssistant.GREATER_THAN_OR_EQUAL, 98000)
-    flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
+    trafficItemStatistics = session.StatViewAssistant('Traffic Item Statistics')
+    ixNetwork.info('{}\n'.format(trafficItemStatistics))
+
+    flowStatistics = session.StatViewAssistant('Flow Statistics')
+    flowStatistics.AddRowFilter('Traffic Item', flowStatistics.REGEX, '^CE1.*')
+    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.EQUAL, 100000)
+    flowStatistics.AddRowFilter('Rx Frames', flowStatistics.GREATER_THAN_OR_EQUAL, 98000)
+
     ixNetwork.info('{}\n'.format(flowStatistics))
 
     if debugMode == False:
         if 'session' in locals():
-            session.remove()
+            session.Session.remove()
 
 except Exception as errMsg:
     # print('\n%s' % traceback.format_exc(None, errMsg))
     print(traceback.print_exception())
     if 'session' in locals():
-        session.remove()
+        session.Session.remove()
 

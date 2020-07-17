@@ -60,11 +60,10 @@ try:
     ixChassisIp = '192.168.70.128'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '1', '2']]
+                [ixChassisIp, '2', '1']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
-                          serverIpPort='443',
+        mainObj = Connect(apiServerIp='192.168.70.12',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
@@ -73,10 +72,13 @@ try:
                           generateLogFile='ixiaDebug.log'
                       )
 
+    # For windows: serverIpPort=11009
+    # For windowsConnectionMgr, must state the following params: httpsSecured=<bool>. serverIpPort=443
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
+                          httpsSecured=False,
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           generateLogFile='ixiaDebug.log'
                       )

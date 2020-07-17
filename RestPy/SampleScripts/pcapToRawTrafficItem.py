@@ -19,27 +19,14 @@ Supports IxNetwork API servers:
 
 Requirements
    - IxNetwork 8.50
-   - Python 2.7 and 3+
    - tcp.pcap file (Included in the same local directory).
    - pip install scapy
    - pip install requests
    - pip install -U --no-cache-dir ixnetwork_restpy
 
-Script development API doc:
-   - The doc is located in your Python installation site-packages/ixnetwork_restpy/docs/index.html
-   - On a web browser:
-         - If installed in Windows: enter: file://c:/<path_to_ixnetwork_restpy>/docs/index.html
-         - If installed in Linux: enter: file:///<path_to_ixnetwork_restpy>/docs/index.html
-
 Usage:
    # Defaults to Windows
    - Enter: python <script>
-
-   # Connect to Windows Connection Manager
-   - Enter: python <script> connection_manager <apiServerIp> 443
-
-   # Connect to Linux API server
-   - Enter: python <script> linux <apiServerIp> 443
 """
 
 import sys, os, re, traceback
@@ -50,7 +37,7 @@ from scapy.all import *
 from ixnetwork_restpy.testplatform.testplatform import TestPlatform
 from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAssistant
 
-# If you got RestPy by doing a git clone instead of using pip, uncomment this line so
+# If you installed RestPy by doing a git clone instead of using pip, uncomment this line so
 # your system knows where the RestPy modules are located.
 #sys.path.append(os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', '')))
 
@@ -60,52 +47,40 @@ osPlatform = 'windows'
 
 apiServerIp = '192.168.70.3'
 
-# windows:11009. linux:443. connection_manager:443
-apiServerPort = 11009
-
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
-# Allow passing in some params/values from the CLI to replace the defaults
-if len(sys.argv) > 1:
-    # Command line input:
-    #   osPlatform: windows, connection_manager or linux
-    osPlatform = sys.argv[1]
-    apiServerIp = sys.argv[2]
-    apiServerPort = sys.argv[3]    
-
 # The IP address for your Ixia license server(s) in a list.
 licenseServerIp = ['192.168.70.3']
+
 # subscription, perpetual or mixed
 licenseMode = 'subscription'
 
-# For linux and windowsConnectionMgr only. Set to False to leave the session alive for debugging.
-deleteSessionWhenDone = True
+# For linux and windowsConnectionMgr only. Set to True to leave the session alive for debugging.
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
 # A list of chassis to use
 ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
 
+# The PCAP file to read
 pcapFile = 'tcp.pcap'
 
 try:
-    testPlatform = TestPlatform(apiServerIp, rest_port=apiServerPort, platform=platform, log_file_name='restpy.log')
+    testPlatform = TestPlatform(apiServerIp, log_file_name='restpy.log')
 
     # Console output verbosity: None|request|request_response
     testPlatform.Trace = 'request_response'
 
-    if osPlatform == 'linux':
-        testPlatform.Authenticate(username, password)
-
+    testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    if osPlatform == 'windows':
-        ixNetwork.NewConfig()    
+    ixNetwork.NewConfig()    
 
     ixNetwork.info('\nConfiguring license server')
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
@@ -230,14 +205,13 @@ try:
     # It is only demonstrating how to parse a pcap file and insert the values into a 
     # Traffic Item.
 
-    if deleteSessionWhenDone:
+    if debugMode == False:
         # For Linux and WindowsConnectionMgr only
-        if osPlatform in ['linux', 'windowsConnectionMgr']:
-            session.remove()
+        session.remove()
 
 except Exception as errMsg:
     ixNetwork.debug(traceback.format_exc())
 
-    if deleteSessionWhenDone and 'session' in locals():
+    if debugMode == False and 'session' in locals():
         if osPlatform in ['linux', 'windowsConnectionMgr']:
             session.remove()

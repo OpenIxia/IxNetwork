@@ -3023,8 +3023,8 @@ class Protocol(object):
             response = self.ixnObj.get(self.ixnObj.httpHeader + topologyObj + '/deviceGroup')
 
             deviceGroupList = []
-            for eachDeviceGroup in response.json()[0]['links']:
-                deviceGroupObj = eachDeviceGroup['href']
+            for eachDeviceGroup in response.json():
+                deviceGroupObj = eachDeviceGroup['links'][0]['href']
                 deviceGroupList.append(deviceGroupObj)
 
                 # Verify if there are additional device groups within a device group.

@@ -15,7 +15,7 @@ Requirements
    - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
-    https://www.openixia.github.io/ixnetwork_restpy
+    https://www.openixia.github.io/ixnetwork_restpy/#/
 
 Usage:
    - Enter: python <script>
@@ -124,9 +124,12 @@ try:
 
     # VLAN
     vlanFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^VLAN', appendToStack='Ethernet II')
-    vlanField = vlanFieldObj.find(DisplayName='VLAN Priority')
-    vlanField.Auto = False
-    vlanField.SingleValue = 3
+    vlanIdField = vlanFieldObj.find(DisplayName='VLAN-ID')
+    vlanIdField.SingleValue = 103
+        
+    vlanPriorityField = vlanFieldObj.find(DisplayName='VLAN Priority')
+    vlanPriorityField.Auto = False
+    vlanPriorityField.SingleValue = 3
 
     # PFC QUEUE
     pfcQueueObj = ethernetStackObj.Field.find(DisplayName='PFC Queue')
@@ -246,11 +249,13 @@ try:
 
     if debugMode == False:
         # For Linux and WindowsConnectionMgr only
-        session.Session.remove()
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 except Exception as errMsg:
     ixNetwork.debug('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
-        session.Session.remove()
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 

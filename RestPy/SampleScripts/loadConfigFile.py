@@ -22,7 +22,7 @@ Requirements
    - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
-    https://www.openixia.github.io/ixnetwork_restpy
+    https://www.openixia.github.io/ixnetwork_restpy/#/
 
 Usage:
    - Enter: python <script>
@@ -32,6 +32,7 @@ import json, sys, os, traceback
 
 # Import the RestPy module
 from ixnetwork_restpy import SessionAssistant, Files
+#from ixnetwork_restpy import *
 
 apiServerIp = '192.168.70.3'
 
@@ -51,7 +52,6 @@ forceTakePortOwnership = True
 
 configFile = 'bgp_ngpf_8.30.ixncfg'
 
-
 try:
     # LogLevel: none, info, warning, request, request_response, all
     session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
@@ -62,7 +62,7 @@ try:
 
     ixNetwork.info('Loading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
-
+   
     # Assign ports. Map physical ports to the configured vports.
     portMap = session.PortMapAssistant()
     vport = dict()
@@ -106,12 +106,14 @@ try:
 
     if debugMode == False:
         # For Linux and Windows Connection Manager only
-        session.Session.remove()
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
-    if debugMode and 'session' in locals():
-        session.remove()
+    if debugMode == False and 'session' in locals():
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 
 

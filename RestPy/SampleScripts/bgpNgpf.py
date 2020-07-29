@@ -26,7 +26,7 @@ Requirements:
    - pip install ixnetwork_restpy (minimum version 1.0.51)
 
 RestPy Doc:
-    https://www.openixia.github.io/ixnetwork_restpy
+    https://www.openixia.github.io/ixnetwork_restpy/#/
 
 Usage:
    - Enter: python <script>
@@ -34,23 +34,19 @@ Usage:
 
 import sys, os, time, traceback
 
-from ixnetwork_restpy import SessionAssistant
+from ixnetwork_restpy import *
 
-apiServerIp = '192.168.70.107'
-#apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.70.3'
 
 ixChassisIpList = ['192.168.70.128']
 portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
-
-ixChassisIpList = ['192.168.70.106']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = True
+debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
@@ -62,7 +58,7 @@ try:
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-
+   
     ixNetwork.info('Assign ports')
     portMap = session.PortMapAssistant()
     vport = dict()
@@ -74,7 +70,7 @@ try:
 
     ixNetwork.info('Creating Topology Group 1')
     topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport['Port_1'])
-    deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='1')
+    deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='3')
     ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
     ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
     ethernet1.EnableVlans.Single(True)
@@ -85,12 +81,12 @@ try:
     ixNetwork.info('Configuring IPv4')
     ipv4 = ethernet1.Ipv4.add(Name='Ipv4')
     ipv4.Address.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
-    ipv4.GatewayIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
+    ipv4.GatewayIp.Increment(start_value='1.1.1.4', step_value='0.0.0.0')
 
     ixNetwork.info('Configuring BgpIpv4Peer 1')
     bgp1 = ipv4.BgpIpv4Peer.add(Name='Bgp1')
-    bgp1.DutIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
-    bgp1.Type.Single('internal')
+    bgp1.DutIp.Increment(start_value='1.1.1.4', step_value='0.0.0.1')
+    bgp1.Type.Single('external')
     bgp1.LocalAs2Bytes.Increment(start_value=101, step_value=0)
 
     ixNetwork.info('Configuring Network Group 1')
@@ -101,7 +97,7 @@ try:
 
     ixNetwork.info('Creating Topology Group 2')
     topology2 = ixNetwork.Topology.add(Name='Topo2', Ports=vport['Port_2'])
-    deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
+    deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='3')
 
     ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
     ethernet2.Mac.Increment(start_value='00:01:01:02:00:01', step_value='00:00:00:00:00:01')
@@ -112,14 +108,14 @@ try:
 
     ixNetwork.info('Configuring IPv4 2')
     ipv4 = ethernet2.Ipv4.add(Name='Ipv4-2')
-    ipv4.Address.Increment(start_value='1.1.1.2', step_value='0.0.0.1')
+    ipv4.Address.Increment(start_value='1.1.1.4', step_value='0.0.0.1')
     ipv4.GatewayIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
-
+  
     ixNetwork.info('Configuring BgpIpv4Peer 2')
     bgp2 = ipv4.BgpIpv4Peer.add(Name='Bgp2')
-    bgp2.DutIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
-    bgp2.Type.Single('internal')
-    bgp2.LocalAs2Bytes.Increment(start_value=101, step_value=0)
+    bgp2.DutIp.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
+    bgp2.Type.Single('external')
+    bgp2.LocalAs2Bytes.Increment(start_value=102, step_value=0)
 
     ixNetwork.info('Configuring Network Group 2')
     networkGroup2 = deviceGroup2.NetworkGroup.add(Name='BGP-Routes2', Multiplier='100')
@@ -149,22 +145,6 @@ try:
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
-
-    ixNetwork.info('Create Traffic Item')
-    trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic 2', BiDirectional=False, TrafficType='ipv4')
-
-    ixNetwork.info('Add endpoint flow group')
-    trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
-
-    # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
-    #       Therefore, ConfigElement is a list.
-    ixNetwork.info('Configuring config elements')
-    configElement = trafficItem.ConfigElement.find()[0]
-    configElement.FrameRate.update(Type='percentLineRate', Rate=50)
-    configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
-    configElement.FrameSize.FixedSize = 128
-   
-    trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
     
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
@@ -185,14 +165,22 @@ try:
             rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
+    ixNetwork.Traffic.StopStatelessTrafficBlocking()
+    ixNetwork.StartAllProtocols(Arg1='sync')
+
     if debugMode == False:
+        for vport in ixNetwork.Vport.find():
+            vport.ReleasePort()
+            
         # For linux and connection_manager only
-        session.Session.remove()
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
-        session.Session.remove()
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 
 

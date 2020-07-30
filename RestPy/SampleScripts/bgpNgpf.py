@@ -166,8 +166,8 @@ try:
             flowStat['Tx Frames'], flowStat['Rx Frames']))
 
     ixNetwork.Traffic.StopStatelessTrafficBlocking()
-    ixNetwork.StartAllProtocols(Arg1='sync')
-
+    ixNetwork.StopAllProtocols()  
+   
     if debugMode == False:
         for vport in ixNetwork.Vport.find():
             vport.ReleasePort()

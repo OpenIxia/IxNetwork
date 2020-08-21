@@ -395,7 +395,7 @@ class Connect:
                 return response
 
             except (requests.exceptions.RequestException, Exception) as errMsg:
-                errMsg = 'GET Exception error {]/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
+                errMsg = 'GET Exception error {}/{} retries: {}'.format(restExecutionFailures, maxRetries, errMsg)
 
                 if restExecutionFailures < maxRetries:
                     self.logError(errMsg)

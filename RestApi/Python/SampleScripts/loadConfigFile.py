@@ -47,7 +47,7 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
 
 # Default the API server to either windows or linux.
-osPlatform = 'windows'
+osPlatform = 'linux'
 
 # For accepting command line parameters: windows or linux
 if len(sys.argv) > 1:
@@ -65,12 +65,13 @@ try:
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    configFile = 'bgp_ngpf_8.30.ixncfg'
+    currentDir = os.path.abspath(os.path.dirname(__file__))
+    configFile = '{}/bgp_ngpf_8.30.ixncfg'.format(currentDir)
 
-    ixChassisIp = '192.168.70.128'
+    ixChassisIp = '192.168.70.15'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
-                [ixChassisIp, '2', '1']]
+                [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp='192.168.70.12',
@@ -79,6 +80,7 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=osPlatform,
+                          sessionId=2,
                           generateLogFile='ixiaDebug.log'
                       )
 

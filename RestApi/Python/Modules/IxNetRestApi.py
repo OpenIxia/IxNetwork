@@ -208,7 +208,8 @@ class Connect:
         # Windows supports only http
         if self.serverOs == 'windows':
             self.logInfo('Connecting to API server: windows')
-            self.httpScheme = 'http'
+            if httpsSecured:
+                self.httpScheme = 'https'
 
             if self.apiServerPort is None:
                 self.apiServerPort = 11009

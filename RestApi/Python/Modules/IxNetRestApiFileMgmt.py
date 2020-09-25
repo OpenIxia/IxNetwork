@@ -75,11 +75,11 @@ class FileMgmt(object):
 
         # Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
         payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.headlessSessionId, fileName)}
-
+        
         # Tell the server to load the config file
         if localFile == True:
-            response = self.ixnObj.post(loadConfigUrl, data=payload, headers=octetStreamHeader)
-
+            response = self.ixnObj.post(loadConfigUrl, data=payload)
+            
         if localFile == False:
             response = self.ixnObj.post(loadConfigUrl, data=payload)
 

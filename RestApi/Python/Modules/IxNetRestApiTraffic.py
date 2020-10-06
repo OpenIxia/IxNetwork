@@ -858,12 +858,21 @@ class Traffic(object):
            4: PFC Queue
         """
         self.ixnObj.logInfo('showPacketHeaderFieldNames: %s' % stackObj+'/field', timestamp=False)
-        response = self.ixnObj.get(self.ixnObj.httpHeader+stackObj+'/field')
-        for eachField in  response.json():
-            id = eachField['id']
-            fieldName = eachField['displayName']
-            self.ixnObj.logInfo('\t{0}: {1}'.format(id, fieldName), timestamp=False)
+        response = self.ixnObj.get(self.ixnObj.httpHeader+stackObj+'/field?skip=0&take=end')
 
+        for eachField in  response.json():
+            if 'id' in eachField:
+                id = eachField['id']
+                fieldName = eachField['displayName']
+                self.ixnObj.logInfo('\t{0}: {1}'.format(id, fieldName), timestamp=False)
+
+            if 'data' in response.json():
+                for eachDataField in response.json()['data']:
+                    if 'id' in eachDataField:
+                        id = eachDataField['id']
+                        fieldName = eachDataField['displayName']
+                        self.ixnObj.logInfo('\t{0}: {1}'.format(id, fieldName), timestamp=False)
+                    
     def convertTrafficItemToRaw(self, trafficItemName):
         """
         Description
@@ -906,10 +915,18 @@ class Traffic(object):
         """
         fieldId = None
         # Get the field ID object by the user defined fieldName
-        response = self.ixnObj.get(self.ixnObj.httpHeader+stackIdObj+'/field')
+        #response = self.ixnObj.get(self.ixnObj.httpHeader+stackIdObj+'/field')
+        response = self.ixnObj.get(self.ixnObj.httpHeader+stackIdObj+'/field?skip=0&take=end')
+
         for eachFieldId in response.json():
-            if bool(re.match(fieldName, eachFieldId['displayName'], re.I)):
-                fieldId = eachFieldId['id']
+            if 'displayName' in eachFieldId:
+                if bool(re.match(fieldName, eachFieldId['displayName'], re.I)):
+                    fieldId = eachFieldId['id']
+
+            if 'data' in eachFieldId:
+                for dataFieldId in response.json()['data']:
+                    if bool(re.match(fieldName, dataFieldId['displayName'], re.I)):
+                        fieldId = dataFieldId['id']
 
         if fieldId == None:
             raise IxNetRestApiException('Failed to located your provided fieldName:', fieldName)
@@ -1126,6 +1143,11 @@ class Traffic(object):
     def disablePacketLossDuration(self):
         self.ixnObj.patch(self.ixnObj.sessionUrl+'/traffic/statistics/packetLossDuration', data={'enabled': 'false'})
 
+    def getTrafficItemStatus(self, trafficItemObj):
+        response = self.ixnObj.get(self.ixnObj.httpHeader + trafficItemObj, silentMode=True)
+        currentTrafficState = response.json()['state']
+        return currentTrafficState
+                       
     def checkTrafficItemState(self, trafficItemList=None, expectedState=['stopped'], timeout=60, ignoreException=False):
         """
         Description

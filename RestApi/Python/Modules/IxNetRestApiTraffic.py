@@ -676,11 +676,9 @@ class Traffic(object):
             if bool(re.match('^{0}$'.format(packetHeaderName), currentStackDisplayName, re.I)):
                 self.ixnObj.logInfo('\nstack: {0}: {1}'.format(eachStack, currentStackDisplayName), timestamp=False)
                 stackObj = eachStack['links'][0]['href']
-                break
-        else:
-            raise IxNetRestApiException('\nError: No such stack name found. Verify stack name existence and spelling: %s' % packetHeaderName)
-
-        return stackObj
+                return stackObj
+        
+        raise IxNetRestApiException('\nError: No such stack name found. Verify stack name existence and spelling: %s' % packetHeaderName)
 
     def showTrafficItemStackLink(self, configElementObj):
         # Return a list of configured Traffic Item packet header in sequential order.

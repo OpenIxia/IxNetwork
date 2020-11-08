@@ -205,6 +205,7 @@ class Connect:
             else:
                 self.apiServerPort = 443
 
+
         # Windows supports only http
         if self.serverOs == 'windows':
             self.logInfo('Connecting to API server: windows')
@@ -1290,6 +1291,16 @@ class Connect:
         self.waitForComplete(response, url+'/'+response.json()['id'], silentMode=silentMode)
         return response
 
+    def select(self, data):
+        """
+        Description
+           Using the Select operation to query for objects using filters.
+        """
+        url = self.sessionUrl+'/operations/select'
+        response = self.post(url, data=data)
+        self.waitForComplete(response, url+'/'+response.json()['id'])
+        return response
+    
     def configMultivalue(self, multivalueUrl, multivalueType, data):
         """
         Description

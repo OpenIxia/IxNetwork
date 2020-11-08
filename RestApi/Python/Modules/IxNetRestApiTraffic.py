@@ -1373,7 +1373,7 @@ class Traffic(object):
             response = self.ixnObj.get(trafficItemUrl+ "?skip=" + str(numOfTrafficItem) + "&take=100")
         return trafficItemNameList
 
-    def getTrafficItemObjByName(self, trafficItemName):
+    def getTrafficItemObjByName_backup(self, trafficItemName):
         """
         Description
             Get the Traffic Item object by the Traffic Item name.
@@ -1386,14 +1386,40 @@ class Traffic(object):
             traffic item object:  /api/v1/sessions/1/ixnetwork/traffic/trafficItem/2
         """
         queryData = {'from': '/traffic',
-                    'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{"property": "name", "regex": trafficItemName}]}
-                    ]}
+                   'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{"property": "name", "regex": trafficItemName}]}
+                   ]}
+        
         queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
+
         try:
             return queryResponse.json()['result'][0]['trafficItem'][0]['href']
         except:
             return 0
 
+    def getTrafficItemObjByName(self, trafficItemName):
+        """
+        Description
+            Get the Traffic Item object by the Traffic Item name.
+
+        Parameter
+            trafficItemName: Name of the Traffic Item.
+
+        Return
+            0: No Traffic Item name found. Return 0.
+            traffic item object:  /api/v1/sessions/1/ixnetwork/traffic/trafficItem/2
+        """
+        # /api/v1/sessions/<id>/ixnetwork/traffic
+        fromObj = self.ixnObj.apiSessionId + '/traffic'
+        queryData = {"selects": [{"from": fromObj, "properties": [], 
+                                  "children": [{"child": "trafficItem", "properties": ["*"], 
+                                                "filters": [{"property": "name", "regex": trafficItemName}]}], "inlines": []}]}
+        
+        queryResponse = self.ixnObj.select(queryData)
+        try:
+            return queryResponse.json()['result'][0]['trafficItem'][0]['href']
+        except:
+            return 0
+        
     def applyTraffic(self):
         """
         Description

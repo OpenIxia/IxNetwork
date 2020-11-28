@@ -4,7 +4,8 @@ The IxNetRestApi library in this level /IxNetwork/RestApi is deprecated in favor
 RestPy is superior and easier to automate.
 It is a library that comes with all IxNetwork class objects for automation.
 This means you don't have to request for any wrappers to perform any CRUDs. 
-See RestPy sample scripts in https://github.com/openixia/IxNetwork/RestPy/SampleScripts.
+
+See RestPy sample scripts in https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/SampleScripts
 loadConfigFile.py and bgpNgpf.py would be great starting points.
 
 With tha said, the IxNetRestApi library is no longer maintained.

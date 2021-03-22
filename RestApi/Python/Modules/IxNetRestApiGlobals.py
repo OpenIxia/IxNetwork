@@ -1,7 +1,3 @@
-import re
-
-from IxNetRestApiProtocol import Protocol
-
 class Globals(object):
     def __init__(self, ixnObj=None):
         """
@@ -9,7 +5,7 @@ class Globals(object):
            ixnObj: <str>: The main connection object.
         """
         self.ixnObj = ixnObj
-        self.protocolObj = Protocol(ixnObj)
+        self.ixNetwork = ixnObj.ixNetwork
 
     def dhcpV4ClientStartStopRate(self, endpoint='startRate', **kwargs):
         """
@@ -19,7 +15,8 @@ class Globals(object):
         Parameters
            endpoint: <str|object endpoint>: startRate|stopRate
 
-           **kwargs: Any attribute for the /globals/topology/dhcpv4client/startRate|stopRate endpoint.
+           **kwargs: Any attribute for the /globals/topology/dhcpv4client/
+           startRate|stopRate endpoint.
                      enabled = bool
                      interval = int
                      maxOutstanding = int
@@ -35,16 +32,16 @@ class Globals(object):
                                                )
 
         """
-        restApi = '/globals/topology/dhcpv4client/{0}?links=true'.format(endpoint)
+        rateObj = None
 
-        response = self.ixnObj.get(self.ixnObj.sessionUrl + restApi)
-        for key,value in response.json().items():
-            if key != 'links':
-                if bool(re.search('multivalue', str(value))) == True:
-                    if key in kwargs:
-                        multiValue = response.json()[key]
-                        self.ixnObj.patch(self.ixnObj.httpHeader+multiValue+"/singleValue", data={'value': kwargs[key]})
-                else:
-                    if key in kwargs:
-                        self.ixnObj.patch(self.ixnObj.sessionUrl + restApi, data={key: kwargs[key]})
-
+        if endpoint == 'startRate':
+            rateObj = self.ixNetwork.Globals.Topology.Dhcpv4client.StartRate
+        if endpoint == 'stopRate':
+            rateObj = self.ixNetwork.Globals.Topology.Dhcpv4client.StopRate
+        for key, value in kwargs.items():
+            key = key[0].capitalize() + key[1:]
+            try:
+                multiValueObj = getattr(rateObj, key)
+                self.ixnObj.configMultivalue(multiValueObj, 'singlevalue', {'value': value})
+            except(ValueError, Exception):
+                setattr(rateObj, key, value)

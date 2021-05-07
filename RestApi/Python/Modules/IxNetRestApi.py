@@ -904,6 +904,75 @@ class Connect:
         """
         if silentMode == False:
             self.logInfo('\nwaitForComplete:', timestamp=False)
+            self.logInfo("\tState:{}  Progress:{}".format(response.json()["state"], response.json()['progress']), timestamp=False)
+
+        if response.json() == []:
+            raise IxNetRestApiException('waitForComplete: response is empty.')
+
+        if response.json() == '' or response.json()['progress'] == 100:
+            return response
+                    
+        if 'errors' in response.json():
+            raise IxNetRestApiException(response.json()["errors"][0])
+
+        if response.json()['state'] in ["ERROR", "EXCEPTION"]:
+            raise IxNetRestApiException('WaitForComplete: STATE=%s: %s' % (response.json()['state'], response.text))
+
+        for counter in range(1,timeout+1):
+            if httpAction == 'get':
+                response = self.get(url, silentMode=True)
+
+            if httpAction == 'post':
+                response = self.post(url, silentMode=True)
+                
+            state = response.json()["state"]
+            progress = response.json()["progress"]
+            
+            if silentMode == False:
+                if progress != 100:
+                    self.logInfo("\tState:{}  Progress:{}:  Wait {}/{} seconds".format(state, progress,
+                                                                                       counter, timeout), timestamp=False)
+                if progress == 100:
+                    self.logInfo("\tState:{}  Progress:{}".format(state, progress), timestamp=False)
+
+            if counter < timeout and progress != 100:
+                time.sleep(1)
+                continue
+
+            if counter < timeout and state in ["ERROR", "EXCEPTION"]:
+                # ignoreException is for assignPorts.  Don't want to exit test.
+                # Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
+                if ignoreException:
+                    return response
+                
+                raise IxNetRestApiException(response.text)
+
+            if counter < timeout and progress == 100:
+                return response
+
+            if counter == timeout and progress != 100:
+                if ignoreException:
+                    return response
+                
+                raise IxNetRestApiException('waitForComplete failed: %s' % response.json())
+            
+    def waitForComplete_backup(self, response='', url='', silentMode=False, ignoreException=False, httpAction='get', timeout=90):
+        """
+        Description
+           Wait for an operation progress to complete.
+
+        Parameters
+           response: (json response/dict): The POST action response.  Generally, after an /operations action.
+                         Such as /operations/startallprotocols, /operations/assignports.
+           silentMode: (bool):  If True, display info messages on stdout.
+           ignoreException: (bool): ignoreException is for assignPorts.  Don't want to exit test.
+                            Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
+
+           httpAction: (get|post): Defaults to GET. For chassisMgmt, it uses POST.
+           timeout: (int): The time allowed to wait for success completion in seconds.
+        """
+        if silentMode == False:
+            self.logInfo('\nwaitForComplete:', timestamp=False)
             self.logInfo("\tState: %s " % response.json()["state"], timestamp=False)
 
         if response.json() == []:
@@ -949,6 +1018,7 @@ class Connect:
                 if ignoreException:
                     return response
                 raise IxNetRestApiException('waitForComplete failed: %s' % response.json())
+
 
     def connectToLinuxIxosChassis(self, chassisIp, username, password):
         url = 'https://{0}/platform/api/v1/auth/session'.format(chassisIp)

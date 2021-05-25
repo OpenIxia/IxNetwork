@@ -31,9 +31,6 @@
 #    - Start Traffic
 #    - Get Stats
 #
-# USAGE
-#    python <script>.py windows
-#    python <script>.py linux
 
 import sys, os, traceback
 
@@ -46,14 +43,12 @@ from IxNetRestApiProtocol import Protocol
 from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
 
-# Default the API server to either windows or linux.
-osPlatform = 'linux'
-
-# For accepting command line parameters: windows or linux
-if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        sys.exit("\nError: %s is not a known option. Choices are 'windows', 'windowsConnectionMgr or 'linux'." % sys.argv[1])
-    osPlatform = sys.argv[1]
+# API server options: windows, windowsConnectionMgr or linux.
+# Linux default port for https only: 443
+# Windows default port for both http|https: 11009
+# Windows Connection Mgr. http:11009|htps:443
+osPlatform = 'windows'
+port = 11009
 
 try:
     #---------- Preference Settings --------------
@@ -61,14 +56,14 @@ try:
     releasePortsWhenDone = False
     deleteSessionAfterTest = True
 
-    licenseServerIp = '192.168.70.3'
+    licenseServerIp = '192.168.129.6'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
     currentDir = os.path.abspath(os.path.dirname(__file__))
     configFile = '{}/bgp_ngpf_8.30.ixncfg'.format(currentDir)
 
-    ixChassisIp = '192.168.70.15'
+    ixChassisIp = '192.168.129.15'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
@@ -87,8 +82,8 @@ try:
     # For windows: serverIpPort=11009
     # For windowsConnectionMgr, must state the following params: httpsSecured=<bool>. serverIpPort=443
     if osPlatform in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
-                          serverIpPort=11009,
+        mainObj = Connect(apiServerIp='192.168.129.6',
+                          serverIpPort=port,
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           generateLogFile='ixiaDebug.log',
@@ -96,6 +91,7 @@ try:
                       )
 
     #---------- Preference Settings End --------------
+
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -105,11 +101,11 @@ try:
             portObj.clearPortOwnership(portList)
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
-        
+
     fileMgmtObj = FileMgmt(mainObj)    
     # localFile=True if config file is not located in the Windows c: drive.
     fileMgmtObj.loadConfigFile(configFile, localFile=True)
-
+    
     portObj.releasePorts(portList)
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 

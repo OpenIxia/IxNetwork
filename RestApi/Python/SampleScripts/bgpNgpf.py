@@ -26,9 +26,6 @@
 #        - Start Traffic
 #        - Get stats
 #
-# USAGE
-#    python <script>.py windows
-#    python <script>.py linux
 
 import sys, os, traceback
 
@@ -40,13 +37,12 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiStatistics import Statistics
 
-# Default the API server to either windows or linux.
-osPlatform = 'windows'
-
-if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        sys.exit("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % sys.argv[1])
-    osPlatform = sys.argv[1]
+# API server options: windows, windowsConnectionMgr or linux.
+# Linux default port for https only: 443
+# Windows default port for both http|https: 11009
+# Windows Connection Mgr. http:11009|htps:443
+osPlatform = 'linux'
+port = 443
 
 try:
     #---------- Preference Settings --------------
@@ -56,15 +52,15 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseServerIp = '192.168.70.3'
+    licenseServerIp = '192.168.129.6'
     licenseModel = 'subscription'
 
-    ixChassisIp = '192.168.70.128'
+    ixChassisIp = '192.168.129.15'
     # [chassisIp, cardNumber, slotNumber]
-    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
+    portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.12',
+        mainObj = Connect(apiServerIp='192.168.129.17',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
@@ -76,9 +72,9 @@ try:
     # For windows: serverIpPort=11009
     # For windowsConnectionMgr, must state the following params: httpsSecured=<bool>. serverIpPort=443
     if osPlatform in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
+        mainObj = Connect(apiServerIp='192.168.129.6',
                           serverOs=osPlatform,
-                          serverIpPort=11009,
+                          serverIpPort=port,
                           httpsSecured=True,
                           deleteSessionAfterTest=True,
                           generateLogFile='ixiaDebug.log'

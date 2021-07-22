@@ -1,5 +1,5 @@
 import re
-import o
+import os
 import json
 from IxNetRestApi import IxNetRestApiException
 from ixnetwork_restpy.files import Files

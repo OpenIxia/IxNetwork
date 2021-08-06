@@ -17,7 +17,7 @@ Example
             fileMgmtObj.importJsonConfigObj(dataObj=jsonData, option='modify')
 """
 
-import os, sys, traceback, time
+import re, os, sys, traceback, time
 
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
 from IxNetRestApi import *
@@ -31,11 +31,6 @@ from IxNetRestApiPacketCapture import PacketCapture
 # Default the API server to either windows or linux.
 osPlatform = 'windows'
 
-if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        sys.exit("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % sys.argv[1])
-    osPlatform = sys.argv[1]
-
 try:
     #---------- Preference Settings --------------
 
@@ -47,41 +42,44 @@ try:
     # If the licenses are activated in the Linux based XGS chassis or if the licenses are configured 
     # in the Windows IxNetwork GUI API server in preferences, then you won't need to config license.
     configLicense = True
-    licenseServerIp = '192.168.70.3'
+    licenseServerIp = '172.16.101.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.128'
+    ixChassisIp = '172.16.102.5'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.9',
+        mainObj = Connect(apiServerIp='172.16.102.2',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=osPlatform,
-                          apiKey='173c9e239c714c8ea73d549c0e62cc82',
-                          sessionId=5
+                          apiKey=None,
+                          sessionId=None,
+                          traceLevel='all'
                           )
 
     if osPlatform in ['windows']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
-                          serverIpPort='11009',
-                          serverOs=osPlatform,
-                          deleteSessionAfterTest=deleteSessionAfterTest
-                          )
-    
-    if osPlatform in ['windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
+        mainObj = Connect(apiServerIp='172.16.101.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
-                          sessionId=8021,
-                          httpsSecured=False
+                          traceLevel='all'
+                          )
+    
+    if osPlatform in ['windowsConnectionMgr']:
+        mainObj = Connect(apiServerIp='172.16.101.3',
+                          serverIpPort='11009',
+                          serverOs=osPlatform,
+                          deleteSessionAfterTest=deleteSessionAfterTest,
+                          sessionId=None,
+                          httpsSecured=False,
+                          traceLevel='all'
                           )
     
     trafficObj = Traffic(mainObj)

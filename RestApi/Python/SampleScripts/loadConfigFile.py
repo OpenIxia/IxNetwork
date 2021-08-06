@@ -32,7 +32,7 @@
 #    - Get Stats
 #
 
-import sys, os, traceback
+import re, sys, os, traceback
 
 # These  modules are one level above.
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
@@ -53,40 +53,42 @@ port = 11009
 try:
     #---------- Preference Settings --------------
     forceTakePortOwnership = True
-    releasePortsWhenDone = False
+    releasePortsWhenDone = True
     deleteSessionAfterTest = True
 
-    licenseServerIp = '192.168.129.6'
+    licenseServerIp = '172.16.101.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
     currentDir = os.path.abspath(os.path.dirname(__file__))
     configFile = '{}/bgp_ngpf_8.30.ixncfg'.format(currentDir)
 
-    ixChassisIp = '192.168.129.15'
+    ixChassisIp = '172.16.102.5'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.12',
+        mainObj = Connect(apiServerIp='172.16.102.2',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=osPlatform,
-                          sessionId=2,
+                          sessionId=None,
+                          traceLevel='all',
                           generateLogFile='ixiaDebug.log'
                       )
 
     # For windows: serverIpPort=11009
     # For windowsConnectionMgr, must state the following params: httpsSecured=<bool>. serverIpPort=443
     if osPlatform in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.129.6',
+        mainObj = Connect(apiServerIp='172.16.101.3',
                           serverIpPort=port,
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           generateLogFile='ixiaDebug.log',
+                          traceLevel='all',
                           httpsSecured=True
                       )
 

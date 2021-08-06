@@ -68,7 +68,7 @@ USAGE
     python <script>.py windows|linux
 """
 
-import sys, os, traceback, time
+import re, sys, os, traceback, time
 
 # These  modules are one level above.
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
@@ -80,39 +80,37 @@ from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiStatistics import Statistics
 from IxNetRestApiPacketCapture import PacketCapture
 
-osPlatform = 'windows'
-
-if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        sys.exit("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % sys.argv[1])
-    osPlatform = sys.argv[1]
+osPlatform = 'windowsConnectionMgr'
 
 try:
     #---------- Preference Settings --------------
     enableDebugTracing = True
     deleteSessionAfterTest = False
 
-    apiServerIp = '192.168.70.3'
+    apiServerIp = '172.16.101.3'
     apiServerIpPort = 11009
-    ixChassisIp = '192.168.70.128'
+    ixChassisIp = '172.16.102.5'
     packetCapturePort = [ixChassisIp, '1', '2']
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp=apiServerIp,
                           serverIpPort=apiServerIpPort,
-                          serverOs=osPlatform
-        )
+                          serverOs=osPlatform,
+                          traceLevel='all',
+                          sessionId=8020
+                        )
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.12',
+        mainObj = Connect(apiServerIp='172.16.102.2',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=osPlatform,
                           generateLogFile='ixiaDebug.log',
-                          sessionId=10,
-                          apiKey='e5d16d3258014241872990301c40bdbf'
+                          traceLevel='all',
+                          sessionId=None,
+                          apiKey=None
                       )
         
     #---------- Preference Settings End --------------
@@ -120,8 +118,8 @@ try:
     trafficObj = Traffic(mainObj)
     pktCaptureObj = PacketCapture(mainObj)
 
-    response = mainObj.get(mainObj.sessionUrl+'/vport')
-    name = response.json()[0]['name']
+    # response = mainObj.get(mainObj.sessionUrl+'/vport')
+    # name = response.json()[0]['name']
 
     # Stop the traffic if it is running in order to configure the packet capture modes.
     if trafficObj.checkTrafficState(expectedState=['stopped'], timeout=1, ignoreException=True) == 1:

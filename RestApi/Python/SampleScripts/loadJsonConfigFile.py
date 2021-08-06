@@ -21,7 +21,7 @@
 #        - Get stats.
 
 
-import json, os, sys, traceback
+import re, json, os, sys, traceback
 
 # These  modules are one level above.
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
@@ -33,13 +33,7 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
 
 # Default the API server to either windows or linux.
-osPlatform = 'windows'
-
-# Optional: Command line parameters: windows or linux
-if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        sys.exit("\nError: %s is not a known option. Choices are 'windows', 'windowsConnectionMgr or 'linux'." % sys.argv[1])
-    osPlatform = sys.argv[1]
+osPlatform = 'linux'
 
 try:
     #---------- Preference Settings --------------
@@ -47,13 +41,15 @@ try:
     forceTakePortOwnership = True
     releasePortsWhenDone = False
     deleteSessionAfterTest = True
-    jsonConfigFile = 'bgp_ngpf_8.50.json'
+    
+    currentDir = os.path.abspath(os.path.dirname(__file__))
+    jsonConfigFile = f'{currentDir}/bgp_ngpf_8.50.json'
 
-    licenseServerIp = '192.168.70.3'
+    licenseServerIp = '172.16.101.3'
     licenseModel = 'subscription'
     licenseTier = 'tier3'
 
-    ixChassisIp = '192.168.70.128'
+    ixChassisIp = '172.16.102.5'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
@@ -64,22 +60,24 @@ try:
     modifyPortMediaType = None ;# None or copper|fiber|SGMII
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.12',
+        mainObj = Connect(apiServerIp='172.16.102.2',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs='linux',
-                          generateLogFile='ixiaDebug.log'
+                          generateLogFile='ixiaDebug.log',
+                          traceLevel='all'
                       )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
+        mainObj = Connect(apiServerIp='172.16.101.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
-                          generateLogFile='ixiaDebug.log'
+                          generateLogFile='ixiaDebug.log',
+                          traceLevel='all'
                       )
 
     #---------- Preference Settings End --------------

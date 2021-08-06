@@ -51,7 +51,7 @@ class Connect:
                  includeDebugTraceback=True, sessionId=None,
                  httpsSecured=None, apiKey=None,
                  generateLogFile=True, robotFrameworkStdout=False,
-                 linuxApiServerTimeout=120):
+                 linuxApiServerTimeout=120, traceLevel='all'):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -129,6 +129,7 @@ class Connect:
         self.apiKey = apiKey
         self.verifySslCert = verifySslCert
         self.linuxApiServerIp = apiServerIp
+        self.deleteSessionAfterTest = deleteSessionAfterTest
         self.manageSessionMode = manageSessionMode
         self.apiServerPort = serverIpPort
         self.webQuickTest = webQuickTest
@@ -162,20 +163,30 @@ class Connect:
                                              rest_port=self.apiServerPort,
                                              platform=self.serverOs,
                                              verify_cert=verifySslCert,
+                                             trace=traceLevel,
                                              log_file_name=self.restLogFile)
-            self.session = self.testPlatform.Sessions.add()
+  
+            self.session = self.testPlatform.Sessions.find(Id=1)
             self.sessionId = self.session.Id
             self.ixNetwork = self.session.Ixnetwork
 
         if self.serverOs == 'windowsConnectionMgr':
-            if self.sessionId:
-                self.testPlatform = TestPlatform(
-                    ip_address=self.linuxApiServerIp,
-                    rest_port=self.apiServerPort,
-                    platform=self.serverOs,
-                    verify_cert=verifySslCert,
-                    log_file_name=self.restLogFile)
+            self.testPlatform = TestPlatform(
+                ip_address=self.linuxApiServerIp,
+                rest_port=443,
+                platform='connection_manager',
+                verify_cert=verifySslCert,
+                trace=traceLevel,
+                log_file_name=self.restLogFile)
 
+            if self.sessionId:
+                self.session = self.testPlatform.Sessions.find(Id=self.sessionId)
+            else:
+                self.session = self.testPlatform.Sessions.add()
+                
+            self.sessionId = self.session.Id
+            self.ixNetwork = self.session.Ixnetwork
+            
         if self.serverOs == 'linux':
             if self.apiServerPort is None:
                 self.apiServerPort = 443
@@ -188,7 +199,9 @@ class Connect:
                                              rest_port=self.apiServerPort,
                                              platform=self.serverOs,
                                              verify_cert=verifySslCert,
-                                             log_file_name=self.restLogFile)
+                                             log_file_name=self.restLogFile,
+                                             trace=traceLevel,)
+            
             self.testPlatform.Authenticate(self.username, self.password)
 
             if apiKey is not None and sessionId is None:

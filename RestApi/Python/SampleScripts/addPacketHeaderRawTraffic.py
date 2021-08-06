@@ -37,7 +37,7 @@
 #    If you use VM ports to do back to back, you probably will not see traffic. Use a physical ports instead.
 #
 
-import sys, os, traceback
+import re, sys, os, traceback
 
 # These  modules are one level above.
 sys.path.insert(0, (os.path.dirname(os.path.abspath(__file__).replace('SampleScripts', 'Modules'))))
@@ -47,12 +47,7 @@ from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
 
 # Default the API server to either windows or linux.
-osPlatform = 'windows'
-
-if len(sys.argv) > 1:
-    if sys.argv[1] not in ['windows', 'windowsConnectionMgr', 'linux']:
-        sys.exit("\nError: %s is not a known option. Choices are 'windows', 'windowsConnectionMgr' or 'linux'." % sys.argv[1])
-    osPlatform = sys.argv[1]
+osPlatform = 'linux'
 
 try:
     #---------- Preference Settings --------------
@@ -61,31 +56,33 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = True ;# For Windows Connection Mgr and Linux API server only
 
-    licenseServerIp = '192.168.70.3'
+    licenseServerIp = '172.16.101.3'
     licenseModel = 'subscription'
 
-    ixChassisIp = '192.168.70.128'
+    ixChassisIp = '172.16.102.5'
     # [chassisIp, cardNumber, slotNumber]
     portList = [[ixChassisIp, '1', '1'],
                 [ixChassisIp, '1', '2']]
 
     if osPlatform == 'linux':
-        mainObj = Connect(apiServerIp='192.168.70.108',
+        mainObj = Connect(apiServerIp='172.16.102.2',
                           serverIpPort='443',
                           username='admin',
                           password='admin',
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=osPlatform,
+                          traceLevel='all',
                           generateLogFile='ixiaDebug.log'
                       )
 
     if osPlatform in ['windows', 'windowsConnectionMgr']:
-        mainObj = Connect(apiServerIp='192.168.70.3',
+        mainObj = Connect(apiServerIp='172.16.101.3',
                           serverIpPort='11009',
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest,
-                          generateLogFile='ixiaDebug.log'
+                          generateLogFile='ixiaDebug.log',
+                          traceLevel='all'
                       )
 
     #---------- Preference Settings End --------------

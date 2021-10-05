@@ -13,15 +13,26 @@ L3vpn SRv6:
 
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
+   
 Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
    - pip install ixnetwork_restpy (minimum version 1.0.51)
+   
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy/#/
+    
 Usage:
    - Enter: python <script>
+   
+Error:
+       raise BadRequestError(message, response.status_code)
+       ixnetwork_restpy.errors.BadRequestError:  Error in L2/L3 Traffic Apply
+
+        Current Server Errors/Warnings:
+        10/04/2021 20:07:06 [WARNING] [No Flow Groups Created] The Traffic Item was not generated properly and no Flow Groups were created. Please regenerate the Traffic Item to see all the pending errors and fix them before Applying the Traffic
+            
 """
 
 import sys, os, time, traceback
@@ -29,10 +40,9 @@ import sys, os, time, traceback
 # Import the Restpy module
 from ixnetwork_restpy import SessionAssistant
 
-print('!!! L3vpn SRv6 Script Starts !!!')
-apiServerIp = '10.39.47.41'
+apiServerIp = '172.16.101.3'
 
-ixChassisIpList = ['10.39.44.162']
+ixChassisIpList = ['172.16.102.5']
 portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
@@ -46,18 +56,12 @@ debugMode = False
 forceTakePortOwnership = True
 
 try:
-    # Connection to Windows API server
-    print('Connecting to IxNetwork Client')
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin',
-                               ClearConfig=True, LogLevel=SessionAssistant.LOGLEVEL_INFO )
-
-    # Connection to Linux API Server
-    # session = SessionAssistant(IpAddress=apiServerIp, RestPort=443, UserName='admin', Password='ixia123!',
-    # SessionName=None, SessionId=None, ApiKey=None, ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName=username,
+                               Password=password, SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
 
-    ixNetwork.info('Cleaning up the old config file and creating an empty config')
     portMap = session.PortMapAssistant()
     vport = dict()
 
@@ -327,17 +331,9 @@ try:
 
     ixNetwork.info('Starting Protocols and waiting for 20 seconds for protocols to come up')
     ixNetwork.StartAllProtocols(Arg1='sync')
-    time.sleep(20)
 
     ixNetwork.info('Fetching all Protocol Summary Stats')
     protocolSummary = session.StatViewAssistant('Protocols Summary')
-    protocolSummary.AddRowFilter('Protocol Type', protocolSummary.REGEX, '(?i)^BGP.*')
-    protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.GREATER_THAN_OR_EQUAL, 0)
-    protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
-    ixNetwork.info(protocolSummary)
-    protocolSummary = session.StatViewAssistant('Protocols Summary')
-    time.sleep(5)
-    protocolSummary.AddRowFilter('Protocol Type', protocolSummary.REGEX, '(?i)^ISIS.*')
     protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.GREATER_THAN_OR_EQUAL, 0)
     protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
     ixNetwork.info(protocolSummary)
@@ -367,8 +363,8 @@ try:
                         NumVlansForMulticastReplication='1', TrafficType='ipv4')
 
     trafficTopo1ToTopo2.EndpointSet.add(Name="EndpointSet-1", MulticastDestinations=[], ScalableSources=[],
-                            MulticastReceivers=[],ScalableDestinations=[],NgpfFilters=[], TrafficGroups=[],
-                            Sources=topology1, Destinations=deviceGroupBgp2)
+                                        MulticastReceivers=[],ScalableDestinations=[],NgpfFilters=[], TrafficGroups=[],
+                                        Sources=topology1, Destinations=deviceGroupBgp2)
 
     trafficTopo1ToTopo2.Tracking.find().TrackBy = ['ipv4SourceIp0', 'trackingenabled0']
     trafficTopo1ToTopo2.Tracking.find().FieldWidth = "thirtyTwoBits"
@@ -379,7 +375,7 @@ try:
     ixNetwork.info('applying and starting L2/L3 traffic')
     trafficTopo1ToTopo2.Generate()
     ixNetwork.Traffic.Apply()
-    time.sleep(5)
+
     ixNetwork.Traffic.Start()
     ixNetwork.info("Traffic runs for 20 seconds")
     time.sleep(20)
@@ -392,14 +388,21 @@ try:
 
     ixNetwork.info('Stopping L2/L3 Traffic')
     ixNetwork.Traffic.Stop()
-    time.sleep(5)
+    #time.sleep(5)
 
     ixNetwork.info('Stopping Protocols')
     ixNetwork.StopAllProtocols()
-    ixNetwork.info('!!! Test Script Ends !!!')
 
+    if debugMode == False:
+        for vport in ixNetwork.Vport.find():
+            vport.ReleasePort()
+            
+        # For linux and connection_manager only
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
+            
 except Exception as errMsg:
-    # print('\n%s' % traceback.format_exc(None, errMsg))
-    print(traceback.print_exception())
-    if 'session' in locals():
-        session.Session.remove()
+    print('\n%s' % traceback.format_exc(None, errMsg))
+    if debugMode == False and 'session' in locals():
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()

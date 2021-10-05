@@ -14,13 +14,16 @@ This script intends to demonstrate how to use NGPF BGP API to configure
 
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
+   
 Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
    - pip install ixnetwork_restpy (minimum version 1.0.51)
+   
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy/#/
+    
 Usage:
    - Enter: python <script>
 """
@@ -31,9 +34,9 @@ import sys, os, time, traceback
 from ixnetwork_restpy import SessionAssistant
 
 print('!!! L3VPN Option C Test Script Starts !!!')
-apiServerIp = '10.39.47.41'
+apiServerIp = '172.16.101.3'
 
-ixChassisIpList = ['10.39.44.162']
+ixChassisIpList = ['172.16.102.5']
 portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
@@ -49,11 +52,9 @@ forceTakePortOwnership = True
 try:
     # Connection to Windows API server
     print('Connecting to IxNetwork Client')
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin', ClearConfig=True, LogLevel=SessionAssistant.LOGLEVEL_INFO )
-
-    #Connection to Linux API Server
-    # session = SessionAssistant(IpAddress=apiServerIp, RestPort=443, UserName='admin', Password='ixia123!', SessionName=None, SessionId=None, ApiKey=None,
-    #                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName=username,
+                               Password=password, SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
 
@@ -158,11 +159,16 @@ try:
     ixNetwork.info('Changing label start value in iBGP Prefix Pool')
     vrf2.BgpIPRouteProperty.find().LabelStart.Increment(start_value='21',step_value='5')
 
-    ixNetwork.info('!!! Configured Topology Syccessfully!!!')
-    ixNetwork.info('!!! Test Script Ends !!!')
+    if debugMode == False:
+        for vport in ixNetwork.Vport.find():
+            vport.ReleasePort()
+            
+        # For linux and connection_manager only
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 except Exception as errMsg:
-    # print('\n%s' % traceback.format_exc(None, errMsg))
-    print(traceback.print_exception())
-    if 'session' in locals():
-        session.Session.remove()
+    print('\n%s' % traceback.format_exc(None, errMsg))
+    if debugMode == False and 'session' in locals():
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()

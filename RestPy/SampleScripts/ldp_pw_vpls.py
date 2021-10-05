@@ -25,16 +25,20 @@ ldppwvpls.py:
     8. Start the L2-L3 traffic.                                                     
     9. Retrieve L2-L3 traffic stats.                                                
    10. Stop L2-L3 traffic.                                                          
-   11. Stop all protocols.    
+   11. Stop all protocols.   
+    
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
+   
 Requirements:
    - IxNetwork 9.00
    - Python 2.7 and 3+
    - pip install requests
    - pip install ixnetwork_restpy (minimum version 1.0.51)
+   
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy
+    
 Usage:
    - Enter: python <script>
 """
@@ -44,10 +48,10 @@ import sys, re, time, traceback
 # Import the RestPy module
 from ixnetwork_restpy import SessionAssistant
 
-apiServerIp = '10.39.47.41'
+apiServerIp = '172.16.101.3'
 
-ixChassisIpList = ['10.39.44.162']
-portList = [[ixChassisIpList[0], 2,1], [ixChassisIpList[0], 2, 2]]
+ixChassisIpList = ['172.16.102.5']
+portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
 username = 'admin'
@@ -59,17 +63,15 @@ debugMode = False
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
 
-
 # For Linux API server and Windows Connection Mgr only.
 #    debugMode=True:  Leave the session opened for debugging.
 #    debugMode=False: Remove the session when the script is done.
 debugMode = False
 
 try:
-    # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin', 
-                               SessionName=None, SessionId=None, ApiKey=None,
-                               ClearConfig=True, LogLevel="info", LogFilename='restpy.log')
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName=username,
+                               Password=password, SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
     ixNetwork.info('Assign ports')
@@ -205,11 +207,10 @@ try:
 
     ixNetwork.info("Starting protocols and waiting 60 seconds for protcols to come up")
     ixNetwork.StartAllProtocols()
-    time.sleep(60)
 
     ixNetwork.info('Verify protocol sessions\n')
     protocolSummary = session.StatViewAssistant('Protocols Summary')
-    protocolSummary.AddRowFilter('Protocol Type', protocolSummary.REGEX, '(?i)^BGP?')
+    #protocolSummary.AddRowFilter('Protocol Type', protocolSummary.REGEX, '(?i)^BGP?')
     protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.GREATER_THAN_OR_EQUAL, 0)
     protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
     ixNetwork.info(protocolSummary)
@@ -255,11 +256,16 @@ try:
     ixNetwork.info("Stopping Protocols")
     ixNetwork.StopAllProtocols()
 
-    ixNetwork.info("Test Script Ends")
+    if debugMode == False:
+        for vport in ixNetwork.Vport.find():
+            vport.ReleasePort()
+            
+        # For linux and connection_manager only
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
 
 except Exception as errMsg:
-    # print('\n%s' % traceback.format_exc(None, errMsg))
-    print(traceback.print_exception())
+    print('\n%s' % traceback.format_exc(None, errMsg))
     if 'session' in locals():
         session.Session.remove()
 

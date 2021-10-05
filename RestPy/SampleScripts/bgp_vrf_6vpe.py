@@ -16,32 +16,41 @@ Tested with two back-2-back IxNetwork ports.
    - Get/Show Traffic Item Statistics
    - Get/Show Flow Statistics stats
    
-   
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
+   
 Requirements:
    - Minimum IxNetwork 8.50
    - Python 2.7 and 3+
    - pip install requests
    - pip install ixnetwork_restpy (minimum version 1.0.51)
+   
 RestPy Doc:
     https://www.openixia.github.io/ixnetwork_restpy/#/
+    
 Usage:
    - Enter: python <script>
+   
+Error:
+        10/04/2021 20:23:11 [WARNING] [Transmit Rate for IxVM] When IxVM ports are used, traffic transmit rate may be lower than expected due to underlying hardware or hypervisor capabilities. In this case, if the Flow Group Transmission Mode for the Traffic Item is configured as Fixed Packet Count, Fixed iteration or Fixed Duration, then the transmit duration for that Traffic Item might be increased.
+        10/04/2021 20:23:11 [WARNING] [No Valid Packets] There are no packets to be applied to hardware. This happens when no packets were generated due to destination MACs or VPNs being invalid or unreachable
+        10/04/2021 20:23:11 [ERROR] [No Flow Groups] Cannot apply traffic because there are no flow groups after removing failed destination MAC addresses.
+
+   
 """
 
 import sys, os, time, traceback
 
 from ixnetwork_restpy import SessionAssistant
 
-apiServerIp = '10.39.33.143'
+apiServerIp = '172.16.101.3'
 
-ixChassisIpList = ['10.39.33.143']
+ixChassisIpList = ['172.16.102.5']
 portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
 username = 'admin'
-password = 'ixia123'
+password = 'admin'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
@@ -51,14 +60,14 @@ forceTakePortOwnership = True
 
 # igp between P-P either ospf or isis
 igp ='ospf'
+
 try:
-    #Connection to Linux API Server
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName=username, Password=password, SessionName=None, SessionId=None, ApiKey=None,
-                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
+    # LogLevel: none, info, warning, request, request_response, all
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+                               SessionName=None, SessionId=None, ApiKey=None,
+                               ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-    
-    ixNetwork.info('Assign test ports into IxNetwork')
 
     portMap = session.PortMapAssistant()
     vport = dict()
@@ -214,7 +223,6 @@ try:
 
     # Getting protocol stats
     protocolSummary = session.StatViewAssistant('Protocols Summary')
-    protocolSummary.AddRowFilter('Protocol Type', protocolSummary.REGEX, '(?i)^BGP?')
     protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.GREATER_THAN_OR_EQUAL, 0)
     protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
     ixNetwork.info(protocolSummary)
@@ -233,7 +241,6 @@ try:
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 120
 
-    #Enable tracking of traffic
     trafficVrf1ToVrf2.Tracking.find()[0].TrackBy = ['flowGroup0']
 
     trafficVrf1ToVrf2.Generate()
@@ -244,15 +251,21 @@ try:
     trafficItemStatistics = session.StatViewAssistant('Traffic Item Statistics')
     ixNetwork.info('{}\n'.format(trafficItemStatistics))
 
-
     ixNetwork.info('Stop traffic')
     ixNetwork.Traffic.StopStatelessTrafficBlocking()
 
-    ixNetwork.info('Stop All Protocols')
-
     ixNetwork.StopAllProtocols(Arg1='sync')
 
+    if debugMode == False:
+        for vport in ixNetwork.Vport.find():
+            vport.ReleasePort()
+            
+        # For linux and connection_manager only
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()
+            
 except Exception as errMsg:
-    print(traceback.print_exception())
-    if 'session' in locals():
-        session.Session.remove()
+    print('\n%s' % traceback.format_exc(None, errMsg))
+    if debugMode == False and 'session' in locals():
+        if session.TestPlatform.Platform != 'windows':
+            session.Session.remove()

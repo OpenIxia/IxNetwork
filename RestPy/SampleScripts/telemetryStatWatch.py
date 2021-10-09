@@ -20,9 +20,9 @@ session = SessionAssistant(IpAddress=apiServerIp, SessionName=None, SessionId=1,
 ixNetwork = session.Ixnetwork
 
 # State the stats to watch
-watchPortCPU = ixNetwork.Statistics.View.find(Caption='Port CPU Statistics').Data
-watchPortStats = ixNetwork.Statistics.View.find(Caption='Port Statistics').Data
-watchTrafficItem = ixNetwork.Statistics.View.find(Caption='Traffic Item Statistics').Data
+watchPortCPU = ixNetwork.Statistics.View.find(Caption='^Port CPU Statistics$').Data
+watchPortStats = ixNetwork.Statistics.View.find(Caption='^Port Statistics$').Data
+watchTrafficItem = ixNetwork.Statistics.View.find(Caption='^Traffic Item Statistics$').Data
 
 attributes_to_watch = ['pageValues']
 topicPortCPU = 'Port CPU Statistics Watch'

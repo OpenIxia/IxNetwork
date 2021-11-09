@@ -220,6 +220,7 @@ try:
 
     # Starting all protocol
     ixNetwork.StartAllProtocols(Arg1='sync')
+    time.sleep(60)
 
     # Getting protocol stats
     protocolSummary = session.StatViewAssistant('Protocols Summary')
@@ -246,6 +247,7 @@ try:
     trafficVrf1ToVrf2.Generate()
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
+    time.sleep(10)
 
     # Traffic Statistics
     trafficItemStatistics = session.StatViewAssistant('Traffic Item Statistics')

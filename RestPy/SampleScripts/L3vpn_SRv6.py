@@ -25,15 +25,6 @@ RestPy Doc:
     
 Usage:
    - Enter: python <script>
-   
-Error:
-       raise BadRequestError(message, response.status_code)
-       ixnetwork_restpy.errors.BadRequestError:  Error in L2/L3 Traffic Apply
-
-        Current Server Errors/Warnings:
-        10/04/2021 20:07:06 [WARNING] [No Flow Groups Created] The Traffic Item was not generated properly and no Flow Groups were created. Please regenerate the Traffic Item to see all the pending errors and fix them before Applying the Traffic
-            
-"""
 
 import sys, os, time, traceback
 

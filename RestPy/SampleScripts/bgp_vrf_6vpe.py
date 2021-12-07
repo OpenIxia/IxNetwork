@@ -30,14 +30,6 @@ RestPy Doc:
     
 Usage:
    - Enter: python <script>
-   
-Error:
-        10/04/2021 20:23:11 [WARNING] [Transmit Rate for IxVM] When IxVM ports are used, traffic transmit rate may be lower than expected due to underlying hardware or hypervisor capabilities. In this case, if the Flow Group Transmission Mode for the Traffic Item is configured as Fixed Packet Count, Fixed iteration or Fixed Duration, then the transmit duration for that Traffic Item might be increased.
-        10/04/2021 20:23:11 [WARNING] [No Valid Packets] There are no packets to be applied to hardware. This happens when no packets were generated due to destination MACs or VPNs being invalid or unreachable
-        10/04/2021 20:23:11 [ERROR] [No Flow Groups] Cannot apply traffic because there are no flow groups after removing failed destination MAC addresses.
-
-   
-"""
 
 import sys, os, time, traceback
 

@@ -40,10 +40,10 @@ import sys, os, time, traceback
 # Import the Restpy module
 from ixnetwork_restpy import SessionAssistant
 
-apiServerIp = '172.16.101.3'
+apiServerIp = '10.39.34.74'
 
-ixChassisIpList = ['172.16.102.5']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
+ixChassisIpList = ['10.39.44.162']
+portList = [[ixChassisIpList[0], 2,1], [ixChassisIpList[0], 2, 2]]
 
 # For Linux API server only
 username = 'admin'
@@ -54,10 +54,9 @@ debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True
-
+ 
 try:
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName=username,
-                               Password=password, SessionName=None, SessionId=None, ApiKey=None,
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11339 ,SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
@@ -275,9 +274,9 @@ try:
     ixNetwork.info('Configuring the SRTE Policy Properties: BGP SRTE Policy Tab')
     bgpIpv6Peer1.BgpSRTEPoliciesListV6.PolicyType.Single('ipv6')
     bgpIpv6Peer1.BgpSRTEPoliciesListV6.EndPointV6.Single('2222::1')
-    bgpIpv6Peer1.BgpSRTEPoliciesListV6.BgpSRTEPoliciesTunnelEncapsulationListV6.BgpSRTEPoliciesSegmentListV6.NumberOfSegmentsV6=6
-    bgpIpv6Peer1.BgpSRTEPoliciesListV6.BgpSRTEPoliciesTunnelEncapsulationListV6.BgpSRTEPoliciesSegmentListV6.BgpSRTEPoliciesSegmentsCollectionV6.SegmentType.Single('ipv6sid')
-    bgpIpv6Peer1.BgpSRTEPoliciesListV6.BgpSRTEPoliciesTunnelEncapsulationListV6.BgpSRTEPoliciesSegmentListV6.BgpSRTEPoliciesSegmentsCollectionV6.Ipv6SID.Single('6666::1')
+    #bgpIpv6Peer1.BgpSRTEPoliciesListV6.BgpSRTEPoliciesTunnelEncapsulationListV6.BgpSRTEPoliciesSegmentListV6.NumberOfSegmentsV6=6
+    #bgpIpv6Peer1.BgpSRTEPoliciesListV6.BgpSRTEPoliciesTunnelEncapsulationListV6.BgpSRTEPoliciesSegmentListV6.BgpSRTEPoliciesSegmentsCollectionV6.SegmentType.Single('ipv6sid')
+    #bgpIpv6Peer1.BgpSRTEPoliciesListV6.BgpSRTEPoliciesTunnelEncapsulationListV6.BgpSRTEPoliciesSegmentListV6.BgpSRTEPoliciesSegmentsCollectionV6.Ipv6SID.Single('6666::1')
 
     ixNetwork.info('Adding BGPVRF on top of BGPv6')
     bgpV6Vrf1=bgpIpv6Peer1.BgpV6Vrf.add(Name='BGP6VRF2', Multiplier=1)
@@ -331,6 +330,7 @@ try:
 
     ixNetwork.info('Starting Protocols and waiting for 20 seconds for protocols to come up')
     ixNetwork.StartAllProtocols(Arg1='sync')
+    time.sleep(20)
 
     ixNetwork.info('Fetching all Protocol Summary Stats')
     protocolSummary = session.StatViewAssistant('Protocols Summary')
@@ -348,7 +348,7 @@ try:
     ixNetwork.Traffic.RefreshLearnedInfoBeforeApply = True
     ixNetwork.Traffic.DetectMisdirectedOnAllPorts = False
     ixNetwork.Traffic.UseRfc5952 = True
-    ixNetwork.Traffic.CycleOffsetUnitForScheduledStart = '0'
+    ixNetwork.Traffic.CycleOffsetUnitForScheduledStart = 'nanoseconds'
     ixNetwork.Traffic.CycleTimeUnitForScheduledStart = 'nanoseconds'
     ixNetwork.Traffic.CycleTimeForScheduledStart = '1'
     ixNetwork.Traffic.EnableLagFlowBalancing = True

@@ -10,7 +10,7 @@ Benefits:
      - All the Python classes you need are already generated.
      - This means you don't have to be creating and managing more API libraries containing high level wrappers.
 
-Supports Python 2.7 and 3+
+Supports Python 2.7 and 3.6+
 
 Requirement:
      - IxNetwork 8.50
@@ -44,25 +44,16 @@ Installation:
         - Note: You need to include this path in your system's environment PYTHONPATH:
 	        /your_path/ixnetwork_restpy
 
-Sample scripts and helper class functions:
+Sample scripts:
     Sample scripts:
-       https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/SampleScripts
+       https://github.com/OpenIxia/IxNetwork/tree/master/RestPy/SampleScripts
 
-    Helper functions for the sample scripts:
-       https://github.com/OpenIxia/IxNetwork/RestApi/Python/RestPy/Modules
-
-How to efficiently use ixnetwork_restpy:
-    - Use the WebUI doc that comes with the PIP installation.
-          - Located in your python site-packages/ixnetwork_restpy/docs/index.html
-          - This doc shows and follows the IxNetwork API hierarchical tree model.
-          - It is the same way you view the IxNetwork API Browser in Windows or Linux API server.
-	  - To access the WebUI doc, on a web browser enter: 
-               Linux:   file:///<path_to_your_python_installation>/site-packages/ixnetwork_restpy/docs/index.html
-               Windows: file://c:/<path_to_your_python_installation>/site-packages/ixnetwork_restpy/docs/index.html
-
+How to use ixnetwork_restpy:
     - Use the IxNetwork API Browser as your guide to understand the API tree.
     - Look at the sample scripts and see how the object oriented dot notation correlates to the IxNetwork
       API tree and the WebUI doc.
+    - RESTPy Guide: https://openixia.github.io/ixnetwork_restpy/index.html
+    
 
 
 

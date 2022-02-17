@@ -229,42 +229,7 @@ class Traffic(object):
                         self.configConfigElements(trafficItemObj.HighLevelStream.find(), eachHighLevelStream)
                         pass
 
-        # if configElements != "" and trafficItemObj is not None:
-        #     configElementObj = trafficItemObj.ConfigElement.find()
-        #
-        # for configEle in configElements:
-        #     if 'transmissionType' in configEle:
-        #         configElementObj.TransmissionControl.Type = configEle['transmissionType']
-        #         del configEle['transmissionType']
-        #
-        #     if 'frameCount' in configEle:
-        #         configElementObj.TransmissionControl.FrameCount = configEle['frameCount']
-        #         del configEle['frameCount']
-        #
-        #     if 'frameRate' in configEle:
-        #         configElementObj.FrameRate.Rate = configEle['frameRate']
-        #         del configEle['frameRate']
-        #
-        #     if 'frameRateType' in configEle:
-        #         configElementObj.FrameRate.Type = configEle['frameRateType']
-        #         del configEle['frameRateType']
-        #
-        #     if 'frameSize' in configEle:
-        #         configElementObj.FrameSize.FixedSize = configEle['frameSize']
-        #         del configEle['frameSize']
-        #
-        #     if 'portDistribution' in configEle:
-        #         configElementObj.FrameRateDistribution.PortDistribution \
-        #             = configEle['portDistribution']
-        #         del configEle['portDistribution']
-        #
-        #     if 'streamDistribution' in configEle:
-        #         configElementObj.FrameRateDistribution.StreamDistribution \
-        #             = configEle['streamDistribution']
-        #         del configEle['streamDistribution']
-
         if mode == 'modify':
-
             if trafficItem is not None:
                 trafficItemObj = obj
                 if 'trackBy' in trafficItem:

@@ -589,6 +589,10 @@ class Protocol(object):
         if 'multiplier' in kwargs:
             del kwargs['multiplier']
 
+        if 'useRapdCommit' in kwargs:
+            kwargs['useRapidCommit'] = kwargs['useRapdCommit']
+            del kwargs['useRapdCommit']
+
         for key, value in kwargs.items():
             key = key[0:1].capitalize() + key[1:]
             multivalueObj = getattr(dhcpObj, key)

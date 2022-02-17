@@ -837,13 +837,13 @@ class Traffic(object):
             raise IxNetRestApiException('Failed to located your provided fieldName:', fieldName)
         self.ixnObj.logInfo('configPacketHeaderFieldId:  fieldIdObj: %s' % stackIdObj.href +
                             '/field/' + str(fieldId), timestamp=False)
+        if 'auto' in data:
+            fieldObj.Auto = data['auto']
         if data.get('valueType'):
             fieldObj.ValueType = data.get('valueType')
         else:
             fieldObj.ValueType = 'singleValue'
             data['valueType'] = 'singleValue'
-        if data.get('auto'):
-            fieldObj.Auto = data['auto']
         if data.get('valueType') == 'singleValue':
             fieldObj.SingleValue = data['fieldValue'] if data.get('fieldValue') else 0
         elif data.get('valueType') in ['increment', 'decrement']:

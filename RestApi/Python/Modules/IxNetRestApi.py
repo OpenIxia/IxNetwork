@@ -15,7 +15,10 @@ import requests
 import datetime
 import platform
 import time
-from ixnetwork_restpy import TestPlatform
+import re
+import traceback
+# from ixnetwork_restpy import TestPlatform
+from ixnetwork_restpy import SessionAssistant
 
 
 class IxNetRestApiException(Exception):
@@ -51,7 +54,7 @@ class Connect:
                  includeDebugTraceback=True, sessionId=None,
                  httpsSecured=None, apiKey=None,
                  generateLogFile=True, robotFrameworkStdout=False,
-                 linuxApiServerTimeout=120):
+                 linuxApiServerTimeout=120, traceLevel='all'):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -128,7 +131,8 @@ class Connect:
         self.password = password
         self.apiKey = apiKey
         self.verifySslCert = verifySslCert
-        self.linuxApiServerIp = apiServerIp
+        self.apiServerIp = apiServerIp
+        self.deleteSessionAfterTest = deleteSessionAfterTest
         self.manageSessionMode = manageSessionMode
         self.apiServerPort = serverIpPort
         self.webQuickTest = webQuickTest
@@ -137,6 +141,14 @@ class Connect:
         self.linuxChassisIp = linuxChassisIp
         self.linuxApiServerTimeout = linuxApiServerTimeout
         self.sessionId = sessionId
+
+        logleveldict = {'none':SessionAssistant.LOGLEVEL_NONE,
+                        'info':SessionAssistant.LOGLEVEL_INFO,
+                        'warning':SessionAssistant.LOGLEVEL_WARNING,
+                        'request':SessionAssistant.LOGLEVEL_REQUEST,
+                        'request_response':SessionAssistant.LOGLEVEL_REQUEST_RESPONSE,
+                        'all':SessionAssistant.LOGLEVEL_ALL}
+        self.logLevel = logleveldict[traceLevel]
 
         # Make Robot print to stdout
         if self.robotFrameworkStdout:
@@ -152,60 +164,18 @@ class Connect:
 
         if type(generateLogFile) != bool:
             self.restLogFile = generateLogFile
-
-        if self.serverOs == 'windows':
-            if self.apiServerPort is None:
-                self.apiServerPort = 11009
-            else:
-                self.apiServerPort = serverIpPort
-            self.testPlatform = TestPlatform(ip_address=self.linuxApiServerIp,
-                                             rest_port=self.apiServerPort,
-                                             platform=self.serverOs,
-                                             verify_cert=verifySslCert,
-                                             log_file_name=self.restLogFile)
-            self.session = self.testPlatform.Sessions.add()
-            self.sessionId = self.session.Id
-            self.ixNetwork = self.session.Ixnetwork
-
-        if self.serverOs == 'windowsConnectionMgr':
-            if self.sessionId:
-                self.testPlatform = TestPlatform(
-                    ip_address=self.linuxApiServerIp,
-                    rest_port=self.apiServerPort,
-                    platform=self.serverOs,
-                    verify_cert=verifySslCert,
-                    log_file_name=self.restLogFile)
-
-        if self.serverOs == 'linux':
-            if self.apiServerPort is None:
-                self.apiServerPort = 443
-
-            if username is None or password is None:
-                self.username = 'admin'
-                self.password = 'admin'
-
-            self.testPlatform = TestPlatform(ip_address=self.linuxApiServerIp,
-                                             rest_port=self.apiServerPort,
-                                             platform=self.serverOs,
-                                             verify_cert=verifySslCert,
-                                             log_file_name=self.restLogFile)
-            self.testPlatform.Authenticate(self.username, self.password)
-
-            if apiKey is not None and sessionId is None:
-                raise IxNetRestApiException('Providing an apiKey must also provide a sessionId.')
-                # Connect to an existing session on the Linux API server
-            if apiKey and sessionId:
-                self.session = self.testPlatform.Sessions.find(Id=sessionId)
-                self.ixNetwork = self.session.Ixnetwork
-
-            if apiKey is None and sessionId:
-                self.session = self.testPlatform.Sessions.find(Id=sessionId)
-                self.ixNetwork = self.session.Ixnetwork
-
-            if apiKey is None and sessionId is None:
-                self.session = self.testPlatform.Sessions.add()
-                self.sessionId = self.session.Id
-                self.ixNetwork = self.session.Ixnetwork
+            
+        try:
+            session = SessionAssistant(IpAddress=self.apiServerIp, UserName=self.username, Password=self.password,
+                                   RestPort=serverIpPort, ApiKey=self.apiKey, LogFilename=self.restLogFile,
+                                   SessionId=self.sessionId, LogLevel=self.logLevel, ClearConfig=True)
+            self.ixNetwork = session.Ixnetwork
+            self.testPlatform = session.TestPlatform
+            self.sessionId = session.Ixnetwork.parent.Id
+        except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
+            if bool(re.search('ConnectionError', traceback.format_exc())):
+                print('\n%s' % traceback.format_exc())
+                raise IxNetRestApiException('Connection Error')
 
             if licenseServerIp or licenseMode or licenseTier:
                 self.configLicenseServerDetails(

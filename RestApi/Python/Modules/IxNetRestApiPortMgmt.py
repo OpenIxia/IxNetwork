@@ -248,6 +248,10 @@ class PortMgmt(object):
             port = [chassisIp, cardNum, portNum]
             if port in portList:
                 vportList.append(vport)
+
+        if not vportList:
+            raise Exception("Unable to find vport for the given portList {} ".format(portList))
+
         return vportList
 
     def getPhysicalPortsFromCreatedVports(self):

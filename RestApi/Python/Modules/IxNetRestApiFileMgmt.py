@@ -1,6 +1,8 @@
 import re
 import os
 import json
+import time
+
 from IxNetRestApi import IxNetRestApiException
 from ixnetwork_restpy.files import Files
 import datetime
@@ -28,7 +30,7 @@ class FileMgmt(object):
         """
         self.ixnObj = mainObject
 
-    def loadConfigFile(self, configFile, localFile=True):
+    def loadConfigFile(self, configFile, localFile=True, portList=None):
         """
         Description
             Load a saved config file.
@@ -48,6 +50,16 @@ class FileMgmt(object):
         self.ixnObj.logInfo("Loading Config File {}".format(configFile))
         try:
             self.ixNetwork.LoadConfig(Files(configFile, local_file=localFile))
+            if portList is not None:
+                vportList = self.ixNetwork.Vport.find()
+                chassisIp = portList[0][0]
+                connectedChassis = self.ixNetwork.AvailableHardware.Chassis.find()
+                if chassisIp != connectedChassis.Hostname:
+                    self.ixNetwork.AvailableHardware.Chassis.find().remove()
+                    self.ixNetwork.AvailableHardware.Chassis.add(Hostname=chassisIp)
+                for port, vport in zip(portList, vportList):
+                    vport.update(Location=';'.join(port))
+
         except Exception as err:
             self.ixnObj.logInfo("Error with Load config {}".format(err))
             raise Exception("Failed to load config file {} ".format(configFile))

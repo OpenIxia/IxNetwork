@@ -45,6 +45,13 @@ class FileMgmt(object):
 
             localFile: (bool): For Windows API server and Connection Mgr running on a Windows
             server only. Set to False if the config file is in the Windows API server filesystem.
+
+            portList: (list): This takes the list of ports to be connected to once load config is performed
+            If the value is None(default value), then chassis, slot and port under configuration file are retained.
+            If not None, chassis, slot and port configurations loaded using configuration file will get replaced with
+            the given parameters
+            Example: [['10.39.64.197', '1', '1'],
+                      ['10.39.64.197', '1', '2']]
         """
 
         self.ixnObj.logInfo("Loading Config File {}".format(configFile))

@@ -54,7 +54,7 @@ class Connect:
                  includeDebugTraceback=True, sessionId=None,
                  httpsSecured=None, apiKey=None,
                  generateLogFile=True, robotFrameworkStdout=False,
-                 linuxApiServerTimeout=120, traceLevel='all'):
+                 linuxApiServerTimeout=120, traceLevel='all', clearConfig=False):
         """
         Description
            Initializing default parameters and making a connection to the API server
@@ -141,6 +141,7 @@ class Connect:
         self.linuxChassisIp = linuxChassisIp
         self.linuxApiServerTimeout = linuxApiServerTimeout
         self.sessionId = sessionId
+        self.clearConfig = clearConfig
 
         logleveldict = {'none':SessionAssistant.LOGLEVEL_NONE,
                         'info':SessionAssistant.LOGLEVEL_INFO,
@@ -168,7 +169,7 @@ class Connect:
         try:
             session = SessionAssistant(IpAddress=self.apiServerIp, UserName=self.username, Password=self.password,
                                    RestPort=serverIpPort, ApiKey=self.apiKey, LogFilename=self.restLogFile,
-                                   SessionId=self.sessionId, LogLevel=self.logLevel, ClearConfig=True)
+                                   SessionId=self.sessionId, LogLevel=self.logLevel, ClearConfig=self.clearConfig)
             self.ixNetwork = session.Ixnetwork
             self.testPlatform = session.TestPlatform
             self.sessionId = session.Ixnetwork.parent.Id

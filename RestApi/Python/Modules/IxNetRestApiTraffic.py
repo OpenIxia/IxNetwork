@@ -188,6 +188,13 @@ class Traffic(object):
                 trackBy = trafficItem['trackBy']
                 del trafficItem['trackBy']
 
+            if 'srcDestMesh' in trafficItem:
+                if trafficItem['srcDestMesh'] not in ['fullMesh', 'manyToMany', 'none', 'oneToOne']:
+                    trafficItem['srcDestMesh'] = trafficItem['srcDestMesh'].replace("-", "")
+                    for element in ['fullMesh', 'manyToMany', 'none', 'oneToOne']:
+                        if element.lower() == trafficItem['srcDestMesh'].lower():
+                            trafficItem['srcDestMesh'] = element
+
             for item, value in trafficItem.items():
                 itemObj = item[0:1].capitalize() + item[1:]
                 setattr(trafficItemObj, itemObj, value)
@@ -235,6 +242,14 @@ class Traffic(object):
                 if 'trackBy' in trafficItem:
                     trackBy = trafficItem['trackBy']
                     del trafficItem['trackBy']
+
+                if 'srcDestMesh' in trafficItem:
+                    if trafficItem['srcDestMesh'] not in ['fullMesh', 'manyToMany', 'none', 'oneToOne']:
+                        trafficItem['srcDestMesh'] = trafficItem['srcDestMesh'].replace("-", "")
+                        for element in['fullMesh', 'manyToMany', 'none', 'oneToOne']:
+                            if element.lower() == trafficItem['srcDestMesh'].lower():
+                                trafficItem['srcDestMesh'] = element
+
                 for item, value in trafficItem.items():
                     itemObj = item[0:1].capitalize() + item[1:]
                     setattr(trafficItemObj, itemObj, trafficItem[item])

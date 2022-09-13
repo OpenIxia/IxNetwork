@@ -141,8 +141,8 @@ class PacketCapture(object):
                                             'options: enableDataPlane|enableControlPlane')
 
         vport = self.portMgmtObj.getVports([self.captureRxPort])[0]
-        totalDataCapturedPackets = vport.Capture.DataPacketCounter
-        totalControlCapturedPackets = vport.Capture.ControlPacketCounter
+        totalDataCapturedPackets = vport.Capture.DataCapturedPacketCounter
+        totalControlCapturedPackets = vport.Capture.ControlCapturedPacketCounter
 
         if type(totalDataCapturedPackets) != int:
             totalDataCapturedPackets = 0

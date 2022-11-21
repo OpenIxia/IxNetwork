@@ -237,6 +237,19 @@ class PortMgmt(object):
         vportList = []
 
         self.ixnObj.logInfo("get vport objects for portList {}".format(portList))
+        portConnected = False
+        if len(self.ixnObj.ixNetwork.Vport.find()) == 0:
+            # this means no ports are configured
+            return
+        else:
+            for vport in self.ixnObj.ixNetwork.Vport.find():
+                if vport.IsConnected == True:
+                    portConnected = True
+                    break
+
+        if portConnected == False:
+            return
+
         for vport in self.ixnObj.ixNetwork.Vport.find():
             assignedTo = vport.AssignedTo
             if assignedTo == '':
@@ -402,9 +415,13 @@ class PortMgmt(object):
                       [[ixChassisIp, str(cardNum), str(portNum)], [], [] ...]
         """
         self.ixnObj.logInfo('Release selected ports {} from configuration'.format(portList))
+        # vportConfiguredList = [vport for vport in self.ixNetwork.Vport.find()]
+        # if vportConfiguredList != portList[0]:
+        #     return
         vportList = self.getVports(portList)
-        for vport in vportList:
-            vport.ReleasePort()
+        if vportList != None:
+            for vport in vportList:
+                vport.ReleasePort()
 
     def resetPortCpu(self, vportList=None, portList=None, timeout=90):
         """

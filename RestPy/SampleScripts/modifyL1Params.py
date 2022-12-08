@@ -39,7 +39,7 @@ osPlatform = 'linux'
 
 # For Linux API server only
 user='admin'
-password='Kimchi123Kimchi123!'
+password='admin'
 
 # Since we can have multiple sessions on Linux based chassis, we need to select a session id/name 
 sessionId='12'

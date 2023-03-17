@@ -1,0 +1,17 @@
+apiServerIp: 192.168.28.10
+
+ixChassisIpList: ['192.168.28.5']
+portList: [[192.168.28.5, 1,1], [192.168.28.5, 1, 2]]
+
+# For Linux API server only
+username: admin
+password: admin
+
+# For linux and connection_manager only. Set to True to leave the session alive for debugging
+debugMode: True
+
+# Forcefully take port ownership if the portList are owned by other users
+forceTakePortOwnership: True
+
+
+

@@ -1,0 +1,163 @@
+stages:
+  - build
+  - reserveSandbox
+  - setup
+  - test
+  - teardown
+  - releaseSandbox
+  - deploy
+
+workflow:
+ rules:
+   - if: $CI_MERGE_REQUEST_ID # Execute a detached pipeline in merge request context
+     when: never
+   - if: $CI_COMMIT_BRANCH == 'dev_branch' # Execute pipeline when a new commit is pushed to dev_branch
+     when: always
+
+variables:
+  gitlabProjectPath: /GitLabProjects/PyTest
+  pytestPath: ${gitlabProjectPath}/PyTest
+  testResultPath: ${gitlabProjectPath}/TestResultsGitLab/${CI_PIPELINE_ID}
+  pytestAllurePath: ${CI_PROJECT_DIR}/pytestHtmlReport
+  sandboxConfigFile: /GitLabProjects/SDLO/ConfigFiles/gitlab-pytest-sdlo.yml
+
+.mergeVariable:
+  before_script:
+    - >
+      if [[ "$CI_COMMIT_BRANCH" == "dev_branch" ]]; then
+        SANDBOXFILE="${gitlabProjectPath}/ConfigFiles/gitlab-pytest-sdlo.yml"
+      elif [[ "$CI_COMMIT_BRANCH" == "ixSuiteStore" ]]; then
+        SANDBOXFILE="${gitlabProjectPath}/ConfigFiles/gitlab-ixSuiteStore-sdlo.yml"
+      else
+        SANDBOXFILE="${gitlabProjectPath}/ConfigFiles/gitlab-ansible-sdlo.yml"
+      fi
+
+Build:
+  stage: build
+  extends:
+    - .mergeVariable
+  script:
+    - pwd && whoami
+    - echo "CI_COMMIT_BRANCH = ${CI_COMMIT_BRANCH}"
+    - echo "SANDBOX = ${SANDBOXFILE}"
+    - echo "$CI_SERVER $CI_SERVER_PORT $CI_SERVER_HOST $CI_PAGES_URL $CI_COMMIT_REF_NAME $SANDBOXFILE"
+    - export
+    - mkdir -p $testResultPath
+
+
+Reserve Sandbox:
+  stage: reserveSandbox
+  script:
+    - echo "CI build directory = $CI_BUILDS_DIR"
+    - >
+      python3.7 /GitLabProjects/SDLO/reserveSandbox.py ${sandboxConfigFile}
+  # allow_failure = false, will not allow next jobs to execute
+  allow_failure: false
+  when: on_success
+
+Setup_DUT1:
+  stage: setup
+  variables:
+    reportFileName: PyTest-Setup-DUT1-Results
+  script:
+    - >
+      pytest -v -s --html=${testResultPath}/${reportFileName}.html --alluredir=${pytestAllurePath}
+      ${pytestPath}/Setup/setup_devices.py::Setup_DUTs::setup_dut1
+    - python3.7 -c "import pdfkit; pdfkit.from_file('${testResultPath}/${reportFileName}.html', '${reportFileName}.pdf')"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${reportFileName}.pdf
+    expire_in: 1 week
+
+Setup_DUT2:
+  stage: setup
+  variables:
+    reportFileName: PyTest-Setup-DUT2-Results.html
+  script:
+    - >
+      pytest -v -s --html=${testResultPath}/${reportFileName}.html --alluredir=${pytestAllurePath}
+      ${pytestPath}/Setup/setup_devices.py::Setup_DUTs::setup_dut2
+    - python3.7 -c "import pdfkit; pdfkit.from_file('${testResultPath}/${reportFileName}.html', '${reportFileName}.pdf')"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${reportFileName}.pdf
+    expire_in: 1 week
+
+PyTest:
+  stage: test
+  variables:
+    reportFileName: PyTest-Test-Results
+  script:
+    - > 
+      pytest -v -s -x --html=${testResultPath}/${reportFileName}.html --alluredir=${pytestAllurePath}
+      ${pytestPath}/Setup ${pytestPath}/BGP ${pytestPath}/OSPF
+      --sandboxConfigs ${sandboxConfigFile}
+    - python3.7 -c "import pdfkit; pdfkit.from_file('${testResultPath}/${reportFileName}.html', '${reportFileName}.pdf')"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${reportFileName}.pdf
+      - ${pytestAllurePath}
+    expire_in: 1 week
+
+Teardown_DUT1:
+  stage: teardown
+  variables:
+    reportFileName: PyTest-Teardown-DUT1-Results
+  script:
+    - >
+      pytest -v -s --html=${testResultPath}/${reportFileName}.html --alluredir=${pytestAllurePath}
+      ${pytestPath}/Teardown/teardown_devices.py::Teardown::teardown_dut1   
+    - python3.7 -c "import pdfkit; pdfkit.from_file('${testResultPath}/${reportFileName}.html', '${reportFileName}.pdf')"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${reportFileName}.pdf
+    expire_in: 1 week
+
+Teardown_DUT2:
+  stage: teardown
+  variables:
+    reportFileName: PyTest-Teardown-DUT2-Results
+  script:
+    - >
+      pytest -v -s --html=${testResultPath}/${reportFileName}.html --alluredir=${pytestAllurePath}
+      ${pytestPath}/Teardown/teardown_devices.py::Teardown::teardown_dut2
+    - python3.7 -c "import pdfkit; pdfkit.from_file('${testResultPath}/${reportFileName}.html', '${reportFileName}.pdf')"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/${reportFileName}.pdf
+    expire_in: 1 week
+
+Release Sandbox:
+  stage: releaseSandbox
+  script:
+    - echo "Releasing lab equipments"
+    - >
+      python3.7 /GitLabProjects/SDLO/releaseSandbox.py ${sandboxConfigFile}
+
+Production:
+  stage: deploy
+  script:
+    - echo "Build a Python package"
+    - echo "Upload Python package to pypi"
+    - echo "Deploy git pull on production server"
+  environment:
+    name: production
+    url: http://${CI_SERVER_URL}/ixia/pytest/-/jobs/${CI_PIPELINE_ID}/artifacts/browse/public/
+
+pages:
+  stage: deploy
+  script:
+    - echo "Generating HTML test results"
+    - mkdir -p public
+    - cp -r ${testResultPath}/* public
+    - rm -rf ${testResultPath}
+  artifacts:
+    name: "Pipeline ID: $CI_PIPELINE_ID"
+    paths:
+      - public
+      - ${pytestAllurePath}
+    expire_in: 1 week
+
+
+  
+

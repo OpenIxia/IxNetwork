@@ -1,6 +1,6 @@
 ################################################################################
-# Version 1.0    $Revision: #2 $
-# $Author: vsomashekar $
+# Version 1.0    $Revision: #1 $
+# $Author: cm $
 #
 #    Copyright © 1997 - 2015 by IXIA
 #    All Rights Reserved.

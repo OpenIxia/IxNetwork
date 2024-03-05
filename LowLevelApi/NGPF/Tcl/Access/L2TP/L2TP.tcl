@@ -1,14 +1,11 @@
 #!/usr/bin/tclsh
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2013 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    21/06/2013 - Vlad Mihai - created sample                      	       #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -51,16 +48,12 @@
 #                                                                              #
 # Description:                                                                 #
 #   This script intends to demonstrate how to configure L2TP in a back 	       #
-#   to back scenario.							       #
+#   to back scenario.							  	       	       	           #
 #   It configures one topology with one Device Group with LAC and PPP client   #
-#   chained behind it							       # 
-#   and another with LNS and PPP server on top of it.      		       #
+#   chained behind it							       	       	    	       # 
+#   and another with LNS and PPP server on top of it.      		     	       #
 # Module:                                                                      #
 #    The sample was tested on an XM4S module.                          	       #
-# Software:                                                                    #
-#    IxOS      6.50 EA                                                         #
-#    IxNetwork 7.11 EA                                                         #
-#                                                                              #
 ################################################################################
 
 # edit this variables values to match your setup

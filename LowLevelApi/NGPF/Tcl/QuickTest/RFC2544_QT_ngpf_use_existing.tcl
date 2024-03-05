@@ -1,10 +1,8 @@
 ﻿################################################################################
-# Version 1.0    $Revision: 1 $
-# $Author: Daniel Iordache $
-#
-#    Copyright © 1997 - 2015 by IXIA
-#    All Rights Reserved.
-#
+#                                                                              #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
+#    All Rights Reserved.                                                      #
+#                                                                              #
 ################################################################################
 
 ################################################################################
@@ -45,28 +43,28 @@
 ################################################################################
 
 ################################################################################
-#                                                                              														  #
-# Description:                                                                													  #
-#    This sample script configures a RFC2544 Tput/Latency Use-Existing QT over NGPF     	  #						     
-#                                                                            															  #
-# Steps:   1 -> Cleaning up IxNetwork                                         											  #
-#	   			2 -> Add virtual port                                               												  #
-#	  			3  -> Add topologies                                               											  #
-#	   			4  -> Add device groups                                             											  #
-#	   			5 -> Add values for deviceGroup and Topologies                     								  #
-#	   			6 -> Add mac to device group                                      									      #
-#	   			7  -> Add ipv4 to device group                                      										  #
-#	   			8 -> Add virtual ports to topology                                  										  #
-#	   			9 -> Setting multiple values for ipv4 addresse                     									  #
-#	   			10 -> Creating Traffic Item                                        											  #
-#	   			11  -> Creating QT                                                 											  #
-#	   			12 -> Assigning ports to virtual ports                              										  #                
-#	   			13 -> Starting All Protocols                                        											  #
-#	   			14 -> Apply QT                                                      											  #
-#	   			15 -> Starting QT                                                   											  #
-#	   			16 -> Test run status                                 										  #
-#     			17 -> Cleaning up the client                                        										  #
-# 									      																								  #
+#                                                                              				
+# Description:                                                                				
+#    This sample script configures a RFC2544 Tput/Latency Use-Existing QT over      	
+# NGPF.                                                                           				
+# Steps:   1 -> Cleaning up IxNetwork                                         				
+#	   			2 -> Add virtual port                                               		
+#	  			3  -> Add topologies                                               			
+#	   			4  -> Add device groups                                             		
+#	   			5 -> Add values for deviceGroup and Topologies                     			
+#	   			6 -> Add mac to device group                                      			
+#	   			7  -> Add ipv4 to device group                                      		
+#	   			8 -> Add virtual ports to topology                                  		
+#	   			9 -> Setting multiple values for ipv4 addresse                     			
+#	   			10 -> Creating Traffic Item                                        			
+#	   			11  -> Creating QT                                                 			
+#	   			12 -> Assigning ports to virtual ports                              		
+#	   			13 -> Starting All Protocols                                        		
+#	   			14 -> Apply QT                                                      		
+#	   			15 -> Starting QT                                                   		
+#	   			16 -> Test run status                                 						
+#     			17 -> Cleaning up the client                                        		
+# 									      													
 ################################################################################
 
 

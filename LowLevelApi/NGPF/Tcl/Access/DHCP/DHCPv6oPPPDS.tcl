@@ -1,12 +1,8 @@
 #!/usr/bin/tclsh
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2013 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    21/06/2013 - Dragos Cotoc - created sample                                #
 #                                                                              #
 ################################################################################
 

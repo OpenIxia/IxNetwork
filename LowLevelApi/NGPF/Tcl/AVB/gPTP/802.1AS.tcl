@@ -1,14 +1,11 @@
 #!/usr/bin/tclsh
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    5/09/2014 - Irina Popa - created sample                         #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -56,11 +53,7 @@
 #   and a corresponding topology containing one Device Group with VxLAN and a  #
 #   chained Device Group with DHCPv6 Server stack.                             #
 # Module:                                                                      #
-#    The sample was tested on an XMVAE module.                          #
-# Software:                                                                    #
-#    IxOS      6.80 EA                                                         #
-#    IxNetwork 7.40 EA                                                         #
-#                                                                              #
+#    The sample was tested on an XMVAE module.                                 #
 ################################################################################
 
 # edit this variables values to match your setup

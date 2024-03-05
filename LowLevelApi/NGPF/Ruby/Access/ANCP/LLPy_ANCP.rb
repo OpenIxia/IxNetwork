@@ -1,11 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright ? 1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    12/08/2014 - Paul Ganea - created sample                         #
 #                                                                              #
 ################################################################################
 ################################################################################
@@ -47,19 +43,19 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-# The script creates and configures a topology with one ANCP DG.                               #
+# The script creates and configures a topology with one ANCP DG.               #
 # Set/Get multivalue parameters.                                               #
 # Start/Stop protocols.                                                        #
 # Module:                                                                      #
-#    The sample was tested on an XMVDC module.                          #
-# Software:                                                                    #
-#    IxOS      6.80 EA                                                         #
-#    IxNetwork 7.40 EA                                                         #
+#    The sample was tested on an XMVDC module.                                 #
 #                                                                              #
 ################################################################################
 
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+################################################################################
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
+################################################################################
+require 'ixnetwork'
 
 # create an instance of the IxNet class
 @ixNet = IxNetwork.new

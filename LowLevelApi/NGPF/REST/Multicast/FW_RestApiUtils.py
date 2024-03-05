@@ -1,9 +1,6 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $
-# $Author: Indranil Acharya $
-#
-#    Copyright © 1997 - 2015 by IXIA
-#    All Rights Reserved.
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
+#    All Rights Reserved.                                                      #
 #
 ################################################################################
 

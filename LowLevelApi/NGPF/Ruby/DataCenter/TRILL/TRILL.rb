@@ -1,11 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    04/10/2015 - Sayantan Pramanick - created sample                          #
 #                                                                              #
 ################################################################################
 
@@ -58,17 +54,12 @@
 #    2. Start all protocols.                                                   #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Retrieve protocol learned info.                                        #
-#    5. Chnage some fields and apply change on the fly                         #
+#    5. Change some fields and apply change on the fly                         #
 #    6. Configure L2-L3 traffic.                                               #
 #    7. Start the L2-L3 traffic.                                               #
 #    8. Retrieve L2-L3 traffic stats.                                          #
 #    9. Stop L2-L3 traffic.                                                    #
 #   10. Stop all protocols.                                                    #
-#                                                                              #
-# Ixia Softwares:                                                              #
-#    IxOS      6.90 EB (6.90.0.240)                                            #
-#    IxNetwork 7.50 EB (7.50.0.160)                                            #
-#                                                                              #
 ################################################################################
 
 # Script Starts
@@ -121,12 +112,10 @@ def assignPorts (ixNet, realPort1, realPort2)
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the
-# IxNetwork.rb file somewhere else where we ruby can autoload it.
-# "IxNetwork.rb" is available in <IxNetwork_installer_path>\API\Ruby
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information

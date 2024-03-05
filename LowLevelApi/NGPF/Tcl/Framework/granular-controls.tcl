@@ -3,15 +3,12 @@
 exec tclsh "$0" "$@"
 
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2012 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    10/16/2012 - Nagendra Prasath - created sample                            #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -58,11 +55,6 @@ exec tclsh "$0" "$@"
 #    will do actions and retrieve status at session level                      #
 # Module:                                                                      #
 #    The sample was tested on 2 back-to-back XMVDC16 ports                     #
-# Software:                                                                    #
-#    OS        Linux Fedora Core 12 (32 bit)                                   #
-#    IxOS      6.40 EA (6.40.900.4)                                            #
-#    IxNetwork 7.0  EA (7.0.801.20)                                            #
-#                                                                              #
 ################################################################################
 
 puts "Load ixNetwork Tcl API package"

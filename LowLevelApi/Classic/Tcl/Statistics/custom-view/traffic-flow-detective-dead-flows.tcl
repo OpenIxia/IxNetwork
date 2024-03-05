@@ -1,11 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2012 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    26/03/2012 - Mircea Dan Gheorghe - created sample                         #
 #                                                                              #
 ################################################################################
 
@@ -46,17 +42,14 @@
 #                                                                              #
 ################################################################################
 
+
+
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to create a custom view            #
 # Module:                                                                      #
 #    The sample was tested on an XMVDC16 module.                               #
-# Software:                                                                    #
-#    OS        Linux Fedora Core 12 (32 bit)                                   #
-#    IxOS      6.40 EA (6.40.900.4)                                            #
-#    IxNetwork 7.0  EA (7.0.801.20)                                            #
-#                                                                              #
 ################################################################################
 
 # edit this variables values to match your setup

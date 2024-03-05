@@ -1,12 +1,8 @@
 #!/usr/bin/tclsh
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2013 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    21/06/2013 - Vlad Mihai - created sample                                  #
 #                                                                              #
 ################################################################################
 
@@ -51,17 +47,13 @@
 #                                                                              #
 # Description:                                                                 #
 #   This script intends to demonstrate how to configure DHCPv6 over L2TP in    #
-#   a back to back scenario. 						       #
+#   a back to back scenario. 						                           #
 #   It configures one topology with one Device Group with LAC and a device     #
-#   chained behind it with DHCPv6 Client over PPP 			       # 
+#   chained behind it with DHCPv6 Client over PPP 			                   # 
 #   The other topology contains a LNS with a PPP server and a DHCPv6 Server    #
-#   on top of it 							       #
+#   on top of it 							                                   #
 # Module:                                                                      #
 #    The sample was tested on an XM4S module.                         	       #
-# Software:                                                                    #
-#    IxOS      6.50 EA                                                         #
-#    IxNetwork 7.11 EA                                                         #
-#                                                                              #
 ################################################################################
 
 # edit this variables values to match your setup

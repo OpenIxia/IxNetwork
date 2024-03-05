@@ -1,4 +1,12 @@
+################################################################################
+#                                                                              #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
+#    All Rights Reserved.                                                      #
+#                                                                              #
+################################################################################
+
 # Needed for REST API
+
 import time
 try:
     import urllib.request

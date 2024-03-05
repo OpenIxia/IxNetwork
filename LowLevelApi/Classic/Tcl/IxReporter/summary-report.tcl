@@ -1,12 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#                                                                              #
-#    Copyright © 1997 - 2011 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    04/14 - Mircea Dan Gheorghe - created sample                              #
 #                                                                              #
 ################################################################################
 
@@ -54,9 +49,6 @@
 #     used in order to generate a basic html report using default template     #
 # Module:                                                                      #
 #    The sample was tested on an XMVDC16 module.                               #
-# Software:                                                                    #
-#    IxOS      6.10 EA (6.10.0.618)                                            #
-#    IxNetwork 6.0  EA (6.0.0.265)                                             #
 ################################################################################
 
 set IXN_TCL_SERVER 10.200.113.27

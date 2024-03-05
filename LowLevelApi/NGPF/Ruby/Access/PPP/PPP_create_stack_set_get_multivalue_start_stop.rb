@@ -1,14 +1,9 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright ? 1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    13/08/2013 - Alexandra Apetroaei - created sample                         #
-#                                                                              #
 ################################################################################
-
 ################################################################################
 #                                                                              #
 #                                LEGAL  NOTICE:                                #
@@ -49,25 +44,19 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-# The script creates and configures 2 PPP stacks.                               #
+# The script creates and configures 2 PPP stacks.                              #
 # Set/Get multivalue parameters.                                               #
 # Start/Stop protocols.                                                        #
 # Module:                                                                      #
 #    The sample was tested on an FlexAP10G16S module.                          #
-# Software:                                                                    #
-#    IxOS      6.70 EA                                                         #
-#    IxNetwork 7.30 EA                                                         #
-#                                                                              #
 ################################################################################
 
 
-
-
-
-
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
-
+################################################################################
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
+################################################################################
+require 'ixnetwork'
 
 # create an instance of the IxNet class
 @ixNet = IxNetwork.new

@@ -1,4 +1,4 @@
-apiServerIp: 192.168.28.10
+apiServerIp: 192.168.28.15
 
 ixChassisIpList: ['192.168.28.5']
 portList: [[192.168.28.5, 1,1], [192.168.28.5, 1, 2]]

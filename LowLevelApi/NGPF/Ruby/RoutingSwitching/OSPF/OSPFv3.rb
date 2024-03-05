@@ -1,11 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright  1997 - 2014 by IXIA                                            #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    12/17/2014 - Deepak Kumar Singh - created sample                          #
 #                                                                              #
 ################################################################################
 
@@ -61,20 +57,16 @@
 #    5. Enable the Ospfv3 simulated topologies External Route type1, which     #
 #       was disabled by default and apply change on the fly.                   #
 #    6. Retrieve protocol learned info again and notice the difference with    #
-#       previouly retrieved learned info.                                      #
+#       previously retrieved learned info.                                     #
 #    7. Configure L2-L3 traffic.                                               #
 #    8. Configure application traffic.                                         #
 #    9. Start the L2-L3 traffic.                                               #
 #   10. Start the application traffic.                                         #
-#   11. Retrieve Appilcation traffic stats.                                    #
+#   11. Retrieve Application traffic stats.                                    #
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
 #   14. Stop Application traffic.                                              #
 #   15. Stop all protocols.                                                    #
-# Ixia Softwares:                                                              #
-#    IxOS      6.80 EB (6.80.1101.116)                                         #
-#    IxNetwork 7.40 EB (7.40.929.3)                                            #
-#                                                                              #
 ################################################################################
 
 
@@ -123,12 +115,10 @@ def assignPorts (ixNet, realPort1, realPort2)
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the
-# IxNetwork.rb file somewhere else where we ruby can autoload it.
-# "IxNetwork.rb" is available in <IxNetwork_installer_path>\API\Ruby
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information

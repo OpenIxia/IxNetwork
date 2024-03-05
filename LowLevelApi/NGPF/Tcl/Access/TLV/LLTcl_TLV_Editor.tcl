@@ -1,13 +1,10 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright ? 1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    10/2/2014 - Alexandra Apetroaei - created sample   	                   #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -54,10 +51,6 @@
 # Start/Stop protocols.                                                        #
 # Module:                                                                      #
 #    The sample was tested on an FlexAP10G16S module.                          #
-# Software:                                                                    #
-#    IxOS      6.80 EA                                                         #
-#    IxNetwork 7.40 EA                                                         #
-#                                                                              #
 ################################################################################
 
 

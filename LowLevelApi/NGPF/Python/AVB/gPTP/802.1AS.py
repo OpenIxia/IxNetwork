@@ -1,11 +1,8 @@
+# -*- coding: cp1252 -*-
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright ? 1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    13/08/2013 - Irina Popa - created sample                                  #
 #                                                                              #
 ################################################################################
 ################################################################################
@@ -55,19 +52,15 @@
 #   Also demonstrates how to set a multivalue. 		   						   #
 # Module:                                                                      #
 #    The sample was tested on an FlexAP10G16S module.                          #
-# Software:                                                                    #
-#    IxOS      6.80 EA                                                         #
-#    IxNetwork 7.40 EA                                                         #
-#                                                                              #
 ################################################################################
 # import Python packages
 
 import time
 import os
-from IxNetwork import IxNet
+import IxNetwork
 
 # create an instance of the IxNet class
-ixNet = IxNet()
+ixNet = IxNetwork.IxNet()
 
 # create absolute path for the config and load it
 print ("Connecting to server: localhost")
@@ -101,7 +94,7 @@ ixNet.commit()
 print ("Rebooting ports...")
 jobs = [ixNet.setAsync().execute('resetPortCpu', vp) for vp in vports]
 for j in jobs:
-    print j + ' ' + ixNet.getResult(j)
+    print (j + ' ' + ixNet.getResult(j))
 print ("Done... Ports are rebooted...")
 time.sleep(5)
 ixNet.execute('clearStats')

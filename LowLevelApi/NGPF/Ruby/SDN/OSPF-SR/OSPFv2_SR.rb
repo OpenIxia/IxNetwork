@@ -1,12 +1,8 @@
 # -*- coding: cp1252 -*-
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright  1997 - 2014 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    03/12/2015 - Chandan Mishra - created sample                              #
 #                                                                              #
 ################################################################################
 
@@ -83,10 +79,6 @@
 #   22. Stop Application traffic.                                              #
 #   23. Stop all protocols.                                                    #
 #                                                                  			   #
-# 	Ixia Softwares:                                                            #
-#    IxOS      8.00 EB (8.00.1201.21)                                          #
-#    IxNetwork 8.00 EB (8.00.1206.6)                                           #
-#                                                                              #
 ################################################################################
 
 def assignPorts (ixNet, realPort1, realPort2)
@@ -132,12 +124,10 @@ def assignPorts (ixNet, realPort1, realPort2)
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the
-# IxNetwork.pm file somewhere else where we python can autoload it.
-# "IxNetwork.pm" is available in <IxNetwork_installer_path>\API\Python
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # 1.Give chassis/client/ixNetwork server port/ chassis port HW port information

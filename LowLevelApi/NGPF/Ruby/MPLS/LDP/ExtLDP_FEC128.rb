@@ -1,12 +1,8 @@
 #!/usr/bin/ruby
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright  1997 - 2014 by IXIA                                            #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    12/10/2014 - Alka pattnaik - created sample                               #
 #                                                                              #
 ################################################################################
 
@@ -52,37 +48,33 @@
 # Description:                                                                       #
 #    This script intends to demonstrate how to use NGPF LDP API.                     #
 #                                                                                    #
-# About Topology:                                                                     #
-#          Within toplogy both Provider Edge(PE) and Provider(P) Routers are created.#
+# About Topology:                                                                    #
+#         Within topology both Provider Edge(PE) and Provider(P) Routers are created.#
 # created.P router is emulated in the front Device Group(DG), which consists of both #
 # OSPF as routing protocol as well as Basic LDP sessions for Transport Label         #
 # Distribution Protocol. The chained DG act as PE Router, where LDP Extended Martini #
-# is configured for VPN Label distibution protocol.Bidirectional L2-L3 Traffic is    #
+# is configured for VPN Label distribution protocol.Bidirectional L2-L3 Traffic is   #
 # configured in between two CE cloud is created.                                     #
-#     Script Flow:                                                                     #
-#     1. Configuration of protocols.                                                     #
+#     Script Flow:                                                                   #
+#     1. Configuration of protocols.                                                 #
 #    Configuration flow of the script is as follow:                                  #
-#         i.    Adding of OSPF router.                                                 #
-#         ii.   Adding of Network Cloud.                                               #
-#         iii.  Adding of chain DG.                                                     #
-#         iv.   Adding of LDP(basic session) on Front DG                                  #
-#         v.    Adding of LDP Extended Martini(Targeted sess.) over chained DG.        #
-#         vi.   Adding of LDP PW/VPLS Tunnel over LDP Extended Martini.                 #
+#         i.    Adding of OSPF router.                                               #
+#         ii.   Adding of Network Cloud.                                             #
+#         iii.  Adding of chain DG.                                                  #
+#         iv.   Adding of LDP(basic session) on Front DG                             #
+#         v.    Adding of LDP Extended Martini(Targeted sess.) over chained DG.      #
+#         vi.   Adding of LDP PW/VPLS Tunnel over LDP Extended Martini.              #
 #    2. Start the ldp protocol.                                                      #
-#    3. Retrieve protocol statistics.                                                  #
+#    3. Retrieve protocol statistics.                                                #
 #    4. Retrieve protocol learned info.                                              #
-#    5. Disbale/Enable the ldp FECs and change label & apply change on the fly       #
+#    5. Disable/Enable the ldp FECs and change label & apply change on the fly       #
 #    6. Retrieve protocol learned info again and notice the difference with          #
-#       previouly retrieved learned info.                                            #
+#       previously retrieved learned info.                                           #
 #    7. Configure L2-L3 traffic.                                                     #
 #    8. Start the L2-L3 traffic.                                                     #
 #    9. Retrieve L2-L3 traffic stats.                                                #
 #   10. Stop L2-L3 traffic.                                                          #
 #   11. Stop all protocols.                                                          #
-# Ixia Software:                                                                     #
-#    IxOS      6.80 EB (6.80.1101.116)                                               #
-#    IxNetwork 7.40 EB (7.40.929.3)                                                  #
-#                                                                                    #
 ######################################################################################
 
 
@@ -132,12 +124,10 @@ def assignPorts (ixNet, realPort1, realPort2)
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the
-# IxNetwork.rb file somewhere else where we ruby can autoload it.
-# "IxNetwork.rb" is available in <IxNetwork_installer_path>\API\Ruby
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information

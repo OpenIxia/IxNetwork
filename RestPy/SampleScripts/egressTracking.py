@@ -77,7 +77,7 @@ import re, sys, os, time, traceback
 from ixnetwork_restpy import SessionAssistant
 
 # Egress tracking settings
-egressTrackingPort='192.168.70.128/Card2/Port1'
+egressTrackingPort='192.168.28.5/Card1/Port2'
 offsetBits = 116
 widthBits = 4
 egressStatViewName = 'EgressStats'
@@ -93,17 +93,17 @@ egressStatViewName = 'EgressStats'
 ingressTrackingFilterName = 'VLAN:VLAN-ID'
 ingressTrackingFilterName = None
 
-apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.28.15'
 
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 2, 1]]
+ixChassisIpList = ['192.168.28.5']
+portList = [[ixChassisIpList[0], 1, 1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
 username = 'admin'
 password = 'admin'
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
-debugMode = False
+debugMode = True
 
 # Forcefully take port ownership if the portList are owned by other users.
 forceTakePortOwnership = True

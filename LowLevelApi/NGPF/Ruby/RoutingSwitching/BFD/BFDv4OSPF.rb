@@ -1,11 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright � 1997 - 2015 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    05/12/2015 - Dhiraj Khandelwal - created sample                           #
 #                                                                              #
 ################################################################################
 
@@ -50,14 +46,10 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF BFDv6 API              #
-#    It will create 2 BFDv6 topologyes, it will start the emulation and        #
+#    It will create 2 BFDv6 topologies, it will start the emulation and        #
 #    than it will retrieve and display few statistics                          #
 # Module:                                                                      #
 #    The sample was tested on an XMVDC16 module.                               #
-# Software:                                                                    #
-#    IxOS      8.00 EA                                                         #
-#    IxNetwork 8.00 EA                                                         #
-#                                                                              #
 ################################################################################
 
 def assignPorts (ixNet, realPort1, realPort2)
@@ -103,12 +95,10 @@ def assignPorts (ixNet, realPort1, realPort2)
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the  #
-# IxNetwork.py file somewhere else where we python can autoload it             #
-# "IxNetwork.py" is available in <IxNetwork_installer_path>\API\Python         #
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information   #

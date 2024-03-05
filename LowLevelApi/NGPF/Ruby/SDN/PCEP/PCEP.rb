@@ -1,14 +1,10 @@
 # -*- coding: cp1252 -*-
 ################################################################################
 #                                                                              #
-#    Copyright © 1997 - 2015 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    19/02/2015 - Rudra Dutta - created sample                                 #
-#                                                                              #
 ################################################################################
-
 ################################################################################
 #                                                                              #
 #                                LEGAL  NOTICE:                                #
@@ -61,7 +57,7 @@
 #      3. Verify statistics from "Protocols Summary" view                      #
 #      4. Fetch PCC learned information                                        #
 #      5. Configure L2/L3 traffic - source end is the topology2 (PCC) and      #
-#         destinaton end is topology1                                          #
+#         destination end is topology1                                         #
 #      6. Apply and start L2/L3 traffic.                                       #
 #      7. Verify L2/L3 traffic statistics.                                     #
 #      8. Stop traffic.                                                        #
@@ -70,12 +66,8 @@
 #     10. Wait for a few seconds and verify learned info                       #
 #     11. Apply L2/L3 traffic.                                                 #
 #     12. Verify traffic L2/L3 statistics.                                     #
-#     13. Stop traiic.                                                         #
+#     13. Stop traffic.                                                        #
 #     13. Stop all protocols.                                                  #
-# Ixia Softwares:                                                              #
-#    IxOS      8.00 EA                                                         #
-#    IxNetwork 8.00 EA                                                         #
-#                                                                              #
 ################################################################################
 def assignPorts (ixNet, realPort1, realPort2)
     chassis1 = realPort1[0]
@@ -120,12 +112,10 @@ def assignPorts (ixNet, realPort1, realPort2)
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the  #
-# IxNetwork.py file somewhere else where we python can autoload it             #
-# "IxNetwork.py" is available in <IxNetwork_installer_path>\API\Python         #
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information   #
@@ -254,54 +244,54 @@ pccIpv4AddressMv = @ixNet.getAttribute(pccGroup, '-pccIpv4Address')
 @ixNet.commit()
 
 ################################################################################
-# Set  pceInitiateLspParameters                                                #
+# Set  pceInitiateLSPParameters                                                #
 # 1. IP version                -- ipv4                                         #
 # 2. IPv4 source endpoint      -- 2.0.0.1                                      #
 # 3. IPv4 destination endpoint -- 3.0.0.1                                      #
 ################################################################################
-ipVerisionMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+ipVerisionMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-ipVersion')
 @ixNet.setAttribute(ipVerisionMv + '/singleValue', '-value', 'ipv4')
 @ixNet.commit()
 
-ipv4SrcEndpointsMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+ipv4SrcEndpointsMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-srcEndPointIpv4')
 @ixNet.setAttribute(ipv4SrcEndpointsMv + '/singleValue', '-value', '2.0.0.1')
 
-ipv4DestEndpointsMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+ipv4DestEndpointsMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-destEndPointIpv4')
 @ixNet.setAttribute(ipv4DestEndpointsMv + '/singleValue', '-value', '3.0.0.1')
 @ixNet.commit()
 
-# Set  pceInitiateLspParameters
+# Set  pceInitiateLSPParameters
 # 1. Include srp
-ipv4SrpEndpointsMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+ipv4SrpEndpointsMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-includeSrp')
 @ixNet.setAttribute(ipv4SrpEndpointsMv + '/singleValue',  '-value',  'True')
 @ixNet.commit()
 
 ################################################################################
-# Set  pceInitiateLspParameters                                                #
+# Set  pceInitiateLSPParameters                                                #
 # a. Include srp                                                               #
 # b. Include symbolic pathname TLV                                             #
 # c. Symbolic path name                                                        #
 ################################################################################
-includeLspMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+includeLspMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-includeLsp')
 @ixNet.setAttribute(includeLspMv + '/singleValue', '-value', 'True')
 
-includeSymbolicPathMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+includeSymbolicPathMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-includeSymbolicPathNameTlv')
 @ixNet.setAttribute(includeSymbolicPathMv + '/singleValue', '-value', 'True')
 
-symbolicPathNameMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
+symbolicPathNameMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-symbolicPathName')
 @ixNet.setAttribute(symbolicPathNameMv + '/singleValue', '-value',
 'IXIA_SAMPLE_LSP_1')
 @ixNet.commit()
 
 # Add 2 EROs
-@ixNet.setMultiAttribute(pccGroup + '/pceInitiateLspParameters',
+@ixNet.setMultiAttribute(pccGroup + '/pceInitiateLSPParameters',
 '-numberOfEroSubObjects', '2',
 '-name', '{Initiated LSP Parameters}')
 @ixNet.commit()
@@ -316,33 +306,33 @@ symbolicPathNameMv = @ixNet.getAttribute(pccGroup + '/pceInitiateLspParameters',
 # f. NAI Type                                                                  #
 ################################################################################
 ero1ActiveMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
 '-active')
 @ixNet.setAttribute(ero1ActiveMv + '/singleValue', '-value', 'True')
 
 ero1SidTypeMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
 '-sidType')
 @ixNet.setAttribute(ero1SidTypeMv + '/singleValue', '-value',  'mplslabel32bit')
 
 ero1MplsLabelMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
 '-mplsLabel')
 @ixNet.setAttribute(ero1MplsLabelMv + '/singleValue', '-value', '1111')
 
 ero1TcMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
 '-tc')
 
 @ixNet.setAttribute(ero1TcMv + '/singleValue', '-value',  '1')
 
 ero1TtlMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
 '-ttl')
 @ixNet.setAttribute(ero1TtlMv + '/singleValue', '-value', '125')
 
 ero1NaiTypeMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
 '-naiType')
 @ixNet.setAttribute(ero1NaiTypeMv + '/singleValue', '-value', 'notapplicable')
 @ixNet.commit()
@@ -357,32 +347,32 @@ pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:1',
 # f. NAI Type                                                                  #
 ################################################################################
 ero2ActiveMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:2',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:2',
 '-active')
 @ixNet.setAttribute(ero2ActiveMv + '/singleValue', '-value', 'True')
 
 ero2SidTypeMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:2',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:2',
 '-sidType')
 @ixNet.setAttribute(ero2SidTypeMv + '/singleValue', '-value', 'mplslabel32bit')
 
 ero2MplsLabelMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:2',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:2',
 '-mplsLabel')
 @ixNet.setAttribute(ero2MplsLabelMv + '/singleValue', '-value', '5555')
 
 ero2TcMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:2',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:2',
 '-tc')
 @ixNet.setAttribute(ero2TcMv + '/singleValue', '-value', '0')
 
 ero2TtlMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:2',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:2',
 '-ttl')
 @ixNet.setAttribute(ero2TtlMv + '/singleValue', '-value', '100')
 
 ero2NaiTypeMv = @ixNet.getAttribute(
-pccGroup + '/pceInitiateLspParameters/pcepEroSubObjectsList:2',
+pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:2',
 '-naiType')
 @ixNet.setAttribute(ero2NaiTypeMv + '/singleValue', '-value', 'notapplicable')
 @ixNet.commit()

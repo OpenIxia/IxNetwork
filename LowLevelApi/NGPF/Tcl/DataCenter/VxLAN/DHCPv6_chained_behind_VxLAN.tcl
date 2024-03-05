@@ -1,14 +1,11 @@
 #!/usr/bin/tclsh
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2013 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    21/06/2013 - Alexandra Apetroaei - created sample                         #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -57,10 +54,6 @@
 #   chained Device Group with DHCPv6 Server stack.                             #
 # Module:                                                                      #
 #    The sample was tested on an FlexAP10G16S module.                          #
-# Software:                                                                    #
-#    IxOS      6.50 EA                                                         #
-#    IxNetwork 7.11 EA                                                         #
-#                                                                              #
 ################################################################################
 
 # edit this variables values to match your setup

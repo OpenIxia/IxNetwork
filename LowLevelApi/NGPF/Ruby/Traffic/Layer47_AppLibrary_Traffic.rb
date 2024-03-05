@@ -1,13 +1,9 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright  1997  2015 by IXIA                                             #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    02/02/2015  Andrei Zamisnicu - created sample                             #
-#                                                                              #
-################################################################################
+# ##############################################################################
 
 ################################################################################
 #                                                                              #
@@ -47,23 +43,23 @@
 ################################################################################
 
 #################################################################################
-#                                                                                  #
-# Description:                                                                     #
-#    The script below represents an end to end workflow for AppLibrary Traffic.     #
-#    Steps:                                                                           #            
-#    1. Chassis connection and API server connection                                   #    
-#    2. Scenario configuration at layer 2-3                                           #    
-#    3. Creation of Applibrary traffic                                               #    
-#    4. Per connection parameters configuration                                        #    
-#    5. Traffic apply and start                                                        #
-#    6. Statistics operations: drill down in a loop                                   #    
-#    7. Test criteria evaluation                                                    #
-#    8. Stop traffic                                                                   #
-#                                                                                   #        
+#                                                                               #
+# Description:                                                                  #
+#    The script below represents an end to end workflow for AppLibrary Traffic. #
+#    Steps:                                                                     #            
+#    1. Chassis connection and API server connection                            #    
+#    2. Scenario configuration at layer 2-3                                     #    
+#    3. Creation of Applibrary traffic                                          #    
+#    4. Per connection parameters configuration                                 #    
+#    5. Traffic apply and start                                                 #
+#    6. Statistics operations: drill down in a loop                             #    
+#    7. Test criteria evaluation                                                #
+#    8. Stop traffic                                                            #
+#                                                                               #        
 #################################################################################
 
 ################################################################################
-# Utils                                                                           #
+# Utils                                                                        #
 ################################################################################
 
 puts "\n\n\n#######################################"
@@ -76,7 +72,7 @@ puts "#######################################\n\n\n"
 #---------------------------------------------------------
 
 chassisIP = "10.200.115.151"                                     ;# chassis IP
-applicationVersion = '7.50'                                 ;# IxN version
+applicationVersion = '7.50'                                     ;# IxN version
 apiPort = '8009'                                             ;# the API port on which the IxApi Server is listening
 port1 = ['4','1']                                             ;# where values are: {<card> <port>}
 port2 = ['4','2']                                             ;# where values are: {<card> <port>}
@@ -89,8 +85,11 @@ PFCriteria_Lower = ['Flows Failed', '40']                     ;# statistic from 
 # Connecting to API Server and loading required packages
 #---------------------------------------------------------
 
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+################################################################################
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
+################################################################################
+require 'ixnetwork'
 
 
 

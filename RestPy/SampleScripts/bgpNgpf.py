@@ -36,10 +36,10 @@ import sys, os, time, traceback
 
 from ixnetwork_restpy import *
 
-apiServerIp = '192.168.70.3'
+apiServerIp = '192.168.28.15'
 
-ixChassisIpList = ['192.168.70.128']
-portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 2, 1]]
+ixChassisIpList = ['192.168.28.5']
+portList = [[ixChassisIpList[0], 1,1], [ixChassisIpList[0], 1, 2]]
 
 # For Linux API server only
 username = 'admin'

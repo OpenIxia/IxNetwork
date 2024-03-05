@@ -3,15 +3,12 @@
 exec tclsh "$0" "$@"
 
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2012 by IXIA                                          #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    10/01/2012 - Nagendra Prasath - created sample                            #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -57,11 +54,6 @@ exec tclsh "$0" "$@"
 #    the next gen protocols                                                    #
 # Module:                                                                      #
 #    The sample was tested on 2 back-to-back XMVDC16 ports                     #
-# Software:                                                                    #
-#    OS        Linux Fedora Core 12 (32 bit)                                   #
-#    IxOS      6.40 EA (6.40.900.4)                                            #
-#    IxNetwork 7.0  EA (7.0.801.20)                                            #
-#                                                                              #
 ################################################################################
 
 puts "Load ixNetwork Tcl API package"
@@ -105,6 +97,91 @@ puts "Add MAC"
 ixNet add $dev ethernet -name testEth
 ixNet commit
 set mac [ixNet getList $dev ethernet]
+puts "Enabled vlan"
+ixNet setAttr $mac -vlanCount 1
+ixNet setAttr $mac -useVlans true
+ixNet setA [ixNet getA $mac -enableVlans]/singleValue -value True
+ixNet commit
+
+set vlan [ixNet getList $mac vlan]
+set vlanId [ixNet getAttribute $vlan -vlanId]
+
+
+#singleValue
+
+set multiVal [ixNet add $vlanId "singleValue"]
+ixNet setMultiAttribute $multiVal \
+-value 100
+ixNet commit
+
+#counter
+
+set multiVal [ixNet add $vlanId "counter"]
+ixNet setMultiAttribute $multiVal \
+	-step 1 \
+	-start 1 \
+	-direction increment
+ixNet commit
+
+#counter
+
+set multiVal [ixNet add $vlanId "counter"]
+ixNet setMultiAttribute $multiVal \
+	-step 1 \
+	-start 1 \
+	-direction decrement
+ixNet commit
+
+set multiVal [ixNet add $vlanId "random"]
+ixNet commit
+
+#repeatableRandom
+
+set multiVal [ixNet add $vlanId "repeatableRandom"]
+ixNet setMultiAttribute $multiVal \
+	-mask 4095 \
+	-count 4000000 \
+	-seed 1 \
+	-fixed 0
+ixNet commit
+
+#customDistributed
+
+set multiVal [ixNet add $vlanId "customDistributed"]
+ixNet setMultiAttribute $multiVal \
+	-mode perPort \
+	-algorithm percentage \
+	-values [list [list 1 50] [list 2 50]]
+ixNet commit
+
+#custom
+
+set multiVal [ixNet add $vlanId "custom"]
+ixNet setMultiAttribute $multiVal \
+	-step 1 \
+	-start 1
+ixNet commit
+set multiVal [lindex [ixNet remapIds $multiVal] 0]
+
+set multiVal2 [ixNet add $multiVal "increment"]
+ixNet setMultiAttribute $multiVal2 \
+	-count 3 \
+	-value 1
+ixNet commit
+
+#valueList
+
+set multiVal [ixNet add $vlanId "valueList"]
+ixNet setMultiAttribute $multiVal \
+	-values [list 1 2 3 4 5 6 7 8 9 10]
+ixNet commit
+
+#CSV
+#amusing the file is present at the desktop of the client with user 8028 and named scaleStack
+
+set multiVal [ixNet add $vlanId "valueList"]
+ixNet exec import $multiVal [ixNet readFrom {C:/Users/8028/Desktop/scaleStack.csv}] "csv" 2
+ixNet commit
 
 puts "Add IPv4"
 ixNet add $mac ipv4 -name testip
@@ -172,6 +249,27 @@ puts "IP Address of 3rd Item before Overlay: [ixNet getAtt [lindex $ipP1Items 2]
 ixNet add $ip_mul overlay -index 3 -value "100.2.5.7"
 ixNet commit
 puts "IP Address of 3rd Item after Overlay: [ixNet getAtt [lindex $ipP1Items 2] -address]"
+
+
+#subset
+
+set networkGroup [ixNet add $dev networkGroup]
+set ipv4PrePool [ixNet add $networkGroup ipv4PrefixPools]
+ixNet commit
+set networkAddress [ixNet getA $ipv4PrePool -networkAddress]
+set ipv4Address [ixNet getA $ip -address]
+set multiVal [ixNet add $networkAddress "subset"]
+ixNet setMultiAttribute $multiVal \
+	-autoScale True \
+	-count 1 \
+	-offset 0 \
+	-roundRobin "port" \
+	-shift 0 \
+	-source $ipv4Address \
+	-step 1
+ixNet commit
+
+
 
 puts "TEST END"
 

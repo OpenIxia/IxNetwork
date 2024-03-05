@@ -1,12 +1,8 @@
 # -*- coding: cp1252 -*-
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2015 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    06/04/2015 - Sumit Deb - created sample                                   #
 #                                                                              #
 ################################################################################
 
@@ -51,23 +47,19 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF StaticLag API.         #
-#     Script uses four ports to demonstrate LAG properties                      #
+#     Script uses four ports to demonstrate LAG properties                     #
 #                                                                              #
 #    1. It will create 2 StaticLag topologies, each having two ports which are #
 #       LAG members. It will then modify the Lag Id for both the LAG systems   #
 #    2. Start the StaticLag protocol.                                          #
 #    3. Retrieve protocol statistics and StaticLag per port statistics         #
-#     4. Perform Simulate Link Down on port1 in System1-StaticLag-LHS           #
-#     5. Retrieve protocol statistics, StaticLag per port statistics               #
+#    4. Perform Simulate Link Down on port1 in System1-StaticLag-LHS           #
+#    5. Retrieve protocol statistics, StaticLag per port statistics            #
 #    6. Retrieve StaticLag global learned info                                 #
-#     7. Perform Simulate Link Up on port1 in System1-StaticLag-LHS             #
-#     8. Retrieve protocol statistics and StaticLag per port statistics         #
+#    7. Perform Simulate Link Up on port1 in System1-StaticLag-LHS             #
+#    8. Retrieve protocol statistics and StaticLag per port statistics         #
 #    9. Retrieve StaticLag global learned info                                 #
-#     10. Stop All protocols                                                    #
-#                                                                              #
-#     Ixia Software:                                                             #
-#    IxOS      6.90 EA                                                         #
-#    IxNetwork 7.50 EA                                                         #
+#    10. Stop All protocols                                                    #
 #                                                                              #
 ################################################################################
 
@@ -191,12 +183,10 @@ def gererateStaticLagLearnedInfoView ( viewName )
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the
-# IxNetwork.rb file somewhere else where we ruby can autoload it.
-# "IxNetwork.rb" is available in <IxNetwork_installer_path>\API\Ruby
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information

@@ -1,14 +1,10 @@
 # -*- coding: cp1252 -*-
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2015 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    06/04/2015 - Sumit Deb - created sample                                   #
-#                                                                              #
-################################################################################
+#################################################################################
 
 ################################################################################
 #                                                                              #
@@ -51,26 +47,22 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF OSPFv2 API.            #
-#     Script uses four ports to demonstrate LAG properties                       #
+#     Script uses four ports to demonstrate LAG properties                     #
 #                                                                              #
 #    1. It will create 2 LACP topologies, each having an two port which are    #
-#       LAG members. It will then modify the ActorSystemId and ActorKey    for       #
+#       LAG members. It will then modify the ActorSystemId and ActorKey for    #
 #       both the LAG systems                                                   #
 #    2. Start the LACP protocol                                                #
 #    3. Retrieve protocol statistics and LACP per port statistics              #
-#     4. Disable Synchronization flag on port1 in System1-LACP-LHS              #
-#     5. Retrieve protocol statistics and LACP per port statistics              #
-#     6. Re-enable Synchronization flag on port1 in System1-LACP-LHS            #
-#     7. Retrieve protocol statistics and LACP per port statistics              #
-#     8. Perform StopPDU on port1 in System1-LACP-LHS                           #
-#     9. Retrieve LACP global learned info                                            #
-#     10. Perform StopPDU on port1 in System1-LACP-LHS                          #
-#     11. Retrieve LACP global learned info                                     #
-#     12. Stop All protocols                                                    #
-#                                                                              #
-#     Ixia Software:                                                             #
-#    IxOS      6.90 EA                                                         #
-#    IxNetwork 7.50 EA                                                         #
+#    4. Disable Synchronization flag on port1 in System1-LACP-LHS              #
+#    5. Retrieve protocol statistics and LACP per port statistics              #
+#    6. Re-enable Synchronization flag on port1 in System1-LACP-LHS            #
+#    7. Retrieve protocol statistics and LACP per port statistics              #
+#    8. Perform StopPDU on port1 in System1-LACP-LHS                           #
+#    9. Retrieve LACP global learned info                                      #
+#    10. Perform StopPDU on port1 in System1-LACP-LHS                          #
+#    11. Retrieve LACP global learned info                                     #
+#    12. Stop All protocols                                                    #
 #                                                                              #
 ################################################################################
 
@@ -194,12 +186,10 @@ def gererateLacpLearnedInfoView ( viewName )
 end
 
 ################################################################################
-# Either feed the ixNetwork library path in the sys.path as below, or put the
-# IxNetwork.rb file somewhere else where we ruby can autoload it.
-# "IxNetwork.rb" is available in <IxNetwork_installer_path>\API\Ruby
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information

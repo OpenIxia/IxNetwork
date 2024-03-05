@@ -1,14 +1,11 @@
 #!/usr/bin/tclsh
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2012 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                              #
-#    Revision Log:                                                             #
-#    11/07/2012 - Alexandru Branciog - created sample                         #
-#                                                                              #
 ################################################################################
+
 
 ################################################################################
 #                                                                              #
@@ -54,10 +51,6 @@
 #    It will create 2 tologyes with PPPoE than it will start the emulation     #
 # Module:                                                                      #
 #    The sample was tested on an XMVDC16 module.                               #
-# Software:                                                                    #
-#    OS        Linux Fedora Core 12 (32 bit)                                   #
-#    IxOS      6.40 EA (6.40.900.4)                                            #
-#    IxNetwork 7.0  EA (7.0.801.20)                                            #
 #                                                                              #
 ################################################################################
 

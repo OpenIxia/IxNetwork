@@ -1,11 +1,7 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2012 by IXIA                                           #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    13/06/2012 - Vicentiu Zamfirescu - created sample                         #
 #                                                                              #
 ################################################################################
 
@@ -46,6 +42,8 @@
 #                                                                              #
 ################################################################################
 
+
+
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
@@ -53,11 +51,6 @@
 #	 advanced filtering														   #	
 # Module:                                                                      #
 #    The sample was tested on an XMVDC16 module.                               #
-# Software:                                                                    #
-#    OS        Linux Fedora Core 12 (32 bit)                                   #
-#    IxOS      6.50 EA (6.50.950.4)                                            #
-#    IxNetwork 7.10  EA (7.10.840.14)                                          #
-#                                                                              #
 ################################################################################
 
 # edit this variables values to match your setup

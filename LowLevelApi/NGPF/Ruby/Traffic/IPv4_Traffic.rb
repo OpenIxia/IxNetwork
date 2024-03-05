@@ -1,11 +1,9 @@
 ################################################################################
-# Version 1.0    $Revision: 1 $
-# $Author: Mario Dicu $
-#
-#    Copyright © 1997 - 2015 by IXIA
-#    All Rights Reserved.
-#
-################################################################################
+#                                                                              #
+#    Copyright 1997 - 2020 by IXIA  Keysight                                   #
+#    All Rights Reserved.                                                      #
+#                                                                              #
+# ##############################################################################
 
 ################################################################################
 #                                                                              #
@@ -77,10 +75,10 @@ if not Object.const_defined?('Py') then
 end
 
 ################################################################################
-# Import the IxNet library
+# Import the ixnetwork library
+# First add the library to Ruby's $LOAD_PATH:    $:.unshift <library_dir>
 ################################################################################
-$:.unshift 'C:\samples\IxNetwork.rb'
-require 'IxNetwork'
+require 'ixnetwork'
 
 
 @ixNet = IxNetwork.new

@@ -123,7 +123,7 @@ def addTimestampToFile(rfcTest, filename):
 
     newFilename = filename.split('.')[0]
     newFileExtension = filename.split('.')[1]
-    newFileWithTimestamp = '{}_{}.{}'.format(rfcTest, currentTimestamp,  newFileExtension)
+    newFileWithTimestamp = '{}_{}_{}.{}'.format(rfcTest, newFilename, currentTimestamp,  newFileExtension)
     return newFileWithTimestamp
 
     ixNetworkVersion = ixNetwork.Globals.BuildNumber

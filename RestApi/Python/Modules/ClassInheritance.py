@@ -7,7 +7,7 @@ Description
      Your scripts will be instantiating objects using your classes.
      With inheritance, this allows your scripts to use all of OpenIxia functions
      and use your added functions in your classes.
-     This allows you to keep getting OpenIxia updates without interferring with 
+     This allows you to keep getting OpenIxia updates without interferring with
      your extended functions.
 
 """
@@ -20,9 +20,11 @@ from IxNetRestApiStatistics import Statistics
 from IxNetRestApiPacketCapture import PacketCapture
 from IxNetRestApiQuickTest import QuickTest
 
+
 class Connection(Connect):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
 
 class Port_Mgmt(PortMgmt):
     def __init__(self, *args, **kwargs):
@@ -37,13 +39,16 @@ class Port_Mgmt(PortMgmt):
         # For enhancement or to fix a bug in exportJsonConfig().
         pass
 
+
 class Traffic_Config(Traffic):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
 class Protocol_Config(Protocol):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
 
 class Statistics_View(Statistics):
     def __init__(self, *args, **kwargs):

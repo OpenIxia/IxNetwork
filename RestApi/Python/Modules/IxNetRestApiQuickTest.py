@@ -1,17 +1,19 @@
-import re, time
+import re
+import time
 from IxNetRestApi import IxNetRestApiException
 from IxNetRestApiFileMgmt import FileMgmt
+
 
 class QuickTest(object):
     def __init__(self, ixnObj=None, fileMgmtObj=None):
         self.ixnObj = ixnObj
+        self.ixNetwork = ixnObj.ixNetwork
         if fileMgmtObj:
             self.fileMgmtObj = fileMgmtObj
         else:
             self.fileMgmtObj = FileMgmt(ixnObj)
 
     def setMainObject(self, mainObject):
-        # For Python Robot Framework support
         self.ixnObj = mainObject
         self.fileMgmtObj.setMainObject(mainObject)
 
@@ -21,57 +23,80 @@ class QuickTest(object):
             Get all the Quick Test object handles
 
         Returns:
-            ['/api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2',
-             '/api/v1/sessions/1/ixnetwork/quickTest/rfc2889broadcastRate/1',
-             '/api/v1/sessions/1/ixnetwork/quickTest/rfc2889broadcastRate/2']
+            [   <ixnetwork_restpy.testplatform.sessions.ixnetwork.quicktest
+                    .openflowlayer2learningrate_3db88746f7f375303f2eda376386a9a8
+                    .OpenFlowLayer2LearningRate object at 0x03AAE2B0>]
         """
-        response = self.ixnObj.get(self.ixnObj.sessionUrl+'/quickTest')
-        quickTestHandles = []
-        for eachTestId in response.json()['testIds']:
-            quickTestHandles.append(eachTestId)
-        return quickTestHandles
+        quickTestObjects = []
+        for testId in self.ixNetwork.QuickTest.TestIds:
+            qtType = testId.split("/")[-2]
+            qtType = qtType[0].upper() + qtType[1:]
+            qtObj = getattr(self.ixNetwork.QuickTest, qtType)
+            quickTestObjects.append(qtObj.find())
+        return quickTestObjects
 
     def getAllQuickTestNames(self):
+        """
+        Description
+            Get all the Quick Test name.
+        """
         quickTestNameList = []
         for eachQtHandle in self.getAllQuickTestHandles():
-            response = self.ixnObj.get(self.ixnObj.httpHeader+eachQtHandle)
-            quickTestNameList.append(response.json()['name'])
+            qtName = eachQtHandle.Name
+            if qtName:
+                quickTestNameList.append(qtName)
         return quickTestNameList
 
     def getQuickTestHandleByName(self, quickTestName):
         """
         Description
             Get the Quick Test object handle by the name.
-
         Parameter
             quickTestName: The name of the Quick Test.
         """
         for quickTestHandle in self.getAllQuickTestHandles():
-            response = self.ixnObj.get(self.ixnObj.httpHeader+quickTestHandle)
-            currentQtName = response.json()['name']
-            if (bool(re.match(quickTestName, currentQtName, re.I))):
+            if bool(re.match(quickTestName, quickTestHandle.Name, re.I)):
                 return quickTestHandle
+        else:
+            raise Exception("Unable to find quicktest with name {}".format(quickTestName))
 
     def getQuickTestNameByHandle(self, quickTestHandle):
         """
-        quickTestHandle = /api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2
+        Description :
+            Get the Quick Test Name by quick test Handle
+        Parameter :
+            quickTestHandle = <ixnetwork_restpy.testplatform.sessions.ixnetwork.quicktest
+                                    .rfc2544throughput_5a77c9a28f5fa2bb9ce9f4280eb5122f
+                                    .Rfc2544throughput object at 0x03800D00>
         """
-        response = self.ixnObj.get(self.ixnObj.httpHeader + quickTestHandle)
-        return response.json()['name']
+        if quickTestHandle.Name:
+            return quickTestHandle.Name
+        else:
+            raise Exception("Unable to find quicktest name for given handle")
 
     def getQuickTestDuration(self, quickTestHandle):
         """
-        quickTestHandle = /api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2
+        Description :
+            Get Quick Test Test Duration Time in Sec
+        Parameter :
+            quickTestHandle = <ixnetwork_restpy.testplatform.sessions.ixnetwork.quicktest
+                                    .rfc2544throughput_5a77c9a28f5fa2bb9ce9f4280eb5122f
+                                    .Rfc2544throughput object at 0x03800D00>
         """
-        response = self.ixnObj.get(self.ixnObj.httpHeader + quickTestHandle + '/testConfig')
-        return response.json()['duration']
+
+        return quickTestHandle.TestConfig.Duration
 
     def getQuickTestTotalFrameSizesToTest(self, quickTestHandle):
         """
-        quickTestHandle = /api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2
+        Description :
+            Get Quick Test Test Total Frame Sizes
+        Parameter :
+            quickTestHandle = <ixnetwork_restpy.testplatform.sessions.ixnetwork.quicktest
+                                    .rfc2544throughput_5a77c9a28f5fa2bb9ce9f4280eb5122f
+                                    .Rfc2544throughput object at 0x03800D00>
         """
-        response = self.ixnObj.get(self.ixnObj.httpHeader + quickTestHandle + '/testConfig')
-        return response.json()['framesizeList']
+
+        return quickTestHandle.TestConfig.FramesizeList
 
     def applyQuickTest(self, qtHandle):
         """
@@ -81,92 +106,92 @@ class QuickTest(object):
         Parameter
             qtHandle: The Quick Test object handle
         """
-        response = self.ixnObj.post(self.ixnObj.sessionUrl+'/quickTest/operations/apply', data={'arg1': qtHandle})
-        if self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/quickTest/operations/apply/'+response.json()['id']) == 1:
-            raise IxNetRestApiException('applyTraffic: waitForComplete failed')
+        try:
+            qtHandle.Apply()
+        except Exception as err:
+            raise Exception("Operation apply quicktest failed with error :\n {}".format(err))
 
     def getQuickTestCurrentAction(self, quickTestHandle):
         """
-        quickTestHandle = /api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2
+        Description :
+            Returns current action like 'InitializingTest', 'ApplyFlowGroups',
+            'SetupStatisticsCollection', etc.
+        Parameter :
+            quickTestHandle = <ixnetwork_restpy.testplatform.sessions.ixnetwork.quicktest
+                                    .rfc2544throughput_5a77c9a28f5fa2bb9ce9f4280eb5122f
+                                    .Rfc2544throughput object at 0x03800D00>
         """
-        ixNetworkVersion = self.ixnObj.getIxNetworkVersion()
-        match = re.match('([0-9]+)\.[^ ]+ *', ixNetworkVersion)
-        if int(match.group(1)) >= 8:
-            timer = 10
-            for counter in range(1,timer+1):
-                response = self.ixnObj.get(self.ixnObj.httpHeader+quickTestHandle+'/results', silentMode=True)
-                if counter < timer and response.json()['currentActions'] == []:
-                    self.ixnObj.logInfo('getQuickTestCurrentAction is empty. Waiting %s/%s' % (counter, timer))
-                    time.sleep(1)
-                    continue
-                if counter < timer and response.json()['currentActions'] != []:
-                    break
-                if counter == timer and response.json()['currentActions'] == []:
-                    IxNetRestApiException('getQuickTestCurrentActions: Has no action')
+        timer = 10
+        currentActions = None
+        for counter in range(1, timer+1):
+            currentActions = quickTestHandle.Results.CurrentActions
+            self.ixnObj.logInfo('\n\ngetQuickTestCurrentAction:\n')
+            for eachCurrentAction in quickTestHandle.Results.CurrentActions:
+                self.ixnObj.logInfo('\t{}'.format(eachCurrentAction['arg2']))
+            self.ixnObj.logInfo('\n')
+            if counter < timer and currentActions == []:
+                self.ixnObj.logInfo(
+                    '\n getQuickTestCurrentAction is empty. Waiting %s/%s \n' % (counter, timer))
+                time.sleep(1)
+                continue
+            if counter < timer and currentActions != []:
+                break
+            if counter == timer and currentActions == []:
+                raise Exception('\n\ngetQuickTestCurrentActions: Has no action')
 
-            return response.json()['currentActions'][-1]['arg2']
-        else:
-            response = self.ixnObj.get(self.ixnObj.httpHeader+quickTestHandle+'/results')
-            return response.json()['progress']
+        return currentActions[-1]['arg2']
 
     def verifyQuickTestInitialization(self, quickTestHandle):
         """
-        quickTestHandle = /api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2
+        Parameter :
+            quickTestHandle = <ixnetwork_restpy.testplatform.sessions.ixnetwork.quicktest
+                                    .rfc2544throughput_5a77c9a28f5fa2bb9ce9f4280eb5122f
+                                    .Rfc2544throughput object at 0x03800D00>
         """
-        for timer in range(1,20+1):
+
+        for timer in range(1, 20+1):
             currentAction = self.getQuickTestCurrentAction(quickTestHandle)
-            print('verifyQuickTestInitialization currentState: %s' % currentAction)
+            self.ixnObj.logInfo('verifyQuickTestInitialization currentState: %s' % currentAction)
             if timer < 20:
                 if currentAction == 'TestEnded' or currentAction == 'None':
-                    self.ixnObj.logInfo('\nverifyQuickTestInitialization CurrentState = %s\n\tWaiting %s/20 seconds to change state' % (currentAction, timer))
+                    self.ixnObj.logInfo(
+                        '\nverifyQuickTestInitialization CurrentState = %s\n\tWaiting %s/20 '
+                        'seconds to change state' % (currentAction, timer))
                     time.sleep(1)
                     continue
                 else:
                     break
             if timer >= 20:
                 if currentAction == 'TestEnded' or currentAction == 'None':
-                    self.ixnObj.showErrorMessage()
                     raise IxNetRestApiException('Quick Test is stuck at TestEnded.')
 
-        ixNetworkVersionNumber = int(self.ixnObj.getIxNetworkVersion().split('.')[0])
         applyQuickTestCounter = 60
-        for counter in range(1,applyQuickTestCounter+1):
-            quickTestApplyStates = ['InitializingTest', 'ApplyFlowGroups', 'SetupStatisticsCollection']
+        for counter in range(1, applyQuickTestCounter+1):
             currentAction = self.getQuickTestCurrentAction(quickTestHandle)
-            if currentAction == None:
+            if currentAction is None:
                 currentAction = 'ApplyingAndInitializing'
 
-            print('\nverifyQuickTestInitialization: %s  Expecting: TransmittingFrames\n\tWaiting %s/%s seconds' % (currentAction, counter, applyQuickTestCounter))
-            if ixNetworkVersionNumber >= 8:
-                if counter < applyQuickTestCounter and currentAction != 'TransmittingFrames':
-                    time.sleep(1)
-                    continue
+            self.ixnObj.logInfo(
+                '\n verifyQuickTestInitialization: %s  Expecting: TransmittingFrames\n\tWaiting'
+                ' %s/%s seconds' % (currentAction, counter, applyQuickTestCounter))
+            if counter < applyQuickTestCounter and currentAction != 'TransmittingFrames':
+                time.sleep(1)
+                continue
 
-                if counter < applyQuickTestCounter and currentAction == 'TransmittingFrames':
-                    self.ixnObj.logInfo('\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n')
-                break
-
-            if ixNetworkVersionNumber < 8:
-                if counter < applyQuickTestCounter and currentAction == 'ApplyingAndInitializing':
-                    time.sleep(1)
-                    continue
-
-                if counter < applyQuickTestCounter and currentAction == 'ApplyingAndInitializing':
-                    self.ixnObj.logInfo('\nVerifyQuickTestInitialization is done applying configuration and has started transmitting frames\n')
+            if counter < applyQuickTestCounter and currentAction == 'TransmittingFrames':
+                self.ixnObj.logInfo(
+                    '\n VerifyQuickTestInitialization is done applying configuration and'
+                    ' has started transmitting frames\n')
                 break
 
             if counter == applyQuickTestCounter:
-                if ixNetworkVersionNumber >= 8 and currentAction != 'TransmittingFrames':
-                    self.ixnObj.showErrorMessage()
-                    if currentAction == 'ApplyFlowGroups':
-                        self.ixnObj.logInfo('\nIxNetwork is stuck on Applying Flow Groups. You need to go to the session to FORCE QUIT it.\n')
-                    raise IxNetRestApiException('\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
-                            currentAction, counter, applyQuickTestCounter))
-
-                if ixNetworkVersionNumber < 8 and currentAction != 'Trial':
-                    self.ixnObj.showErrorMessage()
-                    raise IxNetRestApiException('\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
-                            currentAction, counter, applyQuickTestCounter))
+                if currentAction == 'ApplyFlowGroups':
+                    self.ixnObj.logInfo(
+                        '\nIxNetwork is stuck on Applying Flow Groups. You need to go to the '
+                        'session to FORCE QUIT it.\n')
+                raise IxNetRestApiException(
+                    '\nVerifyQuickTestInitialization is stuck on %s. Waited %s/%s seconds' % (
+                        currentAction, counter, applyQuickTestCounter))
 
     def startQuickTest(self, quickTestHandle):
         """
@@ -175,18 +200,14 @@ class QuickTest(object):
 
         Parameter
             quickTestHandle: The Quick Test object handle.
-            /api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/2
 
-        Syntax
-           POST: http://{apiServerIp:port}/api/v1/sessions/{1}/ixnetwork/quickTest/operations/start
-                 data={arg1: '/api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/2'}
-                 headers={'content-type': 'application/json'}
         """
-        url = self.ixnObj.sessionUrl+'/quickTest/operations/start'
-        self.ixnObj.logInfo('\nstartQuickTest:%s' % url)
-        response = self.ixnObj.post(url, data={'arg1': quickTestHandle})
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        try:
+            quickTestHandle.Apply()
+            quickTestHandle.Start()
+        except Exception as err:
+            self.ixnObj.logInfo("Error : \n {}".format(err))
+            raise Exception("Failed Starting QuickTest for {}".format(quickTestHandle.Name))
 
     def stopQuickTest(self, quickTestHandle):
         """
@@ -195,26 +216,22 @@ class QuickTest(object):
 
         Parameter
             quickTestHandle: The Quick Test object handle.
-            /api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/2
 
-        Syntax
-           POST: http://{apiServerIp:port}/api/v1/sessions/{1}/ixnetwork/quickTest/operations/stop
-                 data={arg1: '/api/v1/sessions/{id}/ixnetwork/quickTest/rfc2544throughput/2'}
-                 headers={'content-type': 'application/json'}
         """
-        url = self.ixnObj.sessionUrl+'/quickTest/operations/stop'
-        response = self.ixnObj.post(url, data={'arg1': quickTestHandle})
-        if self.ixnObj.waitForComplete(response, url+'/'+response.json()['id']) == 1:
-            raise IxNetRestApiException
+        try:
+            quickTestHandle.Stop()
+        except Exception as err:
+            self.ixnObj.logInfo("Error in stop quicktest : \n {}".format(err))
+            raise Exception("Failed Stopping QuickTest for {}".format(quickTestHandle.Name))
 
     def monitorQuickTestRunningProgress(self, quickTestHandle, getProgressInterval=10):
         """
         Description
             monitor the Quick Test running progress.
-            For Linux API server only, it must be a NGPF configuration. (Classic Framework is not supported in REST)
+            For Linux API server only, it must be a NGPF configuration.
 
         Parameters
-            quickTestHandle: /api/v1/sessions/{1}/ixnetwork/quickTest/rfc2544throughput/2
+            quickTestHandle: quick test handle
         """
         isRunningBreakFlag = 0
         trafficStartedFlag = 0
@@ -222,14 +239,14 @@ class QuickTest(object):
         counter = 1
 
         while True:
-            response = self.ixnObj.get(self.ixnObj.httpHeader+quickTestHandle+'/results', silentMode=True)
-            isRunning = response.json()['isRunning']
-            if isRunning == True:
-                response = self.ixnObj.get(self.ixnObj.httpHeader+quickTestHandle+'/results', silentMode=True)
-                currentRunningProgress = response.json()['progress']
-                if bool(re.match('^Trial.*', currentRunningProgress)) == False:
+            isRunning = quickTestHandle.Results.IsRunning
+            if isRunning:
+                currentRunningProgress = quickTestHandle.Results.Progress
+                self.ixnObj.logInfo(currentRunningProgress)
+                if not bool(re.match('^Trial.*', currentRunningProgress)):
                     if waitForRunningProgressCounter < 30:
-                        self.ixnObj.logInfo('isRunning=True. Waiting for trial runs {0}/30 seconds'.format(waitForRunningProgressCounter))
+                        self.ixnObj.logInfo('isRunning=True. Waiting for trial runs {0}/30 '
+                                            'seconds'.format(waitForRunningProgressCounter))
                         waitForRunningProgressCounter += 1
                         time.sleep(1)
                     if waitForRunningProgressCounter == 30:
@@ -247,20 +264,22 @@ class QuickTest(object):
                     self.ixnObj.logInfo('\nisRunning=False. Quick Test is complete')
                     return 0
                 if isRunningBreakFlag < 20:
-                    print('isRunning=False. Wait {0}/20 seconds'.format(isRunningBreakFlag))
+                    self.ixnObj.logInfo('isRunning=False. Wait {0}/20 seconds'.format(
+                        isRunningBreakFlag))
                     isRunningBreakFlag += 1
                     time.sleep(1)
                     continue
                 if isRunningBreakFlag == 20:
-                    raise IxNetRestApiException('Quick Test failed to start:', response.json()['status'])
+                    raise IxNetRestApiException('Quick Test failed to start:')
 
     def getQuickTestResultPath(self, quickTestHandle):
         """
-        quickTestHandle = /api/v1/sessions/1/ixnetwork/quickTest/rfc2544throughput/2
+        quickTestHandle = The quick test handle
         """
-        response = self.ixnObj.get(self.ixnObj.httpHeader + quickTestHandle + '/results')
-        # "resultPath": "C:\\Users\\hgee\\AppData\\Local\\Ixia\\IxNetwork\\data\\result\\DP.Rfc2544Tput\\10694b39-6a8a-4e70-b1cd-52ec756910c3\\Run0001"
-        return response.json()['resultPath']
+        resultsPath = quickTestHandle.Results.ResultPath
+        if not resultsPath:
+            raise Exception("no result path found for quicktest {}".format(quickTestHandle.Name))
+        return resultsPath
 
     def getQuickTestResult(self, quickTestHandle, attribute):
         """
@@ -273,7 +292,8 @@ class QuickTest(object):
         attribute options to get:
            result - Returns pass
            status - Returns none
-           progress - blank or Trial 1/1 Iteration 1, Size 64, Rate 10 % Wait for 2 seconds Wait 70.5169449%complete
+           progress - blank or Trial 1/1 Iteration 1, Size 64,
+                      Rate 10 % Wait for 2 seconds Wait 70.5169449%complete
            startTime - Returns 04/21/17 14:35:42
            currentActions
            waitingStatus
@@ -283,8 +303,9 @@ class QuickTest(object):
            duration - Returns 00:01:03
            currentViews
         """
-        response = self.ixnObj.get(quickTestHandle+'/results')
-        return response.json()[attribute]
+        attribute = attribute[0].upper() + attribute[1:]
+        result = getattr(quickTestHandle.Results, attribute)
+        return result
 
     def getQuickTestCsvFiles(self, quickTestHandle, copyToPath, csvFile='all'):
         """
@@ -301,10 +322,12 @@ class QuickTest(object):
         csvFile: A list of CSV files to get: 'all', one or more CSV files to get:
                  AggregateResults.csv, iteration.csv, results.csv, logFile.txt, portMap.csv
         """
-        resultsPath = self.getQuickTestResultPath(quickTestHandle)
+        resultsPath = quickTestHandle.Results.ResultPath
         self.ixnObj.logInfo('\ngetQuickTestCsvFiles: %s' % resultsPath)
+
         if csvFile == 'all':
-            getCsvFiles = ['AggregateResults.csv', 'iteration.csv', 'results.csv', 'logFile.txt', 'portMap.csv']
+            getCsvFiles = ['AggregateResults.csv',
+                           'iteration.csv', 'results.csv', 'logFile.txt', 'portMap.csv']
         else:
             if type(csvFile) is not list:
                 getCsvFiles = [csvFile]
@@ -314,15 +337,18 @@ class QuickTest(object):
         for eachCsvFile in getCsvFiles:
             # Backslash indicates the results resides on a Windows OS.
             if '\\' in resultsPath:
-                if bool(re.match('[a-z]:.*', copyToPath, re.I)):
-                    self.fileMgmtObj.copyFileWindowsToLocalWindows(resultsPath+'\\{0}'.format(eachCsvFile), copyToPath)
+                windowsSource = resultsPath + '\\{0}'.format(eachCsvFile)
+                if '\\' in copyToPath:
+                    self.fileMgmtObj.copyFileWindowsToLocalWindows(windowsSource, copyToPath)
                 else:
-                    self.fileMgmtObj.copyFileWindowsToLocalLinux(resultsPath+'\\{0}'.format(eachCsvFile), copyToPath)
-            else:
-                # TODO: Copy from Linux to Windows and Linux to Linux.
-                pass
+                    self.fileMgmtObj.copyFileWindowsToLocalLinux(windowsSource, copyToPath)
 
-    def getQuickTestPdf(self, quickTestHandle, copyToLocalPath, where='remoteLinux', renameDestinationFile=None, includeTimestamp=False):
+            else:
+                linuxSource = resultsPath + '/{0}'.format(eachCsvFile)
+                self.fileMgmtObj.copyFileLinuxToLocalLinux(linuxSource, copyToPath)
+
+    def getQuickTestPdf(self, quickTestHandle, copyToLocalPath, where='remoteLinux',
+                        renameDestinationFile=None, includeTimestamp=False):
         """
         Description
            Generate Quick Test result to PDF and retrieve the PDF result file.
@@ -331,26 +357,24 @@ class QuickTest(object):
            where: localWindows|remoteWindows|remoteLinux. The destination.
            copyToLocalPath: The local destination path to store the PDF result file.
            renameDestinationFile: Rename the PDF file.
-           includeTimestamp: True|False.  Set to True if you don't want to overwrite previous result file.
+           includeTimestamp: True|False.  Set to True if you don't want to overwrite previous
+           result file.
         """
-        response = self.ixnObj.post(self.ixnObj.httpHeader+quickTestHandle+'/operations/generateReport', data={'arg1': quickTestHandle})
-        if response.json()['url'] != '':
-            if self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+response.json()['url']) == 1:
-                raise IxNetRestApiException
 
-            if where == 'localWindows':
-                response = self.ixnObj.get(self.ixnObj.httpHeader+response.json()['url'])
-                self.fileMgmtObj.copyFileWindowsToLocalWindows(response.json()['result'], copyToLocalPath, renameDestinationFile, includeTimestamp)
-            if where == 'remoteWindows':
-                # TODO: Work in progress.  Not sure if this is possible.
-                resultPath = self.getQuickTestResultPath(quickTestHandle)
-                #self.ixnObj.copyFileWindowsToRemoteWindows(response.json()['result'], copyToLocalPath, renameDestinationFile, includeTimestamp)
-                self.fileMgmtObj.copyFileWindowsToRemoteWindows(resultPath, copyToLocalPath, renameDestinationFile, includeTimestamp)
-            if where == 'remoteLinux':
-                linuxResultPath = self.getQuickTestResultPath(quickTestHandle)
-                self.fileMgmtObj.copyFileWindowsToLocalLinux(linuxResultPath+'\\TestReport.pdf', copyToLocalPath, renameDestinationFile, includeTimestamp)
-        else:
-            self.ixnObj.logInfo('\ngetQuickTestPdf failed. Result path = %s' % response.json()['result'])
+        try:
+            reportFile = quickTestHandle.GenerateReport()
+        except Exception as err:
+            raise Exception("Generate quicktest report file failed. Error : \n {}".format(err))
+
+        if where == 'localWindows':
+            self.fileMgmtObj.copyFileWindowsToLocalWindows(reportFile, copyToLocalPath,
+                                                           renameDestinationFile, includeTimestamp)
+        if where == 'remoteWindows':
+            self.fileMgmtObj.copyFileWindowsToRemoteWindows(reportFile, copyToLocalPath,
+                                                            renameDestinationFile, includeTimestamp)
+        if where == 'remoteLinux':
+            self.fileMgmtObj.copyFileWindowsToLocalLinux(reportFile, copyToLocalPath,
+                                                         renameDestinationFile, includeTimestamp)
 
     def runQuickTest(self, quickTestName, timeout=90):
         """
@@ -359,7 +383,7 @@ class QuickTest(object):
 
         Parameter
             quickTestName: <str>: name of the quick test to run
-            timeout: <int>: duration for quick test to run. Default=90 seconds
+            timeout: <int>: timeout duration handles internally in Restpy
 
         Example
             runQuickTest("Macro_17_57_14_294", timeout=180)
@@ -369,11 +393,10 @@ class QuickTest(object):
         Note: operation run will keep checking the status of execution for the specified timeout
         """
         eventSchedulerHandle = self.getQuickTestHandleByName(quickTestName)
-
-        url = self.ixnObj.sessionUrl + '/quickTest/eventScheduler/operations/run'
-        data = {"arg1": eventSchedulerHandle}
-        response = self.ixnObj.post(url, data=data)
-        self.ixnObj.waitForComplete(response, url + '/' + response.json()['id'], timeout=timeout)
+        try:
+            eventSchedulerHandle.Run()
+        except Exception as err:
+            raise Exception("Run quicktest operation failed with error : \n {}".format(err))
 
     def deleteQuickTest(self, quickTestName):
         """
@@ -389,10 +412,11 @@ class QuickTest(object):
         Return
         """
         eventSchedulerHandle = self.getQuickTestHandleByName(quickTestName)
-
-        #delete the quick test
-        url = self.ixnObj.httpHeader + eventSchedulerHandle
-        self.ixnObj.delete(url)
+        try:
+            eventSchedulerHandle.remove()
+        except Exception as err:
+            raise Exception("Delete quicktest by quicktest name failed with error : \n {}"
+                            .format(err))
 
     def configQuickTest(self, quickTestName, numOfTrials=1):
         """
@@ -410,14 +434,12 @@ class QuickTest(object):
         Return
             event scheduler handle on success or exception on failure
         """
-        url = self.ixnObj.sessionUrl + '/quickTest/eventScheduler'
-        response = self.ixnObj.post(url, data={"forceApplyQTConfig": "true", "mode": "existingMode", "name": quickTestName})
-
-        eventSchedulerHandle = response.json()["links"][0]["href"]
-        url = self.ixnObj.httpHeader + eventSchedulerHandle + '/eventScheduler'
-        self.ixnObj.post(url, data={"enabled": "true", "itemId": quickTestName, "itemName": quickTestName})
-
-        url = self.ixnObj.httpHeader + eventSchedulerHandle + '/testConfig'
-        self.ixnObj.patch(url, data={"numTrials": numOfTrials})
-
-        return eventSchedulerHandle
+        try:
+            eventSchedulerHandle = self.ixNetwork.QuickTest.EventScheduler.add()
+            eventSchedulerHandle.Name = quickTestName
+            eventSchedulerHandle.Mode = "existingMode"
+            eventSchedulerHandle.ForceApplyQTConfig = True
+            eventSchedulerHandle.TestConfig.NumTrials = numOfTrials
+            return eventSchedulerHandle
+        except Exception as err:
+            raise Exception("Unable to configure quick test. Error : \n {}".format(err))
